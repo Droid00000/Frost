@@ -2,7 +2,7 @@
 Frost is a small [Discord](https://discord.com/) bot that helps you express your feelings towards someone else.
 
 # Installation 
-You'll need to have [discordrb](https://github.com/shardlab/discordrb) installed on your computer. Once you've installed discordrb, you can open the main.rb file in an IDE such as Visual Studio Code and replace the ```token:``` value with your bot's token. Make sure the bot's token value is enclosed in quotation marks. Do not ever share this token with anyone else.
+You'll need to have [discordrb](https://github.com/shardlab/discordrb) installed on your computer. Once you've installed discordrb, you can open the ```Frost_Stable.rb``` file in an IDE. Once you've done that, replace the ```TOKEN_HERE``` value with your bot's token. Make sure the bot's token value remains enclosed in quotation marks. Don't ever share this token with anyone else.
 
 Once you've set the bot token, open your operating system's terminal or command-line interface and ```cd``` into the directory where the main.rb file is located. On Windows, this can be done by right-clicking on the file and choosing ```copy file path```. Once you've correctly changed your directory, simply type in: ```ruby Frost_Stable.rb``` and your bot should come online! 
 
