@@ -1,5 +1,5 @@
 # About the Bot
-Frost is a small [Discord](https://discord.com/) bot that helps you express your feelings towards someone else.
+Frost is a [Discord](https://discord.com/) bot that helps you express your feelings towards someone else.
 
 # Installation 
 You'll need to have [discordrb](https://github.com/shardlab/discordrb) installed on your computer. Once you've installed discordrb, you can open the ```Frost_Stable.rb``` file in an IDE. Once you've done that, replace the ```TOKEN_HERE``` value with your bot's token. Make sure the bot's token value remains enclosed in quotation marks. Don't ever share this token with anyone else.
