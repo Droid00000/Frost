@@ -9,7 +9,7 @@ Once you've set the bot token, open your operating system's terminal or command-
 # Privacy Policy
 Discord requires me to have one of these. There isn't much to say. The bot doesn't store any user or guild data.
 
-# Terms and Conditions
+# Terms of Service
 Once again, I'm required to have one of these. Just follow Discord's terms of service. If you don't like the bot, just don't use it. 
 
 # Acknowledgements 
