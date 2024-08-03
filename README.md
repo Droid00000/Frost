@@ -7,4 +7,4 @@ You'll need to have discordrb installed on your computer. Once you've installed 
 Once you've set the bot token, open your operating system's terminal or command-line interface and ```cd``` into the directory where the main.rb file is located. On Windows, this can be done by right-clicking on the file and choosing ```copy file path```. Once you've correctly changed your directory, simply type in: ```ruby main.rb``` and your bot should come online! 
 
 # Acknowledgements 
-Shout out to Thanos for inspiring me with his bot and being the person who got me interested in bot development. 
+First and foremost, thank you to Dyna for finding the vast majority of the GIFs the bot uses. Additionally, Shout out to Thanos for inspiring me with his bot and being the person who got me interested in bot development. 
