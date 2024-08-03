@@ -93,7 +93,7 @@ end
 
 
 bot.register_application_command(:angered, 'Shows your anger another server member.') do |cmd|
-cmd.user('target', 'Who do you show your wrath to?', required: true)
+cmd.user('target', 'Who do you want to show your wrath to?', required: true)
 end
     
     bot.application_command(:angered) do |event|
@@ -120,23 +120,23 @@ end
 
 
 
-bot.register_application_command(:sleep, 'Tells a server member to go to sleep.') do |cmd|
-cmd.user('target', 'Who needs to go to sleep?', required: true)
+bot.register_application_command(:sleep, 'Tell another server member to go and sleep.') do |cmd|
+cmd.user('target', 'Who needs to sleep?', required: true)
 end
-                        
-        bot.application_command(:sleep) do |event|
-        bedtime = event.options['target']
-        parent = event.user.display_name
-        links = []
-        random_link = links.sample.to_s
-        event.respond(content: "<@#{bedtime}>", ephemeral: false)
-        event.respond.channel.send_embed do |embed|
-        embed.colour = 0x33363b
-        embed.description = "#{parent} tells <@#{bedtime}> to go to sleep!"
-        embed.image = Discordrb::Webhooks::EmbedImage.new(url: random_link)
-        embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: "SLEEPY")
-        end
-        end  
+    
+    bot.application_command(:sleep) do |event|
+    go_sleep = event.options['target']
+    resp = event.user.display_name
+    links = ["https://media.tenor.com/8MuYO-3_LUEAAAAC/milk-and-mocha-bear-couple.gif", "https://media.tenor.com/JytsJ0Mlb8wAAAAC/sleep-time.gif", "https://media.tenor.com/753VtyeLsH4AAAAC/stitch-sleep-sleep.gif", "https://media.tenor.com/l0KyHhRbH1AAAAAC/tired-sleep.gif", "https://media.tenor.com/ifI1z7JYgTIAAAAC/phoneline-sleep.gif", "https://media.tenor.com/S5N8d-OpyNEAAAAC/extasyxx.gif", "https://media.tenor.com/TG_JLONAbSEAAAAC/quby-quby-sticker.gif", "https://media.tenor.com/_Qp9Kn3s1P4AAAAd/i-sleep-meme-sleep.gif", "https://media.tenor.com/TE_jqQ1HW50AAAAd/dog-sleep-dog-sleeping-w-goofy-sleeping-sound.gif", "https://media.tenor.com/GhaZsr7etQoAAAAC/a-labrador-drooling-labrador.gif", "https://media.tenor.com/HItBOocy6ikAAAAC/umaru-sleeping.gif", "https://media.tenor.com/lFCX6zJnNNMAAAAC/frieren-anime.gif", "https://media.tenor.com/NUc4M9ix-kUAAAAC/kotori-minami-sleeping.gif", "https://media.tenor.com/7ze6WIOcsY0AAAAC/sleeping-anime.gif", "https://media.tenor.com/BV0xBnKK6VIAAAAd/anime-sofa.gif","https://media.tenor.com/w8bVOlSAZkUAAAAC/spy-x-family-anya-spy-x-family.gif", "https://media.tenor.com/2nuT6e9IvZ4AAAAi/milk-and-mocha.gif"]
+    random_link = links.sample.to_s
+    event.respond(content: "<@#{go_sleep}>", ephemeral: false)
+    event.channel.send_embed do |embed|
+    embed.colour = 0x33363b
+    embed.description = "#{resp} says <@#{go_sleep}> should go to sleep!"
+    embed.image = Discordrb::Webhooks::EmbedImage.new(url: random_link)
+    embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: "SLEEPY")
+    end
+    end
 
 
 
@@ -175,7 +175,7 @@ end
 
 
     
-bot.register_application_command(:shutdown, 'Safely disconnects the bot.') do |cmd|
+bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.') do |cmd|
 end  
     
     bot.application_command(:shutdown) do |event|
