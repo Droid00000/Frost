@@ -203,8 +203,8 @@ bot.register_application_command(:help, 'Shows information about how to use the 
 end
         
     bot.application_command(:help) do |event|
-    event.respond(content: "_ _", ephemeral: false)
-    event.channel.send_embed do |embed|
+    event.respond(ephemeral: true) do |builder|
+    builder.add_embed do |embed|
     embed.title = "**Help**"
     embed.colour = 0xd4f0ff
     embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: "https://cdn.discordapp.com/avatars/1268769768920580156/1551613008086970c244a81d043d354e?size=1024")
@@ -238,4 +238,5 @@ url = nil
 bot.ready do bot.update_status(status, activity, url)
 end
 
+end
 bot.run
