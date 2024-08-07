@@ -2,7 +2,7 @@
 Frost is a [Discord](https://discord.com/) bot that helps you express your feelings towards someone else.
 
 # Dependencies 
-You'll need the following gems for the bot to run:
+You'll need to have the following gems installed for the bot to run along with an up-to-date version of Ruby.
 
 - [dotenv](https://github.com/bkeepers/dotenv)
 - [discordrb](https://github.com/shardlab/discordrb)
