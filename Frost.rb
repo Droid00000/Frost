@@ -219,7 +219,7 @@ end
     embed.colour = 0xd4f0ff
     embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: "https://cdn.discordapp.com/avatars/1268769768920580156/1551613008086970c244a81d043d354e?size=1024")
     embed.footer = Discordrb::Webhooks::EmbedFooter.new()
-    embed.add_field(name: "``/help``", value: "Opens the ``/help`` menu.")
+    embed.add_field(name: "``/help``", value: "Opens the /help menu.")
     embed.add_field(name: "``/about``", value: "Shows some information about the bot.")
     embed.add_field(name: "``/shutdown``", value: "Allows the bot owner to shutdown the bot.")
     embed.add_field(name: "``/hug``", value: "Sends a random GIF to hug a server member.")
