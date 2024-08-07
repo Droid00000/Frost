@@ -5,7 +5,7 @@ Frost is a [Discord](https://discord.com/) bot that helps you express your feeli
 You'll need to have [discordrb](https://github.com/shardlab/discordrb) installed on your computer. Once you've installed discordrb, type in ```gem install dotenv```. You may have to install this with sudo or admin privileges. 
 
 
-Once you've installed both gems, create a file called ```.env``` and add this line to it: ```BOT_TOKEN=TOKEN_HERE```. Replace ```TOKEN_HERE``` with your actual bot token. Once that's done, you can simply change your directory in your terminal to be in the same directory where your bot file is located and then type in: ```ruby frost.rb``` in the terminal to run the bot.
+Once you've installed both gems, create a file called ```.env``` and add this line to it: ```BOT_TOKEN=TOKEN_HERE```. Replace ```TOKEN_HERE``` with your actual bot token. Once that's done, you can simply change your directory in your terminal to be in the same directory where your bot file is located. Then, type in: ```ruby frost.rb``` in the terminal to run the bot.
 
 # Privacy Policy
 Discord requires me to have one of these. There isn't much to say. The bot doesn't store any member or guild data.
