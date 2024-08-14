@@ -4,7 +4,7 @@ require 'dotenv'
 
 Dotenv.load
 
-bot = Discordrb::Bot.new(token:ENV['BOT_TOKEN'])
+bot = Discordrb::Bot.new(token:ENV['BOT_TOKEN'], intents: [:server_messages])
 
 
 
