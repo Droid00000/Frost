@@ -1,5 +1,5 @@
 # About the Bot
-Frost is a [Discord](https://discord.com/) bot that helps you express your feelings towards someone else.
+Frost is a [Discord](https://discord.com/) bot that helps you express your feelings towards someone else. There are a few optional modules or cogs that can be configured to run, but they're not required. 
 
 # Dependencies 
 You'll need to have the following gems installed for the bot to run along with an up-to-date version of Ruby.
