@@ -17,6 +17,47 @@ SQL
 db.close
 
 
+bot.unknown(type: :CHANNEL_PINS_UPDATE) do |event|
+channel_id = event.data["channel_id"].to_i
+server_id = event.data["guild_id"].to_i
+origin_server = bot.server(server_id)
+origin_channel = bot.channel(channel_id)
+    
+pin_fetch = origin_channel.pins
+if pin_fetch.count >= 49
+second_recent = pin_fetch[1]
+username = second_recent.author.username
+msg_content = second_recent.content
+msg_link = second_recent.link
+msg_id = second_recent.id
+avatar = second_recent.author.avatar_url(format = "png")
+time_raw = second_recent.timestamp.to_s
+time_var = Time.parse(time_raw)
+time_unix = time_var.to_i
+human_time_1 = Time.at(time_unix)
+time = human_time_1.strftime('%m/%d/%Y %H:%M %p')
+db = SQLite3::Database.new("server_settings.db")
+db.results_as_hash = true
+db.execute( "select * from servers where server_id = ?", ["#{server_id}"]) do |row|
+archive_channel = row['archive_channel_id']
+channel = bot.channel(archive_channel)
+channel.send_embed do |embed|
+embed.colour = 0x8da99b
+embed.description = "#{msg_content}"             
+embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: "#{username}", url: "#{msg_link}", icon_url: "#{avatar}")
+embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{msg_id} • #{time}")              
+embed.add_field(name: "Source", value: "[Jump!](#{msg_link})")
+end
+        
+second_recent.unpin    
+    
+end
+end
+end 
+
+
+
+
 bot.register_application_command(:setup, 'Setup the pin-archiver functionality.', server_id: ENV['SLASH_COMMAND_SERVER_ID']) do |cmd|
 cmd.channel('channel', 'Which channel should archived pins be sent to?', required: true)    
 end
@@ -82,7 +123,7 @@ embed.add_field(name: "Source", value: "[Jump!](#{msg_link})")
 end
 
 second_recent.unpin
-event.edit_response(content: "Archived one pin by **#{username}**.")  
+event.edit_response(content: "Succesfully archived two pins!")  
 end
 end
 end    
