@@ -35,23 +35,37 @@ time_raw = second_recent.timestamp.to_s
 time_var = Time.parse(time_raw)
 time_unix = time_var.to_i
 human_time_1 = Time.at(time_unix)
-time = human_time_1.strftime('%m/%d/%Y %H:%M %p')
+time = human_time_1.strftime('%m/%d/%Y %H:%M')
 db = SQLite3::Database.new("server_settings.db")
 db.results_as_hash = true
 db.execute( "select * from servers where server_id = ?", ["#{server_id}"]) do |row|
 archive_channel = row['archive_channel_id']
 channel = bot.channel(archive_channel)
+if second_recent.attachments.any?
+img_in = second_recent.attachments[0]
+img_url = img_in.url
 channel.send_embed do |embed|
 embed.colour = 0x8da99b
-embed.description = "#{msg_content}"             
+embed.description = "#{msg_content}"
+embed.image = Discordrb::Webhooks::EmbedImage.new(url: "#{img_url}")             
 embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: "#{username}", url: "#{msg_link}", icon_url: "#{avatar}")
 embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{msg_id} • #{time}")              
 embed.add_field(name: "Source", value: "[Jump!](#{msg_link})")
 end
+    
+else  
+channel.send_embed do |embed|
+embed.colour = 0x8da99b
+embed.description = "#{msg_content}"
+embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: "#{username}", url: "#{msg_link}", icon_url: "#{avatar}")
+embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{msg_id} • #{time}")              
+embed.add_field(name: "Source", value: "[Jump!](#{msg_link})")
+end
+end
+end
         
 second_recent.unpin    
     
-end
 end
 end 
 
@@ -98,7 +112,7 @@ event.defer
 audit_channel = event.options['channel']
 resolve_audit = bot.channel(audit_channel)
 current_pins = resolve_audit.pins
-if current_pins.count >= 49
+if current_pins.count == 50
 second_recent = current_pins[1]
 username = second_recent.author.username
 msg_content = second_recent.content
@@ -109,22 +123,38 @@ time_raw = second_recent.timestamp.to_s
 time_var = Time.parse(time_raw)
 time_unix = time_var.to_i
 human_time_1 = Time.at(time_unix)
-time = human_time_1.strftime('%m/%d/%Y %H:%M %p')
+time = human_time_1.strftime('%m/%d/%Y %H:%M')
 db.results_as_hash = true
 db.execute( "select * from servers where server_id = ?", ["#{client_server_id}"]) do |row|
 archive_channel = row['archive_channel_id']
 channel = bot.channel(archive_channel)
+
+if second_recent.attachments.any?
+img_in = second_recent.attachments[0]
+img_url = img_in.url
 channel.send_embed do |embed|
 embed.colour = 0x8da99b
-embed.description = "#{msg_content}"             
+embed.description = "#{msg_content}"
+embed.image = Discordrb::Webhooks::EmbedImage.new(url: "#{img_url}")             
 embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: "#{username}", url: "#{msg_link}", icon_url: "#{avatar}")
 embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{msg_id} • #{time}")              
 embed.add_field(name: "Source", value: "[Jump!](#{msg_link})")
 end
 
+else  
+channel.send_embed do |embed|
+embed.colour = 0x8da99b
+embed.description = "#{msg_content}"
+embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: "#{username}", url: "#{msg_link}", icon_url: "#{avatar}")
+embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{msg_id} • #{time}")              
+embed.add_field(name: "Source", value: "[Jump!](#{msg_link})")
+end
+end
+end
+
+
 second_recent.unpin
 event.edit_response(content: "Succesfully archived two pins!")  
-end
 end
 end    
 
