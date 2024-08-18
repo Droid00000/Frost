@@ -12,7 +12,7 @@ If you want to use any of the optional cogs, you'll need the following gem as we
 - [sqlite3](https://github.com/sparklemotion/sqlite3-ruby) 
 
 # Installation 
-Download the ```Frost.rb``` file and place it in a directory. Create a file called ```.env``` in the same directory and add this line to it: ```BOT_TOKEN=TOKEN_HERE```. Replace ```TOKEN_HERE``` with your actual bot token. Once that's done, you can simply change your directory in your terminal to be in the same directory where your bot file is located. Then, type in: ```ruby frost.rb``` in the terminal to run the bot.
+Download the ```Frost.rb``` file and place it in a directory. Create a file called ```.env``` in the same directory and add this line to it: ```BOT_TOKEN=TOKEN_HERE```. Replace ```TOKEN_HERE``` with your actual bot token. Once that's done, you can simply change your directory in your terminal to be in the same directory where your bot file is located. Then, type in: ```ruby Frost.rb``` in the terminal to run the bot.
 
 # Privacy Policy
 Discord requires me to have one of these. There isn't much to say. The bot doesn't store any member or guild data.
