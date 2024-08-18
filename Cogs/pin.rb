@@ -99,16 +99,16 @@ cmd.channel('channel', 'Which channel needs to have its pins archived?', require
 end
 
 bot.application_command(:archive) do |event|
-db = SQLite3::Database.new("server_settings.db")    
+event.defer
+db = SQLite3::Database.new("server_settings.db")  
 client_server_id = event.server.id   
 user = event.user
 perm_check = user.permission?(:manage_messages, channel = nil)
 if perm_check == false
-event.respond 'You need to have the ``manage messages`` permission to use this command.'
+event.edit_response(content: "You need to have the ``manage messages`` permission to use this command.")   
 next
 end    
 
-event.defer
 audit_channel = event.options['channel']
 resolve_audit = bot.channel(audit_channel)
 current_pins = resolve_audit.pins
