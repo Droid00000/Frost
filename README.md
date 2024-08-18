@@ -6,6 +6,7 @@ You'll need to have the following gems installed for the bot to run along with a
 
 - [dotenv](https://github.com/bkeepers/dotenv)
 - [discordrb](https://github.com/shardlab/discordrb)
+- [sqlite3](https://github.com/sparklemotion/sqlite3-ruby)
 
 
 # Installation 
