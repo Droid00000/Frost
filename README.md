@@ -7,7 +7,7 @@ You'll need to have the following gems installed for the base version of the bot
 - [dotenv](https://github.com/bkeepers/dotenv)
 - [discordrb](https://github.com/shardlab/discordrb)
 
-If you want to use any of the optional cogs, you'll need the following gems as well.
+If you want to use any of the optional cogs, you'll need the following gem as well.
 
 - [sqlite3](https://github.com/sparklemotion/sqlite3-ruby) 
 
