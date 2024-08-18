@@ -24,7 +24,7 @@ origin_server = bot.server(server_id)
 origin_channel = bot.channel(channel_id)
     
 pin_fetch = origin_channel.pins
-if pin_fetch.count >= 49
+if pin_fetch.count == 50
 second_recent = pin_fetch[1]
 username = second_recent.author.username
 msg_content = second_recent.content
