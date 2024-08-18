@@ -2,12 +2,14 @@
 Frost is a [Discord](https://discord.com/) bot that helps you express your feelings towards someone else. There are a few optional modules or cogs that can be configured to run, but they're not required. 
 
 # Dependencies 
-You'll need to have the following gems installed for the bot to run as well as an up-to-date version of Ruby.
+You'll need to have the following gems installed for the base version of the bot to run as well as an up-to-date version of Ruby.
 
 - [dotenv](https://github.com/bkeepers/dotenv)
 - [discordrb](https://github.com/shardlab/discordrb)
-- [sqlite3](https://github.com/sparklemotion/sqlite3-ruby)
 
+If you want to use any of the optional cogs, you'll need the following gems as well.
+
+- [sqlite3](https://github.com/sparklemotion/sqlite3-ruby) 
 
 # Installation 
 Download the ```Frost.rb``` file and place it in a directory. Create a file called ```.env``` in the same directory and add this line to it: ```BOT_TOKEN=TOKEN_HERE```. Replace ```TOKEN_HERE``` with your actual bot token. Once that's done, you can simply change your directory in your terminal to be in the same directory where your bot file is located. Then, type in: ```ruby frost.rb``` in the terminal to run the bot.
