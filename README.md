@@ -3,22 +3,22 @@ Frost is a [Discord](https://discord.com/) bot that helps you express your feeli
 
 # Dependencies 
 You'll need to have the following gems installed for the base version of the bot to run as well as an up-to-date version of Ruby.
-
+**TO BE UPDATED**
 - [dotenv](https://github.com/bkeepers/dotenv)
 - [discordrb](https://github.com/shardlab/discordrb)
 
 If you want to use any of the optional cogs, you'll need the following gem as well.
-
+**TO BE UPDATED**
 - [sqlite3](https://github.com/sparklemotion/sqlite3-ruby) 
 
 # Installation 
-Download the ```Frost.rb``` file and place it in a directory. Create a file called ```.env``` in the same directory and add this line to it: ```BOT_TOKEN=TOKEN_HERE```. Replace ```TOKEN_HERE``` with your actual bot token. Once that's done, you can simply change your directory in your terminal to be in the same directory where your bot file is located. Then, type in: ```ruby Frost.rb``` in the terminal to run the bot.
+**TO BE UPDATED**
 
 # Privacy Policy
-Discord requires me to have one of these. There isn't much to say. The bot doesn't store any member or guild data.
+**TO BE UPDATED**
 
 # Terms of Service
-Once again, I'm required to have one of these. Just follow Discord's terms of service. If you don't like the bot, simply don't use it. 
+**TO BE UPDATED**
 
 # Acknowledgements 
 First and foremost, thank you to Dyna for finding the vast majority of the GIFs the bot uses. Additionally, Shout out to Thanos for inspiring me with his bot and being the person who got me interested in bot development. 
