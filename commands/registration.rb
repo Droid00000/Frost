@@ -4,7 +4,7 @@
 
 require 'toml-rb'
 require 'discordrb'
-require '../data/constants'
+require_relative '../data/constants'
 
 TOML = TomlRB.load_file('config.toml')
 
