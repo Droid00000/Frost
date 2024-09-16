@@ -3,7 +3,7 @@
 require 'toml-rb'
 require 'sequel'
 
-TOML = TomlRB.load_file('../config.toml')
+TOML = TomlRB.load_file('config.toml')
 
 POSTGRES = Sequel.connect('postgres://localhost/frigid', user: TOML['Postgres']['USERNAME'], password: TOML['Postgres']['PASSWORD'])
 

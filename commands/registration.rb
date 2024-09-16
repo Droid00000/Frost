@@ -1,12 +1,12 @@
-# frozen_string_literal: true n
+# frozen_string_literal: true
 
 # We register our application commands using a seperate script so we don't need to register them every time the bot starts.
 
 require 'toml-rb'
 require 'discordrb'
-require '../Data/Constants'
+require '../data/constants'
 
-TOML = TomlRB.load_file('../config.toml')
+TOML = TomlRB.load_file('config.toml')
 
 bot = Discordrb::Bot.new(token: TOML['Discord']['RAW_TOKEN'], intents: [:server_messages])
 
@@ -89,7 +89,7 @@ bot.register_application_command(:event, 'Event roles setup', default_member_per
     end
   end
 
-  bot.register_application_command(:booster, 'Booster perks admin', default_member_permissions: 268435456) do |cmd|
+  bot.register_application_command(:boosting, 'Booster perks admin', default_member_permissions: 268435456) do |cmd|
     cmd.subcommand_group(:admin, 'Booster admin!') do |group|
       group.subcommand('add', 'Manually add a user to the database.') do |option|
         option.user('user', 'The user to add to the database.', required: true)

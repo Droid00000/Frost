@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require '../data/constants'
-require '../data/functions'
+require_relative '../data/constants'
+require_relative '../data/functions'
 require 'discordrb'
 
 def help_embed(data)

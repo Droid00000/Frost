@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require '../data/constants'
-require '../data/functions'
-require '../data/schema'
+require_relative '../data/constants'
+require_relative '../data/functions'
+require_relative '../data/schema'
 require 'discordrb'
 
 def edit_role(data)
@@ -11,12 +11,12 @@ def edit_role(data)
     return
   end
 
-  if booster_records(server: data.server.id, user: data.user.id, type: :banned)  
+  if booster_records(server: data.server.id, user: data.user.id, type: :banned)
     data.edit_response(content: RESPONSE[302])
     return
   end
 
-  unless booster_records(server: data.server.id, type: :enabled)  
+  unless booster_records(server: data.server.id, type: :enabled)
     data.edit_response(content: RESPONSE[301])
     return
   end
@@ -31,18 +31,13 @@ def edit_role(data)
     return
   end
 
-  unless data.options['name'].nil?
-    modifiy_guild_role(data.server.id, data.user.id, name: data.options['name'])
-  end
+  modifiy_guild_role(data.server.id, data.user.id, name: data.options['name']) unless data.options['name'].nil?
 
-  unless data.options['color'].nil?
-    modifiy_guild_role(data.server.id, data.user.id, color: data.options['color'])
-  end 
+  modifiy_guild_role(data.server.id, data.user.id, color: data.options['color']) unless data.options['color'].nil?
 
   if !data.options['icon'].nil? && unlocked_icons?(data.server.boost_level)
     modifiy_guild_role(data.server.id, data.user.id, icon: data.options['icon'])
-  end 
-    
-    data.edit_response(content: "#{RESPONSE[202]} #{EMOJI[20]}")
   end
+
+  data.edit_response(content: "#{RESPONSE[202]} #{EMOJI[20]}")
 end

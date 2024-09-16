@@ -13,7 +13,7 @@ require './data/schema'
 require './data/constants'
 require 'selenium-webdriver'
 
-TOML = TomlRB.load_file('../config.toml')
+TOML = TomlRB.load_file('config.toml')
 
 # Public method. Initilaze a new color object for a role.
 # @param [String] The hex color to resolve into a color object.
@@ -154,7 +154,7 @@ def modify_guild_role(server_id, user_id, name: nil, color: nil, icon: nil)
     :guilds_sid_roles_rid,
     server_id,
     :patch,
-    "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id, user: user_id type: :get_role)}",
+    "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id, user: user_id, type: :get_role)}",
     { color: color_data, name: name, hoist: nil, mentionable: nil, permissions: nil, icon: image_string }.compact.to_json,
     Authorization: TOML['Discord']['BOT_TOKEN'],
     content_type: :json,
@@ -170,7 +170,7 @@ def delete_guild_role(server_id, user_id)
     :guilds_sid_roles_rid,
     server_id,
     :delete,
-    "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id, user: user_id type: :get_role)}",
+    "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id, user: user_id, type: :get_role)}",
     Authorization: TOML['Discord']['BOT_TOKEN'],
     'X-Audit-Log-Reason': RESPONSE[300]
   )

@@ -5,7 +5,6 @@ require 'discordrb'
 require 'toml-rb'
 
 require_rel 'pins'
-require_rel 'tags'
 require_rel 'data'
 require_rel 'admin'
 require_rel 'boosters'

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require '../data/constants'
-require '../data/functions'
-require '../data/schema'
+require_relative '../data/constants'
+require_relative '../data/functions'
+require_relative '../data/schema'
 
 module AutoPinArchiver
   extend Discordrb::EventContainer

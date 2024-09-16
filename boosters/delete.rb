@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require '../data/constants'
-require '../data/functions'
-require '../data/schema'
+require_relative '../data/constants'
+require_relative '../data/functions'
+require_relative '../data/schema'
 require 'discordrb'
 
 def delete_role(data)
@@ -11,12 +11,12 @@ def delete_role(data)
     return
   end
 
-  unless booster_records(server: data.server.id, type: :enabled)  
+  unless booster_records(server: data.server.id, type: :enabled)
     data.edit_response(content: RESPONSE[301])
     return
   end
 
-  if booster_records(server: data.server.id, user: data.user.id, type: :banned)  
+  if booster_records(server: data.server.id, user: data.user.id, type: :banned)
     data.edit_response(content: RESPONSE[302])
     return
   end
