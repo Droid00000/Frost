@@ -24,6 +24,8 @@
 
 # 404 — Fires when the client can't find a role. (User hasn't claimed role)
 
+require 'toml-rb'
+
 RESPONSE = {
   100 => 'Server booster claimed role.',
   200 => 'Server booster updated role.',
@@ -68,6 +70,10 @@ ACTIVITY = {
   80 => 'dnd',
   90 => 'Loading...'
 }.freeze
+
+# The configuration file used by the bot.
+
+TOML = TomlRB.load_file('config.toml')
 
 # A series of regular expressions utilized by the bot.
 

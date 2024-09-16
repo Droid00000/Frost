@@ -10,8 +10,6 @@ require_rel 'admin'
 require_rel 'boosters'
 require_rel 'affections'
 
-TOML = TomlRB.load_file('config.toml')
-
 bot = Discordrb::Bot.new(token: TOML['Discord']['RAW_TOKEN'], intents: %i[servers server_messages])
 
 bot.ready do

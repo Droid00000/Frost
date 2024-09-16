@@ -13,8 +13,6 @@ require './data/schema'
 require './data/constants'
 require 'selenium-webdriver'
 
-TOML = TomlRB.load_file('config.toml')
-
 # Public method. Initilaze a new color object for a role.
 # @param [String] The hex color to resolve into a color object.
 # @return [ColourRGB] A colourRGB object.
