@@ -71,7 +71,7 @@ ACTIVITY = {
   90 => 'Loading...'
 }.freeze
 
-# The configuration file used by the bot.
+# The TOML configuration file used by the bot.
 
 TOML = TomlRB.load_file('config.toml')
 
