@@ -7,7 +7,7 @@ require 'discordrb'
 def help_embed(data)
   data.edit_response do |builder|
     builder.add_embed do |embed|
-      embed.title = '**Commands**'
+      embed.title = '**Booster Commands**'
       embed.colour = UI[25]
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[21])
       embed.add_field(name: '``/booster role claim``', value: 'Creates your custom role. Your role name must contain any foul language. Simply put a custom emoji as you normally would in the icon option.')
