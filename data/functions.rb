@@ -196,10 +196,10 @@ end
 # @return [Boolean] Returns true if the user is boosting the server, and false if the user is not.
 def get_booster_status(server_id, user_id)
   !JSON.parse(Discordrb::API.request(
-                :users_sid,
-                user_id,
-                :get,
-                "#{Discordrb::API.api_base}/guilds/#{server_id}/members/#{user_id}",
-                Authorization: TOML['Discord']['BOT_TOKEN']
-              ))['premium_since'].nil?
+   :users_sid,
+   user_id,
+   :get,
+   "#{Discordrb::API.api_base}/guilds/#{server_id}/members/#{user_id}",
+   Authorization: TOML['Discord']['BOT_TOKEN']
+   ))['premium_since'].nil?
 end
