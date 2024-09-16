@@ -40,17 +40,14 @@ end
 bot.register_application_command(:about, 'Shows some information about the bot owner.') do |option|
 end
 
-bot.register_application_command(:archive, 'Archives pins in a specified channel.',
-                                 default_member_permissions: 8192) do |option|
+bot.register_application_command(:archive, 'Archives pins in a specified channel.', default_member_permissions: 8192) do |option|
   option.channel('channel', 'Which channel needs to have its pins archived?', required: true)
 end
 
-bot.register_application_command(:settings, 'View your server configuration.',
-                                 default_member_permissions: 32) do |option|
+bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: 32) do |option|
 end
 
-bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.',
-                                 default_member_permissions: 0) do |option|
+bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.', default_member_permissions: 0) do |option|
 end
 
 bot.register_application_command(:throw, 'Snowball fights') do |cmd|
