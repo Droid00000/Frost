@@ -10,26 +10,26 @@ require_rel 'admin'
 require_rel 'boosters'
 require_rel 'affections'
 
-bot = Discordrb::Bot.new(token: TOML['Discord']['RAW_TOKEN'], intents: %i[servers server_messages])
+BOT = Discordrb::Bot.new(token: TOML['Discord']['RAW_TOKEN'], intents: %i[servers server_messages])
 
-bot.ready do
-  bot.update_status(ACTIVITY[50], ACTIVITY[60], ACTIVITY[70])
+BOT.ready do
+  BOT.update_status(ACTIVITY[50], ACTIVITY[60], ACTIVITY[70])
 end
 
-bot.application_command(:shutdown) do |event|
+BOT.application_command(:shutdown) do |event|
   break unless event.user.id == TOML['Discord']['OWNER']
 
   event.respond(content: 'The bot has powered off.', ephemeral: true)
-  bot.stop
+  BOT.stop
 end
 
-bot.include! BoosterPerks
-bot.include! AngerAffection
-bot.include! HugAffection
-bot.include! PokeAffection
-bot.include! NomAffection
-bot.include! SleepAffection
-bot.include! AutoPinArchiver
-bot.include! ManualPinArchiver
+BOT.include! BoosterPerks
+BOT.include! AngerAffection
+BOT.include! HugAffection
+BOT.include! PokeAffection
+BOT.include! NomAffection
+BOT.include! SleepAffection
+BOT.include! AutoPinArchiver
+BOT.include! ManualPinArchiver
 
-bot.run
+BOT.run
