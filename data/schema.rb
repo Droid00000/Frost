@@ -4,7 +4,8 @@ require 'sequel'
 require 'toml-rb'
 require './data/constants'
 
-POSTGRES = Sequel.connect('postgres://localhost/frigid', user: TOML['Postgres']['USERNAME'], password: TOML['Postgres']['PASSWORD'])
+POSTGRES = Sequel.connect('postgres://localhost/frigid', user: TOML['Postgres']['USERNAME'],
+                                                         password: TOML['Postgres']['PASSWORD'])
 
 POSTGRES.create_table?(:Event_Settings) do
   primary_key :id
@@ -57,7 +58,7 @@ POSTGRES.create_table?(:Tags) do
   Bigint :owner_id, null: false
   Bigint :server_id, null: false
   Bigint :channel_id, null: false
-  String :name, null: false, unique: true 
+  String :name, null: false, unique: true
   Bigint :message_id, unique: true, null: false
 end
 
@@ -76,15 +77,15 @@ def booster_records(server: nil, user: nil, role: nil, channel: nil, type: nil)
   when :get_role
     POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).select(:role_id).map(:role_id)
   when :enabled
-    !POSTGRES[:Booster_Settings].where(server_id: server).select(:enabled).map(:enabled).empty? 
+    !POSTGRES[:Booster_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
   when :setup
     POSTGRES[:Booster_Settings].insert(server_id: server, hoist_role: role, log_channel: channel, enabled: true)
-  when :check_user  
+  when :check_user
     !POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).empty?
-  when :hoist_role  
+  when :hoist_role
     POSTGRES[:Booster_Settings].where(server_id: server).select(:hoist_role).map(:hoist_role)
   when :banned
-    ![:Banned_Boosters].where(server_id: server, user_id: user).empty? 
+    ![:Banned_Boosters].where(server_id: server, user_id: user).empty?
   when :ban
     POSTGRES[:Banned_Boosters].insert(server_id: server, user_id: user)
   else
@@ -112,7 +113,8 @@ def tag_records(name: nil, server: nil, message: nil, owner: nil, type: nil)
   when :enabled
     POSTGRES[:Tag_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
   when :get
-    [POSTGRES[:Tags].where(name: name).select(:message_id).map(:message_id), POSTGRES[:Tags].where(name: name).select(:channel_id).map(:channel_id)]
+    [POSTGRES[:Tags].where(name: name).select(:message_id).map(:message_id),
+     POSTGRES[:Tags].where(name: name).select(:channel_id).map(:channel_id)]
   when :disable
     POSTGRES[:Tag_Settings].insert(server_id: server, enabled: false)
   when :create

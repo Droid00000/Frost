@@ -20,7 +20,8 @@ module ManualPinArchiver
           embed.colour = UI[22]
           embed.description = message.content.to_s
           embed.image = Discordrb::Webhooks::EmbedImage.new(url: message.attachments[0].url.to_s)
-          embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: message.author.username.to_s, url: message.link.to_s, icon_url: message.author.avatar_url.to_s)
+          embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: message.author.username.to_s,
+                                                              url: message.link.to_s, icon_url: message.author.avatar_url.to_s)
           embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{message.id} • #{time_data(message.timestamp.to_s)}")
           embed.add_field(name: 'Source', value: "[Jump!](#{message.link})")
         end
@@ -29,7 +30,8 @@ module ManualPinArchiver
         archive_channel.send_embed do |embed|
           embed.colour = UI[22]
           embed.description = message.content.to_s
-          embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: message.author.username.to_s, url: message.link.to_s, icon_url: message.author.avatar_url.to_s)
+          embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: message.author.username.to_s,
+                                                              url: message.link.to_s, icon_url: message.author.avatar_url.to_s)
           embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{message.id} • #{time_data(message.timestamp.to_s)}")
           embed.add_field(name: 'Source', value: "[Jump!](#{message.link})")
         end

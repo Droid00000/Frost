@@ -40,14 +40,17 @@ end
 bot.register_application_command(:about, 'Shows some information about the bot owner.') do |option|
 end
 
-bot.register_application_command(:archive, 'Archives pins in a specified channel.', default_member_permissions: 8192) do |option|
+bot.register_application_command(:archive, 'Archives pins in a specified channel.',
+                                 default_member_permissions: 8192) do |option|
   option.channel('channel', 'Which channel needs to have its pins archived?', required: true)
 end
 
-bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: 32) do |option|
+bot.register_application_command(:settings, 'View your server configuration.',
+                                 default_member_permissions: 32) do |option|
 end
 
-bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.', default_member_permissions: 0) do |option|
+bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.',
+                                 default_member_permissions: 0) do |option|
 end
 
 bot.register_application_command(:throw, 'Snowball fights') do |cmd|
@@ -70,7 +73,7 @@ bot.register_application_command(:steal, 'Snowball fights') do |cmd|
   cmd.subcommand('snowball', 'Steal a snowball from someone!') do |option|
     option.user('member', 'Who do you want to steal snowballs from?', required: true)
     option.integer('amount', 'How many snowballs do you want to steal?',
-    choices: { two: '2', three: '3', four: '4', five: '5' }, required: true)
+                   choices: { two: '2', three: '3', four: '4', five: '5' }, required: true)
   end
 end
 
@@ -111,12 +114,12 @@ bot.register_application_command(:event, 'Event roles setup', default_member_per
 
       group.subcommand(:setup, 'Setup the booster perks functionality.') do |option|
         option.role('role', 'Which role should al custom booster roles be placed above?', required: true)
-    end
+      end
 
-     group.subcommand(:logging, 'Setup role logs for booster perks.') do |option|
-       option.channel('channel', 'Which channel should booster perk actions be logged to?', required: true)
+      group.subcommand(:logging, 'Setup role logs for booster perks.') do |option|
+        option.channel('channel', 'Which channel should booster perk actions be logged to?', required: true)
+      end
     end
-  end
 
     bot.register_application_command(:booster, 'Booster perks') do |cmd|
       cmd.subcommand_group(:role, 'Booster roles!') do |group|
