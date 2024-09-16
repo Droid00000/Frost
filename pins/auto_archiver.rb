@@ -8,7 +8,7 @@ module AutoPinArchiver
   extend Discordrb::EventContainer
 
   unknown(type: :CHANNEL_PINS_UPDATE) do |event|
-    channel = bot.channel(event.data['channel_id']&.to_i, server = event.data['guild_id']&.to_i)
+    channel = event.bot.channel(event.data['channel_id']&.to_i, server = event.data['guild_id']&.to_i)
     pins = channel.pins
 
     if pins.count == 50 && archiver_records(server: event.data['guild_id']&.to_i, type: :check)
