@@ -76,15 +76,15 @@ def booster_records(server: nil, user: nil, role: nil, channel: nil, type: nil)
   when :get_role
     POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).select(:role_id).map(:role_id)
   when :enabled
-    return false if POSTGRES[:Booster_Settings].where(server_id: server).select(:enabled).map(:enabled).nil? 
+    !POSTGRES[:Booster_Settings].where(server_id: server).select(:enabled).map(:enabled).empty? 
   when :setup
     POSTGRES[:Booster_Settings].insert(server_id: server, hoist_role: role, log_channel: channel, enabled: true)
   when :check_user  
-    return true if POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).nil?
+    !POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).empty?
   when :hoist_role  
-     POSTGRES[:Booster_Settings].where(server_id: server).select(:hoist_role).map(:hoist_role)
+    POSTGRES[:Booster_Settings].where(server_id: server).select(:hoist_role).map(:hoist_role)
   when :banned
-    return false if POSTGRES[:Banned_Boosters].where(server_id: server, user_id: user).nil? 
+    ![:Banned_Boosters].where(server_id: server, user_id: user).empty? 
   when :ban
     POSTGRES[:Banned_Boosters].insert(server_id: server, user_id: user)
   else
@@ -95,7 +95,7 @@ end
 def archiver_records(server: nil, channel: nil, type: nil)
   case type
   when :check
-    return false if POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id).nil?
+    !POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id).empty?
   when :get
     POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id)
   when :setup
@@ -110,7 +110,7 @@ end
 def tag_records(name: nil, server: nil, message: nil, owner: nil, type: nil)
   case type
   when :enabled
-    return false if POSTGRES[:Tag_Settings].where(server_id: server).select(:enabled).map(:enabled).nil?
+    POSTGRES[:Tag_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
   when :get
     [POSTGRES[:Tags].where(name: name).select(:message_id).map(:message_id), POSTGRES[:Tags].where(name: name).select(:channel_id).map(:channel_id)]
   when :disable
