@@ -113,6 +113,9 @@ bot.register_application_command(:event, 'Event roles setup', default_member_per
         option.role('role', 'Which role should al custom booster roles be placed above?', required: true)
       end
 
+      group.subcommand('help', 'Open the administrator help menu for this functionality.') do |option|
+      end
+
       group.subcommand(:logging, 'Setup role logs for booster perks.') do |option|
         option.channel('channel', 'Which channel should booster perk actions be logged to?', required: true)
       end

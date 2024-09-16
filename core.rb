@@ -26,6 +26,7 @@ end
 BOT.include! BoosterPerks
 BOT.include! HugAffection
 BOT.include! NomAffection
+BOT.include! AdminCommands
 BOT.include! PokeAffection
 BOT.include! SleepAffection
 BOT.include! AngerAffection
