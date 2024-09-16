@@ -96,7 +96,7 @@ end
 def archiver_records(server: nil, channel: nil, type: nil)
   case type
   when :check
-    !POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id).empty?
+    POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id).empty?
   when :get
     POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id)
   when :setup
@@ -110,16 +110,16 @@ end
 
 def tag_records(name: nil, server: nil, message: nil, owner: nil, type: nil)
   case type
-  when :enabled
-    POSTGRES[:Tag_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
   when :get
-    [POSTGRES[:Tags].where(name: name).select(:message_id).map(:message_id),
-     POSTGRES[:Tags].where(name: name).select(:channel_id).map(:channel_id)]
-  when :disable
-    POSTGRES[:Tag_Settings].insert(server_id: server, enabled: false)
+    [POSTGRES[:Tags].where(name: name).select(:message_id).map(:message_id), POSTGRES[:Tags].where(name: name).select(:channel_id).map(:channel_id)]
   when :create
     POSTGRES[:Tags].insert(server_id: server, message_id: message, name: name, owner_id: owner, channel_id: channel)
+  when :disabled
+    POSTGRES[:Tag_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
+  when :disable
+    POSTGRES[:Tag_Settings].insert(server_id: server, enabled: false)  
   else
     nil
   end
 end
+
