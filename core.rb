@@ -24,11 +24,11 @@ BOT.application_command(:shutdown) do |event|
 end
 
 BOT.include! BoosterPerks
-BOT.include! AngerAffection
 BOT.include! HugAffection
-BOT.include! PokeAffection
 BOT.include! NomAffection
+BOT.include! PokeAffection
 BOT.include! SleepAffection
+BOT.include! AngerAffection
 BOT.include! AutoPinArchiver
 BOT.include! ManualPinArchiver
 
