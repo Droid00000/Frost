@@ -122,4 +122,3 @@ def tag_records(name: nil, server: nil, message: nil, owner: nil, type: nil)
     nil
   end
 end
-
