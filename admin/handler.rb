@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative '../data/constants'
 require 'discordrb'
 
 module AdminCommands
@@ -12,7 +13,7 @@ module AdminCommands
 
   application_command(:about) do |event|
     event.defer(ephemeral: true)
-    about_bot(event)
+    event.edit_response(content: "#{RESPONSE[500]} #{EMOJI[10]}")
   end
 
   application_command(:settings) do |event|
