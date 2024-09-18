@@ -2,7 +2,7 @@
 
 require 'sequel'
 require 'toml-rb'
-require './data/constants'
+require_relative '../data/constants'
 
 POSTGRES = Sequel.connect('postgres://localhost/frigid', user: TOML['Postgres']['USERNAME'],
                                                          password: TOML['Postgres']['PASSWORD'])
