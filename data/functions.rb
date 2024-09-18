@@ -174,7 +174,7 @@ def delete_guild_role(server_id, user_id)
   )
 end
 
-# Private method. Used to update a channel name. For privacy reasons, I'll be keeping the reason to myself.
+# Public method. Used to update a channel name. For privacy reasons, I'll be keeping the reason to myself.
 # @param name [String] The new name of the channel.
 def modifiy_guild_channel(name)
   Discordrb::API.request(
