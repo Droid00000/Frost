@@ -26,18 +26,18 @@ bot.register_application_command(:nom, 'Noms another server member.') do |option
   option.user('target', 'Who do you want to nom?', required: true)
 end
 
-bot.register_application_command(:angered, 'Shows your anger another server member.') do |option|
+bot.register_application_command(:angered, 'Shows your anger towards another server member.') do |option|
   option.user('target', 'Who do you want to show your wrath to?', required: true)
 end
 
-bot.register_application_command(:sleep, 'Tell another server member to go and sleep.') do |option|
+bot.register_application_command(:sleep, 'Tells another server member to go and sleep.') do |option|
   option.user('target', 'Who needs to sleep?', required: true)
 end
 
 bot.register_application_command(:help, 'Shows some general information about how to use the bot.') do |option|
 end
 
-bot.register_application_command(:about, 'Shows some information about the bot owner.') do |option|
+bot.register_application_command(:about, 'Shows some general information about the bot.') do |option|
 end
 
 bot.register_application_command(:archive, 'Archives pins in a specified channel.',
@@ -107,6 +107,16 @@ bot.register_application_command(:event, 'Event roles setup', default_member_per
   cmd.subcommand_group(:roles, 'Event roles!') do |group|
     group.subcommand(:setup, 'Setup the event roles functionality.') do |option|
       option.role('role', 'Which role should be modifiable by its users?', required: true)
+    end
+  end
+
+bot.register_application_command(:event, 'Event roles', default_member_permissions: 0) do |cmd|
+  cmd.subcommand_group(:role, 'Event roles!') do |group|
+    group.subcommand(:edit, 'Setup the event roles functionality.') do |option|
+      option.role('role', 'Which role do you want to modifiy?', required: true)
+      option.string('name', 'Provide a name for your role.', required: false)
+      option.string('color', 'Provide a HEX color for your role.', required: false)
+      option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
     end
   end
 
