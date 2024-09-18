@@ -165,4 +165,5 @@ bot.register_application_command(:event, 'Event roles setup', default_member_per
     end
   end
 end
+
 bot.run
