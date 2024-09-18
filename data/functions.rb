@@ -153,8 +153,7 @@ def modify_guild_role(server_id, user_id, name: nil, color: nil, icon: nil)
     server_id,
     :patch,
     "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id, user: user_id, type: :get_role)}",
-    { color: color_data, name: name, hoist: nil, mentionable: nil, permissions: nil,
-      icon: image_string }.compact.to_json,
+    { color: color_data, name: name, hoist: nil, mentionable: nil, permissions: nil, icon: image_string }.compact.to_json,
     Authorization: TOML['Discord']['BOT_TOKEN'],
     content_type: :json,
     'X-Audit-Log-Reason': RESPONSE[200]
