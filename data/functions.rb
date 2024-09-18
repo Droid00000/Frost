@@ -45,7 +45,7 @@ end
 # @param link [String] The CDN URL of the emoji to download.
 # @param name [String] The emoji ID serialized as a string.
 # @return [File] The file path of a temporary file object.
-def resolve_icon(link, name)
+def _resolve_icon(link, name)
   return false if Faraday.get(link).status == 404
 
   Tempfile.create(name) do |data|
@@ -64,7 +64,7 @@ def find_icon(string)
   emoji = string.match(REGEX[66])
   return false if emoji.nil?
 
-  resolve_icon("#{Discordrb::API.cdn_url}/emojis/#{emoji[1]}.png", emoji[1])
+  _resolve_icon("#{Discordrb::API.cdn_url}/emojis/#{emoji[1]}.png", emoji[1])
 end
 
 # Public method. Used to return a random GIF link for affection and snowball commands.
