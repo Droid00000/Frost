@@ -40,8 +40,8 @@ POSTGRES.create_table?(:Server_Boosters) do
   primary_key :id
   Bigint :user_id, null: false
   Bigint :role_id, null: false
+  Boolean :status, null: false
   Bigint :server_id, null: false
-  Boolean :boosting, null: false
   unique %i[user_id server_id]
 end
 
