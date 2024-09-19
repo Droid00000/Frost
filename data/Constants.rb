@@ -74,7 +74,7 @@ ACTIVITY = {
 
 # The TOML configuration file used by the bot.
 
-TOML = TomlRB.load_file('../config.toml')
+TOML = TomlRB.load_file('config.toml')
 
 # A series of regular expressions utilized by the bot.
 

@@ -70,11 +70,11 @@ end
 def booster_records(server: nil, user: nil, role: nil, channel: nil, type: nil)
   case type
   when :create
-    POSTGRES[:Server_Boosters].insert(server_id: server, user_id: user, role_id: role)
+    POSTGRES[:Server_Boosters].insert(server_id: server, user_id: user, role_id: role, status: true)
   when :delete
     POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).delete
   when :get_role
-    POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).select(:role_id).map(:role_id)
+    POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).select(:role_id).map(:role_id)&.join.to_i
   when :enabled
     !POSTGRES[:Booster_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
   when :setup
@@ -82,9 +82,9 @@ def booster_records(server: nil, user: nil, role: nil, channel: nil, type: nil)
   when :check_user
     !POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).empty?
   when :hoist_role
-    POSTGRES[:Booster_Settings].where(server_id: server).select(:hoist_role).map(:hoist_role)
+    POSTGRES[:Booster_Settings].where(server_id: server).select(:hoist_role).map(:hoist_role)&.join.to_i
   when :banned
-    ![:Banned_Boosters].where(server_id: server, user_id: user).empty?
+    !POSTGRES[:Banned_Boosters].where(server_id: server, user_id: user).empty?
   when :ban
     POSTGRES[:Banned_Boosters].insert(server_id: server, user_id: user)
   else
@@ -97,7 +97,7 @@ def archiver_records(server: nil, channel: nil, type: nil)
   when :check
     POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id).empty?
   when :get
-    POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id)
+    POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id)&.join.to_i
   when :setup
     POSTGRES[:Archiver_Settings].insert(server_id: server, channel_id: channel, enabled: true)
   when :disable
@@ -110,7 +110,7 @@ end
 def tag_records(name: nil, server: nil, message: nil, owner: nil, type: nil)
   case type
   when :get
-    [POSTGRES[:Tags].where(name: name).select(:message_id).map(:message_id), POSTGRES[:Tags].where(name: name).select(:channel_id).map(:channel_id)]
+    [POSTGRES[:Tags].where(name: name).select(:message_id).map(:message_id), POSTGRES[:Tags].where(name: name).select(:channel_id).map(:channel_id)]&.flatten
   when :create
     POSTGRES[:Tags].insert(server_id: server, message_id: message, name: name, owner_id: owner, channel_id: channel)
   when :disabled

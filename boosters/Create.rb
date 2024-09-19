@@ -6,7 +6,7 @@ require_relative '../data/schema'
 require 'discordrb'
 
 def create_role(data)
-  unless booster_records(server: data.server.id, user: data.user.id, type: :check_user)
+  unless !booster_records(server: data.server.id, user: data.user.id, type: :check_user)
     data.edit_response(content: RESPONSE[226])
     return
   end
@@ -33,7 +33,7 @@ def create_role(data)
 
   role = data.server.create_role(
     name: data.options['name'],
-    color: resolve_color(data.options['color']),
+    colour: resolve_color(data.options['color']),
     hoist: false,
     mentionable: false,
     permissions: 0,
@@ -58,7 +58,7 @@ def create_role(data)
 
   data.edit_response(content: "#{RESPONSE[201]} #{EMOJI[40]}")
 
-  return unless !data.options['icon'].nil? && unlocked_icons?(data.server.boost_level)
-
-  role.icon = File.open("/private#{find_icon(data.options['icon'])}", 'rb')
+  if !data.options['icon'].nil? && unlocked_icons?(data.server.boost_level)
+    role.icon = File.open("/private#{find_icon(data.options['icon'])}", 'rb')
+  end
 end

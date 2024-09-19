@@ -133,7 +133,6 @@ end
 # @param icon [String, #Read] The new icon of the role.
 # @param reason [String] The reason for editing this role.
 def modify_guild_role(server_id, user_id, name: nil, color: nil, icon: nil)
-  sleep(3)
   if !icon.nil? && find_icon(icon)
     image = find_icon(icon)
     image_string = File.open("/private#{image}", 'rb')
@@ -152,8 +151,10 @@ def modify_guild_role(server_id, user_id, name: nil, color: nil, icon: nil)
     :guilds_sid_roles_rid,
     server_id,
     :patch,
-    "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id, user: user_id, type: :get_role)}",
-    { color: color_data, name: name, hoist: nil, mentionable: nil, permissions: nil, icon: image_string }.compact.to_json,
+    "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id, user: user_id,
+                                                                            type: :get_role)}",
+    { color: color_data, name: name, hoist: nil, mentionable: nil, permissions: nil,
+      icon: image_string }.compact.to_json,
     Authorization: TOML['Discord']['BOT_TOKEN'],
     content_type: :json,
     'X-Audit-Log-Reason': RESPONSE[200]
@@ -168,7 +169,8 @@ def delete_guild_role(server_id, user_id)
     :guilds_sid_roles_rid,
     server_id,
     :delete,
-    "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id, user: user_id, type: :get_role)}",
+    "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id, user: user_id,
+                                                                            type: :get_role)}",
     Authorization: TOML['Discord']['BOT_TOKEN'],
     'X-Audit-Log-Reason': RESPONSE[300]
   )
@@ -195,10 +197,10 @@ end
 # @return [Boolean] Returns true if the user is boosting the server, and false if the user is not.
 def get_booster_status(server_id, user_id)
   !JSON.parse(Discordrb::API.request(
-   :users_sid,
-   user_id,
-   :get,
-   "#{Discordrb::API.api_base}/guilds/#{server_id}/members/#{user_id}",
-   Authorization: TOML['Discord']['BOT_TOKEN']
-   ))['premium_since'].nil?
+                :users_sid,
+                user_id,
+                :get,
+                "#{Discordrb::API.api_base}/guilds/#{server_id}/members/#{user_id}",
+                Authorization: TOML['Discord']['BOT_TOKEN']
+              ))['premium_since'].nil?
 end
