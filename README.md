@@ -27,7 +27,7 @@ Simply do: `bundle install`.
 3. **Create the database in PostgreSQL**
 
 You'll need to be using PostgreSQL 14 or higher. If you want a hassle-free solution, [Neon](https://neon.tech/home) is a great choice. Type the following
-in the PostgreSQL manager:
+into the PostgreSQL manager:
 
 ```sql
 CREATE ROLE frost WITH LOGIN PASSWORD 'yourpasswordhere';
@@ -59,4 +59,4 @@ Many of these variables are undocumented because the bot is meant for personal u
 
 ## ToS and Privacy Policy
 
-The only information stored is your user ID and the role ID of your role. Your role and user ID is deleted upon your booster role being removed.
+I'm required to have one of these. No private information is stored.
