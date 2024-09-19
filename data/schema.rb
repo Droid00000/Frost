@@ -4,8 +4,7 @@ require 'sequel'
 require 'toml-rb'
 require_relative '../data/constants'
 
-POSTGRES = Sequel.connect('postgres://localhost/frigid', user: TOML['Postgres']['USERNAME'],
-                                                         password: TOML['Postgres']['PASSWORD'])
+POSTGRES = Sequel.connect(TOML['Postgres']['URL'])
 
 POSTGRES.create_table?(:Event_Settings) do
   primary_key :id
@@ -123,7 +122,7 @@ def tag_records(name: nil, server: nil, message: nil, owner: nil, type: nil)
   end
 end
 
-def event_records(server: nil user: nil, role: nil, type: nil)
+def event_records(server: nil, user: nil, role: nil, type: nil)
   case type
   when :check_role
     !POSTGRES[:Event_Settings].where(server: server, role: role).select(:role_id).map(:role_id).empty?

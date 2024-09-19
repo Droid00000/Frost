@@ -26,7 +26,7 @@ Simply do: `bundle install`.
 
 3. **Create the database in PostgreSQL**
 
-You'll need to be using PostgreSQL 14 or higher. Type the following
+You'll need to be using PostgreSQL 14 or higher. If you want a hassle-free solution, [Neon](https://neon.tech/home) is a great choice. Type the following
 in the PostgreSQL manager:
 
 ```sql
@@ -48,6 +48,7 @@ BOT_TOKEN = "Bot REST_OF_THE_TOKEN_HERE"
 [Postgres]
 USERNAME = ""
 PASSWORD = ""
+URL = ""
 
 [Chapter]
 CHANNEL = ""
