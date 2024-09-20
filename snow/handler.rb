@@ -2,6 +2,10 @@
 
 require_relative '../data/constants'
 require_relative '../data/schema'
+require_relative './collect'
+require_relative './throw'
+require_relative './steal'
+require_relative './shop'
 
 module SnowballFights
   extend Discordrb::EventContainer
