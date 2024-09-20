@@ -8,10 +8,11 @@ require 'faraday'
 require 'toml-rb'
 require 'tempfile'
 require 'discordrb'
-require './data/embeds'
-require './data/schema'
-require './data/constants'
 require 'selenium-webdriver'
+
+require_relative './embeds'
+require_relative './schema'
+require_relative './constants'
 
 # Public method. Initilaze a new color object for a role.
 # @param [String] The hex color to resolve into a color object.

@@ -87,6 +87,12 @@ def booster_records(server: nil, user: nil, role: nil, channel: nil, type: nil)
     !POSTGRES[:Banned_Boosters].where(server_id: server, user_id: user).empty?
   when :ban
     POSTGRES[:Banned_Boosters].insert(server_id: server, user_id: user)
+  when :reset_status
+    POSTGRES[:Server_Boosters].where(status: false).insert(status: true)
+  when :update_status
+    POSTGRES[:Server_Boosters].where(server_id: server, user_id: user, status: false).insert(status: true)
+  when :get_boosters
+    POSTGRES[:Server_Boosters].where(status: false)
   else
     nil
   end
