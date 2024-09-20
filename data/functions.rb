@@ -126,6 +126,18 @@ def add_suffix(day)
   end
 end
 
+# Public method. Used to extract a date from a website and then used to update a guild channel's name.
+# @param [Symbol] An optional type argument. 
+def next_chapter_date(type: nil)
+  DRIVER = Selenium::WebDriver.for :chrome, options:
+  Selenium::WebDriver::Options.chrome(args: ['--headless=new'])
+
+  DRIVER.get TOML['Chapter']['LINK']
+  date = Date.parse(DRIVER.page_source.match(REGEX[77])[0].strip)
+  modifiy_guild_channel("📖 #{date.strftime('%B %d')}#{add_suffix(date.day)} 3PM GMT")
+  DRIVER.quit
+end
+
 # Public method. Used to make an API request to update a guild role. All JSON parameters are optional.
 # @param server_id [Integer] The ID of the guild that the role is on.
 # @param user_id [Integer] The ID of the user that has this role.

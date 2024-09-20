@@ -80,6 +80,7 @@ TOML = TomlRB.load_file('../data/config.toml')
 
 REGEX = {
   66 => /:(\d+)>$/,
+  77 => /(?<=New chapter arrives on)(.*?)(?=<)/,
   88 => /^#/,
   99 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
