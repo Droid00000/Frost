@@ -5,6 +5,7 @@ require 'discordrb'
 require 'toml-rb'
 
 require_rel 'pins'
+require_rel 'snow'
 require_rel 'data'
 require_rel 'admin'
 require_rel 'boosters'
@@ -28,6 +29,7 @@ BOT.include! HugAffection
 BOT.include! NomAffection
 BOT.include! AdminCommands
 BOT.include! PokeAffection
+BOT.include! SnowballFights
 BOT.include! SleepAffection
 BOT.include! AngerAffection
 BOT.include! AutoPinArchiver
