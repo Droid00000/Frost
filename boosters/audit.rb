@@ -8,6 +8,10 @@ Rufus::Scheduler.new.cron '30 0 * * 1' do
   booster_records(type: :reset_status)
 end
 
+Rufus::Scheduler.new.cron '0 12 * * 0' do
+  next_chapter_date(type: :release_date)
+end
+
 Rufus::Scheduler.new.cron '30 18 * * *' do
   booster_records(type: :get_boosters).each do |guild_member|
     unless get_booster_status(guild_member[:server_id], guild_member[:user_id])

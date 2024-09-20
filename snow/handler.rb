@@ -29,4 +29,4 @@ module SnowballFights
       event.defer(ephemeral: true)
       snowball_shop(event)
     end
-  end    
+  end
