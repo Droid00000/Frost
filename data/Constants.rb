@@ -48,7 +48,7 @@ RESPONSE = {
 EMOJI = {
   10 => '<a:RubyPandaHeart:1269075581031546880>',
   20 => '<a:LoidClap_Maomao:1276327798104920175>',
-  30 => '<:YorHeart_Alesetiawan:1276327768979804258>',
+  30 => '<a:YorClap_Maomao:1287269908157038592>',
   40 => '<:AnyaPeek_Enzo:1276327731113627679>'
 }.freeze
 
