@@ -127,7 +127,7 @@ def add_suffix(day)
 end
 
 # Public method. Used to extract a date from a website and then used to update a guild channel's name.
-# @param [Symbol] An optional type argument. 
+# @param type [Symbol] An optional type argument. 
 def next_chapter_date(type: nil)
   DRIVER = Selenium::WebDriver.for :chrome, options:
   Selenium::WebDriver::Options.chrome(args: ['--headless=new'])
