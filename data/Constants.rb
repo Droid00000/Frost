@@ -24,6 +24,14 @@
 
 # 404 — Fires when the client can't find a role. (User hasn't claimed role)
 
+# 405 - The reason shown in a guild's audit log whenever the bot updates a channel's name.
+
+# 500 - A breif blurb about the bot creator and the Discordrb library.
+
+# 502 - General response code when the status description returns a false for the regex validation.
+
+# 503 - Shown when a user doesn't have the ability to update the bot's status.
+
 require 'toml-rb'
 
 RESPONSE = {
@@ -40,7 +48,9 @@ RESPONSE = {
   401 => "You aren't boosting this server.",
   404 => "We couldn't find your role. Please use the ``/booster role claim`` command to claim your role.",
   405 => 'automatically update header channel upon chapter release.',
-  500 => 'Made by *droid00000* using the [discordrb library!](<https://github.com/shardlab/discordrb>)'
+  500 => 'Made by *droid00000* using the [discordrb library!](<https://github.com/shardlab/discordrb>)',
+  502 => 'Invalid status parameter.',
+  503 => 'You must be a bot contributor to use this command.'
 }.freeze
 
 # Emojis that the bot can use.
@@ -62,7 +72,7 @@ UI = {
   25 => 0xd4f0ff
 }.freeze
 
-# Data used to update the status upon startup.
+# Data used to update the bot status.
 
 ACTIVITY = {
   50 => 'online',

@@ -21,6 +21,11 @@ module AdminCommands
     server_settings(event)
   end
 
+  application_command(:update).subcommand(:status) do |event|
+    event.defer(ephemeral: true)
+    update_status(event)
+  end
+
   application_command(:pin).group(:archiver) do |group|
     group.subcommand('setup') do |event|
       event.defer(ephemeral: true)
