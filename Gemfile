@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+source "https://rubygems.org"
+
 gem 'discordrb', github: 'shardlab/discordrb', branch: 'main'
 
 gem 'rufus-scheduler', '~> 3.2'

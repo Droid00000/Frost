@@ -4,7 +4,7 @@
 
 require 'toml-rb'
 require 'discordrb'
-require_relative '../data/constants'
+require_relative './constants'
 
 bot = Discordrb::Bot.new(token: TOML['Discord']['RAW_TOKEN'], intents: [:server_messages])
 

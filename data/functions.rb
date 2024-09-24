@@ -213,4 +213,6 @@ def get_booster_status(server_id, user_id)
                 "#{Discordrb::API.api_base}/guilds/#{server_id}/members/#{user_id}",
                 Authorization: TOML['Discord']['BOT_TOKEN']
               ))['premium_since'].nil?
+rescue Discordrb::Errors::UnknownMember, RestClient::NotFound, Discordrb::Errors::UnknownUser
+  false
 end
