@@ -52,7 +52,7 @@ EMOJI = {
   40 => '<:AnyaPeek_Enzo:1276327731113627679>'
 }.freeze
 
-# UI components including color values, primarily used by the bot when sending embeds.
+# UI components including color values; primarily used by the bot when sending embeds.
 
 UI = {
   21 => 'https://cdn.discordapp.com/avatars/1268769768920580156/1551613008086970c244a81d043d354e?size=1024',
@@ -81,7 +81,7 @@ TOML = TomlRB.load_file('../data/config.toml')
 REGEX = {
   66 => /:(\d+)>$/,
   77 => /(?<=New chapter arrives on)(.*?)(?=<)/,
-  88 => /^#/,
+  88 => /\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z/,
   99 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|
