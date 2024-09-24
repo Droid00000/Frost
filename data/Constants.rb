@@ -26,11 +26,11 @@
 
 # 405 - The reason shown in a guild's audit log whenever the bot updates a channel's name.
 
-# 500 - A breif blurb about the bot creator and the Discordrb library.
+# 500 - A bit of info about the bot creator and the Discordrb library.
 
 # 502 - General response code when the status description returns a false for the regex validation.
 
-# 503 - Shown when a user doesn't have the ability to update the bot's status.
+# 503 - Fires when a user doesn't have the ability to update the bot's status.
 
 require 'toml-rb'
 
@@ -84,7 +84,7 @@ ACTIVITY = {
 
 # The TOML configuration file used by the bot.
 
-TOML = TomlRB.load_file('../data/config.toml')
+TOML = TomlRB.load_file(File.join(Dir.pwd, 'config.toml'))
 
 # A series of regular expressions utilized by the bot.
 
@@ -109,5 +109,5 @@ REGEX = {
           d0ggy style| kike|incest|nhentai|jailbait|handjob|g-spot|futanari|fisting|fingering|
           femdom|squirting|ecchi|ejaculation|erotic|doggiestyle|doggy style|doggystyle|deepthroat|
           date rape|daterape|dildo|clit|clitoris|camgirl|camslut|camwhore|butthole|anal|bitches|
-          black cock|erotic|disboard|invite.gg/i
+          black cock|erotic|disboard|invite.gg|higger/i
 }.freeze

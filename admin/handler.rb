@@ -8,7 +8,7 @@ module AdminCommands
 
   application_command(:help) do |event|
     event.defer(ephemeral: true)
-    help_embed(event)
+    general_help_embed(event)
   end
 
   application_command(:about) do |event|

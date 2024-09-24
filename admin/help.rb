@@ -4,7 +4,7 @@ require_relative '../data/constants'
 require_relative '../data/functions'
 require 'discordrb'
 
-def help_embed(data)
+def general_help_embed(data)
   data.edit_response do |builder|
     builder.add_embed do |embed|
       embed.title = '**General Commands**'

@@ -21,10 +21,10 @@ def delete_role(data)
     return
   end
 
-  #unless data.user.boosting?
-  #  data.edit_response(content: RESPONSE[401])
-  #  return
-  #end
+  unless data.user.boosting?
+    data.edit_response(content: RESPONSE[401])
+    return
+  end
 
   delete_guild_role(data.server.id, data.user.id)
 

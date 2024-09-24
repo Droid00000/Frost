@@ -37,7 +37,7 @@ end
 # @param [String] The string to check.
 # @return [Boolean] True if the name doesn't contain any bad words, false if it does.
 def safe_name?(string)
-  return true if string.nil?
+  return true if string.nil? || string.empty?
 
   !string.match(REGEX[99])
 end
@@ -60,7 +60,7 @@ end
 # @param [String] The emoji string serialized as a parased mention.
 # @return [File] The file path of a temporary file object.
 def find_icon(string)
-  return false if string.nil?
+  return false if string.nil? || string.empty?
 
   emoji = string.match(REGEX[66])
   return false if emoji.nil?
@@ -129,13 +129,13 @@ end
 # Public method. Used to extract a date from a website and then used to update a guild channel's name.
 # @param type [Symbol] An optional type argument. 
 def next_chapter_date(type: nil)
-  DRIVER = Selenium::WebDriver.for :chrome, options:
+  driver = Selenium::WebDriver.for :chrome, options:
   Selenium::WebDriver::Options.chrome(args: ['--headless=new'])
 
-  DRIVER.get TOML['Chapter']['LINK']
-  date = Date.parse(DRIVER.page_source.match(REGEX[77])[0].strip)
+  driver.get TOML['Chapter']['LINK']
+  date = Date.parse(driver.page_source.match(REGEX[77])[0].strip)
   modifiy_guild_channel("📖 #{date.strftime('%B %d')}#{add_suffix(date.day)} 3PM GMT")
-  DRIVER.quit
+  driver.quit
 end
 
 # Public method. Used to make an API request to update a guild role. All JSON parameters are optional.

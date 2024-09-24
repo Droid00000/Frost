@@ -6,8 +6,6 @@ require 'toml-rb'
 require 'discordrb'
 require_relative '../data/constants'
 
-TOML = TomlRB.load_file('config.toml')
-
 bot = Discordrb::Bot.new(token: TOML['Discord']['RAW_TOKEN'], intents: [:server_messages])
 
 bot.ready do
@@ -40,17 +38,14 @@ end
 bot.register_application_command(:about, 'Shows some general information about the bot.') do |option|
 end
 
-bot.register_application_command(:archive, 'Archives pins in a specified channel.',
-                                 default_member_permissions: 8192) do |option|
+bot.register_application_command(:archive, 'Archives pins in a specified channel.', default_member_permissions: 8192) do |option|
   option.channel('channel', 'Which channel needs to have its pins archived?', required: true)
 end
 
-bot.register_application_command(:settings, 'View your server configuration.',
-                                 default_member_permissions: 32) do |option|
+bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: 32) do |option|
 end
 
-bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.',
-                                 default_member_permissions: 0) do |option|
+bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.', default_member_permissions: 0) do |option|
 end
 
 bot.register_application_command(:throw, 'Snowball fights') do |cmd|
@@ -135,7 +130,7 @@ bot.register_application_command(:event, 'Event roles', default_member_permissio
         option.role('role', 'The role to add to the database.', required: true)
       end
 
-      group.subcommand('delete', 'Manually delete and remove a user from the database!') do |option|
+      group.subcommand('delete', 'Manually remove a user from the database!') do |option|
         option.user('user', 'The user to delete the database.', required: true)
         option.role('role', 'The role to delete the database.', required: true)
       end
@@ -153,10 +148,6 @@ bot.register_application_command(:event, 'Event roles', default_member_permissio
       end
 
       group.subcommand('help', 'Open the administrator help menu for this functionality.') do |option|
-      end
-
-      group.subcommand(:logging, 'Setup role logs for booster perks.') do |option|
-        option.channel('channel', 'Which channel should booster perk actions be logged to?', required: true)
       end
     end
 
