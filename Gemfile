@@ -10,6 +10,8 @@ gem 'rubocop', require: false
 
 gem 'selenium-webdriver'
 
+gem 'tzinfo-data'
+
 gem 'require_all'
 
 gem 'tempfile'

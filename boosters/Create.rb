@@ -48,7 +48,7 @@ def create_role(data)
 
   data.edit_response(content: "#{RESPONSE[201]} #{EMOJI[40]}")
 
-  return unless !data.options['icon'].nil? && unlocked_icons?(data.server.boost_level)
+  return unless data.options['icon'].nil? && unlocked_icons?(data.server.boost_level)
 
   role.icon = File.open("/private#{find_icon(data.options['icon'])}", 'rb')
 end
