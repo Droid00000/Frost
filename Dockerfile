@@ -12,4 +12,3 @@ RUN gem install bundler --source https://rubygems.org && \
     bundle install
 
 CMD ["bundle", "exec", "ruby", "core.rb"]
-

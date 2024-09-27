@@ -4,7 +4,7 @@
 
 require 'toml-rb'
 require 'discordrb'
-require_relative './constants'
+require_relative '../data/constants'
 
 bot = Discordrb::Bot.new(token: TOML['Discord']['RAW_TOKEN'], intents: [:server_messages])
 
@@ -112,6 +112,7 @@ bot.register_application_command(:event, 'Event roles setup', default_member_per
       option.role('role', 'Which role should be modifiable by its users?', required: true)
     end
   end
+end  
 
 bot.register_application_command(:event, 'Event roles', default_member_permissions: 0) do |cmd|
   cmd.subcommand_group(:role, 'Event roles!') do |group|

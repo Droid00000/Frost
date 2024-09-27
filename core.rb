@@ -15,6 +15,7 @@ BOT = Discordrb::Bot.new(token: TOML['Discord']['RAW_TOKEN'], intents: %i[server
 
 BOT.ready do
   BOT.update_status(ACTIVITY[50], ACTIVITY[60], ACTIVITY[70])
+  Status.new(ACTIVITY[50], ACTIVITY[60], ACTIVITY[70])
 end
 
 BOT.application_command(:shutdown) do |event|

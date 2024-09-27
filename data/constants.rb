@@ -32,6 +32,8 @@
 
 # 503 - Fires when a user doesn't have the ability to update the bot's status.
 
+# 504 - Fires when a user successfully updates the bot's status.
+
 require 'toml-rb'
 
 RESPONSE = {
@@ -50,7 +52,8 @@ RESPONSE = {
   405 => 'automatically update header channel upon chapter release.',
   500 => 'Made by *droid00000* using the [discordrb library!](<https://github.com/shardlab/discordrb>)',
   502 => 'Invalid status parameter.',
-  503 => 'You must be a bot contributor to use this command.'
+  503 => 'You must be a bot contributor to use this command.',
+  504 => 'Successfully updated the status! Thank you for contributing to my bot!'
 }.freeze
 
 # Emojis that the bot can use.
@@ -84,7 +87,7 @@ ACTIVITY = {
 
 # The TOML configuration file used by the bot.
 
-TOML = TomlRB.load_file(File.join(Dir.pwd, 'config.toml'))
+TOML = TomlRB.load_file(File.join(File.expand_path('..', __dir__), 'config.toml'))
 
 # A series of regular expressions utilized by the bot.
 
