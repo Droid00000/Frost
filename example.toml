@@ -1,0 +1,14 @@
+[Discord]
+OWNER = YOUR_ID_HERE
+CONTRIBUTORS = []
+RAW_TOKEN = "PLAIN_TOKEN_HERE"
+BOT_TOKEN = "Bot PLAN_TOKEN_HERE"
+
+[Postgres]
+USERNAME = ""
+PASSWORD = ""
+URL = ""
+
+[Chapter]
+CHANNEL = ""
+LINK = ""

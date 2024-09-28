@@ -43,7 +43,7 @@ Change the name of the `example.toml` file to `config.toml` and fill in all the 
 OWNER = YOUR_ID_HERE
 CONTRIBUTORS = []
 RAW_TOKEN = "PLAIN_TOKEN_HERE"
-BOT_TOKEN = "Bot REST_OF_THE_TOKEN_HERE"
+BOT_TOKEN = "Bot PLAIN_TOKEN_HERE"
 
 [Postgres]
 USERNAME = ""
