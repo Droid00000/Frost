@@ -164,8 +164,8 @@ def modify_guild_role(server_id, user_id, name: nil, color: nil, icon: nil)
     :guilds_sid_roles_rid,
     server_id,
     :patch,
-    "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id, user: user_id, type: :get_role)}",
-    { color: color_data, name: name, hoist: nil, mentionable: nil, permissions: nil, icon: image_string }.compact.to_json,
+    "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{Frost::Schema.booster_records(server: server_id, user: user_id, type: :get_role)}",
+    { color: color_data, name: name, icon: image_string }.compact.to_json,
     Authorization: TOML['Discord']['BOT_TOKEN'],
     content_type: :json,
     'X-Audit-Log-Reason': RESPONSE[200]
@@ -180,7 +180,7 @@ def delete_guild_role(server_id, user_id)
     :guilds_sid_roles_rid,
     server_id,
     :delete,
-    "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id, user: user_id, type: :get_role)}",
+    "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{Frost::Schema.booster_records(server: server_id, user: user_id, type: :get_role)}",
     Authorization: TOML['Discord']['BOT_TOKEN'],
     'X-Audit-Log-Reason': RESPONSE[300]
   )

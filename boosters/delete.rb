@@ -6,17 +6,17 @@ require_relative '../data/schema'
 require 'discordrb'
 
 def delete_role(data)
-  unless booster_records(server: data.server.id, user: data.user.id, type: :check_user)
+  unless Frost::Schema.booster_records(server: data.server.id, user: data.user.id, type: :check_user)
     data.edit_response(content: RESPONSE[404])
     return
   end
 
-  unless booster_records(server: data.server.id, type: :enabled)
+  unless Frost::Schema.booster_records(server: data.server.id, type: :enabled)
     data.edit_response(content: RESPONSE[301])
     return
   end
 
-  if booster_records(server: data.server.id, user: data.user.id, type: :banned)
+  if Frost::Schema.booster_records(server: data.server.id, user: data.user.id, type: :banned)
     data.edit_response(content: RESPONSE[302])
     return
   end
@@ -28,7 +28,7 @@ def delete_role(data)
 
   delete_guild_role(data.server.id, data.user.id)
 
-  booster_records(server: data.server.id, user: data.user.id, type: :delete)
+  Frost::Schema.booster_records(server: data.server.id, user: data.user.id, type: :delete)
 
   data.edit_response(content: "#{RESPONSE[205]} #{EMOJI[30]}")
 end
