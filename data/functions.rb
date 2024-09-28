@@ -87,6 +87,8 @@ def gif(type)
     COLLECT.sample.to_s
   when :THROW
     THROW.sample.to_s
+  when :MISS
+    MISS.sample.to_s  
   else
     UI[21]
   end
@@ -124,6 +126,14 @@ def add_suffix(day)
   else
     "th"
   end
+end
+
+# Public method. Used to return a true or false value based on a generated number.
+# @return [Boolean] Whether the number was in the range.
+def hit_or_miss?
+  number = rand(1..10)
+  return false if number >= 5
+  return true if number <= 5
 end
 
 # Public method. Used to extract a date from a website and then used to update a guild channel's name.

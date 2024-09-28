@@ -5,7 +5,6 @@ require_relative '../data/schema'
 require_relative './collect'
 require_relative './throw'
 require_relative './steal'
-require_relative './shop'
 require 'discordrb'
 
 module SnowballFights

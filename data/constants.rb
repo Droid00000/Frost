@@ -54,7 +54,8 @@ RESPONSE = {
   502 => 'Invalid status parameter.',
   503 => 'You must be a bot contributor to use this command.',
   504 => 'Successfully updated the status! Thank you for contributing to my bot!',
-  505 => "You're out of snowballs! You can collect more using the ``/collect snowball`` command!"
+  505 => "You're out of snowballs! You can collect more using the ``/collect snowball`` command!",
+  506 => "You missed!"
 }.freeze
 
 # Emojis that the bot can use.
