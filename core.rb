@@ -19,7 +19,7 @@ BOT.ready do
 end
 
 BOT.application_command(:shutdown) do |event|
-  break unless event.user.id == TOML['Discord']['OWNER']
+  break unless event.user.id == TOML['Discord']['OWNER']&.to_i
 
   event.respond(content: 'The bot has powered off.', ephemeral: true)
   BOT.stop

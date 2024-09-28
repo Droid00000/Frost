@@ -40,7 +40,7 @@ Change the name of the `example.toml` file to `config.toml` and fill in all the 
 
 ```ruby
 [Discord]
-OWNER = YOUR_ID_HERE
+OWNER = "YOUR_ID_HERE"
 CONTRIBUTORS = []
 RAW_TOKEN = "PLAIN_TOKEN_HERE"
 BOT_TOKEN = "Bot PLAIN_TOKEN_HERE"
