@@ -11,8 +11,8 @@ module AutoPinArchiver
     channel = event.bot.channel(event.data['channel_id']&.to_i, server = event.data['guild_id']&.to_i)
     pins = channel.pins
 
-    if pins.count == 50 && Frost::Schema.archiver_records(server: event.data['guild_id']&.to_i, type: :check)
-      archive_channel = Frost::Schema.archiver_records(server: event.data['guild_id']&.to_i, type: :get)
+    if pins.count == 50 && archiver_records(server: event.data['guild_id']&.to_i, type: :check)
+      archive_channel = archiver_records(server: event.data['guild_id']&.to_i, type: :get)
       message = pins[1]
 
       if message.attachments.any?

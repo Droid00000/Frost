@@ -11,7 +11,7 @@ def server_settings(data)
       embed.colour = UI[25]
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[21])
       embed.add_field(name: "``/Tags``", value: "#{tag_settings}")
-      embed.add_field(name: "``/Booster Perks``", value: "#{booster_settings}")  
+      embed.add_field(name: "``/Booster Perks``", value: "#{booster_settings}")
       embed.add_field(name: "``/Pin Archiver``", value: "#{archiver_settings}")
       embed.add_field(name: "``/Event Roles``", value: "#{event_settings}")
     end

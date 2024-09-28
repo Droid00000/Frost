@@ -11,8 +11,8 @@ module ManualPinArchiver
     event.defer(ephemeral: true)
     pins = event.channel.pins
 
-    if pins.count == 50 && Frost::Schema.archiver_records(server: event.server.id, type: :check)
-      archive_channel = Frost::Schema.archiver_records(server: event.server.id, type: :get)
+    if pins.count == 50 && archiver_records(server: event.server.id, type: :check)
+      archive_channel = archiver_records(server: event.server.id, type: :get)
       message = pins[1]
 
       if message.attachments.any?

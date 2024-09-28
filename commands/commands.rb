@@ -38,14 +38,17 @@ end
 bot.register_application_command(:about, 'Shows some general information about the bot.') do |option|
 end
 
-bot.register_application_command(:archive, 'Archives pins in a specified channel.', default_member_permissions: 8192) do |option|
+bot.register_application_command(:archive, 'Archives pins in a specified channel.',
+                                 default_member_permissions: 8192) do |option|
   option.channel('channel', 'Which channel needs to have its pins archived?', required: true)
 end
 
-bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: 32) do |option|
+bot.register_application_command(:settings, 'View your server configuration.',
+                                 default_member_permissions: 32) do |option|
 end
 
-bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.', default_member_permissions: 0) do |option|
+bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.',
+                                 default_member_permissions: 0) do |option|
 end
 
 bot.register_application_command(:throw, 'Snowball fights') do |cmd|
@@ -59,16 +62,11 @@ bot.register_application_command(:collect, 'Snowball fights') do |cmd|
   end
 end
 
-bot.register_application_command(:snowball, 'Snowball fights') do |cmd|
-  cmd.subcommand('shop', 'View your balance and browse the shop.') do |sub|
-  end
-end
-
 bot.register_application_command(:steal, 'Snowball fights') do |cmd|
   cmd.subcommand('snowball', 'Steal a snowball from someone!') do |option|
     option.user('member', 'Who do you want to steal snowballs from?', required: true)
     option.integer('amount', 'How many snowballs do you want to steal?',
-    choices: { two: '2', three: '3', four: '4', five: '5' }, required: true)
+                   choices: { two: '2', three: '3', four: '4', five: '5' }, required: true)
   end
 end
 
@@ -76,7 +74,7 @@ bot.register_application_command(:update, 'Contributors') do |cmd|
   cmd.subcommand('status', 'Update the status that is show by the bot.') do |option|
     option.string('description', 'The status that the bot should display.', required: false)
     option.string('type', 'The type of online status that the bot should display.',
-    choices: { online: 'Online', idle: 'Idle', dnd: 'DND' }, required: false)
+                  choices: { online: 'Online', idle: 'Idle', dnd: 'DND' }, required: false)
   end
 end
 
@@ -112,7 +110,7 @@ bot.register_application_command(:event, 'Event roles setup', default_member_per
       option.role('role', 'Which role should be modifiable by its users?', required: true)
     end
   end
-end  
+end
 
 bot.register_application_command(:event, 'Event roles', default_member_permissions: 0) do |cmd|
   cmd.subcommand_group(:role, 'Event roles!') do |group|

@@ -6,17 +6,17 @@ require_relative '../data/schema'
 require 'discordrb'
 
 def edit_role(data)
-  unless Frost::Schema.booster_records(server: data.server.id, user: data.user.id, type: :check_user)
+  unless booster_records(server: data.server.id, user: data.user.id, type: :check_user)
     data.edit_response(content: RESPONSE[404])
     return
   end
 
-  if Frost::Schema.booster_records(server: data.server.id, user: data.user.id, type: :banned)
+  if booster_records(server: data.server.id, user: data.user.id, type: :banned)
     data.edit_response(content: RESPONSE[302])
     return
   end
 
-  unless Frost::Schema.booster_records(server: data.server.id, type: :enabled)
+  unless booster_records(server: data.server.id, type: :enabled)
     data.edit_response(content: RESPONSE[301])
     return
   end
