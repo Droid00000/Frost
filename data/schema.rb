@@ -4,7 +4,7 @@ require 'sequel'
 require 'toml-rb'
 require_relative './constants'
 
-POSTGRES = Sequel.connect(TOML['Postgres']['URL'])
+POSTGRES = Sequel.connect(TOML['Postgres']['URL'], max_connections: 7)
 
 POSTGRES.create_table?(:Event_Settings) do
   primary_key :id
