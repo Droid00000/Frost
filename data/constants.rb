@@ -75,7 +75,8 @@ UI = {
   22 => 0x8da99b,
   23 => 0x33363b,
   24 => 0x8da99b,
-  25 => 0xd4f0ff
+  25 => 0xd4f0ff,
+  26 => 0x4d94e8
 }.freeze
 
 # Data used to update the bot status.
