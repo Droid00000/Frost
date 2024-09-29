@@ -31,10 +31,10 @@ def edit_role(data)
     return
   end
 
-  modify_guild_role(data.server.id, data.user.id, name: data.options['name'], color: data.options['color'])
+  modify_guild_role(data.server.id, data.user.id, name: data.options['name'], color: data.options['color'], type: booster)
 
   if !data.options['icon'].nil? && unlocked_icons?(data.server.boost_level)
-    modify_guild_role(data.server.id, data.user.id, icon: data.options['icon'])
+    modify_guild_role(data.server.id, data.user.id, icon: data.options['icon'], type: booster)
   end
 
   data.edit_response(content: "#{RESPONSE[202]} #{EMOJI[20]}")

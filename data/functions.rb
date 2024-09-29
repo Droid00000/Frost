@@ -88,7 +88,7 @@ def gif(type)
   when :THROW
     THROW.sample.to_s
   when :MISS
-    MISS.sample.to_s  
+    MISS.sample.to_s
   else
     UI[21]
   end
@@ -154,8 +154,9 @@ end
 # @param name [String] The new name of the role.
 # @param color [Integer] The new color of the role.
 # @param icon [String, #Read] The new icon of the role.
-# @param reason [String] The reason for editing this role.
-def modify_guild_role(server_id, user_id, name: nil, color: nil, icon: nil)
+# @param role [Integer] The role to be modified.
+# @param type [Symbol] The type of edit to perform.
+def modify_guild_role(server_id, user_id, name: nil, color: nil, icon: nil, role: nil, type: nil)
   if !icon.nil? && find_icon(icon)
     image = find_icon(icon)
     image_string = File.open("/private#{image}", 'rb')
@@ -170,17 +171,32 @@ def modify_guild_role(server_id, user_id, name: nil, color: nil, icon: nil)
 
   color_data = (resolve_color(color) unless color.nil?)&.combined
 
-  Discordrb::API.request(
-    :guilds_sid_roles_rid,
-    server_id,
-    :patch,
-    "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id,
-                                                                            user: user_id, type: :get_role)}",
-    { color: color_data, name: name, icon: image_string }.compact.to_json,
-    Authorization: TOML['Discord']['BOT_TOKEN'],
-    content_type: :json,
-    'X-Audit-Log-Reason': RESPONSE[200]
-  )
+  case type
+  when :booster
+    Discordrb::API.request(
+      :guilds_sid_roles_rid,
+      server_id,
+      :patch,
+      "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id, user: user_id, type: :get_role)}",
+      { color: color_data, name: name, icon: image_string }.compact.to_json,
+      Authorization: TOML['Discord']['BOT_TOKEN'],
+      content_type: :json,
+      'X-Audit-Log-Reason': RESPONSE[200]
+    )
+  when :event
+    Discordrb::API.request(
+      :guilds_sid_roles_rid,
+      server_id,
+      :patch,
+      "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{role}",
+      { color: color_data, name: name, icon: image_string }.compact.to_json,
+      Authorization: TOML['Discord']['BOT_TOKEN'],
+      content_type: :json,
+      'X-Audit-Log-Reason': RESPONSE[509]
+    )
+  else
+    nil
+  end
 end
 
 # Public method. Used to make an API request to delete a role from a guild.

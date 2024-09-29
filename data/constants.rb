@@ -56,7 +56,9 @@ RESPONSE = {
   504 => 'Successfully updated the status! Thank you for contributing to my bot!',
   505 => "You're out of snowballs! You can collect more using the ``/collect snowball`` command!",
   506 => 'You missed!',
-  507 => "This user doesn't have any snowballs."
+  507 => "This user doesn't have any snowballs.",
+  508 => "That role cannot be updated.",
+  509 => "Event winner updated role."
 }.freeze
 
 # Emojis that the bot can use.
