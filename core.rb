@@ -8,6 +8,7 @@ require_rel 'pins'
 require_rel 'snow'
 require_rel 'data'
 require_rel 'admin'
+require_rel 'events'
 require_rel 'boosters'
 require_rel 'affections'
 
@@ -25,6 +26,7 @@ BOT.application_command(:shutdown) do |event|
   BOT.stop
 end
 
+BOT.include! EventRoles
 BOT.include! BoosterPerks
 BOT.include! HugAffection
 BOT.include! NomAffection
