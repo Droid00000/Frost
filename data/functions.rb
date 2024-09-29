@@ -129,7 +129,7 @@ def add_suffix(day)
 end
 
 # Public method. Used to return a true or false value based on a generated number.
-# @return [Boolean] Whether the number was in the range.
+# @return [Boolean] Whether the number was in the specified range.
 def hit_or_miss?
   number = rand(1..10)
   return false if number >= 5
