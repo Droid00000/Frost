@@ -18,7 +18,7 @@ def throw_snowball(data)
 
   if hit_or_miss?
     snowball_records(user: data.user.id, type: :remove_snowball)
-    data.edit_response("<@#{data.options['member']}>") do |builder|
+    data.edit_response(content: "<@#{data.options['member']}>") do |builder|
       builder.add_embed do |embed|
         embed.description = "<@#{data.user.id}> threw a snowball at <@#{data.options['member']}>!"
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:THROW))

@@ -150,7 +150,7 @@ def snowball_records(user: nil, type: nil)
   when :remove_snowball
     POSTGRES[:Snowball_Players].where(user_id: user).update(balance: Sequel[:balance] - 1)
   when :check_snowball
-    return false unless POSTGRES[:Snowball_Players].where(user_id: user).select(:balance).map(:balance) >= 1
+    return true if POSTGRES[:Snowball_Players].where(user_id: user).select(:balance).map(:balance)&.join.to_i >= 1
   when :add_user
     POSTGRES[:Snowball_Players].insert(user_id: user, balance: 0)
   when :check_user

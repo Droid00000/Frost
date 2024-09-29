@@ -5,3 +5,4 @@ require_relative '../data/schema'
 require 'discordrb'
 
 def steal_snowball(data)
+end
