@@ -20,9 +20,9 @@ def throw_snowball(data)
     snowball_records(user: data.user.id, type: :remove_snowball)
     data.edit_response("<@#{data.options['member']}>") do |builder|
       builder.add_embed do |embed|
-      embed.description = "<@#{data.user.id}> threw a snowball at <@#{data.options['member']}>!"
-      embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:THROW))
-      embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: 'THROW')
+        embed.description = "<@#{data.user.id}> threw a snowball at <@#{data.options['member']}>!"
+        embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:THROW))
+        embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: 'THROW')
       end
     end
 
