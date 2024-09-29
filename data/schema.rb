@@ -67,97 +67,107 @@ POSTGRES.create_table?(:Tag_Settings) do
 end
 
 def booster_records(server: nil, user: nil, role: nil, channel: nil, type: nil)
-  case type
-  when :create
-    POSTGRES[:Server_Boosters].insert(server_id: server, user_id: user, role_id: role, status: true)
-  when :delete
-    POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).delete
-  when :get_role
-    POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).select(:role_id).map(:role_id)&.join.to_i
-  when :enabled
-    !POSTGRES[:Booster_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
-  when :setup
-    POSTGRES[:Booster_Settings].insert(server_id: server, hoist_role: role, log_channel: channel, enabled: true)
-  when :check_user
-    !POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).empty?
-  when :hoist_role
-    POSTGRES[:Booster_Settings].where(server_id: server).select(:hoist_role).map(:hoist_role)&.join.to_i
-  when :banned
-    !POSTGRES[:Banned_Boosters].where(server_id: server, user_id: user).empty?
-  when :ban
-    POSTGRES[:Banned_Boosters].insert(server_id: server, user_id: user)
-  when :reset_status
-    POSTGRES[:Server_Boosters].where(status: false).insert(status: true)
-  when :update_status
-    POSTGRES[:Server_Boosters].where(server_id: server, user_id: user, status: false).insert(status: true)
-  when :get_boosters
-    POSTGRES[:Server_Boosters].where(status: false)
-  else
-    nil
+  POSTGRES.transaction do
+    case type
+    when :create
+      POSTGRES[:Server_Boosters].insert(server_id: server, user_id: user, role_id: role, status: true)
+    when :delete
+      POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).delete
+    when :get_role
+      POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).select(:role_id).map(:role_id)&.join.to_i
+    when :enabled
+      !POSTGRES[:Booster_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
+    when :setup
+      POSTGRES[:Booster_Settings].insert(server_id: server, hoist_role: role, log_channel: channel, enabled: true)
+    when :check_user
+      !POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).empty?
+    when :hoist_role
+      POSTGRES[:Booster_Settings].where(server_id: server).select(:hoist_role).map(:hoist_role)&.join.to_i
+    when :banned
+      !POSTGRES[:Banned_Boosters].where(server_id: server, user_id: user).empty?
+    when :ban
+      POSTGRES[:Banned_Boosters].insert(server_id: server, user_id: user)
+    when :reset_status
+      POSTGRES[:Server_Boosters].where(status: false).insert(status: true)
+    when :update_status
+      POSTGRES[:Server_Boosters].where(server_id: server, user_id: user, status: false).insert(status: true)
+    when :get_boosters
+      POSTGRES[:Server_Boosters].where(status: false)
+    else
+      nil
+    end
   end
 end
 
 def archiver_records(server: nil, channel: nil, type: nil)
-  case type
-  when :check
-    POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id).empty?
-  when :get
-    POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id)&.join.to_i
-  when :setup
-    POSTGRES[:Archiver_Settings].insert(server_id: server, channel_id: channel, enabled: true)
-  when :disable
-    POSTGRES[:Archiver_Settings].where(server_id: server).delete
-  else
-    nil
+  POSTGRES.transaction do
+    case type
+    when :check
+      POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id).empty?
+    when :get
+      POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id)&.join.to_i
+    when :setup
+      POSTGRES[:Archiver_Settings].insert(server_id: server, channel_id: channel, enabled: true)
+    when :disable
+      POSTGRES[:Archiver_Settings].where(server_id: server).delete
+    else
+      nil
+    end
   end
 end
 
 def tag_records(name: nil, server: nil, message: nil, owner: nil, type: nil)
-  case type
-  when :get
-    [POSTGRES[:Tags].where(name: name).select(:message_id).map(:message_id),
-     POSTGRES[:Tags].where(name: name).select(:channel_id).map(:channel_id)]&.flatten
-  when :create
-    POSTGRES[:Tags].insert(server_id: server, message_id: message, name: name, owner_id: owner, channel_id: channel)
-  when :disabled
-    POSTGRES[:Tag_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
-  when :disable
-    POSTGRES[:Tag_Settings].insert(server_id: server, enabled: false)
-  else
-    nil
+  POSTGRES.transaction do
+    case type
+    when :get
+      [POSTGRES[:Tags].where(name: name).select(:message_id).map(:message_id),
+       POSTGRES[:Tags].where(name: name).select(:channel_id).map(:channel_id)]&.flatten
+    when :create
+      POSTGRES[:Tags].insert(server_id: server, message_id: message, name: name, owner_id: owner, channel_id: channel)
+    when :disabled
+      POSTGRES[:Tag_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
+    when :disable
+      POSTGRES[:Tag_Settings].insert(server_id: server, enabled: false)
+    else
+      nil
+    end
   end
 end
 
 def event_records(server: nil, user: nil, role: nil, type: nil)
-  case type
-  when :check_role
-    !POSTGRES[:Event_Settings].where(server: server, role: role).select(:role_id).map(:role_id).empty?
-  when :enabled?
-    !POSTGRES[:Event_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
-  when :enable
-    POSTGRES[:Event_Settings].insert(server_id: server, role_id: role, enabled: true)
-  when :register_role
-    POSTGRES[:Event_Settings].insert(server_id: server, role_id: role)
-  else
-    nil
+  POSTGRES.transaction do
+    case type
+    when :check_role
+      !POSTGRES[:Event_Settings].where(server: server, role: role).select(:role_id).map(:role_id).empty?
+    when :enabled?
+      !POSTGRES[:Event_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
+    when :enable
+      POSTGRES[:Event_Settings].insert(server_id: server, role_id: role, enabled: true)
+    when :register_role
+      POSTGRES[:Event_Settings].insert(server_id: server, role_id: role)
+    else
+      nil
+    end
   end
 end
 
 def snowball_records(user: nil, type: nil, balance: nil)
-  case type
-  when :add_snowball
-    POSTGRES[:Snowball_Players].where(user_id: user).update(balance: Sequel[:balance] + balance)
-  when :remove_snowball
-    POSTGRES[:Snowball_Players].where(user_id: user).update(balance: Sequel[:balance] - balance)
-  when :get_snowball
-    POSTGRES[:Snowball_Players].where(user_id: user).select(:balance).map(:balance)&.join.to_i
-  when :check_snowball
-    return true if POSTGRES[:Snowball_Players].where(user_id: user).select(:balance).map(:balance)&.join.to_i >= 1
-  when :add_user
-    POSTGRES[:Snowball_Players].insert(user_id: user, balance: 0)
-  when :check_user
-    !POSTGRES[:Snowball_Players].where(user_id: user).select(:user_id).map(:user_id).empty?
-  else
-    nil
+  POSTGRES.transaction do
+    case type
+    when :add_snowball
+      POSTGRES[:Snowball_Players].where(user_id: user).update(balance: Sequel[:balance] + balance)
+    when :remove_snowball
+      POSTGRES[:Snowball_Players].where(user_id: user).update(balance: Sequel[:balance] - balance)
+    when :get_snowball
+      POSTGRES[:Snowball_Players].where(user_id: user).select(:balance).map(:balance)&.join.to_i
+    when :check_snowball
+      return true if POSTGRES[:Snowball_Players].where(user_id: user).select(:balance).map(:balance)&.join.to_i >= 1
+    when :add_user
+      POSTGRES[:Snowball_Players].insert(user_id: user, balance: 0)
+    when :check_user
+      !POSTGRES[:Snowball_Players].where(user_id: user).select(:user_id).map(:user_id).empty?
+    else
+      nil
+    end
   end
 end
