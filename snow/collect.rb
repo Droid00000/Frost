@@ -10,7 +10,7 @@ def collect_snowball(data)
     snowball_records(user: data.user.id, type: :add_user)
   end
 
-  snowball_records(user: data.user.id, type: :add_snowball)
+  snowball_records(user: data.user.id, type: :add_snowball, balance: 1)
 
   data.edit_response do |builder|
     builder.add_embed do |embed|

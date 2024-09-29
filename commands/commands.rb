@@ -66,7 +66,7 @@ bot.register_application_command(:steal, 'Snowball fights') do |cmd|
   cmd.subcommand('snowball', 'Steal a snowball from someone!') do |option|
     option.user('member', 'Who do you want to steal snowballs from?', required: true)
     option.integer('amount', 'How many snowballs do you want to steal?',
-                   choices: { two: '2', three: '3', four: '4', five: '5' }, required: true)
+    choices: { two: '2', three: '3', four: '4', five: '5' }, required: true)
   end
 end
 

@@ -17,7 +17,7 @@ def throw_snowball(data)
   end
 
   if hit_or_miss?
-    snowball_records(user: data.user.id, type: :remove_snowball)
+    snowball_records(user: data.user.id, type: :remove_snowball, balance: 1)
     data.edit_response(content: "<@#{data.options['member']}>") do |builder|
       builder.add_embed do |embed|
         embed.description = "<@#{data.user.id}> threw a snowball at <@#{data.options['member']}>!"

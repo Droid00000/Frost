@@ -52,10 +52,11 @@ RESPONSE = {
   405 => 'automatically update header channel upon chapter release.',
   500 => 'Made by *droid00000* using the [discordrb library!](<https://github.com/shardlab/discordrb>)',
   502 => 'Invalid status parameter.',
-  503 => 'You must be a bot contributor to use this command.',
+  503 => 'You must be a contributor to use this command.',
   504 => 'Successfully updated the status! Thank you for contributing to my bot!',
   505 => "You're out of snowballs! You can collect more using the ``/collect snowball`` command!",
-  506 => "You missed!"
+  506 => 'You missed!',
+  507 => "This user doesn't have any snowballs."
 }.freeze
 
 # Emojis that the bot can use.
