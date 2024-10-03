@@ -12,30 +12,30 @@ require_rel 'events'
 require_rel 'boosters'
 require_rel 'affections'
 
-BOT = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: [:servers], log_mode: :silent)
+bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: [:servers], log_mode: :silent)
 
-BOT.ready do
-  BOT.update_status(ACTIVITY[50], ACTIVITY[60], ACTIVITY[70])
+bot.ready do
+  bot.update_status(ACTIVITY[50], ACTIVITY[60], ACTIVITY[70])
   Status.new(ACTIVITY[50], ACTIVITY[60], ACTIVITY[70])
 end
 
-BOT.application_command(:shutdown) do |event|
-  break unless event.user.id == TOML['Discord']['OWNER']&.to_i
+bot.application_command(:shutdown) do |event|
+  break unless event.user.id == TOML['Discord']['OWNER']
 
   event.respond(content: 'The bot has powered off.', ephemeral: true)
-  BOT.stop
+  bot.stop
 end
 
-BOT.include! EventRoles
-BOT.include! BoosterPerks
-BOT.include! HugAffection
-BOT.include! NomAffection
-BOT.include! AdminCommands
-BOT.include! PokeAffection
-BOT.include! SnowballFights
-BOT.include! SleepAffection
-BOT.include! AngerAffection
-BOT.include! AutoPinArchiver
-BOT.include! ManualPinArchiver
+bot.include! EventRoles
+bot.include! BoosterPerks
+bot.include! HugAffection
+bot.include! NomAffection
+bot.include! AdminCommands
+bot.include! PokeAffection
+bot.include! SnowballFights
+bot.include! SleepAffection
+bot.include! AngerAffection
+bot.include! AutoPinArchiver
+bot.include! ManualPinArchiver
 
-BOT.run
+bot.run
