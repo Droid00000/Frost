@@ -12,7 +12,7 @@ require_rel 'events'
 require_rel 'boosters'
 require_rel 'affections'
 
-BOT = Discordrb::Bot.new(token: TOML['Discord']['RAW_TOKEN'], intents: %i[servers server_messages], log_mode: :silent)
+BOT = Discordrb::Bot.new(token: TOML['Discord']['RAW_TOKEN'], intents: [:servers], log_mode: :silent)
 
 BOT.ready do
   BOT.update_status(ACTIVITY[50], ACTIVITY[60], ACTIVITY[70])
