@@ -20,10 +20,13 @@ bot.ready do
 end
 
 bot.application_command(:shutdown) do |event|
-  break unless event.user.id == TOML['Discord']['OWNER']
-
-  event.respond(content: 'The bot has powered off.', ephemeral: true)
-  bot.stop
+  event.defer(ephemeral: true)
+  if event.user.id == TOML['Discord']['OWNER']&.to_i
+    event.edit_response(content: RESPONSE[511])
+    bot.stop
+  else
+    event.edit_response(content: RESPONSE[510])
+  end
 end
 
 bot.include! EventRoles

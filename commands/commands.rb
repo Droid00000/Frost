@@ -71,10 +71,10 @@ bot.register_application_command(:steal, 'Snowball fights') do |cmd|
 end
 
 bot.register_application_command(:update, 'Contributors') do |cmd|
-  cmd.subcommand('status', 'Update the status that is show by the bot.') do |option|
+  cmd.subcommand('status', "Update the status that's show by the bot.") do |option|
     option.string('description', 'The status that the bot should display.', required: false)
     option.string('type', 'The type of online status that the bot should display.',
-                  choices: { online: 'Online', idle: 'Idle', dnd: 'DND' }, required: false)
+    choices: { online: 'Online', idle: 'Idle', dnd: 'DND' }, required: false)
   end
 end
 

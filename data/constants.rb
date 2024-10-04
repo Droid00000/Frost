@@ -58,7 +58,9 @@ RESPONSE = {
   506 => 'You missed!',
   507 => "This user doesn't have any snowballs.",
   508 => "That role cannot be updated.",
-  509 => "Event winner updated role."
+  509 => "Event winner updated role.",
+  510 => "``401: Unauthorized.``",
+  511 => "The bot has powered off."
 }.freeze
 
 # Emojis that the bot can use.
