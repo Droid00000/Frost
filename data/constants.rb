@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-# 100 - The reason show in a guild's audit log whenever a role is created by the bot.
+# 100 - The reason show in a guild's audit log whenever a booster role is created by the bot.
 
-# 200 - The reason show in a guild's audit log whenever a role is updated by the bot.
+# 200 - The reason show in a guild's audit log whenever a booster role is updated by the bot.
 
-# 201 — Fires upon successfully creating a role.
+# 201 — Shown upon successfully creating a role.
 
-# 202 — Fires when the edit request was succesfully accepted by the client.
+# 202 — Shown when the edit request was succesfully accepted by the client.
 
-# 205 — Fires upon succesfully deleting a role.
+# 205 — Shown upon succesfully deleting a role.
 
-# 226 — Fires when a role has already been claimed in that guild for that user.
+# 226 — Shown when a role has already been claimed in that guild for that user.
 
 # 300 - The reason show in a guild's audit log whenever a role is deleted by the bot.
 
@@ -22,7 +22,7 @@
 
 # 401 — General response code that fires when a user isn't a server booster.
 
-# 404 — Fires when the client can't find a role. (User hasn't claimed role)
+# 404 — Shown when the client can't find a role. (User hasn't claimed role)
 
 # 405 - The reason shown in a guild's audit log whenever the bot updates a channel's name.
 
@@ -30,9 +30,23 @@
 
 # 502 - General response code when the status description returns a false for the regex validation.
 
-# 503 - Fires when a user doesn't have the ability to update the bot's status.
+# 503 - Shown when a user doesn't have the ability to update the bot's status.
 
-# 504 - Fires when a user successfully updates the bot's status.
+# 504 - Shown when a user successfully updates the bot's status.
+
+# 505 - Shown when a user is out of snowballs.
+
+# 506 - Shown when a user misses hitting someone with a snowball.
+
+# 507 - Shown when a user tries to steal snowballs from someone who doesn't have any.
+
+# 508 - Shown when someone tries to update a role that hasn't been added to the system.
+
+# 509 - The reason show in a guild's audit log whenever an event role is updated by the bot.
+
+# 510 - Shown when someone who isn't the bot owner tries to shutdown the bot.
+
+# 511 - Shown when the bot has successfully powered off.
 
 require 'toml-rb'
 
