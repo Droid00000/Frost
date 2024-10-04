@@ -10,9 +10,10 @@ require 'tempfile'
 require 'discordrb'
 require 'selenium-webdriver'
 
-require_relative './embeds'
-require_relative './schema'
-require_relative './constants'
+require_relative 'embeds'
+require_relative 'schema'
+require_relative 'requests'
+require_relative 'constants'
 
 # Public method. Initilaze a new color object for a role.
 # @param [String] The hex color to resolve into a color object.
@@ -118,13 +119,13 @@ end
 def add_suffix(day)
   case day
   when 1, 21, 31
-    "st"
+    'st'
   when 2, 22
-    "nd"
+    'nd'
   when 3, 23
-    "rd"
+    'rd'
   else
-    "th"
+    'th'
   end
 end
 
@@ -133,7 +134,8 @@ end
 def hit_or_miss?
   number = rand(1..10)
   return false if number >= 5
-  return true if number <= 5
+
+  true if number <= 5
 end
 
 # Public method. Used to extract a date from a website and then used to update a guild channel's name.
@@ -156,7 +158,7 @@ end
 # @param icon [String, #Read] The new icon of the role.
 # @param role [Integer] The role to be modified.
 # @param type [Symbol] The type of edit to perform.
-def modify_guild_role(server_id, user_id, name: nil, color: nil, icon: nil, role: nil, type: nil)
+def modify_guild_role(server: nil, user: nil, name: nil, color: nil, icon: nil, role: nil, type: nil)
   if !icon.nil? && find_icon(icon)
     image = find_icon(icon)
     image_string = File.open("/private#{image}", 'rb')
@@ -173,29 +175,9 @@ def modify_guild_role(server_id, user_id, name: nil, color: nil, icon: nil, role
 
   case type
   when :booster
-    Discordrb::API.request(
-      :guilds_sid_roles_rid,
-      server_id,
-      :patch,
-      "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id, user: user_id, type: :get_role)}",
-      { color: color_data, name: name, icon: image_string }.compact.to_json,
-      Authorization: TOML['Discord']['TOKEN'],
-      content_type: :json,
-      'X-Audit-Log-Reason': RESPONSE[200]
-    )
+    Frost::Requests.booster_roles(user, server, color: color_data, name: name, icon: image_string)
   when :event
-    Discordrb::API.request(
-      :guilds_sid_roles_rid,
-      server_id,
-      :patch,
-      "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{role}",
-      { color: color_data, name: name, icon: image_string }.compact.to_json,
-      Authorization: TOML['Discord']['TOKEN'],
-      content_type: :json,
-      'X-Audit-Log-Reason': RESPONSE[509]
-    )
-  else
-    nil
+    Frost::Requests.event_roles(role, color: color_data, name: name, icon: image_string)
   end
 end
 
@@ -203,30 +185,13 @@ end
 # @param server_id [Integer] The ID of the guild that the role is on.
 # @param user_id [Integer] The ID of the user that has this role.
 def delete_guild_role(server_id, user_id)
-  Discordrb::API.request(
-    :guilds_sid_roles_rid,
-    server_id,
-    :delete,
-    "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id,
-                                                                            user: user_id, type: :get_role)}",
-    Authorization: TOML['Discord']['TOKEN'],
-    'X-Audit-Log-Reason': RESPONSE[300]
-  )
+  Frost::Requests.delete_role(server_id, user_id)
 end
 
 # Public method. Used to update a channel name. For privacy reasons, I'll be keeping the reason to myself.
 # @param name [String] The new name of the channel.
 def modifiy_guild_channel(name)
-  Discordrb::API.request(
-    :channels_cid,
-    :channel_id,
-    :patch,
-    "#{Discordrb::API.api_base}/channels/#{TOML['Chapter']['CHANNEL']}",
-    { name: name }.compact.to_json,
-    Authorization: TOML['Discord']['TOKEN'],
-    content_type: :json,
-    'X-Audit-Log-Reason': RESPONSE[405]
-  )
+  Frost::Requests.update_channel(name)
 end
 
 # Public method. Used to check if a guild member is still boosting a guild.
@@ -234,13 +199,5 @@ end
 # @param user_id [Integer, String] The ID that uniquely identifies this user across discord.
 # @return [Boolean] Returns true if the user is boosting the server, and false if the user is not.
 def get_booster_status(server_id, user_id)
-  !JSON.parse(Discordrb::API.request(
-                :users_sid,
-                user_id,
-                :get,
-                "#{Discordrb::API.api_base}/guilds/#{server_id}/members/#{user_id}",
-                Authorization: TOML['Discord']['TOKEN']
-              ))['premium_since'].nil?
-rescue Discordrb::Errors::UnknownMember, Discordrb::Errors::UnknownUser
-  false
+  Frost::Requests.booster_status(server_id, user_id)
 end
