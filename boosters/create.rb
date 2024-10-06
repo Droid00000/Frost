@@ -7,27 +7,27 @@ require 'discordrb'
 
 def create_role(data)
   if booster_records(server: data.server.id, user: data.user.id, type: :check_user)
-    data.edit_response(content: RESPONSE[226])
+    data.edit_response(content: RESPONSE[4])
     return
   end
 
   unless booster_records(server: data.server.id, type: :enabled)
-    data.edit_response(content: RESPONSE[301])
+    data.edit_response(content: RESPONSE[5])
     return
   end
 
   if booster_records(server: data.server.id, user: data.user.id, type: :banned)
-    data.edit_response(content: RESPONSE[302])
+    data.edit_response(content: RESPONSE[6])
     return
   end
 
   unless data.user.boosting?
-    data.edit_response(content: RESPONSE[401])
+    data.edit_response(content: RESPONSE[8])
     return
   end
 
   unless safe_name?(data.options['name'])
-    data.edit_response(content: RESPONSE[400])
+    data.edit_response(content: RESPONSE[7])
     return
   end
 
@@ -37,16 +37,16 @@ def create_role(data)
     hoist: false,
     mentionable: false,
     permissions: 0,
-    reason: RESPONSE[100]
+    reason: REASON[1]
   )
 
   role.sort_above(booster_records(server: data.server.id, type: :hoist_role))
 
-  data.user.add_role(role, RESPONSE[100])
+  data.user.add_role(role, REASON[1])
 
   booster_records(server: data.server.id, user: data.user.id, role: role.id, type: :create)
 
-  data.edit_response(content: "#{RESPONSE[201]} #{EMOJI[40]}")
+  data.edit_response(content: "#{RESPONSE[1]} #{EMOJI[4]}")
 
   return unless !data.options['icon'].nil? && unlocked_icons?(data.server.boost_level)
 

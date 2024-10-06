@@ -7,7 +7,7 @@ def general_help_embed(data)
   data.edit_response do |builder|
     builder.add_embed do |embed|
       embed.title = '**General Commands**'
-      embed.colour = UI[25]
+      embed.colour = UI[5]
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[21])
       embed.add_field(name: "``/hug``", value: "Sends a random GIF to hug a server member.")
       embed.add_field(name: "``/nom``", value: "Sends a random GIF to nom a server member.")
