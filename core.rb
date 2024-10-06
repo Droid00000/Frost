@@ -22,10 +22,10 @@ end
 bot.application_command(:shutdown) do |event|
   event.defer(ephemeral: true)
   if event.user.id == TOML['Discord']['OWNER']&.to_i
-    event.edit_response(content: RESPONSE[18])
+    event.edit_response(content: RESPONSE[19])
     bot.stop
   else
-    event.edit_response(content: RESPONSE[19])
+    event.edit_response(content: RESPONSE[18])
   end
 end
 
