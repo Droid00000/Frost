@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'discordrb'
-require_relative './edit'
+require_relative 'edit'
 
 module EventRoles
   extend Discordrb::EventContainer

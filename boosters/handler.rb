@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require 'discordrb'
-require_relative './create'
-require_relative './delete'
-require_relative './audit'
-require_relative './help'
-require_relative './edit'
+require_relative 'create'
+require_relative 'delete'
+require_relative 'audit'
+require_relative 'help'
+require_relative 'edit'
 
 module BoosterPerks
   extend Discordrb::EventContainer
