@@ -8,8 +8,8 @@ def help_embed(data)
   data.edit_response do |builder|
     builder.add_embed do |embed|
       embed.title = '**Booster Commands**'
-      embed.colour = UI[25]
-      embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[21])
+      embed.colour = UI[5]
+      embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
       embed.add_field(name: '``/booster role claim``', value: 'Creates your custom role. Your role name must contain any foul language. Simply put a custom emoji as you normally would in the icon option.')
       embed.add_field(name: '``/booster role edit``', value: 'Lets you edit your custom role. All parameters are optional.')
       embed.add_field(name: '``/booster role delete``', value: 'Deletes your custom role. You can make a new role at any time provided you keep boosting the server.')

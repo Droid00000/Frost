@@ -2,10 +2,10 @@
 
 require 'json'
 require 'discordrb'
-require_relative './schema'
-require_relative './constants'
+require_relative 'schema'
+require_relative 'constants'
 
-module Frost
+module Frigid
   module Requests
     module_function
     # API call for updating a booster role.
@@ -18,7 +18,7 @@ module Frost
         { color: color_data, name: name, icon: image_string }.compact.to_json,
         Authorization: TOML['Discord']['TOKEN'],
         content_type: :json,
-        'X-Audit-Log-Reason': RESPONSE[200]
+        'X-Audit-Log-Reason': REASON[2]
       )
     end
 
@@ -32,7 +32,7 @@ module Frost
         { color: color_data, name: name, icon: image_string }.compact.to_json,
         Authorization: TOML['Discord']['TOKEN'],
         content_type: :json,
-        'X-Audit-Log-Reason': RESPONSE[509]
+        'X-Audit-Log-Reason': REASON[5]
       )
     end
 
@@ -44,20 +44,20 @@ module Frost
         :delete,
         "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{booster_records(server: server_id, user: user_id, type: :get_role)}",
         Authorization: TOML['Discord']['TOKEN'],
-        'X-Audit-Log-Reason': RESPONSE[300]
+        'X-Audit-Log-Reason': REASON[3]
       )
     end
 
     # API call for checking a member's boosting status.
     def booster_status(server_id, user_id)
       !JSON.parse(Discordrb::API.request(
-                    :users_sid,
-                    :user_id,
-                    :get,
-                    "#{Discordrb::API.api_base}/guilds/#{server_id}/members/#{user_id}",
-                    Authorization: TOML['Discord']['TOKEN']
-                  ))['premium_since'].nil?
-    rescue Discordrb::Errors::UnknownMember, Discordrb::Errors::UnknownUser
+      :users_sid,
+      :user_id,
+      :get,
+      "#{Discordrb::API.api_base}/guilds/#{server_id}/members/#{user_id}",
+      Authorization: TOML['Discord']['TOKEN']
+    ))['premium_since'].nil?
+    rescue StandardError
       false
     end
 
@@ -71,7 +71,7 @@ module Frost
         { name: name }.compact.to_json,
         Authorization: TOML['Discord']['TOKEN'],
         content_type: :json,
-        'X-Audit-Log-Reason': RESPONSE[405]
+        'X-Audit-Log-Reason': REASON[4]
       )
     end
   end

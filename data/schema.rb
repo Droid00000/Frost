@@ -2,7 +2,7 @@
 
 require 'sequel'
 require 'toml-rb'
-require_relative './constants'
+require_relative 'constants'
 
 POSTGRES = Sequel.connect(TOML['Postgres']['URL'], max_connections: 7)
 
@@ -51,21 +51,6 @@ POSTGRES.create_table?(:Snowball_Players) do
   Bigint :balance, null: false, default: 0
 end
 
-POSTGRES.create_table?(:Tags) do
-  primary_key :id
-  Bigint :owner_id, null: false
-  Bigint :server_id, null: false
-  Bigint :channel_id, null: false
-  String :name, null: false, unique: true
-  Bigint :message_id, unique: true, null: false
-end
-
-POSTGRES.create_table?(:Tag_Settings) do
-  primary_key :id
-  Bigint :server_id, null: false
-  Boolean :enabled, null: false, default: true
-end
-
 def booster_records(server: nil, user: nil, role: nil, channel: nil, type: nil)
   POSTGRES.transaction do
     case type
@@ -110,24 +95,6 @@ def archiver_records(server: nil, channel: nil, type: nil)
       POSTGRES[:Archiver_Settings].insert(server_id: server, channel_id: channel, enabled: true)
     when :disable
       POSTGRES[:Archiver_Settings].where(server_id: server).delete
-    else
-      nil
-    end
-  end
-end
-
-def tag_records(name: nil, server: nil, message: nil, owner: nil, type: nil)
-  POSTGRES.transaction do
-    case type
-    when :get
-      [POSTGRES[:Tags].where(name: name).select(:message_id).map(:message_id),
-       POSTGRES[:Tags].where(name: name).select(:channel_id).map(:channel_id)]&.flatten
-    when :create
-      POSTGRES[:Tags].insert(server_id: server, message_id: message, name: name, owner_id: owner, channel_id: channel)
-    when :disabled
-      POSTGRES[:Tag_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
-    when :disable
-      POSTGRES[:Tag_Settings].insert(server_id: server, enabled: false)
     else
       nil
     end

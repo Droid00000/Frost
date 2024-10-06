@@ -6,12 +6,12 @@ require 'discordrb'
 
 def steal_snowball(data)
   unless snowball_records(user: data.options['member'], type: :check_snowball)
-    data.edit_response(content: RESPONSE[507])
+    data.edit_response(content: RESPONSE[16])
     return
   end
 
   if snowball_records(user: data.options['member'], type: :get_snowball) < data.options['amount']
-    data.edit_response(content: RESPONSE[508])
+    data.edit_response(content: RESPONSE[21])
     return
   end
 
@@ -20,7 +20,7 @@ def steal_snowball(data)
   end
 
   unless TOML['Discord']['CONTRIBUTORS'].include?(data.user.id)
-    data.edit_response(content: RESPONSE[503])
+    data.edit_response(content: RESPONSE[12])
     return
   end
 

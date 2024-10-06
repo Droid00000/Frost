@@ -2,12 +2,12 @@
 
 require 'toml-rb'
 
-# A response to an interaction shown by the bot.
+# A response message to an interaction.
 RESPONSE = {
   1 => 'Your role has been created! You can always edit your role using the ``/booster role edit`` command.',
   2 => 'Your role has been successfully edited!',
   3 => 'Your role has been successfully deleted! Feel free to make a new role at any time.',
-  4 => "You've already claimed your custom role in this server.",
+  4 => "You've already claimed your custom role on this server.",
   5 => 'This functionality has not been enabled on this server.',
   6 => 'You have been banned from using this feature.',
   7 => 'Invalid name parameter.',
@@ -22,7 +22,9 @@ RESPONSE = {
   16 => "This user doesn't have any snowballs.",
   17 => "That role cannot be updated.",
   18 => "``401: Unauthorized.``",
-  19 => "The bot has powered off."
+  19 => "The bot has powered off.",
+  20 => 'Succesfully archived one pinned message!',
+  21 => "This user doesn't have enough snowballs."
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
@@ -45,7 +47,7 @@ EMOJI = {
 # UI components including color values; primarily used by the bot when sending embeds.
 UI = {
   1 => 'https://cdn.discordapp.com/avatars/1268769768920580156/1551613008086970c244a81d043d354e?size=1024',
-  2 => 0x8da99b,
+  2 => 0x89abd2,
   3 => 0x33363b,
   4 => 0x8da99b,
   5 => 0xd4f0ff,

@@ -9,7 +9,7 @@ require_relative '../data/constants'
 bot = Discordrb::Bot.new(token: TOML['Discord']['RAW_TOKEN'], intents: [:server_messages])
 
 bot.ready do
-  bot.update_status(ACTIVITY[80], ACTIVITY[90], ACTIVITY[70])
+  bot.update_status(ACTIVITY[4], ACTIVITY[5], ACTIVITY[3])
 end
 
 bot.register_application_command(:hug, 'Hugs another server member.') do |option|
@@ -38,17 +38,14 @@ end
 bot.register_application_command(:about, 'Shows some general information about the bot.') do |option|
 end
 
-bot.register_application_command(:archive, 'Archives pins in a specified channel.',
-                                 default_member_permissions: 8192) do |option|
+bot.register_application_command(:archive, 'Archives pins in a specified channel.', default_member_permissions: 8192) do |option|
   option.channel('channel', 'Which channel needs to have its pins archived?', required: true)
 end
 
-bot.register_application_command(:settings, 'View your server configuration.',
-                                 default_member_permissions: 32) do |option|
+bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: 32) do |option|
 end
 
-bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.',
-                                 default_member_permissions: 0) do |option|
+bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.', default_member_permissions: 0) do |option|
 end
 
 bot.register_application_command(:throw, 'Snowball fights') do |cmd|

@@ -15,17 +15,17 @@ require_rel 'affections'
 bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: [:servers], log_mode: :silent)
 
 bot.ready do
-  bot.update_status(ACTIVITY[50], ACTIVITY[60], ACTIVITY[70])
-  Status.new(ACTIVITY[50], ACTIVITY[60], ACTIVITY[70])
+  bot.update_status(ACTIVITY[1], ACTIVITY[2], ACTIVITY[3])
+  Status.new(ACTIVITY[1], ACTIVITY[2], ACTIVITY[3])
 end
 
 bot.application_command(:shutdown) do |event|
   event.defer(ephemeral: true)
   if event.user.id == TOML['Discord']['OWNER']&.to_i
-    event.edit_response(content: RESPONSE[511])
+    event.edit_response(content: RESPONSE[18])
     bot.stop
   else
-    event.edit_response(content: RESPONSE[510])
+    event.edit_response(content: RESPONSE[19])
   end
 end
 

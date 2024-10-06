@@ -29,24 +29,24 @@ end
 
 def update_status(data)
   unless safe_name?(data.options['description'])
-    data.edit_response(content: RESPONSE[502])
+    data.edit_response(content: RESPONSE[11])
     return
   end
 
   unless TOML['Discord']['CONTRIBUTORS'].include?(data.user.id)
-    data.edit_response(content: RESPONSE[503])
+    data.edit_response(content: RESPONSE[12])
     return
   end
 
-  if !data.options['description'].nil?
-    data.bot.update_status(Status.availability, data.options['description'], ACTIVITY[70])
-    Status.new(Status.availability, data.options['description'], ACTIVITY[70])
+  if data.options['description']
+    data.bot.update_status(Status.availability, data.options['description'], ACTIVITY[3])
+    Status.new(Status.availability, data.options['description'], ACTIVITY[3])
   end
 
-  if !data.options['type'].nil?
-    data.bot.update_status(data.options['type'].downcase, Status.status, ACTIVITY[70])
-    Status.new(data.options['type'], Status.status, ACTIVITY[70])
+  if data.options['type']
+    data.bot.update_status(data.options['type'].downcase, Status.status, ACTIVITY[3])
+    Status.new(data.options['type'], Status.status, ACTIVITY[3])
   end
 
-  data.edit_response(content: "#{RESPONSE[504]} #{EMOJI[10]}")
+  data.edit_response(content: "#{RESPONSE[13]} #{EMOJI[1]}")
 end
