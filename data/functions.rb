@@ -12,6 +12,7 @@ require 'selenium-webdriver'
 
 require_relative 'embeds'
 require_relative 'schema'
+require_relative 'requests'
 require_relative 'constants'
 
 # Initilaze a new color object for a role.
@@ -141,38 +142,54 @@ def next_chapter_date(channel)
   driver.quit
 end
 
-# Modifies the name of a channel.
-# @param channel [Integer] The channel to update.
+# Public method. Used to make an API request to update a guild role. All JSON parameters are optional.
+# @param server_id [Integer] The ID of the guild that the role is on.
+# @param user_id [Integer] The ID of the user that has this role.
+# @param name [String] The new name of the role.
+# @param color [Integer] The new color of the role.
+# @param icon [String, #Read] The new icon of the role.
+# @param role [Integer] The role to be modified.
+# @param type [Symbol] The type of edit to perform.
+def modify_guild_role(server: nil, user: nil, name: nil, color: nil, icon: nil, role: nil, type: nil)
+  if !icon.nil? && find_icon(icon)
+    image = find_icon(icon)
+    image_string = File.open("/private#{image}", 'rb')
+
+    if image.respond_to?(:read)
+      image_string = 'data:image/png;base64,'
+      image_string += Base64.strict_encode64(image.read)
+    end
+  else
+    image_string = nil
+  end
+
+  color_data = (resolve_color(color) unless color.nil?)&.combined
+
+  case type
+  when :booster
+    Frost::Requests.booster_roles(user, server, color: color_data, name: name, icon: image_string)
+  when :event
+    Frost::Requests.event_roles(role, color: color_data, name: name, icon: image_string)
+  end
+end
+
+# Public method. Used to make an API request to delete a role from a guild.
+# @param server_id [Integer] The ID of the guild that the role is on.
+# @param user_id [Integer] The ID of the user that has this role.
+def delete_guild_role(server_id, user_id)
+  Frost::Requests.delete_role(server_id, user_id)
+end
+
+# Public method. Used to update a channel name. For privacy reasons, I'll be keeping the reason to myself.
 # @param name [String] The new name of the channel.
-def modify_channel(channel, name)
-  client.modify_guild_channel(channel, name, REASON[13])
+def modifiy_guild_channel(name)
+  Frost::Requests.update_channel(name)
 end
 
-# Modifies a role on a server.
-# @param server [Integer] ID of the server.
-# @param role [Integer] ID of the role.
-# @param reason [String] Reason for updating this role.
-# @param name [String] New name of the role.
-# @param color [String] New color of the role.
-# @param icon [String] New icon of the role.
-def modifiy_role(server, role, reason, name:, color:, icon:)
-  icon = resolve_icon(icon) ? "data:image/png;base64,#{Base64.strict_encode64(image.read)}" : :undef
-  color = resolve_color(color).combined ? color : :undef
-  name ||= :undef
-
-  client.modify_guild_role(server, role, reason, name: name, color: color, icon: icon)
-end
-
-# Returns a server member.
-# @param server [Integer] ID of the server.
-# @param booster [Integer] ID of the member.
-def get_booster(guild, booster)
-  client.get_guild_member(guild, booster)
-end
-
-# Deletes a role on a server.
-# @param server [Integer] ID of the server.
-# @param role [Integer] ID of the role.
-def delete_role(server, role)
-  client.delete_guild_role(guild_id, role, REASON[3])
+# Public method. Used to check if a guild member is still boosting a guild.
+# @param server_id [Integer, String] The ID of the guild that this guild member belongs to.
+# @param user_id [Integer, String] The ID that uniquely identifies this user across discord.
+# @return [Boolean] Returns true if the user is boosting the server, and false if the user is not.
+def get_booster_status(server_id, user_id)
+  Frost::Requests.booster_status(server_id, user_id)
 end

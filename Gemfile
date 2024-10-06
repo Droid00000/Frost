@@ -10,8 +10,6 @@ gem 'rubocop', require: false
 
 gem 'selenium-webdriver'
 
-gem 'faraday-multipart'
-
 gem 'tzinfo-data'
 
 gem 'require_all'
