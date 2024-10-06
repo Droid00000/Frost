@@ -128,6 +128,26 @@ def hit_or_miss?
   true if number <= 5
 end
 
+# Extracts a date from a website and then used to update a guild channel's name.
+# @param channel [Integer] The channel to update.
+def next_chapter_date(channel)
+  driver = Selenium::WebDriver.for :chrome, options: Selenium::WebDriver::Options.chrome(args: ['--headless=new'])
+  driver.get TOML['Chapter']['LINK']
+
+  date = Date.parse(driver.page_source.match(REGEX[2])[0].strip)
+  name = "📖 #{date.strftime('%B %d')}#{add_suffix(date.day)} 3PM GMT"
+
+  modify_channel(channel, name)
+  driver.quit
+end
+
+# Modifies the name of a channel.
+# @param channel [Integer] The channel to update.
+# @param name [String] The new name of the channel.
+def modify_channel(channel, name)
+  client.modify_guild_channel(channel, name, REASON[13])
+end
+
 # Modifies a role on a server.
 # @param server [Integer] ID of the server.
 # @param role [Integer] ID of the role.
@@ -155,24 +175,4 @@ end
 # @param role [Integer] ID of the role.
 def delete_role(server, role)
   client.delete_guild_role(guild_id, role, REASON[3])
-end
-
-# Extracts a date from a website and then used to update a guild channel's name.
-# @param channel [Integer] The channel to update.
-def next_chapter_date(channel)
-  driver = Selenium::WebDriver.for :chrome, options: Selenium::WebDriver::Options.chrome(args: ['--headless=new'])
-  driver.get TOML['Chapter']['LINK']
-
-  date = Date.parse(driver.page_source.match(REGEX[2])[0].strip)
-  name = "📖 #{date.strftime('%B %d')}#{add_suffix(date.day)} 3PM GMT"
-
-  modify_channel(channel, name)
-  driver.quit
-end
-
-# Modifies the name of a channel.
-# @param channel [Integer] The channel to update.
-# @param name [String] The new name of the channel.
-def modify_channel(channel, name)
-  client.modify_guild_channel(channel, name, REASON[13])
 end

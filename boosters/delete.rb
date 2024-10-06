@@ -7,22 +7,22 @@ require 'discordrb'
 
 def delete_role(data)
   unless booster_records(server: data.server.id, user: data.user.id, type: :check_user)
-    data.edit_response(content: RESPONSE[9])
+    data.edit_response(content: RESPONSE[404])
     return
   end
 
   unless booster_records(server: data.server.id, type: :enabled)
-    data.edit_response(content: RESPONSE[5])
+    data.edit_response(content: RESPONSE[301])
     return
   end
 
   if booster_records(server: data.server.id, user: data.user.id, type: :banned)
-    data.edit_response(content: RESPONSE[6])
+    data.edit_response(content: RESPONSE[302])
     return
   end
 
   unless data.user.boosting?
-    data.edit_response(content: RESPONSE[8])
+    data.edit_response(content: RESPONSE[401])
     return
   end
 
@@ -30,5 +30,5 @@ def delete_role(data)
 
   booster_records(server: data.server.id, user: data.user.id, type: :delete)
 
-  data.edit_response(content: "#{RESPONSE[2]} #{EMOJI[3]}")
+  data.edit_response(content: "#{RESPONSE[205]} #{EMOJI[30]}")
 end

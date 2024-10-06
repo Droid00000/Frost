@@ -10,7 +10,7 @@ module NomAffection
     event.defer(ephemeral: false)
     event.edit_response(content: "<@#{event.options['target']}>") do |builder|
       builder.add_embed do |embed|
-        embed.colour = UI[3]
+        embed.colour = UI[23]
         embed.description = "#{event.user.display_name} noms <@#{event.options['target']}>"
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:NOMS))
         embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: 'NOMS')
