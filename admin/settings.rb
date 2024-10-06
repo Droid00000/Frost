@@ -8,7 +8,7 @@ def server_settings(data)
   data.edit_response do |builder|
     builder.add_embed do |embed|
       embed.title = '**Server Settings**'
-      embed.colour = UI[25]
+      embed.colour = UI[5]
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[21])
       embed.add_field(name: "``/Tags``", value: "#{tag_settings}")
       embed.add_field(name: "``/Booster Perks``", value: "#{booster_settings}")
