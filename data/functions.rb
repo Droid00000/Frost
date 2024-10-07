@@ -80,6 +80,8 @@ def gif(type)
     THROW.sample.to_s
   when :MISS
     MISS.sample.to_s
+  when :BONK
+    BONK.sample.to_s  
   else
     UI[21]
   end

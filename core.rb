@@ -33,6 +33,7 @@ bot.include! EventRoles
 bot.include! BoosterPerks
 bot.include! HugAffection
 bot.include! NomAffection
+bot.include! BonkAffection
 bot.include! AdminCommands
 bot.include! PokeAffection
 bot.include! SnowballFights

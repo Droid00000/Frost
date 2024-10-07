@@ -28,6 +28,10 @@ bot.register_application_command(:angered, 'Shows your anger towards another ser
   option.user('target', 'Who do you want to show your wrath to?', required: true)
 end
 
+bot.register_application_command(:bonk, 'Bonk another server member!') do |option|
+  option.user('target', 'Who do you want to bonk?', required: true)
+end
+
 bot.register_application_command(:sleep, 'Tells another server member to go and sleep.') do |option|
   option.user('target', 'Who needs to sleep?', required: true)
 end
