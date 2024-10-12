@@ -2,17 +2,12 @@
 
 require 'time'
 require 'date'
-require 'json'
-require 'base64'
-require 'faraday'
 require 'toml-rb'
-require 'tempfile'
 require 'discordrb'
 require 'selenium-webdriver'
 
 require_relative 'embeds'
 require_relative 'schema'
-require_relative 'requests'
 require_relative 'constants'
 
 # Initilaze a new color object for a role.
@@ -114,7 +109,7 @@ def next_chapter_date(channel)
   date = Date.parse(driver.page_source.match(REGEX[2])[0].strip)
   name = "📖 #{date.strftime('%B %d')}#{add_suffix(date.day)} 3PM GMT"
 
-  Discordrb::API::Channel.update(bot.token, TOML['Chapter']['CHANNEL'], name, reason = REASON[4])
+  Discordrb::API::Channel.name(TOML['Discord']['TOKEN'], TOML['Chapter']['CHANNEL'], name, REASON[4])
   driver.quit
 end
 

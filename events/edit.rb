@@ -26,11 +26,7 @@ def edit_event_role(data)
     return
   end
 
-  modify_guild_role(name: data.options['name'], color: data.options['color'], role: data.options['role'], type: event)
-
-  if data.options['icon'] && unlocked_icons?(data.server.boost_level)
-    modify_guild_role(data.server.id, data.user.id, icon: data.options['icon'], type: event, role: data.options['role'])
-  end
+  data.server.update_role(data.options['role'], data.options['name'], data.options['color'], data.options['icon'], REASON[5])
 
   data.edit_response(content: "#{RESPONSE[2]} #{EMOJI[3]}")
 end

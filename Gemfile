@@ -14,11 +14,7 @@ gem 'tzinfo-data'
 
 gem 'require_all'
 
-gem 'tempfile'
-
 gem 'toml-rb'
-
-gem 'faraday'
 
 gem 'sequel'
 
