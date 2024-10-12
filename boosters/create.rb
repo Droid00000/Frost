@@ -34,9 +34,7 @@ def create_role(data)
   role = data.server.create_role(
     name: data.options['name'],
     colour: resolve_color(data.options['color']),
-    hoist: false,
-    mentionable: false,
-    permissions: 0,
+    icon: resolve_icon(data.options['icon'])
     reason: REASON[1]
   )
 
@@ -47,8 +45,4 @@ def create_role(data)
   booster_records(server: data.server.id, user: data.user.id, role: role.id, type: :create)
 
   data.edit_response(content: "#{RESPONSE[1]} #{EMOJI[4]}")
-
-  return unless data.options['icon'] && unlocked_icons?(data.server.boost_level) && find_icon(data.options['icon'])
-
-  role.icon = File.open("#{find_icon(data.options['icon'])}", 'rb')
 end

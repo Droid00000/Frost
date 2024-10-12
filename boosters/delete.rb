@@ -26,7 +26,7 @@ def delete_role(data)
     return
   end
 
-  delete_guild_role(data.server.id, data.user.id)
+  data.server.delete_role(booster_records(server: server_id, user: user_id, type: :get_role), REASON[3])
 
   booster_records(server: data.server.id, user: data.user.id, type: :delete)
 

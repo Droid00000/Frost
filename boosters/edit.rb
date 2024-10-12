@@ -31,11 +31,9 @@ def edit_role(data)
     return
   end
 
-  modify_guild_role(data.server.id, data.user.id, name: data.options['name'], color: data.options['color'], type: booster)
+  role = booster_records(server: data.server.id, user: data.user.id, type: :get_role)
 
-  if data.options['icon'] && unlocked_icons?(data.server.boost_level)
-    modify_guild_role(data.server.id, data.user.id, icon: data.options['icon'], type: booster)
-  end
+  data.server.update_role(role, data.options['name'], data.options['color'], data.options['icon'], REASON[2])
 
   data.edit_response(content: "#{RESPONSE[2]} #{EMOJI[2]}")
 end

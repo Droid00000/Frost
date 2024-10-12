@@ -2,6 +2,7 @@
 
 require 'time'
 require 'date'
+require 'json'
 require 'base64'
 require 'faraday'
 require 'toml-rb'
@@ -44,19 +45,12 @@ end
 
 # Abstracts away the process or retriving a role icon.
 # @param [String] The emoji string serialized as a parased mention.
-# @return [File] The file path of a temporary file object.
-def find_icon(string)
+# @return [File] The extracted emoji icon
+def resolve_icon(string)
   return false if string.nil? || string.empty?
 
   emoji = string.match(REGEX[1])
   return nil if emoji.nil?
-
-  return nil if Faraday.get("#{Discordrb::API.cdn_url}/emojis/#{emoji[1]}.png").status == 404
-
-  file = Tempfile.new(emoji[1])
-  file.write(Faraday.get("#{Discordrb::API.cdn_url}/emojis/#{emoji[1]}.png").body)
-  file.rewind
-  File.expand_path(file.path)
 end
 
 # Returns a random GIF link for use by the affection and snowball commands.
@@ -81,27 +75,9 @@ def gif(type)
   when :MISS
     MISS.sample.to_s
   when :BONK
-    BONK.sample.to_s  
+    BONK.sample.to_s
   else
     UI[21]
-  end
-end
-
-# Determines if a server has unlocked role icons based on its boost level.
-# @param boost_level [Integer] The current boost level of the server.
-# @return [Boolean] True if the server can have role icons, false otherwise.
-def unlocked_icons?(boost_level)
-  case boost_level
-  when 0
-    false
-  when 1
-    false
-  when 2
-    true
-  when 3
-    true
-  else
-    false
   end
 end
 
@@ -136,53 +112,10 @@ def next_chapter_date(channel)
   driver.get TOML['Chapter']['LINK']
 
   date = Date.parse(driver.page_source.match(REGEX[2])[0].strip)
-  modify_guild_channel("📖 #{date.strftime('%B %d')}#{add_suffix(date.day)} 3PM GMT")
+  name = "📖 #{date.strftime('%B %d')}#{add_suffix(date.day)} 3PM GMT"
 
+  Discordrb::API::Channel.update(bot.token, TOML['Chapter']['CHANNEL'], name, reason = REASON[4])
   driver.quit
-end
-
-# Makes an API request to update a guild role. All JSON parameters are optional.
-# @param server_id [Integer] The ID of the guild that the role is on.
-# @param user_id [Integer] The ID of the user that has this role.
-# @param name [String] The new name of the role.
-# @param color [Integer] The new color of the role.
-# @param icon [String, #Read] The new icon of the role.
-# @param role [Integer] The role to be modified.
-# @param type [Symbol] The type of edit to perform.
-def modify_guild_role(server: nil, user: nil, name: nil, color: nil, icon: nil, role: nil, type: nil)
-  if !icon.nil? && find_icon(icon)
-    image = find_icon(icon)
-    image_string = File.open("#{image}", 'rb')
-
-    if image.respond_to?(:read)
-      image_string = 'data:image/png;base64,'
-      image_string += Base64.strict_encode64(image.read)
-    end
-  else
-    image_string = nil
-  end
-
-  color_data = (resolve_color(color) unless color.nil?)
-
-  case type
-  when :booster
-    Frigid::Requests.booster_roles(user, server, color: color_data, name: name, icon: image_string)
-  when :event
-    Frigid::Requests.event_roles(role, color: color_data, name: name, icon: image_string)
-  end
-end
-
-# Makes an API request to delete a role from a guild.
-# @param server_id [Integer] The ID of the guild that the role is on.
-# @param user_id [Integer] The ID of the user that has this role.
-def delete_guild_role(server_id, user_id)
-  Frigid::Requests.delete_role(server_id, user_id)
-end
-
-# Updates the name of a channel.
-# @param name [String] The new name of the channel.
-def modifiy_guild_channel(name)
-  Frigid::Requests.update_channel(name)
 end
 
 # Checks if a guild member is still boosting a guild.
@@ -190,5 +123,5 @@ end
 # @param user_id [Integer, String] The ID that uniquely identifies this user across discord.
 # @return [Boolean] Returns true if the user is boosting the server, and false if the user is not.
 def get_booster_status(server_id, user_id)
-  Frigid::Requests.booster_status(server_id, user_id)
+  Discordrb::API::Server.resolve_booster(bot.token, server_id, user_id)
 end
