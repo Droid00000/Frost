@@ -5,6 +5,7 @@ require 'discordrb'
 require 'toml-rb'
 
 require_rel 'pins'
+require_rel 'data'
 require_rel 'snow'
 require_rel 'admin'
 require_rel 'events'
