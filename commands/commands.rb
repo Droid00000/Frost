@@ -6,7 +6,7 @@ require 'toml-rb'
 require 'discordrb'
 require_relative '../data/constants'
 
-bot = Discordrb::Bot.new(token: TOML['Discord']['RAW_TOKEN'], intents: [:server_messages])
+bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: [:servers])
 
 bot.ready do
   bot.update_status(ACTIVITY[4], ACTIVITY[5], ACTIVITY[3])

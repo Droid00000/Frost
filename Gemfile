@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-gem 'discordrb', github: 'shardlab/discordrb', branch: 'main'
+gem 'discordrb', github: 'droid00000/discordrb', branch: 'production'
 
 gem 'rufus-scheduler', '~> 3.2'
 
