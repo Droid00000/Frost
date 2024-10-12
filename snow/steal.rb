@@ -15,9 +15,7 @@ def steal_snowball(data)
     return
   end
 
-  unless snowball_records(user: data.user.id, type: :check_user)
-    snowball_records(user: data.user.id, type: :add_user)
-  end
+  snowball_records(user: data.user.id, type: :add_user) unless snowball_records(user: data.user.id, type: :check_user)
 
   unless TOML['Discord']['CONTRIBUTORS'].include?(data.user.id)
     data.edit_response(content: RESPONSE[12])

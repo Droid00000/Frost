@@ -45,7 +45,7 @@ def resolve_icon(string)
   return false if string.nil? || string.empty?
 
   emoji = string.match(REGEX[1])
-  return nil if emoji.nil?
+  nil if emoji.nil?
 end
 
 # Returns a random GIF link for use by the affection and snowball commands.
@@ -102,7 +102,7 @@ end
 
 # Extracts a date from a website.
 # @param channel [Integer] The channel to update.
-def next_chapter_date(channel)
+def next_chapter_date(_channel)
   driver = Selenium::WebDriver.for :chrome, options: Selenium::WebDriver::Options.chrome(args: ['--headless=new'])
   driver.get TOML['Chapter']['LINK']
 

@@ -78,8 +78,6 @@ def booster_records(server: nil, user: nil, role: nil, channel: nil, type: nil)
       POSTGRES[:Server_Boosters].where(server_id: server, user_id: user, status: false).insert(status: true)
     when :get_boosters
       POSTGRES[:Server_Boosters].where(status: false)
-    else
-      nil
     end
   end
 end
@@ -95,8 +93,6 @@ def archiver_records(server: nil, channel: nil, type: nil)
       POSTGRES[:Archiver_Settings].insert(server_id: server, channel_id: channel, enabled: true)
     when :disable
       POSTGRES[:Archiver_Settings].where(server_id: server).delete
-    else
-      nil
     end
   end
 end
@@ -105,15 +101,13 @@ def event_records(server: nil, user: nil, role: nil, type: nil)
   POSTGRES.transaction do
     case type
     when :check_role
-      !POSTGRES[:Event_Settings].where(server: server, role: role).select(:role_id).map(:role_id).empty?
+      !POSTGRES[:Event_Settings].where(server:, role:).select(:role_id).map(:role_id).empty?
     when :enabled
       !POSTGRES[:Event_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
     when :enable
       POSTGRES[:Event_Settings].insert(server_id: server, role_id: role, enabled: true)
     when :register_role
       POSTGRES[:Event_Settings].insert(server_id: server, role_id: role)
-    else
-      nil
     end
   end
 end
@@ -133,8 +127,6 @@ def snowball_records(user: nil, type: nil, balance: nil)
       POSTGRES[:Snowball_Players].insert(user_id: user, balance: 0)
     when :check_user
       !POSTGRES[:Snowball_Players].where(user_id: user).select(:user_id).map(:user_id).empty?
-    else
-      nil
     end
   end
 end

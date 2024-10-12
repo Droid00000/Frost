@@ -9,7 +9,7 @@ class Status
 
   # @param status [String]
   # @param avalibility [String]
-  def initialize(availability, status, *playing)
+  def initialize(availability, status, *_playing)
     @@status_data[:status] = status
     @@status_data[:availability] = availability.downcase
   end

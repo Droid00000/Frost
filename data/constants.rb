@@ -20,9 +20,9 @@ RESPONSE = {
   14 => "You're out of snowballs! You can collect more using the ``/collect snowball`` command!",
   15 => 'You missed!',
   16 => "This user doesn't have any snowballs.",
-  17 => "That role cannot be updated.",
-  18 => "``401: Unauthorized.``",
-  19 => "The bot has powered off.",
+  17 => 'That role cannot be updated.',
+  18 => '``401: Unauthorized.``',
+  19 => 'The bot has powered off.',
   20 => 'Succesfully archived one pinned message!',
   21 => "This user doesn't have enough snowballs."
 }.freeze
@@ -33,7 +33,7 @@ REASON = {
   2 => 'Server booster updated role.',
   3 => 'Server booster deleted role.',
   4 => 'Auto-update chapter release date.',
-  5 => "Event winner updated role."
+  5 => 'Event winner updated role.'
 }.freeze
 
 # Emojis that the bot can use.
