@@ -24,7 +24,8 @@ RESPONSE = {
   18 => '``401: Unauthorized.``',
   19 => 'The bot has powered off.',
   20 => 'Succesfully archived one pinned message!',
-  21 => "This user doesn't have enough snowballs."
+  21 => "This user doesn't have enough snowballs.",
+  22 => "Successfully set the archive channel to:"
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

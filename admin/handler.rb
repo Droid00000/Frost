@@ -29,7 +29,7 @@ module AdminCommands
   application_command(:pin).group(:archiver) do |group|
     group.subcommand('setup') do |event|
       event.defer(ephemeral: true)
-      setup_archiver(event)
+      setup_pin_archiver(event)
     end
   end
 end

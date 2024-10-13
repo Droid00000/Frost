@@ -86,7 +86,9 @@ def archiver_records(server: nil, channel: nil, type: nil)
   POSTGRES.transaction do
     case type
     when :check
-      POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id).empty?
+      !POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id).empty?
+    when :update
+      POSTGRES[:Archiver_Settings].where(server_id: server).insert(channel_id: channel)
     when :get
       POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id)&.join.to_i
     when :setup
