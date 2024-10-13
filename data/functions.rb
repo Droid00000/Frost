@@ -37,7 +37,7 @@ def safe_name?(string)
   !string.match(REGEX[4])
 end
 
-# Abstracts away the process or retriving a role icon.
+# Abstracts away the process of retriving a role icon.
 # @param [String] The emoji string serialized as a parased mention.
 # @return [File] The extracted emoji icon
 def resolve_icon(string)
@@ -100,8 +100,8 @@ def hit_or_miss?
 end
 
 # Extracts a date from a website.
-# @param channel [Integer] The channel to update.
-def next_chapter_date(_channel)
+# @param type [Symbol] An optional type argument that does nothing.
+def next_chapter_date(type:)
   driver = Selenium::WebDriver.for :chrome, options: Selenium::WebDriver::Options.chrome(args: ['--headless=new'])
   driver.get TOML['Chapter']['LINK']
 
