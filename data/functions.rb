@@ -55,19 +55,6 @@ def hit_or_miss?
   true if number <= 5
 end
 
-# Extracts a date from a website.
-# @param type [Symbol] An optional type argument that does nothing.
-def next_chapter_date(type:)
-  driver = Selenium::WebDriver.for :chrome, options: Selenium::WebDriver::Options.chrome(args: ['--headless=new'])
-  driver.get TOML['Chapter']['LINK']
-
-  date = Date.parse(driver.page_source.match(REGEX[2])[0].strip)
-  name = "📖 #{date.strftime('%B %d')}#{add_suffix(date.day)} 3PM GMT"
-
-  Discordrb::API::Channel.name(TOML['Discord']['TOKEN'], TOML['Chapter']['CHANNEL'], name, REASON[4])
-  driver.quit
-end
-
 # Checks if a guild member is still boosting a guild.
 # @param server [Integer, String] An ID that uniquely identifies a guild.
 # @param user [Integer, String] An ID that uniquely identifies a user.
@@ -81,6 +68,35 @@ end
 # @param role [Integer, String] An ID that uniquely identifies a role.
 def delete_guild_role(server, role)
   Discordrb::API::Server.delete_role(TOML['Discord']['TOKEN'], server, role, REASON[6])
+end
+
+# Determines the suffix to use at the end of a date.
+# @param day [Integer] The date to add a suffix to.
+# @return [String] The appropriate suffix.
+def add_suffix(day)
+  case day
+  when 1, 21, 31
+    'st'
+  when 2, 22
+    'nd'
+  when 3, 23
+    'rd'
+  else
+    'th'
+  end
+end
+
+# Extracts a date from a website.
+# @param type [Symbol] An optional type argument that does nothing.
+def next_chapter_date(type:)
+  driver = Selenium::WebDriver.for :chrome, options: Selenium::WebDriver::Options.chrome(args: ['--headless=new'])
+  driver.get TOML['Chapter']['LINK']
+
+  date = Date.parse(driver.page_source.match(REGEX[2])[0].strip)
+  name = "📖 #{date.strftime('%B %d')}#{add_suffix(date.day)} 3PM GMT"
+
+  Discordrb::API::Channel.name(TOML['Discord']['TOKEN'], TOML['Chapter']['CHANNEL'], name, REASON[4])
+  driver.quit
 end
 
 # Returns a random GIF link for use by the affection and snowball commands.
@@ -108,21 +124,5 @@ def gif(type)
     BONK.sample.to_s
   else
     UI[21]
-  end
-end
-
-# Determines the suffix to use at the end of a date.
-# @param day [Integer] The date to add a suffix to.
-# @return [String] The appropriate suffix.
-def add_suffix(day)
-  case day
-  when 1, 21, 31
-    'st'
-  when 2, 22
-    'nd'
-  when 3, 23
-    'rd'
-  else
-    'th'
   end
 end
