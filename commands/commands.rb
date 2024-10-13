@@ -116,11 +116,11 @@ bot.register_application_command(:event, 'Event roles', default_member_permissio
         option.user('user', 'The user to remove from the database.', required: true)
       end
 
-      group.subcommand('blacklist', 'Blacklist a user from using the booster perks functionality.') do |option|
+      group.subcommand('ban', 'Blacklist a user from using the booster perks functionality.') do |option|
         option.user('user', 'The user to blacklist.', required: true)
       end
 
-      group.subcommand('un-blacklist', 'Blacklist a user from using the booster perks functionality.') do |option|
+      group.subcommand('unban', 'Blacklist a user from using the booster perks functionality.') do |option|
         option.user('user', 'The user to un-blacklist.', required: true)
       end
 

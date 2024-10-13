@@ -31,18 +31,13 @@ def admin_booster_help_embed(data)
       embed.title = '**Booster Admin Commands**'
       embed.colour = UI[5]
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
-      embed.add_field(name: '``/hug``', value: EMBED[13])
-      embed.add_field(name: '``/nom``', value: EMBED[14])
-      embed.add_field(name: '``/poke``', value: EMBED[15])
-      embed.add_field(name: '``/help``', value: EMBED[16])
-      embed.add_field(name: '``/about``', value: EMBED[17])
-      embed.add_field(name: '``/sleep``', value: EMBED[18])
-      embed.add_field(name: '``/angered``', value: EMBED[19])
-      embed.add_field(name: '``/shutdown``', value: EMBED[20])
-      embed.add_field(name: '``/booster role help``', value: EMBED[21])
-      embed.add_field(name: '``/event roles setup``', value: EMBED[22])
-      embed.add_field(name: '``/pin archiver setup``', value: EMBED[23])
-      embed.add_field(name: '``/boosting admin help``', value: EMBED[24])
+      embed.add_field(name: '``/boost admin add``', value: EMBED[13])
+      embed.add_field(name: '``/boost admin ban``', value: EMBED[14])
+      embed.add_field(name: '``/boost admin help``', value: EMBED[15])
+      embed.add_field(name: '``/boost admin unban``', value: EMBED[16])
+      embed.add_field(name: '``/boost admin setup``', value: EMBED[17])
+      embed.add_field(name: '``/boost admin disable``', value: EMBED[18])
+      embed.add_field(name: '``//boost admin delete``', value: EMBED[19])
     end
   end
 end

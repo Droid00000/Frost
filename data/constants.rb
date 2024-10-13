@@ -54,7 +54,17 @@ EMBED = {
   9 => 'Opens the booster perks help menu.',
   10 => 'sets up the event roles functionality.',
   11 => 'sets up the pin archiver.',
-  12 => 'Opens the booster perks help menu in administrator mode.'
+  12 => 'Opens the booster perks help menu in administrator mode.',
+  13 => 'Manually adds a member to the booster database.',
+  14 => 'Bans a member from using the booster perks feature in this server.',
+  15 => 'Opens the help menu you are currently viewing.',
+  16 => 'Unbans a member from using the booster perks feature in this server.',
+  17 => 'Sets up the booster perks feature in this server. Run this command again to update your settings.'
+  18 => 'Disables the booster perks feature in this server.',
+  19 => 'Manually deletes a member from the booster database.',
+  20 => 'Creates your custom role. Optionally, you may put a custom emoji in the icon option.',
+  21 => 'Lets you edit your custom role. All parameters are optional.',
+  22 => 'Deletes your custom role. You can make a new role at any time provided you keep boosting the server.'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

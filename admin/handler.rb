@@ -56,12 +56,12 @@ module AdminCommands
       admin_remove_user(event)
     end
 
-    group.subcommand('blacklist') do |event|
+    group.subcommand('ban') do |event|
       event.defer(ephemeral: false)
       admin_blacklist_user(event)
     end
 
-    group.subcommand('un-blacklist') do |event|
+    group.subcommand('unban') do |event|
       event.defer(ephemeral: false)
       admin_remove_blacklist(event)
     end
