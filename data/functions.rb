@@ -47,6 +47,42 @@ def resolve_icon(string)
   nil if emoji.nil?
 end
 
+# Determines a true or false value based on a random number.
+# @return [Boolean] Whether the number was in the specified range.
+def hit_or_miss?
+  number = rand(1..10)
+  false if number >= 5
+  true if number <= 5
+end
+
+# Extracts a date from a website.
+# @param type [Symbol] An optional type argument that does nothing.
+def next_chapter_date(type:)
+  driver = Selenium::WebDriver.for :chrome, options: Selenium::WebDriver::Options.chrome(args: ['--headless=new'])
+  driver.get TOML['Chapter']['LINK']
+
+  date = Date.parse(driver.page_source.match(REGEX[2])[0].strip)
+  name = "📖 #{date.strftime('%B %d')}#{add_suffix(date.day)} 3PM GMT"
+
+  Discordrb::API::Channel.name(TOML['Discord']['TOKEN'], TOML['Chapter']['CHANNEL'], name, REASON[4])
+  driver.quit
+end
+
+# Checks if a guild member is still boosting a guild.
+# @param server [Integer, String] An ID that uniquely identifies a guild.
+# @param user [Integer, String] An ID that uniquely identifies a user.
+# @return [Boolean] Returns true if the user is boosting the server; false otherwise.
+def get_booster_status(server, user)
+  Discordrb::API::Server.resolve_booster(TOML['Discord']['TOKEN'], server, user)
+end
+
+# Deletes a role in a guild.
+# @param server [Integer, String] An ID that uniquely identifies a guild.
+# @param role [Integer, String] An ID that uniquely identifies a role.
+def delete_guild_role(server, role)
+  Discordrb::API::Server.delete_role(TOML['Discord']['TOKEN'], server, role, REASON[6])
+end
+
 # Returns a random GIF link for use by the affection and snowball commands.
 # @param [Integer] An integer from 1-7 representing the type of action.
 # @return [String] The appropriate GIF for the action.
@@ -89,40 +125,4 @@ def add_suffix(day)
   else
     'th'
   end
-end
-
-# Determines a true or false value based on a random number.
-# @return [Boolean] Whether the number was in the specified range.
-def hit_or_miss?
-  number = rand(1..10)
-  false if number >= 5
-  true if number <= 5
-end
-
-# Extracts a date from a website.
-# @param type [Symbol] An optional type argument that does nothing.
-def next_chapter_date(type:)
-  driver = Selenium::WebDriver.for :chrome, options: Selenium::WebDriver::Options.chrome(args: ['--headless=new'])
-  driver.get TOML['Chapter']['LINK']
-
-  date = Date.parse(driver.page_source.match(REGEX[2])[0].strip)
-  name = "📖 #{date.strftime('%B %d')}#{add_suffix(date.day)} 3PM GMT"
-
-  Discordrb::API::Channel.name(TOML['Discord']['TOKEN'], TOML['Chapter']['CHANNEL'], name, REASON[4])
-  driver.quit
-end
-
-# Checks if a guild member is still boosting a guild.
-# @param server [Integer, String] An ID that uniquely identifies a guild.
-# @param user [Integer, String] An ID that uniquely identifies a user.
-# @return [Boolean] Returns true if the user is boosting the server; false otherwise.
-def get_booster_status(server, user)
-  Discordrb::API::Server.resolve_booster(TOML['Discord']['TOKEN'], server, user)
-end
-
-# Deletes a role in a guild.
-# @param server [Integer, String] An ID that uniquely identifies a guild.
-# @param role [Integer, String] An ID that uniquely identifies a role.
-def delete_guild_role(server, role)
-  Discordrb::API::Server.delete_role(TOML['Discord']['TOKEN'], server, role, REASON[6])
 end
