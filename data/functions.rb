@@ -113,9 +113,16 @@ def next_chapter_date(_channel)
 end
 
 # Checks if a guild member is still boosting a guild.
-# @param server_id [Integer, String] The ID of the guild that this guild member belongs to.
-# @param user_id [Integer, String] The ID that uniquely identifies this user across discord.
-# @return [Boolean] Returns true if the user is boosting the server, and false if the user is not.
-def get_booster_status(server_id, user_id)
-  Discordrb::API::Server.resolve_booster(TOML['Discord']['TOKEN'], server_id, user_id)
+# @param server [Integer, String] An ID that uniquely identifies a guild.
+# @param user [Integer, String] An ID that uniquely identifies a user.
+# @return [Boolean] Returns true if the user is boosting the server; false otherwise.
+def get_booster_status(server, user)
+  Discordrb::API::Server.resolve_booster(TOML['Discord']['TOKEN'], server, user)
+end
+
+# Deletes a role in a guild.
+# @param server [Integer, String] An ID that uniquely identifies a guild.
+# @param role [Integer, String] An ID that uniquely identifies a role.
+def delete_guild_role(server, role)
+  Discordrb::API::Server.delete_role(TOML['Discord']['TOKEN'], server, role, REASON[6])
 end

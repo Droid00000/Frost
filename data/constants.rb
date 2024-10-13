@@ -77,7 +77,8 @@ REASON = {
   2 => 'Server booster updated role.',
   3 => 'Server booster deleted role.',
   4 => 'Auto-update chapter release date.',
-  5 => 'Event winner updated role.'
+  5 => 'Event winner updated role.',
+  6 => 'Server booster stopped boosting.'
 }.freeze
 
 # Emojis that the bot can use.
@@ -111,6 +112,7 @@ ACTIVITY = {
 TOML = TomlRB.load_file(File.join(File.expand_path('..', __dir__), 'config.toml'))
 
 # A series of regular expressions utilized by the bot.
+# REGEX[4] is used to ensure a name doesn't contain any bad words.
 REGEX = {
   1 => /:(\d+)>$/,
   2 => /(?<=New chapter arrives on)(.*?)(?=<)/,
