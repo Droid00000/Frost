@@ -84,6 +84,9 @@ bot.register_application_command(:pin, 'Pin archive', default_member_permissions
     group.subcommand(:setup, 'Setup the pin-archiver functionality.') do |option|
       option.channel('channel', 'Which channel should archived pins be sent to?', required: true, types: [:text])
     end
+
+    group.subcommand(:disable, 'disable the pin-archiver functionality.') do |option|
+     end   
   end
 end
 
@@ -91,6 +94,9 @@ bot.register_application_command(:event, 'Event roles setup', default_member_per
   cmd.subcommand_group(:roles, 'Event roles!') do |group|
     group.subcommand(:setup, 'Setup the event roles functionality.') do |option|
       option.role('role', 'Which role should be modifiable by its users?', required: true)
+    end
+
+    group.subcommand(:disable, 'Disable the event roles functionality.') do |option|
     end
   end
 end

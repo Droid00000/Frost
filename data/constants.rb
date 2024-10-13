@@ -38,7 +38,11 @@ RESPONSE = {
   32 => 'Successfully un-banned the following user from using the booster perks functionality:',
   33 => 'Successfully set your hoist-role to the following role:',
   34 => 'Booster perks are already disabled in this server.',
-  35 => "successfully disabled booster perks in this server."
+  35 => "Successfully disabled booster perks in this server.",
+  36 => "This server hasn't enabled the pin archiver.",
+  37 => "Successfully disabled the pin archiver in this server.",
+  38 => "This server hasn't enabled event perks.",
+  39 => "Successfully disabled event perks in this server."
 }.freeze
 
 # A list of values for embed responses.

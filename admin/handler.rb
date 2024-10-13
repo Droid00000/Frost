@@ -6,7 +6,6 @@ require_relative 'roles'
 require_relative 'status'
 require_relative 'boosts'
 require_relative 'settings'
-require 'discordrb'
 
 module AdminCommands
   extend Discordrb::EventContainer
@@ -36,12 +35,22 @@ module AdminCommands
       event.defer(ephemeral: true)
       setup_pin_archiver(event)
     end
+
+    group.subcommand('disable') do |event|
+      event.defer(ephemeral: true)
+      disable_pin_archiver(event)
+    end
   end
 
   application_command(:event).group(:roles) do |group|
     group.subcommand('setup') do |event|
       event.defer(ephemeral: true)
       setup_event_roles(event)
+    end
+
+    group.subcommand('disable') do |event|
+      event.defer(ephemeral: true)
+      disable_event_roles(event)
     end
   end
 

@@ -11,7 +11,8 @@ POSTGRES.create_table?(:Event_Settings) do
   Boolean :enabled, null: false
   Bigint :banned_users, null: false
   Bigint :role_id, unique: true, null: false
-  Bigint :server_id, unique: true, null: false
+  Bigint :server_id, unique: false, null: false
+  unique %i[role_id server_id]
 end
 
 POSTGRES.create_table?(:Archiver_Settings) do
@@ -23,10 +24,9 @@ end
 
 POSTGRES.create_table?(:Booster_Settings) do
   primary_key :id
-  Boolean :enabled, null: true
+  Boolean :enabled, null: false
   Bigint :server_id, null: false, unique: true
   Bigint :hoist_role, null: false, unique: true
-  Bigint :log_channel, null: true, unique: true
 end
 
 POSTGRES.create_table?(:Banned_Boosters) do
@@ -63,7 +63,7 @@ def booster_records(server: nil, user: nil, role: nil, type: nil)
     when :enabled
       !POSTGRES[:Booster_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
     when :disable
-      POSTGRES[:Booster_Settings].where(server_id: server).insert(enabled: nil)
+      POSTGRES[:Booster_Settings].where(server_id: server).delete
     when :setup
       POSTGRES[:Booster_Settings].insert(server_id: server, hoist_role: role, enabled: true)
     when :check_user
@@ -116,6 +116,8 @@ def event_records(server: nil, role: nil, type: nil)
       POSTGRES[:Event_Settings].insert(server_id: server, role_id: role, enabled: true)
     when :register_role
       POSTGRES[:Event_Settings].insert(server_id: server, role_id: role)
+    when :disable
+      POSTGRES[:Event_Settings].where(server_id: server).delete
     end
   end
 end
