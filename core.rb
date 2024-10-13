@@ -33,8 +33,8 @@ bot.application_command(:eval) do |event|
   event.defer(ephemeral: true)
   if event.user.id == TOML['Discord']['OWNER']&.to_i
     begin
-      eval event.options['code']
-      event.edit_response(content: "**Success:** ```#{event.options['code']}```")
+      result = eval event.options['code']
+      event.edit_response(content: "**Success:** ```#{event.options['code']}``` **Result:** ```#{result}```")
     rescue StandardError, SyntaxError => e
       event.edit_response(content: "**Error:** ```#{e.message}```")
     end
