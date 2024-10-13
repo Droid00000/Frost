@@ -42,7 +42,8 @@ RESPONSE = {
   36 => "This server hasn't enabled the pin archiver.",
   37 => "Successfully disabled the pin archiver in this server.",
   38 => "This server hasn't enabled event perks.",
-  39 => "Successfully disabled event perks in this server."
+  39 => "Successfully disabled event perks in this server.",
+  40 => 'Runtime error.'
 }.freeze
 
 # A list of values for embed responses.
@@ -63,7 +64,7 @@ EMBED = {
   14 => 'Bans a member from using the booster perks feature in this server.',
   15 => 'Opens the help menu you are currently viewing.',
   16 => 'Unbans a member from using the booster perks feature in this server.',
-  17 => 'Sets up the booster perks feature in this server. Run this command again to update your settings.'
+  17 => 'Sets up the booster perks feature in this server. Run this command again to update your settings.',
   18 => 'Disables the booster perks feature in this server.',
   19 => 'Manually deletes a member from the booster database.',
   20 => 'Creates your custom role. Optionally, you may put a custom emoji in the icon option.',

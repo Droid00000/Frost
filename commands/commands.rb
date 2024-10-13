@@ -46,6 +46,10 @@ bot.register_application_command(:archive, 'Archives pins in a specified channel
   option.channel('channel', 'Which channel needs to have its pins archived?', required: true, types: [:text])
 end
 
+bot.register_application_command(:eval, 'Allows the bot owner to execute code.', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1]) do |option|
+  option.string('code', 'The code you want to execute.', required: true)
+end
+
 bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: 32, contexts: [0], integration_types: [0]) do |option|
 end
 
@@ -164,5 +168,7 @@ bot.register_application_command(:event, 'Event roles', default_member_permissio
     end
   end
 end
+
+at_exit { bot.stop }
 
 bot.run

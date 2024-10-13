@@ -29,6 +29,20 @@ bot.application_command(:shutdown) do |event|
   end
 end
 
+bot.application_command(:eval) do |event|
+  event.defer(ephemeral: true)
+  if event.user.id == TOML['Discord']['OWNER']&.to_i
+    begin
+      eval event.options['code']
+      event.edit_response(content: event.options['code'])
+    rescue StandardError
+      event.edit_response(content: RESPONSE[40])
+    end
+  else
+    event.edit_response(content: RESPONSE[18])
+  end
+end
+
 bot.include! EventRoles
 bot.include! BoosterPerks
 bot.include! HugAffection
@@ -41,5 +55,7 @@ bot.include! SleepAffection
 bot.include! AngerAffection
 bot.include! AutoPinArchiver
 bot.include! ManualPinArchiver
+
+at_exit { bot.stop }
 
 bot.run

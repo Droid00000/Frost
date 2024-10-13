@@ -4,7 +4,7 @@ require_relative 'help'
 require_relative 'pins'
 require_relative 'roles'
 require_relative 'status'
-require_relative 'boosts'
+require_relative 'booster'
 require_relative 'settings'
 
 module AdminCommands
