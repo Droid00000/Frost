@@ -32,7 +32,7 @@ module ManualPinArchiver
           embed.description = message.content.to_s
           embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: message.author.username.to_s,
                                                               url: message.link.to_s, icon_url: message.author.avatar_url.to_s)
-          embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{message.id} • #{time_data(message.timestamp.to_s)}")
+          embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{message.id} • #{resolve_time(message.timestamp.to_s)}")
           embed.add_field(name: 'Source', value: "[Jump!](#{message.link})")
         end
         message.unpin

@@ -7,7 +7,6 @@ require 'discordrb'
 require 'selenium-webdriver'
 
 require_relative 'embeds'
-require_relative 'schema'
 require_relative 'constants'
 
 # Initilaze a new color object for a role.
@@ -23,7 +22,7 @@ end
 # Converts a unix timestap into a readable timestamp.
 # @param timestamp [Integer] The unix timestamp to covert.
 # @return [String] Time data serialized as a string.
-def time_data(timestamp)
+def resolve_time(timestamp)
   parsed_time = Time.parse(timestamp)
   unix_time = Time.at(parsed_time&.to_i)
   unix_time.strftime('%m/%d/%Y %H:%M')
@@ -118,5 +117,5 @@ end
 # @param user_id [Integer, String] The ID that uniquely identifies this user across discord.
 # @return [Boolean] Returns true if the user is boosting the server, and false if the user is not.
 def get_booster_status(server_id, user_id)
-  Discordrb::API::Server.resolve_booster(bot.token, server_id, user_id)
+  Discordrb::API::Server.resolve_booster(TOML['Discord']['TOKEN'], server_id, user_id)
 end
