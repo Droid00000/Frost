@@ -25,7 +25,9 @@ RESPONSE = {
   19 => 'The bot has powered off.',
   20 => 'Succesfully archived one pinned message!',
   21 => "This user doesn't have enough snowballs.",
-  22 => "Successfully set the archive channel to:"
+  22 => 'Successfully set the archive channel to:',
+  23 => "You've already setup event perks for this role.",
+  24 => 'Successfully setup event perks for this role:'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

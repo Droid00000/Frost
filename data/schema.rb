@@ -99,7 +99,7 @@ def archiver_records(server: nil, channel: nil, type: nil)
   end
 end
 
-def event_records(server: nil, user: nil, role: nil, type: nil)
+def event_records(server: nil, role: nil, type: nil)
   POSTGRES.transaction do
     case type
     when :check_role
