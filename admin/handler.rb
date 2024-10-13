@@ -44,4 +44,41 @@ module AdminCommands
       setup_event_roles(event)
     end
   end
+
+  application_command(:boost).group(:admin) do |group|
+    group.subcommand('add') do |event|
+      event.defer(ephemeral: true)
+      admin_add_booster(event)
+    end
+
+    group.subcommand('delete') do |event|
+      event.defer(ephemeral: false)
+      admin_remove_user(event)
+    end
+
+    group.subcommand('blacklist') do |event|
+      event.defer(ephemeral: false)
+      admin_blacklist_user(event)
+    end
+
+    group.subcommand('un-blacklist') do |event|
+      event.defer(ephemeral: false)
+      admin_remove_blacklist(event)
+    end
+
+    group.subcommand('setup') do |event|
+      event.defer(ephemeral: false)
+      admin_setup_perks(event)
+    end
+
+    group.subcommand('disable') do |event|
+      event.defer(ephemeral: false)
+      admin_disable_perks(event)
+    end
+
+    group.subcommand('help') do |event|
+      event.defer(ephemeral: false)
+      admin_booster_help_embed(event)
+    end
+  end
 end

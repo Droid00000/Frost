@@ -27,7 +27,34 @@ RESPONSE = {
   21 => "This user doesn't have enough snowballs.",
   22 => 'Successfully set the archive channel to:',
   23 => "You've already setup event perks for this role.",
-  24 => 'Successfully setup event perks for this role:'
+  24 => 'Successfully setup event perks for this role:',
+  25 => 'This user is already a booster in this server.',
+  26 => 'Successfully added the following user to the database:',
+  27 => "This user isn't boosting your server, or hasn't claimed their role.",
+  28 => 'Successfully removed the following user from the database:',
+  29 => 'This user has already been banned from using the booster perks functionality.',
+  30 => 'Successfully banned the following user from using the booster perks functionality:',
+  31 => "This user isn't banned from using the booster perks functionality.",
+  32 => 'Successfully un-banned the following user from using the booster perks functionality:',
+  33 => 'Successfully set your hoist-role to the following role:',
+  34 => 'Booster perks are already disabled in this server.',
+  35 => "successfully disabled booster perks in this server."
+}.freeze
+
+# A list of values for embed responses.
+EMBED = {
+  1 => 'Sends a random GIF to hug a server member.',
+  2 => 'Sends a random GIF to nom a server member.',
+  3 => 'Sends a random GIF to poke a server member.',
+  4 => 'Opens the general help menu.',
+  5 => 'Shows some information about the bot.',
+  6 => 'Sends a random GIF to tell a server member to go to sleep.',
+  7 => 'Sends a random GIF to show your anger towards a server member.',
+  8 => 'Allows the bot owner to shutdown the bot.',
+  9 => 'Opens the booster perks help menu.',
+  10 => 'sets up the event roles functionality.',
+  11 => 'sets up the pin archiver.',
+  12 => 'Opens the booster perks help menu in administrator mode.'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

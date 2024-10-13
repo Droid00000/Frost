@@ -23,7 +23,7 @@ end
 
 POSTGRES.create_table?(:Booster_Settings) do
   primary_key :id
-  Boolean :enabled, null: false
+  Boolean :enabled, null: true
   Bigint :server_id, null: false, unique: true
   Bigint :hoist_role, null: false, unique: true
   Bigint :log_channel, null: true, unique: true
@@ -51,7 +51,7 @@ POSTGRES.create_table?(:Snowball_Players) do
   Bigint :balance, null: false, default: 0
 end
 
-def booster_records(server: nil, user: nil, role: nil, channel: nil, type: nil)
+def booster_records(server: nil, user: nil, role: nil, type: nil)
   POSTGRES.transaction do
     case type
     when :create
@@ -62,16 +62,22 @@ def booster_records(server: nil, user: nil, role: nil, channel: nil, type: nil)
       POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).select(:role_id).map(:role_id)&.join.to_i
     when :enabled
       !POSTGRES[:Booster_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
+    when :disable
+      POSTGRES[:Booster_Settings].where(server_id: server).insert(enabled: nil)
     when :setup
-      POSTGRES[:Booster_Settings].insert(server_id: server, hoist_role: role, log_channel: channel, enabled: true)
+      POSTGRES[:Booster_Settings].insert(server_id: server, hoist_role: role, enabled: true)
     when :check_user
       !POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).empty?
     when :hoist_role
       POSTGRES[:Booster_Settings].where(server_id: server).select(:hoist_role).map(:hoist_role)&.join.to_i
+    when :update_hoist_role
+      POSTGRES[:Booster_Settings].where(server_id: server).select(:hoist_role).insert(hoist_role: role)
     when :banned
       !POSTGRES[:Banned_Boosters].where(server_id: server, user_id: user).empty?
     when :ban
       POSTGRES[:Banned_Boosters].insert(server_id: server, user_id: user)
+    when :unban
+      POSTGRES[:Banned_Boosters].where(server_id: server, user_id: user).delete
     when :reset_status
       POSTGRES[:Server_Boosters].where(status: false).insert(status: true)
     when :update_status

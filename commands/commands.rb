@@ -105,16 +105,15 @@ bot.register_application_command(:event, 'Event roles', default_member_permissio
     end
   end
 
-  bot.register_application_command(:boosting, 'Booster perks admin', default_member_permissions: 268435456, contexts: [0], integration_types: [0]) do |cmd|
+  bot.register_application_command(:boost, 'Booster perks admin', default_member_permissions: 268435456, contexts: [0], integration_types: [0]) do |cmd|
     cmd.subcommand_group(:admin, 'Booster admin!') do |group|
-      group.subcommand('add', 'Manually add a user to the database.') do |option|
+      group.subcommand('add', "Manually add a 'booster' to the database.") do |option|
         option.user('user', 'The user to add to the database.', required: true)
         option.role('role', 'The role to add to the database.', required: true)
       end
 
       group.subcommand('delete', 'Manually remove a user from the database!') do |option|
-        option.user('user', 'The user to delete the database.', required: true)
-        option.role('role', 'The role to delete the database.', required: true)
+        option.user('user', 'The user to remove from the database.', required: true)
       end
 
       group.subcommand('blacklist', 'Blacklist a user from using the booster perks functionality.') do |option|
@@ -125,8 +124,11 @@ bot.register_application_command(:event, 'Event roles', default_member_permissio
         option.user('user', 'The user to un-blacklist.', required: true)
       end
 
-      group.subcommand(:setup, 'Setup the booster perks functionality.') do |option|
+      group.subcommand('setup', 'Setup the booster perks functionality.') do |option|
         option.role('role', 'Which role should al custom booster roles be placed above?', required: true)
+      end
+
+      group.subcommand('disable', 'disable the booster perks functionality.') do |option|
       end
 
       group.subcommand('help', 'Open the administrator help menu for this functionality.') do |option|

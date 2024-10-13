@@ -9,18 +9,40 @@ def general_help_embed(data)
       embed.title = '**General Commands**'
       embed.colour = UI[5]
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
-      embed.add_field(name: '``/hug``', value: 'Sends a random GIF to hug a server member.')
-      embed.add_field(name: '``/nom``', value: 'Sends a random GIF to nom a server member.')
-      embed.add_field(name: '``/poke``', value: 'Sends a random GIF to poke a server member.')
-      embed.add_field(name: '``/help``', value: 'Opens the general help menu.')
-      embed.add_field(name: '``/about``', value: 'Shows some information about the bot.')
-      embed.add_field(name: '``/sleep``', value: 'Sends a random GIF to tell a server member to go to sleep.')
-      embed.add_field(name: '``/angered``', value: 'Sends a random GIF to show your anger towards a server member.')
-      embed.add_field(name: '``/shutdown``', value: 'Allows the bot owner to shutdown the bot.')
-      embed.add_field(name: '``/booster role help``', value: 'Opens the booster perks help menu.')
-      embed.add_field(name: '``/event roles setup``', value: 'sets up the event roles functionality.')
-      embed.add_field(name: '``/pin archiver setup``', value: 'sets up the pin archiver.')
-      embed.add_field(name: '``/boosting admin help``', value: 'Opens the booster perks help menu in administrator mode.')
+      embed.add_field(name: '``/hug``', value: EMBED[1])
+      embed.add_field(name: '``/nom``', value: EMBED[2])
+      embed.add_field(name: '``/poke``', value: EMBED[3])
+      embed.add_field(name: '``/help``', value: EMBED[4])
+      embed.add_field(name: '``/about``', value: EMBED[5])
+      embed.add_field(name: '``/sleep``', value: EMBED[6])
+      embed.add_field(name: '``/angered``', value: EMBED[7])
+      embed.add_field(name: '``/shutdown``', value: EMBED[8])
+      embed.add_field(name: '``/booster role help``', value: EMBED[9])
+      embed.add_field(name: '``/event roles setup``', value: EMBED[10])
+      embed.add_field(name: '``/pin archiver setup``', value: EMBED[11])
+      embed.add_field(name: '``/boosting admin help``', value: EMBED[12])
+    end
+  end
+end
+
+def admin_booster_help_embed(data)
+  data.edit_response do |builder|
+    builder.add_embed do |embed|
+      embed.title = '**Booster Admin Commands**'
+      embed.colour = UI[5]
+      embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
+      embed.add_field(name: '``/hug``', value: EMBED[13])
+      embed.add_field(name: '``/nom``', value: EMBED[14])
+      embed.add_field(name: '``/poke``', value: EMBED[15])
+      embed.add_field(name: '``/help``', value: EMBED[16])
+      embed.add_field(name: '``/about``', value: EMBED[17])
+      embed.add_field(name: '``/sleep``', value: EMBED[18])
+      embed.add_field(name: '``/angered``', value: EMBED[19])
+      embed.add_field(name: '``/shutdown``', value: EMBED[20])
+      embed.add_field(name: '``/booster role help``', value: EMBED[21])
+      embed.add_field(name: '``/event roles setup``', value: EMBED[22])
+      embed.add_field(name: '``/pin archiver setup``', value: EMBED[23])
+      embed.add_field(name: '``/boosting admin help``', value: EMBED[24])
     end
   end
 end
