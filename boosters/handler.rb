@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'discordrb'
 require_relative 'create'
 require_relative 'delete'
 require_relative 'audit'

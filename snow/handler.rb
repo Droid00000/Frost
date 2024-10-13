@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../data/constants'
-require_relative '../data/schema'
 require_relative 'collect'
 require_relative 'throw'
 require_relative 'steal'
-require 'discordrb'
 
 module SnowballFights
   extend Discordrb::EventContainer
