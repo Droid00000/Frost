@@ -34,9 +34,9 @@ bot.application_command(:eval) do |event|
   if event.user.id == TOML['Discord']['OWNER']&.to_i
     begin
       eval event.options['code']
-      event.edit_response(content: event.options['code'])
-    rescue StandardError
-      event.edit_response(content: RESPONSE[40])
+      event.edit_response(content: "**Success:** ```#{event.options['code']}```")
+    rescue StandardError, SyntaxError => e
+      event.edit_response(content: "**Error:** ```#{e.message}```")
     end
   else
     event.edit_response(content: RESPONSE[18])

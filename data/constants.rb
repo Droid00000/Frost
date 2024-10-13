@@ -42,8 +42,7 @@ RESPONSE = {
   36 => "This server hasn't enabled the pin archiver.",
   37 => "Successfully disabled the pin archiver in this server.",
   38 => "This server hasn't enabled event perks.",
-  39 => "Successfully disabled event perks in this server.",
-  40 => 'Runtime error.'
+  39 => "Successfully disabled event perks in this server."
 }.freeze
 
 # A list of values for embed responses.
