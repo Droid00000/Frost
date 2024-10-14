@@ -9,7 +9,6 @@ POSTGRES = Sequel.connect(TOML['Postgres']['URL'], max_connections: 7)
 POSTGRES.create_table?(:Event_Settings) do
   primary_key :id
   Boolean :enabled, null: false
-  Bigint :banned_users, null: false
   Bigint :role_id, unique: true, null: false
   Bigint :server_id, unique: false, null: false
   unique %i[role_id server_id]
@@ -109,7 +108,7 @@ def event_records(server: nil, role: nil, type: nil)
   POSTGRES.transaction do
     case type
     when :check_role
-      !POSTGRES[:Event_Settings].where(server:, role:).select(:role_id).map(:role_id).empty?
+      !POSTGRES[:Event_Settings].where(server_id: server, role_id: role).select(:role_id).map(:role_id).empty?
     when :enabled
       !POSTGRES[:Event_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
     when :enable
@@ -118,6 +117,8 @@ def event_records(server: nil, role: nil, type: nil)
       POSTGRES[:Event_Settings].insert(server_id: server, role_id: role)
     when :disable
       POSTGRES[:Event_Settings].where(server_id: server).delete
+    when :get_roles
+      POSTGRES[:Event_Settings].where(server_id: server).select(:role_id)
     end
   end
 end

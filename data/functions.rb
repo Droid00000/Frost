@@ -6,6 +6,7 @@ require 'toml-rb'
 require 'discordrb'
 require 'selenium-webdriver'
 
+require_relative 'schema'
 require_relative 'embeds'
 require_relative 'constants'
 
@@ -124,5 +125,31 @@ def gif(type)
     BONK.sample.to_s
   else
     UI[21]
+  end
+end
+
+def settings(type)
+  case type
+  when :archiver
+    if archiver_records(server: data.server.id, type: :check)
+      then "Enabled: Yes, Archive Channel: <##{archiver_records(server: data.server.id, type: :get)}>"
+    else
+      'Enabled: No>'
+    end
+
+  when :booster
+    if booster_records(server: data.server.id, type: :enabled)
+      then "Enabled: Yes, Hoist Role: <@&#{booster_records(server: data.server.id, type: :hoist_role)}>"
+    else
+      'Enabled: No'
+    end
+  when :events
+    if event_records(server: data.server.id, type: :enabled)
+      then "Enabled: Yes, Roles: #{event_records(server: data.server.id, type: :get_roles).transform_values { |r|
+             "<@&#{r}>"
+           }.keys.to_s}"
+    else
+      'Enabled: No'
+    end
   end
 end
