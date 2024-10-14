@@ -111,7 +111,7 @@ bot.register_application_command(:event, 'Event roles', default_member_permissio
     group.subcommand(:edit, 'Setup the event roles functionality.') do |option|
       option.role('role', 'Which role do you want to modifiy?', required: true)
       option.string('name', 'Provide a name for your role.', required: false)
-      option.string('color', 'Provide a HEX color for your role.', required: false)
+      option.string('color', 'Provide a HEX color for your role.', required: false, min_value: 6, max_value: 7)
       option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
     end
   end
@@ -150,13 +150,13 @@ bot.register_application_command(:event, 'Event roles', default_member_permissio
       cmd.subcommand_group(:role, 'Booster roles!') do |group|
         group.subcommand('claim', 'Claim your custom booster role!') do |option|
           option.string('name', 'Provide a name for your role.', required: true)
-          option.string('color', 'Provide a HEX color for your role.', required: true)
+          option.string('color', 'Provide a HEX color for your role.', required: true, min_value: 6, max_value: 7)
           option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
         end
 
         group.subcommand('edit', 'Edit your custom booster role!') do |option|
           option.string('name', 'Provide a name for your role.', required: false)
-          option.string('color', 'Provide a HEX color for your role.', required: false)
+          option.string('color', 'Provide a HEX color for your role.', required: false, min_value: 6, max_value: 7)
           option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
         end
 
