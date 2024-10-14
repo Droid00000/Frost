@@ -9,8 +9,6 @@ The most up-to-date release of the Ruby programming language, a PostgreSQL datab
 - [Sequel](https://github.com/jeremyevans/sequel)
 - [Toml-rb](https://github.com/emancu/toml-rb)
 - [Bundler](https://rubygems.org/gems/bundler/versions/2.5.18)
-- [Faraday](https://github.com/lostisland/faraday)
-- [Tempfile](https://github.com/ruby/tempfile)
 - [Discordrb](https://github.com/shardlab/discordrb)
 - [Require-All](https://github.com/jarmo/require_all)
 - [Rufus-Scheduler](https://github.com/jmettraux/rufus-scheduler)
@@ -55,6 +53,10 @@ LINK = ""
 ```
 
 Many of these variables are undocumented because the bot is meant for personal use.
+
+5. **Run the bot**
+
+Either build the Dockerfile, or to run locally do `bundle exec ruby core.rb`.
 
 ## ToS and Privacy Policy
 

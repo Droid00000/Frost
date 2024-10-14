@@ -12,7 +12,7 @@ require_rel 'events'
 require_rel 'boosters'
 require_rel 'affections'
 
-bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: [:servers], log_mode: :silent)
+bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: %i[servers server_message_content], log_mode: :silent)
 
 bot.ready do
   bot.update_status(ACTIVITY[1], ACTIVITY[2], ACTIVITY[3])
@@ -30,7 +30,7 @@ bot.application_command(:shutdown) do |event|
 end
 
 bot.application_command(:eval) do |event|
-  event.defer(ephemeral: true)
+  event.defer(ephemeral: event.options['ephemeral'])
   if event.user.id == TOML['Discord']['OWNER']&.to_i
     begin
       result = eval event.options['code']

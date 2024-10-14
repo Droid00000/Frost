@@ -48,6 +48,7 @@ end
 
 bot.register_application_command(:eval, 'Allows the bot owner to execute code.', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1]) do |option|
   option.string('code', 'The code you want to execute.', required: true)
+  option.boolean('ephemeral', 'Whether the output should only be visible to you.', required: true)
 end
 
 bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: 32, contexts: [0], integration_types: [0]) do |option|
