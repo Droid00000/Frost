@@ -1,7 +1,7 @@
 FROM ruby:3.3-alpine
 
 RUN apk update && \
-    apk add --no-cache postgresql-dev ruby-json git build-base
+    apk add --no-cache postgresql-dev ruby-json git build-base libsodium ffmpeg yt-dlp
 
 WORKDIR /app    
 

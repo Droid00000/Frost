@@ -84,6 +84,15 @@ bot.register_application_command(:update, 'Contributors', contexts: [0, 1, 2], i
   end
 end
 
+bot.register_application_command(:voice, 'Connect and play audio over a voice channel.') do |command|
+  command.subcommand(:connect, 'Connect to a voice channel')
+  command.subcommand(:disconnect, 'Disconnect from a voice channel.')
+  command.subcommand(:stop, 'Stop playing the current song.')
+  command.subcommand(:play, 'Play audio from a YouTube video.') do |option|
+    option.string(:url, 'The URL of the youtube video.', required: true, min_length: 11)
+  end
+end
+
 bot.register_application_command(:pin, 'Pin archive', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1]) do |cmd|
   cmd.subcommand_group(:archiver, 'Pin Archival!') do |group|
     group.subcommand(:setup, 'Setup the pin-archiver functionality.') do |option|
