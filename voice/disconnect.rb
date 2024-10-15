@@ -10,5 +10,5 @@ def voice_disconnect(data)
   end
 
   data.bot.voice.destory
-  data.edit_response(content: RESPONSE[41])
+  data.edit_response(content: "#{RESPONSE[41]} #{EMOJI[6]}")
 end
