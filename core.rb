@@ -7,6 +7,7 @@ require 'toml-rb'
 require_rel 'pins'
 require_rel 'data'
 require_rel 'snow'
+require_rel 'voice'
 require_rel 'admin'
 require_rel 'events'
 require_rel 'boosters'
@@ -47,6 +48,7 @@ bot.include! EventRoles
 bot.include! BoosterPerks
 bot.include! HugAffection
 bot.include! NomAffection
+bot.include! VoiceCommands
 bot.include! BonkAffection
 bot.include! AdminCommands
 bot.include! PokeAffection

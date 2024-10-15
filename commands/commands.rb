@@ -85,9 +85,9 @@ bot.register_application_command(:update, 'Contributors', contexts: [0, 1, 2], i
 end
 
 bot.register_application_command(:voice, 'Connect and play audio over a voice channel.') do |command|
-  command.subcommand(:connect, 'Connect to a voice channel')
   command.subcommand(:disconnect, 'Disconnect from a voice channel.')
   command.subcommand(:stop, 'Stop playing the current song.')
+  command.subcommand(:help, 'Help menu for voice commands.')
   command.subcommand(:play, 'Play audio from a YouTube video.') do |option|
     option.string(:url, 'The URL of the youtube video.', required: true, min_length: 11)
   end

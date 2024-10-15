@@ -4,7 +4,7 @@ Frost is a personal Discord bot. It handles booster roles, snowball fights, and 
 
 ## Installation 
 
-The most up-to-date release of the Ruby programming language, a PostgreSQL database, yt-dlp, Docker, and all of the gems found below will need to be installed on your system.  
+The most up-to-date release of the Ruby programming language, a PostgreSQL database, yt-dlp, Docker, and all of the gems below will need to be installed.
 
 - [Sequel](https://github.com/jeremyevans/sequel)
 - [Toml-rb](https://github.com/emancu/toml-rb)
@@ -20,7 +20,7 @@ This is needed for the bot to actually run.
 
 2. **Install dependencies**
 
-Simply do: `bundle install`. In order to get voice functionality, install: ffmpeg, libsodium, and yt-dlp.
+Simply do: `bundle install`. Install: [ffmpeg](https://www.ffmpeg.org/download.html), [libsodium](https://github.com/shardlab/discordrb/wiki/Installing-libsodium), and [yt-dlp](https://github.com/yt-dlp/yt-dlp) seperately for voice features.
 
 3. **Create the database in PostgreSQL**
 
