@@ -11,7 +11,7 @@ def voice_play(data)
     return
   end
 
-  unless valid_song?(data.options['url'])
+  unless resolve_song(data.options['url'])
     data.edit_response(content: RESPONSE[44])
     return
   end
@@ -19,5 +19,5 @@ def voice_play(data)
   data.edit_response(content: "#{RESPONSE[45]} #{EMOJI[5]}")
 
   data.bot.voice_connect(data.user.voice_channel)
-  data.bot.voice(data.server).play_io(IO.popen("yt-dlp -q -o - #{Shellwords.escape(data.options['url'])}"))
+  data.bot.voice(data.server).play_io(IO.popen("yt-dlp -q -o - #{Shellwords.escape(resolve_song(data.options['url']))}"))
 end

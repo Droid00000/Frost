@@ -3,6 +3,7 @@
 require 'time'
 require 'date'
 require 'toml-rb'
+require 'rspotify'
 require 'discordrb'
 require 'selenium-webdriver'
 
@@ -35,7 +36,7 @@ end
 def safe_name?(string)
   return true if string.nil? || string.empty?
 
-  !string.match(REGEX[4])
+  !string.match(REGEX[5])
 end
 
 # Abstracts away the process of retriving a role icon.
@@ -59,10 +60,16 @@ end
 # Checks to make sure a YouTube URL is valid.
 # @param uri [String] A YouTube URI.
 # @return [Boolean]
-def valid_song?(uri)
+def resolve_song(uri)
   return false if uri.nil? || uri.empty?
 
-  ['youtu.be', 'youtube.com', 'www.youtube.com'].include?(URI(uri).host)
+  if SPOTIFY.include?(URI(uri).host)
+    RSpotify::Track.find(uri.match(REGEX[4]))
+  end
+
+  if YOUTUBE.include?(URI(uri).host)
+    return uri
+  end
 end
 
 # Checks if a guild member is still boosting a guild.
