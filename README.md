@@ -4,7 +4,7 @@ Frost is a personal Discord bot. It handles booster roles, snowball fights, and 
 
 ## Installation 
 
-The most up-to-date release of the Ruby programming language, a PostgreSQL database, yt-dlp, Docker, and all of the gems below will need to be installed.
+The most up-to-date release of the Ruby programming language, a PostgreSQL database, Docker, and all of the gems below will need to be installed.
 
 - [Sequel](https://github.com/jeremyevans/sequel)
 - [Toml-rb](https://github.com/emancu/toml-rb)
