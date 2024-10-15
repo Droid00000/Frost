@@ -93,7 +93,7 @@ def archiver_records(server: nil, channel: nil, type: nil)
     when :check
       !POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id).empty?
     when :update
-      POSTGRES[:Archiver_Settings].where(server_id: server).insert(channel_id: channel)
+      POSTGRES[:Archiver_Settings].where(server_id: server).update(channel_id: channel)
     when :get
       POSTGRES[:Archiver_Settings].where(server_id: server).select(:channel_id).map(:channel_id)&.join.to_i
     when :setup
@@ -114,7 +114,7 @@ def event_records(server: nil, role: nil, type: nil)
     when :enable
       POSTGRES[:Event_Settings].insert(server_id: server, role_id: role, enabled: true)
     when :register_role
-      POSTGRES[:Event_Settings].insert(server_id: server, role_id: role)
+      POSTGRES[:Event_Settings].insert(server_id: server, role_id: role, enabled: true)
     when :disable
       POSTGRES[:Event_Settings].where(server_id: server).delete
     when :get_roles

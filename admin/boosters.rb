@@ -51,12 +51,12 @@ end
 # Setup booster perks for a server, or update them.
 def admin_setup_perks(data)
   if booster_records(server: data.server.id, type: :enabled)
-    booster_records(server, data.server.id, role: data.options['role'], type: :update_hoist_role)
+    booster_records(server: data.server.id, role: data.options['role'], type: :update_hoist_role)
     data.edit_response(content: "#{RESPONSE[33]} <@&#{data.options['role']}>")
     return
   end
 
-  booster_records(server, data.server.id, role: data.options['role'], type: :setup)
+  booster_records(server: data.server.id, role: data.options['role'], type: :setup)
   data.edit_response(content: "#{RESPONSE[33]} <@&#{data.options['role']}>")
 end
 

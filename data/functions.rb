@@ -128,28 +128,30 @@ def gif(type)
   end
 end
 
-def settings(type)
+def settings(type, server)
   case type
   when :archiver
-    if archiver_records(server: data.server.id, type: :check)
-      then "Enabled: Yes, Archive Channel: <##{archiver_records(server: data.server.id, type: :get)}>"
+    if archiver_records(server: server, type: :check)
+      then "**Archive Channel:** <##{archiver_records(server: server, type: :get)}>"
     else
-      'Enabled: No>'
+      '**Enabled:** No'
     end
 
   when :booster
-    if booster_records(server: data.server.id, type: :enabled)
-      then "Enabled: Yes, Hoist Role: <@&#{booster_records(server: data.server.id, type: :hoist_role)}>"
+    if booster_records(server: server, type: :enabled)
+      then "**Hoist Role:** <@&#{booster_records(server: server, type: :hoist_role)}>"
     else
-      'Enabled: No'
+      '**Enabled:** No'
     end
   when :events
-    if event_records(server: data.server.id, type: :enabled)
-      then "Enabled: Yes, Roles: #{event_records(server: data.server.id, type: :get_roles).transform_values { |r|
-             "<@&#{r}>"
-           }.keys.to_s}"
+    if event_records(server: server, type: :enabled)
+      roles = event_records(server: server, type: :get_roles).map do |row|
+        row.values.map { |key| "<@&#{key}>".to_s }
+      end.flatten.uniq
+
+      "**Roles:** #{roles.join(', ')}"
     else
-      'Enabled: No'
+      '**Enabled:** No'
     end
   end
 end

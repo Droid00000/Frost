@@ -42,7 +42,7 @@ module AdminCommands
     end
   end
 
-  application_command(:event).group(:roles) do |group|
+  application_command(:events).group(:role) do |group|
     group.subcommand('setup') do |event|
       event.defer(ephemeral: true)
       setup_event_roles(event)
@@ -61,32 +61,32 @@ module AdminCommands
     end
 
     group.subcommand('delete') do |event|
-      event.defer(ephemeral: false)
+      event.defer(ephemeral: true)
       admin_remove_user(event)
     end
 
     group.subcommand('ban') do |event|
-      event.defer(ephemeral: false)
+      event.defer(ephemeral: true)
       admin_blacklist_user(event)
     end
 
     group.subcommand('unban') do |event|
-      event.defer(ephemeral: false)
+      event.defer(ephemeral: true)
       admin_remove_blacklist(event)
     end
 
     group.subcommand('setup') do |event|
-      event.defer(ephemeral: false)
+      event.defer(ephemeral: true)
       admin_setup_perks(event)
     end
 
     group.subcommand('disable') do |event|
-      event.defer(ephemeral: false)
+      event.defer(ephemeral: true)
       admin_disable_perks(event)
     end
 
     group.subcommand('help') do |event|
-      event.defer(ephemeral: false)
+      event.defer(ephemeral: true)
       admin_booster_help_embed(event)
     end
   end
