@@ -35,7 +35,7 @@ end
 def safe_name?(string)
   return true if string.nil? || string.empty?
 
-  !string.match(REGEX[5])
+  !string.match(REGEX[4])
 end
 
 # Abstracts away the process of retriving a role icon.
@@ -60,7 +60,9 @@ end
 # @param uri [String] A YouTube URI.
 # @return [Boolean]
 def valid_song?(uri)
-  return false if uri.nil? || uri.empty? || !uri.match(REGEX[4])
+  return false if uri.nil? || uri.empty?
+
+  ['youtu.be', 'youtube.com', 'www.youtube.com'].include?(URI(uri).host)
 end
 
 # Checks if a guild member is still boosting a guild.

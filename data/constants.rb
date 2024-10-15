@@ -47,7 +47,7 @@ RESPONSE = {
   41 => 'Successfully Disconnected!',
   42 => 'Stopped playback of the current song.',
   43 => "You're not in a voice channel!",
-  44 => 'Please provide a valid song.'
+  44 => 'Please provide a valid song.',
   45 => 'Begining playback!',
   46 => 'Finished playback!'
 }.freeze
@@ -130,8 +130,7 @@ REGEX = {
   1 => /:(\d+)>$/,
   2 => /(?<=New chapter arrives on)(.*?)(?=<)/,
   3 => /\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z/,
-  4 => %r{(?:https?://)?(?:www\.)?(?:youtube\.com/watch\?v=|youtu\.be/)([a-zA-Z0-9_-]{11})},
-  5 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
+  4 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|
           xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|
