@@ -16,6 +16,8 @@ gem 'tzinfo-data'
 
 gem 'require_all'
 
+gem 'rspotify'
+
 gem 'toml-rb'
 
 gem 'sequel'

@@ -19,5 +19,5 @@ def voice_play(data)
   data.edit_response(content: "#{RESPONSE[45]} #{EMOJI[5]}")
 
   data.bot.voice_connect(data.user.voice_channel)
-  data.bot.voice.play_io(IO.popen("yt-dlp -q -o - #{Shellwords.escape(data.options['url'])}"))
+  data.bot.voice(data.server).play_io(IO.popen("yt-dlp -q -o - #{Shellwords.escape(data.options['url'])}"))
 end
