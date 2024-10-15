@@ -42,7 +42,10 @@ RESPONSE = {
   36 => "This server hasn't enabled the pin archiver.",
   37 => "Successfully disabled the pin archiver in this server.",
   38 => "This server hasn't enabled event perks.",
-  39 => "Successfully disabled event perks in this server."
+  39 => "Successfully disabled event perks in this server.",
+  40 => "The bot isn't in a voice channel!",
+  41 => 'Successfully Disconnected!',
+  42 => 'Stopped playback of the current song.'
 }.freeze
 
 # A list of values for embed responses.
@@ -68,7 +71,11 @@ EMBED = {
   19 => 'Manually deletes a member from the booster database.',
   20 => 'Creates your custom role. Optionally, you may put a custom emoji in the icon option.',
   21 => 'Lets you edit your custom role. All parameters are optional.',
-  22 => 'Deletes your custom role. You can make a new role at any time provided you keep boosting the server.'
+  22 => 'Deletes your custom role. You can make a new role at any time provided you keep boosting the server.',
+  23 => "Stops the currently playing song and disconnects the bot from the voice channel if it's in one.",
+  24 => 'Stops the currently playing song.',
+  25 => "Opens the help menu you're currently viewing.",
+  26 => 'Plays audio from a Youtube URL.'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

@@ -25,6 +25,6 @@ module VoiceCommands
 
   application_command(:voice).subcommand(:help) do |event|
     event.defer(ephemeral: true)
-    voice_help(event)
+    voice_help_embed(event)
   end
 end
