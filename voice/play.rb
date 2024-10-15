@@ -4,7 +4,7 @@ require_relative '../data/constants'
 require 'shellwords'
 require 'discordrb'
 
-def voice_disconnect(data)
+def voice_play(data)
   if data.user.voice_channel.nil?
     data.edit_response(content: REPSONSE[43])
     return
