@@ -97,7 +97,9 @@ EMOJI = {
   1 => '<a:RubyPandaHeart:1269075581031546880>',
   2 => '<a:LoidClap_Maomao:1276327798104920175>',
   3 => '<a:YorClap_Maomao:1287269908157038592>',
-  4 => '<:AnyaPeek_Enzo:1276327731113627679>'
+  4 => '<:AnyaPeek_Enzo:1276327731113627679>',
+  5 => '<a:LoidDance_Maomao:1295667431674482741>',
+  6 => '<a:LoidBell_Maomao:1295667609961758731>'
 }.freeze
 
 # UI components including color values; primarily used by the bot when sending embeds.
