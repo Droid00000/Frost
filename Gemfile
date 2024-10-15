@@ -8,6 +8,8 @@ gem 'rufus-scheduler', '~> 3.2'
 
 gem 'rubocop', require: false
 
+gem 'shellwords', '~> 0.2.0'
+
 gem 'selenium-webdriver'
 
 gem 'tzinfo-data'

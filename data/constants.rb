@@ -45,7 +45,11 @@ RESPONSE = {
   39 => "Successfully disabled event perks in this server.",
   40 => "The bot isn't in a voice channel!",
   41 => 'Successfully Disconnected!',
-  42 => 'Stopped playback of the current song.'
+  42 => 'Stopped playback of the current song.',
+  43 => "You're not in a voice channel!",
+  44 => 'Please provide a valid song.'
+  45 => 'Begining playback!',
+  46 => 'Finished playback!'
 }.freeze
 
 # A list of values for embed responses.
