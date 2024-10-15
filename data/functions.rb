@@ -56,6 +56,13 @@ def hit_or_miss?
   true if number <= 5
 end
 
+# Checks to make sure a YouTube URL is valid.
+# @param uri [String] A YouTube URI.
+# @return [Boolean]
+def valid_song?(uri)
+  return false if uri.nil? || uri.empty?
+end
+
 # Checks if a guild member is still boosting a guild.
 # @param server [Integer, String] An ID that uniquely identifies a guild.
 # @param user [Integer, String] An ID that uniquely identifies a user.
