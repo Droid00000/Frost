@@ -50,6 +50,11 @@ URL = ""
 [Chapter]
 CHANNEL = ""
 LINK = ""
+
+[Music]
+YOUTUBE = ""
+SPOTIFY_CLIENT = ""
+SPOTIFY_SECRET = ""
 ```
 
 Many of these variables are undocumented because the bot is meant for personal use.

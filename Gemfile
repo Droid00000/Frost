@@ -12,6 +12,8 @@ gem 'shellwords', '~> 0.2.0'
 
 gem 'selenium-webdriver'
 
+gem 'google-api-client'
+
 gem 'tzinfo-data'
 
 gem 'require_all'

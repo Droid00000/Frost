@@ -11,3 +11,8 @@ URL = ""
 [Chapter]
 CHANNEL = ""
 LINK = ""
+
+[Music]
+YOUTUBE = ""
+SPOTIFY_CLIENT = ""
+SPOTIFY_SECRET = ""

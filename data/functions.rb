@@ -6,6 +6,7 @@ require 'toml-rb'
 require 'rspotify'
 require 'discordrb'
 require 'selenium-webdriver'
+require 'google/apis/youtube_v3'
 
 require_relative 'schema'
 require_relative 'embeds'
@@ -64,7 +65,11 @@ def resolve_song(uri)
   return false if uri.nil? || uri.empty?
 
   if SPOTIFY.include?(URI(uri).host)
-    RSpotify::Track.find(uri.match(REGEX[4]))
+    RSpotify.authenticate(TOML['Spotify']['CLIENT'], TOML['Spotify']['SECRET'])
+    data = RSpotify::Track.find(uri.match(REGEX[4]))
+    Google::Apis::YoutubeV3::YouTubeService.new.key = TOML['Music']['YOUTUBE']
+    search_response = youtube.list_searches('id,snippet', q: "#{data.name} #{data.artists.first.name}", max_results: 1)
+    return "https://www.youtube.com/watch?v=#{search_response.items.first.id.video_id}"
   end
 
   if YOUTUBE.include?(URI(uri).host)
