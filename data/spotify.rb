@@ -33,7 +33,7 @@ module Spotify
     end
 
     # A simple way to handle authorization.
-    def authorization
+    def authorization(payload)
       RSpotify.authenticate(@spotify_client_id, @spotify_client_secret)
       @youtube_search.key = @youtube_api
     end
@@ -47,8 +47,8 @@ module Spotify
 
     # @param media [String]
     def resolve(media)
-      authorization unless @youtube_search || @spotify_client_id
-      song = RSpotify::Track.find(media.split('/track/').first)
+      authorization(true) if @youtube_search && @spotify_client_id
+      song = RSpotify::Track.find(media[1])
       response = @youtube_search.list_searches('id,snippet', q: "#{song.name} #{song.artists.first.name}", max_results: 1)
       "#{@base_url}#{response.items.first.id.video_id}"
     end
