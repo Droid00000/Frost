@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'toml-rb'
+require_relative 'spotify'
 
 # A response message to an interaction.
 RESPONSE = {
@@ -124,9 +125,8 @@ ACTIVITY = {
 # The TOML configuration file used by the bot.
 TOML = TomlRB.load_file(File.join(File.expand_path('..', __dir__), 'config.toml'))
 
-# A list of supported streaming services.
-SPOTIFY = ['spotify.com', 'www.spotify.com', 'open.spotify.com']
-YOUTUBE = ['youtu.be', 'youtube.com', 'www.youtube.com']
+# The Spotify class used to convert Spotify URL's into YouTube links.
+SPOTIFY = Spotify::Resolver.new(TOML['Music']['YOUTUBE'], TOML['Music']['CLIENT_ID'], TOML['Music']['CLIENT_SECRET'])
 
 # A series of regular expressions utilized by the bot.
 # REGEX[4] is used to ensure a name doesn't contain any bad words.
@@ -134,7 +134,9 @@ REGEX = {
   1 => /:(\d+)>$/,
   2 => /(?<=New chapter arrives on)(.*?)(?=<)/,
   3 => /\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z/,
-  4 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
+  4 => /^(?:https?:\/\/)?(?:www\.)?(?:open\.)?spotify\.com/,
+  5 => /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be|youtube\.com)/,
+  6 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|
           xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|

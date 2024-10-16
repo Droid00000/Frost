@@ -3,10 +3,8 @@
 require 'time'
 require 'date'
 require 'toml-rb'
-require 'rspotify'
 require 'discordrb'
 require 'selenium-webdriver'
-require 'google/apis/youtube_v3'
 
 require_relative 'schema'
 require_relative 'embeds'
@@ -37,7 +35,7 @@ end
 def safe_name?(string)
   return true if string.nil? || string.empty?
 
-  !string.match(REGEX[4])
+  !string.match(REGEX[6])
 end
 
 # Abstracts away the process of retriving a role icon.
@@ -63,18 +61,13 @@ end
 # @return [Boolean]
 def resolve_song(uri)
   return false if uri.nil? || uri.empty?
-
-  if SPOTIFY.include?(URI(uri).host)
-    RSpotify.authenticate(TOML['Music']['SPOTIFY_CLIENT'], TOML['Music']['SPOTIFY_SECRET'])
-    track = RSpotify::Track.find(uri.to_s)
-    youtube_service = Google::Apis::YoutubeV3::YouTubeService.new
-    youtube_service.key = TOML['Music']['YOUTUBE']
-    search_response = youtube_service.list_searches('id,snippet', q: "#{track.name} #{track.artists.first.name}", max_results: 1)
-    search_response.items.any? ? "https://www.youtube.com/watch?v=#{search_response.items.first.id.video_id}" : false
+  
+  if uri.match(REGEX[5])
+    return uri
   end
 
-  if YOUTUBE.include?(URI(uri).host)
-    return uri
+  if uri.match(REGEX[4])
+    SPOTIFY.resolve(url)
   end
 end
 
