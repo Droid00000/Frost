@@ -53,8 +53,8 @@ LINK = ""
 
 [Music]
 YOUTUBE = ""
-SPOTIFY_CLIENT = ""
-SPOTIFY_SECRET = ""
+CLIENT_ID = ""
+CLIENT_SECRET = ""
 ```
 
 Many of these variables are undocumented because the bot is meant for personal use.
