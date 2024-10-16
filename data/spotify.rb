@@ -3,7 +3,7 @@
 require 'rspotify'
 require 'google/apis/youtube_v3'
 
-module Spotify
+module Music
   # @Resolver private
   class Resolver
     # @return [String]

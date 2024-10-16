@@ -67,7 +67,7 @@ def resolve_song(uri)
   end
 
   if uri.match(REGEX[4])
-    SPOTIFY.resolve(uri.match(REGEX[4]))
+    SONG.resolve(uri.match(REGEX[4]))
   end
 end
 
