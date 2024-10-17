@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'rspotify'
+require 'selenium-webdriver'
+require_relative 'constants'
 require 'google/apis/youtube_v3'
 
 module Spotify
@@ -46,11 +48,28 @@ module Spotify
     end
 
     # @param media [String]
+    def apple_music(media)
+      driver = Selenium::WebDriver.for :chrome, options: Selenium::WebDriver::Options.chrome(args: ['--headless=new'])
+      driver.get media
+
+      name = driver.page_source.match(REGEX[7])[0]
+      artist = driver.page_source.match(REGEX[8])[1]
+      driver.quit
+
+      authorization(true) if @youtube_search && @spotify_client_id
+      song = RSpotify::Track.search("#{name} #{artist}")
+      return false if song.empty?
+
+      response = @youtube_search.list_searches('id,snippet', q: "#{song[0].name} #{song[0].artists.first.name}", max_results: 1)
+      ["#{@base_url}#{response.items.first.id.video_id}", song[0].name, song[0].artists.first.name, song[0].duration_ms, song[0].artists.images]
+    end
+
+    # @param media [String]
     def resolve(media)
       authorization(true) if @youtube_search && @spotify_client_id
       song = RSpotify::Track.find(media[1])
       response = @youtube_search.list_searches('id,snippet', q: "#{song.name} #{song.artists.first.name}", max_results: 1)
-      "#{@base_url}#{response.items.first.id.video_id}"
+      ["#{@base_url}#{response.items.first.id.video_id}", song.name, song.artists.first.name, song.duration_ms, song.artists.images]
     end
   end
 end

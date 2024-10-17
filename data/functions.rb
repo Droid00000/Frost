@@ -35,7 +35,7 @@ end
 def safe_name?(string)
   return true if string.nil? || string.empty?
 
-  !string.match(REGEX[6])
+  !string.match(REGEX[9])
 end
 
 # Abstracts away the process of retriving a role icon.
@@ -69,6 +69,10 @@ def resolve_song(uri)
   if uri.match(REGEX[4])
     SPOTIFY.resolve(uri.match(REGEX[4]))
   end
+
+  if uri.match(REGEX[6])
+    SPOTIFY.apple_music(uri)
+  end  
 end
 
 # Checks if a guild member is still boosting a guild.
