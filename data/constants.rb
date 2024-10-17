@@ -125,8 +125,8 @@ ACTIVITY = {
 # The TOML configuration file used by the bot.
 TOML = TomlRB.load_file(File.join(File.expand_path('..', __dir__), 'config.toml'))
 
-# The class used to convert Spotify URL's into YouTube links.
-MUSIC = Music::Resolver.new(TOML['Music']['YOUTUBE'], TOML['Music']['CLIENT_ID'], TOML['Music']['CLIENT_SECRET'])
+# The Spotify class used to convert Spotify URL's into YouTube links.
+SPOTIFY = Spotify::Resolver.new(TOML['Music']['YOUTUBE'], TOML['Music']['CLIENT_ID'], TOML['Music']['CLIENT_SECRET'])
 
 # A series of regular expressions utilized by the bot.
 # REGEX[4] is used to ensure a name doesn't contain any bad words.
