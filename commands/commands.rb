@@ -84,12 +84,12 @@ bot.register_application_command(:update, 'Contributors', contexts: [0, 1, 2], i
   end
 end
 
-bot.register_application_command(:voice, 'Connect and play audio over a voice channel.') do |command|
+bot.register_application_command(:music, 'Connect and play audio over a voice channel.') do |command|
   command.subcommand(:disconnect, 'Disconnect from a voice channel.')
   command.subcommand(:stop, 'Stop playing the current song.')
   command.subcommand(:help, 'Help menu for voice commands.')
   command.subcommand(:play, 'Play audio from a YouTube video.') do |option|
-    option.string(:url, 'Spotify or YouTube URL.', required: true, min_length: 11)
+    option.string(:url, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2)
   end
 end
 
