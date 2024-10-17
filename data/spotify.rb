@@ -2,8 +2,8 @@
 
 require 'rspotify'
 require 'selenium-webdriver'
-require_relative 'constants'
 require 'google/apis/youtube_v3'
+require File.dirname(__FILE__) + '/constants'
 
 module Spotify
   # @Resolver private
