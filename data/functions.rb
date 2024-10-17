@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'uri'
 require 'time'
 require 'date'
 require 'toml-rb'
@@ -61,7 +62,7 @@ end
 # @return [Boolean]
 def resolve_song(uri)
   return false if uri.nil? || uri.empty?
-  
+
   if uri.match(REGEX[5])
     return uri
   end
@@ -72,7 +73,11 @@ def resolve_song(uri)
 
   if uri.match(REGEX[6])
     SPOTIFY.apple_music(uri)
-  end  
+  end
+
+  if uri.match(URI::RFC2396_PARSER.make_regexp)
+    SPOTIFY.raw_resolve(uri)
+  end
 end
 
 # Checks if a guild member is still boosting a guild.
