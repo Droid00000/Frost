@@ -66,8 +66,10 @@ module Spotify
       song = RSpotify::Track.search("#{name} #{artist}")
       return false if song.empty?
 
-      response = @youtube_search.list_searches('id,snippet', q: "#{song[0].name} #{song[0].artists.first.name}", max_results: 1)
-      ["#{@base_url}#{response.items.first.id.video_id}", song[0].name, song[0].artists.first.name, resolve_duration(song[0].duration_ms), song[0].album.images[0]['url']]
+      response = @youtube_search.list_searches('id,snippet', q: "#{song[0].name} #{song[0].artists.first.name}",
+                                                             max_results: 1)
+      ["#{@base_url}#{response.items.first.id.video_id}", song[0].name, song[0].artists.first.name,
+       resolve_duration(song[0].duration_ms), song[0].album.images[0]['url']]
     end
 
     # @param media [String]
@@ -76,7 +78,8 @@ module Spotify
       song = RSpotify::Track.search(IO.popen("yt-dlp --get-title #{Shellwords.escape(media)}").read)
       return false if song.empty?
 
-      [media, song[0].name, song[0].artists.first.name, resolve_duration(song[0].duration_ms), song[0].album.images[0]['url']]
+      [media, song[0].name, song[0].artists.first.name, resolve_duration(song[0].duration_ms),
+       song[0].album.images[0]['url']]
     end
 
     # @param media [String]
@@ -85,16 +88,20 @@ module Spotify
       song = RSpotify::Track.search(media)
       return false if song.empty?
 
-      response = @youtube_search.list_searches('id,snippet', q: "#{song[0].name} #{song[0].artists.first.name}", max_results: 1)
-      ["#{@base_url}#{response.items.first.id.video_id}", song[0].name, song[0].artists.first.name, resolve_duration(song[0].duration_ms), song[0].album.images[0]['url']]
+      response = @youtube_search.list_searches('id,snippet', q: "#{song[0].name} #{song[0].artists.first.name}",
+                                                             max_results: 1)
+      ["#{@base_url}#{response.items.first.id.video_id}", song[0].name, song[0].artists.first.name,
+       resolve_duration(song[0].duration_ms), song[0].album.images[0]['url']]
     end
 
     # @param media [String]
     def resolve(media)
       authorization(true) if @youtube_search && @spotify_client_id
       song = RSpotify::Track.find(media[1])
-      response = @youtube_search.list_searches('id,snippet', q: "#{song.name} #{song.artists.first.name}", max_results: 1)
-      ["#{@base_url}#{response.items.first.id.video_id}", song[0].name, song[0].artists.first.name, resolve_duration(song[0].duration_ms), song[0].album.images[0]['url']]
+      response = @youtube_search.list_searches('id,snippet', q: "#{song.name} #{song.artists.first.name}",
+                                                             max_results: 1)
+      ["#{@base_url}#{response.items.first.id.video_id}", song[0].name, song[0].artists.first.name,
+       resolve_duration(song[0].duration_ms), song[0].album.images[0]['url']]
     end
   end
 end
