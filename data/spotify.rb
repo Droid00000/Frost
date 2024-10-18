@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rspotify'
+require 'shellwords'
 require 'selenium-webdriver'
 require 'google/apis/youtube_v3'
 require File.dirname(__FILE__) + '/constants'
@@ -50,7 +51,7 @@ module Spotify
     # @param milliseconds [Integer]
     def resolve_duration(milliseconds)
       (Time.at(milliseconds / 1000.0)).utc.strftime("%M:%S")
-    end  
+    end
 
     # @param media [String]
     def apple_music(media)
@@ -70,6 +71,15 @@ module Spotify
     end
 
     # @param media [String]
+    def youtube(media)
+      authorization(true) if @youtube_search && @spotify_client_id
+      song = RSpotify::Track.search(IO.popen("yt-dlp --get-title #{Shellwords.escape(media)}").read)
+      return false if song.empty?
+
+      [media, song[0].name, song[0].artists.first.name, resolve_duration(song[0].duration_ms), song[0].album.images[0]['url']]
+    end
+
+    # @param media [String]
     def raw_resolve(media)
       authorization(true) if @youtube_search && @spotify_client_id
       song = RSpotify::Track.search(media)
@@ -77,7 +87,7 @@ module Spotify
 
       response = @youtube_search.list_searches('id,snippet', q: "#{song[0].name} #{song[0].artists.first.name}", max_results: 1)
       ["#{@base_url}#{response.items.first.id.video_id}", song[0].name, song[0].artists.first.name, resolve_duration(song[0].duration_ms), song[0].album.images[0]['url']]
-    end  
+    end
 
     # @param media [String]
     def resolve(media)

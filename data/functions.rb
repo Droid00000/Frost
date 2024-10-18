@@ -64,19 +64,19 @@ def resolve_song(uri)
   return false if uri.nil? || uri.empty?
 
   if uri.match(REGEX[5])
-    return uri
+    return SPOTIFY.youtube(uri)
   end
 
   if uri.match(REGEX[4])
-    SPOTIFY.resolve(uri.match(REGEX[4]))
+    return SPOTIFY.resolve(uri.match(REGEX[4]))
   end
 
   if uri.match(REGEX[6])
-    SPOTIFY.apple_music(uri)
+    return SPOTIFY.apple_music(uri)
   end
 
-  if uri.match(URI::RFC2396_PARSER.make_regexp)
-    SPOTIFY.raw_resolve(uri)
+  unless uri.match(URI::RFC2396_PARSER.make_regexp)
+    return SPOTIFY.raw_resolve(uri)
   end
 end
 
