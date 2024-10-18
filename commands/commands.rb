@@ -88,7 +88,7 @@ bot.register_application_command(:music, 'Connect and play audio over a voice ch
   command.subcommand(:disconnect, 'Disconnect from a voice channel.')
   command.subcommand(:stop, 'Stop playing the current song.')
   command.subcommand(:help, 'Help menu for voice commands.')
-  command.subcommand(:play, 'Play audio from a YouTube video.') do |option|
+  command.subcommand(:play, 'Play audio from a URL or a song name.') do |option|
     option.string(:url, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2)
   end
 end
