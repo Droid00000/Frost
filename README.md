@@ -4,19 +4,11 @@ Frost is a personal Discord bot. It handles booster roles, snowball fights, and 
 
 ## Installation 
 
-The most up-to-date release of the Ruby programming language, a PostgreSQL database, Docker, and all of the gems below will need to be installed.
-
-- [Sequel](https://github.com/jeremyevans/sequel)
-- [Toml-rb](https://github.com/emancu/toml-rb)
-- [Bundler](https://rubygems.org/gems/bundler/versions/2.5.18)
-- [Discordrb](https://github.com/shardlab/discordrb)
-- [Require-All](https://github.com/jarmo/require_all)
-- [Rufus-Scheduler](https://github.com/jmettraux/rufus-scheduler)
-- [selenium-webdriver](https://rubygems.org/gems/selenium-webdriver)
+The most up-to-date release of the Ruby programming language, a PostgreSQL database, and optionally Docker is needed to run this bot.
 
 1. **Install the latest version of Ruby**
 
-This is needed for the bot to actually run.
+This should be fairly self-explanatory. See [here](https://www.ruby-lang.org/en/documentation/installation/) for instructions.
 
 2. **Install dependencies**
 
