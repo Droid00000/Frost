@@ -2,7 +2,7 @@
 
 Frost is a personal Discord bot. It handles music, booster roles, snowball fights, and more.
 
-## Installation 
+## Installation
 
 The most up-to-date release of the Ruby programming language, a PostgreSQL database, and optionally Docker is needed to run this bot.
 
