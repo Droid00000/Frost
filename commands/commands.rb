@@ -122,57 +122,57 @@ bot.register_application_command(:event, 'Event roles', contexts: [0], integrati
       option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
     end
   end
+end  
 
-  bot.register_application_command(:boost, 'Booster perks admin', default_member_permissions: 268435456, contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |cmd|
-    cmd.subcommand_group(:admin, 'Booster admin!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |group|
-      group.subcommand('add', "Manually add a 'booster' to the database.", name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-        option.user('user', 'The user to add to the database.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-        option.role('role', 'The role to add to the database.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-      end
-
-      group.subcommand('delete', 'Manually remove a user from the database!') do |option|
-        option.user('user', 'The user to remove from the database.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-      end
-
-      group.subcommand('ban', 'Ban a user from using the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-        option.user('user', 'The user to ban.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-      end
-
-      group.subcommand('unban', 'Unban a user from using the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-        option.user('user', 'The user to unban.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-      end
-
-      group.subcommand('setup', 'Setup the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-        option.role('role', 'Which role should all custom booster roles be placed above?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-      end
-
-      group.subcommand('disable', 'Disable the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-      end
-
-      group.subcommand('help', 'Open the administrator help menu for this functionality.'), name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' } do |option|
-      end
+bot.register_application_command(:boost, 'Booster perks admin', default_member_permissions: 268435456, contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |cmd|
+  cmd.subcommand_group(:admin, 'Booster admin!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |group|
+    group.subcommand('add', "Manually add a 'booster' to the database.", name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+      option.user('user', 'The user to add to the database.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+      option.role('role', 'The role to add to the database.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
     end
 
-    bot.register_application_command(:booster, 'Booster perks', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |cmd|
-      cmd.subcommand_group(:role, 'Booster roles!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |group|
-        group.subcommand('claim', 'Claim your custom booster role!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-          option.string('name', 'Provide a name for your role.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-          option.string('color', 'Provide a HEX color for your role.', required: true, min_length: 6, max_length: 7, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-          option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-        end
+    group.subcommand('delete', 'Manually remove a user from the database!') do |option|
+      option.user('user', 'The user to remove from the database.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+    end
 
-        group.subcommand('edit', 'Edit your custom booster role!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-          option.string('name', 'Provide a name for your role.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-          option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 6, max_length: 7, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-          option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-        end
+    group.subcommand('ban', 'Ban a user from using the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+      option.user('user', 'The user to ban.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+    end
 
-        group.subcommand('delete', 'Delete your custom booster role.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |sub|
-        end
+    group.subcommand('unban', 'Unban a user from using the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+      option.user('user', 'The user to unban.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+    end
 
-        group.subcommand('help', 'Open the booster perks help menu.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |sub|
-        end
+    group.subcommand('setup', 'Setup the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+      option.role('role', 'Which role should all custom booster roles be placed above?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+    end
+
+    group.subcommand('disable', 'Disable the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+    end
+
+    group.subcommand('help', 'Open the administrator help menu for this functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+    end
+  end
+end  
+
+bot.register_application_command(:booster, 'Booster perks', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |cmd|
+  cmd.subcommand_group(:role, 'Booster roles!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |group|
+    group.subcommand('claim', 'Claim your custom booster role!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+        option.string('name', 'Provide a name for your role.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+        option.string('color', 'Provide a HEX color for your role.', required: true, min_length: 6, max_length: 7, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+        option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
       end
+
+      group.subcommand('edit', 'Edit your custom booster role!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+        option.string('name', 'Provide a name for your role.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+        option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 6, max_length: 7, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+        option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+      end
+
+      group.subcommand('delete', 'Delete your custom booster role.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |sub|
+      end
+
+      group.subcommand('help', 'Open the booster perks help menu.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |sub|
     end
   end
 end
