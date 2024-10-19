@@ -87,7 +87,7 @@ bot.register_application_command(:music, 'Connect and play audio over a voice ch
   command.subcommand(:stop, 'Stop playing the current song.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
   command.subcommand(:help, 'Help menu for voice commands.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
   command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-    option.string(:url, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+  option.string(:url, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
   end
 end
 
@@ -134,19 +134,19 @@ bot.register_application_command(:event, 'Event roles', contexts: [0], integrati
         option.user('user', 'The user to remove from the database.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
       end
 
-      group.subcommand('ban', 'Blacklist a user from using the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-        option.user('user', 'The user to blacklist.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+      group.subcommand('ban', 'Ban a user from using the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+        option.user('user', 'The user to ban.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
       end
 
-      group.subcommand('unban', 'Blacklist a user from using the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-        option.user('user', 'The user to un-blacklist.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+      group.subcommand('unban', 'Unban a user from using the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+        option.user('user', 'The user to unban.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
       end
 
       group.subcommand('setup', 'Setup the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-        option.role('role', 'Which role should al custom booster roles be placed above?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+        option.role('role', 'Which role should all custom booster roles be placed above?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
       end
 
-      group.subcommand('disable', 'disable the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+      group.subcommand('disable', 'Disable the booster perks functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
       end
 
       group.subcommand('help', 'Open the administrator help menu for this functionality.'), name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' } do |option|
