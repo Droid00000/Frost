@@ -18,8 +18,6 @@ def voice_play(data)
     return
   end
 
-  data.edit_response(content: "#{RESPONSE[45]} #{EMOJI[5]}")
-
   data.edit_response do |builder|
     builder.add_embed do |embed|
       embed.title = "#{track[1] || "Unknown Track"} — #{track[2] || "Artist Unknown"}"

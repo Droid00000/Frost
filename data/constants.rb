@@ -80,7 +80,8 @@ EMBED = {
   23 => "Stops the currently playing song and disconnects the bot from the voice channel if it's in one.",
   24 => 'Stops the currently playing song.',
   25 => "Opens the help menu you're currently viewing.",
-  26 => 'Plays audio from a Youtube URL.'
+  26 => 'Plays audio from a song name or URL.',
+  27 => "Opeans the music commands help menu."
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
@@ -125,7 +126,7 @@ ACTIVITY = {
 # The TOML configuration file used by the bot.
 TOML = TomlRB.load_file(File.join(File.expand_path('..', __dir__), 'config.toml'))
 
-# The Spotify class used to convert Spotify URL's into YouTube links.
+# The Spotify class used to convert URL's and queries into YouTube links for playback.
 SPOTIFY = Spotify::Resolver.new(TOML['Music']['YOUTUBE'], TOML['Music']['CLIENT_ID'], TOML['Music']['CLIENT_SECRET'])
 
 # A series of regular expressions utilized by the bot.

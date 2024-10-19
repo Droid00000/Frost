@@ -87,7 +87,7 @@ bot.register_application_command(:music, 'Connect and play audio over a voice ch
   command.subcommand(:stop, 'Stop playing the current song.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
   command.subcommand(:help, 'Help menu for voice commands.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
   command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-  option.string(:url, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+  option.string(:song, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
   end
 end
 
