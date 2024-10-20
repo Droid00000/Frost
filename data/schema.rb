@@ -50,7 +50,22 @@ POSTGRES.create_table?(:Snowball_Players) do
   Bigint :balance, null: false, default: 0
 end
 
-def booster_records(server: nil, user: nil, role: nil, type: nil)
+POSTGRES.create_table?(:Tags) do
+  primary_key :id
+  Bigint :owner_id, null: false
+  Bigint :server_id, null: false
+  Bigint :channel_id, null: false
+  String :name, null: false, unique: true
+  Bigint :message_id, unique: true, null: false
+end
+
+POSTGRES.create_table?(:Tag_Settings) do
+  primary_key :id
+  Bigint :server_id, null: false
+  Boolean :enabled, null: false, default: true
+end
+
+def booster_records(server:, user:, role:, type:)
   POSTGRES.transaction do
     case type
     when :create
@@ -87,7 +102,7 @@ def booster_records(server: nil, user: nil, role: nil, type: nil)
   end
 end
 
-def archiver_records(server: nil, channel: nil, type: nil)
+def archiver_records(server:, channel:, type:)
   POSTGRES.transaction do
     case type
     when :check
@@ -104,7 +119,24 @@ def archiver_records(server: nil, channel: nil, type: nil)
   end
 end
 
-def event_records(server: nil, role: nil, type: nil)
+def tag_records(name:, server:, message:, channel:, owner:, type:)
+  POSTGRES.transaction do
+    case type
+    when :enabled
+      !POSTGRES[:Tag_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
+    when :get
+      POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:message_id).map(:message_id)
+    when :disable
+      POSTGRES[:Tag_Settings].insert(server_id: server, enabled: false)
+    when :create
+      POSTGRES[:Tags].insert(server_id: server, message_id: message, name: name, owner_id: owner, channel_id: channel)
+    when :delete
+      POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).delete
+    end
+  end
+end
+
+def event_records(server:, role:, type:)
   POSTGRES.transaction do
     case type
     when :check_role
@@ -123,7 +155,7 @@ def event_records(server: nil, role: nil, type: nil)
   end
 end
 
-def snowball_records(user: nil, type: nil, balance: nil)
+def snowball_records(user:, type:, balance:)
   POSTGRES.transaction do
     case type
     when :add_snowball
@@ -133,7 +165,7 @@ def snowball_records(user: nil, type: nil, balance: nil)
     when :get_snowball
       POSTGRES[:Snowball_Players].where(user_id: user).select(:balance).map(:balance)&.join.to_i
     when :check_snowball
-      return true if POSTGRES[:Snowball_Players].where(user_id: user).select(:balance).map(:balance)&.join.to_i >= 1
+      POSTGRES[:Snowball_Players].where(user_id: user).select(:balance).map(:balance)&.join.to_i >= 1
     when :add_user
       POSTGRES[:Snowball_Players].insert(user_id: user, balance: 0)
     when :check_user
