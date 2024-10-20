@@ -130,7 +130,7 @@ TOML = TomlRB.load_file(File.join(File.expand_path('..', __dir__), 'config.toml'
 SPOTIFY = Spotify::Resolver.new(TOML['Music']['YOUTUBE'], TOML['Music']['CLIENT_ID'], TOML['Music']['CLIENT_SECRET'])
 
 # A series of regular expressions utilized by the bot.
-# REGEX[4] is used to ensure a name doesn't contain any bad words.
+# REGEX[9] is used to ensure a name doesn't contain any bad words.
 REGEX = {
   1 => /:(\d+)>$/,
   2 => /(?<=New chapter arrives on)(.*?)(?=<)/,

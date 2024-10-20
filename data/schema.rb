@@ -125,13 +125,17 @@ def tag_records(name:, server:, message:, channel:, owner:, type:)
     when :enabled
       !POSTGRES[:Tag_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
     when :get
-      POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:message_id).map(:message_id)
+      [POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:message_id).map(:message_id),
+       POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:owner_id).map(:owner_id),
+       POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:channel_id).map(:channel_id)]
     when :disable
       POSTGRES[:Tag_Settings].insert(server_id: server, enabled: false)
+    when :check
+      !POSTGRES[:Tags].where(owner_id: owner, name: name).empty?
     when :create
       POSTGRES[:Tags].insert(server_id: server, message_id: message, name: name, owner_id: owner, channel_id: channel)
     when :delete
-      POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).delete
+      POSTGRES[:Tags].where(name: name, owner_id: owner).delete
     end
   end
 end
