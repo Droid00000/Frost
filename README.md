@@ -32,6 +32,7 @@ Change the name of the `example.toml` file to `config.toml` and fill in all the 
 [Discord]
 OWNER = "YOUR_ID_HERE"
 TOKEN = "Bot TOKEN_HERE"
+COMMANDS = []
 CONTRIBUTORS = []
 
 [Postgres]

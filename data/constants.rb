@@ -50,7 +50,9 @@ RESPONSE = {
   43 => "You're not in a voice channel!",
   44 => 'Please provide a valid song.',
   45 => 'Begining playback!',
-  46 => 'Finished playback!'
+  46 => 'Finished playback!',
+  47 => 'Successfully locked the server.',
+  48 => 'Successfully unlocked the server.'
 }.freeze
 
 # A list of values for embed responses.

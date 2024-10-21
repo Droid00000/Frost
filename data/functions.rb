@@ -147,6 +147,8 @@ def gif(type)
     MISS.sample.to_s
   when :BONK
     BONK.sample.to_s
+  when :PUNCH
+    PUNCH.sample.to_s  
   else
     UI[21]
   end

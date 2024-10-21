@@ -32,6 +32,10 @@ bot.register_application_command(:bonk, 'Bonk another server member.', contexts:
   option.user('target', 'Who do you want to bonk?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
 end
 
+bot.register_application_command(:punch, 'Punch another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+  option.user('target', 'Who do you want to punch?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+end
+
 bot.register_application_command(:sleep, 'Tells another server member to go and sleep.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
   option.user('target', 'Who needs to sleep?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
 end

@@ -1,6 +1,7 @@
 [Discord]
 OWNER = "YOUR_ID_HERE"
 TOKEN = "Bot TOKEN_HERE"
+COMMANDS = []
 CONTRIBUTORS = []
 
 [Postgres]
