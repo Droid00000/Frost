@@ -10,6 +10,11 @@ def tag_info(data)
     return
   end
 
-  message_id = tag_records(name: data.options['name'], type: :get)
-  data.bot.resolve_message(message_id[0], message_id[2])    
+  message = data.bot.resolve_message(tag_records(name: data.options['name'], type: :get)[0],
+                                     tag_records(name: data.options['name'], type: :get)[2])
+
+  data.edit_response do |builder|
+    builder.add_embed do |embed|
+    end
+  end
 end

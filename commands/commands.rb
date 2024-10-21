@@ -42,6 +42,15 @@ end
 bot.register_application_command(:about, 'Shows some general information about the bot.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
 end
 
+bot.register_application_command(:freeze, 'Prevent all members from speaking in the server.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+  option.string('duration', 'How long should the server be frozen for?', required: false, min_length: 2, max_length: 1000, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+  option.string('reason', 'The reason for freezing the server.', required: false, max_length: 1000, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+end
+
+bot.register_application_command(:unfreeze, 'Unlock the timeout caused by using the freeze command.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+  option.user('reason', 'The reason for un-freezing the server.', required: false, max_length: 1000, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+end
+
 bot.register_application_command(:archive, 'Archives pins in a specified channel.', default_member_permissions: 8192, contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
   option.channel('channel', 'Which channel needs to have its pins archived?', required: true, types: [:text], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
 end
