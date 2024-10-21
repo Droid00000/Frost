@@ -90,7 +90,7 @@ end
 
 bot.register_application_command(:create, 'tags', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |cmd|
   cmd.subcommand('tag', 'Create a tag!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-    option.string('name', 'The name of the tag to create.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+    option.string('name', 'The name of the tag to create.', required: true, max_length: 100, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
     option.string('message', 'A message with the content to include in the tag.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
   end
 end
@@ -156,12 +156,12 @@ bot.register_application_command(:event, 'Event roles', contexts: [0], integrati
   cmd.subcommand_group(:roles, 'Event roles!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |group|
     group.subcommand(:edit, 'Edit your event role.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
       option.role('role', 'Which role do you want to modifiy?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-      option.string('name', 'Provide a name for your role.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+      option.string('name', 'Provide a name for your role.', required: false, max_length: 100, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
       option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 6, max_length: 7, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
       option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
     end
   end
-end  
+end
 
 bot.register_application_command(:boost, 'Booster perks admin', default_member_permissions: 268435456, contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |cmd|
   cmd.subcommand_group(:admin, 'Booster admin!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |group|
@@ -197,13 +197,13 @@ end
 bot.register_application_command(:booster, 'Booster perks', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |cmd|
   cmd.subcommand_group(:role, 'Booster roles!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |group|
     group.subcommand('claim', 'Claim your custom booster role!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-        option.string('name', 'Provide a name for your role.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+        option.string('name', 'Provide a name for your role.', required: true, max_length: 100, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
         option.string('color', 'Provide a HEX color for your role.', required: true, min_length: 6, max_length: 7, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
         option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
       end
 
       group.subcommand('edit', 'Edit your custom booster role!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-        option.string('name', 'Provide a name for your role.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+        option.string('name', 'Provide a name for your role.', required: false, max_length: 100, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
         option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 6, max_length: 7, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
         option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
       end
