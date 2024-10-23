@@ -52,7 +52,7 @@ bot.register_application_command(:freeze, 'Prevent all members from speaking in 
 end
 
 bot.register_application_command(:unfreeze, 'Unlock the timeout caused by using the freeze command.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-  option.user('reason', 'The reason for un-freezing the server.', required: false, max_length: 1000, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+  option.string('reason', 'The reason for un-freezing the server.', required: false, max_length: 1000, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
 end
 
 bot.register_application_command(:archive, 'Archives pins in a specified channel.', default_member_permissions: 8192, contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
@@ -95,7 +95,7 @@ bot.register_application_command(:create, 'tags', contexts: [0], integration_typ
   end
 end
 
-bot.register_application_command(:view, 'tags', contexts: [0, 1, 2], integration_types: [0. 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |cmd|
+bot.register_application_command(:view, 'tags', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |cmd|
   cmd.subcommand('tag', 'View a specific tag.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
     option.string('name', 'The name of the tag to view.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
     option.user('member', 'A member to member to mention when viewing this tag.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })

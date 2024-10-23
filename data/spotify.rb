@@ -28,7 +28,7 @@ module Spotify
     # @param spotify_client_id [String]
     # @param spotify_client_secret [String]
     def initialize(youtube_api, spotify_client_id, spotify_client_secret)
-      @base_url = "https://www.youtube.com/watch?v="
+      @base_url = 'https://www.youtube.com/watch?v='
       @youtube_api = youtube_api
       @youtube_search = Google::Apis::YoutubeV3::YouTubeService.new
       @spotify_client_id = spotify_client_id
@@ -36,7 +36,7 @@ module Spotify
     end
 
     # A simple way to handle authorization.
-    def authorization(payload)
+    def authorization(_payload)
       RSpotify.authenticate(@spotify_client_id, @spotify_client_secret)
       @youtube_search.key = @youtube_api
     end
@@ -50,7 +50,7 @@ module Spotify
 
     # @param milliseconds [Integer]
     def resolve_duration(milliseconds)
-      (Time.at(milliseconds / 1000.0)).utc.strftime("%M:%S")
+      Time.at(milliseconds / 1000.0).utc.strftime('%M:%S')
     end
 
     # @param media [String]

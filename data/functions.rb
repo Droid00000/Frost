@@ -111,6 +111,25 @@ def add_suffix(day)
   end
 end
 
+# Return a string with user data.
+# @param duration [String] Length of the action.
+# @param reason [String] The reason for the action.
+# @param symbol [type] Type of response.
+def process_input(duration, reason, type)
+  case type
+  when :lock
+    response = "#{RESPONSE[47]}"
+    response += " For **#{duration}**." if duration
+    response += " Because: #{reason}" if reason
+    return response.to_s
+  when :unlock
+    response = "#{RESPONSE[48]}"
+    response += " For **#{duration}**." if duration
+    response += " Because: #{reason}" if reason
+    return response.to_s
+  end
+end
+
 # Extracts a date from a website.
 # @param type [Symbol] An optional type argument that does nothing.
 def next_chapter_date(type:)

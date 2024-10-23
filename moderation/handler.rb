@@ -7,7 +7,7 @@ module ModerationCommands
   extend Discordrb::EventContainer
 
   application_command(:freeze) do |event|
-    event.defer(ephemeral: true)
+    event.defer(ephemeral: false)
     freeze_server(event)
   end
 

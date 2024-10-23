@@ -4,6 +4,7 @@ require 'require_all'
 require 'discordrb'
 require 'toml-rb'
 
+require_rel 'tags'
 require_rel 'pins'
 require_rel 'data'
 require_rel 'snow'
@@ -12,8 +13,9 @@ require_rel 'admin'
 require_rel 'events'
 require_rel 'boosters'
 require_rel 'affections'
+require_rel 'moderation'
 
-bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: %i[servers server_message_content server_voice_states], log_mode: :silent)
+bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: %i[servers server_message_content server_voice_states], log_mode: :debug)
 
 bot.ready do
   bot.update_status(ACTIVITY[1], ACTIVITY[2], ACTIVITY[3])

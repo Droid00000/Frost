@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative '../data/constants'
+require_relative '../data/functions'
+require_relative 'unfreeze'
 require 'discordrb'
 
 def freeze_server(data)
@@ -9,13 +11,18 @@ def freeze_server(data)
     when 0
       channel.define_overwrite(data.server.everyone_role, nil, 2048)
     when 2
-      channel.define_overwrite(data.server.everyone_role, nil, 3_147_776)
+      channel.define_overwrite(data.server.everyone_role, nil, 3147776)
     when 15
-      channel.define_overwrite(data.server.everyone_role, nil, 377_957_124_096)
+      channel.define_overwrite(data.server.everyone_role, nil, 377957124096)
     end
   end
 
-  unfreeze_server(data.server, data.options['duration']) if data.options['duration']
+  unless safe_name?(data.options['reason'])
+    data.edit_response(content: RESPONSE[49])
+    return
+  end
 
-  data.edit_response(content: "#{RESPONSE[47]} #{proccess_input(data.options['reason'], data.options['reason'])}")
+  schedule_unfreeze(data.server, data.options['duration']) if data.options['duration']
+
+  data.edit_response(content: process_input(data.options['duration'], data.options['reason'], :lock))
 end

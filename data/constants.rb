@@ -39,11 +39,11 @@ RESPONSE = {
   32 => 'Successfully un-banned the following user from using the booster perks functionality:',
   33 => 'Successfully set your hoist-role to the following role:',
   34 => 'Booster perks are already disabled in this server.',
-  35 => "Successfully disabled booster perks in this server.",
+  35 => 'Successfully disabled booster perks in this server.',
   36 => "This server hasn't enabled the pin archiver.",
-  37 => "Successfully disabled the pin archiver in this server.",
+  37 => 'Successfully disabled the pin archiver in this server.',
   38 => "This server hasn't enabled event perks.",
-  39 => "Successfully disabled event perks in this server.",
+  39 => 'Successfully disabled event perks in this server.',
   40 => "The bot isn't in a voice channel!",
   41 => 'Successfully Disconnected!',
   42 => 'Stopped playback of the current song.',
@@ -52,7 +52,8 @@ RESPONSE = {
   45 => 'Begining playback!',
   46 => 'Finished playback!',
   47 => 'Successfully locked the server.',
-  48 => 'Successfully unlocked the server.'
+  48 => 'Successfully unlocked the server.',
+  49 => 'Invalid reason parameter.'
 }.freeze
 
 # A list of values for embed responses.
@@ -83,7 +84,7 @@ EMBED = {
   24 => 'Stops the currently playing song.',
   25 => "Opens the help menu you're currently viewing.",
   26 => 'Plays audio from a song name or URL.',
-  27 => "Opeans the music commands help menu."
+  27 => 'Opeans the music commands help menu.'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
@@ -113,7 +114,8 @@ UI = {
   3 => 0x33363b,
   4 => 0x8da99b,
   5 => 0xd4f0ff,
-  6 => 0x4d94e8
+  6 => 0x4d94e8,
+  7 => 0x6bb7ed
 }.freeze
 
 # Data used to update the bot status upon startup.
@@ -137,11 +139,11 @@ REGEX = {
   1 => /:(\d+)>$/,
   2 => /(?<=New chapter arrives on)(.*?)(?=<)/,
   3 => /\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z/,
-  4 => %r{^(?:https?://)?(?:www\.)?(?:open\.)?spotify\.com/track/([^?\/]+)},
-  5 => /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be|youtube\.com)/,
-  6 => /https?:\/\/music\.apple\.com\/[a-z]{2}\/song\//,
+  4 => %r{^(?:https?://)?(?:www\.)?(?:open\.)?spotify\.com/track/([^?/]+)},
+  5 => %r{^(?:https?://)?(?:www\.)?(?:youtu\.be|youtube\.com)},
+  6 => %r{https?://music\.apple\.com/[a-z]{2}/song/},
   7 => /(?<="song-title">)(.*?)(?=\s*<)/,
-  8 => /href="[^"]*\/artist\/[^"]*">(.*?)<\/a>/,
+  8 => %r{href="[^"]*/artist/[^"]*">(.*?)</a>},
   9 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|
