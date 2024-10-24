@@ -53,7 +53,10 @@ RESPONSE = {
   46 => 'Finished playback!',
   47 => 'Successfully locked the server.',
   48 => 'Successfully unlocked the server.',
-  49 => 'Invalid reason parameter.'
+  49 => 'Invalid reason parameter.',
+  50 => 'This tag has already been claimed.',
+  51 => 'Successfully created a tag with the following name:',
+  52 => 'This tag does not exist.'
 }.freeze
 
 # A list of values for embed responses.

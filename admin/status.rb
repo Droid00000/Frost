@@ -8,7 +8,7 @@ class Status
   @@status_data = { status: nil, availability: nil }
 
   # @param status [String]
-  # @param avalibility [String]
+  # @param availability [String]
   def initialize(availability, status, *_playing)
     @@status_data[:status] = status
     @@status_data[:availability] = availability.downcase

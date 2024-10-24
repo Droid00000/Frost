@@ -55,6 +55,7 @@ POSTGRES.create_table?(:Tags) do
   Bigint :owner_id, null: false
   Bigint :server_id, null: false
   Bigint :channel_id, null: false
+  Bigint :creation_time null: false
   String :name, null: false, unique: true
   Bigint :message_id, unique: true, null: false
 end
@@ -127,15 +128,19 @@ def tag_records(name:, server:, message:, channel:, owner:, type:)
     when :get
       [POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:message_id).map(:message_id),
        POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:owner_id).map(:owner_id),
-       POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:channel_id).map(:channel_id)]
+       POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:channel_id).map(:channel_id),
+       POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:server_id).map(:server_id),
+       POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:creation_time).map(:creation_time)]
     when :disable
       POSTGRES[:Tag_Settings].insert(server_id: server, enabled: false)
     when :check
       !POSTGRES[:Tags].where(owner_id: owner, name: name).empty?
     when :create
-      POSTGRES[:Tags].insert(server_id: server, message_id: message, name: name, owner_id: owner, channel_id: channel)
+      POSTGRES[:Tags].insert(server_id: server, message_id: message, name: name, owner_id: owner, channel_id: channel, creation_time: Time.now.to_i)
     when :delete
       POSTGRES[:Tags].where(name: name, owner_id: owner).delete
+    when :exists?
+      return false if !POSTGRES[:Tags].where(name: name).empty?
     end
   end
 end
