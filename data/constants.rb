@@ -56,7 +56,9 @@ RESPONSE = {
   49 => 'Invalid reason parameter.',
   50 => 'This tag has already been claimed.',
   51 => 'Successfully created a tag with the following name:',
-  52 => 'This tag does not exist.'
+  52 => 'This tag does not exist.',
+  53 => 'Unsupported message.',
+  54 => 'Successfully deleted this tag!'
 }.freeze
 
 # A list of values for embed responses.
