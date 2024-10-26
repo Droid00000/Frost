@@ -12,8 +12,8 @@ bot.ready do
   bot.update_status(ACTIVITY[4], ACTIVITY[5], ACTIVITY[3])
 end
 
-bot.register_application_command(:hug, 'Hugs another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-  option.user('target', 'Who do you want to hug?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+bot.register_application_command(:hug, 'Hugs another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गले मिलना' }, description_localizations: { 'hi' => 'सर्वर मित्र के गले मिलना' }) do |option|
+  option.user('target', 'Who do you want to hug?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => 'किसको गले मिलना है' })
 end
 
 bot.register_application_command(:poke, 'Pokes another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|

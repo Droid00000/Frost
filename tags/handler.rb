@@ -14,12 +14,12 @@ module TagCommands
   end
 
   application_command(:delete).subcommand(:tag) do |event|
-    event.defer(ephemeral: false)
+    event.defer(ephemeral: true)
     delete_tag(event)
   end
 
   application_command(:view).subcommand(:tag) do |event|
-    event.defer(ephemeral: true)
+    event.defer(ephemeral: false)
     view_tag(event)
   end
 

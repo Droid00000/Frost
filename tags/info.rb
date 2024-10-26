@@ -11,9 +11,11 @@ def tag_info(data)
     return
   end
 
-  metadata = tag_records(name: data.options['name'], type: :get)
-  message = data.bot.resolve_message(metadata[0], metadata[2])
-  owner = data.bot.member(metadata[3], metadata[1])
+  message = data.bot.resolve_message(tag_records(name: data.options['name'], type: :get)[0],
+                                     tag_records(name: data.options['name'], type: :get)[2])
+
+  owner = data.bot.member(tag_records(name: data.options['name'], type: :get)[3],
+                           tag_records(name: data.options['name'], type: :get)[1])
 
   data.edit_response do |builder|
     builder.add_embed do |embed|

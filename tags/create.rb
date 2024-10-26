@@ -15,9 +15,12 @@ def create_tag(data)
     return
   end
 
-  tag_records(name: data.options['name'], server: event.server.id,
-              message: data.options['message'], channel: data.channel.id,
-              owner: data.user.id, type: :create)
+  tag_records(name: data.options['name'],
+              server: event.server.id,
+              message: data.options['message'],
+              channel: data.channel.id,
+              owner: data.user.id,
+              type: :create)
 
   data.edit_response(content: "#{RESPONSE[51]} **#{data.options['name']}**")
 end
