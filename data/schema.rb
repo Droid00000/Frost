@@ -126,18 +126,17 @@ def tag_records(name:, server:, message:, channel:, owner:, type:)
     when :enabled
       !POSTGRES[:Tag_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
     when :get
-      [POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:message_id).map(:message_id),
-       POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:owner_id).map(:owner_id),
-       POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:channel_id).map(:channel_id),
-       POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:server_id).map(:server_id),
-       POSTGRES[:Tags].where(Sequel.|(name: name, message: message)).select(:creation_time).map(:creation_time)]
+      [POSTGRES[:Tags].where(Sequel.|(name: name, message_id: message)).select(:message_id).map(:message_id),
+       POSTGRES[:Tags].where(Sequel.|(name: name, message_id: message)).select(:owner_id).map(:owner_id),
+       POSTGRES[:Tags].where(Sequel.|(name: name, message_id: message)).select(:channel_id).map(:channel_id),
+       POSTGRES[:Tags].where(Sequel.|(name: name, message_id: message)).select(:server_id).map(:server_id),
+       POSTGRES[:Tags].where(Sequel.|(name: name, message_id: message)).select(:creation_time).map(:creation_time)]
     when :disable
       POSTGRES[:Tag_Settings].insert(server_id: server, enabled: false)
     when :check
       !POSTGRES[:Tags].where(owner_id: owner, name: name).empty?
     when :create
-      POSTGRES[:Tags].insert(server_id: server, message_id: message, name: name, owner_id: owner, channel_id: channel,
-                             creation_time: Time.now.to_i)
+      POSTGRES[:Tags].insert(server_id: server, message_id: message, name: name, owner_id: owner, channel_id: channel, creation_time: Time.now.to_i)
     when :delete
       POSTGRES[:Tags].where(name: name, owner_id: owner).delete
     when :exists?
