@@ -11,12 +11,12 @@ def voice_play(data)
     return
   end
 
-  track = resolve_song(data.options['url'])
-
-  unless track
+  unless resolve_song(data.options['url'])
     data.edit_response(content: RESPONSE[44])
     return
   end
+
+  track = resolve_song(data.options['url'])
 
   data.edit_response do |builder|
     builder.add_embed do |embed|
