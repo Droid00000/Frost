@@ -12,7 +12,7 @@ module ManualPinArchiver
     pins = event.channel.pins
 
     if pins.count == 50 && archiver_records(server: event.server.id, type: :check)
-      archive_channel = archiver_records(server: event.server.id, type: :get)
+      archive_channel = event.bot.channel(archiver_records(server: event.server.id, type: :get))
       message = pins[1]
 
       if message.attachments.any?
@@ -33,9 +33,9 @@ module ManualPinArchiver
           embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{message.id} • #{resolve_time(message.timestamp.to_s)}")
           embed.add_field(name: 'Source', value: "[Jump!](#{message.link})")
         end
-        message.unpin
-        event.edit_response(content: "#{RESPONSE[20]} #{EMOJI[3]}")
       end
+      message.unpin
+      event.edit_response(content: "#{RESPONSE[20]} #{EMOJI[3]}")
     end
   end
 end

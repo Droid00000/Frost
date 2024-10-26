@@ -12,7 +12,7 @@ module AutoPinArchiver
     pins = channel.pins
 
     if pins.count == 50 && archiver_records(server: event.data['guild_id']&.to_i, type: :check)
-      archive_channel = archiver_records(server: event.data['guild_id']&.to_i, type: :get)
+      archive_channel = event.bot.channel.(archiver_records(server: event.data['guild_id']&.to_i, type: :get))
       message = pins[1]
 
       if message.attachments.any?
@@ -33,8 +33,8 @@ module AutoPinArchiver
           embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{message.id} • #{resolve_time(message.timestamp.to_s)}")
           embed.add_field(name: 'Source', value: "[Jump!](#{message.link})")
         end
-        message.unpin
       end
+      message.unpin
     end
   end
 end
