@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'toml-rb'
-require_relative 'spotify'
+require_relative 'lavalink'
 
 # A response message to an interaction.
 RESPONSE = {
@@ -135,8 +135,8 @@ ACTIVITY = {
 # The TOML configuration file used by the bot.
 TOML = TomlRB.load_file(File.join(File.expand_path('..', __dir__), 'config.toml'))
 
-# The Spotify class used to convert URL's and queries into YouTube links for playback.
-SPOTIFY = Spotify::Resolver.new(TOML['Music']['YOUTUBE'], TOML['Music']['CLIENT_ID'], TOML['Music']['CLIENT_SECRET'])
+# The Lavalink wrapper used to convert URL's and queries into track metadata.
+LAVALINK = Calliope::Request.new(TOML['Lavalink']['ADDRESS'], TOML['Lavalink']['PASSWORD'])
 
 # A series of regular expressions utilized by the bot.
 # REGEX[9] is used to ensure a name doesn't contain any bad words.
@@ -144,12 +144,7 @@ REGEX = {
   1 => /:(\d+)>$/,
   2 => /(?<=New chapter arrives on)(.*?)(?=<)/,
   3 => /\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z/,
-  4 => %r{^(?:https?://)?(?:www\.)?(?:open\.)?spotify\.com/track/([^?/]+)},
-  5 => %r{^(?:https?://)?(?:www\.)?(?:youtu\.be|youtube\.com)},
-  6 => %r{https?://music\.apple\.com/[a-z]{2}/song/},
-  7 => /(?<="song-title">)(.*?)(?=\s*<)/,
-  8 => %r{href="[^"]*/artist/[^"]*">(.*?)</a>},
-  9 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
+  4 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|
           xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|

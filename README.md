@@ -44,10 +44,9 @@ URL = ""
 CHANNEL = ""
 LINK = ""
 
-[Music]
-YOUTUBE = ""
-CLIENT_ID = ""
-CLIENT_SECRET = ""
+[Lavalink]
+ADDRESS = ""
+PASSWORD = ""
 ```
 
 Many of these variables are undocumented because the bot is meant for personal use.

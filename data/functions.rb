@@ -36,7 +36,7 @@ end
 def safe_name?(string)
   return true if string.nil? || string.empty?
 
-  !string.match(REGEX[9])
+  !string.match(REGEX[4])
 end
 
 # Abstracts away the process of retriving a role icon.
@@ -55,29 +55,6 @@ def hit_or_miss?
   number = rand(1..10)
   false if number >= 5
   true if number <= 5
-end
-
-# Checks to make sure a YouTube URL is valid.
-# @param uri [String] A YouTube URI.
-# @return [Boolean]
-def resolve_song(uri)
-  return false if uri.nil? || uri.empty?
-
-  if uri.match(REGEX[5])
-    return SPOTIFY.youtube(uri)
-  end
-
-  if uri.match(REGEX[4])
-    return SPOTIFY.resolve(uri.match(REGEX[4]))
-  end
-
-  if uri.match(REGEX[6])
-    return SPOTIFY.apple_music(uri)
-  end
-
-  unless uri.match(URI::RFC2396_PARSER.make_regexp)
-    return SPOTIFY.raw_resolve(uri)
-  end
 end
 
 # Checks if a guild member is still boosting a guild.
@@ -167,7 +144,7 @@ def gif(type)
   when :BONK
     BONK.sample.to_s
   when :PUNCH
-    PUNCH.sample.to_s  
+    PUNCH.sample.to_s
   else
     UI[21]
   end
