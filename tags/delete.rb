@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../data/constants'
-require_relative '../data/schema'
 require 'discordrb'
+require 'data/schema'
+require 'data/constants'
+require 'data/functions'
 
 def delete_tag(data)
   unless tag_records(name: data.options['name'], owner: data.user.id, type: :check)

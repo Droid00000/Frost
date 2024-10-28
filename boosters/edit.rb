@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../data/constants'
-require_relative '../data/functions'
-require_relative '../data/schema'
 require 'discordrb'
+require 'data/schema'
+require 'data/constants'
+require 'data/functions'
 
 def edit_role(data)
   if booster_records(server: data.server.id, user: data.user.id, type: :banned)
@@ -33,7 +33,11 @@ def edit_role(data)
 
   role = booster_records(server: data.server.id, user: data.user.id, type: :get_role)
 
-  data.server.update_role(role, data.options['name'], data.options['color'], data.options['icon'], REASON[2])
+  data.server.update_role(role,
+                          data.options['name'],
+                          resolve_color(data.options['color']),
+                          data.options['icon'],
+                          REASON[2])
 
   data.edit_response(content: "#{RESPONSE[2]} #{EMOJI[2]}")
 end

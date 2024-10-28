@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative '../data/constants'
 require 'discordrb'
+require 'data/constants'
 
 def voice_help_embed(data)
   data.edit_response do |builder|

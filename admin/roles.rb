@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../data/constants'
-require_relative '../data/schema'
 require 'discordrb'
+require 'data/schema'
+require 'data/constants'
 
 # Adds a new role to the event roles database.
 def setup_event_roles(data)

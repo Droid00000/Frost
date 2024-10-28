@@ -2,7 +2,7 @@
 
 require 'sequel'
 require 'toml-rb'
-require_relative 'constants'
+require 'data/constants'
 
 POSTGRES = Sequel.connect(TOML['Postgres']['URL'], max_connections: 7)
 

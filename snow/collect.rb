@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../data/constants'
-require_relative '../data/functions'
-require_relative '../data/schema'
 require 'discordrb'
+require 'data/schema'
+require 'data/constants'
+require 'data/functions'
 
 def collect_snowball(data)
   snowball_records(user: data.user.id, type: :add_user) unless snowball_records(user: data.user.id, type: :check_user)

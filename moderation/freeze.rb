@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../data/constants'
-require_relative '../data/functions'
-require_relative 'unfreeze'
 require 'discordrb'
+require 'rufus-scheduler'
+require 'data/constants'
+require 'data/functions'
 
 def freeze_server(data)
   data.server.channels.each do |channel|
@@ -25,4 +25,12 @@ def freeze_server(data)
   schedule_unfreeze(data.server, data.options['duration']) if data.options['duration']
 
   data.edit_response(content: process_input(data.options['duration'], data.options['reason'], :lock))
+end
+
+def schedule_unfreeze(server, duration)
+  Rufus::Scheduler.new.in duration do
+    server.channels.each do |channel|
+      channel.define_overwrite(server.everyone_role, nil, nil)
+    end
+  end
 end

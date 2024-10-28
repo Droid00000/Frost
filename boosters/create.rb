@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../data/constants'
-require_relative '../data/functions'
-require_relative '../data/schema'
 require 'discordrb'
+require 'data/schema'
+require 'data/constants'
+require 'data/functions'
 
 def create_role(data)
   if booster_records(server: data.server.id, user: data.user.id, type: :banned)

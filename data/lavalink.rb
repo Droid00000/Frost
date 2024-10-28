@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'faraday'
 require 'json'
+require 'faraday'
 
 # Used to access Lavaplayer.
 module Calliope

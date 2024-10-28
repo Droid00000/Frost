@@ -5,11 +5,10 @@ require 'time'
 require 'date'
 require 'toml-rb'
 require 'discordrb'
+require 'data/schema'
+require 'data/embeds'
+require 'data/constants'
 require 'selenium-webdriver'
-
-require_relative 'schema'
-require_relative 'embeds'
-require_relative 'constants'
 
 # Initilaze a new color object for a role.
 # @param [String] The hex color to resolve.

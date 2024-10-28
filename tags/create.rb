@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
-require_relative '../data/constants'
-require_relative '../data/schema'
+$LOAD_PATH.unshift File.expand_path('..', __FILE__)
+
 require 'discordrb'
+require 'data/schema'
+require 'data/constants'
+require 'data/functions'
 
 def create_tag(data)
   unless safe_name?(data.options['name'])

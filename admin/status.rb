@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../data/constants'
 require 'discordrb'
+require 'data/schema'
+require 'data/constants'
 
 class Status
   # A Hash to store the current status data.

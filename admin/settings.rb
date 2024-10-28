@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../data/constants'
-require_relative '../data/functions'
-require_relative '../data/schema'
 require 'discordrb'
+require 'data/schema'
+require 'data/functions'
+require 'data/constants'
 
 def server_settings(data)
   data.edit_response do |builder|

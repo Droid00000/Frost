@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative '../data/constants'
-require_relative '../data/functions'
-require_relative '../data/schema'
 require 'discordrb'
+require 'data/schema'
+require 'data/constants'
+require 'data/functions'
 
 def edit_event_role(data)
   unless event_records(server: data.server.id, type: :enabled)
@@ -28,7 +28,7 @@ def edit_event_role(data)
 
   data.server.update_role(data.options['role'],
                           data.options['name'],
-                          data.options['color'],
+                          resolve_color(data.options['color']),
                           data.options['icon'],
                           REASON[5])
 

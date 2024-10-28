@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'toml-rb'
-require_relative 'lavalink'
+require 'data/lavalink'
 
 # A response message to an interaction.
 RESPONSE = {
