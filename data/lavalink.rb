@@ -64,6 +64,7 @@ module Calliope
       Time.at(milliseconds / 1000.0).utc.strftime('%M:%S')
     end
 
+    # @return [String] 
     def resolve_source
       @search.source("#{@name} #{@artist}").playback
     end
