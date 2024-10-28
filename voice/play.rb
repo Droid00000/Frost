@@ -2,8 +2,8 @@
 
 require 'discordrb'
 require 'shellwords'
-require 'data/constants'
 require 'data/lavalink'
+require 'data/constants'
 
 def voice_play(data)
   if data.user.voice_channel.nil?
