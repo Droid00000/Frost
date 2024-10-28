@@ -29,7 +29,7 @@ end
 # Blacklists a user from using booster perks in a server.
 def admin_blacklist_user(data)
   if booster_records(server: data.server.id, user: data.options['user'], type: :banned)
-    data.edit_response(content: "#{RESPONSE[29]}")
+    data.edit_response(content: RESPONSE[29])
     return
   end
 
@@ -40,7 +40,7 @@ end
 # Un-blacklists a user from using booster perks in a server.
 def admin_remove_blacklist(data)
   unless booster_records(server: data.server.id, user: data.options['user'], type: :banned)
-    data.edit_response(content: "#{RESPONSE[31]}")
+    data.edit_response(content: RESPONSE[31])
     return
   end
 
@@ -63,10 +63,10 @@ end
 # Disable booster perks for a server.
 def admin_disable_perks(data)
   unless booster_records(server: data.server.id, type: :enabled)
-    data.edit_response(content: "#{RESPONSE[34]}")
+    data.edit_response(content: RESPONSE[34])
     return
   end
 
   booster_records(server: data.server.id, type: :disable)
-  data.edit_response(content: "#{RESPONSE[35]}")
+  data.edit_response(content: RESPONSE[35])
 end
