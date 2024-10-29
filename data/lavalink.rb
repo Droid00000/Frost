@@ -31,31 +31,30 @@ module Calliope
     # @param payload [Hash]
     # @param search [object]
     def initialize(payload, search)
-      puts payload
       if payload['data'].is_a?(Array) && !payload['data'].empty?
-        @name = payload['data'][0].dig('info', 'title') || 'Name Unknown'
-        @cover = payload['data'][0].dig('info', 'artworkUrl') || 'Cover Unknown'
-        @artist = payload['data'][0].dig('info', 'author') || 'Artist Unknown'
-        @source = payload['data'][0].dig('info', 'uri') || 'URL Unknown'
+        @name = payload['data'][0].dig('info', 'title')
+        @cover = payload['data'][0].dig('info', 'artworkUrl')
+        @artist = payload['data'][0].dig('info', 'author')
+        @source = payload['data'][0].dig('info', 'uri')
         @search = search
         @playback = resolve_source unless youtube(payload)
-        @duration = resolve_duration(payload['data'][0].dig('info', 'length')) || 'Duration Unknown'
+        @duration = resolve_duration(payload['data'][0].dig('info', 'length'))
       elsif !payload['data']['tracks'].nil?
-        @name = payload['data']['tracks'][0].dig('info', 'title') || 'Name Unknown'
-        @cover = payload['data']['tracks'][0].dig('info', 'artworkUrl') || 'Cover Unknown'
-        @artist = payload['data']['tracks'][0].dig('info', 'author') || 'Artist Unknown'
-        @source = payload['data']['tracks'][0].dig('info', 'uri') || 'URL Unknown'
+        @name = payload['data']['tracks'][0].dig('info', 'title')
+        @cover = payload['data']['tracks'][0].dig('info', 'artworkUrl')
+        @artist = payload['data']['tracks'][0].dig('info', 'author')
+        @source = payload['data']['tracks'][0].dig('info', 'uri')
         @search = search
         @playback = resolve_source unless youtube(payload)
-        @duration = resolve_duration(payload['data']['tracks'][0].dig('info', 'length')) || 'Duration Unknown'
+        @duration = resolve_duration(payload['data']['tracks'][0].dig('info', 'length'))
       else
-        @name = payload['data'].dig('info', 'title') || 'Name Unknown'
-        @cover = payload['data'].dig('info', 'artworkUrl') || 'Cover Unknown'
-        @artist = payload['data'].dig('info', 'author') || 'Artist Unknown'
-        @source = payload['data'].dig('info', 'uri') || 'URL Unknown'
+        @name = payload['data'].dig('info', 'title')
+        @cover = payload['data'].dig('info', 'artworkUrl')
+        @artist = payload['data'].dig('info', 'author')
+        @source = payload['data'].dig('info', 'uri')
         @search = search
         @playback = resolve_source unless youtube(payload)
-        @duration = resolve_duration(payload['data'].dig('info', 'length')) || 'Duration Unknown'
+        @duration = resolve_duration(payload['data'].dig('info', 'length'))
       end
     end
 
@@ -64,7 +63,7 @@ module Calliope
       Time.at(milliseconds / 1000.0).utc.strftime('%M:%S')
     end
 
-    # @return [String] 
+    # @return [String]
     def resolve_source
       @search.source("#{@name} #{@artist}").playback
     end
@@ -72,8 +71,10 @@ module Calliope
     # @param payload [Hash]
     def youtube(payload)
       payload['data'][0].dig('info', 'sourceName') == 'youtube' if payload['data'].is_a?(Array)
-      payload['data']['tracks'][0].dig('info', 'sourceName') == 'youtube' if payload['data'].is_a?(Hash) && payload['data']['tracks']
-      payload['data'].dig('info', 'sourceName') == 'youtube' if payload['data'].is_a?(Hash) && payload['data']['tracks'].nil?
+      payload['data']['tracks'][0].dig('info',
+                                       'sourceName') == 'youtube' if payload['data'].is_a?(Hash) && payload['data']['tracks']
+      payload['data'].dig('info',
+                          'sourceName') == 'youtube' if payload['data'].is_a?(Hash) && payload['data']['tracks'].nil?
     end
   end
 
@@ -119,25 +120,39 @@ module Calliope
       case track
       when %r{^(?:https?://)?(?:www\.)?(?:youtu\.be|youtube\.com)}
         search(track)
+      when %r{^https?://(www\.)?music\.youtube\.com}i
+        search(track)
       when %r{(?i)https?://open\.spotify\.com}
         search(track)
       when %r{(?i)https?://music\.apple\.com}
         search(track)
       else
-        search(track)
+        spotify(track)
       end
     end
 
     # @param track [String] Song URL or search term to resolve by.
     def search(track)
-      response = run_request("ytsearch:#{URI.encode_www_form_component(track)}")
+      response = run_request("ytsearch:#{handle_encoding(track)}")
+      Calliope::Song.new(response, self)
+    end
+
+    # @param track [String] Song URL or search term to resolve by.
+    def spotify(track)
+      response = run_request("spsearch:#{handle_encoding(track)}")
       Calliope::Song.new(response, self)
     end
 
     # @param track [String] Song URL or search term to resolve by.
     def source(track)
-      response = run_request("ytsearch:#{URI.encode_www_form_component(track)}")
+      response = run_request("ytsearch:#{handle_encoding(track)}")
       Calliope::Metadata.new(response, self)
+    end
+
+    # @param [String] Song URL or search term to encode.
+    # @return [String] Safely encoded query string.
+    def handle_encoding(query)
+      query == URI.decode_www_form_component(URI.encode_www_form_component(query)) ? query : URI.encode_www_form_component(query)
     end
 
     # @param response [Faraday::Response]
