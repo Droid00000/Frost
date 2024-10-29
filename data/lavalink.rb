@@ -109,7 +109,7 @@ module Calliope
 
     # @param query [String]
     def run_request(query)
-      response = Faraday.get("#{@address}/v4/loadtracks?identifier=#{query}") do |builder|
+      response = Faraday.get(URI::Parser.new.escape("#{@address}/v4/loadtracks?identifier=#{query}")) do |builder|
         builder.headers['Authorization'] = @password
       end
       handle_response(response)
@@ -133,26 +133,20 @@ module Calliope
 
     # @param track [String] Song URL or search term to resolve by.
     def search(track)
-      response = run_request("ytsearch:#{handle_encoding(track)}")
+      response = run_request("ytsearch:#{track}")
       Calliope::Song.new(response, self)
     end
 
     # @param track [String] Song URL or search term to resolve by.
     def spotify(track)
-      response = run_request("spsearch:#{handle_encoding(track)}")
+      response = run_request("spsearch:#{track}")
       Calliope::Song.new(response, self)
     end
 
     # @param track [String] Song URL or search term to resolve by.
     def source(track)
-      response = run_request("ytsearch:#{handle_encoding(track)}")
+      response = run_request("ytsearch:#{track}")
       Calliope::Metadata.new(response, self)
-    end
-
-    # @param [String] Song URL or search term to encode.
-    # @return [String] Safely encoded query string.
-    def handle_encoding(query)
-      query == URI.decode_www_form_component(URI.encode_www_form_component(query)) ? query : URI.encode_www_form_component(query)
     end
 
     # @param response [Faraday::Response]
