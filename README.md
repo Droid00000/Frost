@@ -36,9 +36,7 @@ COMMANDS = []
 CONTRIBUTORS = []
 
 [Postgres]
-USERNAME = ""
-PASSWORD = ""
-URL = ""
+URL = "postgres://URI_HERE"
 
 [Chapter]
 CHANNEL = ""

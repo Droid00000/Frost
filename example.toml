@@ -5,9 +5,7 @@ COMMANDS = []
 CONTRIBUTORS = []
 
 [Postgres]
-USERNAME = ""
-PASSWORD = ""
-URL = ""
+URL = "postgres://"
 
 [Chapter]
 CHANNEL = ""
