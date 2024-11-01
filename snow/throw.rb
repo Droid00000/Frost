@@ -16,7 +16,7 @@ def throw_snowball(data)
     data.edit_response(content: "<@#{data.options['member']}>") do |builder|
       builder.add_embed do |embed|
         embed.color = UI[6]
-        embed.description = "<@#{data.user.id}> threw a snowball at <@#{data.options['member']}>!"
+        embed.description = "**#{data.user.display_name}** threw a snowball at <@#{data.options['member']}>!"
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:THROW))
         embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: 'THROW')
       end
@@ -26,7 +26,7 @@ def throw_snowball(data)
     data.edit_response do |builder|
       builder.add_embed do |embed|
         embed.color = UI[6]
-        embed.description = "<@#{data.user.id}> missed!"
+        embed.description = "**#{data.user.display_name}** missed!"
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:MISS))
         embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: 'MISS')
       end
