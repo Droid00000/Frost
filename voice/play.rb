@@ -29,12 +29,6 @@ def voice_play(data)
     return
   end
 
-  status = if data.bot.voice(data.server)&.playing?
-             'Queued'
-           else
-             'Now Playing'
-           end
-
   track = LAVALINK.resolve(data.options['url'])
   Tracks.new(track.playback, data.server.id)
 
@@ -44,8 +38,8 @@ def voice_play(data)
       embed.colour = UI[5]
       embed.url = track.source
       embed.description = "**Duration:** `#{track.duration}`"
-      embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: status)
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: track.cover)
+      embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: data.bot.voice(data.server)&.playing? ? 'Queued' : 'Now Playing')
       embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "Requested by #{data.user.display_name}", icon_url: data.user.avatar_url)
     end
   end
