@@ -1,16 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'sticker'
 require_relative 'button'
 require_relative 'emoji'
 
 module EmojiCommands
   extend Discordrb::EventContainer
-
-  application_command(:add).subcommand(:sticker) do |event|
-    event.defer(ephemeral: true)
-    create_sticker(event)
-  end
 
   application_command(:add).subcommand(:emoji) do |event|
     event.defer(ephemeral: true)
