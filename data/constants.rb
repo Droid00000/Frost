@@ -58,7 +58,9 @@ RESPONSE = {
   51 => 'Successfully created a tag with the following name:',
   52 => 'This tag does not exist.',
   53 => 'Unsupported message.',
-  54 => 'Successfully deleted this tag!'
+  54 => 'Successfully deleted this tag!',
+  55 => "This message doesn't have any emojis.",
+  56 => "Added this emoji to the server:"
 }.freeze
 
 # A list of values for embed responses.
@@ -89,7 +91,8 @@ EMBED = {
   24 => 'Stops the currently playing song.',
   25 => "Opens the help menu you're currently viewing.",
   26 => 'Plays audio from a song name or URL.',
-  27 => 'Opeans the music commands help menu.'
+  27 => 'Opeans the music commands help menu.',
+  28 => '**Select the emojis you want to add!**'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
@@ -139,7 +142,7 @@ TOML = TomlRB.load_file(File.join(File.expand_path('..', __dir__), 'config.toml'
 LAVALINK = Calliope::Request.new(TOML['Lavalink']['ADDRESS'], TOML['Lavalink']['PASSWORD'])
 
 # A series of regular expressions utilized by the bot.
-# REGEX[9] is used to ensure a name doesn't contain any bad words.
+# REGEX[4] is used to ensure a name doesn't contain any bad words.
 REGEX = {
   1 => /:(\d+)>$/,
   2 => /(?<=New chapter arrives on)(.*?)(?=<)/,

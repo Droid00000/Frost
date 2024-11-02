@@ -12,6 +12,7 @@ require_all 'data'
 require_all 'snow'
 require_all 'voice'
 require_all 'admin'
+require_all 'emojis'
 require_all 'events'
 require_all 'boosters'
 require_all 'affections'
@@ -55,6 +56,7 @@ bot.include! HugAffection
 bot.include! NomAffection
 bot.include! VoiceCommands
 bot.include! BonkAffection
+bot.include! EmojiCommands
 bot.include! AdminCommands
 bot.include! PokeAffection
 bot.include! SnowballFights

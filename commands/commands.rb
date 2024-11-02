@@ -32,8 +32,8 @@ bot.register_application_command(:bonk, 'Bonk another server member.', contexts:
   option.user('target', 'Who do you want to bonk?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => 'किसको टपाली मारना है' })
 end
 
-bot.register_application_command(:punch, 'Punch another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-  option.user('target', 'Who do you want to punch?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => '' })
+bot.register_application_command(:punch, 'Punch another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'मुक्का' }, description_localizations: { 'hi' => 'एक सर्वर मित्र को मुक्का मारो' }) do |option|
+  option.user('target', 'Who do you want to punch?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => 'आप किसे मुक्का मारना चाहते हैं?' })
 end
 
 bot.register_application_command(:sleep, 'Tells another server member to go and sleep.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'नींद' }, description_localizations: { 'hi' => 'किसी सर्वर मित्र को बोलो जाके सो जाए' }) do |option|
@@ -43,7 +43,7 @@ end
 bot.register_application_command(:help, 'Shows some general information about how to use the bot.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'हेल्प' }, description_localizations: { 'hi' => 'बोट का उपयोग कैसे करना है उसके जानकारी चाहिए।' }) do |option|
 end
 
-bot.register_application_command(:about, 'Shows some general information about the bot.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+bot.register_application_command(:about, 'Shows some general information about the bot.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'जानकारी' }, description_localizations: { 'hi' => 'बोट का उपयोग कैसे करना है उसके जानकारी चाहिए।' }) do |option|
 end
 
 bot.register_application_command(:freeze, 'Prevent all members from speaking in the server.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
@@ -55,8 +55,8 @@ bot.register_application_command(:unfreeze, 'Unlock the timeout caused by using 
   option.string('reason', 'The reason for un-freezing the server.', required: false, max_length: 1000, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
 end
 
-bot.register_application_command(:archive, 'Archives pins in a specified channel.', default_member_permissions: 8192, contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-  option.channel('channel', 'Which channel needs to have its pins archived?', required: true, types: [:text], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+bot.register_application_command(:archive, 'Archives pins in a specified channel.', default_member_permissions: 8192, contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'पुरातत्व' }, description_localizations: { 'hi' => 'पुरातत्व पिंस कोई चुनित चैनल मै' }) do |option|
+  option.channel('channel', 'Which channel needs to have its pins archived?', required: true, types: [:text], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => 'कौनसे चैनल को उसके पुरातत्व पिंस की जरूरत है' })
 end
 
 bot.register_application_command(:eval, 'Allows the bot owner to execute code.', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
