@@ -14,7 +14,7 @@ def button_click(data, button)
 
     builder.add_embed do |embed|
       embed.title = EMBED[28]
-      embed.color = UI['5']
+      embed.color = UI[5]
     end
   end
 
