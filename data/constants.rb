@@ -123,7 +123,9 @@ UI = {
   4 => 0x8da99b,
   5 => 0xd4f0ff,
   6 => 0x4d94e8,
-  7 => 0x6bb7ed
+  7 => 0x6bb7ed,
+  8 => :danger,
+  9 => :primary
 }.freeze
 
 # Data used to update the bot status upon startup.

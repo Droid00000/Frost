@@ -6,7 +6,7 @@ require_relative 'emoji'
 module EmojiCommands
   extend Discordrb::EventContainer
 
-  application_command(:add).subcommand(:emoji) do |event|
+  application_command('add emoji(s)') do |event|
     event.defer(ephemeral: true)
     create_emoji(event)
   end

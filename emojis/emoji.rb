@@ -14,7 +14,7 @@ def create_emoji(data)
       data.target.emoji.each_with_index do |emoji, position|
         break if position > 4
 
-        buttons.button(style: :primary, emoji: emoji.id, custom_id: position)
+        buttons.button(style: UI[8], emoji: emoji.id, custom_id: position)
       end
     end
 
