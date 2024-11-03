@@ -31,13 +31,13 @@ def steal_emojis(data)
     return
   end
 
-  if data.server.emojis.size >= data.server.max_emojis
+  if data.server.emoji_limit?
     data.edit_response(content: RESPONSE[58])
     return
   end
 
   data.target.emoji.each_with_index do |emoji|
-    break if data.server.emojis.size >= data.server.max_emojis
+    break if data.server.emoji_limit?
     
     data.server.add_emoji(emoji.name, emoji.file)
   end
