@@ -60,7 +60,9 @@ RESPONSE = {
   53 => 'Unsupported message.',
   54 => 'Successfully deleted this tag!',
   55 => "This message doesn't have any emojis.",
-  56 => "Added this emoji to the server:"
+  56 => "Added this emoji to the server:",
+  57 => "Successfully added the following amount of emojis:",
+  58 => "This server is out of emoji slots."
 }.freeze
 
 # A list of values for embed responses.

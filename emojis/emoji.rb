@@ -24,3 +24,23 @@ def create_emoji(data)
     end
   end
 end
+
+def steal_emojis(data)
+  unless data.target.emoji?
+    data.edit_response(content: RESPONSE[55])
+    return
+  end
+
+  if data.server.emojis.size >= data.server.max_emojis
+    data.edit_response(content: RESPONSE[58])
+    return
+  end
+
+  data.target.emoji.each_with_index do |emoji|
+    break if data.server.emojis.size >= data.server.max_emojis
+    
+    data.server.add_emoji(emoji.name, emoji.file)
+  end
+
+  data.edit_response(content: "#{RESPONSE[57]} **#{data.target.emoji.count}**")
+end

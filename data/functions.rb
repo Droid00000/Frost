@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'uri'
 require 'time'
 require 'date'
 require 'toml-rb'
