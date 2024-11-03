@@ -6,6 +6,11 @@ require 'data/constants'
 require 'data/functions'
 
 def freeze_server(data)
+  unless safe_name?(data.options['reason'])
+    data.edit_response(content: RESPONSE[49])
+    return
+  end
+
   data.server.channels.each do |channel|
     case channel.type
     when 0
@@ -15,11 +20,6 @@ def freeze_server(data)
     when 15
       channel.define_overwrite(data.server.everyone_role, nil, 377957124096)
     end
-  end
-
-  unless safe_name?(data.options['reason'])
-    data.edit_response(content: RESPONSE[49])
-    return
   end
 
   schedule_unfreeze(data.server, data.options['duration']) if data.options['duration']

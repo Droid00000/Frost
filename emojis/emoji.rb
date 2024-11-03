@@ -36,7 +36,7 @@ def steal_emojis(data)
     return
   end
 
-  data.target.emoji.each_with_index do |emoji|
+  data.target.emoji.each do |emoji|
     break if data.server.emoji_limit?
     
     data.server.add_emoji(emoji.name, emoji.file)
