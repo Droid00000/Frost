@@ -46,10 +46,10 @@ end
 bot.register_application_command(:about, 'Shows some general information about the bot.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'जानकारी' }, description_localizations: { 'hi' => 'बोट का उपयोग कैसे करना है उसके जानकारी चाहिए।' }) do |option|
 end
 
-bot.register_application_command(:"add emoji(s)", nil, type: :message, contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
+bot.register_application_command(:"add emoji(s)", nil, type: :message, contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'कई इमोजी जोड़ें' }) do |command|
 end
 
-bot.register_application_command(:"add emojis", nil, type: :message, contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
+bot.register_application_command(:"add emojis", nil, type: :message, contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'इमोजी जोड़ें' }) do |command|
 end
 
 bot.register_application_command(:freeze, 'Prevent all members from speaking in the server.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
@@ -65,32 +65,32 @@ bot.register_application_command(:archive, 'Archives pins in a specified channel
   option.channel('channel', 'Which channel needs to have its pins archived?', required: true, types: [:text], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => 'कौनसे चैनल को उसके पुरातत्व पिंस की जरूरत है' })
 end
 
-bot.register_application_command(:eval, 'Allows the bot owner to execute code.', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-  option.string('code', 'The code you want to execute.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-  option.boolean('ephemeral', 'Whether the output should only be visible to you.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+bot.register_application_command(:eval, 'Allows the bot owner to execute code.', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => 'बोट ऑनर को कोड रन करनेकी इजाजत है' }) do |option|
+  option.string('code', 'The code you want to execute.', required: true, name_localizations: { 'hi' => 'कोड' }, description_localizations: { 'hi' => 'कोड जो रन करना है' })
+  option.boolean('ephemeral', 'Whether the output should only be visible to you.', required: true, name_localizations: { 'hi' => 'अल्पकालिक' }, description_localizations: { 'hi' => 'क्या आपको ही बस आउटपुट दिखना चाहिए?' })
 end
 
-bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: 32, contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: 32, contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'सेटिंग्स' }, description_localizations: { 'hi' => 'आपना सर्वर कॉन्फिग्रेशन देखो' }) do |option|
 end
 
-bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'बंधकरो' }, description_localizations: { 'hi' => 'सावधानी से बोट को गेटवे से डिसकनेक्ट करो' }) do |option|
 end
 
-bot.register_application_command(:throw, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand('snowball', 'Throw a snowball at someone!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-    option.user('member', 'Who do you want to hit with a snowball?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+bot.register_application_command(:throw, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'फेंको' }, description_localizations: { 'hi' => 'बर्फ का गोला की लड़ीं' }) do |command|
+  command.subcommand('snowball', 'Throw a snowball at someone!', name_localizations: { 'hi' => 'बर्फ का लोग' }, description_localizations: { 'hi' => 'बर्फ का गोला फेक' }) do |option|
+    option.user('member', 'Who do you want to hit with a snowball?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'बर्फ का गोला किसे मारना चाहते हो' })
   end
 end
 
-bot.register_application_command(:collect, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand('snowball', 'Collect a snowball!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |sub|
+bot.register_application_command(:collect, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'जमा' }, description_localizations: { 'hi' => 'बर्फ का गोला की लड़ीं' }) do |command|
+  command.subcommand('snowball', 'Collect a snowball!', name_localizations: { 'hi' => 'बर्फ का लोग' }, description_localizations: { 'hi' => 'बर्फ का गोला जमा करो' }) do |sub|
   end
 end
 
-bot.register_application_command(:steal, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand('snowball', 'Steal a snowball from someone!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-    option.user('member', 'Who do you want to steal snowballs from?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-    option.integer('amount', 'How many snowballs do you want to steal?', choices: { two: '2', three: '3', four: '4', five: '5' }, required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+bot.register_application_command(:steal, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'चोरी' }, description_localizations: { 'hi' => 'बर्फ का गोला की लड़ीं' }) do |command|
+  command.subcommand('snowball', 'Steal a snowball from someone!', name_localizations: { 'hi' => 'बर्फ का लोग' }, description_localizations: { 'hi' => 'बर्फ का लोग किसी से चूरो' }) do |option|
+    option.user('member', 'Who do you want to steal snowballs from?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'किस से बर्फ का लोग चोरी करना है' })
+    option.integer('amount', 'How many snowballs do you want to steal?', choices: { two: '2', three: '3', four: '4', five: '5' }, required: true, name_localizations: { 'hi' => 'अमाउंट' }, description_localizations: { 'hi' => 'कितने बर्फ के गोले चुराने है' })
   end
 end
 
@@ -120,25 +120,25 @@ bot.register_application_command(:tag, 'tags', contexts: [0], integration_types:
   end
 end
 
-bot.register_application_command(:update, 'Contributors', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand('status', "Update the status that's show by the bot.", name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-    option.string('description', 'The status that the bot should display.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-    option.string('type', 'The type of online status that the bot should display.', choices: { online: 'Online', idle: 'Idle', dnd: 'DND' }, required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+bot.register_application_command(:update, 'Contributors', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'अपडेट' }, description_localizations: { 'hi' => 'सहकारी गण' }) do |command|
+  command.subcommand('status', "Update the status that's show by the bot.", name_localizations: { 'hi' => 'स्टेटस' }, description_localizations: { 'hi' => 'अपटेड स्टेटस जो बोट दिखा रहा है' }) do |option|
+    option.string('description', 'The status that the bot should display.', required: false, name_localizations: { 'hi' => 'डिस्क्रिप्शन' }, description_localizations: { 'hi' => 'स्टेटस जो बोट की दिखाना चाहिए' })
+    option.string('type', 'The type of online status that the bot should display.', choices: { online: 'Online', idle: 'Idle', dnd: 'DND' }, required: false, name_localizations: { 'hi' => 'प्रजाति' }, description_localizations: { 'hi' => 'कौनसी प्रजाति का स्टेटस बोट की दिखाना चाहिए' })
   end
 end
 
-bot.register_application_command(:music, 'Connect and play audio over a voice channel.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand(:disconnect, 'Disconnect from a voice channel.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-  command.subcommand(:stop, 'Stop playing the current song.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-  command.subcommand(:help, 'Help menu for voice commands.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-  command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-  option.string(:song, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+bot.register_application_command(:music, 'Connect and play audio over a voice channel.', name_localizations: { 'hi' => 'गाना' }, description_localizations: { 'hi' => 'आवाज चलाओ किसी लिंक या गाने के नाम से' }) do |command|
+  command.subcommand(:disconnect, 'Disconnect from a voice channel.', name_localizations: { 'hi' => 'अलग करो' }, description_localizations: { 'hi' => 'वॉयस चैनल बंद करो' })
+  command.subcommand(:stop, 'Stop playing the current song.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => 'अभी का गाना बंद करो' })
+  command.subcommand(:help, 'Help menu for music commands.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => 'मदत वॉयस चैनल के लिए' })
+  command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => 'आवाज चलाओ किसी लिंक या गाने के नाम से' }) do |option|
+  option.string(:song, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => 'स्पॉटीफाई एप्पल म्यूजिक या गाने का नाम' })
   end
 end
 
-bot.register_application_command(:pin, 'Pin archive', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand_group(:archiver, 'Pin Archival!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |group|
-    group.subcommand(:setup, 'Setup the pin-archiver functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+bot.register_application_command(:pin, 'Pin archive', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'पिन' }, description_localizations: { 'hi' => 'की पुरातत्' }) do |command|
+  command.subcommand_group(:archiver, 'Pin Archival!', name_localizations: { 'hi' => 'संग्रहकर्ता' }, description_localizations: { 'hi' => 'की पुरातत्व' }) do |group|
+    group.subcommand(:setup, 'Setup the pin-archiver functionality.', name_localizations: { 'hi' => 'बंदोबस्त' }, description_localizations: { 'hi' => 'पिन की पुरातत्व की कंडीशन' }) do |option|
       option.channel('channel', 'Which channel should archived pins be sent to?', required: true, types: [:text], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
     end
 
