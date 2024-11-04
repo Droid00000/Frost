@@ -11,6 +11,11 @@ def freeze_server(data)
     return
   end
 
+  unless data.bot.profile.on(data.server).permission?(:manage_channels)
+    data.edit_response(content: RESPONSE[62])
+    return
+  end
+
   data.server.channels.each do |channel|
     case channel.type
     when 0

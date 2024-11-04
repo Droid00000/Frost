@@ -62,7 +62,13 @@ RESPONSE = {
   55 => "This message doesn't have any emojis.",
   56 => "Added this emoji to the server:",
   57 => "Successfully added the following amount of emojis:",
-  58 => "This server is out of emoji slots."
+  58 => "This server is out of emoji slots.",
+  59 => "This server has reached the maximum amount of roles.",
+  60 => "The bot needs to have the ``manage roles`` permission to do this.",
+  61 => "The bot needs to have the ``create expressions`` permission to do this.",
+  62 => "The bot needs to have the ``manage channels`` permission to do this.",
+  63 => "The bot needs to have the ``voice channel connect`` permission to do this.",
+  64 => "The bot needs to have the ``voice channel speak`` permission to do this."
 }.freeze
 
 # A list of values for embed responses.

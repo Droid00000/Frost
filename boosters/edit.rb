@@ -16,6 +16,11 @@ def edit_role(data)
     return
   end
 
+  unless data.bot.profile.on(data.server).permission?(:manage_roles)
+    data.edit_response(content: RESPONSE[60])
+    return
+  end
+
   unless booster_records(server: data.server.id, type: :enabled)
     data.edit_response(content: RESPONSE[5])
     return

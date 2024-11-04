@@ -21,6 +21,11 @@ def edit_event_role(data)
     return
   end
 
+  unless data.bot.profile.on(data.server).permission?(:manage_roles)
+    data.edit_response(content: RESPONSE[60])
+    return
+  end
+
   unless data.user.roles.include?(data.server.roles.find { |r| r.id == data.options['role'] })
     data.edit_response(content: RESPONSE[17])
     return

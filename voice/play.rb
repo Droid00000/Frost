@@ -29,6 +29,16 @@ def voice_play(data)
     return
   end
 
+  unless data.bot.profile.on(data.server, data.user.voice_channel).permission?(:connect)
+    data.edit_response(content: RESPONSE[63])
+    return
+  end
+
+  unless data.bot.profile.on(data.server, data.user.voice_channel).permission?(:speak)
+    data.edit_response(content: RESPONSE[64])
+    return
+  end
+
   track = LAVALINK.resolve(data.options['url'])
   Tracks.new(track.playback, data.server.id)
 

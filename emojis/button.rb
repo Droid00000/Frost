@@ -4,6 +4,11 @@ require 'discordrb'
 require 'data/constants'
 
 def button_click(data, button)
+  unless data.bot.profile.on(data.server).permission?(:manage_emojis)
+    data.edit_response(content: RESPONSE[61])
+    return
+  end
+
   data.update_message do |builder, components|
     components.row do |buttons|
       data.message.to_message.buttons.each do |old_button|

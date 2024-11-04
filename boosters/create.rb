@@ -11,8 +11,18 @@ def create_role(data)
     return
   end
 
+  if event.server.role_limit
+    data.edit_response(content: RESPONSE[59])
+    return
+  end
+
   if booster_records(server: data.server.id, user: data.user.id, type: :check_user)
     data.edit_response(content: RESPONSE[4])
+    return
+  end
+
+  unless data.bot.profile.on(data.server).permission?(:manage_roles)
+    data.edit_response(content: RESPONSE[60])
     return
   end
 
