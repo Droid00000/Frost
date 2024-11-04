@@ -8,9 +8,7 @@ require 'data/constants'
 
 bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: [:servers])
 
-bot.ready do
-  bot.set_status(ACTIVITY[3], ACTIVITY[4])
-end
+bot.ready { bot.set_status(ACTIVITY[3], ACTIVITY[4]) }
 
 bot.register_application_command(:hug, 'Hugs another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गले मिलना' }, description_localizations: { 'hi' => 'सर्वर मित्र के गले मिलना' }) do |option|
   option.user('target', 'Who do you want to hug?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => 'किसको गले मिलना है' })
@@ -62,7 +60,7 @@ bot.register_application_command(:unfreeze, 'Unlock the timeout caused by using 
 end
 
 bot.register_application_command(:archive, 'Archives pins in a specified channel.', default_member_permissions: 8192, contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'पुरातत्व' }, description_localizations: { 'hi' => 'पुरातत्व पिंस कोई चुनित चैनल मै' }) do |option|
-  option.channel('channel', 'Which channel needs to have its pins archived?', required: true, types: [:text], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => 'कौनसे चैनल को उसके पुरातत्व पिंस की जरूरत है' })
+  option.channel('channel', 'Which channel needs to have its pins archived?', required: true, types: [:text], name_localizations: { 'hi' => 'प्रवाह' }, description_localizations: { 'hi' => 'कौनसे चैनल को उसके पुरातत्व पिंस की जरूरत है' })
 end
 
 bot.register_application_command(:eval, 'Allows the bot owner to execute code.', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => 'बोट ऑनर को कोड रन करनेकी इजाजत है' }) do |option|
@@ -129,20 +127,20 @@ end
 
 bot.register_application_command(:music, 'Connect and play audio over a voice channel.', name_localizations: { 'hi' => 'गाना' }, description_localizations: { 'hi' => 'आवाज चलाओ किसी लिंक या गाने के नाम से' }) do |command|
   command.subcommand(:disconnect, 'Disconnect from a voice channel.', name_localizations: { 'hi' => 'अलग करो' }, description_localizations: { 'hi' => 'वॉयस चैनल बंद करो' })
-  command.subcommand(:stop, 'Stop playing the current song.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => 'अभी का गाना बंद करो' })
-  command.subcommand(:help, 'Help menu for music commands.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => 'मदत वॉयस चैनल के लिए' })
-  command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => 'आवाज चलाओ किसी लिंक या गाने के नाम से' }) do |option|
-  option.string(:song, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => 'स्पॉटीफाई एप्पल म्यूजिक या गाने का नाम' })
+  command.subcommand(:stop, 'Stop playing the current song.', name_localizations: { 'hi' => 'रोकना' }, description_localizations: { 'hi' => 'अभी का गाना बंद करो' })
+  command.subcommand(:help, 'Help menu for music commands.', name_localizations: { 'hi' => 'मदत' }, description_localizations: { 'hi' => 'मदत वॉयस चैनल के लिए' })
+  command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => 'नाटक' }, description_localizations: { 'hi' => 'आवाज चलाओ किसी लिंक या गाने के नाम से' }) do |option|
+  option.string(:song, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2, name_localizations: { 'hi' => 'गाना' }, description_localizations: { 'hi' => 'स्पॉटीफाई एप्पल म्यूजिक या गाने का नाम' })
   end
 end
 
 bot.register_application_command(:pin, 'Pin archive', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'पिन' }, description_localizations: { 'hi' => 'की पुरातत्' }) do |command|
   command.subcommand_group(:archiver, 'Pin Archival!', name_localizations: { 'hi' => 'संग्रहकर्ता' }, description_localizations: { 'hi' => 'की पुरातत्व' }) do |group|
     group.subcommand(:setup, 'Setup the pin-archiver functionality.', name_localizations: { 'hi' => 'बंदोबस्त' }, description_localizations: { 'hi' => 'पिन की पुरातत्व की कंडीशन' }) do |option|
-      option.channel('channel', 'Which channel should archived pins be sent to?', required: true, types: [:text], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+      option.channel('channel', 'Which channel should archived pins be sent to?', required: true, types: [:text], name_localizations: { 'hi' => 'प्रवाह' }, description_localizations: { 'hi' => 'किधर पुरातात्विक पिंस जाने चाहिए' })
     end
 
-    group.subcommand(:disable, 'disable the pin-archiver functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+    group.subcommand(:disable, 'disable the pin-archiver functionality.', name_localizations: { 'hi' => 'बंद करने' }, description_localizations: { 'hi' => 'पिन पुरातत्व कंडीशन को बंद करो' }) do |option|
     end
   end
 end
