@@ -18,7 +18,7 @@ require_all 'boosters'
 require_all 'affections'
 require_all 'moderation'
 
-bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: %i[servers server_message_content server_voice_states], log_mode: :debug)
+bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: 32897, log_mode: :debug)
 
 bot.ready do
   bot.update_status(ACTIVITY[1], ACTIVITY[2], ACTIVITY[3])

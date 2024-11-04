@@ -29,12 +29,12 @@ def voice_play(data)
     return
   end
 
-  unless data.bot.profile.on(data.server, data.user.voice_channel).permission?(:connect)
+  unless data.bot.profile.on(data.server).permission?(:connect, data.user.voice_channel)
     data.edit_response(content: RESPONSE[63])
     return
   end
 
-  unless data.bot.profile.on(data.server, data.user.voice_channel).permission?(:speak)
+  unless data.bot.profile.on(data.server).permission?(:speak, data.user.voice_channel)
     data.edit_response(content: RESPONSE[64])
     return
   end
