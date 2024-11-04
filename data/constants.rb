@@ -102,7 +102,9 @@ EMBED = {
   25 => "Opens the help menu you're currently viewing.",
   26 => 'Plays audio from a song name or URL.',
   27 => 'Opeans the music commands help menu.',
-  28 => '**Select the emojis you want to add!**'
+  28 => '**Select the emojis you want to add!**',
+  29 => 'Pauses the currently playing song.',
+  30 => 'Resumes playback of the most recently playing song.'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
