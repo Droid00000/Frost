@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require_relative 'disconnect'
+require_relative 'resume'
+require_relative 'pause'
 require_relative 'stop'
 require_relative 'play'
 require_relative 'help'
@@ -11,6 +13,16 @@ module VoiceCommands
   application_command(:music).subcommand(:disconnect) do |event|
     event.defer(ephemeral: false)
     voice_disconnect(event)
+  end
+
+  application_command(:music).subcommand(:resume) do |event|
+    event.defer(ephemeral: false)
+    voice_resume(event)
+  end
+
+  application_command(:music).subcommand(:pause) do |event|
+    event.defer(ephemeral: false)
+    voice_pause(event)
   end
 
   application_command(:music).subcommand(:stop) do |event|

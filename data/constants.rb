@@ -68,7 +68,9 @@ RESPONSE = {
   61 => "The bot needs to have the ``create expressions`` permission to do this.",
   62 => "The bot needs to have the ``manage channels`` permission to do this.",
   63 => "The bot needs to have the ``voice channel connect`` permission to do this.",
-  64 => "The bot needs to have the ``voice channel speak`` permission to do this."
+  64 => "The bot needs to have the ``voice channel speak`` permission to do this.",
+  65 => "Successfully stopped playback of the current track.",
+  66 => "Successfully resumed playback of the most recently played track."
 }.freeze
 
 # A list of values for embed responses.

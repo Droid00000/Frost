@@ -39,7 +39,7 @@ def voice_play(data)
     return
   end
 
-  track = LAVALINK.resolve(data.options['url'])
+  track = LAVALINK.resolve(data.options['song'])
   Tracks.new(track.playback, data.server.id)
 
   data.edit_response do |builder|
@@ -57,7 +57,7 @@ def voice_play(data)
   data.bot.voice_connect(data.user.voice_channel)
 
   until Tracks.queue(data.server.id).empty?
-    sleep 1 while data.bot.voice(data.server).playing?
+    sleep 1 while data.bot.voice(data.server).playing? || data.bot.voice(data.server).paused?
     data.bot.voice(data.server).play_io(IO.popen("yt-dlp -q -o - #{Shellwords.escape(Tracks.queue(data.server.id).pop)}"))
   end
 end

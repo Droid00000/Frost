@@ -127,6 +127,8 @@ end
 
 bot.register_application_command(:music, 'Connect and play audio over a voice channel.', name_localizations: { 'hi' => 'गाना' }, description_localizations: { 'hi' => 'आवाज चलाओ किसी लिंक या गाने के नाम से' }) do |command|
   command.subcommand(:disconnect, 'Disconnect from a voice channel.', name_localizations: { 'hi' => 'अलग करो' }, description_localizations: { 'hi' => 'वॉयस चैनल बंद करो' })
+  command.subcommand(:resume, 'Resume playback in a voice channel.', name_localizations: { 'hi' => 'फिर शुरू करना' }, description_localizations: { 'hi' => 'वॉइस चैनल में प्लेबैक फिर से शुरू करे' })
+  command.subcommand(:pause, 'Pause playback in a voice channel.', name_localizations: { 'hi' => 'ठहराव' }, description_localizations: { 'hi' => 'वॉइस चैनल में प्लेबैक रोके' })
   command.subcommand(:stop, 'Stop playing the current song.', name_localizations: { 'hi' => 'रोकना' }, description_localizations: { 'hi' => 'अभी का गाना बंद करो' })
   command.subcommand(:help, 'Help menu for music commands.', name_localizations: { 'hi' => 'मदत' }, description_localizations: { 'hi' => 'मदत वॉयस चैनल के लिए' })
   command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => 'नाटक' }, description_localizations: { 'hi' => 'आवाज चलाओ किसी लिंक या गाने के नाम से' }) do |option|
