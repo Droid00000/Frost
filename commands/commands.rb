@@ -9,7 +9,7 @@ require 'data/constants'
 bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: [:servers])
 
 bot.ready do
-  bot.update_status(ACTIVITY[4], ACTIVITY[5], ACTIVITY[3])
+  bot.set_status(ACTIVITY[3], ACTIVITY[4])
 end
 
 bot.register_application_command(:hug, 'Hugs another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गले मिलना' }, description_localizations: { 'hi' => 'सर्वर मित्र के गले मिलना' }) do |option|

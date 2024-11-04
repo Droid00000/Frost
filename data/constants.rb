@@ -140,9 +140,8 @@ UI = {
 ACTIVITY = {
   1 => 'online',
   2 => 'https://github.com/Droid00000/Frost',
-  3 => nil,
-  4 => 'dnd',
-  5 => 'Loading...'
+  3 => 'dnd',
+  4 => 'Loading...'
 }.freeze
 
 # The TOML configuration file used by the bot.
