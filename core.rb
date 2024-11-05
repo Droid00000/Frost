@@ -20,9 +20,7 @@ require_all 'moderation'
 
 bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: 32897, log_mode: :debug)
 
-bot.ready do
-  bot.set_status(ACTIVITY[1], ACTIVITY[2])
-end
+bot.ready { bot.set_status(ACTIVITY[1], ACTIVITY[2]) }
 
 bot.application_command(:shutdown) do |event|
   event.defer(ephemeral: true)

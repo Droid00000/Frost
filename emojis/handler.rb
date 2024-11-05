@@ -17,27 +17,22 @@ module EmojiCommands
   end
 
   button(custom_id: '0') do |event|
-    event.defer(ephemeral: true)
-    button_click(event)
+    button_click(event, '0')
   end
 
   button(custom_id: '1') do |event|
-    event.defer(ephemeral: true)
-    button_click(event)
+    button_click(event, '1')
   end
 
   button(custom_id: '2') do |event|
-    event.defer(ephemeral: true)
-    button_click(event)
+    button_click(event, '2')
   end
 
   button(custom_id: '3') do |event|
-    event.defer(ephemeral: true)
-    button_click(event)
+    button_click(event, '3')
   end
 
   button(custom_id: '4') do |event|
-    event.defer(ephemeral: true)
-    button_click(event)
+    button_click(event, '4')
   end
 end
