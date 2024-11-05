@@ -66,7 +66,7 @@ POSTGRES.create_table?(:Tag_Settings) do
   Boolean :enabled, null: false, default: true
 end
 
-def booster_records(server:, user:, role:, type:)
+def booster_records(server: nil, user: nil, role: nil, type: nil)
   POSTGRES.transaction do
     case type
     when :create
@@ -103,7 +103,7 @@ def booster_records(server:, user:, role:, type:)
   end
 end
 
-def archiver_records(server:, channel:, type:)
+def archiver_records(server: nil, channel: nil, type: nil)
   POSTGRES.transaction do
     case type
     when :check
@@ -120,7 +120,7 @@ def archiver_records(server:, channel:, type:)
   end
 end
 
-def tag_records(name:, server:, message:, channel:, owner:, type:)
+def tag_records(name: nil, server: nil, message: nil, channel: nil, owner: nil, type: nil)
   POSTGRES.transaction do
     case type
     when :enabled
@@ -145,7 +145,7 @@ def tag_records(name:, server:, message:, channel:, owner:, type:)
   end
 end
 
-def event_records(server:, role:, type:)
+def event_records(server: nil, role: nil, type: nil)
   POSTGRES.transaction do
     case type
     when :check_role
@@ -164,7 +164,7 @@ def event_records(server:, role:, type:)
   end
 end
 
-def snowball_records(user:, type:, balance:)
+def snowball_records(user: nil, type: nil, balance: nil)
   POSTGRES.transaction do
     case type
     when :add_snowball
