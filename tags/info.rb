@@ -19,12 +19,9 @@ def tag_info(data)
 
   data.edit_response do |builder|
     builder.add_embed do |embed|
-      if message.attachments.any?
-        embed.image = Discordrb::Webhooks::EmbedImage.new(url: message.attachments[0].url.to_s)
-      end
-
       embed.colour = UI[5]
       embed.description = message.content.to_s
+      embed.image = Discordrb::Webhooks::EmbedImage.new(url: message.attachments[0].url.to_s) if message.attachments.any?
       embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: owner.display_name, url: message.link, icon_url: owner.avatar_url)
       embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{message.id} • #{resolve_time(metadata[4].to_s)}")
       embed.add_field(name: 'Source', value: "[Jump!](#{message.link})")
