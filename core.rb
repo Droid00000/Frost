@@ -32,6 +32,16 @@ bot.application_command(:shutdown) do |event|
   end
 end
 
+bot.application_command(:restart) do |event|
+  event.defer(ephemeral: true)
+  if event.user.id == TOML['Discord']['OWNER']&.to_i
+    event.edit_response(content: RESPONSE[67])
+    exec("bundle exec ruby core.rb")
+  else
+    event.edit_response(content: RESPONSE[18])
+  end
+end
+
 bot.application_command(:eval) do |event|
   event.defer(ephemeral: event.options['ephemeral'])
   if event.user.id == TOML['Discord']['OWNER']&.to_i
