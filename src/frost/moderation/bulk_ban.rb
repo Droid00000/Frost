@@ -21,7 +21,7 @@ def bulk_ban(data)
   end
 
   filtered_members = data.options['members'].to_a.reject do |member|
-    data.bot.member(data.server, member).highest_role >= event.user.highest_role
+    data.bot.member(data.server, member).highest_role.position >= data.user.highest_role.position
   end
 
   if filtered_members.empty?
