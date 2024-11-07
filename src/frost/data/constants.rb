@@ -150,7 +150,7 @@ ACTIVITY = {
 }.freeze
 
 # The TOML configuration file used by the bot.
-TOML = TomlRB.load_file(File.join(File.expand_path('..', __dir__), 'config.toml'))
+TOML = TomlRB.load_file(File.join(File.expand_path('../../..', __dir__), 'config.toml'))
 
 # The Lavalink wrapper used to convert URL's and queries into track metadata.
 LAVALINK = Calliope::Request.new(TOML['Lavalink']['ADDRESS'], TOML['Lavalink']['PASSWORD'])

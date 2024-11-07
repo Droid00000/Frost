@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift File.expand_path('..', __FILE__)
+$LOAD_PATH.unshift File.join(File.expand_path(__dir__), 'src/frost')
 
 require 'require_all'
 require 'discordrb'
 require 'toml-rb'
 
-require_all 'tags'
-require_all 'pins'
-require_all 'data'
-require_all 'snow'
-require_all 'voice'
-require_all 'admin'
-require_all 'emojis'
-require_all 'events'
-require_all 'boosters'
-require_all 'affections'
-require_all 'moderation'
+require_all 'src/frost/tags'
+require_all 'src/frost/pins'
+require_all 'src/frost/data'
+require_all 'src/frost/snow'
+require_all 'src/frost/voice'
+require_all 'src/frost/admin'
+require_all 'src/frost/emojis'
+require_all 'src/frost/events'
+require_all 'src/frost/boosters'
+require_all 'src/frost/affections'
+require_all 'src/frost/moderation'
 
 bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: 32897, compress_mode: :stream, log_mode: :debug)
 
