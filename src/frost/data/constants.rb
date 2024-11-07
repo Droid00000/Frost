@@ -71,7 +71,11 @@ RESPONSE = {
   64 => "The bot needs to have the ``voice channel speak`` permission to do this.",
   65 => "Successfully stopped playback of the current track.",
   66 => "Successfully resumed playback of the most recently played track.",
-  67 => "Successfully restarting the bot."
+  67 => "Successfully restarting the bot.",
+  68 => "The bot needs to have the ``ban members`` permission to do this.",
+  69 => "The bot needs to have the ``manage server`` permission to do this.",
+  70 => "Successfully banned the following users:",
+  71 => "You do not have permission to ban any user you've specified."
 }.freeze
 
 # A list of values for embed responses.

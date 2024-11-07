@@ -6,6 +6,11 @@ require_relative 'freeze'
 module ModerationCommands
   extend Discordrb::EventContainer
 
+  application_command(:bulk).subcommand(:ban) do |event|
+    event.defer(ephemeral: false)
+    bulk_ban(event)
+  end
+
   application_command(:freeze) do |event|
     event.defer(ephemeral: false)
     freeze_server(event)
