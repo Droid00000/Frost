@@ -2,6 +2,7 @@
 
 require_relative 'unfreeze'
 require_relative 'freeze'
+require_relative 'ban'
 
 module ModerationCommands
   extend Discordrb::EventContainer
