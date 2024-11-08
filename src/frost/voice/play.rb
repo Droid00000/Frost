@@ -55,10 +55,10 @@ def voice_play(data)
     end
   end
 
-  data.bot.voice_connect(data.user.voice_channel)
+  data.bot.voice_connect(data.user.voice_channel) if data.bot.voice.channel != data.user.voice_channel
 
   until Tracks.queue(data.server.id).empty?
-    sleep 1 while data.bot.voice(data.server).playing? || data.bot.voice(data.server).paused?
+    sleep 1 while data.bot.voice(data.server)&.playing? || data.bot.voice(data.server).paused?
     data.bot.voice(data.server).play_io(IO.popen("yt-dlp -q -o - #{Shellwords.escape(Tracks.queue(data.server.id).pop)}"))
   end
 end
