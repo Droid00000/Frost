@@ -26,7 +26,7 @@ module ManualPinArchiver
         embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{message.id} • #{time_data(message.timestamp.to_s)}")
         embed.add_field(name: 'Source', value: "[Jump!](#{message.link})")
       end
-      message.unpin
+      message.unpin(REASON[7])
       event.edit_response(content: "#{RESPONSE[20]} #{EMOJI[3]}")
     end
   end

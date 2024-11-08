@@ -37,16 +37,6 @@ def safe_name?(string)
   !string.match(REGEX[4])
 end
 
-# Abstracts away the process of retriving a role icon.
-# @param [String] The emoji string serialized as a parased mention.
-# @return [File] The extracted emoji file.
-def resolve_icon(string)
-  return false if string.nil? || string.empty?
-
-  emoji = string.match(REGEX[1])
-  emoji || nil
-end
-
 # Determines a true or false value based on a random number.
 # @return [Boolean] Whether the number was in the specified range.
 def hit_or_miss?

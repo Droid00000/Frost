@@ -119,7 +119,8 @@ REASON = {
   3 => 'Server booster deleted role.',
   4 => 'Auto-update chapter release date.',
   5 => 'Event winner updated role.',
-  6 => 'Server booster stopped boosting.'
+  6 => 'Server booster stopped boosting.',
+  7 => 'Auto-archive pinned messages.'
 }.freeze
 
 # Emojis that the bot can use.
