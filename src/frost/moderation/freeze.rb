@@ -21,9 +21,9 @@ def freeze_server(data)
     when 0
       channel.define_overwrite(data.server.everyone_role, nil, 2048)
     when 2
-      channel.define_overwrite(data.server.everyone_role, nil, 3147776)
+      channel.define_overwrite(data.server.everyone_role, nil, 3_147_776)
     when 15
-      channel.define_overwrite(data.server.everyone_role, nil, 377957124096)
+      channel.define_overwrite(data.server.everyone_role, nil, 377_957_124_096)
     end
   end
 

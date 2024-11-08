@@ -15,7 +15,7 @@ def update_status(data)
     return
   end
 
-  if data.options['description'] || data.options['type'] 
+  if data.options['description'] || data.options['type']
     data.bot.custom_status(data.options['type'], data.options['description'])
   end
 

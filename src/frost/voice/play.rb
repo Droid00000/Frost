@@ -50,7 +50,8 @@ def voice_play(data)
       embed.description = "**Duration:** `#{track.duration}`"
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: track.cover)
       embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: data.bot.voice(data.server)&.playing? ? 'Queued' : 'Now Playing')
-      embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "Requested by #{data.user.display_name}", icon_url: data.user.avatar_url)
+      embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "Requested by #{data.user.display_name}",
+                                                          icon_url: data.user.avatar_url)
     end
   end
 

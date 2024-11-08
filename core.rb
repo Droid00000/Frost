@@ -18,7 +18,7 @@ require_all 'src/frost/boosters'
 require_all 'src/frost/affections'
 require_all 'src/frost/moderation'
 
-bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: 32905, compress_mode: :stream, log_mode: :debug)
+bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: 32_905, compress_mode: :stream, log_mode: :debug)
 
 bot.ready { bot.custom_status(ACTIVITY[1], ACTIVITY[2]) }
 
@@ -36,7 +36,7 @@ bot.application_command(:restart) do |event|
   event.defer(ephemeral: true)
   if event.user.id == TOML['Discord']['OWNER']&.to_i
     event.edit_response(content: RESPONSE[67])
-    exec("bundle exec ruby core.rb")
+    exec('bundle exec ruby core.rb')
   else
     event.edit_response(content: RESPONSE[18])
   end

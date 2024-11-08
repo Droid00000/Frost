@@ -44,7 +44,7 @@ def resolve_icon(string)
   return false if string.nil? || string.empty?
 
   emoji = string.match(REGEX[1])
-  emoji ? emoji : nil
+  emoji || nil
 end
 
 # Determines a true or false value based on a random number.
@@ -96,12 +96,12 @@ def process_input(duration, reason, type)
     response = "#{RESPONSE[47]}"
     response += " For **#{duration}**." if duration
     response += " Because: #{reason}" if reason
-    return response.to_s
+    response.to_s
   when :unlock
     response = "#{RESPONSE[48]}"
     response += " For **#{duration}**." if duration
     response += " Because: #{reason}" if reason
-    return response.to_s
+    response.to_s
   end
 end
 

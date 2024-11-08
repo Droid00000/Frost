@@ -136,11 +136,12 @@ def tag_records(name: nil, server: nil, message: nil, channel: nil, owner: nil, 
     when :check
       !POSTGRES[:Tags].where(owner_id: owner, name: name).empty?
     when :create
-      POSTGRES[:Tags].insert(server_id: server, message_id: message, name: name, owner_id: owner, channel_id: channel, creation_time: Time.now.to_i)
+      POSTGRES[:Tags].insert(server_id: server, message_id: message, name: name, owner_id: owner, channel_id: channel,
+                             creation_time: Time.now.to_i)
     when :delete
       POSTGRES[:Tags].where(name: name, owner_id: owner).delete
     when :exists?
-      return false if !POSTGRES[:Tags].where(name: name).empty?
+      return false unless POSTGRES[:Tags].where(name: name).empty?
     end
   end
 end
