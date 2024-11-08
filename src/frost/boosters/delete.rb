@@ -31,6 +31,12 @@ def delete_role(data)
     return
   end
 
+  if data.server.role(booster_records(server: server_id, user: user_id, type: :get_role)).nil?
+    booster_records(server: data.server.id, user: data.user.id, type: :delete)
+    data.edit_response(content: RESPONSE[9])
+    return
+  end
+
   data.server.delete_role(booster_records(server: server_id, user: user_id, type: :get_role), REASON[3])
 
   booster_records(server: data.server.id, user: data.user.id, type: :delete)
