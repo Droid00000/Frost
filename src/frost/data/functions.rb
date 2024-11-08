@@ -16,7 +16,7 @@ def resolve_color(string)
   return nil if string.nil? || !string.match(REGEX[3]) || string.empty?
 
   data = string.strip.delete_prefix('#')
-  Discordrb::ColourRGB.new(data.strip).combined
+  Discordrb::ColourRGB.new(data.strip)
 end
 
 # Converts a unix timestap into a readable timestamp.
