@@ -7,7 +7,6 @@ require 'discordrb'
 require 'data/schema'
 require 'data/embeds'
 require 'data/constants'
-require 'selenium-webdriver'
 
 # Initilaze a new color object for a role.
 # @param [String] The hex color to resolve.
