@@ -18,9 +18,9 @@ require_all 'src/frost/boosters'
 require_all 'src/frost/affections'
 require_all 'src/frost/moderation'
 
-bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: 32897, compress_mode: :stream, log_mode: :debug)
+bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: 32905, compress_mode: :stream, log_mode: :debug)
 
-bot.ready { bot.set_status(ACTIVITY[1], ACTIVITY[2]) }
+bot.ready { bot.custom_status(ACTIVITY[1], ACTIVITY[2]) }
 
 bot.application_command(:shutdown) do |event|
   event.defer(ephemeral: true)

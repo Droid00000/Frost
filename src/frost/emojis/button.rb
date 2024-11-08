@@ -5,7 +5,12 @@ require 'data/constants'
 
 def button_click(data, button)
   unless data.bot.profile.on(data.server).permission?(:manage_emojis)
-    data.edit_response(content: RESPONSE[61])
+    data.update_message(content: RESPONSE[61])
+    return
+  end
+
+  if data.server.emoji_limit?(data.get_component(button).emoji)
+    data.update_message(content: RESPONSE[58], ephemeral: true)
     return
   end
 

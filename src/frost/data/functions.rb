@@ -39,12 +39,12 @@ end
 
 # Abstracts away the process of retriving a role icon.
 # @param [String] The emoji string serialized as a parased mention.
-# @return [File] The extracted emoji icon
+# @return [File] The extracted emoji file.
 def resolve_icon(string)
   return false if string.nil? || string.empty?
 
   emoji = string.match(REGEX[1])
-  nil if emoji.nil?
+  emoji ? emoji : nil
 end
 
 # Determines a true or false value based on a random number.
