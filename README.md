@@ -38,10 +38,6 @@ CONTRIBUTORS = []
 [Postgres]
 URL = "postgres://URI_HERE"
 
-[Chapter]
-CHANNEL = ""
-LINK = ""
-
 [Lavalink]
 ADDRESS = ""
 PASSWORD = ""

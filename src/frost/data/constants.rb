@@ -164,9 +164,8 @@ LAVALINK = Calliope::Request.new(TOML['Lavalink']['ADDRESS'], TOML['Lavalink']['
 # REGEX[4] is used to ensure a name doesn't contain any bad words.
 REGEX = {
   1 => /:(\d+)>$/,
-  2 => /(?<=New chapter arrives on)(.*?)(?=<)/,
-  3 => /\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z/,
-  4 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
+  2 => /\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z/,
+  3 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|
           xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|

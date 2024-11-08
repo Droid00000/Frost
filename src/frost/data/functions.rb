@@ -13,7 +13,7 @@ require 'selenium-webdriver'
 # @param [String] The hex color to resolve.
 # @return [ColourRGB] A colourRGB object.
 def resolve_color(string)
-  return nil if string.nil? || !string.match(REGEX[3]) || string.empty?
+  return nil if string.nil? || !string.match(REGEX[2]) || string.empty?
 
   data = string.strip.delete_prefix('#')
   Discordrb::ColourRGB.new(data.strip)
@@ -34,7 +34,7 @@ end
 def safe_name?(string)
   return true if string.nil? || string.empty?
 
-  !string.match(REGEX[4])
+  !string.match(REGEX[3])
 end
 
 # Determines a true or false value based on a random number.
@@ -60,22 +60,6 @@ def delete_guild_role(server, role)
   Discordrb::API::Server.delete_role(TOML['Discord']['TOKEN'], server, role, REASON[6])
 end
 
-# Determines the suffix to use at the end of a date.
-# @param day [Integer] The date to add a suffix to.
-# @return [String] The appropriate suffix.
-def add_suffix(day)
-  case day
-  when 1, 21, 31
-    'st'
-  when 2, 22
-    'nd'
-  when 3, 23
-    'rd'
-  else
-    'th'
-  end
-end
-
 # Return a string with user data.
 # @param duration [String] Length of the action.
 # @param reason [String] The reason for the action.
@@ -83,29 +67,16 @@ end
 def process_input(duration, reason, type)
   case type
   when :lock
-    response = "#{RESPONSE[47]}"
+    response = RESPONSE[47]
     response += " For **#{duration}**." if duration
     response += " Because: #{reason}" if reason
     response.to_s
   when :unlock
-    response = "#{RESPONSE[48]}"
+    response = RESPONSE[48]
     response += " For **#{duration}**." if duration
     response += " Because: #{reason}" if reason
     response.to_s
   end
-end
-
-# Extracts a date from a website.
-# @param type [Symbol] An optional type argument that does nothing.
-def next_chapter_date(type:)
-  driver = Selenium::WebDriver.for :chrome, options: Selenium::WebDriver::Options.chrome(args: ['--headless=new'])
-  driver.get TOML['Chapter']['LINK']
-
-  date = Date.parse(driver.page_source.match(REGEX[2])[0].strip)
-  name = "📖 #{date.strftime('%B %d')}#{add_suffix(date.day)} 3PM GMT"
-
-  Discordrb::API::Channel.name(TOML['Discord']['TOKEN'], TOML['Chapter']['CHANNEL'], name, REASON[4])
-  driver.quit
 end
 
 # Returns a random GIF link for use by the affection and snowball commands.
@@ -138,6 +109,8 @@ def gif(type)
   end
 end
 
+# Returns a string based on the enabled functionality for a guild.
+# @return [String] The appropriate string for the type of request.
 def settings(type, server)
   case type
   when :archiver

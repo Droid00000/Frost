@@ -1,6 +1,6 @@
 # Dependencies and Development 
-.rubocop.yml
 Gemfile.lock
+travis.yml
 
 # System Files
 .DS_Store

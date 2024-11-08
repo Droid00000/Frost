@@ -153,8 +153,6 @@ def event_records(server: nil, role: nil, type: nil)
       !POSTGRES[:Event_Settings].where(server_id: server, role_id: role).select(:role_id).map(:role_id).empty?
     when :enabled
       !POSTGRES[:Event_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
-    when :enable
-      POSTGRES[:Event_Settings].insert(server_id: server, role_id: role, enabled: true)
     when :register_role
       POSTGRES[:Event_Settings].insert(server_id: server, role_id: role, enabled: true)
     when :disable
