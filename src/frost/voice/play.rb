@@ -36,5 +36,5 @@ def voice_play(data)
     end
   end
 
-  data.bot.voice_connect(data.user.voice_channel)
+  data.bot.voice_connect(data.user.voice_channel) if data.bot.voice(data.server).nil?
 end
