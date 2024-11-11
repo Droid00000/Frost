@@ -36,19 +36,9 @@ def edit_role(data)
     return
   end
 
-  role = booster_records(server: data.server.id, user: data.user.id, type: :get_role)
-
-  if data.server.role(role).nil?
-    booster_records(server: data.server.id, user: data.user.id, type: :delete)
-    data.edit_response(content: RESPONSE[9])
-    return
-  end
-
-  data.server.update_role(role: role,
-                          name: data.options['name'],
-                          colour: resolve_color(data.options['color']),
-                          icon: data.emojis('icon')&.file,
-                          reason: REASON[2])
+  data.server.update_role(role: booster_records(server: data.server.id, user: data.user.id, type: :get_role),
+                          name: data.options['name'], colour: resolve_color(data.options['color']),
+                          icon: data.emojis('icon')&.file, reason: REASON[2])
 
   data.edit_response(content: "#{RESPONSE[2]} #{EMOJI[2]}")
 end

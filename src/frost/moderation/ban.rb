@@ -20,18 +20,16 @@ def bulk_ban(data)
     return
   end
 
-  filtered_members = data.options['members'].delete('@<>').split(',').reject do |member|
+  members = data.options['members'].delete('@<>').split(',').reject do |member|
     data.bot.member(data.server, member).highest_role.position >= data.user.highest_role.position || data.bot.profile.on(data.server).highest_role.position
   end
 
-  if filtered_members.empty?
+  if members.empty?
     data.edit_response(content: RESPONSE[71])
     return
   end
 
-  bans = data.server.bulk_ban(members: filtered_members,
-                              messages: data.options['messages'],
-                              reason: data.options['reason'])
+  bans = data.server.bulk_ban(members, data.options['messages'], data.options['reason'])
 
-  data.edit_response(content: "#{RESPONSE[70]} #{bans.users.count}")
+  data.edit_response(content: "#{RESPONSE[70]} #{bans.count}")
 end
