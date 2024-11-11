@@ -17,7 +17,7 @@ def button_click(data, button)
   data.update_message do |builder, components|
     components.row do |buttons|
       data.message.to_message.buttons.each do |old_button|
-        buttons.button(style: old_button.custom_id == button ? UI[8] : UI[9],
+        buttons.button(style: old_button.custom_id == button ? 4 : old_button.style,
                        emoji: old_button.emoji.id, custom_id: old_button.custom_id)
       end
     end
