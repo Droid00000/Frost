@@ -6,6 +6,7 @@ require_relative 'roles'
 require_relative 'status'
 require_relative 'boosters'
 require_relative 'settings'
+require_relative 'utilities'
 
 module AdminCommands
   extend Discordrb::EventContainer
@@ -17,12 +18,27 @@ module AdminCommands
 
   application_command(:about) do |event|
     event.defer(ephemeral: true)
-    event.edit_response(content: "#{RESPONSE[500]} #{EMOJI[10]}")
+    event.edit_response(content: "#{RESPONSE[10]} #{EMOJI[10]}")
   end
 
   application_command(:settings) do |event|
     event.defer(ephemeral: true)
     server_settings(event)
+  end
+
+  application_command(:shutdown) do |event|
+    event.defer(ephemeral: true)
+    shutdown_command(event)
+  end
+
+  application_command(:restart) do |event|
+    event.defer(ephemeral: true)
+    restart_command(event)
+  end
+
+  application_command(:eval) do |event|
+    event.defer(ephemeral: true)
+    eval_command(event)
   end
 
   application_command(:update).subcommand(:status) do |event|

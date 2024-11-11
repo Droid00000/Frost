@@ -22,40 +22,6 @@ bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: 32_905, log_m
 
 bot.ready { bot.custom_status(ACTIVITY[1], ACTIVITY[2]) }
 
-bot.application_command(:shutdown) do |event|
-  event.defer(ephemeral: true)
-  if event.user.id == TOML['Discord']['OWNER']&.to_i
-    event.edit_response(content: RESPONSE[19])
-    bot.stop
-  else
-    event.edit_response(content: RESPONSE[18])
-  end
-end
-
-bot.application_command(:restart) do |event|
-  event.defer(ephemeral: true)
-  if event.user.id == TOML['Discord']['OWNER']&.to_i
-    event.edit_response(content: RESPONSE[67])
-    exec('bundle exec ruby core.rb')
-  else
-    event.edit_response(content: RESPONSE[18])
-  end
-end
-
-bot.application_command(:eval) do |event|
-  event.defer(ephemeral: event.options['ephemeral'])
-  if event.user.id == TOML['Discord']['OWNER']&.to_i
-    begin
-      result = eval event.options['code']
-      event.edit_response(content: "**Success:** ```#{event.options['code']}``` **Result:** ```#{result}```")
-    rescue StandardError, SyntaxError => e
-      event.edit_response(content: "**Error:** ```#{e.message}```")
-    end
-  else
-    event.edit_response(content: RESPONSE[18])
-  end
-end
-
 bot.include! EventRoles
 bot.include! TagCommands
 bot.include! BoosterPerks
