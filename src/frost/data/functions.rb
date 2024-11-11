@@ -57,6 +57,8 @@ end
 # @param role [Integer, String] An ID that uniquely identifies a role.
 def delete_guild_role(server, role)
   Discordrb::API::Server.delete_role(TOML['Discord']['TOKEN'], server, role, REASON[6])
+rescue Dsicordrb::Errors::NotFound
+  true
 end
 
 # Return a string with user data.

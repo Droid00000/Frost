@@ -38,3 +38,7 @@ Style/ClassVars:
 # Appropriate safeguards have been taken.
 Security/Eval:
   Enabled: false
+
+# I don't like the extra end it introduces.
+Style/IfUnlessModifier:
+  Enabled: false
