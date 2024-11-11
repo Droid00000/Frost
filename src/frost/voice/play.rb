@@ -22,7 +22,7 @@ def voice_play(data)
   end
 
   track = LAVALINK.resolve(data.options['song'])
-  
+
   data.edit_response do |builder|
     builder.add_embed do |embed|
       embed.title = "#{track.name} — #{track.artist}"
