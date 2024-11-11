@@ -2,9 +2,9 @@
 
 $LOAD_PATH.unshift File.join(File.expand_path(__dir__), 'src/frost')
 
-require 'require_all'
-require 'discordrb'
 require 'toml-rb'
+require 'discordrb'
+require 'require_all'
 
 require_all 'src/frost/tags'
 require_all 'src/frost/pins'
