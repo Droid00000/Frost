@@ -11,4 +11,4 @@ RUN gem install bundler --source https://rubygems.org && \
     gem install racc && \
     bundle install
 
-CMD ["bundle", "exec", "ruby", "core.rb"]
+CMD ["bundle", "exec", "ruby", "--yjit", "core.rb"]
