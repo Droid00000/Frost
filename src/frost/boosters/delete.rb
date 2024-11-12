@@ -5,6 +5,7 @@ require 'data/schema'
 require 'data/constants'
 require 'data/functions'
 
+# Application command handler for /booster role delete.
 def delete_role(data)
   if booster_records(server: data.server.id, user: data.user.id, type: :banned)
     data.edit_response(content: RESPONSE[6])
@@ -36,4 +37,9 @@ def delete_role(data)
   booster_records(server: data.server.id, user: data.user.id, type: :delete)
 
   data.edit_response(content: "#{RESPONSE[3]} #{EMOJI[3]}")
+end
+
+# Event handler for the role delete Gateway event.
+def role_delete_event(data)
+  booster_records(server: data.server.id, role: data.id, type: :delete_role)
 end

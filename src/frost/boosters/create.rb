@@ -5,6 +5,7 @@ require 'data/schema'
 require 'data/constants'
 require 'data/functions'
 
+# Application command handler for /booster role claim.
 def create_role(data)
   if booster_records(server: data.server.id, user: data.user.id, type: :banned)
     data.edit_response(content: RESPONSE[6])
