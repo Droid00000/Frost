@@ -2,6 +2,8 @@
 
 # We register our application commands using a seperate script so we don't need to register them every time the bot starts.
 
+$LOAD_PATH.unshift File.join(File.expand_path(__dir__), 'src/frost')
+
 require 'toml-rb'
 require 'discordrb'
 require 'data/constants'
