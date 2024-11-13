@@ -29,10 +29,10 @@ end
 # Returns true if a string doesn't contain any bad words.
 # @param [String] The string to check.
 # @return [Boolean] If the name contains any bad words.
-def safe_name?(string)
-  return true if string.nil? || string.empty?
+def safe_name?(name)
+  return true if name.nil? || name.empty?
 
-  !string.match(REGEX[3])
+  !name.match(REGEX[3])
 end
 
 # Determines a true or false value based on a random number.
