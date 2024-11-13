@@ -11,11 +11,10 @@ require 'data/constants'
 # Initilaze a new color object for a role.
 # @param [String] The hex color to resolve.
 # @return [ColourRGB] A colourRGB object.
-def resolve_color(string)
-  return nil if string.nil? || !string.match(REGEX[2]) || string.empty?
+def resolve_color(color)
+  return nil if color.nil? || !color.match(REGEX[2])
 
-  data = string.strip.delete_prefix('#')
-  Discordrb::ColourRGB.new(data.strip)
+  Discordrb::ColourRGB.new(color.strip.delete_prefix('#'))
 end
 
 # Converts a unix timestap into a readable timestamp.
@@ -107,35 +106,5 @@ def gif(type)
     PUNCH.sample.to_s
   else
     UI[21]
-  end
-end
-
-# Returns a string based on the enabled functionality for a guild.
-# @return [String] The appropriate string for the type of request.
-def settings(type, server)
-  case type
-  when :archiver
-    if archiver_records(server: server, type: :check)
-      then "**Archive Channel:** <##{archiver_records(server: server, type: :get)}>"
-    else
-      '**Enabled:** No'
-    end
-
-  when :booster
-    if booster_records(server: server, type: :enabled)
-      then "**Hoist Role:** <@&#{booster_records(server: server, type: :hoist_role)}>"
-    else
-      '**Enabled:** No'
-    end
-  when :events
-    if event_records(server: server, type: :enabled)
-      roles = event_records(server: server, type: :get_roles).map do |row|
-        row.values.map { |key| "<@&#{key}>".to_s }
-      end.flatten.uniq
-
-      "**Roles:** #{roles.join(', ')}"
-    else
-      '**Enabled:** No'
-    end
   end
 end

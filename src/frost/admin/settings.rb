@@ -5,6 +5,20 @@ require 'data/schema'
 require 'data/functions'
 require 'data/constants'
 
+# Returns a string based on the enabled functionality for a guild.
+# @return [String] The appropriate string for the type of request.
+def settings(type, server)
+  case type
+  when :archiver
+    archiver_records(server: server, type: :check) ? "**Archive Channel:** <##{archiver_records(server: server, type: :get)}>" : '**Enabled:** No'
+  when :booster
+    booster_records(server: server, type: :enabled) ? "**Hoist Role:** <@&#{booster_records(server: server, type: :hoist_role)}>" : '**Enabled:** No'
+  when :events
+    event_records(server: server, type: :enabled) ? "**Roles:** #{event_records(server: server, type: :get_roles)}" : '**Enabled:** No'
+  end
+end
+
+# An embed with data about a guild's enabled functionality.
 def server_settings(data)
   data.edit_response do |builder|
     builder.add_embed do |embed|
