@@ -14,8 +14,6 @@ gem 'require_all'
 
 gem 'toml-rb'
 
-gem 'faraday'
-
 gem 'sequel'
 
 gem 'pg'
