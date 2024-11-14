@@ -76,7 +76,9 @@ def booster_records(server: nil, user: nil, role: nil, type: nil)
     when :get_role
       POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).select(:role_id).map(:role_id)&.join.to_i
     when :delete_role
-      POSTGRES[:Server_Boosters].where(server_id: server, role_id: role).delete if !POSTGRES[:Server_Boosters].where(server_id: server, role_id: role).empty?
+      POSTGRES[:Server_Boosters].where(server_id: server, role_id: role).delete if !POSTGRES[:Server_Boosters].where(
+        server_id: server, role_id: role
+      ).empty?
     when :enabled
       !POSTGRES[:Booster_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
     when :disable

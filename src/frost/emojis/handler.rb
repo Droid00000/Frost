@@ -2,6 +2,7 @@
 
 require_relative 'button'
 require_relative 'emoji'
+require_relative 'steal'
 
 module EmojiCommands
   extend Discordrb::EventContainer
