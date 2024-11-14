@@ -133,6 +133,18 @@ EMOJI = {
   6 => '<a:LoidBell_Maomao:1295667609961758731>'
 }.freeze
 
+# Emojis for phases of the moon used by the moon commands.
+MOON = {
+  "New Moon" => 🌑,
+  "Waxing Crescent" => 🌒,
+  "First Quarter" => 🌓,
+  "Waxing Gibbous" => 🌔,
+  "Full Moon" => 🌕,
+  "Waning Gibbous" => 🌖,
+  "Last Quarter" => 🌗,
+  "Waning Crescent" => 🌘
+}.freeze
+
 # UI components including color values; primarily used by the bot when sending embeds.
 UI = {
   1 => 'https://cdn.discordapp.com/avatars/1268769768920580156/1551613008086970c244a81d043d354e?size=1024',
