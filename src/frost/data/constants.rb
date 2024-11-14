@@ -135,14 +135,14 @@ EMOJI = {
 
 # Emojis for phases of the moon used by the moon commands.
 MOON = {
-  'New Moon' => 🌑,
-  'Waxing Crescent' => 🌒,
-  'First Quarter' => 🌓,
-  'Waxing Gibbous' => 🌔,
-  'Full Moon' => 🌕,
-  'Waning Gibbous' => 🌖,
-  'Last Quarter' => 🌗,
-  'Waning Crescent' => 🌘
+  'New Moon' => '🌑',
+  'Waxing Crescent' => '🌒',
+  'First Quarter' => '🌓',
+  'Waxing Gibbous' => '🌔',
+  'Full Moon' => '🌕',
+  'Waning Gibbous' => '🌖',
+  'Last Quarter' => '🌗',
+  'Waning Crescent' => '🌘'
 }.freeze
 
 # UI components including color values; primarily used by the bot when sending embeds.
@@ -165,10 +165,10 @@ ACTIVITY = {
 }.freeze
 
 # The YAML configuration file used by the bot.
-YAML = YAML.load_file(File.join(File.expand_path('../../..', __dir__), 'config.yaml'))
+CONFIG = YAML.load_file(File.join(File.expand_path('../../..', __dir__), 'config.yml'))
 
 # The Lavalink wrapper used to convert URL's and queries into track metadata.
-LAVALINK = Calliope::Request.new(YAML['Lavalink']['ADDRESS'], YAML['Lavalink']['PASSWORD'])
+LAVALINK = Calliope::Request.new(CONFIG['Lavalink']['ADDRESS'], CONFIG['Lavalink']['PASSWORD'])
 
 # A series of regular expressions utilized by the bot.
 # REGEX[4] is used to ensure a name doesn't contain any bad words.

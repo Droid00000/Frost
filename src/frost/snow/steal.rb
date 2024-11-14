@@ -18,7 +18,7 @@ def steal_snowball(data)
 
   snowball_records(user: data.user.id, type: :add_user) unless snowball_records(user: data.user.id, type: :check_user)
 
-  unless YAML['Discord']['CONTRIBUTORS'].include?(data.user.id)
+  unless CONFIG['Discord']['CONTRIBUTORS'].include?(data.user.id)
     data.edit_response(content: RESPONSE[12])
     return
   end

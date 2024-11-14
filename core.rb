@@ -1,25 +1,16 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift File.join(File.expand_path(__dir__), 'src/frost')
-
 require 'discordrb'
-require 'require_all'
 
-require_all 'src/frost/tags'
-require_all 'src/frost/pins'
-require_all 'src/frost/data'
-require_all 'src/frost/snow'
-require_all 'src/frost/voice'
-require_all 'src/frost/admin'
-require_all 'src/frost/emojis'
-require_all 'src/frost/events'
-require_all 'src/frost/boosters'
-require_all 'src/frost/affections'
-require_all 'src/frost/moderation'
+$LOAD_PATH.unshift './src/frost'
 
-bot = Discordrb::Bot.new(token: YAML['Discord']['TOKEN'], intents: 32_905, log_mode: :normal)
+Dir['./src/frost/**/*.rb'].each { |file| require file if !file.include?('commands.rb') }
+
+bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 32_905, log_mode: :normal)
 
 bot.ready { bot.custom_status(ACTIVITY[1], ACTIVITY[2]) }
+
+at_exit { bot.stop }
 
 bot.include! EventRoles
 bot.include! TagCommands
@@ -38,7 +29,5 @@ bot.include! AngerAffection
 bot.include! AutoPinArchiver
 bot.include! ManualPinArchiver
 bot.include! ModerationCommands
-
-at_exit { bot.stop }
 
 bot.run

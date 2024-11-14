@@ -10,8 +10,6 @@ gem 'rufus-scheduler'
 
 gem 'tzinfo-data'
 
-gem 'require_all'
-
 gem 'sequel'
 
 gem 'pg'

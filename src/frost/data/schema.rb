@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 require 'sequel'
-require 'YAML-rb'
 require 'data/constants'
 
-POSTGRES = Sequel.connect(YAML['Postgres']['URL'], max_connections: 7)
+POSTGRES = Sequel.connect(CONFIG['Postgres']['URL'], max_connections: 7)
 
 POSTGRES.create_table?(:Event_Settings) do
   primary_key :id

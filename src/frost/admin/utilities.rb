@@ -6,7 +6,7 @@ require 'data/constants'
 
 # Turns the bot off and kills the Gateway connection.
 def shutdown_command(data)
-  if data.user.id == YAML['Discord']['OWNER']&.to_i
+  if data.user.id == CONFIG['Discord']['OWNER']&.to_i
     data.edit_response(content: RESPONSE[19])
     data.bot.stop
   else
@@ -16,7 +16,7 @@ end
 
 # Restarts the Gateway connection.
 def restart_command(data)
-  if data.user.id == YAML['Discord']['OWNER']&.to_i
+  if data.user.id == CONFIG['Discord']['OWNER']&.to_i
     data.edit_response(content: RESPONSE[67])
     exec('bundle exec ruby --yjit core.rb')
   else
@@ -26,7 +26,7 @@ end
 
 # Allows us to execute arbitrary code on the current proccess.
 def eval_command(data)
-  if data.user.id == YAML['Discord']['OWNER']&.to_i
+  if data.user.id == CONFIG['Discord']['OWNER']&.to_i
     begin
       result = eval data.options['code']
       data.edit_response(content: "**Success:** ```#{data.options['code']}``` **Result:** ```#{result}```")
