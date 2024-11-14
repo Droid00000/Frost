@@ -7,4 +7,4 @@ travis.yml
 .DS_Store?
 
 # Credentials
-config.toml
+config.yaml

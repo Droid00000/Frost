@@ -26,21 +26,24 @@ CREATE DATABASE frigid OWNER frost;
 
 4. **Fill in configuration variables**
 
-Change the name of the `example.toml` file to `config.toml` and fill in all the variables.
+Change the name of the `example.yaml` file to `config.yaml` and fill in all the variables.
 
-```ruby
-[Discord]
-OWNER = "YOUR_ID_HERE"
-TOKEN = "Bot TOKEN_HERE"
-COMMANDS = []
-CONTRIBUTORS = []
+```yaml
+# Discord related credentials.
+Discord:
+  OWNER: "YOUR_ID_HERE"
+  TOKEN: "Bot TOKEN_HERE."
+  COMMANDS: []
+  CONTRIBUTORS: []
 
-[Postgres]
-URL = "postgres://URI_HERE"
+# Database related credentials.
+Postgres:
+  URL: "postgres://URI_HERE"
 
-[Lavalink]
-ADDRESS = ""
-PASSWORD = ""
+# URI and password for the Lavalink node.
+Lavalink:
+  Username: ""
+  Password: ""
 ```
 
 Many of these variables are undocumented because the bot is meant for personal use.

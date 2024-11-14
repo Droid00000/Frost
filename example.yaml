@@ -1,0 +1,15 @@
+# Discord related credentials.
+Discord:
+  OWNER: "YOUR_ID_HERE"
+  TOKEN: "Bot TOKEN_HERE."
+  COMMANDS: []
+  CONTRIBUTORS: []
+
+# Database related credentials.
+Postgres:
+  URL: "postgres://URI_HERE"
+
+# URI and password for the Lavalink node.
+Lavalink:
+  Username: ""
+  Password: ""

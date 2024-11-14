@@ -12,8 +12,6 @@ gem 'tzinfo-data'
 
 gem 'require_all'
 
-gem 'toml-rb'
-
 gem 'sequel'
 
 gem 'pg'
