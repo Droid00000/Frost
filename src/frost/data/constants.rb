@@ -135,14 +135,14 @@ EMOJI = {
 
 # Emojis for phases of the moon used by the moon commands.
 MOON = {
-  "New Moon" => 🌑,
-  "Waxing Crescent" => 🌒,
-  "First Quarter" => 🌓,
-  "Waxing Gibbous" => 🌔,
-  "Full Moon" => 🌕,
-  "Waning Gibbous" => 🌖,
-  "Last Quarter" => 🌗,
-  "Waning Crescent" => 🌘
+  'New Moon' => 🌑,
+  'Waxing Crescent' => 🌒,
+  'First Quarter' => 🌓,
+  'Waxing Gibbous' => 🌔,
+  'Full Moon' => 🌕,
+  'Waning Gibbous' => 🌖,
+  'Last Quarter' => 🌗,
+  'Waning Crescent' => 🌘
 }.freeze
 
 # UI components including color values; primarily used by the bot when sending embeds.
