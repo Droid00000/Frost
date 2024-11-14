@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
+require 'json'
 require 'time'
-require 'date'
 require 'toml-rb'
+require 'net/http'
 require 'discordrb'
-require 'data/schema'
 require 'data/embeds'
 require 'data/constants'
 
