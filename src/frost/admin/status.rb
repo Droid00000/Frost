@@ -10,7 +10,7 @@ def update_status(data)
     return
   end
 
-  unless TOML['Discord']['CONTRIBUTORS'].include?(data.user.id)
+  unless YAML['Discord']['CONTRIBUTORS'].include?(data.user.id)
     data.edit_response(content: RESPONSE[12])
     return
   end

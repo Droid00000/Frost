@@ -2,7 +2,6 @@
 
 $LOAD_PATH.unshift File.join(File.expand_path(__dir__), 'src/frost')
 
-require 'toml-rb'
 require 'discordrb'
 require 'require_all'
 
@@ -18,7 +17,7 @@ require_all 'src/frost/boosters'
 require_all 'src/frost/affections'
 require_all 'src/frost/moderation'
 
-bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: 32_905, log_mode: :normal)
+bot = Discordrb::Bot.new(token: YAML['Discord']['TOKEN'], intents: 32_905, log_mode: :normal)
 
 bot.ready { bot.custom_status(ACTIVITY[1], ACTIVITY[2]) }
 

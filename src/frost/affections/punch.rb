@@ -8,7 +8,7 @@ module PunchAffection
 
   application_command(:punch) do |event|
     event.defer(ephemeral: false)
-    return unless TOML['Discord']['COMMANDS'].include?(event.user.id)
+    return unless YAML['Discord']['COMMANDS'].include?(event.user.id)
 
     event.edit_response(content: "<@#{event.options['target']}>") do |builder|
       builder.add_embed do |embed|

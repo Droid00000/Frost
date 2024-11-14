@@ -2,7 +2,7 @@
 
 require 'json'
 require 'time'
-require 'toml-rb'
+require 'YAML-rb'
 require 'net/http'
 require 'discordrb'
 require 'data/embeds'
@@ -48,14 +48,14 @@ end
 # @param user [Integer, String] An ID that uniquely identifies a user.
 # @return [Boolean] Returns true if the user is boosting the server; false otherwise.
 def get_booster_status(server, user)
-  Discordrb::API::Server.resolve_booster(TOML['Discord']['TOKEN'], server, user)
+  Discordrb::API::Server.resolve_booster(YAML['Discord']['TOKEN'], server, user)
 end
 
 # Deletes a role in a guild.
 # @param server [Integer, String] An ID that uniquely identifies a guild.
 # @param role [Integer, String] An ID that uniquely identifies a role.
 def delete_guild_role(server, role)
-  Discordrb::API::Server.delete_role(TOML['Discord']['TOKEN'], server, role, REASON[6])
+  Discordrb::API::Server.delete_role(YAML['Discord']['TOKEN'], server, role, REASON[6])
 rescue Dsicordrb::Errors::NotFound
   true
 end

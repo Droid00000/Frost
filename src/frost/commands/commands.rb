@@ -4,11 +4,11 @@
 
 $LOAD_PATH.unshift File.join(File.expand_path(__dir__), 'src/frost')
 
-require 'toml-rb'
+require 'YAML-rb'
 require 'discordrb'
 require 'data/constants'
 
-bot = Discordrb::Bot.new(token: TOML['Discord']['TOKEN'], intents: 0)
+bot = Discordrb::Bot.new(token: YAML['Discord']['TOKEN'], intents: 0)
 
 bot.ready { bot.set_status(ACTIVITY[3], ACTIVITY[4]) }
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'toml-rb'
+require 'yaml'
 require 'data/lavalink'
 
 # A response message to an interaction.
@@ -164,11 +164,11 @@ ACTIVITY = {
   4 => 'Loading...'
 }.freeze
 
-# The TOML configuration file used by the bot.
-TOML = TomlRB.load_file(File.join(File.expand_path('../../..', __dir__), 'config.toml'))
+# The YAML configuration file used by the bot.
+YAML = YAML.load_file(File.join(File.expand_path('../../..', __dir__), 'config.yaml'))
 
 # The Lavalink wrapper used to convert URL's and queries into track metadata.
-LAVALINK = Calliope::Request.new(TOML['Lavalink']['ADDRESS'], TOML['Lavalink']['PASSWORD'])
+LAVALINK = Calliope::Request.new(YAML['Lavalink']['ADDRESS'], YAML['Lavalink']['PASSWORD'])
 
 # A series of regular expressions utilized by the bot.
 # REGEX[4] is used to ensure a name doesn't contain any bad words.
