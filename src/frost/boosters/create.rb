@@ -12,7 +12,7 @@ def create_role(data)
     return
   end
 
-  if event.server.role_limit
+  if data.server.role_limit?
     data.edit_response(content: RESPONSE[59])
     return
   end

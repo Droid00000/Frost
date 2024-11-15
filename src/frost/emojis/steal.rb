@@ -14,16 +14,14 @@ def steal_emojis(data)
     return
   end
 
-  if data.server.emoji_limit?
-    data.edit_response(content: RESPONSE[58])
-    return
-  end
+  emojis = []
 
   data.target.emoji.each do |emoji|
     break if data.server.emoji_limit?(emoji)
 
-    data.server.add_emoji(emoji.name, emoji.file)
+    emoji = data.server.add_emoji(emoji.name, emoji.file)
+    emojis << emoji
   end
 
-  data.edit_response(content: "#{RESPONSE[57]} **#{data.target.emoji.count}**")
+  data.edit_response(content: "#{RESPONSE[57]} **#{emojis.count}**")
 end

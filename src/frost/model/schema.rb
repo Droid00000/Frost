@@ -3,7 +3,7 @@
 require 'sequel'
 require 'constants'
 
-POSTGRES = Sequel.connect(CONFIG['Postgres']['URL'], max_connections: 7)
+POSTGRES = Sequel.connect(CONFIG['Postgres']['URL'])
 
 POSTGRES.create_table?(:Event_Settings) do
   primary_key :id
@@ -152,6 +152,8 @@ end
 def event_records(server: nil, role: nil, type: nil)
   POSTGRES.transaction do
     case type
+    when :get_roles
+      POSTGRES[:Event_Settings].where(server_id: server).select(:role_id)&.map { |role| "<@&#{role[:role_id]}>" }
     when :check_role
       !POSTGRES[:Event_Settings].where(server_id: server, role_id: role).select(:role_id).map(:role_id).empty?
     when :enabled
@@ -160,8 +162,6 @@ def event_records(server: nil, role: nil, type: nil)
       POSTGRES[:Event_Settings].insert(server_id: server, role_id: role, enabled: true)
     when :disable
       POSTGRES[:Event_Settings].where(server_id: server).delete
-    when :get_roles
-      POSTGRES[:Event_Settings].where(server_id: server).select(:role_id)
     end
   end
 end

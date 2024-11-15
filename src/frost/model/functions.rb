@@ -11,7 +11,7 @@ require 'constants'
 def resolve_color(color)
   return nil if color.nil? || !color.match(REGEX[2])
 
-  Discordrb::ColourRGB.new(color.strip.delete_prefix('#'))
+  Discordrb::ColourRGB.new(color.strip.delete('#'))
 end
 
 # Converts a unix timestap into a readable timestamp.

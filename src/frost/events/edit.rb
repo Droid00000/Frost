@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'discordrb'
 require 'schema'
+require 'discordrb'
 require 'constants'
 require 'functions'
 
@@ -26,14 +26,18 @@ def edit_event_role(data)
     return
   end
 
-  unless data.user.roles.include?(data.server.role(data.options['role']))
+  unless data.user.roles&.include?(data.server.role(data.options['role']))
     data.edit_response(content: RESPONSE[17])
     return
   end
 
-  data.server.update_role(data.options['role'], data.options['name'],
-                          resolve_color(data.options['color']),
-                          data.emojis('icon')&.file, REASON[5])
+  data.server.update_role(
+    role: data.options['role'],
+    name: data.options['name'],
+    colour: resolve_color(data.options['color']),
+    icon: data.emojis('icon')&.file,
+    reason: REASON[5]
+  )
 
   data.edit_response(content: "#{RESPONSE[2]} #{EMOJI[3]}")
 end

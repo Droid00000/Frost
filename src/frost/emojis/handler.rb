@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'button'
-require_relative 'emoji'
+require_relative 'click'
 require_relative 'steal'
 
 module EmojiCommands
