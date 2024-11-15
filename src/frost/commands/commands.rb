@@ -1,15 +1,11 @@
 # frozen_string_literal: true
 
-# We register our application commands using a seperate script so we don't need to register them every time the bot starts.
-
-$LOAD_PATH.unshift File.join(File.expand_path(__dir__), 'src/frost/model')
+$LOAD_PATH.unshift '../model'
 
 require 'discordrb'
 require 'constants'
 
 bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 0)
-
-bot.ready { bot.set_status(ACTIVITY[3], ACTIVITY[4]) }
 
 bot.register_application_command(:hug, 'Hugs another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गले मिलना' }, description_localizations: { 'hi' => 'सर्वर मित्र के गले मिलना' }) do |option|
   option.user('target', 'Who do you want to hug?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => 'किसको गले मिलना है' })
