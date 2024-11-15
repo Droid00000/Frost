@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'discordrb'
-require 'data/constants'
+require 'constants'
 
 def create_emoji(data)
   unless data.target.emoji?

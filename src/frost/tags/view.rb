@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
+require 'schema'
 require 'discordrb'
-require 'data/schema'
-require 'data/constants'
-require 'data/functions'
+require 'constants'
+require 'functions'
 
 def tag_info(data)
   unless tag_records(name: data.options['name'], type: :exists?)

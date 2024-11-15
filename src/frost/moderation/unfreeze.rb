@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'discordrb'
-require 'data/constants'
-require 'data/functions'
+require 'constants'
+require 'functions'
 
 def unfreeze_server(data)
   unless data.bot.profile.on(data.server).permission?(:manage_channels)

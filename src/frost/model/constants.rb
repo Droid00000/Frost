@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'yaml'
-require 'data/lavalink'
+require 'lavalink'
 
 # A response message to an interaction.
 RESPONSE = {

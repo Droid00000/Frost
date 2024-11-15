@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
+require 'schema'
 require 'discordrb'
-require 'data/schema'
-require 'data/constants'
-require 'data/functions'
+require 'constants'
+require 'functions'
 
 def steal_snowball(data)
   unless snowball_records(user: data.options['member'], type: :check_snowball)

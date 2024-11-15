@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
+require 'lavalink'
 require 'discordrb'
+require 'constants'
 require 'shellwords'
-require 'data/lavalink'
-require 'data/constants'
 
 def voice_play(data)
   if data.user.voice_channel.nil?

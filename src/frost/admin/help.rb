@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
+require 'schema'
+require 'constants'
 require 'discordrb'
-require 'data/schema'
-require 'data/constants'
 
 def general_help_embed(data)
   data.edit_response do |builder|

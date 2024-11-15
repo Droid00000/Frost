@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'sequel'
-require 'data/constants'
+require 'constants'
 
 POSTGRES = Sequel.connect(CONFIG['Postgres']['URL'], max_connections: 7)
 

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
+require 'schema'
 require 'discordrb'
-require 'data/schema'
-require 'data/constants'
-require 'data/functions'
+require 'constants'
+require 'functions'
 
 # Application command handler for /booster role claim.
 def create_role(data)

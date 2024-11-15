@@ -2,10 +2,10 @@
 
 # We register our application commands using a seperate script so we don't need to register them every time the bot starts.
 
-$LOAD_PATH.unshift File.join(File.expand_path(__dir__), 'src/frost')
+$LOAD_PATH.unshift File.join(File.expand_path(__dir__), 'src/frost/model')
 
 require 'discordrb'
-require 'data/constants'
+require 'constants'
 
 bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 0)
 
@@ -67,6 +67,11 @@ end
 bot.register_application_command(:eval, 'Allows the bot owner to execute code.', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => 'बोट ऑनर को कोड रन करनेकी इजाजत है' }) do |option|
   option.string('code', 'The code you want to execute.', required: true, name_localizations: { 'hi' => 'कोड' }, description_localizations: { 'hi' => 'कोड जो रन करना है' })
   option.boolean('ephemeral', 'Whether the output should only be visible to you.', required: true, name_localizations: { 'hi' => 'अल्पकालिक' }, description_localizations: { 'hi' => 'क्या आपको ही बस आउटपुट दिखना चाहिए?' })
+end
+
+bot.register_application_command(:moon, 'moon commands', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
+  command.subcommand('phase', 'Shows the current phase of the moon!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+  end
 end
 
 bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: 32, contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'सेटिंग्स' }, description_localizations: { 'hi' => 'आपना सर्वर कॉन्फिग्रेशन देखो' }) do |option|

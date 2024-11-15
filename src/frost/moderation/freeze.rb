@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require 'discordrb'
+require 'constants'
+require 'functions'
 require 'rufus-scheduler'
-require 'data/constants'
-require 'data/functions'
 
 def freeze_server(data)
   unless safe_name?(data.options['reason'])

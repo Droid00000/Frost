@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'discordrb'
-require 'data/constants'
+require 'constants'
 
 def voice_pause(data)
   if data.bot.voice(data.server).nil?

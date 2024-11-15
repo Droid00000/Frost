@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
+require 'schema'
+require 'constants'
 require 'discordrb'
-require 'data/schema'
-require 'data/constants'
 
 # Sets the pin archiver channel or updates it.
 def setup_pin_archiver(data)

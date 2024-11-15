@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require 'discordrb'
-require 'data/schema'
-require 'data/constants'
-require 'data/functions'
+require 'schema'
+require 'constants'
+require 'functions'
 
 def edit_event_role(data)
   unless event_records(server: data.server.id, type: :enabled)

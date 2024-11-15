@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'discordrb'
-require 'data/constants'
+require 'constants'
 
 def button_click(data, button)
   unless data.bot.profile.on(data.server).permission?(:manage_emojis)

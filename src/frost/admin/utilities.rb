@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
+require 'schema'
 require 'discordrb'
-require 'data/schema'
-require 'data/constants'
+require 'constants'
 
 # Turns the bot off and kills the Gateway connection.
 def shutdown_command(data)

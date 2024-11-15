@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
-require 'json'
 require 'time'
-require 'net/http'
+require 'embeds'
 require 'discordrb'
-require 'data/embeds'
-require 'data/constants'
+require 'constants'
 
 # Initilaze a new color object for a role.
 # @param [String] The hex color to resolve.

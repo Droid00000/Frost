@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
+require 'schema'
 require 'discordrb'
-require 'data/schema'
-require 'data/constants'
+require 'constants'
 
 def update_status(data)
   unless safe_name?(data.options['description'])

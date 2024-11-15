@@ -2,7 +2,7 @@
 
 require 'discordrb'
 
-$LOAD_PATH.unshift './src/frost'
+$LOAD_PATH.unshift './src/frost/model'
 
 Dir['./src/frost/**/*.rb'].each { |file| require file if !file.include?('commands.rb') }
 
@@ -12,6 +12,7 @@ bot.ready { bot.custom_status(ACTIVITY[1], ACTIVITY[2]) }
 
 at_exit { bot.stop }
 
+bot.include! MoonPhases
 bot.include! EventRoles
 bot.include! TagCommands
 bot.include! BoosterPerks

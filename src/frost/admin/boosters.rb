@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
+require 'schema'
 require 'discordrb'
-require 'data/schema'
-require 'data/constants'
+require 'constants'
 
 # Manually adds a user to the database.
 def admin_add_booster(data)

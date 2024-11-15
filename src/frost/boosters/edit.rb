@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
+require 'schema'
 require 'discordrb'
-require 'data/schema'
-require 'data/constants'
-require 'data/functions'
+require 'constants'
+require 'functions'
 
 # Event handler for the application command /booster role edit.
 def edit_role(data)

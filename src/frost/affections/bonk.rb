@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'data/constants'
-require 'data/functions'
+require 'constants'
+require 'functions'
 
 module BonkAffection
   extend Discordrb::EventContainer

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'data/schema'
-require 'data/functions'
+require 'schema'
+require 'functions'
 require 'rufus-scheduler'
 
 Rufus::Scheduler.new.cron '30 0 * * 1' do
