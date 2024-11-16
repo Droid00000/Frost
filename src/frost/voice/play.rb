@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'lavalink'
+require 'calliope'
 require 'discordrb'
 require 'constants'
 
@@ -34,6 +34,4 @@ def voice_play(data)
                                                           icon_url: data.user.avatar_url)
     end
   end
-
-  data.bot.voice_connect(data.user.voice_channel) if data.bot.voice(data.server).nil?
 end
