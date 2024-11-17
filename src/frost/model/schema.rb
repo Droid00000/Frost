@@ -5,6 +5,10 @@ require 'constants'
 
 POSTGRES = Sequel.connect(CONFIG['Postgres']['URL'])
 
+POSTGRES.extension(:connection_validator)
+
+POSTGRES.pool.connection_validation_timeout = -1
+
 POSTGRES.create_table?(:Event_Settings) do
   primary_key :id
   Boolean :enabled, null: false
