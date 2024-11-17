@@ -101,7 +101,7 @@ def booster_records(server: nil, user: nil, role: nil, type: nil)
     when :unban
       POSTGRES[:Banned_Boosters].where(server_id: server, user_id: user).delete
     when :reset_status
-      POSTGRES[:Server_Boosters].where(status: false).insert(status: true)
+      POSTGRES[:Server_Boosters].where(status: true).insert(status: false)
     when :update_status
       POSTGRES[:Server_Boosters].where(server_id: server, user_id: user, status: false).insert(status: true)
     when :get_boosters
