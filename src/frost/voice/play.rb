@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'calliope'
 require 'discordrb'
 require 'constants'
 
