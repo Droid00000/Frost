@@ -75,7 +75,10 @@ RESPONSE = {
   68 => 'The bot needs to have the ``ban members`` permission to do this.',
   69 => 'The bot needs to have the ``manage server`` permission to do this.',
   70 => 'Successfully banned the following users:',
-  71 => "You do not have permission to ban any user you've specified."
+  71 => "You do not have permission to ban any user you've specified.",
+  72 => "This message doesn't have any stickers.",
+  73 => "This sticker can't be added to this server.",
+  74 => 'Your server is out of sticker slots.'
 }.freeze
 
 # A list of values for embed responses.
@@ -109,7 +112,12 @@ EMBED = {
   27 => 'Opeans the music commands help menu.',
   28 => '**Select the emojis you want to add!**',
   29 => 'Pauses the currently playing song.',
-  30 => 'Resumes playback of the most recently playing song.'
+  30 => 'Resumes playback of the most recently playing song.',
+  31 => 'Sticker Info',
+  32 => 'Name:',
+  33 => 'Description:',
+  34 => 'Tags:',
+  35 => 'None'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
@@ -120,7 +128,8 @@ REASON = {
   4 => 'Auto-update chapter release date.',
   5 => 'Event winner updated role.',
   6 => 'Server booster stopped boosting.',
-  7 => 'Auto-archive pinned messages.'
+  7 => 'Auto-archive pinned messages.',
+  8 => 'Server member added sticker.'
 }.freeze
 
 # Emojis that the bot can use.
@@ -153,7 +162,8 @@ UI = {
   4 => 0x8da99b,
   5 => 0xd4f0ff,
   6 => 0x4d94e8,
-  7 => 0x6bb7ed
+  7 => 0x6bb7ed,
+  8 => 0x849fe8
 }.freeze
 
 # Data used to update the bot status upon startup.
