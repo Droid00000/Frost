@@ -20,7 +20,7 @@ def bulk_ban(data)
     return
   end
 
-  members = data.options['members'].delete('@<>').split(',').reject do |member|
+  members = data.options['members'].delete('@<>,').split(',').reject do |member|
     data.bot.member(data.server, member).highest_role.position >= data.user.highest_role.position
   end
 
