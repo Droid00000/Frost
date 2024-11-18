@@ -27,7 +27,7 @@ end
 # @param [String] The string to check.
 # @return [Boolean] If the name contains any bad words.
 def safe_name?(name)
-  return true if name.nil? || name.empty?
+  return true if name.nil?
 
   !name.match(REGEX[3])
 end
