@@ -9,7 +9,7 @@ module EmojiCommands
 
   application_command(:'add emoji(s)') do |event|
     event.defer(ephemeral: true)
-    create_emoji(event)
+    create_buttons(event)
   end
 
   application_command(:'add emojis') do |event|
@@ -17,23 +17,7 @@ module EmojiCommands
     steal_emojis(event)
   end
 
-  button(custom_id: '0') do |event|
-    button_click(event, '0')
-  end
-
-  button(custom_id: '1') do |event|
-    button_click(event, '1')
-  end
-
-  button(custom_id: '2') do |event|
-    button_click(event, '2')
-  end
-
-  button(custom_id: '3') do |event|
-    button_click(event, '3')
-  end
-
-  button(custom_id: '4') do |event|
-    button_click(event, '4')
+  button do |event|
+    button_click(event)
   end
 end

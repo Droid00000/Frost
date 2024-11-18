@@ -3,7 +3,7 @@
 require 'discordrb'
 require 'constants'
 
-def create_emoji(data)
+def create_buttons(data)
   unless data.target.emoji?
     data.edit_response(content: RESPONSE[55])
     return
