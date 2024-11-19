@@ -7,11 +7,6 @@ require_relative 'info'
 module StickerCommands
   extend Discordrb::EventContainer
 
-  application_command(:create).subcommand(:sticker) do |event|
-    event.defer(ephemeral: true)
-    create_sticker(event)
-  end
-
   application_command(:'add sticker') do |event|
     event.defer(ephemeral: true)
     add_sticker(event)
