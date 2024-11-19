@@ -103,32 +103,6 @@ bot.register_application_command(:steal, 'Snowball fights', contexts: [0, 1, 2],
   end
 end
 
-bot.register_application_command(:create, 'tags', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand('tag', 'Create a tag!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-    option.string('name', 'The name of the tag to create.', required: true, max_length: 100, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-    option.string('message', 'A message with the content to include in the tag.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-  end
-end
-
-bot.register_application_command(:view, 'tags', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand('tag', 'View a specific tag.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-    option.string('name', 'The name of the tag to view.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-    option.user('member', 'A member to member to mention when viewing this tag.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-  end
-end
-
-bot.register_application_command(:delete, 'tags', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand('tag', 'Delete a specific tag.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-    option.string('name', 'The name of the tag to delete.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-  end
-end
-
-bot.register_application_command(:tag, 'tags', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand('info', 'Get information about a certain tag.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-    option.string('name', 'The name of the tag to get.', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-  end
-end
-
 bot.register_application_command(:update, 'Contributors', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'अपडेट' }, description_localizations: { 'hi' => 'सहकारी गण' }) do |command|
   command.subcommand('status', "Update the status that's show by the bot.", name_localizations: { 'hi' => 'स्टेटस' }, description_localizations: { 'hi' => 'अपटेड स्टेटस जो बोट दिखा रहा है' }) do |option|
     option.string('description', 'The status that the bot should display.', required: false, name_localizations: { 'hi' => 'डिस्क्रिप्शन' }, description_localizations: { 'hi' => 'स्टेटस जो बोट की दिखाना चाहिए' })

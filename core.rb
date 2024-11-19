@@ -2,9 +2,9 @@
 
 $LOAD_PATH.unshift './src/frost/model'
 
-Dir['./src/frost/**/*.rb'].each { |file| require file if !file.include?('commands.rb') }
+Dir['./src/frost/**/*.rb'].each { |file| require file unless file.include?('commands.rb') }
 
-bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 32905, log_mode: :normal)
+bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 32_905, log_mode: :normal)
 
 bot.ready { bot.custom_status(ACTIVITY[1], ACTIVITY[2]) }
 

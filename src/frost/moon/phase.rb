@@ -5,5 +5,5 @@ require 'net/http'
 require 'constants'
 
 def moon_phase(data)
-  data.edit_response(content: "#{MOON[JSON.parse((Net::HTTP.get(URI("http://api.farmsense.net/v1/moonphases/?d=#{Time.now.to_i}"))))[0]['Phase']]}")
+  data.edit_response(content: (MOON[JSON.parse(Net::HTTP.get(URI("http://api.farmsense.net/v1/moonphases/?d=#{Time.now.to_i}")))[0]['Phase']]).to_s)
 end

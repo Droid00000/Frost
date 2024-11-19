@@ -16,6 +16,10 @@ Metrics/CyclomaticComplexity:
   Enabled: false
 
 # Most of these metrics are useless.
+Metrics/ParameterLists:
+  Enabled: false
+
+# Most of these metrics are useless.
 Metrics/MethodLength:
   Enabled: false
 

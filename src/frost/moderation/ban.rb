@@ -29,9 +29,7 @@ def bulk_ban(data)
     return
   end
 
-  while members.size > 200
-    members.pop
-  end
+  members.pop while members.size > 200
 
   bans = data.server.bulk_ban(members, data.options['messages'], data.options['reason'])
 

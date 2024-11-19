@@ -53,22 +53,6 @@ POSTGRES.create_table?(:Snowball_Players) do
   Bigint :balance, null: false, default: 0
 end
 
-POSTGRES.create_table?(:Tags) do
-  primary_key :id
-  Bigint :owner_id, null: false
-  Bigint :server_id, null: false
-  Bigint :channel_id, null: false
-  Bigint :creation_time, null: false
-  String :name, null: false, unique: true
-  Bigint :message_id, unique: true, null: false
-end
-
-POSTGRES.create_table?(:Tag_Settings) do
-  primary_key :id
-  Bigint :server_id, null: false
-  Boolean :enabled, null: false, default: true
-end
-
 def booster_records(server: nil, user: nil, role: nil, type: nil)
   POSTGRES.transaction do
     case type
@@ -79,9 +63,7 @@ def booster_records(server: nil, user: nil, role: nil, type: nil)
     when :get_role
       POSTGRES[:Server_Boosters].where(server_id: server, user_id: user).select(:role_id).map(:role_id)&.join.to_i
     when :delete_role
-      POSTGRES[:Server_Boosters].where(server_id: server, role_id: role).delete if !POSTGRES[:Server_Boosters].where(
-        server_id: server, role_id: role
-      ).empty?
+      POSTGRES[:Server_Boosters].where(server_id: server, role_id: role).delete
     when :enabled
       !POSTGRES[:Booster_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
     when :disable
@@ -123,32 +105,6 @@ def archiver_records(server: nil, channel: nil, type: nil)
       POSTGRES[:Archiver_Settings].insert(server_id: server, channel_id: channel, enabled: true)
     when :disable
       POSTGRES[:Archiver_Settings].where(server_id: server).delete
-    end
-  end
-end
-
-def tag_records(name: nil, server: nil, message: nil, channel: nil, owner: nil, type: nil)
-  POSTGRES.transaction do
-    case type
-    when :enabled
-      !POSTGRES[:Tag_Settings].where(server_id: server).select(:enabled).map(:enabled).empty?
-    when :get
-      [POSTGRES[:Tags].where(Sequel.|(name: name, message_id: message)).select(:message_id).map(:message_id),
-       POSTGRES[:Tags].where(Sequel.|(name: name, message_id: message)).select(:owner_id).map(:owner_id),
-       POSTGRES[:Tags].where(Sequel.|(name: name, message_id: message)).select(:channel_id).map(:channel_id),
-       POSTGRES[:Tags].where(Sequel.|(name: name, message_id: message)).select(:server_id).map(:server_id),
-       POSTGRES[:Tags].where(Sequel.|(name: name, message_id: message)).select(:creation_time).map(:creation_time)]
-    when :disable
-      POSTGRES[:Tag_Settings].insert(server_id: server, enabled: false)
-    when :check
-      !POSTGRES[:Tags].where(owner_id: owner, name: name).empty?
-    when :create
-      POSTGRES[:Tags].insert(server_id: server, message_id: message, name: name, owner_id: owner, channel_id: channel,
-                             creation_time: Time.now.to_i)
-    when :delete
-      POSTGRES[:Tags].where(name: name, owner_id: owner).delete
-    when :exists?
-      return false unless POSTGRES[:Tags].where(name: name).empty?
     end
   end
 end

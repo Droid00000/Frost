@@ -9,17 +9,23 @@ require 'constants'
 def settings(type, server)
   case type
   when :archiver
-    archiver_records(server: server,
-                     type: :check) ? "**Archive Channel:** <##{archiver_records(server: server,
-                                                                                type: :get)}>" : '**Enabled:** No'
+    if archiver_records(server: server, type: :check)
+      "**Archive Channel:** <##{archiver_records(server: server, type: :get)}>"
+    else
+      '**Enabled:** No'
+    end
   when :booster
-    booster_records(server: server,
-                    type: :enabled) ? "**Hoist Role:** <@&#{booster_records(server: server,
-                                                                            type: :hoist_role)}>" : '**Enabled:** No'
+    if booster_records(server: server, type: :enabled)
+      "**Hoist Role:** <@&#{booster_records(server: server, type: :hoist_role)}>"
+    else
+      '**Enabled:** No'
+    end
   when :events
-    event_records(server: server,
-                  type: :enabled) ? "**Roles:** #{event_records(server: server,
-                                                                type: :get_roles).join(', ')}" : '**Enabled:** No'
+    if event_records(server: server, type: :enabled)
+      "**Roles:** #{event_records(server: server, type: :get_roles).join(', ')}"
+    else
+      '**Enabled:** No'
+    end
   end
 end
 
