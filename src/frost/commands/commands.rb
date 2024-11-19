@@ -41,10 +41,16 @@ end
 bot.register_application_command(:about, 'Shows some general information about the bot.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'जानकारी' }, description_localizations: { 'hi' => 'बोट का उपयोग कैसे करना है उसके जानकारी चाहिए।' }) do |option|
 end
 
-bot.register_application_command(:"add emoji(s)", nil, type: :message, contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'कई इमोजी जोड़ें' }) do |command|
+bot.register_application_command(:"add emoji(s)", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: 1073741824, name_localizations: { 'hi' => 'कई इमोजी जोड़ें' }) do |command|
 end
 
-bot.register_application_command(:"add emojis", nil, type: :message, contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'इमोजी जोड़ें' }) do |command|
+bot.register_application_command(:"add emojis", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: 1073741824, name_localizations: { 'hi' => 'इमोजी जोड़ें' }) do |command|
+end
+
+bot.register_application_command(:"add sticker", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: 1073741824, name_localizations: { 'hi' => 'स्टीकर जोड़ें' }) do |command|
+end
+
+bot.register_application_command(:"view sticker", nil, type: :message, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'स्टीकर देखें' }) do |command|
 end
 
 bot.register_application_command(:freeze, 'Prevent all members from speaking in the server.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'स्थिर' }, description_localizations: { 'hi' => 'सभी सदस्यों को सर्वर में बोलने से रोकें' }) do |option|
