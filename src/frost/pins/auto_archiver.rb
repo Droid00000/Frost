@@ -11,19 +11,21 @@ module AutoPinArchiver
     channel = event.bot.channel(event.data['channel_id']&.to_i, event.data['guild_id']&.to_i)
     pins = channel.pins
 
-    if pins.count == 50 && archiver_records(server: event.data['guild_id']&.to_i, type: :check)
-      archive_channel = event.bot.channel(archiver_records(server: event.data['guild_id']&.to_i, type: :get))
-      message = pins[1]
+    Thread.new do
+      if pins.count == 50 && archiver_records(server: event.data['guild_id']&.to_i, type: :check)
+        archive_channel = event.bot.channel(archiver_records(server: event.data['guild_id']&.to_i, type: :get))
+        message = pins[1]
 
-      archive_channel.send_embed do |embed|
-        embed.colour = UI[2]
-        embed.description = message.content.to_s
-        embed.image = Discordrb::Webhooks::EmbedImage.new(url: message.attachments[0].url.to_s) if message.attachments.any?
-        embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: message.author.display_name, url: message.link, icon_url: message.author.avatar_url)
-        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{message.id} • #{time_data(message.timestamp.to_s)}")
-        embed.add_field(name: 'Source', value: "[Jump!](#{message.link})")
+        archive_channel.send_embed do |embed|
+          embed.colour = UI[2]
+          embed.description = message.content.to_s
+          embed.image = Discordrb::Webhooks::EmbedImage.new(url: message.attachments[0].url.to_s) if message.attachments.any?
+          embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: message.author.display_name, url: message.link, icon_url: message.author.avatar_url)
+          embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: "#{message.id} • #{time_data(message.timestamp.to_s)}")
+          embed.add_field(name: 'Source', value: "[Jump!](#{message.link})")
+        end
+        message.unpin(REASON[7])
       end
-      message.unpin(REASON[7])
     end
   end
 end

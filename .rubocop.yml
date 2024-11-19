@@ -4,8 +4,8 @@ AllCops:
   TargetRubyVersion: 3.3
   Exclude:
   - 'src/frost/commands/commands.rb'
-  - 'src/frost/data/lavalink.rb'
-  - 'src/frost/data/embeds.rb'
+  - 'src/frost/model/lavalink.rb'
+  - 'src/frost/model/embeds.rb'
 
 # Most of these metrics are useless.
 Metrics/PerceivedComplexity:
