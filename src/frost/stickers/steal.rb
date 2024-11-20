@@ -19,10 +19,10 @@ def add_sticker(data)
     return
   end
 
-  sticker = data.server.add_sticker(data.target.sticker.name,
-                                    data.target.sticker.file,
-                                    data.target.sticker.description,
-                                    data.target.sticker.tags, REASON[8])
+  sticker = data.server.add_sticker(data.target.sticker[0].name,
+                                    data.target.sticker[0].file,
+                                    data.target.sticker[0].description,
+                                    data.target.sticker[0].tags, REASON[8])
 
   data.edit_response do |builder|
     builder.add_embed do |embed|

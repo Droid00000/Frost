@@ -4,7 +4,7 @@ $LOAD_PATH.unshift './src/frost/model'
 
 Dir['./src/frost/**/*.rb'].each { |file| require file unless file.include?('commands.rb') }
 
-bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 32_905, log_mode: :normal)
+bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 32_905, log_mode: :debug)
 
 bot.ready { bot.custom_status(ACTIVITY[1], ACTIVITY[2]) }
 
@@ -12,7 +12,6 @@ at_exit { bot.stop }
 
 bot.include! MoonPhases
 bot.include! EventRoles
-bot.include! TagCommands
 bot.include! BoosterPerks
 bot.include! HugAffection
 bot.include! NomAffection
@@ -26,6 +25,7 @@ bot.include! PunchAffection
 bot.include! SleepAffection
 bot.include! AngerAffection
 bot.include! AutoPinArchiver
+bot.include! StickerCommands
 bot.include! ManualPinArchiver
 bot.include! ModerationCommands
 

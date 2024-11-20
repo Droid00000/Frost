@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'create'
 require_relative 'steal'
 require_relative 'info'
 
@@ -14,6 +13,6 @@ module StickerCommands
 
   application_command(:'view sticker') do |event|
     event.defer(ephemeral: true)
-    view_sticker(event)
+    sticker_info(event)
   end
 end
