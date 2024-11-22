@@ -4,6 +4,7 @@ require 'time'
 require 'embeds'
 require 'discordrb'
 require 'constants'
+require 'rufus-scheduler'
 
 # Initilaze a new color object for a role.
 # @param [String] The hex color to resolve.

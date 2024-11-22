@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'yaml'
-require 'lavalink'
 
 # A response message to an interaction.
 RESPONSE = {
@@ -176,9 +175,6 @@ ACTIVITY = {
 
 # The YAML configuration file used by the bot.
 CONFIG = YAML.load_file(File.join(File.expand_path('../../..', __dir__), 'config.yml'))
-
-# The Lavalink wrapper used to convert URL's and queries into track metadata.
-LAVALINK = Calliope::Request.new(CONFIG['Lavalink']['ADDRESS'], CONFIG['Lavalink']['PASSWORD'])
 
 # A series of regular expressions utilized by the bot.
 # REGEX[4] is used to ensure a name doesn't contain any bad words.

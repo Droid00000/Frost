@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'discordrb'
-require 'constants'
-require 'functions'
-
 def help_embed(data)
   data.edit_response do |builder|
     builder.add_embed do |embed|

@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'schema'
-require 'discordrb'
-require 'constants'
-
 # Adds a new role to the event roles database.
 def setup_event_roles(data)
   if event_records(server: data.server.id, role: data.options['role'], type: :check_role)

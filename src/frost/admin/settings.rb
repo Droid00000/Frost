@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'schema'
-require 'discordrb'
-require 'constants'
-
 # Returns a string based on the enabled functionality for a guild.
 # @return [String] The appropriate string for the type of request.
 def settings(type, server)

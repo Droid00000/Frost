@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'schema'
-require 'constants'
-require 'functions'
-
 module ManualPinArchiver
   extend Discordrb::EventContainer
 

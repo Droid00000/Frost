@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'discordrb'
-require 'constants'
-
 def create_buttons(data)
   unless data.target.emoji?
     data.edit_response(content: RESPONSE[55])

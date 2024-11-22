@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'discordrb'
-require 'constants'
-
 def button_click(data)
   unless data.bot.profile.on(data.server).permission?(:manage_emojis)
     data.update_message(content: RESPONSE[61])

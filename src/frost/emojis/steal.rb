@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'discordrb'
-require 'constants'
-
 def steal_emojis(data)
   unless data.target.emoji?
     data.edit_response(content: RESPONSE[55])

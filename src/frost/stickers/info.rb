@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'discordrb'
-require 'constants'
-
 def sticker_info(data)
   unless data.target.stickers?
     data.edit_response(content: RESPONSE[72])

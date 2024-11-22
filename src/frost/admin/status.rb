@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'schema'
-require 'discordrb'
-require 'constants'
-
 def update_status(data)
   unless safe_name?(data.options['description'])
     data.edit_response(content: RESPONSE[11])

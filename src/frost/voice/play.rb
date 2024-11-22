@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'discordrb'
-require 'constants'
-
 def voice_play(data)
   if data.user.voice_channel.nil?
     data.edit_response(content: RESPONSE[43])

@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'discordrb'
-require 'constants'
-require 'functions'
-
 def unfreeze_server(data)
   unless data.bot.profile.on(data.server).permission?(:manage_channels)
     data.edit_response(content: RESPONSE[62])

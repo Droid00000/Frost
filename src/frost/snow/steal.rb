@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require 'schema'
-require 'discordrb'
-require 'constants'
-require 'functions'
-
 def steal_snowball(data)
   unless snowball_records(user: data.options['member'], type: :check_snowball)
     data.edit_response(content: RESPONSE[16])

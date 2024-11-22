@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'schema'
-require 'functions'
-require 'rufus-scheduler'
-
 Rufus::Scheduler.new.cron '30 0 * * 1' do
   booster_records(type: :reset_status)
 end

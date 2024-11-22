@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'constants'
-require 'functions'
-
 module HugAffection
   extend Discordrb::EventContainer
 

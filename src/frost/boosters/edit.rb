@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require 'schema'
-require 'discordrb'
-require 'constants'
-require 'functions'
-
 # Event handler for the application command /booster role edit.
 def edit_role(data)
   if booster_records(server: data.server.id, user: data.user.id, type: :banned)

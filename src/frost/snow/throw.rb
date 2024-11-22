@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require 'schema'
-require 'discordrb'
-require 'constants'
-require 'functions'
-
 def throw_snowball(data)
   unless snowball_records(user: data.user.id, type: :check_snowball)
     data.edit_response(content: RESPONSE[14])

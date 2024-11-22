@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'discordrb'
-require 'constants'
-
 def add_sticker(data)
   unless data.target.stickers?
     data.edit_response(content: RESPONSE[72])

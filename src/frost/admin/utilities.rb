@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'schema'
-require 'discordrb'
-require 'constants'
-
 # Turns the bot off and kills the Gateway connection.
 def shutdown_command(data)
   if data.user.id == CONFIG['Discord']['OWNER']&.to_i

@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'discordrb'
-require 'constants'
-require 'functions'
-
 def bulk_ban(data)
   unless data.bot.profile.on(data.server).permission?(:ban_members)
     data.edit_response(content: RESPONSE[68])

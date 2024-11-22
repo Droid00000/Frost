@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'schema'
-require 'discordrb'
-require 'constants'
-
 # Manually adds a user to the database.
 def admin_add_booster(data)
   if booster_records(server: data.server.id, user: data.options['user'], type: :check_user)

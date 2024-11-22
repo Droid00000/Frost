@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require 'schema'
-require 'discordrb'
-require 'constants'
-require 'functions'
-
 # Application command handler for /booster role claim.
 def create_role(data)
   if booster_records(server: data.server.id, user: data.user.id, type: :banned)

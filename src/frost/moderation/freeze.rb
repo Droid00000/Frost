@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require 'discordrb'
-require 'constants'
-require 'functions'
-require 'rufus-scheduler'
-
 def freeze_server(data)
   unless safe_name?(data.options['reason'])
     data.edit_response(content: RESPONSE[49])
