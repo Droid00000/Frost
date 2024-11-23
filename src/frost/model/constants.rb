@@ -50,7 +50,7 @@ RESPONSE = {
   44 => 'Please provide a valid song.',
   45 => 'Begining playback!',
   46 => 'Finished playback!',
-  47 => 'Successfully locked the server.',
+  47 => 'Locked down **%s** %s.',
   48 => 'Successfully unlocked the server.',
   49 => 'Invalid reason parameter.',
   50 => 'This tag has already been claimed.',
@@ -123,7 +123,11 @@ EMBED = {
   39 => "**%s** hugs <@%s>!",
   40 => "**%s** noms <@%s>!",
   41 => "**%s** bonks <@%s>!",
-  42 => "Watch out <@%s>! Someone seems to be angry today!"
+  42 => "Watch out <@%s>! Someone seems to be angry today!",
+  43 => "**%s** collected one snowball!",
+  44 => "Successfully stole **%s** snowball(s)!",
+  45 => "**%s** missed!",
+  46 => "**%s** threw a snowball at <@%s>!"
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
@@ -135,7 +139,10 @@ REASON = {
   5 => 'Event winner updated role.',
   6 => 'Server booster stopped boosting.',
   7 => 'Auto-archive pinned messages.',
-  8 => 'Server member added sticker.'
+  8 => 'Server member added sticker.',
+  9 => 'Server member froze the server.',
+  10 => 'Server member unfroze the server.',
+  11 => 'Automatic scheduled unfreeze.'
 }.freeze
 
 # Emojis that the bot can use.

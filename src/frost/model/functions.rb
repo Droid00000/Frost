@@ -57,25 +57,6 @@ rescue Dsicordrb::Errors::NotFound
   true
 end
 
-# Return a string with user data.
-# @param duration [String] Length of the action.
-# @param reason [String] The reason for the action.
-# @param symbol [type] Type of response.
-def process_input(duration, reason, type)
-  case type
-  when :lock
-    response = RESPONSE[47]
-    response += " For **#{duration}**." if duration
-    response += " Because: #{reason}" if reason
-    response.to_s
-  when :unlock
-    response = RESPONSE[48]
-    response += " For **#{duration}**." if duration
-    response += " Because: #{reason}" if reason
-    response.to_s
-  end
-end
-
 # Similar to Python imports. Requires a file.
 # @param file [String] Name of the file to import.
 def import(file)
@@ -88,25 +69,25 @@ end
 def gif(type)
   case type
   when :ANGRY
-    ANGRY.sample.to_s
+    ANGRY.sample
   when :HUGS
-    HUGS.sample.to_s
+    HUGS.sample
   when :NOMS
-    NOMS.sample.to_s
+    NOMS.sample
   when :POKES
-    POKES.sample.to_s
+    POKES.sample
   when :SLEEPY
-    SLEEPY.sample.to_s
+    SLEEPY.sample
   when :COLLECT
-    COLLECT.sample.to_s
+    COLLECT.sample
   when :THROW
-    THROW.sample.to_s
+    THROW.sample
   when :MISS
-    MISS.sample.to_s
+    MISS.sample
   when :BONK
-    BONK.sample.to_s
+    BONK.sample
   when :PUNCH
-    PUNCH.sample.to_s
+    PUNCH.sample
   else
     UI[21]
   end

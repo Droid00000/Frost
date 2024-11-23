@@ -7,7 +7,7 @@ def unfreeze_server(data)
   end
 
   data.server.channels.each do |channel|
-    channel.define_overwrite(data.server.everyone_role, nil, nil)
+    channel.define_overwrite(data.server.everyone_role, nil, nil, reason: REASON[10])
   end
 
   unless safe_name?(data.options['reason'])
@@ -15,5 +15,5 @@ def unfreeze_server(data)
     return
   end
 
-  data.edit_response(content: process_input(data.options['duration'], data.options['reason'], :unlock))
+  data.edit_response(content: RESPONSE[48])
 end

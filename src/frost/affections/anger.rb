@@ -10,7 +10,7 @@ module AngerAffection
         embed.colour = UI[3]
         embed.title = '**ANGER**'
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:ANGRY))
-        embed.description = EMBED[37] % [event.options['target']]
+        embed.description = EMBED[42] % [event.options['target']]
       end
     end
   end

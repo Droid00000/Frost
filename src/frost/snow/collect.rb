@@ -8,9 +8,9 @@ def collect_snowball(data)
   data.edit_response do |builder|
     builder.add_embed do |embed|
       embed.color = UI[6]
-      embed.description = "**#{data.user.display_name}** collected one snowball!"
+      embed.title = '**GATHER**'
+      embed.description = EMBED[43] % data.user.display_name
       embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:COLLECT))
-      embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: 'GATHER')
     end
   end
 end
