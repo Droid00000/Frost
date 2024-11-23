@@ -110,6 +110,20 @@ bot.register_application_command(:pin, 'Pin archive', default_member_permissions
   end
 end
 
+bot.register_application_command(:set, 'birthday', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
+  command.subcommand('birthday', "Set your birthday so a role automatically gets added.", name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+    option.string('date', 'Birthday in the mm-yy format.', required: true, min_length: 3, max_length: 35, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+  end
+end
+
+bot.register_application_command(:view, 'birthday', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
+  command.subcommand('birthday', "View the birthday you've given the bot.", name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+end
+
+bot.register_application_command(:birthday, 'birthday', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
+  command.subcommand('help', "Open the help menu for birthday commands.", name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+end
+
 bot.register_application_command(:events, 'Event roles setup', default_member_permissions: 0, contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
   command.subcommand_group(:role, 'Event roles!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |group|
     group.subcommand(:setup, 'Setup the event roles functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|

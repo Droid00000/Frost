@@ -25,6 +25,7 @@ bot.include! PunchAffection
 bot.include! SleepAffection
 bot.include! AngerAffection
 bot.include! AutoPinArchiver
+bot.include! BirthdayCommands
 bot.include! ManualPinArchiver
 bot.include! ModerationCommands
 

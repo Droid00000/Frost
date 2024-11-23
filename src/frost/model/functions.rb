@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'time'
 require 'embeds'
 require 'discordrb'
 require 'constants'
@@ -21,6 +22,14 @@ def resolve_time(timestamp)
   parsed_time = Time.parse(timestamp)
   unix_time = Time.at(parsed_time&.to_i)
   unix_time.strftime('%m/%d/%Y %H:%M')
+end
+
+# Converts a birthdate into a PG timestamp.
+# @param time [String] A time string.
+# @return [String] Formatted time string for PG..
+def resolve_birthday(time)
+  time = DateTime.parse(time)
+  time.strftime("1999-%m-%d")
 end
 
 # Returns true if a string doesn't contain any bad words.
