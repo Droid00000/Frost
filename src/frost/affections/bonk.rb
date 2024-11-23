@@ -8,9 +8,9 @@ module BonkAffection
     event.edit_response(content: "<@#{event.options['target']}>") do |builder|
       builder.add_embed do |embed|
         embed.colour = UI[3]
-        embed.description = "**#{event.user.display_name}** bonks <@#{event.options['target']}>"
+        embed.title = '**BONKS**'
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:BONK))
-        embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: 'BONKS')
+        embed.description = EMBED[41] % [event.user.display_name, event.options['target']]
       end
     end
   end

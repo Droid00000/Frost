@@ -8,9 +8,9 @@ module AngerAffection
     event.edit_response(content: "<@#{event.options['target']}>") do |builder|
       builder.add_embed do |embed|
         embed.colour = UI[3]
-        embed.description = "Watch out <@#{event.options['target']}>! Someone seems to be angry today!"
+        embed.title = '**ANGER**'
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:ANGRY))
-        embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: 'ANGER')
+        embed.description = EMBED[37] % [event.options['target']]
       end
     end
   end

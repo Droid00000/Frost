@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'create'
-require_relative 'delete'
-require_relative 'audit'
-require_relative 'help'
-require_relative 'edit'
+import 'create'
+import 'delete'
+import 'audit'
+import 'help'
+import 'edit'
 
 module BoosterPerks
   extend Discordrb::EventContainer

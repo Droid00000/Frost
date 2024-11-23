@@ -12,7 +12,6 @@ bot.ready { bot.custom_status(ACTIVITY[1], ACTIVITY[2]) }
 
 at_exit { bot.stop }
 
-bot.include! MoonPhases
 bot.include! EventRoles
 bot.include! BoosterPerks
 bot.include! HugAffection

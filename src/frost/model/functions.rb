@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'time'
 require 'embeds'
 require 'discordrb'
 require 'constants'
@@ -75,6 +74,12 @@ def process_input(duration, reason, type)
     response += " Because: #{reason}" if reason
     response.to_s
   end
+end
+
+# Similar to Python imports. Requires a file.
+# @param file [String] Name of the file to import.
+def import(file)
+  require "#{File.dirname(caller.first)}/#{file}"
 end
 
 # Returns a random GIF link for use by the affection and snowball commands.

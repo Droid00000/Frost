@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require_relative 'disconnect'
-require_relative 'resume'
-require_relative 'pause'
-require_relative 'stop'
-require_relative 'play'
-require_relative 'help'
+import 'help'
+import 'play'
+import 'stop'
+import 'pause'
+import 'resume'
+import 'disconnect'
 
 module VoiceCommands
   extend Discordrb::EventContainer

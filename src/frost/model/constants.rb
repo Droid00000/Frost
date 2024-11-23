@@ -116,7 +116,14 @@ EMBED = {
   32 => 'Name:',
   33 => 'Description:',
   34 => 'Tags:',
-  35 => 'None'
+  35 => 'None',
+  36 => "**%s** says <@%s> should go to bed!",
+  37 => "**%s** punches <@%s>!",
+  38 => "**%s** pokes <@%s>!",
+  39 => "**%s** hugs <@%s>!",
+  40 => "**%s** noms <@%s>!",
+  41 => "**%s** bonks <@%s>!",
+  42 => "Watch out <@%s>! Someone seems to be angry today!"
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
@@ -139,18 +146,6 @@ EMOJI = {
   4 => '<:AnyaPeek_Enzo:1276327731113627679>',
   5 => '<a:LoidDance_Maomao:1295667431674482741>',
   6 => '<a:LoidBell_Maomao:1295667609961758731>'
-}.freeze
-
-# Emojis for phases of the moon used by the moon commands.
-MOON = {
-  'New Moon' => '🌑',
-  'Waxing Crescent' => '🌒',
-  'First Quarter' => '🌓',
-  'Waxing Gibbous' => '🌔',
-  'Full Moon' => '🌕',
-  'Waning Gibbous' => '🌖',
-  'Last Quarter' => '🌗',
-  'Waning Crescent' => '🌘'
 }.freeze
 
 # UI components including color values; primarily used by the bot when sending embeds.

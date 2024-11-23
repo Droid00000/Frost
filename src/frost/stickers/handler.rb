@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'steal'
-require_relative 'info'
+import 'steal'
+import 'info'
 
 module StickerCommands
   extend Discordrb::EventContainer
