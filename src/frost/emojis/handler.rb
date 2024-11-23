@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-import 'button'
+import 'menu'
 import 'click'
 import 'steal'
 
 module EmojiCommands
   extend Discordrb::EventContainer
 
-  application_command(:'Add Emoji(s)') do |event|
+  application_command(:'add emoji(s)') do |event|
     event.defer(ephemeral: true)
-    create_buttons(event)
+    create_menu(event)
   end
 
   application_command(:'add Emojis') do |event|
@@ -17,7 +17,8 @@ module EmojiCommands
     steal_emojis(event)
   end
 
-  button do |event|
-    button_click(event)
+  select_menu do |event|
+    event.defer_update
+    select_click(event)
   end
 end
