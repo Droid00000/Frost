@@ -16,7 +16,6 @@ bot.include! EventRoles
 bot.include! BoosterPerks
 bot.include! HugAffection
 bot.include! NomAffection
-bot.include! VoiceCommands
 bot.include! BonkAffection
 bot.include! EmojiCommands
 bot.include! AdminCommands
@@ -26,7 +25,6 @@ bot.include! PunchAffection
 bot.include! SleepAffection
 bot.include! AngerAffection
 bot.include! AutoPinArchiver
-bot.include! StickerCommands
 bot.include! ManualPinArchiver
 bot.include! ModerationCommands
 

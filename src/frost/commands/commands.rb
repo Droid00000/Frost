@@ -41,16 +41,10 @@ end
 bot.register_application_command(:about, 'Shows some general information about the bot.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'जानकारी' }, description_localizations: { 'hi' => 'बोट का उपयोग कैसे करना है उसके जानकारी चाहिए।' }) do |option|
 end
 
-bot.register_application_command(:"add emoji(s)", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: 1073741824, name_localizations: { 'hi' => 'कई इमोजी जोड़ें' }) do |command|
+bot.register_application_command(:"Add Emoji(s)", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: 1073741824, name_localizations: { 'hi' => 'कई इमोजी जोड़ें' }) do |command|
 end
 
-bot.register_application_command(:"add emojis", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: 1073741824, name_localizations: { 'hi' => 'इमोजी जोड़ें' }) do |command|
-end
-
-bot.register_application_command(:"add sticker", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: 1073741824, name_localizations: { 'hi' => 'स्टीकर जोड़ें' }) do |command|
-end
-
-bot.register_application_command(:"view sticker", nil, type: :message, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'स्टीकर देखें' }) do |command|
+bot.register_application_command(:"Add Emojis", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: 1073741824, name_localizations: { 'hi' => 'इमोजी जोड़ें' }) do |command|
 end
 
 bot.register_application_command(:freeze, 'Prevent all members from speaking in the server.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'स्थिर' }, description_localizations: { 'hi' => 'सभी सदस्यों को सर्वर में बोलने से रोकें' }) do |option|
@@ -102,17 +96,6 @@ bot.register_application_command(:update, 'Contributors', contexts: [0, 1, 2], i
   command.subcommand('status', "Update the status that's show by the bot.", name_localizations: { 'hi' => 'स्टेटस' }, description_localizations: { 'hi' => 'अपटेड स्टेटस जो बोट दिखा रहा है' }) do |option|
     option.string('description', 'The status that the bot should display.', required: false, name_localizations: { 'hi' => 'डिस्क्रिप्शन' }, description_localizations: { 'hi' => 'स्टेटस जो बोट की दिखाना चाहिए' })
     option.string('type', 'The type of online status that the bot should display.', choices: { online: 'Online', idle: 'Idle', dnd: 'DND' }, required: false, name_localizations: { 'hi' => 'प्रजाति' }, description_localizations: { 'hi' => 'कौनसी प्रजाति का स्टेटस बोट की दिखाना चाहिए' })
-  end
-end
-
-bot.register_application_command(:music, 'Connect and play audio over a voice channel.', name_localizations: { 'hi' => 'गाना' }, description_localizations: { 'hi' => 'आवाज चलाओ किसी लिंक या गाने के नाम से' }) do |command|
-  command.subcommand(:disconnect, 'Disconnect from a voice channel.', name_localizations: { 'hi' => 'अलग करो' }, description_localizations: { 'hi' => 'वॉयस चैनल बंद करो' })
-  command.subcommand(:resume, 'Resume playback in a voice channel.', name_localizations: { 'hi' => 'फिर शुरू करना' }, description_localizations: { 'hi' => 'वॉइस चैनल में प्लेबैक फिर से शुरू करे' })
-  command.subcommand(:pause, 'Pause playback in a voice channel.', name_localizations: { 'hi' => 'ठहराव' }, description_localizations: { 'hi' => 'वॉइस चैनल में प्लेबैक रोके' })
-  command.subcommand(:stop, 'Stop playing the current song.', name_localizations: { 'hi' => 'रोकना' }, description_localizations: { 'hi' => 'अभी का गाना बंद करो' })
-  command.subcommand(:help, 'Help menu for music commands.', name_localizations: { 'hi' => 'मदत' }, description_localizations: { 'hi' => 'मदत वॉयस चैनल के लिए' })
-  command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => 'नाटक' }, description_localizations: { 'hi' => 'आवाज चलाओ किसी लिंक या गाने के नाम से' }) do |option|
-  option.string(:song, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2, name_localizations: { 'hi' => 'गाना' }, description_localizations: { 'hi' => 'स्पॉटीफाई एप्पल म्यूजिक या गाने का नाम' })
   end
 end
 

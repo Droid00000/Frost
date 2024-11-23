@@ -7,12 +7,12 @@ import 'steal'
 module EmojiCommands
   extend Discordrb::EventContainer
 
-  application_command(:'add emoji(s)') do |event|
+  application_command(:'Add Emoji(s)') do |event|
     event.defer(ephemeral: true)
     create_buttons(event)
   end
 
-  application_command(:'add emojis') do |event|
+  application_command(:'add Emojis') do |event|
     event.defer(ephemeral: true)
     steal_emojis(event)
   end
