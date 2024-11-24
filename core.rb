@@ -14,17 +14,11 @@ at_exit { bot.stop }
 
 bot.include! EventRoles
 bot.include! BoosterPerks
-bot.include! HugAffection
-bot.include! NomAffection
-bot.include! BonkAffection
 bot.include! EmojiCommands
 bot.include! AdminCommands
-bot.include! PokeAffection
 bot.include! SnowballFights
-bot.include! PunchAffection
-bot.include! SleepAffection
-bot.include! AngerAffection
 bot.include! AutoPinArchiver
+bot.include! AffectionCommands
 bot.include! ManualPinArchiver
 bot.include! ModerationCommands
 

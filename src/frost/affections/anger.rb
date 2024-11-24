@@ -1,17 +1,12 @@
 # frozen_string_literal: true
 
-module AngerAffection
-  extend Discordrb::EventContainer
-
-  application_command(:angered) do |event|
-    event.defer(ephemeral: false)
-    event.edit_response(content: "<@#{event.options['target']}>") do |builder|
-      builder.add_embed do |embed|
-        embed.colour = UI[3]
-        embed.title = '**ANGER**'
-        embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:ANGRY))
-        embed.description = EMBED[42] % [event.options['target']]
-      end
+def angry_member(data)
+  data.edit_response(content: "<@#{data.options['target']}>") do |builder|
+    builder.add_embed do |embed|
+      embed.colour = UI[3]
+      embed.title = '**ANGER**'
+      embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:ANGRY))
+      embed.description = EMBED[42] % [data.options['target']]
     end
   end
 end
