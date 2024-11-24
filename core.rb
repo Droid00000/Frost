@@ -8,7 +8,7 @@ Dir['./src/frost/**/*.rb'].each { |file| require file unless file.include?('comm
 
 bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 32_905, log_mode: :normal)
 
-bot.ready { bot.custom_status(ACTIVITY[1], ACTIVITY[2]) }
+bot.ready { bot.custom_status(nil, STATUS[1]); rotating_status(bot) }
 
 at_exit { bot.stop }
 

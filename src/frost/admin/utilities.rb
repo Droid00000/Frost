@@ -33,3 +33,10 @@ def eval_command(data)
     data.edit_response(content: RESPONSE[18])
   end
 end
+
+# Rotates the bots status everyday at 1AM.
+def rotating_status(bot)
+  Rufus::Scheduler.new.cron '0 1 * * *' do
+    bot.custom_status(nil, STATUS.to_a.sample.last)
+  end
+end

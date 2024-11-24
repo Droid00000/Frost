@@ -169,11 +169,10 @@ UI = {
 }.freeze
 
 # Data used to update the bot status upon startup.
-ACTIVITY = {
-  1 => 'online',
-  2 => 'https://github.com/Droid00000/Frost',
-  3 => 'dnd',
-  4 => 'Loading...'
+STATUS = {
+  1 => "https://github.com/Droid00000/Frost",
+  2 => "Loading...",
+  3 => "He didn't say I couldn't sing!"
 }.freeze
 
 # The YAML configuration file used by the bot.
