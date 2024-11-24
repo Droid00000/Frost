@@ -53,20 +53,6 @@ POSTGRES.create_table?(:Snowball_Players) do
   Bigint :balance, null: false, default: 0
 end
 
-POSTGRES.create_table?(:Birthdays) do
-  primary_key :id
-  Date :date, unique: false, null: false
-  Bigint :user_id, unique: true, null: false
-  Bigint :server_id, unique: true, null: false
-end
-
-POSTGRES.create_table?(:Birthday_Settings) do
-  primary_key :id
-  Bigint :role_id, unique: true, null: false
-  Bigint :server_id, unique: true, null: false
-  Boolean :enabled, unique: false, null: false
-end
-
 def booster_records(server: nil, user: nil, role: nil, type: nil)
   POSTGRES.transaction do
     case type
@@ -155,23 +141,6 @@ def snowball_records(user: nil, type: nil, balance: nil)
       POSTGRES[:Snowball_Players].insert(user_id: user, balance: 0)
     when :check_user
       !POSTGRES[:Snowball_Players].where(user_id: user).select(:user_id).map(:user_id).empty?
-    end
-  end
-end
-
-def birthday_records(user: nil, type: nil, date: nil, server: nil)
-  POSTGRES.transaction do
-    case type
-    when :add_birthday
-      POSTGRES[:Birthdays].insert(user_id: user, date: date, server_id: server)
-    when :update_birthday
-      POSTGRES[:Birthdays].where(user_id: user).update(date: date)
-    when :remove_birthday
-      POSTGRES[:Birthdays].where(user_id: user).delete
-    when :get_birthdays
-      POSTGRES[:Birthdays].where(date: Date.now)
-    when :check_user
-      POSTGRES[:Birthdays].where(user_id: user).select(:user_id).map(:user_id).empty?
     end
   end
 end

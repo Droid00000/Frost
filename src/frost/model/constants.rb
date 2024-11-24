@@ -77,8 +77,7 @@ RESPONSE = {
   71 => "You do not have permission to ban any user you've specified.",
   72 => "This message doesn't have any stickers.",
   73 => "This sticker can't be added to this server.",
-  74 => 'Your server is out of sticker slots.',
-  75 => "Successfully set your birthday to: <t:%s:D>"
+  74 => 'Your server is out of sticker slots.'
 }.freeze
 
 # A list of values for embed responses.
@@ -129,10 +128,7 @@ EMBED = {
   44 => "Successfully stole **%s** snowball(s)!",
   45 => "**%s** missed!",
   46 => "**%s** threw a snowball at <@%s>!",
-  47 => 'Select the Emojis you want to add!',
-  48 => 'Adds your Birthday to the database. Provide your birthday in the mm-dd format.',
-  49 => 'View your currently set birthday, or delete it from the database.',
-  50 => 'Opens the birthday roles help menu in administrator mode.',
+  47 => 'Select the Emojis you want to add!'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
