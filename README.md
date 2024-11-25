@@ -4,7 +4,7 @@ Frost is a personal Discord bot. It handles music, booster roles, snowball fight
 
 ## Installation
 
-At least Ruby version 3.3, a PostgreSQL database, a LavaLink node, and Docker (optional) is needed to run the bot.
+At least Ruby version 3.3, a PostgreSQL database, and Docker (optional) is needed to run the bot.
 
 1. **Install the latest version of Ruby**
 
@@ -39,11 +39,6 @@ Discord:
 # Database related credentials.
 Postgres:
   URL: "postgres://URI_HERE"
-
-# URI and password for the Lavalink node.
-Lavalink:
-  Username: ""
-  Password: ""
 ```
 
 Many of these variables are undocumented because the bot is meant for personal use.
