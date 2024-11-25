@@ -15,5 +15,5 @@ def select_click(data)
 
   emoji = data.server.add_emoji(parsed_emoji[0].name, parsed_emoji[0].file)
 
-  data.send_message(content: "#{RESPONSE[56]} #{emoji.mention}", ephemeral: true)
+  data.send_message(content: "#{RESPONSE[56]} #{emoji.use}", ephemeral: true)
 end

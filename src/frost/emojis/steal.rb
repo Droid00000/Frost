@@ -20,5 +20,5 @@ def steal_emojis(data)
     emojis << emoji
   end
 
-  data.edit_response(content: "#{RESPONSE[57]} **#{emojis.count}**")
+  data.edit_response(content: RESPONSE[57] % emojis.count)
 end

@@ -29,5 +29,5 @@ def bulk_ban(data)
 
   bans = data.server.bulk_ban(members, data.options['messages'], data.options['reason'])
 
-  data.edit_response(content: "#{RESPONSE[70]} #{bans.count}")
+  data.edit_response(content: RESPONSE[70] % bans.count)
 end
