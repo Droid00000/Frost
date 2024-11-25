@@ -43,25 +43,24 @@ RESPONSE = {
   37 => 'Successfully disabled the pin archiver in this server.',
   38 => "This server hasn't enabled event perks.",
   39 => 'Successfully disabled event perks in this server.',
-  47 => 'Locked down **%s** %s.',
-  48 => 'Successfully unlocked the server.',
-  49 => 'Invalid reason parameter.',
-  55 => "This message doesn't have any emojis.",
-  56 => 'Added this emoji to the server:',
-  57 => 'Added **%s** emoji(s) to the server.',
-  58 => 'This server is out of emoji slots.',
-  59 => 'This server has reached the maximum amount of roles.',
-  60 => 'The bot needs to have the ``manage roles`` permission to do this.',
-  61 => 'The bot needs to have the ``create expressions`` permission to do this.',
-  62 => 'The bot needs to have the ``manage channels`` permission to do this.',
-  67 => 'Successfully restarting the bot.',
-  68 => 'The bot needs to have the ``ban members`` permission to do this.',
-  69 => 'The bot needs to have the ``manage server`` permission to do this.',
-  70 => 'Successfully banned **%s** user(s).',
-  71 => "You do not have permission to ban any user you've specified."
+  40 => 'Locked down **%s** %s.',
+  41 => 'Successfully unlocked the server.',
+  42 => "This message doesn't have any emojis.",
+  43 => 'Added this emoji to the server:',
+  44 => 'Added **%s** emoji(s) to the server.',
+  45 => 'This server is out of emoji slots.',
+  46 => 'This server has reached the maximum amount of roles.',
+  47 => 'The bot needs to have the ``manage roles`` permission to do this.',
+  48 => 'The bot needs to have the ``create expressions`` permission to do this.',
+  49 => 'The bot needs to have the ``manage channels`` permission to do this.',
+  50 => 'Successfully restarting the bot.',
+  51 => 'The bot needs to have the ``ban members`` permission to do this.',
+  52 => 'The bot needs to have the ``manage server`` permission to do this.',
+  53 => 'Successfully banned **%s** user(s).',
+  54 => "You do not have permission to ban any user you've specified."
 }.freeze
 
-# A list of values for embed responses.
+# Values for embed responses.
 EMBED = {
   1 => 'Sends a random GIF to hug a server member.',
   2 => 'Sends a random GIF to nom a server member.',
@@ -85,18 +84,18 @@ EMBED = {
   20 => 'Creates your custom role. Optionally, you may put a custom emoji in the icon option.',
   21 => 'Lets you edit your custom role. All parameters are optional.',
   22 => 'Deletes your custom role. You can make a new role at any time provided you keep boosting the server.',
-  36 => "**%s** says <@%s> should go to bed!",
-  37 => "**%s** punches <@%s>!",
-  38 => "**%s** pokes <@%s>!",
-  39 => "**%s** hugs <@%s>!",
-  40 => "**%s** noms <@%s>!",
-  41 => "**%s** bonks <@%s>!",
-  42 => "Watch out <@%s>! Someone seems to be angry today!",
-  43 => "**%s** collected one snowball!",
-  44 => "Successfully stole **%s** snowball(s)!",
-  45 => "**%s** missed!",
-  46 => "**%s** threw a snowball at <@%s>!",
-  47 => 'Select the Emojis you want to add!'
+  23 => "**%s** says <@%s> should go to bed!",
+  24 => "**%s** punches <@%s>!",
+  25 => "**%s** pokes <@%s>!",
+  26 => "**%s** hugs <@%s>!",
+  27 => "**%s** noms <@%s>!",
+  28 => "**%s** bonks <@%s>!",
+  29 => "Watch out <@%s>! Someone seems to be angry today!",
+  30 => "**%s** collected one snowball!",
+  31 => "Successfully stole **%s** snowball(s)!",
+  32 => "**%s** missed!",
+  33 => "**%s** threw a snowball at <@%s>!",
+  34 => 'Select the Emojis you want to add!'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
@@ -124,7 +123,7 @@ EMOJI = {
   6 => '<a:LoidBell_Maomao:1295667609961758731>'
 }.freeze
 
-# UI components including color values; primarily used by the bot when sending embeds.
+# UI components including color values.
 UI = {
   1 => 'https://cdn.discordapp.com/avatars/1268769768920580156/1551613008086970c244a81d043d354e?size=1024',
   2 => 0x89abd2,
@@ -136,11 +135,10 @@ UI = {
   8 => 0x849fe8
 }.freeze
 
-# Data used to update the bot status upon startup.
+# Lyrics used to update the bot status.
 STATUS = {
   1 => "https://github.com/Droid00000/Frost",
-  2 => "Loading...",
-  3 => "He didn't say I couldn't sing!"
+  2 => "He didn't say I couldn't sing!"
 }.freeze
 
 # The YAML configuration file used by the bot.

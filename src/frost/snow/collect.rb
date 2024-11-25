@@ -9,7 +9,7 @@ def collect_snowball(data)
     builder.add_embed do |embed|
       embed.color = UI[6]
       embed.title = '**GATHER**'
-      embed.description = EMBED[43] % data.user.display_name
+      embed.description = EMBED[30] % data.user.display_name
       embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:COLLECT))
     end
   end

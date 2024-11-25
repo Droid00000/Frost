@@ -6,7 +6,7 @@ def sleep_member(data)
       embed.colour = UI[3]
       embed.title = '**SLEEPY**'
       embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:SLEEPY))
-      embed.description = EMBED[36] % [data.user.display_name, data.options['target']]
+      embed.description = EMBED[23] % [data.user.display_name, data.options['target']]
     end
   end
 end

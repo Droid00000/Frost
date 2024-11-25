@@ -22,5 +22,5 @@ def steal_snowball(data)
 
   snowball_records(user: data.options['member'], type: :remove_snowball, balance: data.options['amount'])
 
-  data.edit_response(content: RESPONSE[44] % data.options['amount'])
+  data.edit_response(content: RESPONSE[31] % data.options['amount'])
 end

@@ -1,13 +1,8 @@
 # frozen_string_literal: true
 
 def freeze_server(data)
-  unless safe_name?(data.options['reason'])
-    data.edit_response(content: RESPONSE[49])
-    return
-  end
-
   unless data.bot.profile.on(data.server).permission?(:manage_channels)
-    data.edit_response(content: RESPONSE[62])
+    data.edit_response(content: RESPONSE[49])
     return
   end
 
@@ -26,7 +21,7 @@ def freeze_server(data)
 
   duration = data.options['duration'] ? "for #{data.options['duration']}" : 'indefinitely'
 
-  data.edit_response(content: RESPONSE[47] % [data.server.name, duration])
+  data.edit_response(content: RESPONSE[40] % [data.server.name, duration])
 end
 
 def schedule_unfreeze(server, duration)

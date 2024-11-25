@@ -13,7 +13,7 @@ def delete_role(data)
   end
 
   unless data.bot.profile.on(data.server).permission?(:manage_roles)
-    data.edit_response(content: RESPONSE[60])
+    data.edit_response(content: RESPONSE[47])
     return
   end
 

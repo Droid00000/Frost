@@ -2,12 +2,12 @@
 
 def steal_emojis(data)
   unless data.target.emoji?
-    data.edit_response(content: RESPONSE[55])
+    data.edit_response(content: RESPONSE[42])
     return
   end
 
   unless data.bot.profile.on(data.server).permission?(:manage_emojis)
-    data.edit_response(content: RESPONSE[61])
+    data.edit_response(content: RESPONSE[48])
     return
   end
 
@@ -20,5 +20,5 @@ def steal_emojis(data)
     emojis << emoji
   end
 
-  data.edit_response(content: RESPONSE[57] % emojis.count)
+  data.edit_response(content: RESPONSE[44] % emojis.count)
 end

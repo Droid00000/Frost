@@ -2,12 +2,12 @@
 
 def bulk_ban(data)
   unless data.bot.profile.on(data.server).permission?(:ban_members)
-    data.edit_response(content: RESPONSE[68])
+    data.edit_response(content: RESPONSE[51])
     return
   end
 
   unless data.bot.profile.on(data.server).permission?(:manage_server)
-    data.edit_response(content: RESPONSE[69])
+    data.edit_response(content: RESPONSE[52])
     return
   end
 
@@ -21,7 +21,7 @@ def bulk_ban(data)
   end
 
   if members.empty?
-    data.edit_response(content: RESPONSE[71])
+    data.edit_response(content: RESPONSE[54])
     return
   end
 
@@ -29,5 +29,5 @@ def bulk_ban(data)
 
   bans = data.server.bulk_ban(members, data.options['messages'], data.options['reason'])
 
-  data.edit_response(content: RESPONSE[70] % bans.count)
+  data.edit_response(content: RESPONSE[53] % bans.count)
 end

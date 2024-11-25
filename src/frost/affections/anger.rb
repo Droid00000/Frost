@@ -6,7 +6,7 @@ def angry_member(data)
       embed.colour = UI[3]
       embed.title = '**ANGER**'
       embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:ANGRY))
-      embed.description = EMBED[42] % [data.options['target']]
+      embed.description = EMBED[29] % [data.options['target']]
     end
   end
 end

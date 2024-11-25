@@ -6,7 +6,7 @@ def poke_member(data)
       embed.colour = UI[3]
       embed.title = '**POKES**'
       embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:POKES))
-      embed.description = EMBED[38] % [data.user.display_name, data.options['target']]
+      embed.description = EMBED[25] % [data.user.display_name, data.options['target']]
     end
   end
 end
