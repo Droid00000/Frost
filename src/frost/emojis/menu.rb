@@ -9,8 +9,8 @@ def create_menu(data)
   data.send_message do |builder, components|
     components.row do |menu|
       menu.select_menu(custom_id: 'emojis', placeholder: EMBED[34], min_values: 1) do |options|
-        data.target.emoji.each_with_index do |emoji, position|
-          break if position > 24
+        data.target.emoji.each_with_index do |emoji, count|
+          break if count > 24
 
           options.option(label: emoji.name, value: emoji.mention, emoji: emoji.id)
         end

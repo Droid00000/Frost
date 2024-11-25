@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift '../model'
-
-require 'discordrb'
-require 'constants'
+Dir['../src/frost/model/*.rb'].each { |file| require file }
 
 bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 0)
 
@@ -15,8 +12,8 @@ bot.register_application_command(:poke, 'Pokes another server member.', contexts
   option.user('target', 'Who do you want to poke?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => 'किसको बुलाना है' })
 end
 
-bot.register_application_command(:nom, 'Noms another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-  option.user('target', 'Who do you want to nom?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+bot.register_application_command(:nom, 'Noms another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'कुतरना' }, description_localizations: { 'hi' => 'किसी अन्य सर्वर सदस्य को काटता है' }) do |option|
+  option.user('target', 'Who do you want to nom?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => 'आप किसे काटना चाहते हैं?' })
 end
 
 bot.register_application_command(:angered, 'Show your anger towards another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गुस्सा करना' }, description_localizations: { 'hi' => 'कोई सर्वर मित्र पे गुस्सा दिखाना' }) do |option|
@@ -71,7 +68,7 @@ end
 bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'बंधकरो' }, description_localizations: { 'hi' => 'सावधानी से बोट को गेटवे से डिसकनेक्ट करो' }) do |option|
 end
 
-bot.register_application_command(:restart, 'Safely restarts and reconnects the bot to the Gateway.', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+bot.register_application_command(:restart, 'Safely restarts and reconnects the bot to the Gateway.', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'फिरसेकरो' }, description_localizations: { 'hi' => 'सुरक्षित रूप से पुनरारंभ होता है और बॉट को गेटवे से पुनः कनेक्ट करता है' }) do |option|
 end
 
 bot.register_application_command(:throw, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'फेंको' }, description_localizations: { 'hi' => 'बर्फ का गोला की लड़ीं' }) do |command|
@@ -108,20 +105,6 @@ bot.register_application_command(:pin, 'Pin archive', default_member_permissions
     group.subcommand(:disable, 'disable the pin-archiver functionality.', name_localizations: { 'hi' => 'बंद करने' }, description_localizations: { 'hi' => 'पिन पुरातत्व कंडीशन को बंद करो' }) do |option|
     end
   end
-end
-
-bot.register_application_command(:set, 'birthday', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand('birthday', "Set your birthday so a role automatically gets added.", name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-    option.string('date', 'Birthday in the mm-yy format.', required: true, min_length: 3, max_length: 35, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-  end
-end
-
-bot.register_application_command(:view, 'birthday', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand('birthday', "View the birthday you've given the bot.", name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-end
-
-bot.register_application_command(:birthday, 'birthday', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand('help', "Open the help menu for birthday commands.", name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
 end
 
 bot.register_application_command(:events, 'Event roles setup', default_member_permissions: 0, contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
@@ -191,10 +174,10 @@ bot.register_application_command(:booster, 'Booster perks', contexts: [0], integ
         option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
       end
 
-      group.subcommand('delete', 'Delete your custom booster role.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |sub|
+      group.subcommand('delete', 'Delete your custom booster role.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
       end
 
-      group.subcommand('help', 'Open the booster perks help menu.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |sub|
+      group.subcommand('help', 'Open the booster perks help menu.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
     end
   end
 end
