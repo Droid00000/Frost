@@ -1,6 +1,6 @@
 ## Introduction
 
-Frost is a personal Discord bot. It handles music, booster roles, snowball fights, and more.
+Frost is a personal Discord bot. It handles booster roles, snowball fights, and more.
 
 ## Installation
 
@@ -35,6 +35,11 @@ Discord:
   TOKEN: "Bot TOKEN_HERE"
   COMMANDS: []
   CONTRIBUTORS: []
+
+# Retrives the date of the next chapter of a manga.
+Chapter:
+  ELEMENT: ''
+  LINK: ''
 
 # Database related credentials.
 Postgres:

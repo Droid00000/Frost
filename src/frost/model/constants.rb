@@ -57,7 +57,9 @@ RESPONSE = {
   51 => 'The bot needs to have the ``ban members`` permission to do this.',
   52 => 'The bot needs to have the ``manage server`` permission to do this.',
   53 => 'Successfully banned **%s** user(s).',
-  54 => "You do not have permission to ban any user you've specified."
+  54 => "You do not have permission to ban any user you've specified.",
+  55 => "There are many reasons as to why the chapter could be delayed. Please be paitent and wait."
+  56 => "**Next Chapter:** <t:%s:D>"
 }.freeze
 
 # Values for embed responses.
@@ -120,7 +122,8 @@ EMOJI = {
   3 => '<a:YorClap_Maomao:1287269908157038592>',
   4 => '<:AnyaPeek_Enzo:1276327731113627679>',
   5 => '<a:LoidDance_Maomao:1295667431674482741>',
-  6 => '<a:LoidBell_Maomao:1295667609961758731>'
+  6 => '<a:LoidBell_Maomao:1295667609961758731>',
+  7 => '<:AnyaPlead_Maomao:1310804270240628816>'
 }.freeze
 
 # UI components including color values.

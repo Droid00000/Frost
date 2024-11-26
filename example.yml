@@ -5,6 +5,11 @@ Discord:
   COMMANDS: []
   CONTRIBUTORS: []
 
+# Retrives the date of the next chapter of a manga.
+Chapter:
+  ELEMENT: ''
+  LINK: ''
+
 # Database related credentials.
 Postgres:
   URL: "postgres://URI_HERE"

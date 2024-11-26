@@ -11,6 +11,11 @@ import 'utilities'
 module AdminCommands
   extend Discordrb::EventContainer
 
+  button(custom_id: 'chapter') do |event|
+    event.defer_update
+    chapter_reason(event)
+  end
+
   application_command(:help) do |event|
     event.defer(ephemeral: true)
     general_help_embed(event)
@@ -67,6 +72,13 @@ module AdminCommands
     group.subcommand('disable') do |event|
       event.defer(ephemeral: true)
       disable_event_roles(event)
+    end
+  end
+
+  application_command(:next).group(:chapter) do |group|
+    group.subcommand('when') do |event|
+      event.defer(ephemeral: false)
+      next_chapter_date(event)
     end
   end
 

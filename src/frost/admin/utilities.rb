@@ -34,6 +34,26 @@ def eval_command(data)
   end
 end
 
+# Gets the release date of a chapter of a series.
+def next_chapter_date(data)
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless')
+  driver = Selenium::WebDriver.for :chrome, options: options
+  driver.navigate.to CONFIG['Chapter']['LINK']
+  sleep(6)
+  time = driver.find_element(:css, CONFIG['Chapter']['ELEMENT'])
+  data.edit_response(content: RESPONSE[56] % DateTime.parse(time.text).to_time.to_i) do |builder, components|
+    components.row do |buttons|
+      buttons.button(emoji: 1310804270240628816, custom_id: 'chapter', style: :danger, label: 'Why?')
+    end
+  end
+end
+
+# Responds to the button interaction for the new chapter command.
+def chapter_reason(data)
+  data.send_message(content: "#{RESPONSE[55] EMOJI[6]}", ephemeral: true)
+end
+
 # Rotates the bots status everyday at 1AM.
 def rotating_status(bot)
   Rufus::Scheduler.new.cron '0 1 * * *' do
