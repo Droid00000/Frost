@@ -58,7 +58,7 @@ RESPONSE = {
   52 => 'The bot needs to have the ``manage server`` permission to do this.',
   53 => 'Successfully banned **%s** user(s).',
   54 => "You do not have permission to ban any user you've specified.",
-  55 => "There are many reasons as to why the chapter could be delayed. Please be paitent and wait."
+  55 => "There are many reasons as to why the chapter could be delayed. Please be paitent and wait.",
   56 => "**Next Chapter:** <t:%s:D>"
 }.freeze
 

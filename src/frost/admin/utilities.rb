@@ -51,7 +51,7 @@ end
 
 # Responds to the button interaction for the new chapter command.
 def chapter_reason(data)
-  data.send_message(content: "#{RESPONSE[55] EMOJI[6]}", ephemeral: true)
+  data.send_message(content: "#{RESPONSE[55]} #{EMOJI[6]}", ephemeral: true)
 end
 
 # Rotates the bots status everyday at 1AM.
