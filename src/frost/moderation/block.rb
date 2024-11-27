@@ -6,7 +6,7 @@ def block_member(data)
     return
   end
 
-  overwrite = Overwrite.new(data.member('member'), deny: 1024)
+  overwrite = Discordrb::Overwrite.new(data.member('member'), deny: 1024)
 
   data.channel.define_overwrite(overwrite, reason: REASON[12])
 
