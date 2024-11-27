@@ -3,6 +3,8 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 3.3
   Exclude:
+  - 'src/frost/pins/manual_archiver.rb'
+  - 'src/frost/pins/auto_archiver.rb'
   - 'src/frost/commands/commands.rb'
   - 'src/frost/model/embeds.rb'
 
@@ -44,4 +46,8 @@ Security/Eval:
 
 # I don't like the extra end it introduces.
 Style/IfUnlessModifier:
+  Enabled: false
+
+# I prefer to keep the block for consistency.
+Lint/UnusedBlockArgument:
   Enabled: false

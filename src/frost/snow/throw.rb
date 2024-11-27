@@ -13,7 +13,7 @@ def throw_snowball(data)
         embed.color = UI[6]
         embed.title = '**HIT**'
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:THROW))
-        embed.description = EMBED[33] % [data.user.display_name, data.options['member']]
+        embed.description = format(EMBED[33], data.user.display_name, data.options['member'])
       end
     end
 

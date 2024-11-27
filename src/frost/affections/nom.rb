@@ -6,7 +6,7 @@ def nom_member(data)
       embed.colour = UI[3]
       embed.title = '**NOMS**'
       embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:NOMS))
-      embed.description = EMBED[27] % [data.user.display_name, data.options['target']]
+      embed.description = format(EMBED[27], data.user.display_name, data.options['target'])
     end
   end
 end

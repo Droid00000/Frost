@@ -6,7 +6,7 @@ def bonk_member(data)
       embed.colour = UI[3]
       embed.title = '**BONKS**'
       embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:BONK))
-      embed.description = EMBED[28] % [data.user.display_name, data.options['target']]
+      embed.description = format(EMBED[28], data.user.display_name, data.options['target'])
     end
   end
 end

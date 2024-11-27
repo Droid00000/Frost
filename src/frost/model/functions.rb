@@ -25,14 +25,6 @@ def resolve_time(timestamp)
   unix_time.strftime('%m/%d/%Y %H:%M')
 end
 
-# Converts a birthdate into a PG timestamp.
-# @param time [String] A time string.
-# @return [String] Formatted time string for PG..
-def resolve_birthday(time)
-  time = DateTime.parse(time)
-  time.strftime("1999-%m-%d")
-end
-
 # Returns true if a string doesn't contain any bad words.
 # @param [String] The string to check.
 # @return [Boolean] If the name contains any bad words.
@@ -46,8 +38,7 @@ end
 # @return [Boolean] Whether the number was in the specified range.
 def hit_or_miss?
   number = rand(1..10)
-  false if number >= 5
-  true if number <= 5
+  number >= 5
 end
 
 # Checks if a guild member is still boosting a guild.

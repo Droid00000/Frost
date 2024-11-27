@@ -44,7 +44,7 @@ def next_chapter_date(data)
   time = driver.find_element(:css, CONFIG['Chapter']['ELEMENT'])
   data.edit_response(content: RESPONSE[56] % DateTime.parse(time.text).to_time.to_i) do |builder, components|
     components.row do |buttons|
-      buttons.button(emoji: 1310804270240628816, custom_id: 'chapter', style: :danger, label: 'Why?')
+      buttons.button(emoji: 1_310_804_270_240_628_816, custom_id: 'chapter', style: :danger, label: 'Why?')
     end
   end
 end

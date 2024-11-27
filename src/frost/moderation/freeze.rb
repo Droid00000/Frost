@@ -21,7 +21,7 @@ def freeze_server(data)
 
   duration = data.options['duration'] ? "for #{data.options['duration']}" : 'indefinitely'
 
-  data.edit_response(content: RESPONSE[40] % [data.server.name, duration])
+  data.edit_response(content: format(RESPONSE[40], data.server.name, duration))
 end
 
 def schedule_unfreeze(server, duration)

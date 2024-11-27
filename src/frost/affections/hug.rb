@@ -6,7 +6,7 @@ def hug_member(data)
       embed.colour = UI[3]
       embed.title = '**HUGS**'
       embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:HUGS))
-      embed.description = EMBED[26] % [data.user.display_name, data.options['target']]
+      embed.description = format(EMBED[26], data.user.display_name, data.options['target'])
     end
   end
 end

@@ -58,8 +58,8 @@ RESPONSE = {
   52 => 'The bot needs to have the ``manage server`` permission to do this.',
   53 => 'Successfully banned **%s** user(s).',
   54 => "You do not have permission to ban any user you've specified.",
-  55 => "There are many reasons as to why the chapter could be delayed. Please be paitent and wait.",
-  56 => "**Next Chapter:** <t:%s:D>"
+  55 => 'There are many reasons as to why the chapter could be delayed. Please be paitent and wait.',
+  56 => '**Next Chapter:** <t:%s:D>'
 }.freeze
 
 # Values for embed responses.
@@ -86,17 +86,17 @@ EMBED = {
   20 => 'Creates your custom role. Optionally, you may put a custom emoji in the icon option.',
   21 => 'Lets you edit your custom role. All parameters are optional.',
   22 => 'Deletes your custom role. You can make a new role at any time provided you keep boosting the server.',
-  23 => "**%s** says <@%s> should go to bed!",
-  24 => "**%s** punches <@%s>!",
-  25 => "**%s** pokes <@%s>!",
-  26 => "**%s** hugs <@%s>!",
-  27 => "**%s** noms <@%s>!",
-  28 => "**%s** bonks <@%s>!",
-  29 => "Watch out <@%s>! Someone seems to be angry today!",
-  30 => "**%s** collected one snowball!",
-  31 => "Successfully stole **%s** snowball(s)!",
-  32 => "**%s** missed!",
-  33 => "**%s** threw a snowball at <@%s>!",
+  23 => '**%s** says <@%s> should go to bed!',
+  24 => '**%s** punches <@%s>!',
+  25 => '**%s** pokes <@%s>!',
+  26 => '**%s** hugs <@%s>!',
+  27 => '**%s** noms <@%s>!',
+  28 => '**%s** bonks <@%s>!',
+  29 => 'Watch out <@%s>! Someone seems to be angry today!',
+  30 => '**%s** collected one snowball!',
+  31 => 'Successfully stole **%s** snowball(s)!',
+  32 => '**%s** missed!',
+  33 => '**%s** threw a snowball at <@%s>!',
   34 => 'Select the Emojis you want to add!'
 }.freeze
 
@@ -140,7 +140,7 @@ UI = {
 
 # Lyrics used to update the bot status.
 STATUS = {
-  1 => "https://github.com/Droid00000/Frost",
+  1 => 'https://github.com/Droid00000/Frost',
   2 => "He didn't say I couldn't sing!"
 }.freeze
 
