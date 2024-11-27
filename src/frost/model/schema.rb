@@ -13,7 +13,7 @@ POSTGRES.create_table?(:Event_Settings) do
   primary_key :id
   Bigint :role_id, unique: true, null: false
   Bigint :guild_id, unique: false, null: false
-  unique %i[role_id server_id]
+  unique %i[role_id guild_id]
 end
 
 POSTGRES.create_table?(:Archiver_Settings) do
