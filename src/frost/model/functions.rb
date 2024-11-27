@@ -33,13 +33,6 @@ def safe_name?(name)
   !name.match(REGEX[3])
 end
 
-# Determines a true or false value based on a random number.
-# @return [Boolean] Whether the number was in the specified range.
-def hit_or_miss?
-  number = rand(1..10)
-  number >= 5
-end
-
 # Checks if a guild member is still boosting a guild.
 # @param server [Integer, String] An ID that uniquely identifies a guild.
 # @param user [Integer, String] An ID that uniquely identifies a user.

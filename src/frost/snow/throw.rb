@@ -6,7 +6,7 @@ def throw_snowball(data)
     return
   end
 
-  if hit_or_miss?
+  if rand(1..10) >= 5
     snowball_records(user: data.user.id, type: :remove_snowball, balance: 1)
     data.edit_response(content: "<@#{data.options['member']}>") do |builder|
       builder.add_embed do |embed|
