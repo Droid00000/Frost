@@ -4,32 +4,32 @@ Dir['../src/frost/model/*.rb'].each { |file| require file }
 
 bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 0)
 
-bot.register_application_command(:hug, 'Hugs another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गले मिलना' }, description_localizations: { 'hi' => 'सर्वर मित्र के गले मिलना' }) do |option|
-  option.user('target', 'Who do you want to hug?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => 'किसको गले मिलना है' })
+bot.register_application_command(:hug, 'Hugs another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गलेमिलना' }, description_localizations: { 'hi' => 'सर्वर मित्र के गले मिलना' }) do |option|
+  option.user('target', 'Who do you want to hug?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको गले मिलना है' })
 end
 
 bot.register_application_command(:poke, 'Pokes another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'बुलाना' }, description_localizations: { 'hi' => 'कोई सर्वर मित्र को बुलाना' }) do |option|
-  option.user('target', 'Who do you want to poke?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => 'किसको बुलाना है' })
+  option.user('target', 'Who do you want to poke?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको बुलाना है' })
 end
 
 bot.register_application_command(:nom, 'Noms another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'कुतरना' }, description_localizations: { 'hi' => 'किसी अन्य सर्वर सदस्य को काटता है' }) do |option|
-  option.user('target', 'Who do you want to nom?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => 'आप किसे काटना चाहते हैं?' })
+  option.user('target', 'Who do you want to nom?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'आप किसे काटना चाहते हैं?' })
 end
 
-bot.register_application_command(:angered, 'Show your anger towards another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गुस्सा करना' }, description_localizations: { 'hi' => 'कोई सर्वर मित्र पे गुस्सा दिखाना' }) do |option|
-  option.user('target', 'Who do you want to show your wrath to?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => 'किसपे आपको गुस्सा दिखाना है' })
+bot.register_application_command(:angered, 'Show your anger towards another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गुस्साकरना' }, description_localizations: { 'hi' => 'कोई सर्वर मित्र पे गुस्सा दिखाना' }) do |option|
+  option.user('target', 'Who do you want to show your wrath to?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसपे आपको गुस्सा दिखाना है' })
 end
 
-bot.register_application_command(:bonk, 'Bonk another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'टपली मारना' }, description_localizations: { 'hi' => 'किसी सर्वर मित्र को टपाली मारना' }) do |option|
-  option.user('target', 'Who do you want to bonk?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => 'किसको टपाली मारना है' })
+bot.register_application_command(:bonk, 'Bonk another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'टपलीमारना' }, description_localizations: { 'hi' => 'किसी सर्वर मित्र को टपाली मारना' }) do |option|
+  option.user('target', 'Who do you want to bonk?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको टपाली मारना है' })
 end
 
 bot.register_application_command(:punch, 'Punch another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'मुक्का' }, description_localizations: { 'hi' => 'एक सर्वर मित्र को मुक्का मारो' }) do |option|
-  option.user('target', 'Who do you want to punch?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => 'आप किसे मुक्का मारना चाहते हैं?' })
+  option.user('target', 'Who do you want to punch?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'आप किसे मुक्का मारना चाहते हैं?' })
 end
 
 bot.register_application_command(:sleep, 'Tells another server member to go and sleep.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'नींद' }, description_localizations: { 'hi' => 'किसी सर्वर मित्र को बोलो जाके सो जाए' }) do |option|
-  option.user('target', 'Who needs to sleep?', required: true, name_localizations: { 'hi' => 'इशारा लगाना' }, description_localizations: { 'hi' => 'किसको सोने जाने बोलना है' })
+  option.user('target', 'Who needs to sleep?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको सोने जाने बोलना है' })
 end
 
 bot.register_application_command(:help, 'Shows some general information about how to use the bot.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'हेल्प' }, description_localizations: { 'hi' => 'बोट का उपयोग कैसे करना है उसके जानकारी चाहिए।' }) do |option|
@@ -69,6 +69,10 @@ bot.register_application_command(:shutdown, 'Safely disconnects the bot from the
 end
 
 bot.register_application_command(:restart, 'Safely restarts and reconnects the bot to the Gateway.', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'फिरसेकरो' }, description_localizations: { 'hi' => 'सुरक्षित रूप से पुनरारंभ होता है और बॉट को गेटवे से पुनः कनेक्ट करता है' }) do |option|
+end
+
+bot.register_application_command(:block, 'Stop a member from being able to access this channel.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+  option.user('member', 'Which member do you want to lock out?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
 end
 
 bot.register_application_command(:throw, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'फेंको' }, description_localizations: { 'hi' => 'बर्फ का गोला की लड़ीं' }) do |command|

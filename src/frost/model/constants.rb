@@ -59,7 +59,8 @@ RESPONSE = {
   53 => 'Successfully banned **%s** user(s).',
   54 => "You do not have permission to ban any user you've specified.",
   55 => 'There are many reasons as to why the chapter could be delayed. Please be paitent and wait.',
-  56 => '**Next Chapter:** <t:%s:D>'
+  56 => '**Next Chapter:** <t:%s:D>',
+  57 => 'Successfully blocked <@%s> from viewing this channel.'
 }.freeze
 
 # Values for embed responses.
@@ -112,7 +113,8 @@ REASON = {
   8 => 'Server member added sticker.',
   9 => 'Server member froze the server.',
   10 => 'Server member unfroze the server.',
-  11 => 'Automatic scheduled unfreeze.'
+  11 => 'Automatic scheduled unfreeze.',
+  12 => 'Server member was blocked.'
 }.freeze
 
 # Emojis that the bot can use.
@@ -148,7 +150,6 @@ STATUS = {
 CONFIG = YAML.load_file(File.join(File.expand_path('../../..', __dir__), 'config.yml'))
 
 # A series of regular expressions utilized by the bot.
-# REGEX[4] is used to ensure a name doesn't contain any bad words.
 REGEX = {
   1 => /:(\d+)>$/,
   2 => /\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z/,
