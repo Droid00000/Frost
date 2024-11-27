@@ -36,10 +36,6 @@ Metrics/BlockLength:
 Metrics/AbcSize:
   Enabled: false
 
-# The usage of class variables is intentional.
-Style/ClassVars:
-  Enabled: false
-
 # Appropriate safeguards have been taken.
 Security/Eval:
   Enabled: false
