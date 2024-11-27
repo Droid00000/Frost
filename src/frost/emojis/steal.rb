@@ -6,7 +6,7 @@ def steal_emojis(data)
     return
   end
 
-  unless data.bot.profile.on(data.server).permission?(:manage_emojis)
+  unless data.server.bot.permission?(:manage_emojis)
     data.edit_response(content: RESPONSE[48])
     return
   end

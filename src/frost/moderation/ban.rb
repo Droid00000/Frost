@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 def bulk_ban(data)
-  unless data.bot.profile.on(data.server).permission?(:ban_members)
+  unless data.server.bot.permission?(:ban_members)
     data.edit_response(content: RESPONSE[51])
     return
   end
 
-  unless data.bot.profile.on(data.server).permission?(:manage_server)
+  unless data.server.bot.permission?(:manage_server)
     data.edit_response(content: RESPONSE[52])
     return
   end

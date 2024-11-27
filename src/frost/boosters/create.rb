@@ -2,28 +2,8 @@
 
 # Application command handler for /booster role claim.
 def create_role(data)
-  if booster_records(server: data.server.id, user: data.user.id, type: :banned)
-    data.edit_response(content: RESPONSE[6])
-    return
-  end
-
   if data.server.role_limit?
     data.edit_response(content: RESPONSE[46])
-    return
-  end
-
-  if booster_records(server: data.server.id, user: data.user.id, type: :check_user)
-    data.edit_response(content: RESPONSE[4])
-    return
-  end
-
-  unless data.bot.profile.on(data.server).permission?(:manage_roles)
-    data.edit_response(content: RESPONSE[47])
-    return
-  end
-
-  unless booster_records(server: data.server.id, type: :enabled)
-    data.edit_response(content: RESPONSE[5])
     return
   end
 
@@ -32,8 +12,28 @@ def create_role(data)
     return
   end
 
+  unless data.server.bot.permission?(:manage_roles)
+    data.edit_response(content: RESPONSE[47])
+    return
+  end
+
   unless safe_name?(data.options['name'])
     data.edit_response(content: RESPONSE[7])
+    return
+  end
+
+  unless booster_records(server: data.server.id, type: :enabled)
+    data.edit_response(content: RESPONSE[5])
+    return
+  end
+
+  if booster_records(server: data.server.id, user: data.user.id, type: :banned)
+    data.edit_response(content: RESPONSE[6])
+    return
+  end
+
+  if booster_records(server: data.server.id, user: data.user.id, type: :check_user)
+    data.edit_response(content: RESPONSE[4])
     return
   end
 
