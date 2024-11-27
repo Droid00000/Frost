@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'time'
 require 'embeds'
 require 'discordrb'
 require 'constants'
@@ -22,7 +21,7 @@ end
 def resolve_time(timestamp)
   parsed_time = Time.parse(timestamp)
   unix_time = Time.at(parsed_time&.to_i)
-  unix_time.strftime('%m/%d/%Y %H:%M')
+  unix_time.strftime('%m/%d/%Y, %H:%M')
 end
 
 # Returns true if a string doesn't contain any bad words.
