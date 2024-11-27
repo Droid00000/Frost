@@ -3,12 +3,11 @@
 module AutoPinArchiver
   extend Discordrb::EventContainer
 
-  unknown(type: :CHANNEL_PINS_UPDATE) do |event|
-    channel = event.bot.channel(event.data['channel_id']&.to_i, event.data['guild_id']&.to_i)
-    pins = channel.pins
+  channel_pins_update do |event|
+    pins = event.channel.pins
 
-    if pins.count == 50 && archiver_records(server: event.data['guild_id']&.to_i, type: :check)
-      archive_channel = event.bot.channel(archiver_records(server: event.data['guild_id']&.to_i, type: :get))
+    if pins.count == 50 && archiver_records(server: event.server.id, type: :check)
+      archive_channel = event.bot.channel(archiver_records(server: event.server.id, type: :get))
       message = pins[1]
 
       archive_channel.send_embed do |embed|
