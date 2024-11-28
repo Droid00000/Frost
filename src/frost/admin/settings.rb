@@ -8,19 +8,19 @@ def settings(type, server)
     if archiver_records(server: server, type: :check)
       "**Archive Channel:** <##{archiver_records(server: server, type: :get)}>"
     else
-      '**Enabled:** No'
+      EMBED[35]
     end
   when :booster
     if booster_records(server: server, type: :enabled)
       "**Hoist Role:** <@&#{booster_records(server: server, type: :hoist_role)}>"
     else
-      '**Enabled:** No'
+      EMBED[35]
     end
   when :events
     if event_records(server: server, type: :enabled)
       "**Roles:** #{event_records(server: server, type: :get_roles).join(', ')}"
     else
-      '**Enabled:** No'
+      EMBED[35]
     end
   end
 end

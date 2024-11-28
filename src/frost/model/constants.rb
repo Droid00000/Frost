@@ -98,7 +98,8 @@ EMBED = {
   31 => 'Successfully stole **%s** snowball(s)!',
   32 => '**%s** missed!',
   33 => '**%s** threw a snowball at <@%s>!',
-  34 => 'Select the Emojis you want to add!'
+  34 => 'Select the Emojis you want to add!',
+  35 => '**Enabled:** No'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

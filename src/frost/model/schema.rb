@@ -12,35 +12,38 @@ POSTGRES.pool.connection_validation_timeout = -1
 POSTGRES.create_table?(:Event_Settings) do
   Bigint :role_id, unique: true, null: false
   Bigint :guild_id, unique: false, null: false
-  unique %i[role_id guild_id]
+  primary_key %i[role_id guild_id]
 end
 
 POSTGRES.create_table?(:Archiver_Settings) do
   Bigint :guild_id, null: false, unique: true
   Bigint :channel_id, null: false, unique: true
+  primary_key %i[channel_id guild_id]
 end
 
 POSTGRES.create_table?(:Booster_Settings) do
   Bigint :guild_id, null: false, unique: true
   Bigint :hoist_role, null: false, unique: true
+  primary_key %i[hoist_role guild_id]
 end
 
 POSTGRES.create_table?(:Snowball_Players) do
   Bigint :user_id, unique: true, null: false
   Bigint :balance, null: false, default: 0
+  primary_key %i[user_id balance]
 end
 
 POSTGRES.create_table?(:Banned_Boosters) do
   Bigint :user_id, null: false
   Bigint :guild_id, null: false
-  unique %i[guild_id user_id]
+  primary_key %i[guild_id user_id]
 end
 
 POSTGRES.create_table?(:Server_Boosters) do
   Bigint :user_id, null: false
   Bigint :role_id, null: false
   Bigint :guild_id, null: false
-  unique %i[user_id guild_id]
+  primary_key %i[user_id guild_id]
 end
 
 def booster_records(server: nil, user: nil, role: nil, type: nil)
