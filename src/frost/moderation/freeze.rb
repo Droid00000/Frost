@@ -11,9 +11,9 @@ def freeze_server(data)
     when 0
       channel.produce_overwrite(data.server.everyone_role, deny: 2048, reason: REASON[9])
     when 2
-      channel.produce_overwrite(data.server.everyone_role, deny: 3147776, reason: REASON[9])
+      channel.produce_overwrite(data.server.everyone_role, deny: 3_147_776, reason: REASON[9])
     when 15
-      channel.produce_overwrite(data.server.everyone_role, deny: 377957124096, reason: REASON[9])
+      channel.produce_overwrite(data.server.everyone_role, deny: 377_957_124_096, reason: REASON[9])
     end
   end
 
@@ -31,9 +31,9 @@ def schedule_unfreeze(server, duration)
       when 0
         channel.destroy_overwrite(server.everyone_role, allow: 2048, reason: REASON[11])
       when 2
-        channel.destroy_overwrite(server.everyone_role, allow: 3147776, reason: REASON[11])
+        channel.destroy_overwrite(server.everyone_role, allow: 3_147_776, reason: REASON[11])
       when 15
-        channel.destroy_overwrite(server.everyone_role, allow: 377957124096, reason: REASON[11])
+        channel.destroy_overwrite(server.everyone_role, allow: 377_957_124_096, reason: REASON[11])
       end
     end
   end

@@ -14,10 +14,10 @@ def steal_emojis(data)
   emojis = []
 
   data.target.emoji.each do |emoji|
-    break if data.server.emoji_limit?(emoji)
-
     emoji = data.server.add_emoji(emoji.name, emoji.file)
     emojis << emoji
+  rescue Discordrb::Errors::UnknownError
+    break
   end
 
   data.edit_response(content: RESPONSE[44] % emojis.count)

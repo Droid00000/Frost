@@ -58,7 +58,7 @@ def booster_records(server: nil, user: nil, role: nil, type: nil)
     when :delete_role
       POSTGRES[:Server_Boosters].where(guild_id: server, role_id: role).delete
     when :enabled
-      !POSTGRES[:Booster_Settings].where(guild_id: server).get(:hoist_role).empty?
+      !POSTGRES[:Booster_Settings].where(guild_id: server).get(:hoist_role).nil?
     when :disable
       POSTGRES[:Booster_Settings].where(guild_id: server).delete
     when :setup
@@ -85,7 +85,7 @@ def archiver_records(server: nil, channel: nil, type: nil)
   POSTGRES.transaction do
     case type
     when :check
-      !POSTGRES[:Archiver_Settings].where(guild_id: server).get(:channel_id)
+      POSTGRES[:Archiver_Settings].where(guild_id: server).get(:channel_id)
     when :update
       POSTGRES[:Archiver_Settings].where(guild_id: server).update(channel_id: channel)
     when :get
@@ -123,7 +123,7 @@ def snowball_records(user: nil, type: nil, balance: nil)
     when :remove_snowball
       POSTGRES[:Snowball_Players].where(user_id: user).update(balance: Sequel[:balance] - balance)
     when :check_user
-      !POSTGRES[:Snowball_Players].where(user_id: user).get(:user_id).empty?
+      !POSTGRES[:Snowball_Players].where(user_id: user).get(:user_id).nil?
     when :check_snowball
       POSTGRES[:Snowball_Players].where(user_id: user).get(:balance) >= 1
     when :get_snowball
