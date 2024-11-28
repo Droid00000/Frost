@@ -53,6 +53,17 @@ bot.register_application_command(:unfreeze, 'Unlock the timeout caused by using 
   option.string('reason', 'The reason for un-freezing the server.', required: false, max_length: 1000, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
 end
 
+bot.register_application_command(:block, 'Stop a member from being able to access this channel.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+  option.user('member', 'Which member do you want to lock out?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+end
+
+bot.register_application_command(:bulk, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
+  command.subcommand('ban', 'Steal a snowball from someone!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+    option.string('members', 'Which members do you want to ban?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+    option.string('messages', 'How many days worth of messages (1-7) should be deleted?', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+  end
+end
+
 bot.register_application_command(:archive, 'Archives pins in a specified channel.', default_member_permissions: 8192, contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'पुरातत्व' }, description_localizations: { 'hi' => 'पुरातत्व पिंस कोई चुनित चैनल मै' }) do |option|
   option.channel('channel', 'Which channel needs to have its pins archived?', required: true, types: [:text], name_localizations: { 'hi' => 'प्रवाह' }, description_localizations: { 'hi' => 'कौनसे चैनल को उसके पुरातत्व पिंस की जरूरत है' })
 end
@@ -69,10 +80,6 @@ bot.register_application_command(:shutdown, 'Safely disconnects the bot from the
 end
 
 bot.register_application_command(:restart, 'Safely restarts and reconnects the bot to the Gateway.', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'फिरसेकरो' }, description_localizations: { 'hi' => 'सुरक्षित रूप से पुनरारंभ होता है और बॉट को गेटवे से पुनः कनेक्ट करता है' }) do |option|
-end
-
-bot.register_application_command(:block, 'Stop a member from being able to access this channel.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-  option.user('member', 'Which member do you want to lock out?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
 end
 
 bot.register_application_command(:throw, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'फेंको' }, description_localizations: { 'hi' => 'बर्फ का गोला की लड़ीं' }) do |command|
