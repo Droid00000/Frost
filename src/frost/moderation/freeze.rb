@@ -9,11 +9,11 @@ def freeze_server(data)
   data.server.channels.each do |channel|
     case channel.type
     when 0
-      channel.define_overwrite(data.server.everyone_role, nil, 2048, reason: REASON[9])
+      channel.produce_overwrite(data.server.everyone_role, deny: 2048, reason: REASON[9])
     when 2
-      channel.define_overwrite(data.server.everyone_role, nil, 3_147_776, reason: REASON[9])
+      channel.produce_overwrite(data.server.everyone_role, deny: 3147776, reason: REASON[9])
     when 15
-      channel.define_overwrite(data.server.everyone_role, nil, 377_957_124_096, reason: REASON[9])
+      channel.produce_overwrite(data.server.everyone_role, deny: 377957124096, reason: REASON[9])
     end
   end
 
@@ -27,7 +27,14 @@ end
 def schedule_unfreeze(server, duration)
   Rufus::Scheduler.new.in duration do
     server.channels.each do |channel|
-      channel.define_overwrite(server.everyone_role, nil, nil, reason: REASON[11])
+      case channel.type
+      when 0
+        channel.destroy_overwrite(server.everyone_role, allow: 2048, reason: REASON[11])
+      when 2
+        channel.destroy_overwrite(server.everyone_role, allow: 3147776, reason: REASON[11])
+      when 15
+        channel.destroy_overwrite(server.everyone_role, allow: 377957124096, reason: REASON[11])
+      end
     end
   end
 end

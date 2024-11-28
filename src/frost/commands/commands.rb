@@ -60,7 +60,8 @@ end
 bot.register_application_command(:bulk, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
   command.subcommand('ban', 'Steal a snowball from someone!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
     option.string('members', 'Which members do you want to ban?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-    option.string('messages', 'How many days worth of messages (1-7) should be deleted?', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+    option.integer('messages', 'How many days worth of messages (1-7) should be deleted?', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+    option.string('reason', 'The reason for banning these messages.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
   end
 end
 
