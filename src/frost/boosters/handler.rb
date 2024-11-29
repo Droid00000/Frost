@@ -1,11 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'edit'
-require_relative 'help'
-require_relative 'audit'
-require_relative 'delete'
-require_relative 'create'
-
 module BoosterPerks
   extend Discordrb::EventContainer
   server_role_delete { |event| role_delete_event(event) }

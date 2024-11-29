@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift './src/frost/model'
-
-Dir['./src/frost/model/*.rb'].each { |file| require file }
-
-Dir['./src/frost/**/*.rb'].each { |file| require file unless file.include?('commands.rb') }
+require_relative './src/frost/model/require.rb'
 
 bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 32_769, log_mode: :silent)
 

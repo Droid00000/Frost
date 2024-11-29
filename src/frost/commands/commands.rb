@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Dir['../src/frost/model/*.rb'].each { |file| require file }
+Dir['../model/*.rb'].each { |file| require file unless file.include?('loader.rb') }
 
 bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 0)
 

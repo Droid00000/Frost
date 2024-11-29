@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 require 'embeds'
-require 'discordrb'
 require 'constants'
-require 'rufus-scheduler'
-require 'selenium-webdriver'
 
 # Initilaze a new color object for a role.
 # @param [String] The hex color to resolve.

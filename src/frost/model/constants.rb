@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'yaml'
-
 # A response message to an interaction.
 RESPONSE = {
   1 => 'Your role has been created! You can always edit your role using the ``/booster role edit`` command.',

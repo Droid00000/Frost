@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'ban'
-require_relative 'block'
-require_relative 'freeze'
-require_relative 'unfreeze'
-
 module ModerationCommands
   extend Discordrb::EventContainer
 
