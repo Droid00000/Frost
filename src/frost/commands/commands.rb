@@ -130,13 +130,13 @@ bot.register_application_command(:events, 'Event roles setup', default_member_pe
   end
 end
 
-bot.register_application_command(:event, 'Event roles', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand_group(:roles, 'Event roles!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |group|
-    group.subcommand(:edit, 'Edit your event role.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-      option.role('role', 'Which role do you want to modifiy?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-      option.string('name', 'Provide a name for your role.', required: false, max_length: 100, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-      option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 6, max_length: 7, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-      option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+bot.register_application_command(:event, 'Event roles', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'इवेंट' }, description_localizations: { 'hi' => 'इवेंट रोल्स' }) do |command|
+  command.subcommand_group(:roles, 'Event roles!', name_localizations: { 'hi' => 'रोल्स' }, description_localizations: { 'hi' => 'इवेंट रोल्स!' }) do |group|
+    group.subcommand(:edit, 'Edit your event role.', name_localizations: { 'hi' => 'परिवर्तन' }, description_localizations: { 'hi' => 'अपने इवेंट रोल को संपादित करें' }) do |option|
+      option.role('role', 'Which role do you want to modify?', required: true, name_localizations: { 'hi' => 'रोल' }, description_localizations: { 'hi' => 'आप कौन सा रोल संपादित करना चाहते हैं?' })
+      option.string('name', 'Provide a name for your role.', required: false, max_length: 100, name_localizations: { 'hi' => 'नाम' }, description_localizations: { 'hi' => 'अपने रोल के लिए एक नाम दें.' })
+      option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 6, max_length: 7, name_localizations: { 'hi' => 'रंग' }, description_localizations: { 'hi' => 'अपने रोल के लिए एक HEX रंग दें.' })
+      option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => 'आइकन' }, description_localizations: { 'hi' => 'अपने रोल आइकन के रूप में एक इमोजी दें.' })
     end
   end
 end
