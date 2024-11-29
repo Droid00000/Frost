@@ -21,6 +21,6 @@ Dir.glob("#{BASE}/*").select { |path| File.directory?(path) }.each do |folder|
   end
 end
 
-Dir.glob("#{BASE}/**/handler.rb").each do |file|
-  require file
+Dir.glob("#{BASE}/**/handler.rb").each do |handler|
+  require handler
 end
