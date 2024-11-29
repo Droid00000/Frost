@@ -36,7 +36,7 @@ Discord:
   COMMANDS: []
   CONTRIBUTORS: []
 
-# Retrives the date of the next chapter of a manga.
+# Leaving this one undocumented.
 Chapter:
   ELEMENT: ''
   LINK: ''
