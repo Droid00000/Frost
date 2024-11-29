@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-Dir['../model/*.rb'].each { |file| require file unless file.include?('loader.rb') }
+require 'discordrb'
 
-bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 0)
+bot = Discordrb::Bot.new(token: ENV.fetch('TOKEN'), intents: 0)
 
 bot.register_application_command(:hug, 'Hugs another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गलेमिलना' }, description_localizations: { 'hi' => 'सर्वर मित्र के गले मिलना' }) do |option|
   option.user('target', 'Who do you want to hug?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको गले मिलना है' })
@@ -49,7 +49,7 @@ bot.register_application_command(:freeze, 'Prevent all members from speaking in 
   option.string('reason', 'The reason for freezing the server.', required: false, max_length: 1000, name_localizations: { 'hi' => 'क्यू' }, description_localizations: { 'hi' => 'सर्वर लॉक होने का कारण' })
 end
 
-bot.register_application_command(:unfreeze, 'Unlock the timeout caused by using the freeze command.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'अनफ़्रीज़' }, description_localizations: { 'hi' => 'फ़्रीज़ कमांड का उपयोग करके होने वाले टाइमआउट को अनलॉक करें' }) do |option|
+bot.register_application_command(:unfreeze, 'Remove the lock caused by the freeze command.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'अनफ़्रीज़' }, description_localizations: { 'hi' => 'फ़्रीज़ कमांड का उपयोग करके होने वाले टाइमआउट को अनलॉक करें' }) do |option|
   option.string('reason', 'The reason for un-freezing the server.', required: false, max_length: 1000, name_localizations: { 'hi' => 'वजह' }, description_localizations: { 'hi' => 'सर्वर को अनफ्रीज करने का कारण' })
 end
 
@@ -57,11 +57,11 @@ bot.register_application_command(:block, 'Stop a member from being able to acces
   option.user('member', 'Which member do you want to lock out?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'आप किस सदस्य को लॉक आउट करना चाहते हैं' })
 end
 
-bot.register_application_command(:bulk, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand('ban', 'Steal a snowball from someone!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-    option.string('members', 'Which members do you want to ban?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-    option.integer('messages', 'How many days worth of messages (1-7) should be deleted?', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
-    option.string('reason', 'The reason for banning these messages.', required: false, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+bot.register_application_command(:bulk, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'थोक' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }) do |command|
+  command.subcommand('ban', 'Ban multiple members at once!', name_localizations: { 'hi' => 'प्रतिबंध' }, description_localizations: { 'hi' => 'एक साथ कई सदस्यों पर प्रतिबंध लगाएं' }) do |option|
+    option.string('members', 'Which members do you want to ban?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'आप किन सदस्यों पर प्रतिबंध लगाना चाहते हैं?' })
+    option.integer('messages', 'How many days worth of messages (1-7) should be deleted?', required: false, name_localizations: { 'hi' => 'संदेशों' }, description_localizations: { 'hi' => 'कितने दिनों के संदेश (1-7) हटाये जाने चाहिए?' })
+    option.string('reason', 'The reason for banning these members.', required: false, name_localizations: { 'hi' => 'कारण' }, description_localizations: { 'hi' => 'इन सदस्यों पर प्रतिबंध लगाने का कारण' })
   end
 end
 
@@ -119,13 +119,13 @@ bot.register_application_command(:pin, 'Pin archive', default_member_permissions
   end
 end
 
-bot.register_application_command(:events, 'Event roles setup', default_member_permissions: 0, contexts: [0], integration_types: [0], name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |command|
-  command.subcommand_group(:role, 'Event roles!', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |group|
-    group.subcommand(:setup, 'Setup the event roles functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
-      option.role('role', 'Which role should be modifiable by its users?', required: true, name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' })
+bot.register_application_command(:events, 'Event roles setup', default_member_permissions: 0, contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'घटनाएँ' }, description_localizations: { 'hi' => 'इवेंट रोल्स सेटअप करें' }) do |command|
+  command.subcommand_group(:role, 'Event roles!', name_localizations: { 'hi' => 'भूमिका!' }, description_localizations: { 'hi' => 'इवेंट रोल्स के लिए सेटअप करें' }) do |group|
+    group.subcommand(:setup, 'Setup the event roles functionality.', name_localizations: { 'hi' => 'व्यवस्था' }, description_localizations: { 'hi' => 'इवेंट रोल्स कार्यक्षमता सेटअप करें' }) do |option|
+      option.role('role', 'Which role should be modifiable by its users?', required: true, name_localizations: { 'hi' => 'रोल' }, description_localizations: { 'hi' => 'कौन सा रोल उपयोगकर्ताओं द्वारा संपादित किया जा सकता है?' })
     end
 
-    group.subcommand(:disable, 'Disable the event roles functionality.', name_localizations: { 'hi' => '' }, description_localizations: { 'hi' => '' }) do |option|
+    group.subcommand(:disable, 'Disable the event roles functionality.', name_localizations: { 'hi' => 'असमर्थ' }, description_localizations: { 'hi' => 'इवेंट रोल्स कार्यक्षमता को अक्षम करें' }) do |option|
     end
   end
 end
