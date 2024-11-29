@@ -8,7 +8,7 @@ def select_click(data)
 
   begin
     emoji = data.server.add_emoji(data.emoji.name, data.emoji.file)
-  rescue Discordrb::Errors::UnknownError
+  rescue StandardError
     data.send_message(content: RESPONSE[45], ephemeral: true)
     return
   end

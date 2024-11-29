@@ -146,10 +146,9 @@ UI = {
   8 => 0x849fe8
 }.freeze
 
-# Lyrics used to update the bot status.
+# Data used to update the bot status.
 STATUS = {
-  1 => 'https://github.com/Droid00000/Frost',
-  2 => "He didn't say I couldn't sing!"
+  1 => 'https://github.com/Droid00000/Frost'
 }.freeze
 
 # The YAML configuration file used by the bot.
