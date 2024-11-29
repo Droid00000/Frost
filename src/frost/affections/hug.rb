@@ -4,7 +4,7 @@ def hug_member(data)
   data.edit_response(content: "<@#{data.options['target']}>") do |builder|
     builder.add_embed do |embed|
       embed.colour = UI[3]
-      embed.title = '**HUGS**'
+      embed.title = EMBED[38]
       embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:HUGS))
       embed.description = format(EMBED[26], data.user.display_name, data.options['target'])
     end

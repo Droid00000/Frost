@@ -6,7 +6,7 @@ def punch_member(data)
   data.edit_response(content: "<@#{data.options['target']}>") do |builder|
     builder.add_embed do |embed|
       embed.colour = UI[3]
-      embed.title = '**PUNCH**'
+      embed.title = EMBED[41]
       embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:PUNCH))
       embed.description = format(EMBED[24], data.user.display_name, data.options['target'])
     end
