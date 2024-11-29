@@ -170,7 +170,7 @@ bot.register_application_command(:boost, 'Booster perks admin', default_member_p
     group.subcommand('help', 'Open the administrator help menu for this functionality.') do |option|
     end
   end
-end  
+end
 
 bot.register_application_command(:booster, 'Booster perks', contexts: [0], integration_types: [0]) do |command|
   command.subcommand_group(:role, 'Booster roles!') do |group|
