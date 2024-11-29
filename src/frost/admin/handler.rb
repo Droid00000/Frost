@@ -3,11 +3,6 @@
 module AdminCommands
   extend Discordrb::EventContainer
 
-  button(custom_id: 'chapter') do |event|
-    event.defer_update
-    chapter_reason(event)
-  end
-
   application_command(:help) do |event|
     event.defer(ephemeral: true)
     general_help_embed(event)
