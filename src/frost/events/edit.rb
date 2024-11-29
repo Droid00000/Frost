@@ -11,7 +11,7 @@ def edit_event_role(data)
     return
   end
 
-  unless data.user.roles&.include?(data.server.role(data.options['role']))
+  unless data.user.role?(data.options['role'])
     data.edit_response(content: RESPONSE[17])
     return
   end

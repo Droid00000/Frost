@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-import 'menu'
-import 'click'
-import 'steal'
+require_relative 'menu'
+require_relative 'click'
+require_relative 'steal'
 
 module EmojiCommands
   extend Discordrb::EventContainer

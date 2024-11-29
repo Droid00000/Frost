@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-import 'throw'
-import 'steal'
-import 'collect'
+require_relative 'throw'
+require_relative 'steal'
+require_relative 'collect'
 
 module SnowballFights
   extend Discordrb::EventContainer

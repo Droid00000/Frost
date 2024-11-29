@@ -46,14 +46,8 @@ end
 # @param role [Integer, String] An ID that uniquely identifies a role.
 def delete_guild_role(server, role)
   Discordrb::API::Server.delete_role(CONFIG['Discord']['TOKEN'], server, role, REASON[6])
-rescue Dsicordrb::Errors::NotFound
+rescue StandardError
   true
-end
-
-# Similar to Python imports. Requires a file.
-# @param file [String] Name of the file to import.
-def import(file)
-  require "#{File.dirname(caller.first)}/#{file}"
 end
 
 # Returns a random GIF link for use by the affection and snowball commands.
