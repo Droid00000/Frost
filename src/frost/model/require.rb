@@ -1,25 +1,26 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift File.expand_path('./', __dir__)
-
 require 'yaml'
 require 'sequel'
 require 'discordrb'
 require 'rufus-scheduler'
 require 'selenium-webdriver'
 
-Dir["#{File.expand_path('./', __dir__)}/*.rb"].each { |file| require file }
+require_relative 'embeds'
+require_relative 'constants'
+require_relative 'schema'
+require_relative 'functions'
 
-Dir.glob("#{File.expand_path('../', __dir__)}/*").select { |block| File.directory?(block) }.each do |folder|
+BASE = File.expand_path('../', __dir__)
+
+Dir.glob("#{BASE}/*").select { |path| File.directory?(path) }.each do |folder|
   Dir["#{folder}/*.rb"].each do |file|
     next if file.include?('handler.rb') || file.include?('commands.rb')
 
     require file
   end
+end
 
-  Dir.glob("#{File.expand_path('../', __dir__)}/**/*.rb").select { |f|
-    File.basename(f) == 'handler.rb'
-  }.each do |file|
-    require file
-  end
+Dir.glob("#{BASE}/**/handler.rb").each do |file|
+  require file
 end

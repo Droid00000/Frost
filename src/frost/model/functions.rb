@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'embeds'
-require 'constants'
-
 # Initilaze a new color object for a role.
 # @param [String] The hex color to resolve.
 # @return [ColourRGB] A colourRGB object.

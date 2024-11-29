@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'constants'
-
 POSTGRES = Sequel.connect(CONFIG['Postgres']['URL'])
 
 POSTGRES.extension(:connection_validator)
