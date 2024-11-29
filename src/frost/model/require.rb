@@ -8,7 +8,7 @@ require 'selenium-webdriver'
 
 require_relative 'embeds'
 require_relative 'constants'
-require_relative 'schema'
+require_relative 'cassandra'
 require_relative 'functions'
 
 BASE = File.expand_path('../', __dir__)
