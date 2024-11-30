@@ -36,9 +36,9 @@ end
 
 # Gets the release date of a chapter of a series.
 def next_chapter_date(data)
-  options = Selenium::WebDriver::Chrome::Options.new
+  options = Selenium::WebDriver::Firefox::Options.new
   options.add_argument('--headless')
-  driver = Selenium::WebDriver.for :chrome, options: options
+  driver = Selenium::WebDriver.for :firefox, options: options
   driver.navigate.to CONFIG['Chapter']['LINK']
   sleep(6)
   time = driver.find_element(:css, CONFIG['Chapter']['ELEMENT'])

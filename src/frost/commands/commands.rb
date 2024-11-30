@@ -141,6 +141,13 @@ bot.register_application_command(:event, 'Event roles', contexts: [0], integrati
   end
 end
 
+bot.register_application_command(:next, 'Manga Chapter!', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'मंगा अध्याय' }) do |command|
+  command.subcommand_group(:chapter, 'Comics!', name_localizations: { 'hi' => 'प्रकरण' }, description_localizations: { 'hi' => 'कॉमिक्स' }) do |group|
+    group.subcommand(:when, 'When is the next chapter coming out?', name_localizations: { 'hi' => 'कब' }, description_localizations: { 'hi' => 'अगला अध्याय कब आ रहा है' }) do |option|
+    end
+  end
+end
+
 bot.register_application_command(:boost, 'Booster perks admin', default_member_permissions: 268435456, contexts: [0], integration_types: [0]) do |command|
   command.subcommand_group(:admin, 'Booster admin!') do |group|
     group.subcommand('add', "Manually add a 'booster' to the database.") do |option|
