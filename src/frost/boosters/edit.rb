@@ -36,7 +36,7 @@ def edit_role(data)
     role: booster_records(server: data.server.id, user: data.user.id, type: :get_role),
     name: data.options['name'],
     colour: resolve_color(data.options['color']),
-    icon: data.emojis('icon')&.file,
+    icon: data.emojis('icon')&.static_file,
     reason: REASON[2]
   )
 

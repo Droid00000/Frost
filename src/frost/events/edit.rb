@@ -30,7 +30,7 @@ def edit_event_role(data)
     role: data.options['role'],
     name: data.options['name'],
     colour: resolve_color(data.options['color']),
-    icon: data.emojis('icon')&.file,
+    icon: data.emojis('icon')&.static_file,
     reason: REASON[5]
   )
 
