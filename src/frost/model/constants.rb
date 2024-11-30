@@ -149,7 +149,8 @@ UI = {
 
 # Data used to update the bot status.
 STATUS = {
-  1 => 'https://github.com/Droid00000/Frost'
+  1 => 'online',
+  2 => 'https://github.com/Droid00000/Frost'
 }.freeze
 
 # The YAML configuration file used by the bot.

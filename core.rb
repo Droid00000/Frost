@@ -2,9 +2,9 @@
 
 require_relative 'src/frost/model/require'
 
-bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 32_769, log_mode: :normal)
+bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 32_769)
 
-bot.ready { rotating_status(bot) }
+bot.ready { bot.custom_status(STATUS[1], STATUS[2]) }
 
 at_exit { bot.stop }
 
