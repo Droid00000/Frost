@@ -69,7 +69,7 @@ module AdminCommands
     end
   end
 
-  application_command(:boost).group(:admin) do |group|
+  application_command(:booster).group(:admin) do |group|
     group.subcommand('add') do |event|
       event.defer(ephemeral: true)
       admin_add_booster(event)
@@ -102,7 +102,7 @@ module AdminCommands
 
     group.subcommand('help') do |event|
       event.defer(ephemeral: true)
-      admin_booster_help_embed(event)
+      booster_admin_help(event)
     end
   end
 end

@@ -148,7 +148,27 @@ bot.register_application_command(:next, 'Manga Chapter!', contexts: [0, 1, 2], i
   end
 end
 
-bot.register_application_command(:boost, 'Booster perks admin', default_member_permissions: 268435456, contexts: [0], integration_types: [0]) do |command|
+bot.register_application_command(:booster, 'Booster perks', contexts: [0], integration_types: [0]) do |command|
+  command.subcommand_group(:role, 'Booster roles!') do |group|
+    group.subcommand('claim', 'Claim your custom booster role!') do |option|
+        option.string('name', 'Provide a name for your role.', required: true, max_length: 100)
+        option.string('color', 'Provide a HEX color for your role.', required: true, min_length: 6, max_length: 7)
+        option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
+      end
+
+      group.subcommand('edit', 'Edit your custom booster role!') do |option|
+        option.string('name', 'Provide a name for your role.', required: false, max_length: 100)
+        option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 6, max_length: 7)
+        option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
+      end
+
+      group.subcommand('delete', 'Delete your custom booster role.') do |option|
+      end
+
+      group.subcommand('help', 'Open the booster perks help menu.') do |option|
+    end
+  end
+
   command.subcommand_group(:admin, 'Booster admin!') do |group|
     group.subcommand('add', "Manually add a 'booster' to the database.") do |option|
       option.user('user', 'The user to add to the database.', required: true)
@@ -175,28 +195,6 @@ bot.register_application_command(:boost, 'Booster perks admin', default_member_p
     end
 
     group.subcommand('help', 'Open the administrator help menu for this functionality.') do |option|
-    end
-  end
-end
-
-bot.register_application_command(:booster, 'Booster perks', contexts: [0], integration_types: [0]) do |command|
-  command.subcommand_group(:role, 'Booster roles!') do |group|
-    group.subcommand('claim', 'Claim your custom booster role!') do |option|
-        option.string('name', 'Provide a name for your role.', required: true, max_length: 100)
-        option.string('color', 'Provide a HEX color for your role.', required: true, min_length: 6, max_length: 7)
-        option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
-      end
-
-      group.subcommand('edit', 'Edit your custom booster role!') do |option|
-        option.string('name', 'Provide a name for your role.', required: false, max_length: 100)
-        option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 6, max_length: 7)
-        option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
-      end
-
-      group.subcommand('delete', 'Delete your custom booster role.') do |option|
-      end
-
-      group.subcommand('help', 'Open the booster perks help menu.') do |option|
     end
   end
 end
