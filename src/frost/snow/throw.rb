@@ -9,7 +9,7 @@ def throw_snowball(data)
   snowball_records(user: data.user.id, type: :remove_snowball, balance: 1)
 
   if rand(1..10) >= 5
-    data.edit_response(content: "<@#{data.options['member']}>") do |builder|
+    data.edit_response(content: data.member('member').mention) do |builder|
       builder.add_embed do |embed|
         embed.color = UI[6]
         embed.title = '**HIT**'

@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 def punch_member(data)
-  return unless CONFIG['Discord']['COMMANDS'].include?(data.user.id)
+  unless CONFIG['Discord']['COMMANDS'].include?(data.user.id)
+    data.edit_response(content: RESPONSE[18])
+    return
+  end
 
   data.edit_response(content: data.member('target').mention) do |builder|
     builder.add_embed do |embed|

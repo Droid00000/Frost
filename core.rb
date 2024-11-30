@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './src/frost/model/require.rb'
+require_relative 'src/frost/model/require'
 
 bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 32_769, log_mode: :silent)
 

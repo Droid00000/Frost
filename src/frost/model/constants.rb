@@ -19,7 +19,7 @@ RESPONSE = {
   15 => 'You missed!',
   16 => "This user doesn't have any snowballs.",
   17 => 'That role cannot be updated.',
-  18 => '``401: Unauthorized.``',
+  18 => '``401: Unauthorized``',
   19 => 'The bot has powered off.',
   20 => 'Succesfully archived one pinned message!',
   21 => "This user doesn't have enough snowballs.",
@@ -58,7 +58,8 @@ RESPONSE = {
   54 => "You do not have permission to ban any user you've specified.",
   55 => 'There are many reasons as to why the chapter could be delayed. Please be paitent and wait.',
   56 => '**Next Chapter:** <t:%s:D>',
-  57 => 'Successfully blocked <@%s> from viewing this channel.'
+  57 => 'Successfully blocked <@%s> from viewing this channel.',
+  58 => 'You may not block this user.'
 }.freeze
 
 # Values for embed responses.

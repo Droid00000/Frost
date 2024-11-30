@@ -17,12 +17,20 @@ def bulk_ban(data)
   end
 
   members = data.options['members'].delete('@<>,').split(',').uniq.reject do |member|
-    data.bot.member(data.server, member).highest_role.position >= data.user.highest_role.position
+    data.bot.member(data.server, member).hierarchy >= data.user.hierarchy
   end
 
   if members.empty?
     data.edit_response(content: RESPONSE[54])
     return
+  end
+
+  if members.include?(data.server.bot.id.to_s)
+    members.delete(data.server.bot.id.to_s)
+  end
+
+  if members.include?(data.user.id.to_s)
+    members.delete(data.user.id.to_s)
   end
 
   members.pop while members.size > 200
