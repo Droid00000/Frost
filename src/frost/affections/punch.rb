@@ -2,7 +2,7 @@
 
 def punch_member(data)
   unless CONFIG['Discord']['COMMANDS'].include?(data.user.id)
-    data.respond(content: RESPONSE[18])
+    data.respond(content: RESPONSE[18], ephemeral: true)
     return
   end
 
