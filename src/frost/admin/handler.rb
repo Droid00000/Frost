@@ -10,7 +10,7 @@ module AdminCommands
 
   application_command(:about) do |event|
     event.defer(ephemeral: true)
-    event.edit_response(content: "#{RESPONSE[10]} #{EMOJI[10]}")
+    event.edit_response(content: "#{RESPONSE[10]} #{EMOJI[1]}")
   end
 
   application_command(:settings) do |event|
