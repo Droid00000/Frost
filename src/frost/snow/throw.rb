@@ -2,14 +2,14 @@
 
 def throw_snowball(data)
   unless snowball_records(user: data.user.id, type: :check_snowball)
-    data.edit_response(content: RESPONSE[14])
+    data.respond(content: RESPONSE[14])
     return
   end
 
   snowball_records(user: data.user.id, type: :remove_snowball, balance: 1)
 
   if rand(1..10) >= 5
-    data.edit_response(content: data.member('member').mention) do |builder|
+    data.respond(content: data.member('member').mention) do |builder|
       builder.add_embed do |embed|
         embed.color = UI[6]
         embed.title = '**HIT**'
@@ -19,7 +19,7 @@ def throw_snowball(data)
     end
 
   else
-    data.edit_response do |builder|
+    data.respond do |builder|
       builder.add_embed do |embed|
         embed.color = UI[6]
         embed.title = '**MISS**'

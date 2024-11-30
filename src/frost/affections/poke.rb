@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 def poke_member(data)
-  data.edit_response(content: data.member('target').mention) do |builder|
+  data.respond(content: data.member('target').mention) do |builder|
     builder.add_embed do |embed|
       embed.colour = UI[3]
       embed.title = EMBED[40]
