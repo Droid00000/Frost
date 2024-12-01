@@ -33,7 +33,6 @@ Change the name of the `example.yml` file to `config.yml` and fill in all the va
 Discord:
   OWNER: "YOUR_ID_HERE"
   TOKEN: "Bot TOKEN_HERE"
-  COMMANDS: []
   CONTRIBUTORS: []
 
 # Leaving this one undocumented.
