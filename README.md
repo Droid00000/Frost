@@ -12,7 +12,7 @@ This should be fairly self-explanatory. See [here](https://www.ruby-lang.org/en/
 
 2. **Install dependencies**
 
-Simply do: `bundle install`. Install: [ffmpeg](https://www.ffmpeg.org/download.html), and [libsodium](https://github.com/shardlab/discordrb/wiki/Installing-libsodium).
+Simply do: `bundle install`.
 
 3. **Create the database in PostgreSQL**
 
