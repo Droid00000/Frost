@@ -17,11 +17,11 @@ def bulk_ban(data)
   end
 
   members = data.options['members'].gsub(/\D/, '').split(',').uniq.reject do |member|
-    data.bot.member(data.server, member).hierarchy >= data.user.hierarchy
+    data.server.member(member).hierarchy >= data.user.hierarchy
   end
 
   members = members.reject do |member|
-    data.server.bot.hierarchy >= data.bot.member(data.server, member).hierarchy
+    data.server.bot.hierarchy >= data.server.member(member).hierarchy
   end
 
   if members.empty?
