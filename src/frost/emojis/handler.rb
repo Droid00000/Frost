@@ -17,4 +17,8 @@ module EmojiCommands
     event.defer_update
     select_click(event)
   end
+
+  message(contains: REGEX[3]) do |event|
+    emoji_stats(event)
+  end
 end
