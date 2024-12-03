@@ -8,7 +8,7 @@ module Frost
 
     # @param emoji [Discordrb::Emoji]
     # @param server [Discordrb::Server]
-    def initalize(emoji, server)
+    def initialize(emoji, server)
       @@emoji << { emoji: emoji, server: server }
     end
 
@@ -21,7 +21,7 @@ end
 
 def emoji_stats(data)
   data.message.emoji.each do |emoji|
-    Frost::Emoji.new(emoji: emoji, server: data.server)
+    Frost::Emoji.new(emoji, data.server)
   end
 end
 
