@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+import 'menu'
+import 'stats'
+import 'click'
+import 'steal'
+
 module EmojiCommands
   extend Discordrb::EventContainer
 

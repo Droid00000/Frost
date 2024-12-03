@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'constants'
+
 POSTGRES = Sequel.connect(CONFIG['Postgres']['URL'])
 
 POSTGRES.extension(:connection_validator)
@@ -44,7 +46,7 @@ POSTGRES.create_table?(:server_boosters) do
 end
 
 POSTGRES.create_table?(:emoji_tracker) do
-  Bigint :balance, default: 0
+  Bigint :balance, default: 1
   Bigint :emoji_id, null: false
   Bigint :guild_id, null: false
   primary_key %i[emoji_id guild_id]
@@ -144,7 +146,7 @@ def emoji_records(emoji: nil, server: nil, type: nil)
     when :check_emoji
       POSTGRES[:emoji_tracker].where(emoji_id: emoji, guild_id: server).empty?
     when :add_emoji
-      POSTGRES[:emoji_tracker].insert(emoji_id: emoji, guild_id: server)
+      POSTGRES[:emoji_tracker].insert(emoji_id: emoji.id, guild_id: server.id)
     when :emojis
       POSTGRES[:emoji_tracker]
     end
