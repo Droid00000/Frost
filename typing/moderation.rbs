@@ -1,0 +1,20 @@
+# frozen_string_literal: true
+
+module ModerationCommands
+  extend Discordrb::EventContainer
+
+  # Bans many server members in one go.
+  def bulk_ban: (untyped data) -> (nil | untyped)
+  
+  # This locks a members out of a channel.
+  def block_member: (untyped data) -> (nil | untyped)
+
+  # This denies the send messages permission in a guild.
+  def freeze_server: (untyped data) -> (nil | untyped)
+
+  # This allows the send messages permission in a guild.
+  def unfreeze_server: (untyped data) -> (nil | untyped)
+  
+  # This schedules an unfreeze server event to occur in a guild.
+  def schedule_unfreeze: (untyped server, untyped duration) -> untyped
+end

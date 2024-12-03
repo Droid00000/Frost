@@ -1,0 +1,32 @@
+# frozen_string_literal: true
+
+module Frost
+  # Represents an Emoji cache.
+  class Emoji
+    # An array to store emojis.
+    @@emoji: untyped
+
+    # @param emoji [Discordrb::Emoji]
+    # @param server [Discordrb::Server]
+    def initialize: (untyped emoji, untyped server) -> void
+
+    # Returns all emojis.
+    def self.get_emojis: () -> untyped
+  end
+end
+
+module EmojiCommands
+  extend Discordrb::EventContainer
+  
+  # Adds an in a message.emoji to the DB.
+  def emoji_stats: (untyped data) -> untyped
+
+  # Creates the select menu component for emojis.
+  def create_menu: (untyped data) -> (nil | untyped)
+
+  # Handles the select menu component click for emojis.
+  def select_click: (untyped data) -> (nil | untyped)
+  
+  # Adds all the emojis in the targeted message to a guild.
+  def steal_emojis: (untyped data) -> (nil | untyped)
+end

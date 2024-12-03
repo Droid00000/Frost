@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+module EventRoles
+  extend Discordrb::EventContainer
+
+  # Allows a member with an "allowed" role to edit it.
+  def edit_event_role: (untyped data) -> (nil | untyped)
+end
