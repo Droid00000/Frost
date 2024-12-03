@@ -1,5 +1,13 @@
 # frozen_string_literal: true
 
+import 'help'
+import 'pins'
+import 'roles'
+import 'status'
+import 'boosters'
+import 'settings'
+import 'utilities'
+
 module AdminCommands
   extend Discordrb::EventContainer
 

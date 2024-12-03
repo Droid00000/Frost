@@ -1,5 +1,13 @@
 # frozen_string_literal: true
 
+import 'hug'
+import 'nom'
+import 'bonk'
+import 'poke'
+import 'punch'
+import 'sleep'
+import 'anger'
+
 module AffectionCommands
   extend Discordrb::EventContainer
 

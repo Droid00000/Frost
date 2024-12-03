@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+import 'menu'
+import 'stats'
+import 'click'
+import 'steal'
+
 module EmojiCommands
   extend Discordrb::EventContainer
 
@@ -16,5 +21,9 @@ module EmojiCommands
   select_menu(custom_id: 'emojis') do |event|
     event.defer_update
     select_click(event)
+  end
+
+  message(contains: REGEX[3]) do |event|
+    emoji_stats(event)
   end
 end

@@ -24,7 +24,7 @@ end
 def safe_name?(name)
   return true if name.nil?
 
-  !name.match(REGEX[3])
+  !name.match(REGEX[4])
 end
 
 # Checks if a guild member is still boosting a guild.
@@ -42,6 +42,12 @@ def delete_guild_role(server, role)
   Discordrb::API::Server.delete_role(CONFIG['Discord']['TOKEN'], server, role, REASON[6])
 rescue StandardError
   true
+end
+
+# Similar to Python imports. Requires a file.
+# @param file [String] Name of the file to import.
+def import(file)
+  require "#{File.dirname(caller.first)}/#{file}"
 end
 
 # Returns a random GIF link for use by the affection and snowball commands.

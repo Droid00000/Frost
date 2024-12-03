@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
+import 'ban'
+import 'block'
+import 'freeze'
+import 'unfreeze'
+
 module ModerationCommands
   extend Discordrb::EventContainer
 

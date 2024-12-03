@@ -160,7 +160,8 @@ CONFIG = YAML.load_file(File.join(File.expand_path('../../..', __dir__), 'config
 REGEX = {
   1 => /:(\d+)>$/,
   2 => /\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z/,
-  3 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
+  3 => /<(a?):([a-zA-Z0-9_]{1,32}):([0-9]{15,20})>/,
+  4 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|
           xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|
@@ -173,7 +174,7 @@ REGEX = {
           hitler|swastika|strapon|spooge|jizz|shibari|cumshot|shemale|sex|chaturbate|scat|
           masochist|scissoring|schlong|shibari|sadism|raping|queef|pornography|pissing|pegging|
           pegged|paedophile|orgy|pedobear|ponyplay|nympho|nudes|nude|octopussy|omorashi|masturbate|
-          milf|dilf|lolita|missionary style|m!ssionary style|m!ss!onary style|m!ss!0nary style|
+          milf|dilf|lolita|missionary|missionary style|m!ssionary style|m!ss!onary style|m!ss!0nary style|
           d0ggy style| kike|incest|nhentai|jailbait|handjob|g-spot|futanari|fisting|fingering|
           femdom|squirting|ecchi|ejaculation|erotic|doggiestyle|doggy style|doggystyle|deepthroat|
           date rape|daterape|dildo|clit|clitoris|camgirl|camslut|camwhore|butthole|anal|bitches|

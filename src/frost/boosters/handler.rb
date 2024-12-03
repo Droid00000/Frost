@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 
+import 'help'
+import 'edit'
+import 'audit'
+import 'create'
+import 'delete'
+
 module BoosterPerks
   extend Discordrb::EventContainer
   server_role_delete { |event| role_delete_event(event) }
