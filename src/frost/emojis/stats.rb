@@ -25,7 +25,7 @@ def emoji_stats(data)
   end
 end
 
-Rufus::Scheduler.new.cron '6 3 * * 5' do
+Rufus::Scheduler.new.cron '0 0 * * *' do
   while emoji = Frost::Emoji.get_emojis.shift
     emoji_records(emoji: emoji[:emoji], server: emoji[:server], type: :add_emoji)
   end
