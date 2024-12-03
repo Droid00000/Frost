@@ -8,7 +8,7 @@ module Frost
 
     # @param emoji [Discordrb::Emoji]
     # @param server [Discordrb::Server]
-    def initalize(emoji, server)
+    def initialize(emoji, server)
       @@emoji << { emoji: emoji, server: server }
     end
 
@@ -21,12 +21,12 @@ end
 
 def emoji_stats(data)
   data.message.emoji.each do |emoji|
-    Frost::Emoji.new(emoji: emoji, server: data.server)
+    Frost::Emoji.new(emoji, data.server)
   end
 end
 
 Rufus::Scheduler.new.cron '0 0 * * *' do
-  while emoji = Frost::Emoji.get_emojis.shift
+  while (emoji = Frost::Emoji.get_emojis.shift)
     emoji_records(emoji: emoji[:emoji], server: emoji[:server], type: :add_emoji)
   end
 end
