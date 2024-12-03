@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+module BoosterPerks
+  extend Discordrb::EventContainer
+
+  # Application command handler for /booster role claim.
+  def create_role: (untyped data) -> (nil | untyped)
+                 
+  # Event handler for the application command /booster role edit.
+  def edit_role: (untyped data) -> (nil | untyped)
+
+  # Application command handler for /booster role delete.
+  def delete_role: (untyped data) -> (nil | untyped)
+  
+  # Event handler for the role delete Gateway event.
+  def role_delete_event: (untyped data) -> untyped
+end

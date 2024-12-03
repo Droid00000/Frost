@@ -1,0 +1,15 @@
+# frozen_string_literal: true
+
+POSTGRES: untyped
+
+class Object
+  def booster_records: (?server: untyped?, ?user: untyped?, ?role: untyped?, ?type: untyped?) -> untyped
+
+  def archiver_records: (?server: untyped?, ?channel: untyped?, ?type: untyped?) -> untyped
+
+  def event_records: (?server: untyped?, ?role: untyped?, ?type: untyped?) -> untyped
+
+  def snowball_records: (?user: untyped?, ?type: untyped?, ?balance: untyped?) -> untyped
+
+  def emoji_records: (?emoji: untyped?, ?server: untyped?, ?type: untyped?) -> untyped
+end
