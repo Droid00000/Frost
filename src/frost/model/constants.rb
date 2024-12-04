@@ -105,7 +105,13 @@ EMBED = {
   39 => '**NOMS**',
   40 => '**POKES**',
   41 => '**PUNCH**',
-  42 => '**SLEEP**'
+  42 => '**SLEEP**',
+  43 => '**GATHER**',
+  44 => '**HIT**',
+  45 => '**MISS**',
+  46 => '**COMMANDS**',
+  47 => '**Booster Settings**',
+  48 => '**Booster Commands**'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

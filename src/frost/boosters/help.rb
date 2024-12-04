@@ -3,8 +3,8 @@
 def help_embed(data)
   data.edit_response do |builder|
     builder.add_embed do |embed|
-      embed.title = '**Booster Commands**'
       embed.colour = UI[5]
+      embed.title = EMBED[48]
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
       embed.add_field(name: '``/booster role claim``', value: EMBED[20])
       embed.add_field(name: '``/booster role edit``', value: EMBED[21])

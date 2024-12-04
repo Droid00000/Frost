@@ -3,8 +3,8 @@
 def general_help_embed(data)
   data.edit_response do |builder|
     builder.add_embed do |embed|
-      embed.title = '**General Commands**'
       embed.colour = UI[5]
+      embed.title = EMBED[46]
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
       embed.add_field(name: '``/hug``', value: EMBED[1])
       embed.add_field(name: '``/nom``', value: EMBED[2])
@@ -26,8 +26,8 @@ end
 def booster_admin_help(data)
   data.edit_response do |builder|
     builder.add_embed do |embed|
-      embed.title = '**Booster Admin Commands**'
       embed.colour = UI[5]
+      embed.title = EMBED[47]
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
       embed.add_field(name: '``/booster admin add``', value: EMBED[13])
       embed.add_field(name: '``/booster admin ban``', value: EMBED[14])
