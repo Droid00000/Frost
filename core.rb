@@ -10,16 +10,10 @@ require 'selenium-webdriver'
 require 'src/frost/model/embeds'
 require 'src/frost/model/schema'
 require 'src/frost/model/functions'
-
-require 'src/frost/snow/handler'
-require 'src/frost/admin/handler'
-require 'src/frost/emojis/handler'
-require 'src/frost/events/handler'
-require 'src/frost/boosters/handler'
-require 'src/frost/affections/handler'
-require 'src/frost/moderation/handler'
 require 'src/frost/pins/auto_archiver'
 require 'src/frost/pins/manual_archiver'
+
+Dir['src/frost/**/handler.rb'].each {|file| require file}
 
 bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 33_281)
 
