@@ -13,7 +13,7 @@ require 'src/frost/model/functions'
 require 'src/frost/pins/auto_archiver'
 require 'src/frost/pins/manual_archiver'
 
-Dir['src/frost/**/handler.rb'].each {|file| require file}
+Dir['src/frost/**/handler.rb'].each { |file| require file }
 
 bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 33_281)
 
