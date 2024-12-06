@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 def block_member(data)
-  unless data.server.bot.permission?(:manage_channels)
+  unless data.server.bot.permission?(:manage_roles)
     data.edit_response(content: RESPONSE[49])
     return
   end
@@ -23,7 +23,17 @@ def block_member(data)
 
   overwrite = Discordrb::Overwrite.new(data.member('member'), deny: 1024)
 
-  data.channel.define_overwrite(overwrite, reason: REASON[12])
+  if data.options['cascade'] == true
+    data.server.channels.each do |channel|
+      next unless data.server.bot.permission?(:manage_roles, channel)
+
+      channel.define_overwrite(overwrite, reason: REASON[12])
+    end
+  end
+
+  if data.options['cascade'] != true
+    data.channel.define_overwrite(overwrite, reason: REASON[12])
+  end
 
   data.edit_response(content: format(RESPONSE[57], data.options['member']))
 end

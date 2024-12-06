@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 def unfreeze_server(data)
-  unless data.server.bot.permission?(:manage_channels)
+  unless data.server.bot.permission?(:manage_roles)
     data.edit_response(content: RESPONSE[49])
     return
   end
 
   data.server.channels.each do |channel|
+    next unless data.server.bot.permission?(:manage_roles, channel)
+
     case channel.type
     when 0
       channel.destroy_overwrite(server.everyone_role, allow: 2048, reason: REASON[10])

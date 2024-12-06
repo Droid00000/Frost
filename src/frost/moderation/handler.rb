@@ -27,4 +27,9 @@ module ModerationCommands
     event.defer(ephemeral: false)
     block_member(event)
   end
+
+  application_command(:mute) do |event|
+    event.defer(ephemeral: false)
+    mute_member(event)
+  end
 end

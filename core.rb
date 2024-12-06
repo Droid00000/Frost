@@ -17,8 +17,6 @@ Dir['src/frost/**/handler.rb'].each { |file| require file }
 
 bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 33_281)
 
-bot.ready { bot.custom_status(STATUS[1], STATUS[2]) }
-
 at_exit { bot.stop }
 
 bot.include! EventRoles

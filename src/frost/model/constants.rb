@@ -153,12 +153,6 @@ UI = {
   8 => 0x849fe8
 }.freeze
 
-# Data used to update the bot status.
-STATUS = {
-  1 => 'online',
-  2 => 'https://github.com/Droid00000/Frost'
-}.freeze
-
 # The YAML configuration file used by the bot.
 CONFIG = YAML.load_file(File.join(File.expand_path('../../..', __dir__), 'config.yml'))
 
