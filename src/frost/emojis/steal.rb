@@ -16,7 +16,7 @@ def steal_emojis(data)
   data.target.emoji.uniq.each do |emoji|
     emoji = data.server.add_emoji(emoji.name, emoji.file)
     emojis << emoji
-  rescue Discordrb::Errors::UnknownError
+  rescue StandardError
     break
   end
 
