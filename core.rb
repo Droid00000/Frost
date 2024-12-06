@@ -7,13 +7,13 @@ require 'sequel'
 require 'discordrb'
 require 'rufus-scheduler'
 require 'selenium-webdriver'
-require 'src/frost/model/embeds'
-require 'src/frost/model/schema'
-require 'src/frost/model/functions'
-require 'src/frost/pins/auto_archiver'
-require 'src/frost/pins/manual_archiver'
+require 'app/frost/model/embeds'
+require 'app/frost/model/schema'
+require 'app/frost/model/functions'
+require 'app/frost/pins/auto_archiver'
+require 'app/frost/pins/manual_archiver'
 
-Dir['src/frost/**/handler.rb'].each { |file| require file }
+Dir['app/frost/**/handler.rb'].each { |file| require file }
 
 bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 33_281)
 
