@@ -63,7 +63,8 @@ RESPONSE = {
   59 => 'The bot needs to have the ``timeout members`` permission to do this.',
   60 => 'Invalid duration parameter.',
   61 => 'A mute can only last up to 28 days.',
-  62 => 'You may not mute this user.'
+  62 => 'You may not mute this user.',
+  63 => 'Successfully timed out <@%s>.'
 }.freeze
 
 # Values for embed responses.
@@ -165,7 +166,8 @@ REGEX = {
   1 => /:(\d+)>$/,
   2 => /\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z/,
   3 => /<(a?):([a-zA-Z0-9_]{1,32}):([0-9]{15,20})>/,
-  4 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
+  4 => /(?<=<@|\s|^)\d+(?=>|\s|$)/,
+  5 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|
           xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|

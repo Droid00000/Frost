@@ -6,7 +6,7 @@ module AutoPinArchiver
   channel_pins_update do |event|
     pins = event.channel.pins
 
-    if pins.count == 50 && archiver_records(server: event.server.id, type: :check)
+    if pins.count == 50 && archiver_records(server: event.server.id, type: :get)
       archive_channel = event.bot.channel(archiver_records(server: event.server.id, type: :get))
       message = pins[1]
 

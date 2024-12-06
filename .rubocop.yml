@@ -40,6 +40,10 @@ Metrics/AbcSize:
 Security/Eval:
   Enabled: false
 
+# The usage of class variables is intentional.
+Style/ClassVars:
+  Enabled: false
+
 # I don't like the extra end it introduces.
 Style/IfUnlessModifier:
   Enabled: false

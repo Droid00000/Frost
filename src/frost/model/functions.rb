@@ -24,7 +24,7 @@ end
 def safe_name?(name)
   return true if name.nil?
 
-  !name.match(REGEX[4])
+  !name.match(REGEX[5])
 end
 
 # Checks if a guild member is still boosting a guild.

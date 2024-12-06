@@ -90,8 +90,6 @@ end
 def archiver_records(server: nil, channel: nil, type: nil)
   POSTGRES.transaction do
     case type
-    when :check
-      POSTGRES[:archiver_settings].where(guild_id: server).get(:channel_id)
     when :update
       POSTGRES[:archiver_settings].where(guild_id: server).update(channel_id: channel)
     when :get
