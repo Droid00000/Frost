@@ -61,8 +61,8 @@ RESPONSE = {
   57 => 'Successfully blocked <@%s> from viewing this channel.',
   58 => 'You may not block this user.',
   59 => 'The bot needs to have the ``timeout members`` permission to do this.',
-  60 => "Invalid duration parameter.",
-  61 => "A mute can only last up to 28 days.",
+  60 => 'Invalid duration parameter.',
+  61 => 'A mute can only last up to 28 days.',
   62 => 'You may not mute this user.'
 }.freeze
 
