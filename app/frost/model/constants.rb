@@ -159,7 +159,7 @@ UI = {
 }.freeze
 
 # The YAML configuration file used by the bot.
-CONFIG = YAML.load_file(File.join(File.expand_path('../../..', __dir__), 'config.yml'))
+CONFIG = YAML.load_file("#{$LOAD_PATH.first}/config.yml")
 
 # A series of regular expressions utilized by the bot.
 REGEX = {
