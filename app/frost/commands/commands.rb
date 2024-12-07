@@ -82,10 +82,10 @@ end
 bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: "32", contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'सेटिंग्स' }, description_localizations: { 'hi' => 'आपना सर्वर कॉन्फिग्रेशन देखो' }) do |option|
 end
 
-bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.', default_member_permissions: "0", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'बंधकरो' }, description_localizations: { 'hi' => 'सावधानी से बोट को गेटवे से डिसकनेक्ट करो' }) do |option|
+bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.', default_member_permissions: "0", contexts: [0, 1], integration_types: [0, 1], name_localizations: { 'hi' => 'बंधकरो' }, description_localizations: { 'hi' => 'सावधानी से बोट को गेटवे से डिसकनेक्ट करो' }) do |option|
 end
 
-bot.register_application_command(:restart, 'Safely restarts and reconnects the bot to the Gateway.', default_member_permissions: "0", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'फिरसेकरो' }, description_localizations: { 'hi' => 'सुरक्षित रूप से पुनरारंभ होता है और बॉट को गेटवे से पुनः कनेक्ट करता है' }) do |option|
+bot.register_application_command(:restart, 'Safely restarts and reconnects the bot to the Gateway.', default_member_permissions: "0", contexts: [0, 1], integration_types: [0, 1], name_localizations: { 'hi' => 'फिरसेकरो' }, description_localizations: { 'hi' => 'सुरक्षित रूप से पुनरारंभ होता है और बॉट को गेटवे से पुनः कनेक्ट करता है' }) do |option|
 end
 
 bot.register_application_command(:throw, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'फेंको' }, description_localizations: { 'hi' => 'बर्फ का गोला की लड़ीं' }) do |command|
