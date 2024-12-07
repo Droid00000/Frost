@@ -55,6 +55,12 @@ end
 
 bot.register_application_command(:block, 'Stop a member from being able to access this channel.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'ब्लॉक' }, description_localizations: { 'hi' => 'किसी सदस्य को चैनल का उपयोग करने से रोकें।' }) do |option|
   option.user('member', 'Which member do you want to lock out?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'आप किस सदस्य को लॉक आउट करना चाहते हैं' })
+  option.boolean('cascade', 'Should this member be blocked from every channel in this server?', required: false, name_localizations: { 'hi' => 'झरना' }, description_localizations: { 'hi' => 'क्या इस सदस्य को इस सर्वर के प्रत्येक चैनल से ब्लॉक कर दिया जाना चाहिए' } )
+end
+
+bot.register_application_command(:mute, 'Stop a member from being able to talk in this server.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'मूक' }, description_localizations: { 'hi' => 'किसी सदस्य को इस सर्वर में बात करने से रोकें' }) do |option|
+  option.user('member', 'Which member do you want to mute?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'आप किस सदस्य को म्यूट करना चाहते हैं' })
+  option.string('duration', 'How long the mute should last. Max 28 days. ', required: true, name_localizations: { 'hi' => 'लंबाई' }, description_localizations: { 'hi' => 'कितनी देर तक मौन रहना चाहिए. अधिकतम अट्ठाईस दिन' } )
 end
 
 bot.register_application_command(:bulk, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'थोक' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }, default_member_permissions: 36) do |command|

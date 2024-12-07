@@ -3,6 +3,7 @@
 import 'ban'
 import 'block'
 import 'freeze'
+import 'timeout'
 import 'unfreeze'
 
 module ModerationCommands

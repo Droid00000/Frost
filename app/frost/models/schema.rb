@@ -8,6 +8,14 @@ POSTGRES.extension(:connection_validator)
 
 POSTGRES.pool.connection_validation_timeout = -1
 
+POSTGRES.create_table?(:media_tracker) do
+  String :name, null: false, unique: true
+  String :cover, null: false, unique: true
+  String :creator, null: false, unique: true
+  String :released, null: false, unique: true
+  primary_key %i[name creator]
+end
+
 POSTGRES.create_table?(:event_settings) do
   Bigint :role_id, unique: true, null: false
   Bigint :guild_id, unique: false, null: false

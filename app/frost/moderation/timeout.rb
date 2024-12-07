@@ -29,7 +29,7 @@ def mute_member(data)
   end
 
   begin
-    data.member('member').timeout = Time.at(time / 1000.0)
+    data.member('member').timeout = Time.now + time
   rescue ArgumentError
     data.edit_response(content: RESPONSE[61])
     return
