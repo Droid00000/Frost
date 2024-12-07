@@ -44,21 +44,21 @@ end
 bot.register_application_command(:"Add Emojis", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: 1073741824, name_localizations: { 'hi' => 'इमोजी जोड़ें' }) do |command|
 end
 
-bot.register_application_command(:freeze, 'Prevent all members from speaking in the server.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'स्थिर' }, description_localizations: { 'hi' => 'सभी सदस्यों को सर्वर में बोलने से रोकें' }) do |option|
+bot.register_application_command(:freeze, 'Prevent all members from speaking in the server.', contexts: [0], integration_types: [0], default_member_permissions: 268435456, name_localizations: { 'hi' => 'स्थिर' }, description_localizations: { 'hi' => 'सभी सदस्यों को सर्वर में बोलने से रोकें' }) do |option|
   option.string('duration', 'How long should the server be frozen for?', required: false, min_length: 2, max_length: 1000, name_localizations: { 'hi' => 'लंबाई' }, description_localizations: { 'hi' => 'सर्वर को कितने समय के लिए फ़्रीज़ किया जाना चाहिए' })
   option.string('reason', 'The reason for freezing the server.', required: false, max_length: 1000, name_localizations: { 'hi' => 'क्यू' }, description_localizations: { 'hi' => 'सर्वर लॉक होने का कारण' })
 end
 
-bot.register_application_command(:unfreeze, 'Remove the lock caused by the freeze command.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'अनफ़्रीज़' }, description_localizations: { 'hi' => 'फ़्रीज़ कमांड का उपयोग करके होने वाले टाइमआउट को अनलॉक करें' }) do |option|
+bot.register_application_command(:unfreeze, 'Remove the lock caused by the freeze command.', contexts: [0], integration_types: [0], default_member_permissions: 268435456, name_localizations: { 'hi' => 'अनफ़्रीज़' }, description_localizations: { 'hi' => 'फ़्रीज़ कमांड का उपयोग करके होने वाले टाइमआउट को अनलॉक करें' }) do |option|
   option.string('reason', 'The reason for un-freezing the server.', required: false, max_length: 1000, name_localizations: { 'hi' => 'वजह' }, description_localizations: { 'hi' => 'सर्वर को अनफ्रीज करने का कारण' })
 end
 
-bot.register_application_command(:block, 'Stop a member from being able to access this channel.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'ब्लॉक' }, description_localizations: { 'hi' => 'किसी सदस्य को चैनल का उपयोग करने से रोकें।' }) do |option|
+bot.register_application_command(:block, 'Stop a member from being able to access this channel.', contexts: [0], integration_types: [0], default_member_permissions: 268435456, name_localizations: { 'hi' => 'ब्लॉक' }, description_localizations: { 'hi' => 'किसी सदस्य को चैनल का उपयोग करने से रोकें।' }) do |option|
   option.user('member', 'Which member do you want to lock out?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'आप किस सदस्य को लॉक आउट करना चाहते हैं' })
   option.boolean('cascade', 'Should this member be blocked from every channel in this server?', required: false, name_localizations: { 'hi' => 'झरना' }, description_localizations: { 'hi' => 'क्या इस सदस्य को इस सर्वर के प्रत्येक चैनल से ब्लॉक कर दिया जाना चाहिए' } )
 end
 
-bot.register_application_command(:mute, 'Stop a member from being able to talk in this server.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'मूक' }, description_localizations: { 'hi' => 'किसी सदस्य को इस सर्वर में बात करने से रोकें' }) do |option|
+bot.register_application_command(:mute, 'Stop a member from being able to talk in this server.', contexts: [0], integration_types: [0], default_member_permissions: 1099511627776, name_localizations: { 'hi' => 'मूक' }, description_localizations: { 'hi' => 'किसी सदस्य को इस सर्वर में बात करने से रोकें' }) do |option|
   option.user('member', 'Which member do you want to mute?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'आप किस सदस्य को म्यूट करना चाहते हैं' })
   option.string('duration', 'How long the mute should last. Max 28 days. ', required: true, name_localizations: { 'hi' => 'लंबाई' }, description_localizations: { 'hi' => 'कितनी देर तक मौन रहना चाहिए. अधिकतम अट्ठाईस दिन' } )
 end
@@ -113,7 +113,7 @@ bot.register_application_command(:update, 'Contributors', contexts: [0, 1, 2], i
   end
 end
 
-bot.register_application_command(:pin, 'Pin archive', default_member_permissions: 0, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'पिन' }, description_localizations: { 'hi' => 'की पुरातत्' }) do |command|
+bot.register_application_command(:pin, 'Pin archive', default_member_permissions: 16, contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'पिन' }, description_localizations: { 'hi' => 'की पुरातत्' }) do |command|
   command.subcommand_group(:archiver, 'Pin Archival!', name_localizations: { 'hi' => 'संग्रहकर्ता' }, description_localizations: { 'hi' => 'की पुरातत्व' }) do |group|
     group.subcommand(:setup, 'Setup the pin-archiver functionality.', name_localizations: { 'hi' => 'बंदोबस्त' }, description_localizations: { 'hi' => 'पिन की पुरातत्व की कंडीशन' }) do |option|
       option.channel('channel', 'Which channel should archived pins be sent to?', required: true, types: [:text], name_localizations: { 'hi' => 'प्रवाह' }, description_localizations: { 'hi' => 'किधर पुरातात्विक पिंस जाने चाहिए' })
@@ -124,7 +124,7 @@ bot.register_application_command(:pin, 'Pin archive', default_member_permissions
   end
 end
 
-bot.register_application_command(:events, 'Event roles setup', default_member_permissions: 0, contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'घटनाएँ' }, description_localizations: { 'hi' => 'इवेंट रोल्स सेटअप करें' }) do |command|
+bot.register_application_command(:events, 'Event roles setup', default_member_permissions: 268435456, contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'घटनाएँ' }, description_localizations: { 'hi' => 'इवेंट रोल्स सेटअप करें' }) do |command|
   command.subcommand_group(:role, 'Event roles!', name_localizations: { 'hi' => 'भूमिका' }, description_localizations: { 'hi' => 'इवेंट रोल्स के लिए सेटअप करें' }) do |group|
     group.subcommand(:setup, 'Setup the event roles functionality.', name_localizations: { 'hi' => 'व्यवस्था' }, description_localizations: { 'hi' => 'इवेंट रोल्स कार्यक्षमता सेटअप करें' }) do |option|
       option.role('role', 'Which role should be modifiable by its users?', required: true, name_localizations: { 'hi' => 'रोल' }, description_localizations: { 'hi' => 'कौन सा रोल उपयोगकर्ताओं द्वारा संपादित किया जा सकता है' })
