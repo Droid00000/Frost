@@ -44,10 +44,3 @@ def next_chapter_date(data)
   time = driver.find_element(:css, CONFIG['Chapter']['ELEMENT'])
   data.edit_response(content: RESPONSE[56] % DateTime.parse(time.text).to_time.to_i)
 end
-
-# Rotates the bots status everyday at 1AM.
-def rotating_status(bot)
-  Rufus::Scheduler.new.cron '0 0 * * *' do
-    bot.custom_status(nil, STATUS.to_a.sample.last)
-  end
-end
