@@ -6,7 +6,7 @@ AllCops:
   - 'src/frost/pins/manual_archiver.rb'
   - 'src/frost/pins/auto_archiver.rb'
   - 'src/frost/commands/commands.rb'
-  - 'src/frost/model/embeds.rb'
+  - 'src/frost/models/embeds.rb'
 
 # Most of these metrics are useless.
 Metrics/PerceivedComplexity:

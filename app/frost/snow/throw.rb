@@ -2,7 +2,7 @@
 
 def throw_snowball(data)
   unless snowball_records(user: data.user.id, type: :check_snowball)
-    data.respond(content: RESPONSE[14])
+    data.respond(content: RESPONSE[14], ephemeral: true)
     return
   end
 
