@@ -116,7 +116,8 @@ EMBED = {
   45 => '**MISS**',
   46 => '**COMMANDS**',
   47 => '**Booster Settings**',
-  48 => '**Booster Commands**'
+  48 => '**Booster Commands**',
+  49 => '**Server Settings**'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

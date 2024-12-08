@@ -1,29 +1,12 @@
 # frozen_string_literal: true
 
-import 'help'
 import 'pins'
 import 'roles'
 import 'status'
-import 'settings'
 import 'utilities'
 
 module AdminCommands
   extend Discordrb::EventContainer
-
-  application_command(:help) do |event|
-    event.defer(ephemeral: true)
-    general_help_embed(event)
-  end
-
-  application_command(:about) do |event|
-    event.defer(ephemeral: true)
-    event.edit_response(content: "#{RESPONSE[10]} #{EMOJI[1]}")
-  end
-
-  application_command(:settings) do |event|
-    event.defer(ephemeral: true)
-    server_settings(event)
-  end
 
   application_command(:shutdown) do |event|
     event.defer(ephemeral: true)
@@ -66,13 +49,6 @@ module AdminCommands
     group.subcommand('disable') do |event|
       event.defer(ephemeral: true)
       disable_event_roles(event)
-    end
-  end
-
-  application_command(:next).group(:chapter) do |group|
-    group.subcommand('when') do |event|
-      event.defer(ephemeral: false)
-      next_chapter_date(event)
     end
   end
 end

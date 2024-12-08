@@ -26,10 +26,10 @@ def settings(type, server)
 end
 
 # An embed with data about a guild's enabled functionality.
-def server_settings(data)
+def general_settings(data)
   data.edit_response do |builder|
     builder.add_embed do |embed|
-      embed.title = '**Server Settings**'
+      embed.title = EMBED[49]
       embed.colour = UI[5]
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
       embed.add_field(name: '``/Booster Perks``', value: settings(:booster, data.server.id).to_s)
