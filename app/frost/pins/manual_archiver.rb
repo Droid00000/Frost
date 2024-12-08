@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ManualPinArchiver
+module PinArchiver
   extend Discordrb::EventContainer
 
   application_command(:archive) do |event|

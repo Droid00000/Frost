@@ -20,13 +20,12 @@ bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 33_281)
 at_exit { bot.stop }
 
 bot.include! EventRoles
+bot.include! PinArchiver
 bot.include! BoosterPerks
 bot.include! EmojiCommands
 bot.include! AdminCommands
 bot.include! SnowballFights
-bot.include! AutoPinArchiver
 bot.include! AffectionCommands
-bot.include! ManualPinArchiver
 bot.include! ModerationCommands
 
 bot.run

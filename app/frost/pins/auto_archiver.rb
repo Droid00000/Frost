@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module AutoPinArchiver
+module PinArchiver
   extend Discordrb::EventContainer
 
   channel_pins_update do |event|
