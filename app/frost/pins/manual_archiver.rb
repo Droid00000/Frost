@@ -13,7 +13,7 @@ module ManualPinArchiver
 
       archive_channel.send_embed do |embed|
         embed.colour = UI[2]
-        embed.description = message.content&.to_s if message.content
+        embed.description = message.content&.to_s
         embed.add_field(name: 'Source', value: "[Jump!](#{message.link})")
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: message.attachments.first.url) if message.attachments.any?
         embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: message.author.display_name, icon_url: message.author.avatar_url)

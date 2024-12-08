@@ -31,7 +31,7 @@ def block_member(data)
     end
   end
 
-  if data.options['cascade'] != true
+  if data.options['cascade'] == false
     data.channel.define_overwrite(overwrite, reason: REASON[12])
   end
 

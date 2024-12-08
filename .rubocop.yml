@@ -3,10 +3,10 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 3.3
   Exclude:
-  - 'src/frost/pins/manual_archiver.rb'
-  - 'src/frost/pins/auto_archiver.rb'
-  - 'src/frost/commands/commands.rb'
-  - 'src/frost/models/embeds.rb'
+  - 'app/frost/pins/manual_archiver.rb'
+  - 'app/frost/pins/auto_archiver.rb'
+  - 'app/frost/commands/commands.rb'
+  - 'app/frost/models/embeds.rb'
 
 # Most of these metrics are useless.
 Metrics/PerceivedComplexity:

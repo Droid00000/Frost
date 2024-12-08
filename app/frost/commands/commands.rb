@@ -55,12 +55,12 @@ end
 
 bot.register_application_command(:block, 'Stop a member from being able to access this channel.', contexts: [0], integration_types: [0], default_member_permissions: "268435456", name_localizations: { 'hi' => 'ब्लॉक' }, description_localizations: { 'hi' => 'किसी सदस्य को चैनल का उपयोग करने से रोकें।' }) do |option|
   option.user('member', 'Which member do you want to lock out?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'आप किस सदस्य को लॉक आउट करना चाहते हैं' })
-  option.boolean('cascade', 'Should this member be blocked from every channel in this server?', required: false, name_localizations: { 'hi' => 'झरना' }, description_localizations: { 'hi' => 'क्या इस सदस्य को इस सर्वर के प्रत्येक चैनल से ब्लॉक कर दिया जाना चाहिए' } )
+  option.boolean('cascade', 'Should this member be blocked from every channel in this server?', required: true, name_localizations: { 'hi' => 'झरना' }, description_localizations: { 'hi' => 'क्या इस सदस्य को इस सर्वर के प्रत्येक चैनल से ब्लॉक कर दिया जाना चाहिए' })
 end
 
 bot.register_application_command(:mute, 'Stop a member from being able to talk in this server.', contexts: [0], integration_types: [0], default_member_permissions: "1099511627776", name_localizations: { 'hi' => 'मूक' }, description_localizations: { 'hi' => 'किसी सदस्य को इस सर्वर में बात करने से रोकें' }) do |option|
   option.user('member', 'Which member do you want to mute?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'आप किस सदस्य को म्यूट करना चाहते हैं' })
-  option.string('duration', 'How long the mute should last. Max 28 days. ', required: true, name_localizations: { 'hi' => 'लंबाई' }, description_localizations: { 'hi' => 'कितनी देर तक मौन रहना चाहिए. अधिकतम अट्ठाईस दिन' } )
+  option.string('duration', 'How long the mute should last. Max 28 days. ', required: true, name_localizations: { 'hi' => 'लंबाई' }, description_localizations: { 'hi' => 'कितनी देर तक मौन रहना चाहिए. अधिकतम अट्ठाईस दिन' })
 end
 
 bot.register_application_command(:bulk, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'थोक' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }, default_member_permissions: "36") do |command|
@@ -156,21 +156,21 @@ end
 bot.register_application_command(:booster, 'Booster perks', contexts: [0], integration_types: [0]) do |command|
   command.subcommand_group(:role, 'Booster roles!') do |group|
     group.subcommand('claim', 'Claim your custom booster role!') do |option|
-        option.string('name', 'Provide a name for your role.', required: true, max_length: 100)
-        option.string('color', 'Provide a HEX color for your role.', required: true, min_length: 6, max_length: 7)
-        option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
-      end
+      option.string('name', 'Provide a name for your role.', required: true, max_length: 100)
+      option.string('color', 'Provide a HEX color for your role.', required: true, min_length: 6, max_length: 7)
+      option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
+    end
 
-      group.subcommand('edit', 'Edit your custom booster role!') do |option|
-        option.string('name', 'Provide a name for your role.', required: false, max_length: 100)
-        option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 6, max_length: 7)
-        option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
-      end
+    group.subcommand('edit', 'Edit your custom booster role!') do |option|
+      option.string('name', 'Provide a name for your role.', required: false, max_length: 100)
+      option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 6, max_length: 7)
+      option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
+    end
 
-      group.subcommand('delete', 'Delete your custom booster role.') do |option|
-      end
+    group.subcommand('delete', 'Delete your custom booster role.') do |option|
+    end
 
-      group.subcommand('help', 'Open the booster perks help menu.') do |option|
+    group.subcommand('help', 'Open the booster perks help menu.') do |option|
     end
   end
 
