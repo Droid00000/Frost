@@ -4,7 +4,6 @@ import 'help'
 import 'pins'
 import 'roles'
 import 'status'
-import 'boosters'
 import 'settings'
 import 'utilities'
 
@@ -74,43 +73,6 @@ module AdminCommands
     group.subcommand('when') do |event|
       event.defer(ephemeral: false)
       next_chapter_date(event)
-    end
-  end
-
-  application_command(:booster).group(:admin) do |group|
-    group.subcommand('add') do |event|
-      event.defer(ephemeral: true)
-      admin_add_booster(event)
-    end
-
-    group.subcommand('delete') do |event|
-      event.defer(ephemeral: true)
-      admin_remove_user(event)
-    end
-
-    group.subcommand('ban') do |event|
-      event.defer(ephemeral: true)
-      admin_blacklist_user(event)
-    end
-
-    group.subcommand('unban') do |event|
-      event.defer(ephemeral: true)
-      admin_remove_blacklist(event)
-    end
-
-    group.subcommand('setup') do |event|
-      event.defer(ephemeral: true)
-      admin_setup_perks(event)
-    end
-
-    group.subcommand('disable') do |event|
-      event.defer(ephemeral: true)
-      admin_disable_perks(event)
-    end
-
-    group.subcommand('help') do |event|
-      event.defer(ephemeral: true)
-      booster_admin_help(event)
     end
   end
 end
