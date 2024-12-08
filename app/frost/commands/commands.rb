@@ -76,7 +76,6 @@ end
 
 bot.register_application_command(:eval, 'Allows the bot owner to execute code.', default_member_permissions: "0", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'लगाना' }, description_localizations: { 'hi' => 'बोट ऑनर को कोड रन करनेकी इजाजत है' }) do |option|
   option.string('code', 'The code you want to execute.', required: true, name_localizations: { 'hi' => 'कोड' }, description_localizations: { 'hi' => 'कोड जो रन करना है' })
-  option.boolean('ephemeral', 'Whether the output should only be visible to you.', required: true, name_localizations: { 'hi' => 'अल्पकालिक' }, description_localizations: { 'hi' => 'क्या आपको ही बस आउटपुट दिखना चाहिए?' })
 end
 
 bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: "32", contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'सेटिंग्स' }, description_localizations: { 'hi' => 'आपना सर्वर कॉन्फिग्रेशन देखो' }) do |option|

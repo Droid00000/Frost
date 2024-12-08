@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-def update_status(data)
+def owner_status(data)
   unless safe_name?(data.options['description'])
     data.edit_response(content: RESPONSE[11])
     return
