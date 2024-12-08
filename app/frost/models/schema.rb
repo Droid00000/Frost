@@ -95,66 +95,133 @@ def booster_records(server: nil, user: nil, role: nil, type: nil)
   end
 end
 
-def archiver_records(server: nil, channel: nil, type: nil)
-  POSTGRES.transaction do
-    case type
-    when :update
-      POSTGRES[:archiver_settings].where(guild_id: server).update(channel_id: channel)
-    when :get
-      POSTGRES[:archiver_settings].where(guild_id: server).get(:channel_id)
-    when :setup
-      POSTGRES[:archiver_settings].insert(guild_id: server, channel_id: channel)
-    when :disable
-      POSTGRES[:archiver_settings].where(guild_id: server).delete
+module Frost
+  # Represents a pins DB.
+  class Pins
+    # Easy way to access the DB.
+    attr_accessor :PG
+
+    # @param database [Sequel::Dataset]
+    def initialize(database)
+      @@PG = database
+    end
+
+    # Updates an existing archive channel.
+    def self.update(data)
+      @@PG.where(guild_id: data.server.id).update(channel_id: data.channel.id)
+    end
+
+    # Sets up an existing archive channel.
+    def self.setup(data)
+      @@PG.insert(guild_id: data.server.id, channel_id: data.channel.id)
+    end
+
+    # Gets an existing archive channel.
+    def self.get(data)
+      @@PG.where(guild_id: data.server.id).get(:channel_id)
+    end
+
+    # Deletes an existing archive channel.
+    def self.disable(data)
+      @@PG.where(guild_id: data.server.id).delete
     end
   end
 end
 
-def event_records(server: nil, role: nil, type: nil)
-  POSTGRES.transaction do
-    case type
-    when :get_roles
-      POSTGRES[:event_settings].where(guild_id: server).select(:role_id)&.map { |role| "<@&#{role[:role_id]}>" }
-    when :check_role
-      !POSTGRES[:event_settings].where(guild_id: server, role_id: role).empty?
-    when :register_role
-      POSTGRES[:event_settings].insert(guild_id: server, role_id: role)
-    when :enabled
-      !POSTGRES[:event_settings].where(guild_id: server).empty?
-    when :disable
-      POSTGRES[:event_settings].where(guild_id: server).delete
+module Frost
+  # Represents a roles DB.
+  class Roles
+    # Easy way to access the DB.
+    attr_accessor :PG
+
+    # @param database [Sequel::Dataset]
+    def initialize(database)
+      @@PG = database
+    end
+
+    # Gets all the setup roles for a guild.
+    def self.all(data)
+      @@PG.where(guild_id: data.server.id).select(:role_id)&.map { |role| "<@&#{role[:role_id]}>" }
+    end
+
+    # Check if an existing role is setup.
+    def self.get?(data)
+      !@@PG.where(guild_id: data.server.id, role_id: data.options['role']).empty?
+    end
+
+    # Add a new role to the database.
+    def self.add(data)
+      @@PG.insert(guild_id: data.server.id, role_id: data.options['role'])
+    end
+
+    # Removes all the roles for a guild.
+    def self.disable(data)
+      @@PG.where(guild_id: data.server.id).delete
+    end
+
+    # Check if this guild is enable.
+    def self.enabled?(data)
+      !@@PG.where(guild_id: data.server.id).empty?
     end
   end
 end
 
-def snowball_records(user: nil, type: nil, balance: nil)
-  POSTGRES.transaction do
-    case type
-    when :add_snowball
-      POSTGRES[:snowball_players].where(user_id: user).update(balance: Sequel[:balance] + balance)
-    when :remove_snowball
-      POSTGRES[:snowball_players].where(user_id: user).update(balance: Sequel[:balance] - balance)
-    when :check_user
-      !POSTGRES[:snowball_players].where(user_id: user).get(:user_id).nil?
-    when :check_snowball
-      POSTGRES[:snowball_players].where(user_id: user).get(:balance) >= 1
-    when :get_snowball
-      POSTGRES[:snowball_players].where(user_id: user).get(:balance)
-    when :add_user
-      POSTGRES[:snowball_players].insert(user_id: user)
+module Frost
+  # Represents an emojis DB.
+  class Emojis
+    # Easy way to access the DB.
+    attr_accessor :PG
+
+    # @param database [Sequel::Dataset]
+    def initialize(database)
+      @@PG = database
+    end
+
+    # Add a new role to the database.
+    def self.add(data)
+      @@PG.insert(emoji_id: emoji.id, guild_id: server.id)
     end
   end
 end
 
-def emoji_records(emoji: nil, server: nil, type: nil)
-  POSTGRES.transaction do
-    case type
-    when :check_emoji
-      POSTGRES[:emoji_tracker].where(emoji_id: emoji, guild_id: server).empty?
-    when :add_emoji
-      POSTGRES[:emoji_tracker].insert(emoji_id: emoji.id, guild_id: server.id)
-    when :emojis
-      POSTGRES[:emoji_tracker]
+module Frost
+  # Represents an snowballs DB.
+  class Snowballs
+    # Easy way to access the DB.
+    attr_accessor :PG
+
+    # @param database [Sequel::Dataset]
+    def initialize(database)
+      @@PG = database
+    end
+
+    # Checks if a user is in the Database.
+    def self.user?(data)
+      !@@PG.where(user_id: data.user.id).get(:user_id).nil?
+    end
+
+    # Checks if a user has a snowball.
+    def self.snowball?(data)
+      @@PG.where(user_id: data.user.id).get(:balance) >= 1
+    end
+
+    # Gets the snowballs a user has.
+    def self.snowballs(data)
+      @@PG.where(user_id: user).get(:balance)
+    end
+
+    # Adds a user to the DB.
+    def self.user(data)
+      @@PG.insert(user_id: data.user.id)
+    end
+    
+    # Adds or removes a snowball.
+    def self.balance(data, add = false)
+      if add
+        @@PG.where(user_id: data.user.id).update(balance: Sequel[:balance] + balance)
+      else
+        @@PG.where(user_id: data.user.id).update(balance: Sequel[:balance] - balance)
+      end
     end
   end
 end
