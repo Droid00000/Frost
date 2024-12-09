@@ -6,15 +6,11 @@ module Frost
     class Members
       # Easy way to access the DB.
       attr_accessor :PG
+      alias_method :all, :PG
 
       # @param database [Sequel::Dataset]
       def initialize(database)
         @@PG = POSTGRES[:server_boosters]
-      end
-
-      # Easy way to access all the boosters.
-      def self.all
-        @@PG
       end
 
       # Adds a booster to the DB.
