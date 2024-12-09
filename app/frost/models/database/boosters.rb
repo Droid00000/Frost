@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'ban'
-
 module Frost
   class Booster
     # Easy way to access the DB.
