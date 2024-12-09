@@ -8,7 +8,6 @@ import 'delete'
 
 module BoosterPerks
   extend Discordrb::EventContainer
-  server_role_delete { |event| role_delete_event(event) }
 
   application_command(:booster).group(:role) do |group|
     group.subcommand('claim') do |event|

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 module Frost
-  # Represents an snowballs DB.
-  class Snowballs
+  # Represents a snowball DB.
+  class Snow
     # Easy way to access the DB.
     attr_accessor :PG
 
@@ -19,9 +19,13 @@ module Frost
     end
 
     # Checks if a user has a snowball.
-    def self.snowball?(data)
+    def self.snowball?(data, other: false)
       POSTGRES.transaction do
-        @@PG.where(user_id: data.user.id).get(:balance) >= 1
+        if other
+          @@PG.where(user_id: data.options['member']).get(:balance)
+        else
+          @@PG.where(user_id: data.user.id).get(:balance) >= 1
+        end
       end
     end
 
@@ -39,13 +43,21 @@ module Frost
       end
     end
 
+    # Steals snowballs.
+    def self.steal(data)
+      POSTGRES.transaction do
+        @@PG.where(user_id: data.user.id).update(balance: Sequel[:balance] + data.options['amount'])
+        @@PG.where(user_id: data.options['member']).update(balance: Sequel[:balance] - data.options['amount'])
+      end
+    end
+
     # Adds or removes a snowball.
     def self.balance(data, add: false)
       POSTGRES.transaction do
         if add
-          @@PG.where(user_id: data.user.id).update(balance: Sequel[:balance] + balance)
+          @@PG.where(user_id: data.user.id).update(balance: Sequel[:balance] + 1)
         else
-          @@PG.where(user_id: data.user.id).update(balance: Sequel[:balance] - balance)
+          @@PG.where(user_id: data.user.id).update(balance: Sequel[:balance] - 1)
         end
       end
     end

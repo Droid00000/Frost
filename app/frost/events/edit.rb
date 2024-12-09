@@ -16,12 +16,12 @@ def edit_event_role(data)
     return
   end
 
-  unless event_records(server: data.server.id, type: :enabled)
+  unless Frost::Roles.enabled?(data)
     data.edit_response(content: RESPONSE[5])
     return
   end
 
-  unless event_records(server: data.server.id, role: data.options['role'], type: :check_role)
+  unless Frost::Roles.get?(data)
     data.edit_response(content: RESPONSE[17])
     return
   end
