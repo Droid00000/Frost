@@ -15,7 +15,7 @@ def admin_remove_blacklist(data)
   booster_records(
     type: :unban,
     server: data.server.id,
-    user: data.options['user'],
+    user: data.options['user']
   )
 
   data.edit_response(content: format(RESPONSE[32], data.options['user']))

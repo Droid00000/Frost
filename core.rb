@@ -8,10 +8,10 @@ require 'discordrb'
 require 'rufus-scheduler'
 require 'selenium-webdriver'
 require 'app/frost/models/embeds'
-require 'app/frost/models/schema'
 require 'app/frost/models/functions'
 require 'app/frost/pins/auto_archiver'
 require 'app/frost/pins/manual_archiver'
+require 'app/frost/models/database/schema'
 
 Dir['app/frost/**/handler.rb'].each { |file| require file }
 
