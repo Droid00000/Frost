@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'ban'
+
 module Frost
   class Booster
     # Easy way to access the DB.
@@ -7,7 +9,7 @@ module Frost
 
     # @param database [Sequel::Dataset]
     def initialize(database)
-      @PG = database
+      @@PG = POSTGRES[:server_boosters]
     end
 
     # Adds a booster to the DB.

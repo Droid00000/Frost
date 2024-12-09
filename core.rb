@@ -15,6 +15,8 @@ require 'app/frost/models/database/schema'
 
 Dir['app/frost/**/handler.rb'].each { |file| require file }
 
+Dir['app/frost/models/database/**.rb'].each { |file| require file }
+
 bot = Discordrb::Bot.new(token: CONFIG['Discord']['TOKEN'], intents: 33_281)
 
 at_exit { bot.stop }

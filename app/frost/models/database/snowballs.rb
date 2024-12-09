@@ -8,7 +8,7 @@ module Frost
 
     # @param database [Sequel::Dataset]
     def initialize(database)
-      @@PG = database
+      @@PG = POSTGRES[:snowball_players]
     end
 
     # Checks if a user is in the Database.

@@ -8,7 +8,7 @@ module Frost
 
     # @param database [Sequel::Dataset]
     def initialize(database)
-      @@PG = database
+      @@PG = POSTGRES[:booster_settings]
     end
 
     # Gets the hoist role for this guild.

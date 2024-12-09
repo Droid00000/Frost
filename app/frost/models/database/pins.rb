@@ -8,7 +8,7 @@ module Frost
 
     # @param database [Sequel::Dataset]
     def initialize(database)
-      @@PG = database
+      @@PG = POSTGRES[:archiver_settings]
     end
 
     # Updates an existing archive channel.

@@ -8,7 +8,7 @@ module Frost
 
     # @param database [Sequel::Dataset]
     def initialize(database)
-      @@PG = database
+      @@PG = POSTGRES[:emoji_tracker]
     end
 
     # Add a new role to the database.

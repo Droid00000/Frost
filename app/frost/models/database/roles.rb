@@ -8,7 +8,7 @@ module Frost
 
     # @param database [Sequel::Dataset]
     def initialize(database)
-      @@PG = database
+      @@PG = POSTGRES[:event_settings]
     end
 
     # Gets all the setup roles for a guild.
