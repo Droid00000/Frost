@@ -4,6 +4,7 @@ $LOAD_PATH.unshift Dir.pwd
 
 require 'yaml'
 require 'sequel'
+require 'calliope'
 require 'discordrb'
 require 'rufus-scheduler'
 require 'selenium-webdriver'
@@ -22,6 +23,7 @@ at_exit { bot.stop }
 bot.include! EventRoles
 bot.include! PinArchiver
 bot.include! BoosterPerks
+bot.include! MusicCommands
 bot.include! EmojiCommands
 bot.include! AdminCommands
 bot.include! SnowballFights
