@@ -14,14 +14,14 @@ module Frost
     # Updates an existing archive channel.
     def self.update(data)
       POSTGRES.transaction do
-        @@PG.where(guild_id: data.server.id).update(channel_id: data.channel.id)
+        @@PG.where(guild_id: data.server.id).update(channel_id: data.options['channel'])
       end
     end
 
     # Sets up an existing archive channel.
     def self.setup(data)
       POSTGRES.transaction do
-        @@PG.insert(guild_id: data.server.id, channel_id: data.channel.id)
+        @@PG.insert(guild_id: data.server.id, channel_id: data.options['channel'])
       end
     end
 

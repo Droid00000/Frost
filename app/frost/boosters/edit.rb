@@ -6,7 +6,7 @@ def edit_role(data)
     data.edit_response(content: RESPONSE[47])
     return
   end
-  
+
   unless data.user.boosting?
     data.edit_response(content: RESPONSE[8])
     return

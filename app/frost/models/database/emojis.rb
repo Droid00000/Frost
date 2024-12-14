@@ -15,21 +15,27 @@ module Frost
       @@PG = POSTGRES[:emoji_tracker]
     end
 
-    # Add a new role to the database.
+    # Insert a new emoji into the DB.
     def self.add(data)
       POSTGRES.transaction do
-        @@PG.insert(emoji_id: data.emoji.id, guild_id: data.server.id)
+        @@PG.insert(emoji_id: data[:emoji].id, guild_id: data[:guild].id)
       end
     end
 
     # @param emoji [Discordrb::Emoji]
-    # @param server [Discordrb::Server]
-    def self.add(emoji, server)
-      @@emoji << { emoji: emoji, server: server }
+    # @param guild [Discordrb::Server]
+    def self.emoji(emoji, guild)
+      @@emoji << { emoji: emoji, guild: guild }
+    end
+
+    # Empties out the Emoji cache.
+    # @param index [Integer]
+    def delete(index)
+      @@emoji.delete_at(index)
     end
 
     # Returns all emojis.
-    def self.get_emojis
+    def self.drain
       @@emoji
     end
   end
