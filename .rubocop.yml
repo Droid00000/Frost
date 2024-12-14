@@ -5,7 +5,7 @@ AllCops:
   Exclude:
   - 'app/frost/pins/manual_archiver.rb'
   - 'app/frost/pins/auto_archiver.rb'
-  - 'app/frost/commands/commands.rb'
+  - 'app/frost/models/commands.rb'
   - 'app/frost/models/embeds.rb'
 
 # Most of these metrics are useless.
