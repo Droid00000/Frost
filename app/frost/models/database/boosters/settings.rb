@@ -34,14 +34,14 @@ module Frost
       end
 
       # Removes a hoist role for this guild.
-      def self.remove(data)
+      def self.disable(data)
         POSTGRES.transaction do
           @@PG.where(guild_id: data.server.id).delete
         end
       end
 
       # Adds a hoist role for this guild.
-      def self.add(data)
+      def self.setup(data)
         POSTGRES.transaction do
           @@PG.insert(guild_id: data.server.id, hoist_role: data.options['role'])
         end

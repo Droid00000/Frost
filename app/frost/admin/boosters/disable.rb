@@ -6,12 +6,12 @@ def disable_booster(data)
     return
   end
 
-  unless booster_records(server: data.server.id, type: :enabled)
+  unless Frost::Boosters::Settings.get?(data)
     data.edit_response(content: RESPONSE[34])
     return
   end
 
-  booster_records(server: data.server.id, type: :disable)
+  Frost::Boosters::Settings.disable(data)
 
   data.edit_response(content: RESPONSE[35])
 end
