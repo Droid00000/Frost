@@ -7,17 +7,17 @@ def add_booster(data)
     return
   end
 
-  if booster_records(server: data.server.id, user: data.options['user'], type: :check_user)
+  unless Frost::Boosters::Settings.get?(data)
+    data.edit_response(content: RESPONSE[34])
+    return
+  end
+
+  if Frost::Boosters::Members.get?(data, true)
     data.edit_response(content: RESPONSE[25])
     return
   end
 
-  booster_records(
-    type: :create,
-    server: data.server.id,
-    user: data.options['user'],
-    role: data.options['role']
-  )
+  Frost::Boosters::Members.add(data, nil, true)
 
   data.edit_response(content: format(RESPONSE[26], data.options['user']))
 end

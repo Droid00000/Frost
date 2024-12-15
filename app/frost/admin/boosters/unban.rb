@@ -7,16 +7,17 @@ def admin_remove_blacklist(data)
     return
   end
 
-  unless booster_records(server: data.server.id, user: data.options['user'], type: :banned)
+  unless Frost::Boosters::Settings.get?(data)
+    data.edit_response(content: RESPONSE[34])
+    return
+  end
+
+  unless Frost::Boosters::Ban.user?(data, true)
     data.edit_response(content: RESPONSE[31])
     return
   end
 
-  booster_records(
-    type: :unban,
-    server: data.server.id,
-    user: data.options['user'],
-  )
+  Frost::Boosters::Ban.remove?(data)
 
   data.edit_response(content: format(RESPONSE[32], data.options['user']))
 end

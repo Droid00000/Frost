@@ -33,4 +33,3 @@ def delete_role(data)
 
   data.edit_response(content: "#{RESPONSE[3]} #{EMOJI[3]}")
 end
-

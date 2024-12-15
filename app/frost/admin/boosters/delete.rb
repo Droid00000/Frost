@@ -7,16 +7,17 @@ def delete_booster(data)
     return
   end
 
-  unless booster_records(server: data.server.id, user: data.options['user'], type: :check_user)
+  unless Frost::Boosters::Settings.get?(data)
+    data.edit_response(content: RESPONSE[34])
+    return
+  end
+
+  unless Frost::Boosters::Members.get?(data, true)
     data.edit_response(content: RESPONSE[27])
     return
   end
 
-  booster_records(
-    type: :delete,
-    server: data.server.id,
-    user: data.options['user']
-  )
+  Frost::Boosters::Members.get?(data, true)
 
   data.edit_response(content: format(RESPONSE[28], data.options['user']))
 end

@@ -7,16 +7,17 @@ def ban_booster(data)
     return
   end
 
-  if booster_records(server: data.server.id, user: data.options['user'], type: :banned)
+  unless Frost::Boosters::Settings.get?(data)
+    data.edit_response(content: RESPONSE[34])
+    return
+  end
+
+  if Frost::Boosters::Ban.user?(data, true)
     data.edit_response(content: RESPONSE[29])
     return
   end
 
-  booster_records(
-    type: :ban,
-    server: data.server.id,
-    user: data.options['user']
-  )
+  Frost::Boosters::Members.delete(data, true)
 
   data.edit_response(content: format(RESPONSE[30], data.options['user']))
 end

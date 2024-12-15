@@ -7,18 +7,10 @@ def setup_booster(data)
     return
   end
 
-  if booster_records(server: data.server.id, type: :enabled)
-    booster_records(
-      server: data.server.id,
-      role: data.options['role'],
-      type: :update_hoist_role
-    )
+  if Frost::Boosters::Settings.get?(data)
+    Frost::Boosters::Settings.enable(data)
   else
-    booster_records(
-      type: :setup,
-      server: data.server.id,
-      role: data.options['role']
-    )
+    Frost::Boosters::Settings.update(data)
   end
 
   data.edit_response(content: format(RESPONSE[33], data.options['role']))
