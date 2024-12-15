@@ -46,9 +46,9 @@ def create_role(data)
 
   data.user.add_role(role, REASON[1])
 
-  Frost::Booster::Members.add(data, role)
+  Frost::Boosters::Members.add(data, role)
 
-  role.sort_above(Frost::Booster::Settings.get(data))
+  role.sort_above(Frost::Boosters::Settings.get(data))
 
   data.edit_response(content: "#{RESPONSE[1]} #{EMOJI[4]}")
 end
