@@ -3,42 +3,42 @@
 -- Reason: Initial migration
 
 -- Holds info about event roles.
-CREATE TABLE event_settings (
+CREATE TABLE IF NOT EXISTS event_settings (
   role_id BIGINT NOT NULL, 
   guild_id BIGINT NOT NULL, 
   PRIMARY KEY (role_id, guild_id)
 );
 
 -- Holds info about the pin archiver.
-CREATE TABLE archiver_settings (
+CREATE TABLE IF NOT EXISTS archiver_settings (
   guild_id BIGINT NOT NULL UNIQUE,
   channel_id BIGINT NOT NULL UNIQUE,
   PRIMARY KEY (channel_id, guild_id)
 );
 
 -- Holds info about booster settings.
-CREATE TABLE booster_settings (
+CREATE TABLE IF NOT EXISTS booster_settings (
   guild_id BIGINT NOT NULL UNIQUE,
   hoist_role BIGINT NOT NULL UNIQUE,
   PRIMARY KEY (hoist_role, guild_id)
 );
 
 -- Holds info about snowball players.
-CREATE TABLE snowball_players (
+CREATE TABLE IF NOT EXISTS snowball_players (
   user_id BIGINT NOT NULL UNIQUE,
   balance BIGINT NOT NULL DEFAULT 0,
   PRIMARY KEY (user_id, balance)
 );
 
 -- Holds info about banned boosters.
-CREATE TABLE banned_boosters (  
+CREATE TABLE IF NOT EXISTS banned_boosters (  
   user_id BIGINT NOT NULL,
   guild_id BIGINT NOT NULL,
   PRIMARY KEY (guild_id, user_id)
 );
 
 -- Holds info about server boosters.
-CREATE TABLE guild_boosters (
+CREATE TABLE IF NOT EXISTS guild_boosters (
   user_id BIGINT NOT NULL,
   role_id BIGINT NOT NULL,
   guild_id BIGINT NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE guild_boosters (
 );
 
 -- Holds info about emoji stats.
-CREATE TABLE emoji_tracker (
+CREATE TABLE IF NOT EXISTS emoji_tracker (
   balance BIGINT DEFAULT 1,
   emoji_id BIGINT NOT NULL,
   guild_id BIGINT NOT NULL,

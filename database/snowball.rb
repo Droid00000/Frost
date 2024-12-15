@@ -7,20 +7,20 @@ module Frost
     attr_accessor :PG
 
     # @param database [Sequel::Dataset]
-    def initialize(database)
-      @@PG = POSTGRES[:snowball_players]
+    def initialize
+      @@PG = PG[:snowball_players]
     end
 
     # Checks if a user is in the Database.
     def self.user?(data)
-      POSTGRES.transaction do
+      PG.transaction do
         !@@PG.where(user_id: data.user.id).get(:user_id).nil?
       end
     end
 
     # Checks if a user has a snowball.
     def self.snowball?(data, other: false)
-      POSTGRES.transaction do
+      PG.transaction do
         if other
           @@PG.where(user_id: data.options['member']).get(:balance)
         else
@@ -31,21 +31,21 @@ module Frost
 
     # Gets the snowballs a user has.
     def self.snowballs(data)
-      POSTGRES.transaction do
+      PG.transaction do
         @@PG.where(user_id: data.user.id).get(:balance)
       end
     end
 
     # Adds a user to the DB.
     def self.user(data)
-      POSTGRES.transaction do
+      PG.transaction do
         @@PG.insert(user_id: data.user.id)
       end
     end
 
     # Steals snowballs.
     def self.steal(data)
-      POSTGRES.transaction do
+      PG.transaction do
         @@PG.where(user_id: data.user.id).update(balance: Sequel[:balance] + data.options['amount'])
         @@PG.where(user_id: data.options['member']).update(balance: Sequel[:balance] - data.options['amount'])
       end
@@ -53,7 +53,7 @@ module Frost
 
     # Adds or removes a snowball.
     def self.balance(data, add: false)
-      POSTGRES.transaction do
+      PG.transaction do
         if add
           @@PG.where(user_id: data.user.id).update(balance: Sequel[:balance] + 1)
         else

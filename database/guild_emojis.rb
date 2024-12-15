@@ -10,15 +10,19 @@ module Frost
     attr_accessor :emojis
 
     # @param database [Sequel::Dataset]
-    def initialize(database)
+    def initialize
       @@emoji = []
-      @@PG = POSTGRES[:emoji_tracker]
+      @@PG = PG[:emoji_tracker]
     end
 
     # Insert a new emoji into the DB.
     def self.add(data)
-      POSTGRES.transaction do
-        @@PG.insert(emoji_id: data[:emoji].id, guild_id: data[:guild].id)
+      PG.transaction do
+        if @@PG.where(emoji_id: data[:emoji].id, guild_id: data[:guild].id).empty?
+          @@PG.insert(emoji_id: data[:emoji].id, guild_id: data[:guild].id)
+        else
+          @@PG.where(emoji_id: data[:emoji].id, guild_id: data[:guild].id).update(balance Sequel[:balance] + 1)
+        end
       end
     end
 
