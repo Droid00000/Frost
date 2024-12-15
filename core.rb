@@ -13,7 +13,7 @@ require 'app/frost/models/functions'
 require 'app/frost/pins/auto_archiver'
 require 'app/frost/pins/manual_archiver'
 
-Dir['database/*.rb'].each { |file| require file }
+Dir['app/frost/database/*.rb'].each { |file| require file }
 
 Dir['app/frost/**/handler.rb'].each { |file| require file }
 
