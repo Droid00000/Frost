@@ -19,9 +19,9 @@ module Frost
     end
 
     # Checks if a user has a snowball.
-    def self.snowball?(data, other: false)
+    def self.snowball?(data, hash: false)
       PG.transaction do
-        if other
+        if hash
           @@PG.where(user_id: data.options['member']).get(:balance)
         else
           @@PG.where(user_id: data.user.id).get(:balance) >= 1

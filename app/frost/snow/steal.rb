@@ -1,26 +1,24 @@
 # frozen_string_literal: true
 
 def steal_snowball(data)
-  unless snowball_records(user: data.options['member'], type: :check_snowball)
-    data.edit_response(content: RESPONSE[16])
-    return
-  end
-
-  if snowball_records(user: data.options['member'], type: :get_snowball) < data.options['amount']
-    data.edit_response(content: RESPONSE[21])
-    return
-  end
-
-  snowball_records(user: data.user.id, type: :add_user) unless snowball_records(user: data.user.id, type: :check_user)
-
   unless CONFIG['Discord']['CONTRIBUTORS'].include?(data.user.id)
     data.edit_response(content: RESPONSE[12])
     return
   end
 
-  snowball_records(user: data.user.id, type: :add_snowball, balance: data.options['amount'])
+  if Frost::Snow.snowballs(data) < data.options['amount']
+    data.edit_response(content: RESPONSE[21])
+    return
+  end
 
-  snowball_records(user: data.options['member'], type: :remove_snowball, balance: data.options['amount'])
+  unless Frost::Snow.snowball?(data, hash: true)
+    data.edit_response(content: RESPONSE[16])
+    return
+  end
+
+  Frost::Snow.steal(data, data.options['amount'])
+
+  Frost::Snow.user(data) unless Frost::Snow.user?(data)
 
   data.edit_response(content: format(RESPONSE[31], data.options['amount']))
 end

@@ -163,7 +163,8 @@ UI = {
 CONFIG = YAML.load_file("#{$LOAD_PATH.first}/config.yml")
 
 # The Postgres database instance used by the bot.
-PG = Sequel.connect(CONFIG['Postgres']['URL'], extensions: :connection_validator); PG.pool.connection_validation_timeout = -1
+PG = Sequel.connect(CONFIG['Postgres']['URL'], extensions: :connection_validator);
+PG.pool.connection_validation_timeout = -1
 
 # A series of regular expressions utilized by the bot.
 REGEX = {

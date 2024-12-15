@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 def collect_snowball(data)
-  snowball_records(user: data.user.id, type: :add_user) unless snowball_records(user: data.user.id, type: :check_user)
+  Frost::Snow.user(data) unless Frost::Snow.user?(data)
 
-  snowball_records(user: data.user.id, type: :add_snowball, balance: 1)
+  Frost::Snow.balance(data, add: true)
 
   data.edit_response do |builder|
     builder.add_embed do |embed|

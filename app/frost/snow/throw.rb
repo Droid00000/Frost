@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 def throw_snowball(data)
-  unless snowball_records(user: data.user.id, type: :check_snowball)
+  unless Frost::Snow.snowball?(data)
     data.respond(content: RESPONSE[14], ephemeral: true)
     return
   end
 
-  snowball_records(user: data.user.id, type: :remove_snowball, balance: 1)
-
   if rand(1..10) >= 5
+    Frost::Snow.balance(data)
     data.respond(content: data.member('member').mention) do |builder|
       builder.add_embed do |embed|
         embed.color = UI[6]
@@ -19,6 +18,7 @@ def throw_snowball(data)
     end
 
   else
+    Frost::Snow.balance(data)
     data.respond do |builder|
       builder.add_embed do |embed|
         embed.color = UI[6]

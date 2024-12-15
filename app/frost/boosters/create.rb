@@ -2,8 +2,8 @@
 
 # Application command handler for /booster role claim.
 def create_role(data)
-  if data.server.role_limit?
-    data.edit_response(content: RESPONSE[46])
+  unless data.server.bot.permission?(:manage_roles)
+    data.edit_response(content: RESPONSE[47])
     return
   end
 
@@ -12,8 +12,8 @@ def create_role(data)
     return
   end
 
-  unless data.server.bot.permission?(:manage_roles)
-    data.edit_response(content: RESPONSE[47])
+  if data.server.role_limit?
+    data.edit_response(content: RESPONSE[46])
     return
   end
 
@@ -22,18 +22,18 @@ def create_role(data)
     return
   end
 
-  unless booster_records(server: data.server.id, type: :enabled)
+  unless Frost::Boosters::Settings.get?(data)
     data.edit_response(content: RESPONSE[5])
     return
   end
 
-  if booster_records(server: data.server.id, user: data.user.id, type: :banned)
-    data.edit_response(content: RESPONSE[6])
+  if Frost::Boosters::Members.user?(data)
+    data.edit_response(content: RESPONSE[4])
     return
   end
 
-  if booster_records(server: data.server.id, user: data.user.id, type: :check_user)
-    data.edit_response(content: RESPONSE[4])
+  if Frost::Boosters::Ban.user?(data)
+    data.edit_response(content: RESPONSE[6])
     return
   end
 
@@ -44,11 +44,11 @@ def create_role(data)
     reason: REASON[1]
   )
 
-  role.sort_above(booster_records(server: data.server.id, type: :hoist_role))
-
   data.user.add_role(role, REASON[1])
 
-  booster_records(server: data.server.id, user: data.user.id, role: role.id, type: :create)
+  Frost::Booster::Members.add(data, role)
+
+  role.sort_above(Frost::Booster::Settings.get(data))
 
   data.edit_response(content: "#{RESPONSE[1]} #{EMOJI[4]}")
 end

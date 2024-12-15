@@ -12,29 +12,25 @@ def delete_role(data)
     return
   end
 
-  unless booster_records(server: data.server.id, type: :enabled)
+  unless Frost::Boosters::Settings.get?(data)
     data.edit_response(content: RESPONSE[5])
     return
   end
 
-  if booster_records(server: data.server.id, user: data.user.id, type: :banned)
-    data.edit_response(content: RESPONSE[6])
-    return
-  end
-
-  unless booster_records(server: data.server.id, user: data.user.id, type: :check_user)
+  unless Frost::Boosters::Members.user?(data)
     data.edit_response(content: RESPONSE[9])
     return
   end
 
-  data.server.role(booster_records(server: data.server.id, user: data.user.id, type: :get_role))&.delete(REASON[3])
+  if Frost::Boosters::Ban.user?(data)
+    data.edit_response(content: RESPONSE[6])
+    return
+  end
 
-  booster_records(server: data.server.id, user: data.user.id, type: :delete)
+  data.server.role(Frost::Boosters::Members.role(data))&.delete(REASON[3])
+
+  Frost::Boosters::Members.delete(data)
 
   data.edit_response(content: "#{RESPONSE[3]} #{EMOJI[3]}")
 end
 
-# Event handler for the role delete Gateway event.
-def role_delete_event(data)
-  booster_records(server: data.server.id, role: data.id, type: :delete_role)
-end

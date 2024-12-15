@@ -7,8 +7,8 @@ module PinArchiver
     event.defer(ephemeral: true)
     pins = event.channel.pins
 
-    if pins.count == 50 && archiver_records(server: event.server.id, type: :get)
-      archive_channel = event.bot.channel(archiver_records(server: event.server.id, type: :get))
+    if pins.count == 50 && Frost::Pins.get?(event)
+      archive_channel = event.bot.channel(Frost::Pins.get(event))
       message = pins[1]
 
       archive_channel.send_embed do |embed|

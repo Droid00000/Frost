@@ -32,6 +32,13 @@ module Frost
       end
     end
 
+    # Checks if there's an existing archive channel.
+    def self.get?(data)
+      PG.transaction do
+        !@@PG.where(guild_id: data.server.id).empty?
+      end
+    end
+
     # Deletes an existing archive channel.
     def self.disable(data)
       PG.transaction do
