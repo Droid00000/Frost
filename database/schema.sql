@@ -1,5 +1,5 @@
--- Revises: V0
--- Creation Date: 2024-12-14 12:31:07.804348 UTC
+-- Revision: V0
+-- Creation Date: 2024-12-14 12:31:07.804358 UTC
 -- Reason: Initial migration
 
 -- Holds info about event roles.
@@ -72,21 +72,3 @@ CREATE UNIQUE INDEX IF NOT EXISTS guild_event_idx ON event_settings (role_id);
 CREATE INDEX IF NOT EXISTS guild_premium_idx ON guild_boosters (guild_id);
 
 CREATE INDEX IF NOT EXISTS guild_booster_idx ON guild_boosters (user_id);
-
-CREATE TRIGGER emoji_balance BEFORE INSERT ON emoji_tracker
-
-FOR EACH ROW EXECUTE FUNCTION balance_increment();
-
-CREATE OR REPLACE FUNCTION balance_increment() 
-RETURNS TRIGGER AS $$
-BEGIN
-IF EXISTS (SELECT FROM emoji_tracker WHERE emoji_id = NEW.emoji_id AND guild_id = NEW.guild_id) THEN
-        UPDATE emoji_tracker
-        SET balance = balance + 1
-        WHERE emoji_id = NEW.emoji_id AND guild_id = NEW.guild_id;
-        RETURN NULL;
-    ELSE
-        RETURN NEW;
-    END IF;
-END;
-$$ LANGUAGE plpgsql;
