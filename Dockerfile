@@ -18,4 +18,4 @@ COPY . .
 
 RUN bundle install
 
-CMD ["bundle", "exec", "ruby", "core.rb"]
+CMD ["bundle", "exec", "ruby", "--yjit", "core.rb"]
