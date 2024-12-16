@@ -10,6 +10,7 @@ require 'selenium-webdriver'
 require 'app/frost/models/embeds'
 require 'app/frost/models/constants'
 require 'app/frost/models/functions'
+require 'app/frost/models/extensions'
 require 'app/frost/pins/auto_archiver'
 require 'app/frost/pins/manual_archiver'
 
