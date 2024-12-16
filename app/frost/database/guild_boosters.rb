@@ -6,7 +6,6 @@ module Frost
     class Members
       # Easy way to access the DB.
       attr_accessor :PG
-      alias_method :all, :PG
 
       # @param database [Sequel::Dataset]
       def initialize
@@ -39,6 +38,11 @@ module Frost
         PG.transaction do
           @@PG.where(guild_id: data.server.id, role_id: data.options['role']).delete
         end
+      end
+
+      # Gets all the members.
+      def self.fetch
+        @@PG
       end
 
       # Removes a single user from the DB.

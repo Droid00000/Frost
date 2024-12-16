@@ -8,6 +8,6 @@ end
 
 Rufus::Scheduler.new.cron '0 0 * * *' do
   Frost::Emojis.drain.each_with_index do |emoji, index|
-    Frost::Emojis.add(emoji); Frost::Emojis.delete(index)
+    Frost::Emojis.add_from_cache(emoji, index)
   end
 end

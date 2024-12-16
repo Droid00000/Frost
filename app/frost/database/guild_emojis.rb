@@ -16,13 +16,14 @@ module Frost
     end
 
     # Insert a new emoji into the DB.
-    def self.add(data)
+    def self.add_from_cache(data, index)
       PG.transaction do
         if @@PG.where(emoji_id: data[:emoji].id, guild_id: data[:guild].id).empty?
           @@PG.insert(emoji_id: data[:emoji].id, guild_id: data[:guild].id)
         else
-          @@PG.where(emoji_id: data[:emoji].id, guild_id: data[:guild].id).update(balance Sequel[:balance] + 1)
+          @@PG.where(emoji_id: data[:emoji].id, guild_id: data[:guild].id).update(balance(Sequel[:balance] + 1))
         end
+        delete(index)
       end
     end
 
