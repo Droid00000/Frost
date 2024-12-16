@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-import 'setup'
-import 'disable'
+require_relative 'setup'
+require_relative 'disable'
 
 module AdminCommands
   extend Discordrb::EventContainer

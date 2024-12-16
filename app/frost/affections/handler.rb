@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-import 'hug'
-import 'nom'
-import 'bonk'
-import 'poke'
-import 'punch'
-import 'sleep'
-import 'anger'
+require_relative 'hug'
+require_relative 'nom'
+require_relative 'bonk'
+require_relative 'poke'
+require_relative 'punch'
+require_relative 'sleep'
+require_relative 'anger'
 
 module AffectionCommands
   extend Discordrb::EventContainer

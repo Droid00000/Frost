@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-import 'add'
-import 'ban'
-import 'help'
-import 'setup'
-import 'unban'
-import 'delete'
-import 'disable'
+require_relative 'add'
+require_relative 'ban'
+require_relative 'help'
+require_relative 'setup'
+require_relative 'unban'
+require_relative 'delete'
+require_relative 'disable'
 
 module AdminCommands
   extend Discordrb::EventContainer

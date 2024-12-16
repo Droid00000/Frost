@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-import 'help'
-import 'chapter'
-import 'settings'
+require_relative 'help'
+require_relative 'chapter'
+require_relative 'settings'
 
 module AdminCommands
   extend Discordrb::EventContainer

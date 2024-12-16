@@ -44,12 +44,6 @@ rescue StandardError
   true
 end
 
-# Similar to Python imports. Requires a file.
-# @param file [String] Name of the file to import.
-def import(file)
-  require "#{File.dirname(caller.first)}/#{file}"
-end
-
 # Returns a random GIF link for use by the affection and snowball commands.
 # @param [Integer] An integer from 1-7 representing the type of action.
 # @return [String] The appropriate GIF for the action.
