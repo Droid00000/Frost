@@ -19,7 +19,8 @@ module Discordrb
     # @param icon [String, #read] A role icon for this role.
     # @param reason [String] The reason the for the creation of this role.
     # @return [Role] the created role.
-    def create_role(name: 'new role', colour: 0, hoist: false, mentionable: false, permissions: 0, icon: nil, reason: nil)
+    def create_role(name: 'new role', colour: 0, hoist: false, mentionable: false, permissions: 0, icon: nil,
+                    reason: nil)
       colour = colour.combined if colour.respond_to?(:combined)
 
       begin
@@ -64,7 +65,7 @@ module Discordrb
 end
 
 module Discordrb
-    # Monkey patches to the channel class.
+  # Monkey patches to the channel class.
   class Channel
     # The same as define overwrite except it modifies the overwrites in place.
     # @param thing [Overwrite] an Overwrite object to apply to this channel
@@ -110,6 +111,95 @@ module Discordrb
       computed_allow = current_bits.allow.bits
 
       API::Channel.update_permission(@bot.token, @id, thing.id, computed_allow, thing.deny.bits, thing.type, reason)
+    end
+  end
+end
+
+module Discordrb
+  # Monkey patches to the emoji class.
+  class Emoji
+    # Returns a tempfile object of the emoji.
+    # @return [File] a file.
+    def file
+      gif_url = "#{API.cdn_url}/emojis/#{@id}.gif"
+      png_url = "#{API.cdn_url}/emojis/#{@id}.png"
+      response = Faraday.get(gif_url)
+      chosen_url = response.status == 415 ? png_url : gif_url
+      file = Tempfile.new(Time.now.to_s)
+      file.binmode
+      file.write(Faraday.get(chosen_url).body)
+      file.rewind
+      file
+    end
+
+    # Returns a tempfile object of the emoji.
+    # @return [File] a file.
+    def static_file
+      file = Tempfile.new(Time.now.to_s)
+      file.binmode
+      file.write(Faraday.get("#{API.cdn_url}/emojis/#{@id}.png").body)
+      file.rewind
+      file
+    end
+  end
+end
+
+module Discordrb
+  # Monkey patch for member class.
+  class Member
+    # @return [Integer] Position of the highest role this member has.
+    def hierarchy
+      roles.max_by(&:position).position
+    end
+  end
+end
+
+module Discordrb
+  # Monkey patch for message class.
+  class Message
+    # @return [Array<Emoji>] the emotes that were used/mentioned in this message.
+    def emoji
+      return nil if @content.nil?
+      return @emoji unless @emoji.empty?
+
+      @emoji = @bot.parse_mentions(@content).select { |el| el.is_a? Discordrb::Emoji }
+    end
+
+    # Check if any emoji were used in this message.
+    # @return [true, false] whether or not any emoji were used.
+    def emoji?
+      !emoji&.empty?
+    end
+  end
+end
+
+module Discordrb::Events
+  # Monkey patch for application commands.
+  class ApplicationCommandEvent
+    # @param name [String] The name of the option.
+    # @return [Emoji] Emojis sent in this interaction.
+    def emojis(name)
+      return nil unless @options[name]
+
+      @bot.parse_mentions(@content).select { |e| e.is_a? Discordrb::Emoji }.first
+    end
+
+    # @param name [String] The name of the option.
+    # @return [Member]
+    def member(name)
+      @resolved[:members][@options[name].to_i] || @resolved[:users][@options[name].to_i]
+    end
+  end
+end
+
+module Discordrb::Events
+  # Monkey patch for select menus.
+  class StringSelectEvent
+    # @return [Emoji] Emojis sent in this interaction.
+    def emoji
+      return nil if @values.first.nil?
+
+      @bot.parse_mentions(@values.first).select { |e| e.is_a? Discordrb::Emoji }.first
     end
   end
 end
