@@ -17,7 +17,7 @@ def admin_remove_blacklist(data)
     return
   end
 
-  Frost::Boosters::Ban.remove?(data)
+  Frost::Boosters::Ban.remove(data)
 
   data.edit_response(content: format(RESPONSE[32], data.options['user']))
 end
