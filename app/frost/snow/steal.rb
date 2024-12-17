@@ -11,7 +11,7 @@ def steal_snowball(data)
     return
   end
 
-  unless Frost::Snow.snowball?(data, hash: true)
+  unless Frost::Snow.snowball?(data, true)
     data.edit_response(content: RESPONSE[16])
     return
   end

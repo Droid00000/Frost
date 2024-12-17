@@ -4,24 +4,24 @@ module Frost
   # Represents an emojis DB.
   class Emojis
     # Easy way to access the DB.
-    attr_accessor :PG
+    attr_accessor :pg
 
     # Easy way to access emojis.
     attr_accessor :emojis
 
     # @param database [Sequel::Dataset]
     def initialize
+      @@pg = POSTGRES[:emoji_tracker]
       @@emoji = []
-      @@PG = PG[:emoji_tracker]
     end
 
     # Insert a new emoji into the DB.
     def self.add_from_cache(data, index)
-      PG.transaction do
-        if @@PG.where(emoji_id: data[:emoji].id, guild_id: data[:guild].id).empty?
-          @@PG.insert(emoji_id: data[:emoji].id, guild_id: data[:guild].id)
+      POSTGRES.transaction do
+        if @@pg.where(emoji_id: data[:emoji].id, guild_id: data[:guild].id).empty?
+          @@pg.insert(emoji_id: data[:emoji].id, guild_id: data[:guild].id)
         else
-          @@PG.where(emoji_id: data[:emoji].id, guild_id: data[:guild].id).update(balance(Sequel[:balance] + 1))
+          @@pg.where(emoji_id: data[:emoji].id, guild_id: data[:guild].id).update(balance(Sequel[:balance] + 1))
         end
         delete(index)
       end
