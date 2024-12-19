@@ -69,12 +69,12 @@ module Discordrb
   class Channel
     # The same as define overwrite except it modifies the overwrites in place.
     # @param thing [Overwrite] an Overwrite object to apply to this channel
-    #   @param reason [String] The reason the for defining the overwrite.
-    #   @overload define_overwrite(thing, allow, deny)
-    #   @param thing [User, Role] What to define an overwrite for.
-    #   @param allow [#bits, Permissions, Integer] The permission sets that should receive an `allow` override.
-    #   @param deny [#bits, Permissions, Integer] The permission sets that should receive a `deny` override.
-    #   @param reason [String] The reason the for defining the overwrite.
+    # @param reason [String] The reason the for defining the overwrite.
+    # @overload define_overwrite(thing, allow, deny)
+    # @param thing [User, Role] What to define an overwrite for.
+    # @param allow [#bits, Permissions, Integer] The permission sets that should receive an `allow` override.
+    # @param deny [#bits, Permissions, Integer] The permission sets that should receive a `deny` override.
+    # @param reason [String] The reason the for defining the overwrite.
     def produce_overwrite(thing, allow: 0, deny: 0, reason: nil)
       unless thing.is_a? Overwrite
         allow_bits = allow.respond_to?(:bits) ? allow.bits : allow
