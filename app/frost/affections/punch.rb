@@ -11,7 +11,7 @@ def punch_member(data)
       embed.colour = UI[3]
       embed.title = EMBED[41]
       embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:PUNCH))
-      embed.description = format(EMBED[24], data.user.display_name, data.options['target'])
+      embed.description = format(EMBED[24], data.user.display_name, data.member('target').display_name)
     end
   end
 end
