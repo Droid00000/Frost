@@ -64,7 +64,8 @@ RESPONSE = {
   60 => 'Invalid duration parameter.',
   61 => 'A mute can only last up to 28 days.',
   62 => 'You may not mute this user.',
-  63 => 'Successfully timed out <@%s>.'
+  63 => 'Successfully timed out <@%s>.',
+  64 => "There aren't any emojis stats available for this server!"
 }.freeze
 
 # Values for embed responses.

@@ -7,7 +7,7 @@ def throw_snowball(data)
   end
 
   Frost::Snow.balance(data)
-  
+
   if rand(1..10) >= 5
     data.respond(content: data.member('member').mention) do |builder|
       builder.add_embed do |embed|
