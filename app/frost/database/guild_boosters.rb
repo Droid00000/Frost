@@ -3,45 +3,52 @@
 module Frost
   module Boosters
     # Represents a boosters DB.
-    module Members
+    class Members
+      # Easy way to access the DB.
+      attr_accessor :pg
+
+      # @param database [Sequel::Dataset]
+      def initialize
+        @@pg = POSTGRES[:server_boosters]
+      end
+
       # Adds a booster to the DB.
       def self.add(data, role)
         POSTGRES.transaction do
-          POSTGRES[:server_boosters].insert(guild_id: data.server.id, user_id: data.user.id, role_id: role.id)
+          @@pg.insert(guild_id: data.server.id, user_id: data.user.id, role_id: role.id)
         end
       end
 
       # Manually adds a user to the database.
       def self.create(data)
         POSTGRES.transaction do
-          POSTGRES[:server_boosters].insert(guild_id: data.server.id, user_id: data.options['user'],
-                                            role_id: data.options['role'])
+          @@pg.insert(guild_id: data.server.id, user_id: data.options['user'], role_id: data.options['role'])
         end
       end
 
       # Gets the role of a booster.
       def self.role(data)
         POSTGRES.transaction do
-          POSTGRES[:server_boosters].where(guild_id: data.server.id, user_id: data.user.id).get(:role_id)
+          @@pg.where(guild_id: data.server.id, user_id: data.user.id).get(:role_id)
         end
       end
 
       # Removes all instances of a role from the DB.
       def self.purge(data)
         POSTGRES.transaction do
-          POSTGRES[:server_boosters].where(guild_id: data.server.id, role_id: data.options['role']).delete
+          @@pg.where(guild_id: data.server.id, role_id: data.options['role']).delete
         end
       end
 
       # Gets all the members.
       def self.fetch
-        POSTGRES[:server_boosters]
+        @@pg
       end
 
       # Removes a single user from the DB.
       def self.delete(data)
         POSTGRES.transaction do
-          POSTGRES[:server_boosters].where(guild_id: data.server.id, user_id: data.user.id).delete
+          @@pg.where(guild_id: data.server.id, user_id: data.user.id).delete
         end
       end
 
@@ -49,9 +56,9 @@ module Frost
       def self.user?(data, hash = false)
         POSTGRES.transaction do
           if hash == true
-            !POSTGRES[:server_boosters].where(guild_id: data.server.id, user_id: data.options['user']).empty?
+            !@@pg.where(guild_id: data.server.id, user_id: data.options['user']).empty?
           else
-            !POSTGRES[:server_boosters].where(guild_id: data.server.id, user_id: data.user.id).empty?
+            !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
           end
         end
       end
