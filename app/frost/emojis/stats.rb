@@ -23,13 +23,13 @@ def stats_command(data)
   Frost::Emojis.top(data).map do |emoji|
     next unless data.bot.emoji(emoji[:emoji_id])
 
-    emojis[0] << { main: data.bot.emoji(emoji[:emoji_id]), count: emoji[:balance]}
+    emojis[0] << { main: data.bot.emoji(emoji[:emoji_id]), count: emoji[:balance] }
   end
 
   Frost::Emojis.bottom(data).map do |emoji|
     next unless data.bot.emoji(emoji[:emoji_id])
 
-    emojis[0] << { main: data.bot.emoji(emoji[:emoji_id]), count: emoji[:balance]}
+    emojis[0] << { main: data.bot.emoji(emoji[:emoji_id]), count: emoji[:balance] }
   end
 
   emojis[0].map! do |emoji|
