@@ -42,7 +42,7 @@ def stats_command(data)
 
   data.edit_response do |builder|
     builder.add_embed do |embed|
-      embed.colour = UI[9]
+      embed.colour = UI[6]
       embed.description = EMBED[51]
       embed.timestamp = Time.at(Time.now)
       embed.title = format(EMBED[50], data.server.name)

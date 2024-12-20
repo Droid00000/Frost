@@ -103,7 +103,7 @@ module Discordrb
       current_bits = overwrites(:role).find { |o| o.id == @server_id }
       unless thing.is_a? Overwrite
         allow_bits = allow.respond_to?(:bits) ? allow.bits : allow
-        deny_bits = current_bits.deny.bits & ~(allow)
+        deny_bits = current_bits.deny.bits & ~allow
 
         thing = Overwrite.new thing, allow: allow_bits, deny: deny_bits
       end
@@ -173,33 +173,37 @@ module Discordrb
   end
 end
 
-module Discordrb::Events
-  # Monkey patch for application commands.
-  class ApplicationCommandEvent
-    # @param name [String] The name of the option.
-    # @return [Emoji] Emojis sent in this interaction.
-    def emojis(name)
-      return nil unless @options[name]
+module Discordrb
+  module Events
+    # Monkey patch for application commands.
+    class ApplicationCommandEvent
+      # @param name [String] The name of the option.
+      # @return [Emoji] Emojis sent in this interaction.
+      def emojis(name)
+        return nil unless @options[name]
 
-      @bot.parse_mentions(@content).select { |e| e.is_a? Discordrb::Emoji }.first
-    end
+        @bot.parse_mentions(@content).find { |e| e.is_a? Discordrb::Emoji }
+      end
 
-    # @param name [String] The name of the option.
-    # @return [Member]
-    def member(name)
-      @resolved[:members][@options[name].to_i] || @resolved[:users][@options[name].to_i]
+      # @param name [String] The name of the option.
+      # @return [Member]
+      def member(name)
+        @resolved[:members][@options[name].to_i] || @resolved[:users][@options[name].to_i]
+      end
     end
   end
 end
 
-module Discordrb::Events
-  # Monkey patch for select menus.
-  class StringSelectEvent
-    # @return [Emoji] Emojis sent in this interaction.
-    def emoji
-      return nil if @values.first.nil?
+module Discordrb
+  module Events
+    # Monkey patch for select menus.
+    class StringSelectEvent
+      # @return [Emoji] Emojis sent in this interaction.
+      def emoji
+        return nil if @values.first.nil?
 
-      @bot.parse_mentions(@values.first).select { |e| e.is_a? Discordrb::Emoji }.first
+        @bot.parse_mentions(@values.first).find { |e| e.is_a? Discordrb::Emoji }
+      end
     end
   end
 end
