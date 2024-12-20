@@ -117,7 +117,11 @@ EMBED = {
   46 => '**COMMANDS**',
   47 => '**Booster Settings**',
   48 => '**Booster Commands**',
-  49 => '**Server Settings**'
+  49 => '**Server Settings**',
+  50 => "Emoji Statistics for %s",
+  51 => "These are the current emoji stats for your server. Non-animated and animated emojis are mixed. Thank you for your support.",
+  52 => "Top Emojis ⬆️",
+  53 => "Boring Emojis ⬇️"
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
@@ -156,7 +160,8 @@ UI = {
   5 => 0xd4f0ff,
   6 => 0x4d94e8,
   7 => 0x6bb7ed,
-  8 => 0x849fe8
+  8 => 0x849fe8,
+  9 => 0x62a5f3
 }.freeze
 
 # The YAML configuration file used by the bot.

@@ -32,6 +32,10 @@ bot.register_application_command(:sleep, 'Tells another server member to go and 
   option.user('target', 'Who needs to sleep?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको सोने जाने बोलना है' })
 end
 
+bot.register_application_command(:emoji, 'View some emoji stats.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'इमोजी' }, description_localizations: { 'hi' => 'कुछ इमोजी आँकड़े देखें' }) do |command|
+  command.subcommand(:stats, 'Get information about the top emojis here.', name_localizations: { 'hi' => 'आँकड़े' }, description_localizations: { 'hi' => 'शीर्ष इमोजी के बारे में जानकारी यहां प्राप्त करें' })
+end
+
 bot.register_application_command(:help, 'Shows some general information about how to use the bot.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'हेल्प' }, description_localizations: { 'hi' => 'बोट का उपयोग कैसे करना है उसके जानकारी चाहिए।' }) do |option|
 end
 

@@ -8,6 +8,11 @@ require_relative 'steal'
 module EmojiCommands
   extend Discordrb::EventContainer
 
+  application_command(:emoji).subcommand(:stats) do |event|
+    event.defer(ephemeral: false)
+    stats_command(event)
+  end
+
   application_command(:'Add Emoji(s)') do |event|
     event.defer(ephemeral: true)
     create_menu(event)

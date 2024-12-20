@@ -16,7 +16,7 @@ module Frost
     end
 
     # Insert a new emoji into the DB.
-    def self.add_from_cache(data, index)
+    def self.produce(data, index)
       POSTGRES.transaction do
         if @@pg.where(emoji_id: data[:emoji].id, guild_id: data[:guild].id).empty?
           @@pg.insert(emoji_id: data[:emoji].id, guild_id: data[:guild].id)
@@ -31,6 +31,21 @@ module Frost
     # @param guild [Discordrb::Server]
     def self.emoji(emoji, guild)
       @@emoji << { emoji: emoji, guild: guild }
+    end
+
+    # @param data [Discordrb::Interaction]
+    def self.any?(data)
+      !@@pg.where(guild_id: data.server.id).empty?
+    end
+
+    # Returns the top 15 emojis.
+    def self.top(data)
+      @@pg.where(guild_id: "1081635484209520802").order(Sequel.desc(:balance)).limit(15)
+    end
+
+    # Returns the bottom 15 emojis.
+    def self.bottom(data)
+      @@pg.where(guild_id: "1081635484209520802").order(Sequel.asc(:balance)).limit(15)
     end
 
     # Empties out the Emoji cache.
