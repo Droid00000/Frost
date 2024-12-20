@@ -23,13 +23,6 @@ CREATE TABLE IF NOT EXISTS booster_settings (
   PRIMARY KEY (hoist_role, guild_id)
 );
 
--- Holds info about starboard settings.
-CREATE TABLE IF NOT EXISTS starboard_settings (
-  guild_id BIGINT NOT NULL UNIQUE,
-  emoji_id VARCHAR NOT NULL DEFAULT '⭐',
-  PRIMARY KEY (guild_id, emoji_id)
-);
-
 -- Holds info about snowball players.
 CREATE TABLE IF NOT EXISTS snowball_players (
   user_id BIGINT NOT NULL UNIQUE,
@@ -60,15 +53,6 @@ CREATE TABLE IF NOT EXISTS emoji_tracker (
   PRIMARY KEY (emoji_id, guild_id)
 );
 
--- Holds info about messages on starboard.
-CREATE TABLE IF NOT EXISTS starboard_messages (
-  balance BIGINT NOT NULL,
-  guild_id BIGINT NOT NULL,
-  channel_id BIGINT NOT NULL,
-  message_id BIGINT NOT NULL,
-  PRIMARY KEY (guild_id, message_id)
-);
-
 CREATE UNIQUE INDEX IF NOT EXISTS app_snowball_user_idx ON snowball_players (user_id);
 
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
@@ -77,13 +61,9 @@ CREATE UNIQUE INDEX IF NOT EXISTS guild_booster_ban_idx ON banned_boosters (user
 
 CREATE UNIQUE INDEX IF NOT EXISTS guild_channel_idx ON archiver_settings (guild_id);
 
-CREATE UNIQUE INDEX IF NOT EXISTS guilds_stars_idx ON starboard_settings (guild_id);
-
 CREATE UNIQUE INDEX IF NOT EXISTS guilds_events_idx ON event_settings (role_id);
 
 CREATE INDEX IF NOT EXISTS guild_premium_ban_idx ON banned_boosters (guild_id);
-
-CREATE INDEX IF NOT EXISTS guild_stars_idx ON starboard_settings (emoji_id);
 
 CREATE INDEX IF NOT EXISTS guild_premium_idx ON guild_boosters (guild_id);
 
