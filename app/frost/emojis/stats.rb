@@ -48,7 +48,6 @@ def stats_command(data)
       embed.title = format(EMBED[50], data.server.name)
       embed.add_field(name: EMBED[52], value: emojis[0].join, inline: true)
       embed.add_field(name: EMBED[53], value: emojis[1].join, inline: true)
-      embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: data.server.icon_url)
     end
   end
 end
