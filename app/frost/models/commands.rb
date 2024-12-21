@@ -105,8 +105,7 @@ bot.register_application_command(:throw, 'Snowball fights', contexts: [0, 1, 2],
 end
 
 bot.register_application_command(:collect, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'जमा' }, description_localizations: { 'hi' => 'बर्फ का गोला की लड़ीं' }) do |command|
-  command.subcommand('snowball', 'Collect a snowball!', name_localizations: { 'hi' => 'बर्फकालोग' }, description_localizations: { 'hi' => 'बर्फ का गोला जमा करो' }) do |sub|
-  end
+  command.subcommand('snowball', 'Collect a snowball!', name_localizations: { 'hi' => 'बर्फकालोग' }, description_localizations: { 'hi' => 'बर्फ का गोला जमा करो' })
 end
 
 bot.register_application_command(:steal, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'चोरी' }, description_localizations: { 'hi' => 'बर्फ का गोला की लड़ीं' }) do |command|

@@ -238,8 +238,10 @@ module Discordrb
         if icon
           path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
 
-          raise ArgumentError,
-                'File object must respond to original_filename, path, or local path.' unless path_method
+          unless path_method
+            raise ArgumentError,
+                  'File object must respond to original_filename, path, or local path.'
+          end
           raise ArgumentError, 'File must respond to read' unless icon.respond_to? :read
 
           mime_type = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || 'image/jpeg'
@@ -275,8 +277,10 @@ module Discordrb
         if icon != :undef && icon
           path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
 
-          raise ArgumentError,
-                'File object must respond to original_filename, path, or local path.' unless path_method
+          unless path_method
+            raise ArgumentError,
+                  'File object must respond to original_filename, path, or local path.'
+          end
           raise ArgumentError, 'File must respond to read' unless icon.respond_to? :read
 
           mime_type = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || 'image/jpeg'
