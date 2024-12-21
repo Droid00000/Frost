@@ -67,7 +67,7 @@ RESPONSE = {
   63 => 'Successfully timed out <@%s>.',
   64 => "There aren't any emojis stats available for this server!",
   65 => "Successfully changed this member's nickname: <@%s>",
-  66 => "The bot needs to have the ``manage nicknames`` permission to do this."
+  66 => 'The bot needs to have the ``manage nicknames`` permission to do this.'
 }.freeze
 
 # Values for embed responses.

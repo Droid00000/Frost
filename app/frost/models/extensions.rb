@@ -207,3 +207,174 @@ module Discordrb
     end
   end
 end
+
+module Discordrb
+  module API
+    module Server
+      module_function
+
+      # Gets the premium status of a booster.
+      # @param token [String] bot token to make the request.
+      # @param server_id [Integer] ID of the guild to request.
+      # @param user_id [Integer] ID od the member to request.
+      def resolve_booster(token, server_id, user_id)
+        !JSON.parse(Discordrb::API.request(
+                      :guilds_sid_members_uid,
+                      server_id,
+                      :get,
+                      "#{Discordrb::API.api_base}/guilds/#{server_id}/members/#{user_id}",
+                      Authorization: token
+                    ))['premium_since'].nil?
+      rescue StandardError
+        false
+      end
+
+      # Create a role (parameters such as name and colour if not set can be set by update_role afterwards)
+      # Permissions are the Discord defaults; allowed: invite creation, reading/sending messages,
+      # sending TTS messages, embedding links, sending files, reading the history, mentioning everybody,
+      # connecting to voice, speaking and voice activity (push-to-talk isn't mandatory)
+      # https://discord.com/developers/docs/resources/guild#get-guild-roles
+      def create_role(token, server_id, name, colour, hoist, mentionable, packed_permissions, icon, reason = nil)
+        if icon
+          path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
+
+          raise ArgumentError,
+                'File object must respond to original_filename, path, or local path.' unless path_method
+          raise ArgumentError, 'File must respond to read' unless icon.respond_to? :read
+
+          mime_type = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || 'image/jpeg'
+          image = "data:#{mime_type};base64,#{Base64.encode64(icon.read).strip}"
+        else
+          image = nil
+        end
+
+        Discordrb::API.request(
+          :guilds_sid_roles,
+          server_id,
+          :post,
+          "#{Discordrb::API.api_base}/guilds/#{server_id}/roles",
+          { color: colour, name: name, hoist: hoist, mentionable: mentionable, permissions: packed_permissions,
+            icon: image }.compact.to_json,
+          Authorization: token,
+          content_type: :json,
+          'X-Audit-Log-Reason': reason
+        )
+      end
+
+      # Update a role
+      # Permissions are the Discord defaults; allowed: invite creation, reading/sending messages,
+      # sending TTS messages, embedding links, sending files, reading the history, mentioning everybody,
+      # connecting to voice, speaking and voice activity (push-to-talk isn't mandatory)
+      # https://discord.com/developers/docs/resources/guild#batch-modify-guild-role
+      # @param icon [:undef, File]
+      def update_role(token, server_id, role_id, name, colour, hoist, mentionable, packed_permissions, icon = :undef,
+                      reason = nil)
+        data = { color: colour, name: name, hoist: hoist, mentionable: mentionable,
+                 permissions: packed_permissions }
+
+        if icon != :undef && icon
+          path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
+
+          raise ArgumentError,
+                'File object must respond to original_filename, path, or local path.' unless path_method
+          raise ArgumentError, 'File must respond to read' unless icon.respond_to? :read
+
+          mime_type = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || 'image/jpeg'
+          data[:icon] = "data:#{mime_type};base64,#{Base64.encode64(icon.read).strip}"
+        elsif icon.nil?
+          data[:icon] = nil
+        end
+
+        Discordrb::API.request(
+          :guilds_sid_roles_rid,
+          server_id,
+          :patch,
+          "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{role_id}",
+          data.compact.to_json,
+          Authorization: token,
+          content_type: :json,
+          'X-Audit-Log-Reason': reason
+        )
+      end
+
+      # Bans multiple users in a guild at once.
+      # https://discord.com/developers/docs/resources/guild#bulk-guild-ban
+      def bulk_ban(token, server_id, user_ids, delete_message_seconds, reason)
+        Discordrb::API.request(
+          :guilds_sid_bans_uids,
+          server_id,
+          :post,
+          "#{Discordrb::API.api_base}/guilds/#{server_id}/bulk-ban",
+          { user_ids: user_ids, delete_message_seconds: delete_message_seconds }.to_json,
+          content_type: :json,
+          Authorization: token,
+          'X-Audit-Log-Reason': reason
+        )
+      end
+    end
+  end
+end
+
+module Discordrb
+  # Monkey patches to the bot class.
+  class Bot
+    # Calculates the intents payload.
+    def calculate_intents(intents)
+      intents = [intents] unless intents.is_a? Array
+
+      intents.reduce(0) do |sum, intent|
+        case intent
+        when Symbol
+          if INTENTS[intent]
+            sum | INTENTS[intent]
+          else
+            LOGGER.warn("Unknown intent: #{intent}")
+            sum
+          end
+        when Integer
+          sum | intent
+        else
+          LOGGER.warn("Invalid intent: #{intent}")
+          sum
+        end
+      end
+    end
+
+    # Updates presence status.
+    # @param status [String] The status the bot should show up as. Can be `online`, `dnd`, `idle`, or `invisible`
+    # @param activity [String, nil] The name of the activity to be played/watched/listened to/stream name on the stream.
+    # @param url [String, nil] The Twitch URL to display as a stream. nil for no stream.
+    # @param since [Integer] When this status was set.
+    # @param afk [true, false] Whether the bot is AFK.
+    # @param activity_type [Integer] The type of activity status to display.
+    # Can be 0 (Playing), 1 (Streaming), 2 (Listening), 3 (Watching), or 5 (Competing).
+    # @see Gateway#send_status_update
+    def update_status(status, activity, url, since = 0, afk = false, activity_type = 0)
+      gateway_check
+      @activity = activity
+      @status = status
+      @streamurl = url
+      type = url ? 1 : activity_type
+
+      activity_obj = if type == 4
+                       { 'name' => activity, 'type' => type, 'state' => activity }
+                     else
+                       activity || url ? { 'name' => activity, 'url' => url, 'type' => type } : nil
+                     end
+      @gateway.send_status_update(status, since, activity_obj, afk)
+
+      # Update the status in the cache
+      profile.update_presence('status' => status.to_s, 'activities' => [activity_obj].compact)
+    end
+
+    # Sets the currently custom status to the specified name.
+    # @param name [String] The custom status. E.g. idle, dnd, etc.
+    # @return [String] The new custom status that the bot will display.
+    def custom_status(status, name)
+      gateway_check
+      presence = status.nil? ? @status : status.downcase
+      name_string = name.nil? ? @activity : name
+      update_status(presence, name_string, nil, nil, nil, 4)
+    end
+  end
+end

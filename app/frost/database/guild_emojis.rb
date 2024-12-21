@@ -18,7 +18,7 @@ module Frost
     # Insert a new emoji into the DB.
     def self.add(emoji, guild)
       POSTGRES.transaction do
-        @@pg.insert_conflict(set: { balance: Sequel[:balance] + 1 } ).insert(emoji_id: emoji.id, guild_id: guild.id)
+        @@pg.insert_conflict(set: { balance: Sequel[:balance] + 1 }).insert(emoji_id: emoji.id, guild_id: guild.id)
       end
     end
 
