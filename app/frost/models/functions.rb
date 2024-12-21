@@ -9,15 +9,6 @@ def resolve_color(color)
   Discordrb::ColourRGB.new(color.strip.delete('#'))
 end
 
-# Converts a unix timestap into a readable timestamp.
-# @param timestamp [Integer] The unix timestamp to covert.
-# @return [String] Time data serialized as a string.
-def resolve_time(timestamp)
-  parsed_time = Time.parse(timestamp)
-  unix_time = Time.at(parsed_time&.to_i)
-  unix_time.strftime('%m/%d/%Y')
-end
-
 # Returns true if a string doesn't contain any bad words.
 # @param [String] The string to check.
 # @return [Boolean] If the name contains any bad words.

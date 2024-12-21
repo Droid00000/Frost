@@ -5,7 +5,7 @@ ENV TZ="America/Panama"
 RUN apk update && \
     apk add --no-cache \
     postgresql-dev \
-    ruby-json \
+    ruby-dev \
     git \
     build-base \
     firefox \

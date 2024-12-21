@@ -14,7 +14,7 @@ end
 
 def stats_command(data)
   unless Frost::Emojis.any?(data)
-    data.edit_response(content: RESPONSE[])
+    data.edit_response(content: RESPONSE[64])
     return
   end
 

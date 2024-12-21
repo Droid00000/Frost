@@ -75,6 +75,13 @@ bot.register_application_command(:bulk, 'Moderation Commands', contexts: [0], in
   end
 end
 
+bot.register_application_command(:change, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'अद्यतन' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }, default_member_permissions: "201326592") do |command|
+  command.subcommand('nickname', "Change a member's nickname!", name_localizations: { 'hi' => 'उपनाम' }, description_localizations: { 'hi' => 'किसी सदस्य का उपनाम बदलें' }) do |option|
+    option.user('member', 'Which member needs to have their name changed?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'किस सदस्य को अपना नाम बदलना है' })
+    option.string('nickname', "What should this member's new nickname be?", required: true, name_localizations: { 'hi' => 'उपनाम' }, description_localizations: { 'hi' => 'इस सदस्य का नया उपनाम क्या होना चाहिए' })
+  end
+end
+
 bot.register_application_command(:archive, 'Archives pins in a specified channel.', default_member_permissions: "8192", contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'पुरातत्व' }, description_localizations: { 'hi' => 'पुरातत्व पिंस कोई चुनित चैनल मै' }) do |option|
 end
 
