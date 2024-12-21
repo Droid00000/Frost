@@ -4,12 +4,7 @@ module Frost
   # Represents a roles DB.
   class Roles
     # Easy way to access the DB.
-    attr_accessor :pg
-
-    # @param database [Sequel::Dataset]
-    def initialize
-      @@pg = POSTGRES[:event_settings]
-    end
+    @@pg = POSTGRES[:event_settings]
 
     # Gets all the setup roles for a guild.
     def self.all(data)

@@ -5,12 +5,7 @@ module Frost
     # Represents a boosters DB.
     class Members
       # Easy way to access the DB.
-      attr_accessor :pg
-
-      # @param database [Sequel::Dataset]
-      def initialize
-        @@pg = POSTGRES[:server_boosters]
-      end
+      @@pg = POSTGRES[:server_boosters]
 
       # Adds a booster to the DB.
       def self.add(data, role)
@@ -67,12 +62,7 @@ module Frost
     # Represents a settings DB
     class Settings
       # Easy way to access the DB.
-      attr_accessor :pg
-
-      # @param database [Sequel::Dataset]
-      def initialize
-        @@pg = POSTGRES[:booster_settings]
-      end
+      @@pg = POSTGRES[:booster_settings]
 
       # Gets the hoist role for this guild.
       def self.get(data)
@@ -112,12 +102,7 @@ module Frost
 
     class Ban
       # Easy way to access the DB.
-      attr_accessor :pg
-
-      # @param database [Sequel::Dataset]
-      def initialize
-        @@pg = POSTGRES[:banned_boosters]
-      end
+      @@pg = POSTGRES[:banned_boosters]
 
       # Removes a ban from the DB.
       def self.remove(data)

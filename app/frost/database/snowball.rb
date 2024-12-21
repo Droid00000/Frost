@@ -4,12 +4,7 @@ module Frost
   # Represents a snowball DB.
   class Snow
     # Easy way to access the DB.
-    attr_accessor :pg
-
-    # @param database [Sequel::Dataset]
-    def initialize
-      @@pg = POSTGRES[:snowball_players]
-    end
+    @@pg = POSTGRES[:snowball_players]
 
     # Checks if a user is in the Database.
     def self.user?(data)

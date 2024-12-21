@@ -3,34 +3,23 @@
 module Frost
   # Represents an emojis DB.
   class Emojis
-    # Easy way to access the DB.
-    attr_accessor :pg
-
     # Easy way to access emojis.
-    attr_accessor :emojis
+    @@emojis = []
 
-    # @param database [Sequel::Dataset]
-    def initialize
-      @@pg = POSTGRES[:emoji_tracker]
-      @@emoji = []
-    end
-
-    # Insert a new emoji into the DB.
-    def self.produce(data, index)
-      POSTGRES.transaction do
-        if @@pg.where(emoji_id: data[:emoji].id, guild_id: data[:guild].id).empty?
-          @@pg.insert(emoji_id: data[:emoji].id, guild_id: data[:guild].id)
-        else
-          @@pg.where(emoji_id: data[:emoji].id, guild_id: data[:guild].id).update(balance(Sequel[:balance] + 1))
-        end
-        delete(index)
-      end
-    end
+    # Easy way to access the DB.
+    @@pg = POSTGRES[:emoji_tracker]
 
     # @param emoji [Discordrb::Emoji]
     # @param guild [Discordrb::Server]
-    def self.emoji(emoji, guild)
-      @@emoji << { emoji: emoji, guild: guild }
+    def initialize(emoji, guild)
+      @@emojis << { emoji: emoji, guild: guild }
+    end
+
+    # Insert a new emoji into the DB.
+    def self.add(emoji, guild)
+      POSTGRES.transaction do
+        @@pg.insert_conflict(set: { balance: Sequel[:balance] + 1 } ).insert(emoji_id: emoji.id, guild_id: guild.id)
+      end
     end
 
     # @param data [Discordrb::Interaction]
@@ -51,12 +40,13 @@ module Frost
     # Empties out the Emoji cache.
     # @param index [Integer]
     def delete(index)
-      @@emoji.delete_at(index)
+      @@emojis.delete_at(index)
     end
 
     # Returns all emojis.
     def self.drain
-      @@emoji
+      @@emojis
     end
   end
 end
+

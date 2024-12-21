@@ -2,13 +2,13 @@
 
 def emoji_stats(data)
   data.message.emoji.each do |emoji|
-    Frost::Emojis.emoji(emoji, data.server)
+    Frost::Emojis.new(emoji, data.server)
   end
 end
 
 Rufus::Scheduler.new.cron '0 0 * * *' do
-  Frost::Emojis.drain.each_with_index do |emoji, index|
-    Frost::Emojis.produce(emoji, index)
+  while (emoji = Frost::Emoji.drain.shift)
+    Frost::Emojis.add(emoji: emoji[:emoji], guild: emoji[:guild])
   end
 end
 

@@ -4,12 +4,7 @@ module Frost
   # Represents a pins DB.
   class Pins
     # Easy way to access the DB.
-    attr_accessor :pg
-
-    # @param database [Sequel::Dataset]
-    def initialize
-      @@pg = POSTGRES[:archiver_settings]
-    end
+    @@pg = POSTGRES[:archiver_settings]
 
     # Updates an existing archive channel.
     def self.update(data)
