@@ -1,8 +1,3 @@
-# Ensure we're using all the relavent rubocop extensions.
-require:
-  - rubocop-sequel
-  - rubocop-performance
-
 # Ensure we're using the most up-to-date version of Ruby.
 AllCops:
   NewCops: enable

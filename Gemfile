@@ -4,10 +4,6 @@ source 'https://rubygems.org'
 
 gem 'discordrb', github: 'droid00000/discordrb', branch: 'production'
 
-gem 'rubocop-performance', require: false
-
-gem 'rubocop-sequel', require: false
-
 gem 'rubocop', require: false
 
 gem 'selenium-webdriver'
