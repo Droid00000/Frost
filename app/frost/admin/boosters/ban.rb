@@ -17,7 +17,7 @@ def ban_booster(data)
     return
   end
 
-  Frost::Boosters::Members.delete(data, true)
+  Frost::Boosters::Members.manual_delete(data)
 
   data.edit_response(content: format(RESPONSE[30], data.options['user']))
 end

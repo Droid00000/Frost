@@ -49,4 +49,3 @@ module Frost
     end
   end
 end
-

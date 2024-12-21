@@ -15,7 +15,7 @@ module Frost
       end
 
       # Manually adds a user to the database.
-      def self.create(data)
+      def self.manual_add(data)
         POSTGRES.transaction do
           @@pg.insert(guild_id: data.server.id, user_id: data.options['user'], role_id: data.options['role'])
         end
@@ -44,6 +44,13 @@ module Frost
       def self.delete(data)
         POSTGRES.transaction do
           @@pg.where(guild_id: data.server.id, user_id: data.user.id).delete
+        end
+      end
+
+      # Removes a single user from the DB.
+      def self.manual_delete(data)
+        POSTGRES.transaction do
+          @@pg.where(guild_id: data.server.id, user_id: data.options['user']).delete
         end
       end
 
@@ -112,9 +119,13 @@ module Frost
       end
 
       # Checks if a user is in the DB.
-      def self.user?(data)
+      def self.user?(data, hash = false)
         POSTGRES.transaction do
-          !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
+          if hash == false
+            !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
+          else
+            !@@pg.where(guild_id: data.server.id, user_id: data.options['user']).empty?
+          end
         end
       end
 

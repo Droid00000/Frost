@@ -8,5 +8,6 @@ def pins_disable(data)
   end
 
   Frost::Pins.disable(data)
+
   data.edit_response(content: RESPONSE[37])
 end

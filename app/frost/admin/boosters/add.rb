@@ -17,7 +17,7 @@ def add_booster(data)
     return
   end
 
-  Frost::Boosters::Members.add(data, nil, true)
+  Frost::Boosters::Members.manual_add(data)
 
   data.edit_response(content: format(RESPONSE[26], data.options['user']))
 end
