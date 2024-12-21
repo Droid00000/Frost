@@ -23,7 +23,7 @@ def mute_member(data)
 
   begin
     time = Rufus::Scheduler.parse_duration(data.options['duration'])
-  rescue StandardError
+  rescue ArgumentError
     data.edit_response(content: RESPONSE[60])
     return
   end

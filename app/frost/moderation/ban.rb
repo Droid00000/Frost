@@ -16,7 +16,7 @@ def bulk_ban(data)
     return
   end
 
-  members = data.options['members'].scan(REGEX[4]).split.uniq.reject do |member|
+  members = data.options['members'].scan(REGEX[4]).uniq.reject do |member|
     data.server.member(member).hierarchy >= data.user.hierarchy
   end
 
