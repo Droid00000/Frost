@@ -19,18 +19,18 @@ def safe_name?(name)
 end
 
 # Checks if a guild member is still boosting a guild.
-# @param server [Integer, String] An ID that uniquely identifies a guild.
-# @param user [Integer, String] An ID that uniquely identifies a user.
+# @param guild [Integer, String] An ID that uniquely identifies a guild.
+# @param id [Integer, String] An ID that uniquely identifies a user.
 # @return [Boolean] Returns true if the user is boosting the server; false otherwise.
-def get_booster_status(server, user)
-  Discordrb::API::Server.resolve_booster(CONFIG['Discord']['TOKEN'], server, user)
+def get_booster_status(guild, id)
+  Discordrb::API::Server.resolve_booster(CONFIG['Discord']['TOKEN'], guild, id)
 end
 
 # Deletes a role in a guild.
-# @param server [Integer, String] An ID that uniquely identifies a guild.
-# @param role [Integer, String] An ID that uniquely identifies a role.
-def delete_guild_role(server, role)
-  Discordrb::API::Server.delete_role(CONFIG['Discord']['TOKEN'], server, role, REASON[6])
+# @param guild [Integer, String] An ID that uniquely identifies a guild.
+# @param id [Integer, String] An ID that uniquely identifies a role.
+def delete_guild_role(guild, id)
+  Discordrb::API::Server.delete_role(CONFIG['Discord']['TOKEN'], guild, id, REASON[6])
 rescue StandardError
   true
 end
