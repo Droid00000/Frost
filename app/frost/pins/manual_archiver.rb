@@ -8,10 +8,10 @@ module PinArchiver
     pins = event.channel.pins
 
     if pins.count == 50 && Frost::Pins.get?(event)
-      archive_channel = event.bot.channel(Frost::Pins.get(event))
+      channel = event.bot.channel(Frost::Pins.get(event))
       message = pins[1]
 
-      archive_channel.send_embed do |embed|
+      channel.send_embed do |embed|
         embed.colour = UI[2]
         embed.timestamp = message.timestamp
         embed.description = message.content&.to_s
