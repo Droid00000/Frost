@@ -37,12 +37,6 @@ module Frost
       @@pg.where(guild_id: data.server.id).order(Sequel.asc(:balance)).limit(15)
     end
 
-    # Empties out the Emoji cache.
-    # @param index [Integer]
-    def delete(index)
-      @@emojis.delete_at(index)
-    end
-
     # Returns all emojis.
     def self.drain
       @@emojis
