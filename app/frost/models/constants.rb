@@ -124,7 +124,10 @@ EMBED = {
   50 => 'Emoji Statistics for %s',
   51 => 'These are the current emoji stats for your server. Non-animated and animated emojis are mixed. Thank you for your support.',
   52 => 'Top Emojis ⬆️',
-  53 => 'Boring Emojis ⬇️'
+  53 => 'Boring Emojis ⬇️',
+  54 => "**Archive Channel:** <#%s>",
+  55 => "**Hoist Role:** <@&%s>",
+  56 => "**Roles:** %s"
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
