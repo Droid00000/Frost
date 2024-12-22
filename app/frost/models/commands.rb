@@ -4,37 +4,36 @@ require 'discordrb'
 
 bot = Discordrb::Bot.new(token: ENV.fetch('TOKEN'), intents: 0)
 
-# @!deprecated This command has been removed and is no longer available for use! 
+# @!function [Affections] This command has been removed and is no longer available for use! 
 bot.register_application_command(:hug, 'Hugs another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गलेमिलना' }, description_localizations: { 'hi' => 'सर्वर मित्र के गले मिलना' }) do |option|
   option.user('target', 'Who do you want to hug?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको गले मिलना है' })
 end
 
-# @!deprecated This command has been removed and is no longer available for use! 
+# @!function [Affections] This command has been removed and is no longer available for use! 
 bot.register_application_command(:poke, 'Pokes another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'बुलाना' }, description_localizations: { 'hi' => 'कोई सर्वर मित्र को बुलाना' }) do |option|
   option.user('target', 'Who do you want to poke?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको बुलाना है' })
 end
-
-# @!deprecated This command has been removed and is no longer available for use! 
+# @!function [Affections] This command has been removed and is no longer available for use! 
 bot.register_application_command(:nom, 'Noms another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'कुतरना' }, description_localizations: { 'hi' => 'किसी अन्य सर्वर सदस्य को काटता है' }) do |option|
   option.user('target', 'Who do you want to nom?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'आप किसे काटना चाहते हैं?' })
 end
 
-# @!deprecated This command has been removed and is no longer available for use! 
+# @!function [Affections] This command has been removed and is no longer available for use! 
 bot.register_application_command(:angered, 'Show your anger towards another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गुस्साकरना' }, description_localizations: { 'hi' => 'कोई सर्वर मित्र पे गुस्सा दिखाना' }) do |option|
   option.user('target', 'Who do you want to show your wrath to?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसपे आपको गुस्सा दिखाना है' })
 end
 
-# @!deprecated This command has been removed and is no longer available for use! 
+# @!function [Affections] This command has been removed and is no longer available for use! 
 bot.register_application_command(:bonk, 'Bonk another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'टपलीमारना' }, description_localizations: { 'hi' => 'किसी सर्वर मित्र को टपाली मारना' }) do |option|
   option.user('target', 'Who do you want to bonk?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको टपाली मारना है' })
 end
 
-# @!deprecated This command has been removed and is no longer available for use! 
+# @!function [Affections] This command has been removed and is no longer available for use! 
 bot.register_application_command(:punch, 'Punch another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'मुक्का' }, description_localizations: { 'hi' => 'एक सर्वर मित्र को मुक्का मारो' }) do |option|
   option.user('target', 'Who do you want to punch?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'आप किसे मुक्का मारना चाहते हैं?' })
 end
 
-# @!deprecated This command has been removed and is no longer available for use! 
+# @!function [Affections] This command has been removed and is no longer available for use! 
 bot.register_application_command(:sleep, 'Tells another server member to go and sleep.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'नींद' }, description_localizations: { 'hi' => 'किसी सर्वर मित्र को बोलो जाके सो जाए' }) do |option|
   option.user('target', 'Who needs to sleep?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको सोने जाने बोलना है' })
 end
