@@ -240,7 +240,3 @@ bot.register_application_command(:booster, 'Booster perks', contexts: [0], integ
     end
   end
 end
-
-at_exit { bot.stop }
-
-bot.run
