@@ -12,7 +12,7 @@ RUN apk update && \
     ca-certificates \
     ttf-freefont
 
-WORKDIR /app    
+WORKDIR /app
 
 COPY . .
 
