@@ -4,36 +4,36 @@ require 'discordrb'
 
 bot = Discordrb::Bot.new(token: ENV.fetch('TOKEN'), intents: 0)
 
-# @!function [Affections] This command has been removed and is no longer available for use! 
+# @!function [Affections] This command is part of a cog that does expressions! 
 bot.register_application_command(:hug, 'Hugs another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गलेमिलना' }, description_localizations: { 'hi' => 'सर्वर मित्र के गले मिलना' }) do |option|
   option.user('target', 'Who do you want to hug?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको गले मिलना है' })
 end
 
-# @!function [Affections] This command has been removed and is no longer available for use! 
+# @!function [Affections] This command is part of a cog that does expressions! 
 bot.register_application_command(:poke, 'Pokes another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'बुलाना' }, description_localizations: { 'hi' => 'कोई सर्वर मित्र को बुलाना' }) do |option|
   option.user('target', 'Who do you want to poke?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको बुलाना है' })
 end
-# @!function [Affections] This command has been removed and is no longer available for use! 
+# @!function [Affections] This command is part of a cog that does expressions! 
 bot.register_application_command(:nom, 'Noms another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'कुतरना' }, description_localizations: { 'hi' => 'किसी अन्य सर्वर सदस्य को काटता है' }) do |option|
   option.user('target', 'Who do you want to nom?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'आप किसे काटना चाहते हैं?' })
 end
 
-# @!function [Affections] This command has been removed and is no longer available for use! 
+# @!function [Affections] This command is part of a cog that does expressions!
 bot.register_application_command(:angered, 'Show your anger towards another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गुस्साकरना' }, description_localizations: { 'hi' => 'कोई सर्वर मित्र पे गुस्सा दिखाना' }) do |option|
   option.user('target', 'Who do you want to show your wrath to?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसपे आपको गुस्सा दिखाना है' })
 end
 
-# @!function [Affections] This command has been removed and is no longer available for use! 
+# @!function [Affections] This command is part of a cog that does expressions!
 bot.register_application_command(:bonk, 'Bonk another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'टपलीमारना' }, description_localizations: { 'hi' => 'किसी सर्वर मित्र को टपाली मारना' }) do |option|
   option.user('target', 'Who do you want to bonk?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको टपाली मारना है' })
 end
 
-# @!function [Affections] This command has been removed and is no longer available for use! 
+# @!function [Affections] This command is part of a cog that does expressions! 
 bot.register_application_command(:punch, 'Punch another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'मुक्का' }, description_localizations: { 'hi' => 'एक सर्वर मित्र को मुक्का मारो' }) do |option|
   option.user('target', 'Who do you want to punch?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'आप किसे मुक्का मारना चाहते हैं?' })
 end
 
-# @!function [Affections] This command has been removed and is no longer available for use! 
+# @!function [Affections] This command is part of a cog that does expressions!
 bot.register_application_command(:sleep, 'Tells another server member to go and sleep.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'नींद' }, description_localizations: { 'hi' => 'किसी सर्वर मित्र को बोलो जाके सो जाए' }) do |option|
   option.user('target', 'Who needs to sleep?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको सोने जाने बोलना है' })
 end
@@ -82,7 +82,7 @@ end
 bot.register_application_command(:bulk, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'थोक' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }, default_member_permissions: "36") do |command|
   command.subcommand('ban', 'Ban multiple members at once!', name_localizations: { 'hi' => 'प्रतिबंध' }, description_localizations: { 'hi' => 'एक साथ कई सदस्यों पर प्रतिबंध लगाएं' }) do |option|
     option.string('members', 'Which members do you want to ban?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'आप किन सदस्यों पर प्रतिबंध लगाना चाहते हैं?' })
-    option.integer('messages', 'How many days worth of messages (1-7) should be deleted?', required: false, name_localizations: { 'hi' => 'संदेशों' }, description_localizations: { 'hi' => 'कितने दिनों के संदेश (1-7) हटाये जाने चाहिए?' })
+    option.integer('messages', 'How many days worth of messages (1-7) should be deleted?', required: false, min_value: 1, max_value: 7, name_localizations: { 'hi' => 'संदेशों' }, description_localizations: { 'hi' => 'कितने दिनों के संदेश (1-7) हटाये जाने चाहिए?' })
     option.string('reason', 'The reason for banning these members.', required: false, name_localizations: { 'hi' => 'कारण' }, description_localizations: { 'hi' => 'इन सदस्यों पर प्रतिबंध लगाने का कारण' })
   end
 end
@@ -92,6 +92,13 @@ bot.register_application_command(:change, 'Moderation Commands', contexts: [0], 
   command.subcommand('nickname', "Change a member's nickname!", name_localizations: { 'hi' => 'उपनाम' }, description_localizations: { 'hi' => 'किसी सदस्य का उपनाम बदलें' }) do |option|
     option.user('member', 'Which member needs to have their name changed?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'किस सदस्य को अपना नाम बदलना है' })
     option.string('nickname', "What should this member's new nickname be?", required: true, name_localizations: { 'hi' => 'उपनाम' }, description_localizations: { 'hi' => 'इस सदस्य का नया उपनाम क्या होना चाहिए' })
+  end
+end
+
+# @!function [Moderation Operations] Belongs to a cog that manages moderation related commands!
+bot.register_application_command(:purge, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'शुद्ध' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }, default_member_permissions: "73760") do |command|
+  command.subcommand('messages', "Delete messages in the current channel.", name_localizations: { 'hi' => 'सूचना' }, description_localizations: { 'hi' => 'वर्तमान चैनल में संदेश हटाएँ' }) do |option|
+    option.integer('amount', 'How many messages do you want to delete?', required: true, min_value: 1, max_value: 100, name_localizations: { 'hi' => 'रकम' }, description_localizations: { 'hi' => 'आप कितने मैसेज डिलीट करना चाहते हैं' })
   end
 end
 

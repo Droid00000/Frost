@@ -2,6 +2,7 @@
 
 require_relative 'ban'
 require_relative 'block'
+require_relative 'delete'
 require_relative 'freeze'
 require_relative 'timeout'
 require_relative 'unfreeze'
@@ -13,6 +14,11 @@ module ModerationCommands
   application_command(:change).subcommand(:nickname) do |event|
     event.defer(ephemeral: true)
     update_nickname(event)
+  end
+
+  application_command(:purge).subcommand(:messages) do |event|
+    event.defer(ephemeral: true)
+    delete_messages(event)
   end
 
   application_command(:bulk).subcommand(:ban) do |event|
