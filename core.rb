@@ -28,6 +28,7 @@ bot.include! BoosterPerks
 bot.include! EmojiCommands
 bot.include! AdminCommands
 bot.include! SnowballFights
+bot.include! AffectionCommands
 bot.include! ModerationCommands
 
 bot.run
