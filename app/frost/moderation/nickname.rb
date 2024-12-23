@@ -16,6 +16,11 @@ def update_nickname(data)
     return
   end
 
+  if data.member('member').hierarchy >= data.server.bot.hierarchy
+    data.edit_response(content: RESPONSE[69])
+    return
+  end
+
   data.member('member').nick = data.options['nickname']
 
   data.edit_response(content: format(RESPONSE[65], data.options['member']))

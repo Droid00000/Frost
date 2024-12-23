@@ -59,17 +59,18 @@ RESPONSE = {
   55 => 'There are many reasons as to why the chapter could be delayed. Please be paitent and wait.',
   56 => '**Next Chapter:** <t:%s:D>',
   57 => 'Successfully blocked <@%s> from viewing this channel.',
-  58 => 'You cannot perform this action on your target member.',
+  58 => 'You cannot perform this action on this member.',
   59 => 'The bot needs to have the ``timeout members`` permission to do this.',
   60 => 'Invalid duration parameter.',
   61 => 'A mute can only last up to 28 days.',
   62 => 'You may not mute this user.',
   63 => 'Successfully timed out <@%s>.',
   64 => "There aren't any emojis stats available for this server!",
-  65 => "Successfully changed this member's nickname: <@%s>",
+  65 => "Changed this member's nickname: <@%s>",
   66 => 'The bot needs to have the ``manage nicknames`` permission to do this.',
   67 => 'The bot needs to have the ``manage messages`` permission to do this.',
-  68 => 'Successfully deleted **%s** message(s).'
+  68 => 'Successfully deleted **%s** message(s).',
+  69 => "The bot doesn't have permissions to do this!"
 }.freeze
 
 # Values for embed responses.

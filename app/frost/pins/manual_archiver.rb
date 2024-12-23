@@ -19,8 +19,8 @@ module PinArchiver
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: message.attachments.first.url) if message.attachments.any?
         embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: message.author.display_name, icon_url: message.author.avatar_url)
       end
-      message.unpin(REASON[7])
-      event.edit_response(content: "#{RESPONSE[20]} #{EMOJI[3]}")
+      message.unpin
+      event.edit_response(content: "#{RESPONSE[20]}")
     end
   end
 end

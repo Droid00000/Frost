@@ -18,7 +18,7 @@ module PinArchiver
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: message.attachments.first.url) if message.attachments.any?
         embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: message.author.display_name, icon_url: message.author.avatar_url)
       end
-      message.unpin(REASON[7])
+      message.unpin
     end
   end
 end
