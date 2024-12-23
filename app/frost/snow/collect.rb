@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 def collect_snowball(data)
-  Frost::Snow.user(data) unless Frost::Snow.user?(data)
+  Frost::Snow.user(data)
 
-  Frost::Snow.balance(data, add: true)
+  Frost::Snow.balance(data, true)
 
   data.edit_response do |builder|
     builder.add_embed do |embed|

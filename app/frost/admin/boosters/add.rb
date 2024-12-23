@@ -17,6 +17,11 @@ def add_booster(data)
     return
   end
 
+  if Frost::Boosters::Ban.user?(data, true)
+    data.edit_response(content: RESPONSE[29])
+    return
+  end
+
   Frost::Boosters::Members.manual_add(data)
 
   data.edit_response(content: format(RESPONSE[26], data.options['user']))

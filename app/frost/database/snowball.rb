@@ -6,13 +6,6 @@ module Frost
     # Easy way to access the DB.
     @@pg = POSTGRES[:snowball_players]
 
-    # Checks if a user is in the Database.
-    def self.user?(data)
-      POSTGRES.transaction do
-        !@@pg.where(user_id: data.user.id).get(:user_id).nil?
-      end
-    end
-
     # Checks if a user has a snowball.
     def self.snowball?(data, hash = false)
       POSTGRES.transaction do
@@ -34,7 +27,7 @@ module Frost
     # Adds a user to the DB.
     def self.user(data)
       POSTGRES.transaction do
-        @@pg.insert(user_id: data.user.id)
+        @@pg.insert_conflict(:ignore).insert(user_id: data.user.id)
       end
     end
 
@@ -47,7 +40,7 @@ module Frost
     end
 
     # Adds or removes a snowball.
-    def self.balance(data, add: false)
+    def self.balance(data, add = false)
       POSTGRES.transaction do
         if add
           @@pg.where(user_id: data.user.id).update(balance: Sequel[:balance] + 1)
