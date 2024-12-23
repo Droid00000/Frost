@@ -1,16 +1,15 @@
-FROM ruby:3.3-alpine
+FROM ruby:3.3
 
 ENV TZ="America/Panama"
 
-RUN apk update && \
-    apk add --no-cache \
-    postgresql-dev \
+RUN apt-get update && \
+    apt-get install -y \
+    postgresql libpq-dev \
     ruby-dev \
     git \
-    build-base \
-    firefox \
-    ca-certificates \
-    ttf-freefont
+    build-essential \
+    firefox-esr && \
+    apt-get clean
 
 WORKDIR /app
 
