@@ -6,6 +6,11 @@ def mute_member(data)
     return
   end
 
+  if data.member('member').hierarchy >= data.server.bot.hierarchy
+    data.edit_response(content: RESPONSE[62])
+    return
+  end
+
   if data.member('member').hierarchy >= data.user.hierarchy
     data.edit_response(content: RESPONSE[62])
     return
