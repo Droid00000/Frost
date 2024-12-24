@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'help'
 require_relative 'chapter'
 require_relative 'settings'
 
@@ -17,10 +16,5 @@ module AdminCommands
   application_command(:settings) do |event|
     event.defer(ephemeral: true)
     general_settings(event)
-  end
-
-  application_command(:help) do |event|
-    event.defer(ephemeral: true)
-    general_help(event)
   end
 end

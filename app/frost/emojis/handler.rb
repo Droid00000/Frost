@@ -23,7 +23,7 @@ module EmojiCommands
     steal_emojis(event)
   end
 
-  select_menu(custom_id: 'emojis') do |event|
+  select_menu(custom_id: 'emoji') do |event|
     event.defer_update
     select_click(event)
   end
