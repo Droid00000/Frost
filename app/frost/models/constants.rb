@@ -146,8 +146,8 @@ EMBED = {
   69 => "Hi! Welcome to the help page. Use the dropdown menu below to view a category.",
   70 => "About Me",
   71 => "I was made by *droid00000*! My code is open source and can be viewed [here](<https://github.com/Droid00000/Frost>)!",
-  72 => "Server Moderation",
-  73 => "Pin Archiver",
+  72 => "**Server Moderation**",
+  73 => "**Pin Archiver**",
   74 => "The Pin archiver automatically archives pins when the pinned message limit is reached. The second most recent pinned message is the one that's archived.",
   75 => "This command sets up the pin archiver. When the archiver has already been setup the archive channel will be updated.",
   76 => "This command disables the pin archiver preventing pins from being archived.",
@@ -159,7 +159,15 @@ EMBED = {
   82 => 'PINS',
   83 => 'EMOJI',
   84 => 'BOOST',
-  85 => 'SNOW'
+  85 => 'SNOW',
+  86 => '**Emoji Operations**',
+  87 => "Emoji operations allow you to perform actions on emojis. See the commands below for more emojis.",
+  88 => "`/add emoji(s)`",
+  89 => 'This command yields a select menu that allows you to choose which emojis to add from a message.',
+  90 => 'This command adds every emoji in a message to your server.',
+  91 => "`/add emojis`",
+  92 => "`/emoji stats`",
+  93 => "This command shows emoji stats for your server. Stats are logged by default, so no special setup is required."
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

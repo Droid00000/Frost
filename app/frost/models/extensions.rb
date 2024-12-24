@@ -201,7 +201,7 @@ module Discordrb
       # Producer for this event.
       def initialize(data, bot)
         super
-  
+
         @values = data['data']['values'].first
       end
 
