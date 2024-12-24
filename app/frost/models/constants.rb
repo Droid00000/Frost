@@ -138,8 +138,14 @@ EMBED = {
   61 => "Moderation related commands.",
   62 => "Commands for server boosters.",
   63 => "Commands for the pin archiver.",
-  64 => "Commands related to emojis.",
-  65 => "Select a category..."
+  64 => "Commands for emoji operations.",
+  65 => "Select a category...",
+  66 => "Snowballs",
+  67 => "Commands for snowball fights.",
+  68 => "Help Menu",
+  69 => "Hi! Welcome to the help page. Use the dropdown menu below to view a category.",
+  70 => "About Me",
+  71 => "I was made by *droid00000*! My code is open source and can be viewed [here](<https://github.com/Droid00000/Frost>)!"
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

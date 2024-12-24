@@ -35,7 +35,7 @@ module Frost
     def self.steal(data)
       POSTGRES.transaction do
         @@pg.where(user_id: data.user.id).update(balance: Sequel[:balance] + data.options['amount'])
-        
+
         @@pg.where(user_id: data.options['member']).update(balance: Sequel[:balance] - data.options['amount'])
       end
     end

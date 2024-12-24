@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require_relative 'home'
-#require_relative 'pins'
-#require_relative 'emoji'
-#require_relative 'boosters'
-#require_relative 'moderation'
+# require_relative 'pins'
+# require_relative 'emoji'
+# require_relative 'boosters'
+# require_relative 'moderation'
 
 module AdminCommands
   extend Discordrb::EventContainer
