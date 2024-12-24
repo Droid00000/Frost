@@ -82,7 +82,7 @@ end
 bot.register_application_command(:bulk, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'थोक' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }, default_member_permissions: "36") do |command|
   command.subcommand('ban', 'Ban multiple members at once!', name_localizations: { 'hi' => 'प्रतिबंध' }, description_localizations: { 'hi' => 'एक साथ कई सदस्यों पर प्रतिबंध लगाएं' }) do |option|
     option.string('members', 'Which members do you want to ban?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'आप किन सदस्यों पर प्रतिबंध लगाना चाहते हैं?' })
-    option.integer('messages', 'How many days worth of messages (1-7) should be deleted?', required: false, min_value: 1, max_value: 7, name_localizations: { 'hi' => 'संदेशों' }, description_localizations: { 'hi' => 'कितने दिनों के संदेश (1-7) हटाये जाने चाहिए?' })
+    option.integer('messages', 'How many days worth of messages (1-7) should be deleted?', required: false, min_value: 0, max_value: 7, name_localizations: { 'hi' => 'संदेशों' }, description_localizations: { 'hi' => 'कितने दिनों के संदेश (1-7) हटाये जाने चाहिए?' })
     option.string('reason', 'The reason for banning these members.', required: false, name_localizations: { 'hi' => 'कारण' }, description_localizations: { 'hi' => 'इन सदस्यों पर प्रतिबंध लगाने का कारण' })
   end
 end
@@ -210,11 +210,7 @@ bot.register_application_command(:booster, 'Booster perks', contexts: [0], integ
       option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
     end
 
-    group.subcommand('delete', 'Delete your custom booster role.') do |option|
-    end
-
-    group.subcommand('help', 'Open the booster perks help menu.') do |option|
-    end
+    group.subcommand('delete', 'Delete your custom booster role.')
   end
 
   command.subcommand_group(:admin, 'Booster admin!') do |group|
@@ -239,10 +235,6 @@ bot.register_application_command(:booster, 'Booster perks', contexts: [0], integ
       option.role('role', 'Which role should all custom booster roles be placed above?', required: true)
     end
 
-    group.subcommand('disable', 'Disable the booster perks functionality.') do |option|
-    end
-
-    group.subcommand('help', 'Open the administrator help menu for this functionality.') do |option|
-    end
+    group.subcommand('disable', 'Disable the booster perks functionality.')
   end
 end

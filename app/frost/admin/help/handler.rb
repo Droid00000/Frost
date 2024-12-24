@@ -2,9 +2,9 @@
 
 require_relative 'pins'
 require_relative 'index'
-#require_relative 'emoji'
-#require_relative 'boosters'
-#require_relative 'moderation'
+# require_relative 'emoji'
+# require_relative 'boosters'
+# require_relative 'moderation'
 
 module AdminCommands
   extend Discordrb::EventContainer

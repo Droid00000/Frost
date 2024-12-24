@@ -12,7 +12,7 @@ def owner_status(data)
   end
 
   if data.options['description'] || data.options['type']
-    data.bot.custom_status(data.options['type'], data.options['description'])
+    data.bot.update_status(data.options['type'], data.options['description'])
   end
 
   data.edit_response(content: "#{RESPONSE[13]} #{EMOJI[1]}")

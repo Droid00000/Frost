@@ -353,32 +353,12 @@ module Discordrb
     # @param activity_type [Integer] The type of activity status to display.
     # Can be 0 (Playing), 1 (Streaming), 2 (Listening), 3 (Watching), or 5 (Competing).
     # @see Gateway#send_status_update
-    def update_status(status, activity, url, since = 0, afk = false, activity_type = 0)
-      gateway_check
-      @activity = activity
-      @status = status
-      @streamurl = url
-      type = url ? 1 : activity_type
+    def update_status(status, name, url = nil, since = 0, activity_type = 0)
+      data = { name: name, type: 4, state: name }.compact
 
-      activity_obj = if type == 4
-                       { 'name' => activity, 'type' => type, 'state' => activity }
-                     else
-                       activity || url ? { 'name' => activity, 'url' => url, 'type' => type } : nil
-                     end
-      @gateway.send_status_update(status, since, activity_obj, afk)
+      @status = status&.downcase if status
 
-      # Update the status in the cache
-      profile.update_presence('status' => status.to_s, 'activities' => [activity_obj].compact)
-    end
-
-    # Sets the currently custom status to the specified name.
-    # @param name [String] The custom status. E.g. idle, dnd, etc.
-    # @return [String] The new custom status that the bot will display.
-    def custom_status(status, name)
-      gateway_check
-      presence = status.nil? ? @status : status.downcase
-      name_string = name.nil? ? @activity : name
-      update_status(presence, name_string, nil, nil, nil, 4)
+      @gateway.send_status_update(@status, since, data, false)
     end
   end
 end
