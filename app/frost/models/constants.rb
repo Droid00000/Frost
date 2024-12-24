@@ -145,7 +145,16 @@ EMBED = {
   68 => "Help Menu",
   69 => "Hi! Welcome to the help page. Use the dropdown menu below to view a category.",
   70 => "About Me",
-  71 => "I was made by *droid00000*! My code is open source and can be viewed [here](<https://github.com/Droid00000/Frost>)!"
+  71 => "I was made by *droid00000*! My code is open source and can be viewed [here](<https://github.com/Droid00000/Frost>)!",
+  72 => "Server Moderation",
+  73 => "Pin Archiver",
+  74 => "The Pin archiver automatically archives pins when the pinned message limit is reached. The second most recent pinned message is the one that's archived.",
+  75 => "This command sets up the pin archiver. When the archiver has already been setup the archive channel will be updated.",
+  76 => "This command disables the pin archiver preventing pins from being archived.",
+  77 => "This command manually archives the pins in the channel it's invoked in.",
+  78 => '`/pin archiver setup`',
+  79 => '`/pin archiver disable`',
+  80 => '`/archive`',
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
