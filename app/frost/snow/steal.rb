@@ -17,8 +17,8 @@ def steal_snowball(data)
   end
 
   Frost::Snow.user(data)
-  
-  Frost::Snow.steal(data, data.options['amount'])
+
+  Frost::Snow.steal(data) 
 
   data.edit_response(content: format(RESPONSE[31], data.options['amount']))
 end

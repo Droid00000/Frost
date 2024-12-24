@@ -130,7 +130,16 @@ EMBED = {
   53 => 'Boring Emojis ⬇️',
   54 => "**Archive Channel:** <#%s>",
   55 => "**Hoist Role:** <@&%s>",
-  56 => "**Roles:** %s"
+  56 => "**Roles:** %s",
+  57 => "Moderation",
+  58 => "Boosters",
+  59 => "Pins",
+  60 => "Emojis",
+  61 => "Moderation related commands.",
+  62 => "Commands for server boosters.",
+  63 => "Commands for the pin archiver.",
+  64 => "Commands related to emojis.",
+  65 => "Select a category..."
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

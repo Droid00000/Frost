@@ -27,7 +27,7 @@ module Frost
     # Adds a user to the DB.
     def self.user(data)
       POSTGRES.transaction do
-        @@pg.insert_conflict(:ignore).insert(user_id: data.user.id)
+        @@pg.insert_conflict.insert(user_id: data.user.id)
       end
     end
 
@@ -35,6 +35,7 @@ module Frost
     def self.steal(data)
       POSTGRES.transaction do
         @@pg.where(user_id: data.user.id).update(balance: Sequel[:balance] + data.options['amount'])
+        
         @@pg.where(user_id: data.options['member']).update(balance: Sequel[:balance] - data.options['amount'])
       end
     end
