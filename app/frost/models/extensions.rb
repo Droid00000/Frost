@@ -198,11 +198,18 @@ module Discordrb
   module Events
     # Monkey patch for select menus.
     class StringSelectEvent
+      # Producer for this event.
+      def initialize(data, bot)
+        super
+  
+        @values = data['data']['values'].first
+      end
+
       # @return [Emoji] Emojis sent in this interaction.
       def emoji
-        return nil if @values.first.nil?
+        return nil if @values.nil?
 
-        @bot.parse_mentions(@values.first).find { |e| e.is_a? Discordrb::Emoji }
+        @bot.parse_mentions(@values).find { |e| e.is_a? Discordrb::Emoji }
       end
     end
   end

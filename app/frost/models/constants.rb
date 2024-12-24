@@ -155,6 +155,11 @@ EMBED = {
   78 => '`/pin archiver setup`',
   79 => '`/pin archiver disable`',
   80 => '`/archive`',
+  81 => 'MOD',
+  82 => 'PINS',
+  83 => 'EMOJI',
+  84 => 'BOOST',
+  85 => 'SNOW'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

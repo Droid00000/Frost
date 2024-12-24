@@ -11,7 +11,18 @@ module AdminCommands
 
   select_menu(custom_id: 'index') do |event|
     event.defer_update
-    help_pins(event)
+    case event.values
+    when "MOD"
+      help_mod(event)
+    when "PINS"
+      help_pins(event)
+    when "SNOW"
+      help_snow(event)
+    when "EMOJI"
+      help_emoji(event)
+    when "BOOST"
+      help_booster(event)
+    end
   end
 
   application_command(:help) do |event|
