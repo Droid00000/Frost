@@ -175,7 +175,9 @@ EMBED = {
   120 => "Booster perks allow you to reward the boosters of your server with configurable perks such as custom roles.",
   121 => 'This command permanently deletes your custom role in this server.',
   122 => 'This command changes your custom role in this server. All parameters are optional.',
-  123 => 'This command creates your custom role in this server.'
+  123 => 'This command creates your custom role in this server.',
+  124 => 'Admin Commands',
+  125 => 'Booster Admins'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

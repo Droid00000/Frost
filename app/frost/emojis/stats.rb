@@ -13,7 +13,7 @@ def reaction_stats(data)
 end
 
 Rufus::Scheduler.new.cron '0 0 * * *' do
-  while (emoji = Frost::Emoji.drain.shift)
+  while (emoji = Frost::Emojis.drain.shift)
     Frost::Emojis.add(emoji: emoji[:emoji], guild: emoji[:guild])
   end
 end
