@@ -75,28 +75,6 @@ RESPONSE = {
 
 # Values for embed responses.
 EMBED = {
-  1 => 'Sends a random GIF to hug a server member.',
-  2 => 'Sends a random GIF to nom a server member.',
-  3 => 'Sends a random GIF to poke a server member.',
-  4 => 'Opens the general help menu.',
-  5 => 'Shows some information about the bot.',
-  6 => 'Sends a random GIF to tell a server member to go to sleep.',
-  7 => 'Sends a random GIF to show your anger towards a server member.',
-  8 => 'Allows the bot owner to shutdown the bot.',
-  9 => 'Opens the booster perks help menu.',
-  10 => 'sets up the event roles functionality.',
-  11 => 'sets up the pin archiver.',
-  12 => 'Opens the booster perks help menu in administrator mode.',
-  13 => 'Manually adds a member to the booster database.',
-  14 => 'Bans a member from using the booster perks feature in this server.',
-  15 => 'Opens the help menu you are currently viewing.',
-  16 => 'Unbans a member from using the booster perks feature in this server.',
-  17 => 'Sets up the booster perks feature in this server. Run this command again to update your settings.',
-  18 => 'Disables the booster perks feature in this server.',
-  19 => 'Manually deletes a member from the booster database.',
-  20 => 'Creates your custom role. Optionally, you may put a custom emoji in the icon option.',
-  21 => 'Lets you edit your custom role. All parameters are optional.',
-  22 => 'Deletes your custom role. You can make a new role at any time provided you keep boosting the server.',
   23 => '**%s** says **%s** should go to bed!',
   24 => '**%s** punches **%s**!',
   25 => '**%s** pokes **%s**!',
@@ -122,7 +100,7 @@ EMBED = {
   45 => '**MISS**',
   46 => '**COMMANDS**',
   47 => '**Booster Settings**',
-  48 => '**Booster Commands**',
+  48 => '**Server Boosters**',
   49 => '**Server Settings**',
   50 => 'Emoji Statistics for %s',
   51 => 'These are the current emoji stats for your server. Non-animated and animated emojis are mixed. Thank you for your support.',
@@ -190,7 +168,14 @@ EMBED = {
   113 => "Changes a members nickname to the specified option.",
   114 => "Blocks the member from viewing the channel the command is invoked in if cascade is sent to false. Otherwise, applies to every channel in the server.",
   115 => "`/purge messages`",
-  116 => "Deletes up to 200 messages in the channel the command is invoked in. Cannot delete messages older than 2 weeks."
+  116 => "Deletes up to 200 messages in the channel the command is invoked in. Cannot delete messages older than 2 weeks.",
+  117 => '``/booster role delete``',
+  118 => '``/booster role claim``',
+  119 => '``/booster role edit``',
+  120 => "Booster perks allow you to reward the boosters of your server with configurable perks such as custom roles.",
+  121 => 'This command permanently deletes your custom role in this server.',
+  122 => 'This command changes your custom role in this server. All parameters are optional.',
+  123 => 'This command creates your custom role in this server.'
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

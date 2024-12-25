@@ -4,7 +4,7 @@ require_relative 'pins'
 require_relative 'snow'
 require_relative 'index'
 require_relative 'emoji'
-# require_relative 'boosters'
+require_relative 'boosters'
 require_relative 'moderation'
 
 module AdminCommands
