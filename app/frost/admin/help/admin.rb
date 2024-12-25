@@ -3,7 +3,7 @@
 def help_admin(data)
   data.send_message(ephemeral: true) do |builder|
     builder.add_embed do |embed|
-      embed.colour = UI[5]
+      embed.colour = UI[7]
       embed.title = EMBED[47]
       embed.description = EMBED[134]
       embed.timestamp = Time.at(Time.now)
