@@ -70,7 +70,8 @@ RESPONSE = {
   66 => 'The bot needs to have the ``manage nicknames`` permission to do this.',
   67 => 'The bot needs to have the ``manage messages`` permission to do this.',
   68 => 'Successfully deleted **%s** message(s).',
-  69 => "The bot doesn't have permissions to do this!"
+  69 => "The bot doesn't have permissions to do this!",
+  70 => "Stole **%s** snowballs!"
 }.freeze
 
 # Values for embed responses.
