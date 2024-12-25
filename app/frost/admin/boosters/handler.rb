@@ -2,7 +2,6 @@
 
 require_relative 'add'
 require_relative 'ban'
-require_relative 'help'
 require_relative 'setup'
 require_relative 'unban'
 require_relative 'delete'

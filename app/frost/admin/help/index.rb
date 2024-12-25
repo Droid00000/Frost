@@ -3,7 +3,7 @@
 def help_index(data)
   data.send_message do |builder, components|
     components.row do |menu|
-      menu.select_menu(custom_id: 'index', placeholder: EMBED[65], min_values: 1) do |options|
+      menu.select_menu(custom_id: EMBED[126], placeholder: EMBED[65], min_values: 1) do |options|
         options.option(label: EMBED[57], value: EMBED[81], description: EMBED[61], emoji: 1320928322804388003)
         options.option(label: EMBED[66], value: EMBED[85], description: EMBED[67], emoji: 1320936043020554251)
         options.option(label: EMBED[58], value: EMBED[84], description: EMBED[62], emoji: 1320971944627146752)

@@ -4,6 +4,7 @@ require_relative 'pins'
 require_relative 'snow'
 require_relative 'index'
 require_relative 'emoji'
+require_relative 'admin'
 require_relative 'boosters'
 require_relative 'moderation'
 
@@ -29,5 +30,10 @@ module AdminCommands
   application_command(:help) do |event|
     event.defer(ephemeral: true)
     help_index(event)
+  end
+
+  button(custom_id: 'admin') do |event|
+    event.defer_update
+    help_admin(event)
   end
 end

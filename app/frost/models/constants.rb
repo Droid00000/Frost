@@ -99,7 +99,7 @@ EMBED = {
   44 => '**HIT**',
   45 => '**MISS**',
   46 => '**COMMANDS**',
-  47 => '**Booster Settings**',
+  47 => '**Booster Moderation**',
   48 => '**Server Boosters**',
   49 => '**Server Settings**',
   50 => 'Emoji Statistics for %s',
@@ -177,7 +177,21 @@ EMBED = {
   122 => 'This command changes your custom role in this server. All parameters are optional.',
   123 => 'This command creates your custom role in this server.',
   124 => 'Admin Commands',
-  125 => 'Booster Admins'
+  125 => 'admin',
+  126 => 'index',
+  127 => '``/booster admin disable``',
+  128 => '``/booster admin delete``',
+  129 => '``/booster admin setup``',
+  130 => '``/booster admin unban``',
+  131 => '``/booster admin ban``',
+  132 => '``/booster admin add``',
+  134 => 'Booster perks come with a set of commands in order to protect your community from bad actors.',
+  135 => 'Disables booster perks on this server.',
+  136 => "Manually removes a booster from the bot's database.",
+  137 => "Sets up booster perks on this server. The hoist role is the role all custom roles will be placed above.",
+  138 => "Removes a ban placed upon a member in this server.",
+  139 => "Prevents a member from accessing booster perks on this server. Removes their custom role if they have one.",
+  140 => "Manually adds a booster to the bot's database."
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
