@@ -6,6 +6,7 @@ def help_pins(data)
       embed.colour = UI[7]
       embed.title = EMBED[73]
       embed.description = EMBED[74]
+      embed.timestamp = Time.at(Time.now)
       embed.add_field(name: EMBED[78], value: EMBED[75])
       embed.add_field(name: EMBED[79], value: EMBED[76])
       embed.add_field(name: EMBED[80], value: EMBED[77])

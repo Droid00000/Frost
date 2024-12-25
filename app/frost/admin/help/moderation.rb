@@ -6,6 +6,7 @@ def help_mod(data)
       embed.colour = UI[7]
       embed.title = EMBED[72]
       embed.description = EMBED[102]
+      embed.timestamp = Time.at(Time.now)
       embed.add_field(name: EMBED[107], value: EMBED[113])
       embed.add_field(name: EMBED[115], value: EMBED[116])
       embed.add_field(name: EMBED[103], value: EMBED[109])
