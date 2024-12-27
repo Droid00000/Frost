@@ -195,18 +195,6 @@ bot.register_application_command(:next, 'Manga Chapter!', contexts: [0, 1, 2], i
   end
 end
 
-# @!function [Music Operations] Belongs to a cog that can stream songs!
-bot.register_application_command(:music, 'Connect and play songs!.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'संगीत' }, description_localizations: { 'hi' => 'कनेक्ट करें और गाने चलाएं' }) do |command|
-  command.subcommand(:leave, 'Disconnect from a voice channel.', name_localizations: { 'hi' => 'छुट्टी' }, description_localizations: { 'hi' => 'वॉइस चैनल से डिस्कनेक्ट करें' })
-  command.subcommand(:pause, 'Stop playing the current song.', name_localizations: { 'hi' => 'रुकना' }, description_localizations: { 'hi' => 'वर्तमान गाना बजाना बंद करें' })
-  command.subcommand(:help, 'Help menu for voice commands.', name_localizations: { 'hi' => 'मदद' }, description_localizations: { 'hi' => 'वॉइस कमांड के लिए सहायता मेनू' })
-  command.subcommand(:next, 'Play the next track.', name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'अगला ट्रैक चलाएँ' })
-
-  command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => 'नाटक' }, description_localizations: { 'hi' => 'किसी यूआरएल या गाने के नाम से ऑडियो चलाएं' }) do |option|
-    option.string(:song, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2, name_localizations: { 'hi' => 'गाना' }, description_localizations: { 'hi' => 'एक गीत का लिंक' })
-  end
-end
-
 # @!function [Booster Operations] Belongs to a cog that manages booster roles!
 bot.register_application_command(:booster, 'Booster perks', contexts: [0], integration_types: [0]) do |command|
   command.subcommand_group(:role, 'Booster roles!') do |group|
