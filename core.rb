@@ -4,6 +4,7 @@ $LOAD_PATH.unshift Dir.pwd
 
 require 'yaml'
 require 'sequel'
+require 'calliope'
 require 'discordrb'
 require 'rufus-scheduler'
 require 'selenium-webdriver'

@@ -40,6 +40,12 @@ Chapter:
   ELEMENT: ''
   LINK: ''
 
+# Information about the lavalink node.
+Lavalink:
+  ID: "BOT_ID_HERE"
+  URL: ''
+  PASSWORD: ''
+
 # Database related credentials.
 Postgres:
   URL: "postgres://URI_HERE"
