@@ -12,6 +12,13 @@ def process_server(data)
   CALLIOPE.connect(data.server.id, token: data.token, endpoint: data.endpoint)
 end
 
+# Convienent way to connect from a voice channel.
+def gateway_voice_disconnect(data)
+  return if data.server.bot.voice_channel.nil?
+
+  data.bot.gateway.send_voice_state_update(data.server.id, nil, false, false)
+end
+
 # Convienent way to connect to a voice channel.
 def gateway_voice_connect(data)
   return unless data.server.bot.voice_channel.nil?
