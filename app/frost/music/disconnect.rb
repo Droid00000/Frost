@@ -12,13 +12,13 @@ def music_disconnect(data)
   end
 
   unless CALLIOPE.player(data.server.id)
-    data.send_message(content: RESPONSE[])
+    data.edit_response(content: RESPONSE[])
     return
   end
 
   gateway_voice_disconnect(data)
 
-  CALLIOPE.player(data.server.id).delete
+  CALLIOPE.player(data.server.id).shutdown
 
   data.edit_response(content: RESPONSE[])
 end

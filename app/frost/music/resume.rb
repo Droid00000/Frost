@@ -18,5 +18,5 @@ def music_resume(data)
 
   CALLIOPE.player(data.server.id).paused = false
 
-  data.send_message(content: RESPONSE[])
+  data.edit_response(content: RESPONSE[])
 end

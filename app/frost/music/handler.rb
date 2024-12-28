@@ -14,24 +14,24 @@ module MusicCommands
     music_disconnect(event)
   end
 
-  application_command(:music).subcommand(:play) do |event|
+  application_command(:music).subcommand(:resume) do |event|
     event.defer(ephemeral: false)
-    music_play(event)
-  end
-
-  button(custom_id: "Resume") do |event|
-    event.defer_update
     music_resume(event)
   end
 
-  button(custom_id: "Pause") do |event|
-    event.defer_update
+  application_command(:music).subcommand(:pause) do |event|
+    event.defer(ephemeral: false)
     music_pause(event)
   end
 
-  button(custom_id: "Next") do |event|
-    event.defer_update
+  application_command(:music).subcommand(:next) do |event|
+    event.defer(ephemeral: false)
     music_next(event)
+  end
+
+  application_command(:music).subcommand(:play) do |event|
+    event.defer(ephemeral: false)
+    music_play(event)
   end
 
   voice_server_update do |event|
