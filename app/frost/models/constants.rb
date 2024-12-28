@@ -242,6 +242,11 @@ POSTGRES = Sequel.connect(CONFIG['Postgres']['URL'], extensions: :connection_val
 
 POSTGRES.pool.connection_validation_timeout = -1
 
+# The lavalink client used by the bot to play music.
+CALLIOPE = Calliope::Client.new(CONFIG['Lavalink']['URL'], CONFIG['Lavalink']['TOKEN'], CONFIG['Lavalink']['ID'])
+
+CALLIOPE.login
+
 # A series of regular expressions utilized by the bot.
 REGEX = {
   1 => /:(\d+)>$/,
