@@ -3,6 +3,7 @@
 require_relative "play"
 require_relative "pause"
 require_relative "resume"
+require_relative "internals"
 
 module MusicCommands
   extend Discordrb::EventContainer

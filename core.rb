@@ -26,6 +26,7 @@ at_exit { bot.stop }
 bot.include! EventRoles
 bot.include! PinArchiver
 bot.include! BoosterPerks
+bot.include! MusicCommands
 bot.include! EmojiCommands
 bot.include! AdminCommands
 bot.include! SnowballFights
