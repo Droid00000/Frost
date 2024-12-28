@@ -6,7 +6,7 @@
 def resolve_color(color)
   return nil if color.nil? || !color.match(REGEX[2])
 
-  Discordrb::ColourRGB.new(color.strip.delete('#'))
+  Discordrb::ColourRGB.new(color.strip.delete("#"))
 end
 
 # Returns true if a string doesn't contain any bad words.
@@ -23,14 +23,14 @@ end
 # @param id [Integer, String] An ID that uniquely identifies a user.
 # @return [Boolean] Returns true if the user is boosting the server; false otherwise.
 def get_booster_status(guild, id)
-  Discordrb::API::Server.resolve_booster(CONFIG['Discord']['TOKEN'], guild, id)
+  Discordrb::API::Server.resolve_booster(CONFIG["Discord"]["TOKEN"], guild, id)
 end
 
 # Deletes a role in a guild.
 # @param guild [Integer, String] An ID that uniquely identifies a guild.
 # @param id [Integer, String] An ID that uniquely identifies a role.
 def delete_guild_role(guild, id)
-  Discordrb::API::Server.delete_role(CONFIG['Discord']['TOKEN'], guild, id, REASON[6])
+  Discordrb::API::Server.delete_role(CONFIG["Discord"]["TOKEN"], guild, id, REASON[6])
 rescue StandardError
   true
 end

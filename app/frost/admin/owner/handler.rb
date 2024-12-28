@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative 'eval'
-require_relative 'status'
-require_relative 'restart'
-require_relative 'shutdown'
+require_relative "eval"
+require_relative "status"
+require_relative "restart"
+require_relative "shutdown"
 
 module AdminCommands
   extend Discordrb::EventContainer

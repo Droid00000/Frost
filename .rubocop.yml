@@ -8,6 +8,10 @@ AllCops:
   - 'app/frost/models/commands.rb'
   - 'app/frost/models/embeds.rb'
 
+# Double quotes are preferable for me.
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+  
 # Most of these metrics are useless.
 Metrics/PerceivedComplexity:
   Enabled: false

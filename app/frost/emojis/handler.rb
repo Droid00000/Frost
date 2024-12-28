@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative 'menu'
-require_relative 'stats'
-require_relative 'click'
-require_relative 'steal'
+require_relative "menu"
+require_relative "stats"
+require_relative "click"
+require_relative "steal"
 
 module EmojiCommands
   extend Discordrb::EventContainer
@@ -13,17 +13,17 @@ module EmojiCommands
     stats_command(event)
   end
 
-  application_command(:'Add Emoji(s)') do |event|
+  application_command(:"Add Emoji(s)") do |event|
     event.defer(ephemeral: true)
     create_menu(event)
   end
 
-  application_command(:'Add Emojis') do |event|
+  application_command(:"Add Emojis") do |event|
     event.defer(ephemeral: true)
     steal_emojis(event)
   end
 
-  select_menu(custom_id: 'emoji') do |event|
+  select_menu(custom_id: "emoji") do |event|
     event.defer_update
     select_click(event)
   end

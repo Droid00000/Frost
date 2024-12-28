@@ -19,7 +19,7 @@ module Discordrb
     # @param icon [String, #read] A role icon for this role.
     # @param reason [String] The reason the for the creation of this role.
     # @return [Role] the created role.
-    def create_role(name: 'new role', colour: 0, hoist: false, mentionable: false, permissions: 0, icon: nil,
+    def create_role(name: "new role", colour: 0, hoist: false, mentionable: false, permissions: 0, icon: nil,
                     reason: nil)
       colour = colour.combined if colour.respond_to?(:combined)
 
@@ -59,7 +59,7 @@ module Discordrb
       messages = message_seconds ? message_seconds * 86_400 : 0
       users = users.map { |user| user&.to_i }
       response = JSON.parse(API::Server.bulk_ban(@bot.token, @id, users, messages, reason))
-      response['banned_users']
+      response["banned_users"]
     end
   end
 end
@@ -202,7 +202,7 @@ module Discordrb
       def initialize(data, bot)
         super
 
-        @values = data['data']['values'].first
+        @values = data["data"]["values"].first
       end
 
       # @return [Emoji] Emojis sent in this interaction.
@@ -231,7 +231,7 @@ module Discordrb
                       :get,
                       "#{Discordrb::API.api_base}/guilds/#{server_id}/members/#{user_id}",
                       Authorization: token
-                    ))['premium_since'].nil?
+                    ))["premium_since"].nil?
       rescue StandardError
         false
       end
@@ -247,11 +247,11 @@ module Discordrb
 
           unless path_method
             raise ArgumentError,
-                  'File object must respond to original_filename, path, or local path.'
+                  "File object must respond to original_filename, path, or local path."
           end
-          raise ArgumentError, 'File must respond to read' unless icon.respond_to? :read
+          raise ArgumentError, "File must respond to read" unless icon.respond_to? :read
 
-          mime_type = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || 'image/jpeg'
+          mime_type = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || "image/jpeg"
           image = "data:#{mime_type};base64,#{Base64.encode64(icon.read).strip}"
         else
           image = nil
@@ -266,7 +266,7 @@ module Discordrb
             icon: image }.compact.to_json,
           Authorization: token,
           content_type: :json,
-          'X-Audit-Log-Reason': reason
+          "X-Audit-Log-Reason": reason
         )
       end
 
@@ -286,11 +286,11 @@ module Discordrb
 
           unless path_method
             raise ArgumentError,
-                  'File object must respond to original_filename, path, or local path.'
+                  "File object must respond to original_filename, path, or local path."
           end
-          raise ArgumentError, 'File must respond to read' unless icon.respond_to? :read
+          raise ArgumentError, "File must respond to read" unless icon.respond_to? :read
 
-          mime_type = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || 'image/jpeg'
+          mime_type = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || "image/jpeg"
           data[:icon] = "data:#{mime_type};base64,#{Base64.encode64(icon.read).strip}"
         elsif icon.nil?
           data[:icon] = nil
@@ -304,7 +304,7 @@ module Discordrb
           data.compact.to_json,
           Authorization: token,
           content_type: :json,
-          'X-Audit-Log-Reason': reason
+          "X-Audit-Log-Reason": reason
         )
       end
 
@@ -319,7 +319,7 @@ module Discordrb
           { user_ids: user_ids, delete_message_seconds: delete_message_seconds }.to_json,
           content_type: :json,
           Authorization: token,
-          'X-Audit-Log-Reason': reason
+          "X-Audit-Log-Reason": reason
         )
       end
     end
@@ -360,7 +360,7 @@ module Discordrb
     # @param activity_type [Integer] The type of activity status to display.
     # Can be 0 (Playing), 1 (Streaming), 2 (Listening), 3 (Watching), or 5 (Competing).
     # @see Gateway#send_status_update
-    def update_status(status, name, url = nil, since = 0, activity_type = 0)
+    def update_status(status, name, _url = nil, since = 0, _activity_type = 0)
       data = { name: name, type: 4, state: name }.compact
 
       @status = status&.downcase if status
@@ -384,7 +384,7 @@ module Discordrb::Events
           when Integer
             e.id == a
           when String
-            e.name == a || e.name == a.delete(':') || e.id == a.resolve_id
+            e.name == a || e.name == a.delete(":") || e.id == a.resolve_id
           else
             e == a
           end
@@ -396,7 +396,7 @@ module Discordrb::Events
           case a
           when String
             # Make sure to remove the "#" from channel names in case it was specified
-            a.delete('#') == e.name
+            a.delete("#") == e.name
           when Integer
             a == e.id
           else
@@ -416,7 +416,7 @@ module Discordrb::Events
         matches_all(@attributes[:type], event.emoji) do |a, e|
           case a
           when :custom
-            e.id != nil
+            !e.id.nil?
           end
         end
       ].reduce(true, &:&)

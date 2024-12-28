@@ -12,7 +12,7 @@ def help_booster(data)
         embed.add_field(name: EMBED[118], value: EMBED[123])
         embed.add_field(name: EMBED[119], value: EMBED[122])
         embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
-        buttons.button(label: EMBED[124], custom_id: EMBED[125], style: 1, emoji: 1295667609961758731)
+        buttons.button(label: EMBED[124], custom_id: EMBED[125], style: 1, emoji: 1_295_667_609_961_758_731)
       end
     end
   end

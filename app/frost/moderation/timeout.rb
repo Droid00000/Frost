@@ -6,39 +6,39 @@ def mute_member(data)
     return
   end
 
-  if data.member('member').hierarchy >= data.server.bot.hierarchy
+  if data.member("member").hierarchy >= data.server.bot.hierarchy
     data.edit_response(content: RESPONSE[62])
     return
   end
 
-  if data.member('member').hierarchy >= data.user.hierarchy
+  if data.member("member").hierarchy >= data.user.hierarchy
     data.edit_response(content: RESPONSE[62])
     return
   end
 
-  if data.member('member').permission?(:administrator)
+  if data.member("member").permission?(:administrator)
     data.edit_response(content: RESPONSE[62])
     return
   end
 
-  if data.member('member').owner?
+  if data.member("member").owner?
     data.edit_response(content: RESPONSE[62])
     return
   end
 
   begin
-    time = Rufus::Scheduler.parse_duration(data.options['duration'])
+    time = Rufus::Scheduler.parse_duration(data.options["duration"])
   rescue ArgumentError
     data.edit_response(content: RESPONSE[60])
     return
   end
 
   begin
-    data.member('member').timeout = Time.now + time
+    data.member("member").timeout = Time.now + time
   rescue ArgumentError
     data.edit_response(content: RESPONSE[61])
     return
   end
 
-  data.edit_response(content: format(RESPONSE[63], data.options['member']))
+  data.edit_response(content: format(RESPONSE[63], data.options["member"]))
 end

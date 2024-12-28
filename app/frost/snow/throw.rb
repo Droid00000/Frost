@@ -9,12 +9,12 @@ def throw_snowball(data)
   Frost::Snow.balance(data)
 
   if rand(1..10) >= 5
-    data.respond(content: data.member('member').mention) do |builder|
+    data.respond(content: data.member("member").mention) do |builder|
       builder.add_embed do |embed|
         embed.color = UI[6]
         embed.title = EMBED[44]
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:THROW))
-        embed.description = format(EMBED[33], data.user.display_name, data.options['member'])
+        embed.description = format(EMBED[33], data.user.display_name, data.options["member"])
       end
     end
 

@@ -6,12 +6,12 @@ def edit_event_role(data)
     return
   end
 
-  unless safe_name?(data.options['name'])
+  unless safe_name?(data.options["name"])
     data.edit_response(content: RESPONSE[7])
     return
   end
 
-  unless data.user.role?(data.options['role'])
+  unless data.user.role?(data.options["role"])
     data.edit_response(content: RESPONSE[17])
     return
   end
@@ -27,10 +27,10 @@ def edit_event_role(data)
   end
 
   data.server.update_role(
-    role: data.options['role'],
-    name: data.options['name'],
-    colour: resolve_color(data.options['color']),
-    icon: data.emojis('icon')&.static_file,
+    role: data.options["role"],
+    name: data.options["name"],
+    colour: resolve_color(data.options["color"]),
+    icon: data.emojis("icon")&.static_file,
     reason: REASON[5]
   )
 

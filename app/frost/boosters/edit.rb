@@ -12,7 +12,7 @@ def edit_role(data)
     return
   end
 
-  unless safe_name?(data.options['name'])
+  unless safe_name?(data.options["name"])
     data.edit_response(content: RESPONSE[7])
     return
   end
@@ -34,9 +34,9 @@ def edit_role(data)
 
   data.server.update_role(
     role: Frost::Boosters::Members.role(data),
-    name: data.options['name'],
-    colour: resolve_color(data.options['color']),
-    icon: data.emojis('icon')&.static_file,
+    name: data.options["name"],
+    colour: resolve_color(data.options["color"]),
+    icon: data.emojis("icon")&.static_file,
     reason: REASON[2]
   )
 

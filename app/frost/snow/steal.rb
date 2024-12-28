@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 def steal_snowball(data)
-  unless CONFIG['Discord']['CONTRIBUTORS'].include?(data.user.id)
+  unless CONFIG["Discord"]["CONTRIBUTORS"].include?(data.user.id)
     data.edit_response(content: RESPONSE[12])
     return
   end
 
-  if Frost::Snow.snowballs(data) < data.options['amount']
+  if Frost::Snow.snowballs(data) < data.options["amount"]
     data.edit_response(content: RESPONSE[21])
     return
   end
@@ -20,5 +20,5 @@ def steal_snowball(data)
 
   Frost::Snow.steal(data)
 
-  data.edit_response(content: format(RESPONSE[70], data.options['amount']))
+  data.edit_response(content: format(RESPONSE[70], data.options["amount"]))
 end

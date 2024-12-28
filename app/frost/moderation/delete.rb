@@ -8,7 +8,7 @@ def delete_messages(data)
 
   messages = [[], []]
 
-  ([1] * data.options['amount']).each_slice(100) do |chunk|
+  ([1] * data.options["amount"]).each_slice(100) do |chunk|
     messages[0] << chunk.sum
   end
 

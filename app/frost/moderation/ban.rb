@@ -13,7 +13,7 @@ def bulk_ban(data)
 
   bans = []
 
-  members = data.options['members'].scan(REGEX[4]).uniq.reject do |member|
+  members = data.options["members"].scan(REGEX[4]).uniq.reject do |member|
     data.server.member(member).hierarchy >= data.user.hierarchy
   end
 
@@ -37,7 +37,7 @@ def bulk_ban(data)
   members.each_slice(200).to_a
 
   members.each do |members|
-    bans << data.server.bulk_ban(members, data.options['messages'], data.options['reason'])
+    bans << data.server.bulk_ban(members, data.options["messages"], data.options["reason"])
   end
 
   data.edit_response(content: format(RESPONSE[53], bans.count))

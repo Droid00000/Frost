@@ -24,5 +24,5 @@ def delete_booster(data)
 
   Frost::Boosters::Members.manual_delete(data)
 
-  data.edit_response(content: format(RESPONSE[28], data.options['user']))
+  data.edit_response(content: format(RESPONSE[28], data.options["user"]))
 end

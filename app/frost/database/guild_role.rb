@@ -16,14 +16,14 @@ module Frost
     # Check if an existing role is setup.
     def self.get?(data)
       POSTGRES.transaction do
-        !@@pg.where(guild_id: data.server.id, role_id: data.options['role']).empty?
+        !@@pg.where(guild_id: data.server.id, role_id: data.options["role"]).empty?
       end
     end
 
     # Add a new role to the database.
     def self.add(data)
       POSTGRES.transaction do
-        @@pg.insert(guild_id: data.server.id, role_id: data.options['role'])
+        @@pg.insert(guild_id: data.server.id, role_id: data.options["role"])
       end
     end
 

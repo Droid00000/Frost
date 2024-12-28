@@ -13,5 +13,5 @@ def setup_booster(data)
     Frost::Boosters::Settings.update(data)
   end
 
-  data.edit_response(content: format(RESPONSE[33], data.options['role']))
+  data.edit_response(content: format(RESPONSE[33], data.options["role"]))
 end

@@ -9,5 +9,5 @@ def roles_setup(data)
 
   Frost::Roles.add(data)
 
-  data.edit_response(content: format(RESPONSE[24], data.options['role']))
+  data.edit_response(content: format(RESPONSE[24], data.options["role"]))
 end

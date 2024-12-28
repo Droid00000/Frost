@@ -19,9 +19,9 @@ def freeze_server(data)
     end
   end
 
-  schedule_unfreeze(data.server, data.options['duration']) if data.options['duration']
+  schedule_unfreeze(data.server, data.options["duration"]) if data.options["duration"]
 
-  duration = data.options['duration'] ? "for #{data.options['duration']}" : 'indefinitely'
+  duration = data.options["duration"] ? "for #{data.options['duration']}" : "indefinitely"
 
   data.edit_response(content: format(RESPONSE[40], data.server.name, duration))
 end

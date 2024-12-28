@@ -17,7 +17,7 @@ module Frost
       # Manually adds a user to the database.
       def self.manual_add(data)
         POSTGRES.transaction do
-          @@pg.insert(guild_id: data.server.id, user_id: data.options['user'], role_id: data.options['role'])
+          @@pg.insert(guild_id: data.server.id, user_id: data.options["user"], role_id: data.options["role"])
         end
       end
 
@@ -31,7 +31,7 @@ module Frost
       # Removes all instances of a role from the DB.
       def self.purge(data)
         POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id, role_id: data.options['role']).delete
+          @@pg.where(guild_id: data.server.id, role_id: data.options["role"]).delete
         end
       end
 
@@ -50,7 +50,7 @@ module Frost
       # Removes a single user from the DB.
       def self.manual_delete(data)
         POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id, user_id: data.options['user']).delete
+          @@pg.where(guild_id: data.server.id, user_id: data.options["user"]).delete
         end
       end
 
@@ -58,7 +58,7 @@ module Frost
       def self.user?(data, hash = false)
         POSTGRES.transaction do
           if hash == true
-            !@@pg.where(guild_id: data.server.id, user_id: data.options['user']).empty?
+            !@@pg.where(guild_id: data.server.id, user_id: data.options["user"]).empty?
           else
             !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
           end
@@ -88,7 +88,7 @@ module Frost
       # Update a hoist role for this guild.
       def self.update(data)
         POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id).update(hoist_role: data.options['role'])
+          @@pg.where(guild_id: data.server.id).update(hoist_role: data.options["role"])
         end
       end
 
@@ -102,7 +102,7 @@ module Frost
       # Adds a hoist role for this guild.
       def self.setup(data)
         POSTGRES.transaction do
-          @@pg.insert(guild_id: data.server.id, hoist_role: data.options['role'])
+          @@pg.insert(guild_id: data.server.id, hoist_role: data.options["role"])
         end
       end
     end
@@ -114,7 +114,7 @@ module Frost
       # Removes a ban from the DB.
       def self.remove(data)
         POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id, user_id: data.options['user']).delete
+          @@pg.where(guild_id: data.server.id, user_id: data.options["user"]).delete
         end
       end
 
@@ -124,7 +124,7 @@ module Frost
           if hash == false
             !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
           else
-            !@@pg.where(guild_id: data.server.id, user_id: data.options['user']).empty?
+            !@@pg.where(guild_id: data.server.id, user_id: data.options["user"]).empty?
           end
         end
       end
@@ -139,7 +139,7 @@ module Frost
       # Adds a new user to the DB.
       def self.add(data)
         POSTGRES.transaction do
-          @@pg.insert(guild_id: data.server.id, user_id: data.options['user'])
+          @@pg.insert(guild_id: data.server.id, user_id: data.options["user"])
         end
       end
     end

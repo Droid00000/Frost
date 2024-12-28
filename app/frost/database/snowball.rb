@@ -10,7 +10,7 @@ module Frost
     def self.snowball?(data, hash = false)
       POSTGRES.transaction do
         if hash
-          @@pg.where(user_id: data.options['member']).get(:balance)
+          @@pg.where(user_id: data.options["member"]).get(:balance)
         else
           @@pg.where(user_id: data.user.id).get(:balance) >= 1
         end
@@ -34,9 +34,9 @@ module Frost
     # Steals snowballs.
     def self.steal(data)
       POSTGRES.transaction do
-        @@pg.where(user_id: data.user.id).update(balance: Sequel[:balance] + data.options['amount'])
+        @@pg.where(user_id: data.user.id).update(balance: Sequel[:balance] + data.options["amount"])
 
-        @@pg.where(user_id: data.options['member']).update(balance: Sequel[:balance] - data.options['amount'])
+        @@pg.where(user_id: data.options["member"]).update(balance: Sequel[:balance] - data.options["amount"])
       end
     end
 
