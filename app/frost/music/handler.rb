@@ -4,13 +4,14 @@ require_relative "play"
 require_relative "pause"
 require_relative "resume"
 require_relative "internals"
+require_relative "disconnect"
 
 module MusicCommands
   extend Discordrb::EventContainer
 
   application_command(:music).subcommand(:disconnect) do |event|
     event.defer(ephemeral: false)
-    music_leave(event)
+    music_disconnect(event)
   end
 
   application_command(:music).subcommand(:play) do |event|

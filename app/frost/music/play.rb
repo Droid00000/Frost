@@ -34,7 +34,8 @@ def music_play(data)
         component.button(label: EMBED[143], custom_id: EMBED[146], style: 1, emoji: 1010666367709622322)
         component.button(label: EMBED[144], custom_id: EMBED[144], style: 4, emoji: 1006485583717220352)
         component.button(label: EMBED[145], custom_id: EMBED[145], style: 3, emoji: 1069778505283416165)
-        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: format(EMBED[142], data.user.display_name), icon_url: data.user.avatar_url)
+        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: format(EMBED[142], data.user.display_name),
+                                                            icon_url: data.user.avatar_url)
       end
     end
   end
