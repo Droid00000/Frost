@@ -162,14 +162,14 @@ EMBED = {
   106 => '`/unfreeze`',
   107 => '`/change nickname`',
   108 => '`/block`',
-  109 => "Bans up to 200 members. If more than 200 members are specified they will be removed starting from the most recently specified.",
+  109 => "Bans up to 500 members in one go. This command may take a while to proccess and appear to be in a \"loading\" state."
   110 => "Sets a timeout up to 28 days for a member. Does not work on administrator's or the server owner.",
   111 => "Prevents members from talking in a server for a specified amount of time or indefinetely.",
   112 => "Removes the timeout caused by the freeze command.",
   113 => "Changes a members nickname to the specified option.",
-  114 => "Blocks the member from viewing the channel the command is invoked in if cascade is sent to false. Otherwise, applies to every channel in the server.",
+  114 => "Blocks the member from viewing the channel the command is used in. If cascade is set to true applies to every channel in the server.",
   115 => "`/purge messages`",
-  116 => "Deletes up to 200 messages in the channel the command is invoked in. Cannot delete messages older than 2 weeks.",
+  116 => "Deletes up to 600 messages in the channel the command is used in. Cannot delete messages older than 2 weeks.",
   117 => '``/booster role delete``',
   118 => '``/booster role claim``',
   119 => '``/booster role edit``',
@@ -244,8 +244,6 @@ POSTGRES.pool.connection_validation_timeout = -1
 
 # The lavalink client used by the bot to play music.
 CALLIOPE = Calliope::Client.new(CONFIG['Lavalink']['URL'], CONFIG['Lavalink']['TOKEN'], CONFIG['Lavalink']['ID'])
-
-CALLIOPE.login
 
 # A series of regular expressions utilized by the bot.
 REGEX = {

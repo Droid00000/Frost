@@ -98,7 +98,7 @@ end
 # @!function [Moderation Operations] Belongs to a cog that manages moderation related commands!
 bot.register_application_command(:purge, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'शुद्ध' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }, default_member_permissions: "73760") do |command|
   command.subcommand('messages', "Delete messages in the current channel.", name_localizations: { 'hi' => 'सूचना' }, description_localizations: { 'hi' => 'वर्तमान चैनल में संदेश हटाएँ' }) do |option|
-    option.integer('amount', 'How many messages do you want to delete?', required: true, min_value: 1, max_value: 100, name_localizations: { 'hi' => 'रकम' }, description_localizations: { 'hi' => 'आप कितने मैसेज डिलीट करना चाहते हैं' })
+    option.integer('amount', 'How many messages do you want to delete?', required: true, min_value: 1, max_value: 600, name_localizations: { 'hi' => 'रकम' }, description_localizations: { 'hi' => 'आप कितने मैसेज डिलीट करना चाहते हैं' })
   end
 end
 
@@ -184,6 +184,18 @@ bot.register_application_command(:event, 'Event roles', contexts: [0], integrati
       option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 6, max_length: 7, name_localizations: { 'hi' => 'रंग' }, description_localizations: { 'hi' => 'अपने रोल के लिए एक HEX रंग दें' })
       option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => 'आइकन' }, description_localizations: { 'hi' => 'अपने रोल आइकन के रूप में एक इमोजी दें' })
     end
+  end
+end
+
+# @!function [Music Operations] Belongs to a cog that can stream songs!
+bot.register_application_command(:music, 'Connect and play songs!.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'संगीत' }, description_localizations: { 'hi' => 'कनेक्ट करें और गाने चलाएं' }) do |command|
+  command.subcommand(:leave, 'Disconnect from a voice channel.', name_localizations: { 'hi' => 'छुट्टी' }, description_localizations: { 'hi' => 'वॉइस चैनल से डिस्कनेक्ट करें' })
+  command.subcommand(:pause, 'Stop playing the current song.', name_localizations: { 'hi' => 'रुकना' }, description_localizations: { 'hi' => 'वर्तमान गाना बजाना बंद करें' })
+  command.subcommand(:help, 'Help menu for voice commands.', name_localizations: { 'hi' => 'मदद' }, description_localizations: { 'hi' => 'वॉइस कमांड के लिए सहायता मेनू' })
+  command.subcommand(:next, 'Play the next track in the queue.', name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'अगला ट्रैक चलाएँ' })
+
+  command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => 'नाटक' }, description_localizations: { 'hi' => 'किसी यूआरएल या गाने के नाम से ऑडियो चलाएं' }) do |option|
+    option.string(:song, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2, name_localizations: { 'hi' => 'गाना' }, description_localizations: { 'hi' => 'एक गीत का लिंक' })
   end
 end
 
