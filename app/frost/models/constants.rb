@@ -74,7 +74,12 @@ RESPONSE = {
   70 => "Stole **%s** snowballs!",
   71 => "You're not connected to a voice channel.",
   72 => "Couldn't resolve this track.",
-  73 => "Something went wrong when connecting to the voice channel."
+  73 => "Something went wrong when connecting to the voice channel.",
+  74 => "The bot is already paused.",
+  75 => "The bot isn't in a voice channel.",
+  76 => "Successfully paused playback.",
+  77 => "This bot isn't paused.",
+  78 => "Successfully resumed playback."
 }.freeze
 
 # Values for embed responses.

@@ -2,7 +2,7 @@
 
 # intercepts the voice state update.
 def process_state(data)
-  return if data.old_channel && data.user.id != CONFIG["lavalink"]["ID"]
+  return if data.old_channel && data.user.id != CONFIG["Lavalink"]["ID"]
 
   CALLIOPE.connect(data.server.id, session: data.session_id)
 end

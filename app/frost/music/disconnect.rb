@@ -7,18 +7,18 @@ def music_disconnect(data)
   end
 
   if data.server.bot.voice_channel.nil?
-    data.edit_response(content: RESPONSE[])
+    data.edit_response(content: RESPONSE[1])
     return
   end
 
   unless CALLIOPE.player(data.server.id)
-    data.edit_response(content: RESPONSE[])
+    data.edit_response(content: RESPONSE[1])
     return
   end
 
   gateway_voice_disconnect(data)
 
-  CALLIOPE.player(data.server.id).shutdown
+  CALLIOPE.players[data.server.id].shutdown
 
-  data.edit_response(content: RESPONSE[])
+  data.edit_response(content: RESPONSE[1])
 end

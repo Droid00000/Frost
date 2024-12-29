@@ -7,16 +7,16 @@ def music_resume(data)
   end
 
   if data.server.bot.voice_channel.nil?
-    data.edit_response(content: RESPONSE[])
+    data.edit_response(content: RESPONSE[75])
     return
   end
 
-  unless CALLIOPE.player(data.server.id).idle?
-    data.edit_response(content: RESPONSE[])
+  if CALLIOPE.players[data.server.id].paused?
+    data.edit_response(content: RESPONSE[77])
     return
   end
 
-  CALLIOPE.player(data.server.id).paused = false
+  CALLIOPE.players[data.server.id].paused = false
 
-  data.edit_response(content: RESPONSE[])
+  data.edit_response(content: RESPONSE[78])
 end
