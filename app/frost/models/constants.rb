@@ -79,7 +79,8 @@ RESPONSE = {
   75 => "The bot isn't in a voice channel.",
   76 => "Successfully paused playback.",
   77 => "This bot isn't paused.",
-  78 => "Successfully resumed playback."
+  78 => "Successfully resumed playback.",
+  79 => "There aren't any tracks in the queue!"
 }.freeze
 
 # Values for embed responses.
@@ -203,10 +204,10 @@ EMBED = {
   140 => "Manually adds a booster to the bot's database.",
   141 => "**Duration:** `%s`",
   142 => "Requested by %s",
-  143 => "Next Track",
   144 => "Pause",
   145 => "Resume",
-  146 => "Next"
+  146 => "Next",
+  147 => "Now Playing"
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

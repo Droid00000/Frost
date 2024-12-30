@@ -11,7 +11,7 @@ def music_resume(data)
     return
   end
 
-  if CALLIOPE.players[data.server.id].paused?
+  unless CALLIOPE.players[data.server.id].paused?
     data.edit_response(content: RESPONSE[77])
     return
   end

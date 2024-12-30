@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "play"
+require_relative "next"
 require_relative "pause"
 require_relative "resume"
 require_relative "internals"

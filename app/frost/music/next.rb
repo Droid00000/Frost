@@ -1,27 +1,22 @@
 # frozen_string_literal: true
 
-def music_play(data)
+def music_next(data)
   if data.user.voice_channel.nil?
     data.edit_response(content: RESPONSE[71])
     return
   end
 
-  track = CALLIOPE.search(data.options["song"])
-
-  begin
-    gateway_voice_connect(data)
-  rescue StandardError
-    data.edit_response(content: RESPONSE[73])
+  if data.server.bot.voice_channel.nil?
+    data.edit_response(content: RESPONSE[75])
     return
   end
 
-  begin
-    sleep(0.5)
-    track.queue(data.server.id)
-  rescue ArgumentError
-    data.edit_response(content: RESPONSE[72])
+  if CALLIOPE.players[data.server.id].queue.empty?
+    data.edit_response(content: RESPONSE[79])
     return
   end
+
+  track = CALLIOPE.players[data.server.id].next
 
   data.edit_response do |builder, components|
     builder.add_embed do |embed|
@@ -29,7 +24,7 @@ def music_play(data)
       embed.url = track.source
       embed.title = "#{track.name} — #{track.artist}"
       embed.description = format(EMBED[141], track.strftime)
-      embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: track.status)
+      embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: EMBED[147])
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: track.cover)
       embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: format(EMBED[142], data.user.display_name),
                                                           icon_url: data.user.avatar_url)
