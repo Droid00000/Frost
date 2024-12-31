@@ -16,6 +16,11 @@ def music_next(data)
     return
   end
 
+  if CALLIOPE.players[data.server.id].paused?
+    data.edit_response(content: RESPONSE[81])
+    return
+  end
+
   track = CALLIOPE.players[data.server.id].next
 
   data.edit_response do |builder, components|

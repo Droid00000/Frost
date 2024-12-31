@@ -197,6 +197,10 @@ bot.register_application_command(:music, 'Connect and play songs!.', contexts: [
   command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => 'नाटक' }, description_localizations: { 'hi' => 'किसी यूआरएल या गाने के नाम से ऑडियो चलाएं' }) do |option|
     option.string(:song, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2, name_localizations: { 'hi' => 'गाना' }, description_localizations: { 'hi' => 'एक गीत का लिंक' })
   end
+
+  command.subcommand(:volume, 'Adjust the volume of the player.', name_localizations: { 'hi' => 'आयतन' }, description_localizations: { 'hi' => 'प्लेयर का वॉल्यूम समायोजित करें' }) do |option|
+    option.integer(:volume, 'Number between 1 and 1,000 to set the volume to.', required: true, min_value: 1, max_value: 1000, name_localizations: { 'hi' => 'आयतन' }, description_localizations: { "hi" => "वॉल्यूम सेट करने के लिए 1 और 1,000 के बीच की संख्या।" } )
+  end
 end
 
 # @!function [General Operations] Belongs to a cog that manages general information!

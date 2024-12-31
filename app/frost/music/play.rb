@@ -29,8 +29,8 @@ def music_play(data)
       embed.url = track.source
       embed.title = "#{track.name} — #{track.artist}"
       embed.description = format(EMBED[141], track.strftime)
-      embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: track.status)
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: track.cover)
+      embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: track.status(data.server.id))
       embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: format(EMBED[142], data.user.display_name),
                                                           icon_url: data.user.avatar_url)
     end

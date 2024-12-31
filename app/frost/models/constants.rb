@@ -80,7 +80,9 @@ RESPONSE = {
   76 => "Successfully paused playback.",
   77 => "This bot isn't paused.",
   78 => "Successfully resumed playback.",
-  79 => "There aren't any tracks in the queue!"
+  79 => "There aren't any tracks in the queue!",
+  80 => "Successfully changed the volume.",
+  81 => "This player is currently paused."
 }.freeze
 
 # Values for embed responses.

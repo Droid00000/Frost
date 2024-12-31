@@ -3,6 +3,7 @@
 require_relative "play"
 require_relative "next"
 require_relative "pause"
+require_relative "volume"
 require_relative "resume"
 require_relative "internals"
 require_relative "disconnect"
@@ -13,6 +14,11 @@ module MusicCommands
   application_command(:music).subcommand(:disconnect) do |event|
     event.defer(ephemeral: false)
     music_disconnect(event)
+  end
+
+  application_command(:music).subcommand(:volume) do |event|
+    event.defer(ephemeral: false)
+    music_volume(event)
   end
 
   application_command(:music).subcommand(:resume) do |event|
