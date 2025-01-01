@@ -16,7 +16,7 @@ def music_volume(data)
     return
   end
 
-  CALLIOPE.players[data.server.id].volume = data.options['volume']
+  CALLIOPE.players[data.server.id].volume = data.options["volume"]
 
   data.edit_response(content: RESPONSE[80])
 end

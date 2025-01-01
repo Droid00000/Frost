@@ -371,55 +371,57 @@ module Discordrb
 end
 
 # Monkey patches to the reaction class.
-module Discordrb::Events
-  # Generic superclass for event handlers pertaining to adding and removing reactions
-  class ReactionEventHandler < EventHandler
-    def matches?(event)
-      # Check for the proper event type
-      return false unless event.is_a? ReactionEvent
+module Discordrb
+  module Events
+    # Generic superclass for event handlers pertaining to adding and removing reactions
+    class ReactionEventHandler < EventHandler
+      def matches?(event)
+        # Check for the proper event type
+        return false unless event.is_a? ReactionEvent
 
-      [
-        matches_all(@attributes[:emoji], event.emoji) do |a, e|
-          case a
-          when Integer
-            e.id == a
-          when String
-            e.name == a || e.name == a.delete(":") || e.id == a.resolve_id
-          else
-            e == a
-          end
-        end,
-        matches_all(@attributes[:message], event.message_id) do |a, e|
-          a == e
-        end,
-        matches_all(@attributes[:in], event.channel) do |a, e|
-          case a
-          when String
-            # Make sure to remove the "#" from channel names in case it was specified
-            a.delete("#") == e.name
-          when Integer
-            a == e.id
-          else
+        [
+          matches_all(@attributes[:emoji], event.emoji) do |a, e|
+            case a
+            when Integer
+              e.id == a
+            when String
+              e.name == a || e.name == a.delete(":") || e.id == a.resolve_id
+            else
+              e == a
+            end
+          end,
+          matches_all(@attributes[:message], event.message_id) do |a, e|
             a == e
+          end,
+          matches_all(@attributes[:in], event.channel) do |a, e|
+            case a
+            when String
+              # Make sure to remove the "#" from channel names in case it was specified
+              a.delete("#") == e.name
+            when Integer
+              a == e.id
+            else
+              a == e
+            end
+          end,
+          matches_all(@attributes[:from], event.user) do |a, e|
+            case a
+            when String
+              a == e.name
+            when :bot
+              e.current_bot?
+            else
+              a == e
+            end
+          end,
+          matches_all(@attributes[:type], event.emoji) do |a, e|
+            case a
+            when :custom
+              !e.id.nil?
+            end
           end
-        end,
-        matches_all(@attributes[:from], event.user) do |a, e|
-          case a
-          when String
-            a == e.name
-          when :bot
-            e.current_bot?
-          else
-            a == e
-          end
-        end,
-        matches_all(@attributes[:type], event.emoji) do |a, e|
-          case a
-          when :custom
-            !e.id.nil?
-          end
-        end
-      ].reduce(true, &:&)
+        ].reduce(true, &:&)
+      end
     end
   end
 end

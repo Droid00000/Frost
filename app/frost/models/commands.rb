@@ -55,6 +55,11 @@ end
 bot.register_application_command(:"Add Emojis", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: "1073741824", name_localizations: { 'hi' => 'इमोजी जोड़ें' }) do |command|
 end
 
+# @!function [General Operations] Belongs to a cog that manages general information!
+bot.register_application_command(:coin, 'Flip a coin!', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'मुद्रा' }, description_localizations: { 'hi' => 'एक सिक्का पलटें' }) do |command|
+  command.subcommand(:flip, 'Flip a coin!', name_localizations: { 'hi' => 'पलटना' }, description_localizations: { 'hi' => 'एक सिक्का पलटें' })
+end
+
 # @!function [Moderation Operations] Belongs to a cog that manages moderation related commands!
 bot.register_application_command(:freeze, 'Prevent all members from speaking in the server.', contexts: [0], integration_types: [0], default_member_permissions: "268435456", name_localizations: { 'hi' => 'स्थिर' }, description_localizations: { 'hi' => 'सभी सदस्यों को सर्वर में बोलने से रोकें' }) do |option|
   option.string('duration', 'How long should the server be frozen for?', required: false, min_length: 2, max_length: 1000, name_localizations: { 'hi' => 'लंबाई' }, description_localizations: { 'hi' => 'सर्वर को कितने समय के लिए फ़्रीज़ किया जाना चाहिए' })
@@ -190,8 +195,12 @@ end
 # @!function [Music Operations] Belongs to a cog that can stream songs!
 bot.register_application_command(:music, 'Connect and play songs!.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'संगीत' }, description_localizations: { 'hi' => 'कनेक्ट करें और गाने चलाएं' }) do |command|
   command.subcommand(:disconnect, 'Disconnect from a voice channel.', name_localizations: { 'hi' => 'छुट्टी' }, description_localizations: { 'hi' => 'वॉइस चैनल से डिस्कनेक्ट करें' })
+  command.subcommand(:shuffle, 'Shuffle the tracks in the queue.', name_localizations: { 'hi' => 'मिश्रण' }, description_localizations: { 'hi' => 'कतार में पटरियों को फेरें' })
+  command.subcommand(:current, "View the track that's currently playing.", name_localizations: { 'hi' => 'मौजूदा' }, description_localizations: { 'hi' => 'वह ट्रैक देखें जो वर्तमान में चल रहा है' })
   command.subcommand(:resume, 'Continue playback ater pausing.', name_localizations: { 'hi' => 'फिरशुरूकरना' }, description_localizations: { 'hi' => 'रुकने के बाद प्लेबैक जारी रखें' })
   command.subcommand(:pause, 'Stop playing the current song.', name_localizations: { 'hi' => 'रुकना' }, description_localizations: { 'hi' => 'वर्तमान गाना बजाना बंद करें' })
+  command.subcommand(:queue, 'View the tracks that are in the queue.', name_localizations: { 'hi' => 'कतार' }, description_localizations: { 'hi' => 'वे ट्रैक देखें जो कतार में हैं' })
+  command.subcommand(:clear, 'Clear the queue for this server.', name_localizations: { 'hi' => 'स्पष्ट' }, description_localizations: { 'hi' => 'इस सर्वर के लिए कतार साफ़ करें' })
   command.subcommand(:next, 'Play the next track.', name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'अगला ट्रैक चलाएँ' })
 
   command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => 'नाटक' }, description_localizations: { 'hi' => 'किसी यूआरएल या गाने के नाम से ऑडियो चलाएं' }) do |option|

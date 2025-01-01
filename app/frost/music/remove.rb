@@ -28,5 +28,5 @@ def music_remove(data)
 
   CALLIOPE.players[data.server.id].destroy_queue
 
-  data.edit_response(content: RESPONSE[])
+  data.edit_response(content: RESPONSE[84])
 end

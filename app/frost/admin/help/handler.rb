@@ -2,6 +2,7 @@
 
 require_relative "pins"
 require_relative "snow"
+require_relative "music"
 require_relative "index"
 require_relative "emoji"
 require_relative "admin"
@@ -22,6 +23,8 @@ module AdminCommands
       help_snow(event)
     when "EMOJI"
       help_emoji(event)
+    when "MUSIC"
+      help_music(event)
     when "BOOST"
       help_booster(event)
     end

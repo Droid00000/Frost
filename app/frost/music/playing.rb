@@ -1,13 +1,8 @@
 # frozen_string_literal: true
 
-def music_next(data)
+def music_current(data)
   if data.user.voice_channel.nil?
     data.edit_response(content: RESPONSE[71])
-    return
-  end
-
-  if data.server.bot.voice_channel.nil?
-    data.edit_response(content: RESPONSE[75])
     return
   end
 
@@ -16,17 +11,17 @@ def music_next(data)
     return
   end
 
+  if data.server.bot.voice_channel.nil?
+    data.edit_response(content: RESPONSE[75])
+    return
+  end
+
   if CALLIOPE.players[data.server.id].paused?
-    data.edit_response(content: RESPONSE[81])
+    data.edit_response(content: RESPONSE[74])
     return
   end
 
-  unless CALLIOPE.players[data.server.id].lava_queue
-    data.edit_response(content: RESPONSE[79])
-    return
-  end
-
-  track = CALLIOPE.players[data.server.id].next_track
+  track = CALLIOPE.players[data.server.id].track
 
   data.edit_response do |builder|
     builder.add_embed do |embed|

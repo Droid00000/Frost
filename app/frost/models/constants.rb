@@ -84,7 +84,10 @@ RESPONSE = {
   80 => "Successfully changed the volume.",
   81 => "This player is currently paused.",
   82 => "An audio player doesn't exist for this server.",
-  83 => "There's only a single track left in the queue!"
+  83 => "There's only a single track left in the queue!",
+  84 => "Successfully cleared out the queue!",
+  85 => "Heads!",
+  86 => "Tails!"
 }.freeze
 
 # Values for embed responses.
@@ -153,13 +156,13 @@ EMBED = {
   84 => "BOOST",
   85 => "SNOW",
   86 => "**Emoji Operations**",
-  87 => "Emoji operations allow you to perform actions on emojis. See the commands below for more emojis.",
+  87 => "Emoji operations allow you to perform actions on emojis. See each command below for more information.",
   88 => "`/add emoji(s)`",
   89 => "Shows a select menu that allows you to choose which emojis to add from a message.",
   90 => "Adds every emoji in a message to your server.",
   91 => "`/add emojis`",
   92 => "`/emoji stats`",
-  93 => "Shows emoji stats for your server. Stats are logged by default, so no special setup is required.",
+  93 => "Shows emoji stats for your server. Stats are logged by default; no special setup is required.",
   94 => "**Snowball Fights**",
   95 => "Snowball fights, well... let you have snowball fights with other members!",
   96 => "`/collect snowball`",
@@ -216,7 +219,32 @@ EMBED = {
   149 => "Music Queue for %s",
   150 => "This is the current music queue for this server. The next 15 songs, and last 15 songs are shown.",
   151 => "First ⬆️",
-  152 => "Last ⬇️"
+  152 => "Last ⬇️",
+  153 => "Music",
+  154 => "Commands for music operations.",
+  155 => "MUSIC",
+  156 => "**Music Commands**",
+  157 => "This bot allows you to play music over voice channels. Supported sources include: YouTube, Spotify, Deezer, and Apple Music.",
+  158 => "``/music disconnect``",
+  159 => "``/music shuffle``",
+  160 => "``/music current``",
+  161 => "``/music resume``",
+  162 => "``/music volume``",
+  163 => "``/music queue``",
+  164 => "``/music clear``",
+  165 => "``/music pause``",
+  166 => "``/music next``",
+  167 => "``/music play``",
+  168 => "Disconnects the bot from the current voice channel. Permenantly deletes the queue and stops playback.",
+  169 => "Shuffles the current queue. The current song will continue playing.",
+  170 => "View the track that is currently playing.",
+  171 => "Resume playback after previously pausing playback.",
+  172 => "Set the bot's volume. This can be any value between 1 and 1,000.",
+  173 => "View the first 15 and last 15 song in the bot's queue.",
+  174 => "Completely deletes the queue. The current song will continue playing.",
+  175 => "Pause playback of the current track.",
+  176 => "Skips to the next track in the queue.",
+  177 => "Connects the bot to a voice channel, and adds the specified track to the queue."
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

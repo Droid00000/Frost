@@ -8,6 +8,7 @@ require_relative "volume"
 require_relative "resume"
 require_relative "remove"
 require_relative "shuffle"
+require_relative "playing"
 require_relative "internals"
 require_relative "disconnect"
 
@@ -19,6 +20,16 @@ module MusicCommands
     music_disconnect(event)
   end
 
+  application_command(:music).subcommand(:shuffle) do |event|
+    event.defer(ephemeral: false)
+    music_shuffle(event)
+  end
+
+  application_command(:music).subcommand(:current) do |event|
+    event.defer(ephemeral: false)
+    music_current(event)
+  end
+
   application_command(:music).subcommand(:volume) do |event|
     event.defer(ephemeral: false)
     music_volume(event)
@@ -27,6 +38,16 @@ module MusicCommands
   application_command(:music).subcommand(:resume) do |event|
     event.defer(ephemeral: false)
     music_resume(event)
+  end
+
+  application_command(:music).subcommand(:queue) do |event|
+    event.defer(ephemeral: false)
+    music_queue(event)
+  end
+
+  application_command(:music).subcommand(:clear) do |event|
+    event.defer(ephemeral: false)
+    music_remove(event)
   end
 
   application_command(:music).subcommand(:pause) do |event|

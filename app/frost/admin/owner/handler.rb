@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "flip"
 require_relative "eval"
 require_relative "status"
 require_relative "restart"
@@ -11,6 +12,11 @@ module AdminCommands
   application_command(:update).subcommand(:status) do |event|
     event.defer(ephemeral: true)
     owner_status(event)
+  end
+
+  application_command(:coin).subcommand(:flip) do |event|
+    event.defer(ephemeral: false)
+    coin_flip(event)
   end
 
   application_command(:shutdown) do |event|

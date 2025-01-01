@@ -5,7 +5,7 @@ def update_nickname(data)
     data.edit_response(content: RESPONSE[58])
     return
   end
-  
+
   unless data.server.bot.permission?(:manage_nicknames)
     data.edit_response(content: RESPONSE[66])
     return

@@ -7,7 +7,7 @@ def music_play(data)
   end
 
   track = CALLIOPE.search(data.options["song"])
-  
+
   begin
     gateway_voice_connect(data)
   rescue StandardError
