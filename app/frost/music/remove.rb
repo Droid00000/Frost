@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-def music_pause(data)
+def music_remove(data)
   if data.user.voice_channel.nil?
     data.edit_response(content: RESPONSE[71])
     return
@@ -17,11 +17,16 @@ def music_pause(data)
   end
 
   if CALLIOPE.players[data.server.id].paused?
-    data.edit_response(content: RESPONSE[74])
+    data.edit_response(content: RESPONSE[81])
     return
   end
 
-  CALLIOPE.players[data.server.id].paused = true
+  unless CALLIOPE.players[data.server.id].lava_queue
+    data.edit_response(content: RESPONSE[79])
+    return
+  end
 
-  data.edit_response(content: RESPONSE[76])
+  CALLIOPE.players[data.server.id].destroy_queue
+
+  data.edit_response(content: RESPONSE[])
 end

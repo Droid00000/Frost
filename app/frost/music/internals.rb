@@ -12,6 +12,13 @@ def process_server(data)
   CALLIOPE.connect(data.server.id, token: data.token, endpoint: data.endpoint)
 end
 
+# Convienent way to get the queue.
+def fetch_queue(data, mode)
+  CALLIOPE.players[data.server.id].lava_queue.last(15) unless mode == :MAX
+
+  CALLIOPE.players[data.server.id].lava_queue.first(15) unless mode == :BOTTOM
+end
+
 # Convienent way to connect from a voice channel.
 def gateway_voice_disconnect(data)
   return if data.server.bot.voice_channel.nil?

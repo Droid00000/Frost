@@ -82,7 +82,9 @@ RESPONSE = {
   78 => "Successfully resumed playback.",
   79 => "There aren't any tracks in the queue!",
   80 => "Successfully changed the volume.",
-  81 => "This player is currently paused."
+  81 => "This player is currently paused.",
+  82 => "An audio player doesn't exist for this server.",
+  83 => "There's only a single track left in the queue!"
 }.freeze
 
 # Values for embed responses.
@@ -209,7 +211,12 @@ EMBED = {
   144 => "Pause",
   145 => "Resume",
   146 => "Next",
-  147 => "Now Playing"
+  147 => "Now Playing",
+  148 => "Next Playing",
+  149 => "Music Queue for %s",
+  150 => "This is the current music queue for this server. The next 15 songs, and last 15 songs are shown.",
+  151 => "First ⬆️",
+  152 => "Last ⬇️"
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

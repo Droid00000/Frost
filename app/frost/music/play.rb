@@ -7,7 +7,7 @@ def music_play(data)
   end
 
   track = CALLIOPE.search(data.options["song"])
-
+  
   begin
     gateway_voice_connect(data)
   rescue StandardError
@@ -15,22 +15,24 @@ def music_play(data)
     return
   end
 
+  status = track.status(data.server.id)
+
   begin
     sleep(0.5)
-    track.queue(data.server.id)
+    track.produce_queue(data.server.id)
   rescue ArgumentError
     data.edit_response(content: RESPONSE[72])
     return
   end
 
-  data.edit_response do |builder, components|
+  data.edit_response do |builder|
     builder.add_embed do |embed|
       embed.colour = UI[5]
       embed.url = track.source
       embed.title = "#{track.name} — #{track.artist}"
       embed.description = format(EMBED[141], track.strftime)
+      embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: status)
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: track.cover)
-      embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: track.status(data.server.id))
       embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: format(EMBED[142], data.user.display_name),
                                                           icon_url: data.user.avatar_url)
     end

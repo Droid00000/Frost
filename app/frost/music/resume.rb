@@ -6,6 +6,11 @@ def music_resume(data)
     return
   end
 
+  unless CALLIOPE.players[data.server.id]
+    data.edit_response(content: RESPONSE[82])
+    return
+  end
+
   if data.server.bot.voice_channel.nil?
     data.edit_response(content: RESPONSE[75])
     return

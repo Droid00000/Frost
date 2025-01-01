@@ -2,9 +2,12 @@
 
 require_relative "play"
 require_relative "next"
+require_relative "queue"
 require_relative "pause"
 require_relative "volume"
 require_relative "resume"
+require_relative "remove"
+require_relative "shuffle"
 require_relative "internals"
 require_relative "disconnect"
 
