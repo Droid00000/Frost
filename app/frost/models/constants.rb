@@ -260,8 +260,8 @@ EMBED = {
   184 => "These are the current members for **%s**. Each page contains a maximum of 30 members.",
   185 => "House Members for %s",
   186 => "Members",
-  187 => "Return 0",
-  188 => "Forward 0",
+  187 => "return 1",
+  188 => "forward 1",
   189 => 1324461217187631237,
   190 => 1324461196727947335
 }.freeze
