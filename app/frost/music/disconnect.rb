@@ -20,5 +20,5 @@ def music_disconnect(data)
 
   CALLIOPE.delete_player(data.server.id)
 
-  data.edit_response(content: RESPONSE[1])
+  data.edit_response(content: RESPONSE[87])
 end

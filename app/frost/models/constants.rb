@@ -87,7 +87,9 @@ RESPONSE = {
   83 => "There's only a single track left in the queue!",
   84 => "Successfully cleared out the queue!",
   85 => "Heads!",
-  86 => "Tails!"
+  86 => "Tails!",
+  87 => "Successfully ended this session.",
+  88 => "There aren't any previous tracks that can be played!"
 }.freeze
 
 # Values for embed responses.
@@ -120,7 +122,7 @@ EMBED = {
   48 => "**Server Boosters**",
   49 => "**Server Settings**",
   50 => "Emoji Statistics for %s",
-  51 => "These are the current emoji stats for your server. Non-animated and animated emojis are mixed. Thank you for your support.",
+  51 => "These are the current emoji stats for your server. Non-animated, animated emojis, and reactions are mixed. Thank you for your support.",
   52 => "Top Emojis ⬆️",
   53 => "Boring Emojis ⬇️",
   54 => "**Archive Channel:** <#%s>",
@@ -217,9 +219,9 @@ EMBED = {
   147 => "Now Playing",
   148 => "Next Playing",
   149 => "Music Queue for %s",
-  150 => "This is the current music queue for this server. The next 15 songs, and last 15 songs are shown.",
-  151 => "First ⬆️",
-  152 => "Last ⬇️",
+  150 => "This is the current queue for this server. The first and last 10 songs are shown. There are a total of **%s** song(s) in the queue.",
+  151 => "Playing Next ⬆️",
+  152 => "Playing Last ⬇️",
   153 => "Music",
   154 => "Commands for music operations.",
   155 => "MUSIC",
@@ -239,12 +241,14 @@ EMBED = {
   169 => "Shuffles the current queue. The current song will continue playing.",
   170 => "View the track that is currently playing.",
   171 => "Resume playback after previously pausing playback.",
-  172 => "Set the bot's volume. This can be any value between 1 and 1,000.",
+  172 => "Set the bot's volume. This can be any value between 1 and 200.",
   173 => "View the first 15 and last 15 song in the bot's queue.",
   174 => "Completely deletes the queue. The current song will continue playing.",
   175 => "Pause playback of the current track.",
   176 => "Skips to the next track in the queue.",
-  177 => "Connects the bot to a voice channel, and adds the specified track to the queue."
+  177 => "Connects the bot to a voice channel, and adds the specified track to the queue.",
+  178 => "``/music back``",
+  179 => "Play the track that was previously playing."
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

@@ -21,7 +21,7 @@ def music_queue(data)
     return
   end
 
-  unless CALLIOPE.players[data.server.id].lava_queue
+  unless CALLIOPE.players[data.server.id].queue
     data.edit_response(content: RESPONSE[79])
     return
   end
@@ -29,19 +29,19 @@ def music_queue(data)
   queue = [[], []]
 
   fetch_queue(data, :BOTTOM).each_with_index do |track, index|
-    queue[1] << "#{track.name} by #{track.artist} —— **#{index + 1}**\n"
+    queue[0] << "**#{index + 1}** — [#{track.name}](#{track.url})\n"
   end
 
   fetch_queue(data, :TOP).each_with_index do |track, index|
-    queue[0] << "#{track.name} by #{track.artist} —— **#{index + 1}**\n"
+    queue[1] << "**#{index + 1}** — [#{track.name}](#{track.url})\n"
   end
 
   data.edit_response do |builder|
     builder.add_embed do |embed|
-      embed.colour = UI[6]
-      embed.description = EMBED[150]
+      embed.colour = UI[5]
       embed.timestamp = Time.at(Time.now)
       embed.title = format(EMBED[149], data.server.name)
+      embed.description = format(EMBED[150], fetch_queue(data, :ALL))
       embed.add_field(name: EMBED[151], value: queue[0].join, inline: true)
       embed.add_field(name: EMBED[152], value: queue[1].join, inline: true)
     end

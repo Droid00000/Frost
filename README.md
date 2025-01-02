@@ -1,10 +1,10 @@
 ## Introduction
 
-Frost is a personal Discord bot. It handles booster roles, snowball fights, and more.
+Frost is a personal Discord bot. It handle music, booster roles, snowball fights, and more.
 
 ## Installation
 
-At least Ruby version 3.3, a PostgreSQL database, and Docker (optional) is needed to run the bot.
+Ruby version 3.3, a PostgreSQL database, a Lavalink node, and Docker is needed to run the bot.
 
 1. **Install the latest version of Ruby**
 
@@ -37,8 +37,14 @@ Discord:
 
 # Leaving this one undocumented.
 Chapter:
-  ELEMENT: ''
-  LINK: ''
+  ELEMENT: ""
+  LINK: ""
+
+# Information about the lavalink node.
+Lavalink:
+  ID: ""
+  URL: ""
+  TOKEN: ""
 
 # Database related credentials.
 Postgres:

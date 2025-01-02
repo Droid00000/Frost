@@ -6,8 +6,14 @@ Discord:
 
 # Leaving this one undocumented.
 Chapter:
-  ELEMENT: ''
-  LINK: ''
+  ELEMENT: ""
+  LINK: ""
+
+# Information about the lavalink node.
+Lavalink:
+  ID: ""
+  URL: ""
+  TOKEN: ""
 
 # Database related credentials.
 Postgres:

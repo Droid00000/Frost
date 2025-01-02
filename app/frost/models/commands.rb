@@ -201,6 +201,7 @@ bot.register_application_command(:music, 'Connect and play songs!.', contexts: [
   command.subcommand(:pause, 'Stop playing the current song.', name_localizations: { 'hi' => 'रुकना' }, description_localizations: { 'hi' => 'वर्तमान गाना बजाना बंद करें' })
   command.subcommand(:queue, 'View the tracks that are in the queue.', name_localizations: { 'hi' => 'कतार' }, description_localizations: { 'hi' => 'वे ट्रैक देखें जो कतार में हैं' })
   command.subcommand(:clear, 'Clear the queue for this server.', name_localizations: { 'hi' => 'स्पष्ट' }, description_localizations: { 'hi' => 'इस सर्वर के लिए कतार साफ़ करें' })
+  command.subcommand(:back, 'Play the previous track.', name_localizations: { 'hi' => 'पीछे' }, description_localizations: { 'hi' => 'पिछला ट्रैक चलाएँ' })
   command.subcommand(:next, 'Play the next track.', name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'अगला ट्रैक चलाएँ' })
 
   command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => 'नाटक' }, description_localizations: { 'hi' => 'किसी यूआरएल या गाने के नाम से ऑडियो चलाएं' }) do |option|
@@ -208,7 +209,7 @@ bot.register_application_command(:music, 'Connect and play songs!.', contexts: [
   end
 
   command.subcommand(:volume, 'Adjust the volume of the player.', name_localizations: { 'hi' => 'आयतन' }, description_localizations: { 'hi' => 'प्लेयर का वॉल्यूम समायोजित करें' }) do |option|
-    option.integer(:volume, 'Number between 1 and 1,000 to set the volume to.', required: true, min_value: 1, max_value: 1000, name_localizations: { 'hi' => 'आयतन' }, description_localizations: { "hi" => "वॉल्यूम सेट करने के लिए 1 और 1,000 के बीच की संख्या।" } )
+    option.integer(:volume, 'Number between 1 and 200 to set the volume to.', required: true, min_value: 1, max_value: 200, name_localizations: { 'hi' => 'आयतन' }, description_localizations: { "hi" => "वॉल्यूम सेट करने के लिए 1 और 1,000 के बीच की संख्या।" } )
   end
 end
 

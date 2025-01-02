@@ -21,12 +21,12 @@ def music_remove(data)
     return
   end
 
-  unless CALLIOPE.players[data.server.id].lava_queue
+  unless CALLIOPE.players[data.server.id].queue
     data.edit_response(content: RESPONSE[79])
     return
   end
 
-  CALLIOPE.players[data.server.id].destroy_queue
+  CALLIOPE.players[data.server.id].delete_queue
 
   data.edit_response(content: RESPONSE[84])
 end

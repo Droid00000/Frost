@@ -21,7 +21,7 @@ def music_next(data)
     return
   end
 
-  unless CALLIOPE.players[data.server.id].lava_queue
+  unless CALLIOPE.players[data.server.id].queue
     data.edit_response(content: RESPONSE[79])
     return
   end

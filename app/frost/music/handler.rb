@@ -9,6 +9,7 @@ require_relative "resume"
 require_relative "remove"
 require_relative "shuffle"
 require_relative "playing"
+require_relative "previous"
 require_relative "internals"
 require_relative "disconnect"
 
@@ -41,7 +42,7 @@ module MusicCommands
   end
 
   application_command(:music).subcommand(:queue) do |event|
-    event.defer(ephemeral: false)
+    event.defer(ephemeral: true)
     music_queue(event)
   end
 
@@ -63,6 +64,11 @@ module MusicCommands
   application_command(:music).subcommand(:play) do |event|
     event.defer(ephemeral: false)
     music_play(event)
+  end
+
+  application_command(:music).subcommand(:back) do |event|
+    event.defer(ephemeral: false)
+    music_previous(event)
   end
 
   voice_server_update do |event|

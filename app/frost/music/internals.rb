@@ -14,9 +14,11 @@ end
 
 # Convienent way to get the queue.
 def fetch_queue(data, mode)
-  CALLIOPE.players[data.server.id].lava_queue.last(15) unless mode == :MAX
+  return CALLIOPE.players[data.server.id].queue.count if mode == :ALL
 
-  CALLIOPE.players[data.server.id].lava_queue.first(15) unless mode == :BOTTOM
+  return CALLIOPE.players[data.server.id].queue.last(10) if mode == :TOP
+
+  return CALLIOPE.players[data.server.id].queue.first(10) if mode == :BOTTOM
 end
 
 # Convienent way to connect from a voice channel.
