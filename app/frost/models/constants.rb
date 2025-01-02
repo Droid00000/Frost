@@ -89,7 +89,11 @@ RESPONSE = {
   85 => "Heads!",
   86 => "Tails!",
   87 => "Successfully ended this session.",
-  88 => "There aren't any previous tracks that can be played!"
+  88 => "There aren't any previous tracks that can be played!",
+  89 => "The bot isn't playing any tracks.",
+  90 => "You've specified an invalid duration.",
+  91 => "You've specified a duration longer than the track.",
+  92 => "Successfully seeked to ``%s``."
 }.freeze
 
 # Values for embed responses.
@@ -248,7 +252,9 @@ EMBED = {
   176 => "Skips to the next track in the queue.",
   177 => "Connects the bot to a voice channel, and adds the specified track to the queue.",
   178 => "``/music back``",
-  179 => "Play the track that was previously playing."
+  179 => "Play the track that was previously playing.",
+  180 => "Seek to a specific position for the currently playing track.",
+  181 => "``/music seek``"
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
@@ -307,7 +313,8 @@ REGEX = {
   2 => /\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z/,
   3 => /<(a?):([a-zA-Z0-9_]{1,32}):([0-9]{15,20})>/,
   4 => /(?<=<@|\s|^)\d+(?=>|\s|$)/,
-  5 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
+  5 => /(\d+):(\d+)/,
+  6 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|
           xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|

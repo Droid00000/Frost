@@ -18,6 +18,7 @@ def help_music(data)
       embed.add_field(name: EMBED[166], value: EMBED[176])
       embed.add_field(name: EMBED[167], value: EMBED[177])
       embed.add_field(name: EMBED[178], value: EMBED[179])
+      embed.add_field(name: EMBED[181], value: EMBED[180])
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
     end
   end

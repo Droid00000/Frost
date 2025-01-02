@@ -21,7 +21,7 @@ def fetch_queue(data, mode)
   return CALLIOPE.players[data.server.id].queue.first(10) if mode == :BOTTOM
 end
 
-# Convienent way to connect from a voice channel.
+# Convienent way to disconnect from a voice channel.
 def gateway_voice_disconnect(data)
   return if data.server.bot.voice_channel.nil?
 

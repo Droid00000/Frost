@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "seek"
 require_relative "play"
 require_relative "next"
 require_relative "queue"
@@ -69,6 +70,11 @@ module MusicCommands
   application_command(:music).subcommand(:back) do |event|
     event.defer(ephemeral: false)
     music_previous(event)
+  end
+
+  application_command(:music).subcommand(:seek) do |event|
+    event.defer(ephemeral: false)
+    music_seek(event)
   end
 
   voice_server_update do |event|

@@ -211,6 +211,10 @@ bot.register_application_command(:music, 'Connect and play songs!.', contexts: [
   command.subcommand(:volume, 'Adjust the volume of the player.', name_localizations: { 'hi' => 'आयतन' }, description_localizations: { 'hi' => 'प्लेयर का वॉल्यूम समायोजित करें' }) do |option|
     option.integer(:volume, 'Number between 1 and 200 to set the volume to.', required: true, min_value: 1, max_value: 200, name_localizations: { 'hi' => 'आयतन' }, description_localizations: { "hi" => "वॉल्यूम सेट करने के लिए 1 और 1,000 के बीच की संख्या।" } )
   end
+
+  command.subcommand(:seek, 'Skip to a specific duration of a track.', name_localizations: { 'hi' => 'तलाश' }, description_localizations: { 'hi' => 'किसी ट्रैक की विशिष्ट अवधि पर जाएं' }) do |option|
+    option.string(:position, "The duration to skip to.", max_length: 10, required: true, min_length: 2, name_localizations: { 'hi' => 'स्थिति' }, description_localizations: { 'hi' => 'छोड़ने की अवधि' })
+  end
 end
 
 # @!function [General Operations] Belongs to a cog that manages general information!
