@@ -1,5 +1,5 @@
 -- Revision: V0
--- Creation Date: 2024-12-14 12:31:07.804358 UTC
+-- Creation Date: 2025-01-02 12:31:07.804358 UTC
 -- Reason: Initial Migration
 
 -- Holds info about event roles.
@@ -53,6 +53,14 @@ CREATE TABLE IF NOT EXISTS emoji_tracker (
   PRIMARY KEY (emoji_id, guild_id)
 );
 
+-- Holds info about house settings.
+CREATE TABLE IF NOT EXISTS house_settings (
+  user_id BIGINT NOT NULL,
+  role_id BIGINT NOT NULL,
+  guild_id BIGINT NOT NULL,
+  PRIMARY KEY (guild_id, user_id)
+);
+
 CREATE UNIQUE INDEX IF NOT EXISTS app_snowball_user_idx ON snowball_players (user_id);
 
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
@@ -61,9 +69,13 @@ CREATE UNIQUE INDEX IF NOT EXISTS guild_channel_idx ON archiver_settings (guild_
 
 CREATE UNIQUE INDEX IF NOT EXISTS guilds_events_idx ON event_settings (role_id);
 
+CREATE UNIQUE INDEX IF NOT EXISTS guild_houses_idx ON house_settings (role_id);
+
 CREATE INDEX IF NOT EXISTS guild_premium_ban_idx ON banned_boosters (guild_id);
 
 CREATE INDEX IF NOT EXISTS guild_booster_ban_idx ON banned_boosters (user_id);
+
+CREATE INDEX IF NOT EXISTS guild_house_head_idx ON house_settings (user_id);
 
 CREATE INDEX IF NOT EXISTS guild_premium_idx ON guild_boosters (guild_id);
 
