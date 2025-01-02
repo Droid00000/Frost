@@ -254,7 +254,16 @@ EMBED = {
   178 => "``/music back``",
   179 => "Play the track that was previously playing.",
   180 => "Seek to a specific position for the currently playing track.",
-  181 => "``/music seek``"
+  181 => "``/music seek``",
+  182 => "Previous Page",
+  183 => "Next Page",
+  184 => "These are the current members for **%s**. Each page contains a maximum of 30 members.",
+  185 => "House Members for %s",
+  186 => "Members",
+  187 => "Return 0",
+  188 => "Forward 0",
+  189 => 1324461217187631237,
+  190 => 1324461196727947335
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
@@ -314,7 +323,9 @@ REGEX = {
   3 => /<(a?):([a-zA-Z0-9_]{1,32}):([0-9]{15,20})>/,
   4 => /(?<=<@|\s|^)\d+(?=>|\s|$)/,
   5 => /(\d+):(\d+)/,
-  6 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
+  6 => /forward (\d+)/,
+  7 => /return (\d+)/,
+  8 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|
           xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|

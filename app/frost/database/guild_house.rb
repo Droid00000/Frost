@@ -4,7 +4,7 @@ module Frost
   # Represents a houses DB.
   class Houses
     # Easy way to access the DB.
-    @@pg = POSTGRES[:guild_houses]
+    @@pg = POSTGRES[:house_settings]
 
     # @param data [Discordrb::Interaction]
     def self.head?(data)
@@ -13,7 +13,7 @@ module Frost
 
     # Returns the cult role of a member.
     def self.cult(data)
-      @@pg.where(guild_id: data.server.id, user_id: data.user.id).get(:role_id)
+      data.server.role(@@pg.where(guild_id: data.server.id, user_id: data.user.id).get(:role_id))
     end
 
     # Adds a head of house to the houses DB..

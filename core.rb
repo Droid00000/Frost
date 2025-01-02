@@ -19,7 +19,7 @@ Dir["app/frost/database/*.rb"].each { |file| require file }
 
 Dir["app/frost/**/handler.rb"].each { |file| require file }
 
-bot = Discordrb::Bot.new(token: CONFIG["Discord"]["TOKEN"], intents: 34_441)
+bot = Discordrb::Bot.new(token: CONFIG["Discord"]["TOKEN"], intents: 34_443)
 
 at_exit { bot.stop }
 

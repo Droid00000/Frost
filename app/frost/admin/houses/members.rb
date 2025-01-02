@@ -8,20 +8,36 @@ def members_house(data)
 
   members = []
 
-  data.server.role(Frost::Houses.cult(data)).members.each_with_index do |user, count|
+  Frost::Houses.cult(data).members.each_with_index do |user, count|
     members << "**#{count + 1}** — #{user.display_name}\n"
   end
 
-  members.each_slice(15).to_a if members.count > 15
-
-  data.edit_response do |builder, components|
-    builder.add_embed do |embed|
-      embed.colour = UI[6]
-      embed.description = EMBED[51]
-      embed.timestamp = Time.at(Time.now)
-      embed.title = format(EMBED[50], data.server.name)
-      embed.add_field(name: EMBED[52], value: emojis[0].join, inline: true)
-      embed.add_field(name: EMBED[53], value: emojis[1].join, inline: true)
+  if members.size > 30
+    members.slice(0, 29)
+    members.each_slice(15).to_a
+    data.edit_response do |builder, components|
+      components.row do |component|
+        builder.add_embed do |embed|
+          embed.timestamp = Time.at(Time.now)
+          embed.colour = Frost::Houses.cult(data).color
+          embed.title = format(EMBED[185], Frost::Houses.cult(data).name)
+          embed.description = format(EMBED[184], Frost::Houses.cult(data).name)
+          embed.add_field(name: EMBED[186], value: members[0].join, inline: true)
+          embed.add_field(name: EMBED[186], value: members[1].join, inline: true)
+          component.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: EMBED[187])
+          component.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: EMBED[188])
+        end
+      end
+    end
+  else
+    data.edit_response do |builder|
+      builder.add_embed do |embed|
+        embed.timestamp = Time.at(Time.now)
+        embed.colour = Frost::Houses.cult(data).color
+        embed.title = format(EMBED[185], Frost::Houses.cult(data).name)
+        embed.add_field(name: EMBED[186], value: members.join, inline: true)
+        embed.description = format(EMBED[184], Frost::Houses.cult(data).name)
+      end
     end
   end
 end
