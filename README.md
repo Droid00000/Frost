@@ -26,7 +26,7 @@ CREATE DATABASE frigid OWNER frost;
 
 4. **Fill in configuration variables**
 
-Change the name of the `example.yml` file to `config.yml` and fill in all the variables.
+Change the name of the `example.yml` file to `config.yml` and fill in all the variables. Change the name of `lavalink.yml` to `application.yml` and do the same.
 
 ```yaml
 # Discord related credentials.
