@@ -263,7 +263,9 @@ EMBED = {
   187 => "return 1",
   188 => "forward 1",
   189 => 1324461217187631237,
-  190 => 1324461196727947335
+  190 => 1324461196727947335,
+  191 => "forward %s",
+  192 => "return %s"
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
