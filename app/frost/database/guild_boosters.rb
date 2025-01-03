@@ -35,11 +35,6 @@ module Frost
         end
       end
 
-      # Gets all the members.
-      def self.fetch
-        @@pg
-      end
-
       # Removes a single user from the DB.
       def self.delete(data)
         POSTGRES.transaction do
@@ -63,6 +58,19 @@ module Frost
             !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
           end
         end
+      end
+
+      # Gets all the members in a format the Discord gateway can understand.
+      def self.chunks
+        @@pg.all.group_by { |member| member[:guild_id] }.map do |guild, users|
+          { guild_id: guild, members: users.map { |user| user[:user_id] } }
+        end
+      end
+
+      # Gets all the members.
+      def self.fetch
+        sleep(5)
+        @@pg
       end
     end
 

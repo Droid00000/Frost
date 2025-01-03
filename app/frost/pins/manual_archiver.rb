@@ -7,7 +7,7 @@ module PinArchiver
     event.defer(ephemeral: true)
     pins = event.channel.pins
 
-    if pins.count == 50 && Frost::Pins.get?(event)
+    if pins.count == 50 && Frost::Pins.get(event)
       channel = event.bot.channel(Frost::Pins.get(event))
       message = pins[1]
 

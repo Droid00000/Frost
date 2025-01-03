@@ -6,7 +6,7 @@ module PinArchiver
   channel_pins_update do |event|
     pins = event.channel.pins
 
-    if pins.count == 50 && Frost::Pins.get?(event)
+    if pins.count == 50 && Frost::Pins.get(event)
       channel = event.bot.channel(Frost::Pins.get(event))
       message = pins[1]
 

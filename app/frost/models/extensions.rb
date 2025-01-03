@@ -425,3 +425,18 @@ module Discordrb
     end
   end
 end
+
+# Monkey patches to the Gateway class.
+module Discordrb
+  # Standard Gateway class for DRB.
+  class Gateway
+    def members(server_id, members)
+      data = {
+        guild_id: server_id,
+        user_ids: members.count == 1 ? members.first : members
+      }.compact
+
+      send_packet(Opcodes::REQUEST_MEMBERS, data)
+    end
+  end
+end
