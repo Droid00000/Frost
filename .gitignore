@@ -7,4 +7,5 @@ travis.yml
 .DS_Store?
 
 # Credentials
+application.yml
 config.yml
