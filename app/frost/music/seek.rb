@@ -27,7 +27,7 @@ def music_seek(data)
   end
 
   if REGEX[5].match(data.options["position"])
-    m, s = data.options["position"].split(':').map(&:to_i)
+    m, s = data.options["position"].split(":").map(&:to_i)
     time = (m * 60) + s
   else
     begin

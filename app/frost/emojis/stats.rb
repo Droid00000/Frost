@@ -47,8 +47,8 @@ def stats_command(data)
   data.edit_response do |builder|
     builder.add_embed do |embed|
       embed.colour = UI[6]
+      embed.timestamp = Time.now
       embed.description = EMBED[51]
-      embed.timestamp = Time.at(Time.now)
       embed.title = format(EMBED[50], data.server.name)
       embed.add_field(name: EMBED[52], value: emojis[0].join, inline: true)
       embed.add_field(name: EMBED[53], value: emojis[1].join, inline: true)

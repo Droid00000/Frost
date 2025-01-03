@@ -14,8 +14,8 @@ def help_index(data)
         builder.add_embed do |embed|
           embed.colour = UI[6]
           embed.title = EMBED[68]
+          embed.timestamp = Time.now
           embed.description = EMBED[69]
-          embed.timestamp = Time.at(Time.now)
           embed.add_field(name: EMBED[70], value: EMBED[71])
           embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
         end

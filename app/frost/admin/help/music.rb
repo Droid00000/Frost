@@ -5,8 +5,8 @@ def help_music(data)
     builder.add_embed do |embed|
       embed.colour = UI[7]
       embed.title = EMBED[156]
+      embed.timestamp = Time.now
       embed.description = EMBED[157]
-      embed.timestamp = Time.at(Time.now)
       embed.add_field(name: EMBED[158], value: EMBED[168])
       embed.add_field(name: EMBED[159], value: EMBED[169])
       embed.add_field(name: EMBED[160], value: EMBED[170])

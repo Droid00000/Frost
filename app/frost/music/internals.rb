@@ -18,7 +18,7 @@ def fetch_queue(data, mode)
 
   return CALLIOPE.players[data.server.id].queue.last(10) if mode == :TOP
 
-  return CALLIOPE.players[data.server.id].queue.first(10) if mode == :BOTTOM
+  CALLIOPE.players[data.server.id].queue.first(10) if mode == :BOTTOM
 end
 
 # Convienent way to disconnect from a voice channel.

@@ -5,8 +5,8 @@ def help_admin(data)
     builder.add_embed do |embed|
       embed.colour = UI[7]
       embed.title = EMBED[47]
+      embed.timestamp = Time.now
       embed.description = EMBED[134]
-      embed.timestamp = Time.at(Time.now)
       embed.add_field(name: EMBED[127], value: EMBED[135])
       embed.add_field(name: EMBED[128], value: EMBED[136])
       embed.add_field(name: EMBED[129], value: EMBED[137])

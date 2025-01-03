@@ -39,7 +39,7 @@ def music_queue(data)
   data.edit_response do |builder|
     builder.add_embed do |embed|
       embed.colour = UI[5]
-      embed.timestamp = Time.at(Time.now)
+      embed.timestamp = Time.now
       embed.title = format(EMBED[149], data.server.name)
       embed.description = format(EMBED[150], fetch_queue(data, :ALL))
       embed.add_field(name: EMBED[151], value: queue[0].join, inline: true)

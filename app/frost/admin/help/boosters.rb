@@ -6,8 +6,8 @@ def help_booster(data)
       builder.add_embed do |embed|
         embed.colour = UI[7]
         embed.title = EMBED[48]
+        embed.timestamp = Time.now
         embed.description = EMBED[120]
-        embed.timestamp = Time.at(Time.now)
         embed.add_field(name: EMBED[117], value: EMBED[121])
         embed.add_field(name: EMBED[118], value: EMBED[123])
         embed.add_field(name: EMBED[119], value: EMBED[122])
