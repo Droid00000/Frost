@@ -169,18 +169,6 @@ bot.register_application_command(:pin, 'Pin archive', default_member_permissions
 end
 
 # @!function [Event Operations] Belongs to a cog that manages custom roles!
-bot.register_application_command(:events, 'Event roles setup', default_member_permissions: "268435456", contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'घटनाएँ' }, description_localizations: { 'hi' => 'इवेंट रोल्स सेटअप करें' }) do |command|
-  command.subcommand_group(:role, 'Event roles!', name_localizations: { 'hi' => 'भूमिका' }, description_localizations: { 'hi' => 'इवेंट रोल्स के लिए सेटअप करें' }) do |group|
-    group.subcommand(:setup, 'Setup the event roles functionality.', name_localizations: { 'hi' => 'व्यवस्था' }, description_localizations: { 'hi' => 'इवेंट रोल्स कार्यक्षमता सेटअप करें' }) do |option|
-      option.role('role', 'Which role should be modifiable by its users?', required: true, name_localizations: { 'hi' => 'रोल' }, description_localizations: { 'hi' => 'कौन सा रोल उपयोगकर्ताओं द्वारा संपादित किया जा सकता है' })
-    end
-
-    group.subcommand(:disable, 'Disable the event roles functionality.', name_localizations: { 'hi' => 'असमर्थ' }, description_localizations: { 'hi' => 'इवेंट रोल्स कार्यक्षमता को अक्षम करें' }) do |option|
-    end
-  end
-end
-
-# @!function [Event Operations] Belongs to a cog that manages custom roles!
 bot.register_application_command(:event, 'Event roles', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'इवेंट' }, description_localizations: { 'hi' => 'इवेंट रोल्स' }) do |command|
   command.subcommand_group(:roles, 'Event roles!', name_localizations: { 'hi' => 'रोल्स' }, description_localizations: { 'hi' => 'इवेंट रोल्स' }) do |group|
     group.subcommand(:edit, 'Edit your event role.', name_localizations: { 'hi' => 'परिवर्तन' }, description_localizations: { 'hi' => 'अपने इवेंट रोल को संपादित करें' }) do |option|
