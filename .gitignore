@@ -1,6 +1,7 @@
 # Dependencies and Development 
 Gemfile.lock
 travis.yml
+plugins
 
 # System Files
 .DS_Store
