@@ -43,6 +43,13 @@ module Frost
         end
       end
 
+      # Removes a single user from the DB.
+      def self.prune(*data)
+        POSTGRES.transaction do
+          @@pg.where(guild_id: data[0], user_id: data[1]).delete
+        end
+      end
+
       # Gets all the members.
       def self.fetch
         sleep(5)

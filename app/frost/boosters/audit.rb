@@ -9,6 +9,6 @@ Rufus::Scheduler.new.cron "30 18 * * 5" do
     next if @bot.member(member[:guild_id], member[:user_id])&.boosting?
 
     delete_guild_role(member[:guild_id], member[:role_id])
-    Frost::Boosters::Members.delete(member[:guild_id], member[:user_id])
+    Frost::Boosters::Members.prune(member[:guild_id], member[:user_id])
   end
 end
