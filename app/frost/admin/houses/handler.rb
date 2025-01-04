@@ -12,13 +12,5 @@ module AdminCommands
     members_house(event)
   end
 
-  button(custom_id: REGEX[6]) do |event|
-    event.defer_update
-    members_forward(event)
-  end
-
-  button(custom_id: REGEX[7]) do |event|
-    event.defer_update
-    members_back(event)
-  end
+  button { |event| event.defer_update; members_forward(event) }
 end

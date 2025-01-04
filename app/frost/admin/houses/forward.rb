@@ -6,48 +6,29 @@ def members_forward(data)
     return
   end
 
-  members = []
-  id = data.custom_id.scan(/\d+/).first.to_i
+  page = Frost::Paginator.new(data, Frost::Houses.all)
 
-  Frost::Houses.cult(data).members.drop(id * 30).each_with_index do |user, count|
-    members << "**#{count + 1}** — #{user.display_name}\n"
-  end
-
-  if members.size >= 30
-    members = members.slice(0, 29)
-    members = members.each_slice(15).to_a
-    data.edit_response do |builder, components|
+  if page.second_row?
+    data.edit_response(components: page.components) do |builder|
       builder.add_embed do |embed|
         embed.timestamp = Time.now
         embed.colour = Frost::Houses.cult(data).color
         embed.title = format(EMBED[185], Frost::Houses.cult(data).name)
         embed.description = format(EMBED[184], Frost::Houses.cult(data).name)
-        embed.add_field(name: EMBED[186], value: members[0].join, inline: true)
-        embed.add_field(name: EMBED[186], value: members[1].join, inline: true)
-
-        unless id > members.size
-          components.row do |component|
-            component.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: format(EMBED[192], id + 1))
-            component.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: format(EMBED[191], id + 1))
-          end
-        end
+        embed.add_field(name: EMBED[186], value: page.map_first, inline: true)
+        embed.add_field(name: EMBED[186], value: page.map_second, inline: true)
       end
     end
-  else
-    data.edit_response do |builder, components|
+  end
+
+  unless page.second_row?
+    data.edit_response(components: page.components) do |builder|
       builder.add_embed do |embed|
-        components.row do |component|
-          embed.timestamp = Time.now
-          embed.colour = Frost::Houses.cult(data).color
-          embed.title = format(EMBED[185], Frost::Houses.cult(data).name)
-          embed.add_field(name: EMBED[186], value: members.join, inline: true)
-          embed.description = format(EMBED[184], Frost::Houses.cult(data).name)
-          component.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: format(EMBED[192], id + 1))
-          unless id == 1 || id > members.size
-            component.button(style: 1, label: EMBED[183], emoji: EMBED[190],
-                             custom_id: format(EMBED[191], id + 1))
-          end
-        end
+        embed.timestamp = Time.now
+        embed.colour = Frost::Houses.cult(data).color
+        embed.title = format(EMBED[185], Frost::Houses.cult(data).name)
+        embed.description = format(EMBED[184], Frost::Houses.cult(data).name)
+        embed.add_field(name: EMBED[186], value: page.map_first, inline: true)
       end
     end
   end

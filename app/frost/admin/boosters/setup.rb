@@ -7,11 +7,7 @@ def setup_booster(data)
     return
   end
 
-  if Frost::Boosters::Settings.get?(data)
-    Frost::Boosters::Settings.enable(data)
-  else
-    Frost::Boosters::Settings.update(data)
-  end
+  Frost::Boosters::Settings.setup(data)
 
   data.edit_response(content: format(RESPONSE[33], data.options["role"]))
 end

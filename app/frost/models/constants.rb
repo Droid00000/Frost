@@ -257,7 +257,7 @@ EMBED = {
   181 => "``/music seek``",
   182 => "Previous Page",
   183 => "Next Page",
-  184 => "These are the current members for **%s**. Each page contains a maximum of 30 members.",
+  184 => "These are the members in your house. Your house contains **%s** members.",
   185 => "House Members for %s",
   186 => "Members",
   187 => "return 1",
@@ -265,7 +265,10 @@ EMBED = {
   189 => 1_324_461_217_187_631_237,
   190 => 1_324_461_196_727_947_335,
   191 => "forward %s",
-  192 => "return %s"
+  192 => "return %s",
+  193 => "``/Booster Perks``",
+  194 => "``/Pin Archiver``",
+  195 => "``/Event Roles``",
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
@@ -316,7 +319,7 @@ POSTGRES = Sequel.connect(CONFIG["Postgres"]["URL"], extensions: :connection_val
 POSTGRES.pool.connection_validation_timeout = -1
 
 # The lavalink client used by the bot to play music.
-CALLIOPE = Calliope::Client.new(CONFIG["Lavalink"]["URL"], CONFIG["Lavalink"]["TOKEN"], CONFIG["Lavalink"]["ID"])
+# CALLIOPE = Calliope::Client.new(CONFIG["Lavalink"]["URL"], CONFIG["Lavalink"]["TOKEN"], CONFIG["Lavalink"]["ID"])
 
 # A series of regular expressions utilized by the bot.
 REGEX = {

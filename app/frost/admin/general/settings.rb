@@ -7,12 +7,9 @@ def general_settings(data)
       embed.title = EMBED[49]
       embed.colour = UI[5]
       embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
-      embed.add_field(name: "``/Booster Perks``",
-                      value: Frost::Boosters::Settings.get?(data) ? (EMBED[55] % Frost::Boosters::Settings.get(data)) : EMBED[35])
-      embed.add_field(name: "``/Pin Archiver``",
-                      value: Frost::Pins.get?(data) ? (EMBED[54] % Frost::Pins.get(data)) : EMBED[35])
-      embed.add_field(name: "``/Event Roles``",
-                      value: Frost::Roles.enabled?(data) ? (EMBED[56] % Frost::Roles.all(data).join(", ")) : EMBED[35])
+      embed.add_field(name: EMBED[193], value: (EMBED[55] % Frost::Boosters::Settings.get(data))) if Frost::Boosters::Settings.get(data)
+      embed.add_field(name: EMBED[194], value: (EMBED[54] % Frost::Pins.get(data))) if Frost::Pins.get(data)
+      embed.add_field(name: EMBED[195], value: Frost::Roles.all(data).join(", ")) if Frost::Roles.enabled?(data)
     end
   end
 end

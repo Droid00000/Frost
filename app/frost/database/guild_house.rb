@@ -20,5 +20,10 @@ module Frost
     def self.add(data)
       @@pg.insert(guild_id: data.server.id, user_id: data.user.id, role_id: data.options["role"])
     end
+
+    # The entrite DB.
+    def self.all
+      self
+    end
   end
 end

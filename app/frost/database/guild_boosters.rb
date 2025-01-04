@@ -93,13 +93,6 @@ module Frost
         end
       end
 
-      # Update a hoist role for this guild.
-      def self.update(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id).update(hoist_role: data.options["role"])
-        end
-      end
-
       # Removes a hoist role for this guild.
       def self.disable(data)
         POSTGRES.transaction do
@@ -110,7 +103,7 @@ module Frost
       # Adds a hoist role for this guild.
       def self.setup(data)
         POSTGRES.transaction do
-          @@pg.insert(guild_id: data.server.id, hoist_role: data.options["role"])
+          @@pg.insert_conflict(set: { hoist_role: data.options["role"] }).insert(guild_id: data.server.id, hoist_role: data.options["role"])
         end
       end
     end
