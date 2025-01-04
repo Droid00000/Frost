@@ -2,6 +2,8 @@ FROM ruby:3.3-alpine
 
 ENV TZ="America/Panama"
 
+ENV DISCORDRB_NONACL="0"
+
 RUN apk add --no-cache \
     postgresql-dev \
     icu-data-full \
