@@ -6,11 +6,6 @@ def disable_booster(data)
     return
   end
 
-  unless Frost::Boosters::Settings.get?(data)
-    data.edit_response(content: RESPONSE[34])
-    return
-  end
-
   Frost::Boosters::Settings.disable(data)
 
   data.edit_response(content: RESPONSE[35])

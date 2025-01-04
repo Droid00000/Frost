@@ -189,6 +189,12 @@ bot.register_application_command(:event, 'Event roles', contexts: [0], integrati
       option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 6, max_length: 7, name_localizations: { 'hi' => 'रंग' }, description_localizations: { 'hi' => 'अपने रोल के लिए एक HEX रंग दें' })
       option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => 'आइकन' }, description_localizations: { 'hi' => 'अपने रोल आइकन के रूप में एक इमोजी दें' })
     end
+
+    group.subcommand(:setup, 'Setup the event roles functionality.', name_localizations: { 'hi' => 'व्यवस्था' }, description_localizations: { 'hi' => 'इवेंट रोल्स कार्यक्षमता सेटअप करें' }) do |option|
+      option.role('role', 'Which role should be modifiable by its users?', required: true, name_localizations: { 'hi' => 'रोल' }, description_localizations: { 'hi' => 'कौन सा रोल उपयोगकर्ताओं द्वारा संपादित किया जा सकता है' })
+    end
+
+    group.subcommand(:disable, 'Disable the event roles functionality.', name_localizations: { 'hi' => 'असमर्थ' }, description_localizations: { 'hi' => 'इवेंट रोल्स कार्यक्षमता को अक्षम करें' }) 
   end
 end
 
@@ -245,20 +251,20 @@ bot.register_application_command(:booster, 'Booster perks', contexts: [0], integ
 
   command.subcommand_group(:admin, 'Booster admin!') do |group|
     group.subcommand('add', "Manually add a 'booster' to the database.") do |option|
-      option.user('user', 'The user to add to the database.', required: true)
+      option.user('member', 'The user to add to the database.', required: true)
       option.role('role', 'The role to add to the database.', required: true)
     end
 
     group.subcommand('delete', 'Manually remove a user from the database!') do |option|
-      option.user('user', 'The user to remove from the database.', required: true)
+      option.user('member', 'The user to remove from the database.', required: true)
     end
 
     group.subcommand('ban', 'Ban a user from using the booster perks functionality.') do |option|
-      option.user('user', 'The user to ban.', required: true)
+      option.user('member', 'The user to ban.', required: true)
     end
 
     group.subcommand('unban', 'Unban a user from using the booster perks functionality.') do |option|
-      option.user('user', 'The user to unban.', required: true)
+      option.user('member', 'The user to unban.', required: true)
     end
 
     group.subcommand('setup', 'Setup the booster perks functionality.') do |option|

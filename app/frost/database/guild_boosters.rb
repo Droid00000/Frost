@@ -1,23 +1,17 @@
 # frozen_string_literal: true
 
 module Frost
+  # Generic class for boosters.
   module Boosters
     # Represents a boosters DB.
     class Members
       # Easy way to access the DB.
-      @@pg = POSTGRES[:server_boosters]
+      @@pg = POSTGRES[:guild_boosters]
 
       # Adds a booster to the DB.
       def self.add(data, role)
         POSTGRES.transaction do
           @@pg.insert(guild_id: data.server.id, user_id: data.user.id, role_id: role.id)
-        end
-      end
-
-      # Manually adds a user to the database.
-      def self.manual_add(data)
-        POSTGRES.transaction do
-          @@pg.insert(guild_id: data.server.id, user_id: data.options["user"], role_id: data.options["role"])
         end
       end
 
@@ -28,35 +22,10 @@ module Frost
         end
       end
 
-      # Removes all instances of a role from the DB.
-      def self.purge(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id, role_id: data.options["role"]).delete
-        end
-      end
-
-      # Removes a single user from the DB.
-      def self.delete(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id, user_id: data.user.id).delete
-        end
-      end
-
-      # Removes a single user from the DB.
-      def self.manual_delete(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id, user_id: data.options["user"]).delete
-        end
-      end
-
       # Checks if a user is in the DB.
-      def self.user?(data, hash = false)
+      def self.user?(data)
         POSTGRES.transaction do
-          if hash == true
-            !@@pg.where(guild_id: data.server.id, user_id: data.options["user"]).empty?
-          else
-            !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
-          end
+          @@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
         end
       end
 
@@ -67,6 +36,13 @@ module Frost
         end
       end
 
+      # Removes a single user from the DB.
+      def self.delete(data)
+        POSTGRES.transaction do
+          @@pg.where(guild_id: data.server.id, user_id: data.user.id).delete
+        end
+      end
+
       # Gets all the members.
       def self.fetch
         sleep(5)
@@ -74,59 +50,14 @@ module Frost
       end
     end
 
-    # Represents a settings DB
-    class Settings
-      # Easy way to access the DB.
-      @@pg = POSTGRES[:booster_settings]
-
-      # Gets the hoist role for this guild.
-      def self.get(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id).get(:hoist_role)
-        end
-      end
-
-      # Gets the hoist role for this guild.
-      def self.get?(data)
-        POSTGRES.transaction do
-          !@@pg.where(guild_id: data.server.id).get(:hoist_role).nil?
-        end
-      end
-
-      # Removes a hoist role for this guild.
-      def self.disable(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id).delete
-        end
-      end
-
-      # Adds a hoist role for this guild.
-      def self.setup(data)
-        POSTGRES.transaction do
-          @@pg.insert_conflict(set: { hoist_role: data.options["role"] }).insert(guild_id: data.server.id, hoist_role: data.options["role"])
-        end
-      end
-    end
-
     class Ban
       # Easy way to access the DB.
       @@pg = POSTGRES[:banned_boosters]
 
-      # Removes a ban from the DB.
-      def self.remove(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id, user_id: data.options["user"]).delete
-        end
-      end
-
       # Checks if a user is in the DB.
-      def self.user?(data, hash = false)
+      def self.user?(data)
         POSTGRES.transaction do
-          if hash == false
-            !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
-          else
-            !@@pg.where(guild_id: data.server.id, user_id: data.options["user"]).empty?
-          end
+          !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
         end
       end
 
@@ -136,13 +67,75 @@ module Frost
           !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
         end
       end
+      # Removes a ban from the DB.
+      def self.remove(data)
+        POSTGRES.transaction do
+          @@pg.where(guild_id: data.server.id, user_id: data.options["user"]).delete
+        end
+      end
 
       # Adds a new user to the DB.
       def self.add(data)
         POSTGRES.transaction do
-          @@pg.insert(guild_id: data.server.id, user_id: data.options["user"])
+          @@pg.insert_conflict.insert(guild_id: data.server.id, user_id: data.options["user"])
         end
       end
     end
+
+    # Represents a settings DB
+    class Settings
+      # Easy way to access the DB.
+      @@pg = POSTGRES
+
+      # Removes a hoist role for this guild.
+      def self.disable(data)
+        POSTGRES.transaction do
+          @@pg[:booster_settings].where(guild_id: data.server.id).delete
+        end
+      end
+
+      # Gets the hoist role for this guild.
+      def self.get(data)
+        POSTGRES.transaction do
+          @@pg[:booster_settings].where(guild_id: data.server.id).get(:hoist_role)
+        end
+      end
+
+      # Manually get a user.
+      def self.get_user
+        POSTGRES.transaction do
+          !@@pg[:guild_boosters].where(guild_id: data.server.id, user_id: data.options["member"]).empty?
+        end
+      end
+
+      # Manually get a ban.
+      def self.get_ban
+        POSTGRES.transaction do
+          !@@pg[:banned_boosters].where(guild_id: data.server.id, user_id: data.options["member"]).empty?
+        end
+      end
+
+      # Manually delete a user.
+      def self.delete_user
+        POSTGRES.transaction do
+          @@pg[:guild_boosters].where(guild_id: data.server.id, user_id: data.options["member"]).delete
+        end
+      end
+
+      # Adds a hoist role for this guild.
+      def self.setup(data)
+        POSTGRES.transaction do
+          @@pg[:booster_settings].insert_conflict(set: { hoist_role: data.options["role"] }).insert(guild_id: data.server.id,
+                                                                                 hoist_role: data.options["role"])
+        end
+      end
+
+      # Add a user manually.
+      def self.post_user
+        POSTGRES.transaction do
+          @@pg[:guild_boosters].insert(guild_id: data.server.id, user_id: data.options["member"], role_id: data.options["role"])
+        end
+      end
+    end    
   end
 end

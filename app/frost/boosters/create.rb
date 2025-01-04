@@ -22,12 +22,12 @@ def create_role(data)
     return
   end
 
-  unless Frost::Boosters::Settings.get?(data)
+  unless Frost::Boosters::Settings.get(data)
     data.edit_response(content: RESPONSE[5])
     return
   end
 
-  if Frost::Boosters::Members.user?(data)
+  if Frost::Boosters::Members.role(data)
     data.edit_response(content: RESPONSE[4])
     return
   end

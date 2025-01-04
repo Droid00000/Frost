@@ -13,6 +13,13 @@ module Frost
       end
     end
 
+    # Add a new role to the database.
+    def self.add(data)
+      POSTGRES.transaction do
+        @@pg.insert_conflict.insert(guild_id: data.server.id, role_id: data.options["role"])
+      end
+    end
+
     # Check if an existing role is setup.
     def self.get?(data)
       POSTGRES.transaction do
@@ -20,10 +27,10 @@ module Frost
       end
     end
 
-    # Add a new role to the database.
-    def self.add(data)
+    # Check if this guild is enable.
+    def self.enabled?(data)
       POSTGRES.transaction do
-        @@pg.insert(guild_id: data.server.id, role_id: data.options["role"])
+        !@@pg.where(guild_id: data.server.id).empty?
       end
     end
 
@@ -31,13 +38,6 @@ module Frost
     def self.disable(data)
       POSTGRES.transaction do
         @@pg.where(guild_id: data.server.id).delete
-      end
-    end
-
-    # Check if this guild is enable.
-    def self.enabled?(data)
-      POSTGRES.transaction do
-        !@@pg.where(guild_id: data.server.id).empty?
       end
     end
   end

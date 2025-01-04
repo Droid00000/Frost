@@ -17,12 +17,12 @@ def edit_role(data)
     return
   end
 
-  unless Frost::Boosters::Settings.get?(data)
+  unless Frost::Boosters::Settings.get(data)
     data.edit_response(content: RESPONSE[5])
     return
   end
 
-  unless Frost::Boosters::Members.user?(data)
+  unless Frost::Boosters::Members.role(data)
     data.edit_response(content: RESPONSE[9])
     return
   end

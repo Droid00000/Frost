@@ -7,22 +7,22 @@ def add_booster(data)
     return
   end
 
-  unless Frost::Boosters::Settings.get?(data)
+  unless Frost::Boosters::Settings.get(data)
     data.edit_response(content: RESPONSE[34])
     return
   end
 
-  if Frost::Boosters::Members.get?(data, true)
+  if Frost::Boosters::Settings.get_user(data)
     data.edit_response(content: RESPONSE[25])
     return
   end
 
-  if Frost::Boosters::Ban.user?(data, true)
+  if Frost::Boosters::Settings.get_ban(data)
     data.edit_response(content: RESPONSE[29])
     return
   end
 
-  Frost::Boosters::Members.manual_add(data)
+  Frost::Boosters::Settings.post_user(data)
 
-  data.edit_response(content: format(RESPONSE[26], data.options["user"]))
+  data.edit_response(content: format(RESPONSE[26], data.options["member"]))
 end

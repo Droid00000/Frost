@@ -6,7 +6,7 @@ def members_house(data)
     return
   end
 
-  hash = { main: [], cut: []}#, page: Frost::Paginator.calculate(data) }
+  hash = { main: [], cut: [] } # , page: Frost::Paginator.calculate(data) }
 
   Frost::Houses.cult(data).members.each_with_index do |user, count|
     hash[:main] << "**#{count + 1}** — *#{user.display_name}*\n"
