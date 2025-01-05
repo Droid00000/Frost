@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "back"
 require_relative "members"
-require_relative "forward"
+require_relative "paginator"
 
 module AdminCommands
   extend Discordrb::EventContainer
@@ -12,13 +11,8 @@ module AdminCommands
     members_house(event)
   end
 
-  button(custom_id: REGEX[7]) do |event|
-    event.defer_update
-    members_up(event)
-  end
-
   button(custom_id: REGEX[6]) do |event|
     event.defer_update
-    members_down(event)
+    members_page(event)
   end
 end

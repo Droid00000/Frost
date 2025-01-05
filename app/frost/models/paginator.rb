@@ -48,9 +48,9 @@ module Frost
 
       chunks = make_chunks(@postgres.cult(@interaction))
 
-      @set = [chunks[@id[:chunk][0]], chunks.index(@id[:chunk][0] + 1)]
+      @set = [chunks[@id[:chunk][0]], chunks.fetch(@id[:chunk][0] + 1, nil)]
 
-      @second = chunks.index([@id[:chunk][0]]) != chunks.length - 1
+      @second_row = @set.fetch(1, nil)
 
       @id[:chunk] = [@id[:chunk][0] + 1, count_chunks(@postgres.cult(@interaction))]
 
@@ -61,11 +61,53 @@ module Frost
       @buttons = Discordrb::Webhooks::View.new do |components|
         components.row do |builder|
           if @id[:chunk][0] != 0
-            builder.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: (@id[:type] = "H-DOWN").to_json)
+            @id[:type] = "H-DOWN"
+            builder.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: @id.to_json)
           end
 
           if @id[:chunk][0] != @id[:chunk][1]
-            builder.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: (@id[:type] = "H-UP").to_json)
+            @id[:type] = "H-UP"
+            builder.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: @id.to_json)
+          end
+        end
+      end
+    end
+
+    def house_backward
+      if @id[:chunk][0] == @id[:chunk][1] && (@id[:chunk][0] != 0 && @id[:chunk][1] != 0)
+        @id = { type: "H-DOWN", chunk: @id[:chunk] }
+      end
+
+      if count_chunks(@postgres.cult(@interaction)) != @id[:chunk][1]
+        @id[:chunk] = [@id[:chunk][0], count_chunks(@postgres.cult(@interaction))]
+      end
+
+      if count_chunks(@postgres.cult(@interaction)) >= @id[:chunk][1]
+        @id = { type: "H-DOWN", chunk: @id[:chunk] }
+      end
+
+      chunks = make_chunks(@postgres.cult(@interaction))
+
+      @set = [chunks[@id[:chunk][0] - 3], chunks.fetch(@id[:chunk][0] - 2, nil)]
+
+      @second_row = @set.fetch(1, nil)
+
+      @id[:chunk] = [@id[:chunk][0] - 1, count_chunks(@postgres.cult(@interaction))]
+
+      if (@id[:chunk][0] == @id[:chunk][1]) && (@id[:chunk][0] != 2)
+        @id = { type: "H-DOWN", chunk: @id[:chunk] }
+      end
+
+      @buttons = Discordrb::Webhooks::View.new do |components|
+        components.row do |builder|
+          if @id[:chunk][0] != 2
+            @id[:type] = "H-DOWN"
+            builder.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: @id.to_json)
+          end
+
+          if @id[:chunk][0] != @id[:chunk][1]
+            @id[:type] = "H-UP"
+            builder.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: @id.to_json)
           end
         end
       end

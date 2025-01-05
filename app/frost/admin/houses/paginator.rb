@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-def members_up(data)
+def members_page(data)
   unless Frost::Houses.head?(data)
     data.send_message(content: RESPONSE[64])
     return
