@@ -12,6 +12,10 @@ def reaction_stats(data)
   Frost::Emojis.new(data.emoji, data.server)
 end
 
+def thread_join(data)
+  data.channel.join if data.channel.thread?
+end
+
 Rufus::Scheduler.new.cron "0 0 * * *" do
   while (emoji = Frost::Emojis.drain.shift)
     Frost::Emojis.add(emoji: emoji[:emoji], guild: emoji[:guild])

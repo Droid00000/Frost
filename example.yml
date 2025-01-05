@@ -4,16 +4,16 @@ Discord:
   TOKEN: "Bot TOKEN_HERE"
   CONTRIBUTORS: []
 
-# Leaving this one undocumented.
-Chapter:
-  ELEMENT: ""
-  LINK: ""
-
-# Information about the lavalink node.
+# Information about the Lavalink node.
 Lavalink:
   ID: ""
   URL: ""
   TOKEN: ""
+
+# Leaving this one undocumented.
+Chapter:
+  ELEMENT: ""
+  LINK: ""
 
 # Database related credentials.
 Postgres:

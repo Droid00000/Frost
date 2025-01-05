@@ -35,4 +35,8 @@ module EmojiCommands
   message(contains: REGEX[3]) do |event|
     emoji_stats(event)
   end
+
+  channel_create do |event|
+    thread_join(event)
+  end
 end
