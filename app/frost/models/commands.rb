@@ -96,6 +96,11 @@ bot.register_application_command(:purge, 'Moderation Commands', contexts: [0], i
   end
 end
 
+# @!function [House Operations] Belongs to a cog that manages houses for a specific community!
+bot.register_application_command(:house, 'Head of houses', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'घर' }, description_localizations: { 'hi' => 'घरों का मुखिया' }) do |command|
+  command.subcommand('members', "View the members in your house.", name_localizations: { 'hi' => 'सदस्यों' }, description_localizations: { 'hi' => 'अपने घर के सदस्यों को देखें' })
+end
+
 # @!function [Pin Operations] Belongs to a cog that manages pins in a channel!
 bot.register_application_command(:archive, 'Archives pins in a specified channel.', default_member_permissions: "8192", contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'पुरातत्व' }, description_localizations: { 'hi' => 'पुरातत्व पिंस कोई चुनित चैनल मै' }) do |option|
 end
@@ -244,10 +249,12 @@ bot.register_application_command(:booster, 'Booster perks', contexts: [0], integ
       option.user('member', 'The user to unban.', required: true)
     end
 
+    group.subcommand('disable', 'Disable the booster perks functionality.') do |option|
+      option.boolean('prune', 'If all roles should be removed from the database.', required: true)
+    end
+    
     group.subcommand('setup', 'Setup the booster perks functionality.') do |option|
       option.role('role', 'Which role should all custom booster roles be placed above?', required: true)
     end
-
-    group.subcommand('disable', 'Disable the booster perks functionality.')
   end
 end
