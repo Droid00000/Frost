@@ -22,7 +22,7 @@ Dir["app/frost/**/handler.rb"].each { |file| require file }
 
 @bot = Discordrb::Bot.new(token: CONFIG["Discord"]["TOKEN"], intents: 34_443)
 
-at_exit { bot.stop }
+at_exit { @bot.stop }
 
 @bot.include! EventRoles
 @bot.include! PinArchiver
