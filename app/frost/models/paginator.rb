@@ -7,12 +7,12 @@ module Frost
     attr_reader :set
     alias members set
 
+    # Easy way to get buttons.
+    attr_reader :buttons
+
     # Easy way to access the DB.
     attr_reader :postgres
     alias pg postgres
-
-    # Easy way to get buttons.
-    attr_reader :components
 
     # Easy way to access the interaction.
     attr_reader :interation
@@ -26,7 +26,7 @@ module Frost
     def initialize(data, postgres = nil)
       @set = nil
       @mapped = [[], []]
-      @components = nil
+      @buttons = nil
       @second_row = nil
       @interaction = data
       @postgres = postgres
@@ -58,16 +58,14 @@ module Frost
         @id = { type: "H-DOWN", chunk: @id[:chunk] }
       end
 
-      return if @id[:chunk][0] == 0 && @id[:chunk][0] == @id[:chunk][1]
-
-      @components = Discordrb::Webhooks::View.new do |consumer|
-        consumer.row do |builder|
+      @buttons = Discordrb::Webhooks::View.new do |components|
+        components.row do |builder|
           if @id[:chunk][0] != 0
-            builder.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: "1 #{@id}")
+            builder.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: (@id[:type] = "H-DOWN").to_json)
           end
 
           if @id[:chunk][0] != @id[:chunk][1]
-            builder.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: "2 #{@id}")
+            builder.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: (@id[:type] = "H-UP").to_json)
           end
         end
       end
@@ -87,20 +85,12 @@ module Frost
       end
     end
 
-    def map_first
-      @set[0].each_with_index do |user, count|
-        @mapped[0] << "**#{count + 1}** — *#{user.display_name}*\n"
+    def map(index)
+      @set[index].each_with_index do |user, count|
+        @mapped[index] << "**#{count + 1}** — *#{user.display_name}*\n"
       end
 
-      @mapped[0].join
-    end
-
-    def map_second
-      @set[1].each_with_index do |user, count|
-        @mapped[1] << "**#{count + 1}** — *#{user.display_name}*\n"
-      end
-
-      @mapped[1].join
+      @mapped[index].join
     end
 
     private
@@ -115,8 +105,9 @@ module Frost
       data.members.each_slice(15).to_a
     end
 
-    def self.consume(*data)
-      { type: data[0], chunk: [data[1], data[2]] }
+    # Make a new ID.
+    def self.id(*data)
+      { type: data[0], chunk: [2, data[1]] }.to_json
     end
   end
 end

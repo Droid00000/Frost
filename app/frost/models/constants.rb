@@ -328,8 +328,8 @@ REGEX = {
   3 => /<(a?):([a-zA-Z0-9_]{1,32}):([0-9]{15,20})>/,
   4 => /(?<=<@|\s|^)\d+(?=>|\s|$)/,
   5 => /(\d+):(\d+)/,
-  6 => /forward (\d+)/,
-  7 => /return (\d+)/,
+  6 => /"type":\s*"H-UP"/,
+  7 => /"type":\s*"H-DOWN"/,
   8 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|

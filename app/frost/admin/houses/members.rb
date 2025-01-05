@@ -6,13 +6,15 @@ def members_house(data)
     return
   end
 
-  hash = { main: [], cut: [] } # , page: Frost::Paginator.calculate(data) }
+  hash = { main: [], cut: [], id: [] }
 
   Frost::Houses.cult(data).members.each_with_index do |user, count|
     hash[:main] << "**#{count + 1}** — *#{user.display_name}*\n"
   end
 
   hash[:cut] = hash[:main].first(30).each_slice(15).to_a
+
+  hash[:id] = Frost::Paginator.id("H-UP", hash[:main].size)
 
   if hash[:main].size > 30
     data.edit_response do |builder, components|
@@ -24,14 +26,13 @@ def members_house(data)
           embed.add_field(name: EMBED[186], value: hash[:cut][0].join, inline: true)
           embed.add_field(name: EMBED[186], value: hash[:cut][1].join, inline: true)
           embed.description = format(EMBED[184], Frost::Houses.cult(data).members.size)
-          component.button(style: 1, label: EMBED[183], emoji: EMBED[190],
-                           custom_id: { type: "H-UP", chunk: [2, hash[:main].size] }.to_json)
+          component.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: hash[:id])
         end
       end
     end
   end
 
-  unless hash[:main].size > 30
+  if hash[:main].size <= 30
     data.edit_response do |builder|
       builder.add_embed do |embed|
         embed.timestamp = Time.at(Time.now)

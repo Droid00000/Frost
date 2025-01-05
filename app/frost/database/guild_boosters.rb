@@ -74,6 +74,7 @@ module Frost
           !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
         end
       end
+
       # Removes a ban from the DB.
       def self.remove(data)
         POSTGRES.transaction do
@@ -97,6 +98,7 @@ module Frost
       # Removes a hoist role for this guild.
       def self.disable(data)
         POSTGRES.transaction do
+          @@pg[:guild_boosters].where(guild_id: data.server.id).delete
           @@pg[:booster_settings].where(guild_id: data.server.id).delete
         end
       end
@@ -133,16 +135,17 @@ module Frost
       def self.setup(data)
         POSTGRES.transaction do
           @@pg[:booster_settings].insert_conflict(set: { hoist_role: data.options["role"] }).insert(guild_id: data.server.id,
-                                                                                 hoist_role: data.options["role"])
+                                                                                                    hoist_role: data.options["role"])
         end
       end
 
       # Add a user manually.
       def self.post_user
         POSTGRES.transaction do
-          @@pg[:guild_boosters].insert(guild_id: data.server.id, user_id: data.options["member"], role_id: data.options["role"])
+          @@pg[:guild_boosters].insert(guild_id: data.server.id, user_id: data.options["member"],
+                                       role_id: data.options["role"])
         end
       end
-    end    
+    end
   end
 end

@@ -6,7 +6,7 @@ def roles_setup(data)
     data.edit_response(content: RESPONSE[18])
     return
   end
-  
+
   Frost::Roles.add(data)
 
   data.edit_response(content: format(RESPONSE[24], data.options["role"]))

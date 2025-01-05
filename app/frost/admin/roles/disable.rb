@@ -6,7 +6,7 @@ def roles_disable(data)
     data.edit_response(content: RESPONSE[18])
     return
   end
-  
+
   Frost::Roles.disable(data)
 
   data.edit_response(content: RESPONSE[39])
