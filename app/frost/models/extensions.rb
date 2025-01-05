@@ -351,6 +351,21 @@ module Discordrb
       end
     end
 
+    # Count the total number of servers.
+    def count_servers
+      servers.values.count
+    end
+
+    # Count the total number of channels.
+    def count_channels
+      servers.values.map(&:channels).flatten.count
+    end
+
+    # Count the total number of members.
+    def count_members
+      servers.values.map(&:member_count).sum
+    end
+
     # Updates presence status.
     # @param status [String] The status the bot should show up as. Can be `online`, `dnd`, `idle`, or `invisible`
     # @param activity [String, nil] The name of the activity to be played/watched/listened to/stream name on the stream.

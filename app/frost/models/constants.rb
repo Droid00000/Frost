@@ -269,6 +269,8 @@ EMBED = {
   193 => "``/Booster Perks``",
   194 => "``/Pin Archiver``",
   195 => "``/Event Roles``",
+  196 => "Stats",
+  197 => "I'm on %s servers with a total of %s members and %s channels."
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

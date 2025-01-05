@@ -18,6 +18,7 @@ def help_index(data)
           embed.description = EMBED[69]
           embed.add_field(name: EMBED[70], value: EMBED[71])
           embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
+          embed.add_field(name: EMBED[196], value: format(EMBED[197], data.bot.count_servers, data.bot.count_members, data.bot.count_channels))
         end
       end
     end
