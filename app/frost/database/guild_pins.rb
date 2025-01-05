@@ -9,8 +9,8 @@ module Frost
     # Sets up an existing archive channel.
     def self.setup(data)
       POSTGRES.transaction do
-        @@pg.insert_conflict(set: { channel_id: data.options["channel"] }).insert(guild_id: data.server.id,
-                                                                                  channel_id: data.options["channel"])
+        @@pg.insert_conflict(target: :guild_id, update: { channel_id: data.options["channel"] }).insert(guild_id: data.server.id,
+                                                                                                        channel_id: data.options["channel"])
       end
     end
 

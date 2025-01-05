@@ -182,7 +182,7 @@ module Discordrb
       def emojis(name)
         return nil unless @options[name]
 
-        @bot.parse_mentions(@content).find { |e| e.is_a? Discordrb::Emoji }
+        @bot.parse_mentions(@options[name]).find { |e| e.is_a? Discordrb::Emoji }
       end
 
       # @param name [String] The name of the option.

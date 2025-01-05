@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Un-blacklists a user from using booster perks in a server.
-def admin_remove_blacklist(data)
+def unban_booster(data)
   unless data.user.permission?(:manage_roles)
     data.edit_response(content: RESPONSE[18])
     return

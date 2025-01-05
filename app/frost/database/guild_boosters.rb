@@ -78,14 +78,14 @@ module Frost
       # Removes a ban from the DB.
       def self.remove(data)
         POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id, user_id: data.options["user"]).delete
+          @@pg.where(guild_id: data.server.id, user_id: data.options["member"]).delete
         end
       end
 
       # Adds a new user to the DB.
       def self.add(data)
         POSTGRES.transaction do
-          @@pg.insert_conflict.insert(guild_id: data.server.id, user_id: data.options["user"])
+          @@pg.insert_conflict.insert(guild_id: data.server.id, user_id: data.options["member"])
         end
       end
     end
@@ -115,21 +115,21 @@ module Frost
       end
 
       # Manually get a user.
-      def self.get_user
+      def self.get_user(data)
         POSTGRES.transaction do
           !@@pg[:guild_boosters].where(guild_id: data.server.id, user_id: data.options["member"]).empty?
         end
       end
 
       # Manually get a ban.
-      def self.get_ban
+      def self.get_ban(data)
         POSTGRES.transaction do
           !@@pg[:banned_boosters].where(guild_id: data.server.id, user_id: data.options["member"]).empty?
         end
       end
 
       # Manually delete a user.
-      def self.delete_user
+      def self.delete_user(data)
         POSTGRES.transaction do
           @@pg[:guild_boosters].where(guild_id: data.server.id, user_id: data.options["member"]).delete
         end
@@ -138,13 +138,14 @@ module Frost
       # Adds a hoist role for this guild.
       def self.setup(data)
         POSTGRES.transaction do
-          @@pg[:booster_settings].insert_conflict(set: { hoist_role: data.options["role"] }).insert(guild_id: data.server.id,
-                                                                                                    hoist_role: data.options["role"])
+          @@pg[:booster_settings].insert_conflict(target: :guild_id, update: { hoist_role: data.options["role"] }).insert(
+            guild_id: data.server.id, hoist_role: data.options["role"]
+          )
         end
       end
 
       # Add a user manually.
-      def self.post_user
+      def self.post_user(data)
         POSTGRES.transaction do
           @@pg[:guild_boosters].insert(guild_id: data.server.id, user_id: data.options["member"],
                                        role_id: data.options["role"])
