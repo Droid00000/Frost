@@ -61,17 +61,6 @@ bot.register_application_command(:coin, 'Flip a coin!', contexts: [0, 1, 2], int
 end
 
 # @!function [Moderation Operations] Belongs to a cog that manages moderation related commands!
-bot.register_application_command(:freeze, 'Prevent all members from speaking in the server.', contexts: [0], integration_types: [0], default_member_permissions: "268435456", name_localizations: { 'hi' => 'स्थिर' }, description_localizations: { 'hi' => 'सभी सदस्यों को सर्वर में बोलने से रोकें' }) do |option|
-  option.string('duration', 'How long should the server be frozen for?', required: false, min_length: 2, max_length: 1000, name_localizations: { 'hi' => 'लंबाई' }, description_localizations: { 'hi' => 'सर्वर को कितने समय के लिए फ़्रीज़ किया जाना चाहिए' })
-  option.string('reason', 'The reason for freezing the server.', required: false, max_length: 1000, name_localizations: { 'hi' => 'क्यू' }, description_localizations: { 'hi' => 'सर्वर लॉक होने का कारण' })
-end
-
-# @!function [Moderation Operations] Belongs to a cog that manages moderation related commands!
-bot.register_application_command(:unfreeze, 'Remove the lock caused by the freeze command.', contexts: [0], integration_types: [0], default_member_permissions: "268435456", name_localizations: { 'hi' => 'अनफ़्रीज़' }, description_localizations: { 'hi' => 'फ़्रीज़ कमांड का उपयोग करके होने वाले टाइमआउट को अनलॉक करें' }) do |option|
-  option.string('reason', 'The reason for un-freezing the server.', required: false, max_length: 1000, name_localizations: { 'hi' => 'वजह' }, description_localizations: { 'hi' => 'सर्वर को अनफ्रीज करने का कारण' })
-end
-
-# @!function [Moderation Operations] Belongs to a cog that manages moderation related commands!
 bot.register_application_command(:block, 'Stop a member from being able to access this channel.', contexts: [0], integration_types: [0], default_member_permissions: "268435456", name_localizations: { 'hi' => 'ब्लॉक' }, description_localizations: { 'hi' => 'किसी सदस्य को चैनल का उपयोग करने से रोकें।' }) do |option|
   option.user('member', 'Which member do you want to lock out?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'आप किस सदस्य को लॉक आउट करना चाहते हैं' })
   option.boolean('cascade', 'Should this member be blocked from every channel in this server?', required: true, name_localizations: { 'hi' => 'झरना' }, description_localizations: { 'hi' => 'क्या इस सदस्य को इस सर्वर के प्रत्येक चैनल से ब्लॉक कर दिया जाना चाहिए' })
