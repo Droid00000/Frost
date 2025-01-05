@@ -93,7 +93,8 @@ RESPONSE = {
   89 => "The bot isn't playing any tracks.",
   90 => "You've specified an invalid duration.",
   91 => "You've specified a duration longer than the track.",
-  92 => "Successfully seeked to ``%s``."
+  92 => "Successfully seeked to ``%s``.",
+  93 => "Disabled event perks for this role: <@&%s>"
 }.freeze
 
 # Values for embed responses.

@@ -2,7 +2,7 @@
 
 require 'discordrb'
 
-bot = Discordrb::Bot.new(token: ENV.fetch('TOKEN'), intents: 0)
+bot = Discordrb::Bot.new(token: ENV.fetch('TOKEN'), intents: :none)
 
 # @!function [Affections] This command is part of a cog that does expressions! 
 bot.register_application_command(:hug, 'Hugs another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गलेमिलना' }, description_localizations: { 'hi' => 'सर्वर मित्र के गले मिलना' }) do |option|
@@ -174,6 +174,10 @@ bot.register_application_command(:event, 'Event roles', contexts: [0], integrati
 
     group.subcommand(:setup, 'Setup the event roles functionality.', name_localizations: { 'hi' => 'व्यवस्था' }, description_localizations: { 'hi' => 'इवेंट रोल्स कार्यक्षमता सेटअप करें' }) do |option|
       option.role('role', 'Which role should be modifiable by its users?', required: true, name_localizations: { 'hi' => 'रोल' }, description_localizations: { 'hi' => 'कौन सा रोल उपयोगकर्ताओं द्वारा संपादित किया जा सकता है' })
+    end
+
+    group.subcommand(:remove, 'Remove event roles functionality from a role.', name_localizations: { 'hi' => 'निकालना' }, description_localizations: { 'hi' => 'किसी भूमिका से ईवेंट भूमिका कार्यक्षमता हटाएँ' }) do |option|
+      option.role('role', 'Which role needs to be removed?', required: true, name_localizations: { 'hi' => 'रोल' }, description_localizations: { 'hi' => 'किस भूमिका को हटाने की जरूरत है' })
     end
 
     group.subcommand(:disable, 'Disable the event roles functionality.', name_localizations: { 'hi' => 'असमर्थ' }, description_localizations: { 'hi' => 'इवेंट रोल्स कार्यक्षमता को अक्षम करें' }) 

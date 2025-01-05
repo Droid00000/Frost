@@ -24,7 +24,6 @@ Dir["app/frost/**/handler.rb"].each { |file| require file }
 
 at_exit { @bot.stop }
 
-@bot.include! EventRoles
 @bot.include! PinArchiver
 @bot.include! BoosterPerks
 @bot.include! MusicCommands

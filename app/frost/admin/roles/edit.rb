@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-def edit_event_role(data)
+def roles_edit(data)
   unless data.server.bot.permission?(:manage_roles)
     data.edit_response(content: RESPONSE[47])
     return

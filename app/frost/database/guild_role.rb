@@ -27,6 +27,13 @@ module Frost
       end
     end
 
+    # Remove a single role from the DB.
+    def self.remove(data)
+      POSTGRES.transaction do
+        !@@pg.where(guild_id: data.server.id, role_id: data.options["role"]).delete
+      end
+    end
+
     # Check if this guild is enable.
     def self.enabled?(data)
       POSTGRES.transaction do
