@@ -61,6 +61,8 @@ CREATE TABLE IF NOT EXISTS house_settings (
   PRIMARY KEY (guild_id, user_id)
 );
 
+CREATE TRIGGER guild_booster_ban_udx BEFORE UPDATE ON banned_boosters FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
+
 CREATE TRIGGER guild_hoist_role_udx BEFORE UPDATE ON booster_settings FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
 
 CREATE TRIGGER guild_channel_udx BEFORE UPDATE ON archiver_settings FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
