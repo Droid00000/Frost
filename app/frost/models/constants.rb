@@ -2,7 +2,7 @@
 
 # A response message to an interaction.
 RESPONSE = {
-  1 => "Your role has been created! You can always edit your role using the </booster role edit:1312281524321648651> command.",
+  1 => "Your role has been created! You can always edit your role using the </booster role edit:1325631222990372915> command.",
   2 => "Your role has been successfully edited!",
   3 => "Your role has been successfully deleted! Feel free to make a new role at any time.",
   4 => "You've already claimed your custom role on this server.",
@@ -10,12 +10,12 @@ RESPONSE = {
   6 => "You have been banned from using this feature.",
   7 => "Invalid name parameter.",
   8 => "You aren't boosting this server.",
-  9 => "We couldn't find your role. Please use the </booster role claim:1312281524321648651> command to claim your role.",
+  9 => "We couldn't find your role. Please use the </booster role claim:1325631222990372915> command to claim your role.",
   10 => "Made by *droid00000* using the [discordrb library!](<https://github.com/shardlab/discordrb>)",
   11 => "Invalid status parameter.",
   12 => "You must be a contributor to use this command.",
   13 => "Successfully updated the status! Thank you for contributing to my bot!",
-  14 => "You're out of snowballs! You can collect more using the </collect snowball:1312281435675033711> command!",
+  14 => "You're out of snowballs! You can collect more using the </collect snowball:1325631057734926339> command!",
   15 => "You missed!",
   16 => "This user doesn't have any snowballs.",
   17 => "That role cannot be updated.",

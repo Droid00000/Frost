@@ -111,11 +111,11 @@ module Frost
       @second_row = @set.fetch(0, nil)
 
       if @second_row
-        @id[:chunk] = [@id[:chunk][0] - 2, count_chunks(@postgres.cult(@interaction))] 
+        @id[:chunk] = [@id[:chunk][0] - 2, count_chunks(@postgres.cult(@interaction))]
       else
         @id[:chunk] = [@id[:chunk][0] - 1, count_chunks(@postgres.cult(@interaction))]
       end
-  
+
       if @id[:chunk][0] == 1
         @hash = [hashed.fetch(@id[:chunk][0] - 4), hashed.fetch(@id[:chunk][0] - 3, nil)]
       end
