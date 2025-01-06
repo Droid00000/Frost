@@ -61,6 +61,20 @@ CREATE TABLE IF NOT EXISTS house_settings (
   PRIMARY KEY (guild_id, user_id)
 );
 
+-- Function for managing the balance of an emoji.
+CREATE OR REPLACE FUNCTION balance_manager() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (SELECT FROM emoji_tracker WHERE emoji_id = NEW.emoji_id AND guild_id = NEW.guild_id) THEN
+        UPDATE emoji_tracker
+        SET balance = balance + 1
+        WHERE emoji_id = NEW.emoji_id AND guild_id = NEW.guild_id;
+        RETURN NULL;
+    ELSE
+        RETURN NEW;
+    END IF;
+END;
+$$ LANGUAGE PLPGSQL;
+
 CREATE INDEX IF NOT EXISTS guild_emoji_idx ON emoji_tracker (emoji_id);
 
 CREATE INDEX IF NOT EXISTS guilds_emoji_idx ON emoji_tracker (guild_id);
@@ -84,19 +98,6 @@ CREATE UNIQUE INDEX IF NOT EXISTS guild_channel_idx ON archiver_settings (guild_
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
 
 CREATE UNIQUE INDEX IF NOT EXISTS app_snowball_user_idx ON snowball_players (user_id);
-
-CREATE OR REPLACE FUNCTION balance_manager() RETURNS TRIGGER AS $$
-BEGIN
-    IF EXISTS (SELECT FROM emoji_tracker WHERE emoji_id = NEW.emoji_id AND guild_id = NEW.guild_id) THEN
-        UPDATE emoji_tracker
-        SET balance = balance + 1
-        WHERE emoji_id = NEW.emoji_id AND guild_id = NEW.guild_id;
-        RETURN NULL;
-    ELSE
-        RETURN NEW;
-    END IF;
-END;
-$$ LANGUAGE PLPGSQL;
 
 CREATE TRIGGER guild_emoji_udx BEFORE INSERT ON emoji_tracker FOR EACH ROW EXECUTE FUNCTION balance_manager();
 
