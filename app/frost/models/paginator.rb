@@ -25,6 +25,7 @@ module Frost
     # @param data [Discordrb::Interaction]
     def initialize(data, postgres = nil)
       @set = nil
+      @hash = []
       @mapped = [[], []]
       @buttons = nil
       @second_row = nil
@@ -48,11 +49,24 @@ module Frost
 
       chunks = make_chunks(@postgres.cult(@interaction))
 
+      hashed = to_h(@postgres.cult(@interaction))
+
       @set = [chunks[@id[:chunk][0]], chunks.fetch(@id[:chunk][0] + 1, nil)]
+
+      @hash = [hashed[@id[:chunk][0]], hashed.fetch(@id[:chunk][0] + 1, nil)]
+
+      if @id[:chunk][0] == 1
+        @hash = [hashed[@id[:chunk][0] + 1], hashed.fetch(@id[:chunk][0] + 2, nil)]
+        @set = [chunks[@id[:chunk][0] + 1], chunks.fetch(@id[:chunk][0] + 2, nil)]
+      end
 
       @second_row = @set.fetch(1, nil)
 
-      @id[:chunk] = [@id[:chunk][0] + 1, count_chunks(@postgres.cult(@interaction))]
+      if @second_row
+        @id[:chunk] = [@id[:chunk][0] + 2, count_chunks(@postgres.cult(@interaction))]
+      else
+        @id[:chunk] = [@id[:chunk][0] + 1, count_chunks(@postgres.cult(@interaction))]
+      end
 
       if (@id[:chunk][0] == @id[:chunk][1]) && (@id[:chunk][0] != 1)
         @id = { type: "H-DOWN", chunk: @id[:chunk] }
@@ -65,7 +79,7 @@ module Frost
             builder.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: @id.to_json)
           end
 
-          if @id[:chunk][0] != @id[:chunk][1]
+          if @id[:chunk][0] != @id[:chunk][1] && @id[:chunk][0] != 2
             @id[:type] = "H-UP"
             builder.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: @id.to_json)
           end
@@ -88,11 +102,23 @@ module Frost
 
       chunks = make_chunks(@postgres.cult(@interaction))
 
-      @set = [chunks[@id[:chunk][0] - 3], chunks.fetch(@id[:chunk][0] - 2, nil)]
+      hashed = to_h(@postgres.cult(@interaction))
 
-      @second_row = @set.fetch(1, nil)
+      @set = [chunks.fetch(@id[:chunk][0] - 4), chunks.fetch(@id[:chunk][0] - 3, nil)]
 
-      @id[:chunk] = [@id[:chunk][0] - 1, count_chunks(@postgres.cult(@interaction))]
+      @hash = [hashed.fetch(@id[:chunk][0] - 4), hashed.fetch(@id[:chunk][0] - 3, nil)]
+
+      @second_row = @set.fetch(0, nil)
+
+      if @second_row
+        @id[:chunk] = [@id[:chunk][0] - 2, count_chunks(@postgres.cult(@interaction))] 
+      else
+        @id[:chunk] = [@id[:chunk][0] - 1, count_chunks(@postgres.cult(@interaction))]
+      end
+  
+      if @id[:chunk][0] == 1
+        @hash = [hashed.fetch(@id[:chunk][0] - 4), hashed.fetch(@id[:chunk][0] - 3, nil)]
+      end
 
       if (@id[:chunk][0] == @id[:chunk][1]) && (@id[:chunk][0] != 2)
         @id = { type: "H-DOWN", chunk: @id[:chunk] }
@@ -100,7 +126,7 @@ module Frost
 
       @buttons = Discordrb::Webhooks::View.new do |components|
         components.row do |builder|
-          if @id[:chunk][0] != 2
+          if @id[:chunk][0] != 2 && @id[:chunk][0] != 3 && @id[:chunk][0] != 1
             @id[:type] = "H-DOWN"
             builder.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: @id.to_json)
           end
@@ -128,8 +154,8 @@ module Frost
     end
 
     def map(index)
-      @set[index].each_with_index do |user, count|
-        @mapped[index] << "**#{count + 1}** — *#{user.display_name}*\n"
+      @hash[index].each do |user|
+        @mapped[index] << "**#{user[:count]}** — *#{user[:user].display_name}*\n"
       end
 
       @mapped[index].join
@@ -145,6 +171,13 @@ module Frost
     # Make members into their own little chunks.
     def make_chunks(data)
       data.members.each_slice(15).to_a
+    end
+
+    # Convert members into their own hash.
+    def to_h(data)
+      data.members.each_with_index.map do |member, count|
+        { count: count + 1, user: member }
+      end.each_slice(15).to_a
     end
 
     # Make a new ID.

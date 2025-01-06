@@ -2,7 +2,7 @@
 
 def members_page(data)
   unless Frost::Houses.head?(data)
-    data.send_message(content: RESPONSE[64])
+    data.send_message(content: RESPONSE[94])
     return
   end
 
@@ -17,6 +17,7 @@ def members_page(data)
         embed.add_field(name: EMBED[186], value: page.map(0), inline: true)
         embed.add_field(name: EMBED[186], value: page.map(1), inline: true)
         embed.description = format(EMBED[184], Frost::Houses.cult(data).members.size)
+        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: Frost::Houses.cult(data).icon_url)
       end
     end
   end
@@ -29,6 +30,7 @@ def members_page(data)
         embed.title = format(EMBED[185], Frost::Houses.cult(data).name)
         embed.add_field(name: EMBED[186], value: page.map(0), inline: true)
         embed.description = format(EMBED[184], Frost::Houses.cult(data).members.size)
+        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: Frost::Houses.cult(data).icon_url)
       end
     end
   end

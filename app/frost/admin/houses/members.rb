@@ -2,7 +2,7 @@
 
 def members_house(data)
   unless Frost::Houses.head?(data)
-    data.edit_response(content: RESPONSE[64])
+    data.edit_response(content: RESPONSE[94])
     return
   end
 
@@ -27,6 +27,7 @@ def members_house(data)
           embed.add_field(name: EMBED[186], value: hash[:cut][1].join, inline: true)
           embed.description = format(EMBED[184], Frost::Houses.cult(data).members.size)
           component.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: hash[:id])
+          embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: Frost::Houses.cult(data).icon_url)
         end
       end
     end
@@ -40,6 +41,7 @@ def members_house(data)
         embed.title = format(EMBED[185], Frost::Houses.cult(data).name)
         embed.add_field(name: EMBED[186], value: hash[:main].join, inline: true)
         embed.description = format(EMBED[184], Frost::Houses.cult(data).members.size)
+        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: Frost::Houses.cult(data).icon_url)
       end
     end
   end

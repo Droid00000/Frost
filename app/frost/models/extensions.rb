@@ -455,3 +455,17 @@ module Discordrb
     end
   end
 end
+
+# Monkey patches to the role class.
+module Discordrb
+  # Role class.
+  class Role
+    # @param format ['webp', 'png', 'jpeg']
+    # @return [String] URL to the icon on Discord's CDN.
+    def icon_url(format = 'webp')
+      return nil unless @icon
+
+      Discordrb::API.role_icon_url(@id, @icon, "png")
+    end
+  end
+end
