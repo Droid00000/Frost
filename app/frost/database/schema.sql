@@ -61,34 +61,49 @@ CREATE TABLE IF NOT EXISTS house_settings (
   PRIMARY KEY (guild_id, user_id)
 );
 
-CREATE TRIGGER guild_booster_ban_udx BEFORE UPDATE ON banned_boosters FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
-
-CREATE TRIGGER guild_hoist_role_udx BEFORE UPDATE ON booster_settings FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
-
-CREATE TRIGGER guild_channel_udx BEFORE UPDATE ON archiver_settings FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
-
-CREATE TRIGGER guild_events_udx BEFORE UPDATE ON event_settings FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
-
-CREATE UNIQUE INDEX IF NOT EXISTS app_snowball_user_idx ON snowball_players (user_id);
-
-CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
-
-CREATE UNIQUE INDEX IF NOT EXISTS guild_channel_idx ON archiver_settings (guild_id);
-
-CREATE UNIQUE INDEX IF NOT EXISTS guilds_events_idx ON event_settings (role_id);
-
-CREATE UNIQUE INDEX IF NOT EXISTS guild_houses_idx ON house_settings (role_id);
-
-CREATE INDEX IF NOT EXISTS guild_premium_ban_idx ON banned_boosters (guild_id);
-
-CREATE INDEX IF NOT EXISTS guild_booster_ban_idx ON banned_boosters (user_id);
-
-CREATE INDEX IF NOT EXISTS guild_house_head_idx ON house_settings (user_id);
-
-CREATE INDEX IF NOT EXISTS guild_premium_idx ON guild_boosters (guild_id);
-
-CREATE INDEX IF NOT EXISTS guild_booster_idx ON guild_boosters (user_id);
+CREATE INDEX IF NOT EXISTS guild_emoji_idx ON emoji_tracker (emoji_id);
 
 CREATE INDEX IF NOT EXISTS guilds_emoji_idx ON emoji_tracker (guild_id);
 
-CREATE INDEX IF NOT EXISTS guild_emoji_idx ON emoji_tracker (emoji_id);
+CREATE INDEX IF NOT EXISTS guild_booster_idx ON guild_boosters (user_id);
+
+CREATE INDEX IF NOT EXISTS guild_premium_idx ON guild_boosters (guild_id);
+
+CREATE INDEX IF NOT EXISTS guild_house_head_idx ON house_settings (user_id);
+
+CREATE INDEX IF NOT EXISTS guild_booster_ban_idx ON banned_boosters (user_id);
+
+CREATE INDEX IF NOT EXISTS guild_premium_ban_idx ON banned_boosters (guild_id);
+
+CREATE UNIQUE INDEX IF NOT EXISTS guild_houses_idx ON house_settings (role_id);
+
+CREATE UNIQUE INDEX IF NOT EXISTS guilds_events_idx ON event_settings (role_id);
+
+CREATE UNIQUE INDEX IF NOT EXISTS guild_channel_idx ON archiver_settings (guild_id);
+
+CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
+
+CREATE UNIQUE INDEX IF NOT EXISTS app_snowball_user_idx ON snowball_players (user_id);
+
+CREATE OR REPLACE FUNCTION balance_manager() RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (SELECT FROM emoji_tracker WHERE emoji_id = NEW.emoji_id AND guild_id = NEW.guild_id) THEN
+        UPDATE emoji_tracker
+        SET balance = balance + 1
+        WHERE emoji_id = NEW.emoji_id AND guild_id = NEW.guild_id;
+        RETURN NULL;
+    ELSE
+        RETURN NEW;
+    END IF;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER guild_emoji_udx BEFORE INSERT ON emoji_tracker FOR EACH ROW EXECUTE FUNCTION balance_manager();
+
+CREATE TRIGGER guild_events_udx BEFORE UPDATE ON event_settings FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
+
+CREATE TRIGGER guild_channel_udx BEFORE UPDATE ON archiver_settings FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
+
+CREATE TRIGGER guild_hoist_role_udx BEFORE UPDATE ON booster_settings FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
+
+CREATE TRIGGER guild_booster_ban_udx BEFORE UPDATE ON banned_boosters FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();

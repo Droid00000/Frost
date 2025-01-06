@@ -127,7 +127,7 @@ EMBED = {
   48 => "**Server Boosters**",
   49 => "**Server Settings**",
   50 => "Emoji Statistics for %s",
-  51 => "These are the current emoji stats for your server. Non-animated, animated emojis, and reactions are mixed. Thank you for your support.",
+  51 => "These are the current emoji stats for your server. Non-animated, animated emojis, and reactions are mixed. If you enjoy using the bot, please consider supporting it [here.](<https://www.youtube.com/watch?v=i4eVTUi7LD4>)",
   52 => "Top Emojis ⬆️",
   53 => "Boring Emojis ⬇️",
   54 => "**Archive Channel:** <#%s>",
