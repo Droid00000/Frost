@@ -83,7 +83,7 @@ module Discordrb
         thing = Overwrite.new thing, allow: allow_bits, deny: deny_bits
       end
 
-      current_bits = overwrites(:role).find { |o| o.id == @server_id }
+      current_bits = overwrites(:member).find { |o| o.id == thing.id }
 
       computed_allow = thing.allow.bits | current_bits.allow.bits
       computed_deny = thing.deny.bits | current_bits.deny.bits

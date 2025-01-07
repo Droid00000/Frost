@@ -27,12 +27,12 @@ def block_member(data)
     data.server.channels.each do |channel|
       next unless data.server.bot.permission?(:manage_roles, channel)
 
-      channel.define_overwrite(overwrite, reason: REASON[12])
+      channel.produce_overwrite(overwrite, reason: REASON[12])
     end
   end
 
   unless data.options["cascade"]
-    data.channel.define_overwrite(overwrite, reason: REASON[12])
+    data.channel.produce_overwrite(overwrite, reason: REASON[12])
   end
 
   data.edit_response(content: format(RESPONSE[57], data.options["member"]))
