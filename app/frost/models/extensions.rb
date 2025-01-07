@@ -363,7 +363,7 @@ module Discordrb
 
     # Count the total number of members.
     def count_members
-      servers.values.map(&:member_count).sum
+      servers.values.map(&:member_count).sum.delimit
     end
 
     # Updates presence status.
