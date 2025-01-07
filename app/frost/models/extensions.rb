@@ -469,3 +469,11 @@ module Discordrb
     end
   end
 end
+
+# Monkey patches for string.
+class Integer
+  # Comma delimit numbers.
+  def delimit
+    self.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse
+  end
+end

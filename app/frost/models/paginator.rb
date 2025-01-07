@@ -3,19 +3,15 @@
 module Frost
   # Easy way to handle pagination.
   class Paginator
-    # Easy way to get members.
-    attr_reader :set
-    alias members set
+    # Easy way to get index.
+    attr_reader :index
 
     # Easy way to get buttons.
     attr_reader :buttons
 
-    # Easy way to access the DB.
-    attr_reader :postgres
-    alias pg postgres
-
-    # Easy way to access the interaction.
-    attr_reader :interation
+    # Easy way to get house role.
+    attr_reader :house_role
+    alias role house_role
 
     # Easy way to get row count.
     attr_reader :second_row
@@ -24,116 +20,62 @@ module Frost
     # @param postgres [Sequel::Dataset]
     # @param data [Discordrb::Interaction]
     def initialize(data, postgres = nil)
-      @set = nil
-      @hash = []
-      @mapped = [[], []]
-      @buttons = nil
-      @second_row = nil
-      @interaction = data
-      @postgres = postgres
-      paginate((@id = JSON.parse(data.custom_id, symbolize_names: true)))
+      @hash = {}
+      @index = []
+      @mapped = []
+      @buttons = []
+      @second_row = []
+      @house_role = postgres.cult(data)
+      @custom_id = JSON.parse(data.custom_id)
+      @total_pages = JSON.parse(data.custom_id)["chunk"][1]
+      @current_page = JSON.parse(data.custom_id)["chunk"][0]
     end
 
     def house_forward
-      if @id[:chunk][0] == @id[:chunk][1] && (@id[:chunk][0] != 0 && @id[:chunk][1] != 0)
-        @id = { type: "H-DOWN", chunk: @id[:chunk] }
-      end
+      make_pages
 
-      if count_chunks(@postgres.cult(@interaction)) != @id[:chunk][1]
-        @id[:chunk] = [@id[:chunk][0], count_chunks(@postgres.cult(@interaction))]
-      end
+      @mapped = @hash[@current_page + 1]
 
-      if count_chunks(@postgres.cult(@interaction)) >= @id[:chunk][1]
-        @id = { type: "H-DOWN", chunk: @id[:chunk] }
-      end
+      @second_row = @mapped.size > 15
 
-      chunks = make_chunks(@postgres.cult(@interaction))
+      @custom_id["chunk"] = [@current_page + 1, @total_pages]
 
-      hashed = to_h(@postgres.cult(@interaction))
-
-      @set = [chunks[@id[:chunk][0]], chunks.fetch(@id[:chunk][0] + 1, nil)]
-
-      @hash = [hashed[@id[:chunk][0]], hashed.fetch(@id[:chunk][0] + 1, nil)]
-
-      if @id[:chunk][0] == 1
-        @hash = [hashed[@id[:chunk][0] + 1], hashed.fetch(@id[:chunk][0] + 2, nil)]
-        @set = [chunks[@id[:chunk][0] + 1], chunks.fetch(@id[:chunk][0] + 2, nil)]
-      end
-
-      @second_row = @set.fetch(1, nil)
-
-      if @second_row
-        @id[:chunk] = [@id[:chunk][0] + 2, count_chunks(@postgres.cult(@interaction))]
-      else
-        @id[:chunk] = [@id[:chunk][0] + 1, count_chunks(@postgres.cult(@interaction))]
-      end
-
-      if (@id[:chunk][0] == @id[:chunk][1]) && (@id[:chunk][0] != 1)
-        @id = { type: "H-DOWN", chunk: @id[:chunk] }
-      end
+      @index = "Page #{@current_page + 1} of #{@total_pages}"
 
       @buttons = Discordrb::Webhooks::View.new do |components|
         components.row do |builder|
-          if @id[:chunk][0] != 0
-            @id[:type] = "H-DOWN"
-            builder.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: @id.to_json)
-          end
+          @custom_id["type"] = "H-DOWN"
+          builder.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: @custom_id.to_json)
 
-          if @id[:chunk][0] != @id[:chunk][1] && @id[:chunk][0] != 2
-            @id[:type] = "H-UP"
-            builder.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: @id.to_json)
+          unless @current_page + 1 == @total_pages
+            @custom_id["type"] = "H-UP"
+            builder.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: @custom_id.to_json)
           end
         end
       end
     end
 
     def house_backward
-      if @id[:chunk][0] == @id[:chunk][1] && (@id[:chunk][0] != 0 && @id[:chunk][1] != 0)
-        @id = { type: "H-DOWN", chunk: @id[:chunk] }
-      end
+      make_pages
 
-      if count_chunks(@postgres.cult(@interaction)) != @id[:chunk][1]
-        @id[:chunk] = [@id[:chunk][0], count_chunks(@postgres.cult(@interaction))]
-      end
+      @mapped = @hash[@current_page - 1] unless @current_page == 1
 
-      if count_chunks(@postgres.cult(@interaction)) >= @id[:chunk][1]
-        @id = { type: "H-DOWN", chunk: @id[:chunk] }
-      end
+      @custom_id["chunk"] = [@current_page - 1, @total_pages]
 
-      chunks = make_chunks(@postgres.cult(@interaction))
+      @second_row = @mapped.size > 15
 
-      hashed = to_h(@postgres.cult(@interaction))
-
-      @set = [chunks.fetch(@id[:chunk][0] - 4), chunks.fetch(@id[:chunk][0] - 3, nil)]
-
-      @hash = [hashed.fetch(@id[:chunk][0] - 4), hashed.fetch(@id[:chunk][0] - 3, nil)]
-
-      @second_row = @set.fetch(0, nil)
-
-      if @second_row
-        @id[:chunk] = [@id[:chunk][0] - 2, count_chunks(@postgres.cult(@interaction))]
-      else
-        @id[:chunk] = [@id[:chunk][0] - 1, count_chunks(@postgres.cult(@interaction))]
-      end
-
-      if @id[:chunk][0] == 1
-        @hash = [hashed.fetch(@id[:chunk][0] - 4), hashed.fetch(@id[:chunk][0] - 3, nil)]
-      end
-
-      if (@id[:chunk][0] == @id[:chunk][1]) && (@id[:chunk][0] != 2)
-        @id = { type: "H-DOWN", chunk: @id[:chunk] }
-      end
+      @index = "Page #{@current_page - 1} of #{@total_pages}"
 
       @buttons = Discordrb::Webhooks::View.new do |components|
         components.row do |builder|
-          if @id[:chunk][0] != 2 && @id[:chunk][0] != 3 && @id[:chunk][0] != 1
-            @id[:type] = "H-DOWN"
-            builder.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: @id.to_json)
+          unless @custom_id["chunk"][0] == 1
+            @custom_id["type"] = "H-DOWN"
+            builder.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: @custom_id.to_json)
           end
 
-          if @id[:chunk][0] != @id[:chunk][1]
-            @id[:type] = "H-UP"
-            builder.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: @id.to_json)
+          unless @current_page - 1 == @total_pages
+            @custom_id["type"] = "H-UP"
+            builder.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: @custom_id.to_json)
           end
         end
       end
@@ -141,48 +83,39 @@ module Frost
 
     # Determine the chunk type.
     def paginate(*data)
-      case @id[:type]
+      case @custom_id["type"]
       when "H-UP"
-        house_forward
+        house_forward; self
       when "M-UP"
-        music_forward
+        music_forward; self
       when "H-DOWN"
-        house_backward
+        house_backward; self
       when "M-DOWN"
-        music_backward
+        music_backward; self
       end
     end
 
+    # Get the values to return.
     def map(index)
-      @hash[index].each do |user|
-        @mapped[index] << "**#{user[:count]}** — *#{user[:user].display_name}*\n"
-      end
+      return @mapped.first(15).join if index == 1
 
-      @mapped[index].join
+      return @mapped.last(15).join if index == 2
     end
 
     private
 
-    # Count the total number of chunks.
-    def count_chunks(data)
-      data.members.each_slice(15).to_a.count
-    end
-
-    # Make members into their own little chunks.
-    def make_chunks(data)
-      data.members.each_slice(15).to_a
-    end
-
     # Convert members into their own hash.
-    def to_h(data)
-      data.members.each_with_index.map do |member, count|
-        { count: count + 1, user: member }
-      end.each_slice(15).to_a
+    def make_pages
+      house_role.members.each_with_index.map do |member, count|
+        "**#{(count + 1).delimit}** — *#{member.display_name}*\n"
+      end.each_slice(30).to_a.each_with_index do |members, count|
+        @hash[count + 1] = members
+      end
     end
 
     # Make a new ID.
     def self.id(*data)
-      { type: data[0], chunk: [2, data[1]] }.to_json
+      { type: data[0], chunk: [1, data[1].count] }.to_json
     end
   end
 end

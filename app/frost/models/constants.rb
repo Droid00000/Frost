@@ -95,7 +95,8 @@ RESPONSE = {
   91 => "You've specified a duration longer than the track.",
   92 => "Successfully seeked to ``%s``.",
   93 => "Disabled event perks for this role: <@&%s>",
-  94 => "You aren't a head of house."
+  94 => "You aren't a head of house.",
+  95 => "This isn't your house."
 }.freeze
 
 # Values for embed responses.
@@ -272,7 +273,9 @@ EMBED = {
   194 => "``/Pin Archiver``",
   195 => "``/Event Roles``",
   196 => "Stats",
-  197 => "I'm on %s servers with a total of %s members and %s channels."
+  197 => "I'm on %s servers with a total of %s members and %s channels.",
+  198 => "Page 1 of 1",
+  199 => "Page 1 of %s"
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
