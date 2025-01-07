@@ -23,7 +23,7 @@ def block_member(data)
 
   overwrite = Discordrb::Overwrite.new(data.member("member"), deny: 1024)
 
-  if data.options["cascade"] == true
+  if data.options["cascade"]
     data.server.channels.each do |channel|
       next unless data.server.bot.permission?(:manage_roles, channel)
 
@@ -31,7 +31,7 @@ def block_member(data)
     end
   end
 
-  if data.options["cascade"] == false
+  unless data.options["cascade"]
     data.channel.define_overwrite(overwrite, reason: REASON[12])
   end
 

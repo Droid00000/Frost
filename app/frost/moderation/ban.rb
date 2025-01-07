@@ -19,13 +19,13 @@ def bulk_ban(data)
     data.server.bot.hierarchy <= data.server.member(member).hierarchy
   end
 
+  [data.server.bot.id, data.user.id].each do |id|
+    members.delete(id) if members.include?(id)
+  end
+
   if members.empty?
     data.edit_response(content: RESPONSE[54])
     return
-  end
-
-  [data.server.bot.id, data.user.id].each do |id|
-    members.delete(id) if members.include?(id)
   end
 
   members.each_slice(200).to_a

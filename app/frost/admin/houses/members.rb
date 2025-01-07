@@ -27,7 +27,8 @@ def members_house(data)
           embed.description = format(EMBED[184], Frost::Houses.cult(data).members.size.delimit)
           component.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: hash[:id])
           embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: Frost::Houses.cult(data).icon_url)
-          embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: format(EMBED[199], JSON.parse(hash[:id])["chunk"][1]))
+          embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: format(EMBED[199],
+                                                                           JSON.parse(hash[:id])["chunk"][1]))
         end
       end
     end

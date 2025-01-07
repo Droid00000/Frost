@@ -112,6 +112,24 @@ module Discordrb
 
       API::Channel.update_permission(@bot.token, @id, thing.id, computed_allow, thing.deny.bits, thing.type, reason)
     end
+
+    # Deletes a list of messages on this channel using bulk delete.
+    def bulk_delete(ids, strict = false, reason = nil)
+      min_snowflake = IDObject.synthesise(Time.now - TWO_WEEKS)
+
+      ids.reject! do |e|
+        next unless e < min_snowflake
+
+        message = "Attempted to bulk_delete message #{e} which is too old (min = #{min_snowflake})"
+        raise ArgumentError, message if strict
+
+        Discordrb::LOGGER.warn(message)
+        true
+      end
+
+      API::Channel.bulk_delete_messages(@bot.token, @id, ids, reason) unless ids.empty?
+      ids.size
+    end
   end
 end
 

@@ -6,15 +6,15 @@ def delete_messages(data)
     return
   end
 
-  messages = [[], []]
+  messages = []
 
   ([1] * data.options["amount"]).each_slice(100) do |chunk|
-    messages[0] << chunk.sum
+    messages << chunk.sum
   end
 
-  messages[0].each do |chunk|
-    messages[1] << data.channel.prune(chunk)
+  messages = messages.map do |chunk|
+    data.channel.prune(chunk)
   end
 
-  data.edit_response(content: format(RESPONSE[68], messages[1].sum))
+  data.edit_response(content: format(RESPONSE[68], messages.sum))
 end
