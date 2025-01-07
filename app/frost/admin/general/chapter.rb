@@ -8,5 +8,5 @@ def general_chapter(data)
   driver.navigate.to CONFIG["Chapter"]["LINK"]
   sleep(6)
   time = driver.find_element(:css, CONFIG["Chapter"]["ELEMENT"])
-  data.edit_response(content: format(RESPONSE[56], DateTime.parse(time.text).to_time.to_i))
+  data.edit_response(content: format(RESPONSE[56], DateTime.parse(time.text).to_time.utc.to_i))
 end
