@@ -13,8 +13,8 @@ def admin_houses_menu(data)
         menu.select_menu(custom_id: EMBED[201], placeholder: EMBED[200], min_values: 1) do |options|
           options.option(label: EMBED[208], value: EMBED[227], description: EMBED[219], emoji: 1326701956026204281)
           options.option(label: EMBED[202], value: EMBED[228], description: EMBED[213], emoji: 1326697875727581235)
-          options.option(label: EMBED[212], value: EMBED[229], description: EMBED[223], emoji: 1326701718250979338)
           options.option(label: EMBED[211], value: EMBED[230], description: EMBED[222], emoji: 1326703610133872700)
+          options.option(label: EMBED[212], value: EMBED[229], description: EMBED[223], emoji: 1326701718250979338)
           options.option(label: EMBED[209], value: EMBED[231], description: EMBED[220], emoji: 1326701195242377287)
           options.option(label: EMBED[205], value: EMBED[232], description: EMBED[216], emoji: 1326698977273446452)
           options.option(label: EMBED[204], value: EMBED[233], description: EMBED[215], emoji: 1326698213524377610)
@@ -30,7 +30,7 @@ end
 
 def admin_house(data)
   unless data.message.interaction.user.id == data.user.id
-    data.send_message(content: RESPONSE[96])
+    data.send_message(content: RESPONSE[96], ephemeral: true)
     return
   end
 
@@ -78,7 +78,7 @@ end
 
 def staff_page(data)
   unless data.message.interaction.user.id == data.user.id
-    data.send_message(content: RESPONSE[95])
+    data.send_message(content: RESPONSE[96], ephemeral: true)
     return
   end
 

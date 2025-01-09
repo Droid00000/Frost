@@ -7,7 +7,7 @@ def members_page(data)
   end
 
   unless data.message.interaction.user.id == data.user.id
-    data.send_message(content: RESPONSE[95])
+    data.send_message(content: RESPONSE[96], ephemeral: true)
     return
   end
 
