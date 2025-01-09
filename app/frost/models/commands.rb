@@ -56,7 +56,7 @@ bot.register_application_command(:"Add Emojis", nil, type: :message, contexts: [
 end
 
 # @!function [Emoji Operations] Belongs to a cog that manages emoji related commands!
-bot.register_application_command(:drain, "View some emoji stats." contexts: [1], integration_types: [1], name_localizations: { 'hi' => 'निकास' }, description_localizations: { 'hi' => 'कुछ इमोजी आँकड़े देखें' }) do |command|
+bot.register_application_command(:drain, "View some emoji stats.", contexts: [1], integration_types: [1], name_localizations: { 'hi' => 'निकास' }, description_localizations: { 'hi' => 'कुछ इमोजी आँकड़े देखें' }) do |command|
   command.subcommand(:emojis, 'Drains all the cached emojis into the database.', name_localizations: { 'hi' => 'इमोजी' }, description_localizations: { 'hi' => 'सभी कैश्ड इमोजी को डेटाबेस में हटा देता है' })
 end
 
