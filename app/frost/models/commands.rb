@@ -55,6 +55,11 @@ end
 bot.register_application_command(:"Add Emojis", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: "1073741824", name_localizations: { 'hi' => 'इमोजी जोड़ें' }) do |command|
 end
 
+# @!function [Emoji Operations] Belongs to a cog that manages emoji related commands!
+bot.register_application_command(:drain, "View some emoji stats." contexts: [1], integration_types: [1], name_localizations: { 'hi' => 'निकास' }, description_localizations: { 'hi' => 'कुछ इमोजी आँकड़े देखें' }) do |command|
+  command.subcommand(:emojis, 'Drains all the cached emojis into the database.', name_localizations: { 'hi' => 'इमोजी' }, description_localizations: { 'hi' => 'सभी कैश्ड इमोजी को डेटाबेस में हटा देता है' })
+end
+
 # @!function [General Operations] Belongs to a cog that manages general information!
 bot.register_application_command(:coin, 'Flip a coin!', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'मुद्रा' }, description_localizations: { 'hi' => 'एक सिक्का पलटें' }) do |command|
   command.subcommand(:flip, 'Flip a coin!', name_localizations: { 'hi' => 'पलटना' }, description_localizations: { 'hi' => 'एक सिक्का पलटें' })

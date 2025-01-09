@@ -30,7 +30,7 @@ end
 
 def admin_house(data)
   unless data.message.interaction.user.id == data.user.id
-    data.send_message(content: RESPONSE[95])
+    data.send_message(content: RESPONSE[96])
     return
   end
 

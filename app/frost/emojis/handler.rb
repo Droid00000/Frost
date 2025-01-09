@@ -1,12 +1,18 @@
 # frozen_string_literal: true
 
 require_relative "menu"
+require_relative "drain"
 require_relative "stats"
 require_relative "click"
 require_relative "steal"
 
 module EmojiCommands
   extend Discordrb::EventContainer
+
+  application_command(:drain).subcommand(:emojis) do |event|
+    event.defer(ephemeral: true)
+    drain_emojis(event)
+  end
 
   application_command(:emoji).subcommand(:stats) do |event|
     event.defer(ephemeral: false)

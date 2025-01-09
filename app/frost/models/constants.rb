@@ -96,7 +96,9 @@ RESPONSE = {
   92 => "Successfully seeked to ``%s``.",
   93 => "Disabled event perks for this role: <@&%s>",
   94 => "You aren't a head of house.",
-  95 => "This isn't your house."
+  95 => "This isn't your house.",
+  96 => "You don't have permission to use this button.",
+  97 => "Drained all the emojis into the database."
 }.freeze
 
 # Values for embed responses.
