@@ -57,8 +57,7 @@ module Discordrb
     # @param reason [String] The reason for banning these users.
     def bulk_ban(users, message_seconds, reason)
       messages = message_seconds ? message_seconds * 86_400 : 0
-      users = users.map { |user| user&.to_i }
-      response = JSON.parse(API::Server.bulk_ban(@bot.token, @id, users, messages, reason))
+      response = JSON.parse(API::Server.bulk_ban(@bot.token, @id, users.map(&:to_i), messages, reason))
       response["banned_users"]
     end
   end
@@ -376,7 +375,7 @@ module Discordrb
 
     # Count the total number of channels.
     def count_channels
-      servers.values.map(&:channels).flatten.count
+      servers.values.map(&:channels).flatten.count.delimit
     end
 
     # Count the total number of members.

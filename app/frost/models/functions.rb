@@ -10,20 +10,12 @@ def resolve_color(color)
 end
 
 # Returns true if a string doesn't contain any bad words.
-# @param [String] The string to check.
+# @param [String] The string to check for slurs and words.
 # @return [Boolean] If the name contains any bad words.
 def safe_name?(name)
   return true if name.nil?
 
   !name.match(REGEX[8])
-end
-
-# Checks if a guild member is still boosting a guild.
-# @param guild [Integer, String] An ID that uniquely identifies a guild.
-# @param id [Integer, String] An ID that uniquely identifies a user.
-# @return [Boolean] Returns true if the user is boosting the server; false otherwise.
-def get_booster_status(guild, id)
-  Discordrb::API::Server.resolve_booster(CONFIG["Discord"]["TOKEN"], guild, id)
 end
 
 # Deletes a role in a guild.
