@@ -12,8 +12,18 @@ module AdminCommands
     members_house(event)
   end
 
+  select_menu(custom_id: "Houses") do |event|
+    event.defer_update
+    admin_house(event)
+  end
+
   button(custom_id: REGEX[6]) do |event|
     event.defer_update
     members_page(event)
+  end
+
+  button(custom_id: REGEX[7]) do |event|
+    event.defer_update
+    staff_page(event)
   end
 end

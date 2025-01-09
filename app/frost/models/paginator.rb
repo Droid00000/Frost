@@ -25,10 +25,10 @@ module Frost
       @mapped = []
       @buttons = []
       @second_row = []
-      @house_role = postgres.cult(data)
       @custom_id = JSON.parse(data.custom_id)
       @total_pages = JSON.parse(data.custom_id)["chunk"][1]
       @current_page = JSON.parse(data.custom_id)["chunk"][0]
+      @house_role = postgres ? postgres.cult(data) : data.server.role(JSON.parse(data.custom_id)["id"])
     end
 
     def house_forward
@@ -49,6 +49,30 @@ module Frost
 
           unless @current_page + 1 == @total_pages
             @custom_id["type"] = "H-UP"
+            builder.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: @custom_id.to_json)
+          end
+        end
+      end
+    end
+
+    def admin_forward
+      make_pages
+
+      @mapped = @hash[@current_page + 1]
+
+      @second_row = @mapped.size > 15
+
+      @custom_id["chunk"] = [@current_page + 1, @total_pages]
+
+      @index = "Page #{@current_page + 1} of #{@total_pages}"
+
+      @buttons = Discordrb::Webhooks::View.new do |components|
+        components.row do |builder|
+          @custom_id["type"] = "AH-DOWN"
+          builder.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: @custom_id.to_json)
+
+          unless @current_page + 1 == @total_pages
+            @custom_id["type"] = "AH-UP"
             builder.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: @custom_id.to_json)
           end
         end
@@ -81,6 +105,32 @@ module Frost
       end
     end
 
+    def admin_backward
+      make_pages
+
+      @mapped = @hash[@current_page - 1] unless @current_page == 1
+
+      @custom_id["chunk"] = [@current_page - 1, @total_pages]
+
+      @second_row = @mapped.size > 15
+
+      @index = "Page #{@current_page - 1} of #{@total_pages}"
+
+      @buttons = Discordrb::Webhooks::View.new do |components|
+        components.row do |builder|
+          unless @custom_id["chunk"][0] == 1
+            @custom_id["type"] = "AH-DOWN"
+            builder.button(style: 4, label: EMBED[182], emoji: EMBED[189], custom_id: @custom_id.to_json)
+          end
+
+          unless @current_page - 1 == @total_pages
+            @custom_id["type"] = "AH-UP"
+            builder.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: @custom_id.to_json)
+          end
+        end
+      end
+    end
+
     # Determine the chunk type.
     def paginate(*data)
       case @custom_id["type"]
@@ -88,8 +138,12 @@ module Frost
         house_forward; self
       when "M-UP"
         music_forward; self
+      when "AH-UP"
+        admin_forward; self
       when "H-DOWN"
         house_backward; self
+      when "AH-DOWN"
+        admin_backward; self
       when "M-DOWN"
         music_backward; self
       end
@@ -115,7 +169,7 @@ module Frost
 
     # Make a new ID.
     def self.id(*data)
-      { type: data[0], chunk: [1, data[1].count] }.to_json
+      { type: data[0], chunk: [1, data[1].count], id: data.fetch(2, nil) }.compact.to_json
     end
   end
 end

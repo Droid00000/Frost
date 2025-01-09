@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 def members_house(data)
-  if CONFIG["Houses"]["ADMIN"].include?(data.user.id)
+  if CONFIG["Houses"]["STAFF"].include?(data.user.id)
     admin_houses_menu(data)
     return
   end

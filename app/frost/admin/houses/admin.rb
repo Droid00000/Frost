@@ -3,64 +3,58 @@
 def admin_houses_menu(data)
   data.send_message do |builder, components|
     components.row do |menu|
-      menu.select_menu(custom_id: EMBED[201], placeholder: EMBED[200], min_values: 1) do |options|
-        options.option(label: EMBED[208], value: "1320791662129053847", description: EMBED[219],
-                       emoji: 1326701956026204281)
-        options.option(label: EMBED[202], value: "1320717790310563920", description: EMBED[213],
-                       emoji: 1326697875727581235)
-        options.option(label: EMBED[212], value: "1106239251512832033", description: EMBED[223],
-                       emoji: 1326701718250979338)
-        options.option(label: EMBED[211], value: "1322784652015964211", description: EMBED[222],
-                       emoji: 1326703610133872700)
-        options.option(label: EMBED[209], value: "1320717910875836478", description: EMBED[220],
-                       emoji: 1326701195242377287)
-        options.option(label: EMBED[205], value: "1320717569342312509", description: EMBED[216],
-                       emoji: 1326698977273446452)
-        options.option(label: EMBED[204], value: "1320637139976978505", description: EMBED[215],
-                       emoji: 1326698213524377610)
-        options.option(label: EMBED[206], value: "1318972723434623066", description: EMBED[217],
-                       emoji: 1326700670161653810)
-        options.option(label: EMBED[207], value: "1322784270431027264", description: EMBED[218],
-                       emoji: 1310804270240628816)
-        options.option(label: EMBED[203], value: "1320715697566781491", description: EMBED[214],
-                       emoji: 1326694246723485776)
-        options.option(label: EMBED[210], value: "1320638503109001238", description: EMBED[221],
-                       emoji: 1326701448251314206)
-        builder.add_embed do |embed|
-          embed.colour = UI[6]
-          embed.title = EMBED[68]
-          embed.timestamp = Time.now
-          embed.description = EMBED[224]
-          embed.add_field(name: EMBED[225], value: EMBED[226])
-          embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
+      builder.add_embed do |embed|
+        embed.colour = UI[6]
+        embed.title = EMBED[68]
+        embed.timestamp = Time.now
+        embed.description = EMBED[224]
+        embed.add_field(name: EMBED[225], value: EMBED[226])
+        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: UI[1])
+        menu.select_menu(custom_id: EMBED[201], placeholder: EMBED[200], min_values: 1) do |options|
+          options.option(label: EMBED[208], value: EMBED[227], description: EMBED[219], emoji: 1326701956026204281)
+          options.option(label: EMBED[202], value: EMBED[228], description: EMBED[213], emoji: 1326697875727581235)
+          options.option(label: EMBED[212], value: EMBED[229], description: EMBED[223], emoji: 1326701718250979338)
+          options.option(label: EMBED[211], value: EMBED[230], description: EMBED[222], emoji: 1326703610133872700)
+          options.option(label: EMBED[209], value: EMBED[231], description: EMBED[220], emoji: 1326701195242377287)
+          options.option(label: EMBED[205], value: EMBED[232], description: EMBED[216], emoji: 1326698977273446452)
+          options.option(label: EMBED[204], value: EMBED[233], description: EMBED[215], emoji: 1326698213524377610)
+          options.option(label: EMBED[206], value: EMBED[234], description: EMBED[217], emoji: 1326700670161653810)
+          options.option(label: EMBED[207], value: EMBED[235], description: EMBED[218], emoji: 1310804270240628816)
+          options.option(label: EMBED[203], value: EMBED[236], description: EMBED[214], emoji: 1326694246723485776)
+          options.option(label: EMBED[210], value: EMBED[237], description: EMBED[221], emoji: 1326701448251314206)
         end
       end
     end
   end
 end
 
-def admin_houses(data)
+def admin_house(data)
+  unless data.message.interaction.user.id == data.user.id
+    data.send_message(content: RESPONSE[95])
+    return
+  end
+
   hash = { main: [], cut: [], id: [] }
 
-  Frost::Houses.cult(data).members.each_with_index do |user, count|
+  data.server.role(data.values).members.each_with_index do |user, count|
     hash[:main] << "**#{count + 1}** — *#{user.display_name}*\n"
   end
 
   hash[:cut] = hash[:main].first(30).each_slice(15).to_a
 
-  hash[:id] = Frost::Paginator.id("H-UP", hash[:main].each_slice(30).to_a)
+  hash[:id] = Frost::Paginator.id("AH-UP", hash[:main].each_slice(30).to_a, data.values)
 
   if hash[:main].size > 30
-    data.edit_response do |builder, components|
+    data.send_message do |builder, components|
       components.row do |component|
         builder.add_embed do |embed|
-          embed.colour = Frost::Houses.cult(data).color
-          embed.title = format(EMBED[185], Frost::Houses.cult(data).name)
+          embed.colour = data.server.role(data.values).color
+          embed.title = format(EMBED[185], data.server.role(data.values).name)
           embed.add_field(name: EMBED[186], value: hash[:cut][0].join, inline: true)
           embed.add_field(name: EMBED[186], value: hash[:cut][1].join, inline: true)
-          embed.description = format(EMBED[184], Frost::Houses.cult(data).members.size.delimit)
           component.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: hash[:id])
-          embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: Frost::Houses.cult(data).icon_url)
+          embed.description = format(EMBED[184], data.server.role(data.values).members.size.delimit)
+          embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: data.server.role(data.values).icon_url)
           embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: format(EMBED[199],
                                                                            JSON.parse(hash[:id])["chunk"][1]))
         end
@@ -69,14 +63,50 @@ def admin_houses(data)
   end
 
   if hash[:main].size <= 30
-    data.edit_response do |builder|
+    data.send_message do |builder|
       builder.add_embed do |embed|
-        embed.colour = Frost::Houses.cult(data).color
-        embed.title = format(EMBED[185], Frost::Houses.cult(data).name)
+        embed.colour = data.server.role(data.values).color
+        embed.title = format(EMBED[185], data.server.role(data.values).name)
         embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: EMBED[198])
         embed.add_field(name: EMBED[186], value: hash[:main].join, inline: true)
-        embed.description = format(EMBED[184], Frost::Houses.cult(data).members.size.delimit)
-        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: Frost::Houses.cult(data).icon_url)
+        embed.description = format(EMBED[184], data.server.role(data.values).members.size.delimit)
+        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: data.server.role(data.values).icon_url)
+      end
+    end
+  end
+end
+
+def staff_page(data)
+  unless data.message.interaction.user.id == data.user.id
+    data.send_message(content: RESPONSE[95])
+    return
+  end
+
+  page = Frost::Paginator.new(data).paginate
+
+  if page.second_row?
+    data.edit_response(components: page.buttons) do |builder|
+      builder.add_embed do |embed|
+        embed.colour = page.role.color
+        embed.title = format(EMBED[185], page.role.name)
+        embed.add_field(name: EMBED[186], value: page.map(1), inline: true)
+        embed.add_field(name: EMBED[186], value: page.map(2), inline: true)
+        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: page.index)
+        embed.description = format(EMBED[184], page.role.members.size.delimit)
+        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: page.role.icon_url)
+      end
+    end
+  end
+
+  unless page.second_row?
+    data.edit_response(components: page.buttons) do |builder|
+      builder.add_embed do |embed|
+        embed.colour = page.role.color
+        embed.title = format(EMBED[185], page.role.name)
+        embed.add_field(name: EMBED[186], value: page.map(1), inline: true)
+        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: page.index)
+        embed.description = format(EMBED[184], page.role.members.size.delimit)
+        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: page.role.icon_url)
       end
     end
   end

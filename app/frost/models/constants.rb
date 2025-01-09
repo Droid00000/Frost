@@ -302,7 +302,18 @@ EMBED = {
   223 => "Dev's house.",
   224 => "Hi! Welcome to the house's page. Use the dropdown menu below to pick a house.",
   225 => "Info",
-  226 => "This special menu can only be used by the staff team and administrators."
+  226 => "This special menu can only be used by server menu and administrators.",
+  227 => "1320791662129053847",
+  228 => "1320717790310563920",
+  229 => "1106239251512832033",
+  230 => "1322784652015964211",
+  231 => "1320717910875836478",
+  232 => "1320717569342312509",
+  233 => "1320637139976978505",
+  234 => "1318972723434623066",
+  235 => "1322784270431027264",
+  236 => "1320715697566781491",
+  237 => "1320638503109001238"
 }.freeze
 
 # The audit log reason shown whenever the bot does something.
@@ -362,8 +373,9 @@ REGEX = {
   3 => /<(a?):([a-zA-Z0-9_]{1,32}):([0-9]{15,20})>/,
   4 => /(?<=<@|\s|^)\d+(?=>|\s|$)/,
   5 => /(\d+):(\d+)/,
-  6 => /"type":/,
-  7 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
+  6 => /"type":\s*"(?!A)[^"]*"/,
+  7 => /"type":\s*"A[^"]*"/,
+  8 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|
           xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|

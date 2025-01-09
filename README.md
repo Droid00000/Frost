@@ -46,6 +46,10 @@ Chapter:
   ELEMENT: ""
   LINK: ""
 
+# Holds information about staff.
+Houses:
+  STAFF: []
+
 # Database related credentials.
 Postgres:
   URL: "postgres://URI_HERE"
