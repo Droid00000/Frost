@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 def members_house(data)
+  if CONFIG["Houses"]["ADMIN"].include?(data.user.id)
+    admin_houses_menu(data)
+    return
+  end
+
   unless Frost::Houses.head?(data)
     data.edit_response(content: RESPONSE[94])
     return

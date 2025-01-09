@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "admin"
 require_relative "members"
 require_relative "paginator"
 
