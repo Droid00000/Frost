@@ -26,7 +26,7 @@ CREATE DATABASE frigid OWNER frost;
 
 4. **Fill in configuration variables**
 
-Change the name of the `example.yml` file to `config.yml` and fill in all the variables. Change the name of `lavalink.yml` to `application.yml` and do the same.
+Change the name of the `example.yml` file to `config.yml` and `lavalink.yml` to `application.yml` and fill in all the variables.
 
 ```yaml
 # Discord related credentials.
@@ -60,7 +60,7 @@ Many of these variables are undocumented because the bot is meant for personal u
 
 5. **Run the bot**
 
-Either build the Dockerfile, or do: `bundle exec ruby core.rb`.
+Either build the Dockerfile, or do: `bundle exec ruby --yjit core.rb`.
 
 ## ToS and Privacy Policy
 
