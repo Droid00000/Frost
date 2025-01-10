@@ -367,7 +367,7 @@ POSTGRES = Sequel.connect(CONFIG["Postgres"]["URL"], extensions: :connection_val
 POSTGRES.pool.connection_validation_timeout = -1
 
 # The lavalink client used by the bot to play music.
-# CALLIOPE = Calliope::Client.new(CONFIG["Lavalink"]["URL"], CONFIG["Lavalink"]["TOKEN"], CONFIG["Lavalink"]["ID"])
+CALLIOPE = Calliope::Client.new(CONFIG["Lavalink"]["URL"], CONFIG["Lavalink"]["TOKEN"], CONFIG["Lavalink"]["ID"])
 
 # A series of regular expressions utilized by the bot.
 REGEX = {
@@ -395,5 +395,5 @@ REGEX = {
           d0ggy style| kike|incest|nhentai|jailbait|handjob|g-spot|futanari|fisting|fingering|
           femdom|squirting|ecchi|ejaculation|erotic|doggiestyle|doggy style|doggystyle|deepthroat|
           date rape|daterape|dildo|clit|clitoris|camgirl|camslut|camwhore|butthole|anal|bitches|
-          black cock|erotic|disboard|invite.gg|higger/i
+          black cock|erotic|disboard|invite.gg|higger|nate higgers|gooner|kys|kms/i
 }.freeze

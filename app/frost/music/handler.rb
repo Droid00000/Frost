@@ -28,7 +28,7 @@ module MusicCommands
   end
 
   application_command(:music).subcommand(:current) do |event|
-    event.defer(ephemeral: false)
+    event.defer(ephemeral: true)
     music_current(event)
   end
 
