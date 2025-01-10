@@ -17,7 +17,7 @@ def music_current(data)
   end
 
   if CALLIOPE.players[data.server.id].paused?
-    data.edit_response(content: RESPONSE[74])
+    data.edit_response(content: RESPONSE[98])
     return
   end
 
