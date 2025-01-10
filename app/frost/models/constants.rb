@@ -98,7 +98,8 @@ RESPONSE = {
   94 => "You aren't a head of house.",
   95 => "This isn't your house.",
   96 => "You don't have permission to use this button.",
-  97 => "Drained all the emojis into the database."
+  97 => "Drained all the emojis into the database.",
+  98 => "The bot isn't playing anything!"
 }.freeze
 
 # Values for embed responses.

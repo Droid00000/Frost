@@ -21,6 +21,11 @@ def music_current(data)
     return
   end
 
+  if CALLIOPE.players[data.server.id].track.nil?
+    data.edit_response(content: RESPONSE[98])
+    return
+  end
+
   track = CALLIOPE.players[data.server.id].track
 
   data.edit_response do |builder|
