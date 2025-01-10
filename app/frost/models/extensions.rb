@@ -493,4 +493,18 @@ class Integer
   def delimit
     self.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse
   end
+
+  # Append an ordinal suffix to a number.
+  def ordinal
+    case self
+    when 1, 21, 31
+      "#{self}st"
+    when 2, 22
+      "#{self}nd"
+    when 3, 23
+      "#{self}rd"
+    else
+      "#{self}th"
+    end
+  end
 end

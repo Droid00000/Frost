@@ -43,6 +43,7 @@ Lavalink:
 
 # Leaving this one undocumented.
 Chapter:
+  CHANNEL: ""
   ELEMENT: ""
   LINK: ""
 
