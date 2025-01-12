@@ -26,24 +26,41 @@ def music_queue(data)
     return
   end
 
-  queue = [[], []]
+  hash = { main: [], cut: [], id: [] }
 
-  fetch_queue(data, :BOTTOM).each_with_index do |track, index|
-    queue[0] << "**#{index + 1}** — [#{track.name}](#{track.url})\n"
+  fetch_queue(data, :ALL).each_with_index do |track, index|
+    hash[:main] << "**#{index + 1}** — [#{track.name}](#{track.url})\n"
   end
 
-  fetch_queue(data, :TOP).each_with_index do |track, index|
-    queue[1] << "**#{index + 1}** — [#{track.name}](#{track.url})\n"
+  hash[:id] = Frost::Paginator.id("M-UP", hash[:main].each_slice(20).to_a)
+
+  hash[:cut] = hash[:main].first(20).each_slice(10).to_a
+
+  if hash[:main].size > 10
+    data.edit_response do |builder, buttons|
+      builder.add_embed do |embed|
+        buttons.row do |button|
+          embed.colour = UI[5]
+          embed.title = format(EMBED[149], data.server.name)
+          embed.description = format(EMBED[150], fetch_queue(data, :SIZE))
+          embed.add_field(name: EMBED[151], value: hash[:cut][0].join, inline: true)
+          embed.add_field(name: EMBED[151], value: hash[:cut][1].join, inline: true)
+          button.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: hash[:id])
+          embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: Frost::Paginator.count(hash[:id]))
+        end
+      end
+    end
   end
 
-  data.edit_response do |builder|
-    builder.add_embed do |embed|
-      embed.colour = UI[5]
-      embed.timestamp = Time.now
-      embed.title = format(EMBED[149], data.server.name)
-      embed.description = format(EMBED[150], fetch_queue(data, :ALL))
-      embed.add_field(name: EMBED[151], value: queue[0].join, inline: true)
-      embed.add_field(name: EMBED[152], value: queue[1].join, inline: true)
+  if hash[:main].size < 10
+    data.edit_response do |builder|
+      builder.add_embed do |embed|
+        embed.colour = UI[5]
+        embed.title = format(EMBED[149], data.server.name)
+        embed.description = format(EMBED[150], fetch_queue(data, :SIZE))
+        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: EMBED[198])
+        embed.add_field(name: EMBED[151], value: hash[:main].join, inline: true)
+      end
     end
   end
 end

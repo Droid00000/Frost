@@ -23,7 +23,7 @@ def members_house(data)
 
   if hash[:main].size > 30
     data.edit_response do |builder, components|
-      components.row do |component|
+      buttons.row do |component|
         builder.add_embed do |embed|
           embed.colour = Frost::Houses.cult(data).color
           embed.title = format(EMBED[185], Frost::Houses.cult(data).name)
@@ -31,9 +31,8 @@ def members_house(data)
           embed.add_field(name: EMBED[186], value: hash[:cut][1].join, inline: true)
           embed.description = format(EMBED[184], Frost::Houses.cult(data).members.size.delimit)
           component.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: hash[:id])
+          embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: Frost::Paginator.count(hash[:id]))
           embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: Frost::Houses.cult(data).icon_url)
-          embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: format(EMBED[199],
-                                                                           JSON.parse(hash[:id])["chunk"][1]))
         end
       end
     end

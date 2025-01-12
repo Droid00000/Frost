@@ -229,8 +229,8 @@ EMBED = {
   147 => "Now Playing",
   148 => "Next Playing",
   149 => "Music Queue for %s",
-  150 => "This is the current queue for this server. The first and last 10 songs are shown. There are a total of **%s** song(s) in the queue.",
-  151 => "Playing Next ⬆️",
+  150 => "This is the current queue for this server. There are **%s** song(s) queued tracks.",
+  151 => "Tracks",
   152 => "Playing Last ⬇️",
   153 => "Music",
   154 => "Commands for music operations.",
@@ -376,9 +376,10 @@ REGEX = {
   3 => /<(a?):([a-zA-Z0-9_]{1,32}):([0-9]{15,20})>/,
   4 => /(?<=<@|\s|^)\d+(?=>|\s|$)/,
   5 => /(\d+):(\d+)/,
-  6 => /"type":\s*"(?!A)[^"]*"/,
+  6 => /"type":\s*"(?![AM])[^"]*"/,
   7 => /"type":\s*"A[^"]*"/,
-  8 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
+  8 => /"type":\s*"(?!A)[M][^"]*"/,
+  9 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|
           xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|

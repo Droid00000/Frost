@@ -14,11 +14,9 @@ end
 
 # Convienent way to get the queue.
 def fetch_queue(data, mode)
-  return CALLIOPE.players[data.server.id].queue.count if mode == :ALL
+  return CALLIOPE.players[data.server.id].queue if mode == :ALL
 
-  return CALLIOPE.players[data.server.id].queue.last(10) if mode == :TOP
-
-  CALLIOPE.players[data.server.id].queue.first(10) if mode == :BOTTOM
+  return CALLIOPE.players[data.server.id].queue.size if mode == :SIZE
 end
 
 # Convienent way to disconnect from a voice channel.

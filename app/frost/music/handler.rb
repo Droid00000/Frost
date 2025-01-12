@@ -12,6 +12,7 @@ require_relative "shuffle"
 require_relative "playing"
 require_relative "previous"
 require_relative "internals"
+require_relative "paginator"
 require_relative "disconnect"
 
 module MusicCommands
@@ -75,6 +76,11 @@ module MusicCommands
   application_command(:music).subcommand(:seek) do |event|
     event.defer(ephemeral: false)
     music_seek(event)
+  end
+
+  button(custom_id: REGEX[8]) do |event|
+    event.defer_update
+    music_pages(event)
   end
 
   voice_server_update do |event|
