@@ -11,14 +11,14 @@ def steal_emojis(data)
     return
   end
 
-  emojis = []
+  count = 0
 
   data.target.emoji.uniq.each do |emoji|
-    emoji = data.server.add_emoji(emoji.name, emoji.file)
-    emojis << emoji
+    data.server.add_emoji(emoji.name, emoji.file)
+    count += 1
   rescue StandardError
     break
   end
 
-  data.edit_response(content: RESPONSE[44] % emojis.count)
+  data.edit_response(content: RESPONSE[44] % count)
 end

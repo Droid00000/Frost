@@ -18,7 +18,7 @@ def music_play(data)
   status = track.status(data.server.id)
 
   begin
-    sleep(0.5)
+    sleep(0.9)
     track.produce_queue(data.server.id)
   rescue ArgumentError
     data.edit_response(content: RESPONSE[72])
