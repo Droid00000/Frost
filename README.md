@@ -49,6 +49,7 @@ Chapter:
 
 # Holds information about staff.
 Houses:
+  GUILD: ""
   STAFF: []
 
 # Database related credentials.

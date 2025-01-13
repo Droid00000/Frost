@@ -101,7 +101,8 @@ RESPONSE = {
   97 => "Drained all the emojis into the database.",
   98 => "The bot isn't playing anything!",
   99 => "The bot doesn't have permission to move to this channel.",
-  100 => "Successfully moved channels."
+  100 => "Successfully moved channels.",
+  101 => "This command can't be used here."
 }.freeze
 
 # Values for embed responses.
