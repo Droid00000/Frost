@@ -2,7 +2,7 @@
 
 # intercepts the voice state update.
 def process_state(data)
-  return if data.old_channel && data.user.id != CONFIG["Lavalink"]["ID"]
+  return if data.old_channel || data.user.id != CONFIG["Lavalink"]["ID"]
 
   CALLIOPE.connect(data.server.id, session: data.session_id)
 end
@@ -31,4 +31,13 @@ def gateway_voice_connect(data)
   return unless data.server.bot.voice_channel.nil?
 
   data.bot.gateway.send_voice_state_update(data.server.id, data.user.voice_channel.id, false, false)
+end
+
+# Convinent way to move voice channels.
+def gateway_voice_move(data)
+  return if data.server.bot.voice_channel.nil?
+
+  data.bot.gateway.send_voice_state_update(data.server.id, nil, false, false)
+
+  data.bot.gateway.send_voice_state_update(data.server.id, data.options["channel"], false, false)
 end

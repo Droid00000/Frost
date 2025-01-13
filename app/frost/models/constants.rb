@@ -99,7 +99,9 @@ RESPONSE = {
   95 => "This isn't your house.",
   96 => "You don't have permission to use this button.",
   97 => "Drained all the emojis into the database.",
-  98 => "The bot isn't playing anything!"
+  98 => "The bot isn't playing anything!",
+  99 => "The bot doesn't have permission to move to this channel.",
+  100 => "Successfully moved channels."
 }.freeze
 
 # Values for embed responses.
@@ -229,7 +231,7 @@ EMBED = {
   147 => "Now Playing",
   148 => "Next Playing",
   149 => "Music Queue for %s",
-  150 => "This is the current queue for this server. There are **%s** song(s) queued tracks.",
+  150 => "This is the current queue for this server. There are **%s** queued track(s).",
   151 => "Tracks",
   152 => "Playing Last ⬇️",
   153 => "Music",

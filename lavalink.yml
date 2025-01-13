@@ -54,6 +54,8 @@ lavalink:
       snapshot: false
     - dependency: "com.github.topi314.lavaqueue:lavaqueue-plugin:90a2ccf"
       snapshot: true
+    - dependency: "com.github.topi314.sponsorblock:sponsorblock-plugin:3.0.1"
+      snapshot: false
   server:
     password: "YOUR_PASSWORD_HERE"
     sources:

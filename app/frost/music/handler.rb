@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "move"
 require_relative "seek"
 require_relative "play"
 require_relative "next"
@@ -76,6 +77,11 @@ module MusicCommands
   application_command(:music).subcommand(:seek) do |event|
     event.defer(ephemeral: false)
     music_seek(event)
+  end
+
+  application_command(:music).subcommand(:move) do |event|
+    event.defer(ephemeral: false)
+    music_move(event)
   end
 
   button(custom_id: REGEX[8]) do |event|

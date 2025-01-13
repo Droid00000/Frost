@@ -207,6 +207,10 @@ module Discordrb
       def member(name)
         @resolved[:members][@options[name].to_i] || @resolved[:users][@options[name].to_i]
       end
+
+      def channels(name)
+        @resolved[:channels][@options[name].to_i]
+      end
     end
   end
 end
