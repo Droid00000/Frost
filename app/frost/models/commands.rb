@@ -190,7 +190,7 @@ bot.register_application_command(:event, 'Event roles', contexts: [0], integrati
 end
 
 # @!function [Music Operations] Belongs to a cog that can stream songs!
-bot.register_application_command(:music, 'Connect and play songs!.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'संगीत' }, description_localizations: { 'hi' => 'कनेक्ट करें और गाने चलाएं' }) do |command|
+bot.register_application_command(:music, 'Connect and play songs!', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'संगीत' }, description_localizations: { 'hi' => 'कनेक्ट करें और गाने चलाएं' }) do |command|
   command.subcommand(:disconnect, 'Disconnect from a voice channel.', name_localizations: { 'hi' => 'छुट्टी' }, description_localizations: { 'hi' => 'वॉइस चैनल से डिस्कनेक्ट करें' })
   command.subcommand(:shuffle, 'Shuffle the tracks in the queue.', name_localizations: { 'hi' => 'मिश्रण' }, description_localizations: { 'hi' => 'कतार में पटरियों को फेरें' })
   command.subcommand(:current, "View the track that's currently playing.", name_localizations: { 'hi' => 'मौजूदा' }, description_localizations: { 'hi' => 'वह ट्रैक देखें जो वर्तमान में चल रहा है' })
