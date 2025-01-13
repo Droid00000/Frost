@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 def members_page(data)
-  unless Frost::Houses.head?(data)
-    data.send_message(content: RESPONSE[94])
-    return
-  end
-
   unless data.message.interaction.user.id == data.user.id
     data.send_message(content: RESPONSE[96], ephemeral: true)
     return
