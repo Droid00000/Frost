@@ -7,6 +7,12 @@ services:
     image: 'ghcr.io/lavalink-devs/lavalink:4'
     container_name: lavalink
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "Lavalink has started."]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
     environment:
       - _JAVA_OPTIONS=-Xmx6G
       - SERVER_PORT=2333
