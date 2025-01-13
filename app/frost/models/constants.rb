@@ -324,18 +324,14 @@ EMBED = {
 
 # The audit log reason shown whenever the bot does something.
 REASON = {
-  1 => "Server booster claimed role.",
-  2 => "Server booster updated role.",
-  3 => "Server booster deleted role.",
-  4 => "Auto-update chapter release date.",
-  5 => "Event winner updated role.",
-  6 => "Server booster stopped boosting.",
-  7 => "Auto-archive pinned messages.",
-  8 => "Server member added sticker.",
-  9 => "Server member froze the server.",
-  10 => "Server member unfroze the server.",
-  11 => "Automatic scheduled unfreeze.",
-  12 => "Server member was blocked."
+  1 => "server booster claimed role",
+  2 => "server booster updated role",
+  3 => "server booster deleted role",
+  4 => "auto-update chapter release date",
+  5 => "event winner updated role",
+  6 => "server booster removed boost",
+  7 => "auto-archive pinned messages",
+  8 => "server member was blocked"
 }.freeze
 
 # Emojis that the bot can use.
