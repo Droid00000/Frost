@@ -6,7 +6,7 @@ def emoji_stats(data)
   end
 end
 
-def reaction_stats(data)
+def emoji_react(data)
   return unless data.emoji.id
 
   Frost::Emojis.new(data.emoji, data.server)
@@ -44,7 +44,7 @@ def stats_command(data)
 
   emojis.each do |stats|
     stats.map! do |emoji|
-      "#{emoji[:main].mention} — #{emoji[:main].name} **(#{emoji[:count]})**\n"
+      "#{emoji[:main].mention} — #{emoji[:main].name} **(#{emoji[:count].delimit})**\n"
     end
   end
 

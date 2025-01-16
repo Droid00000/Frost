@@ -3,11 +3,6 @@
 module Discordrb
   # Monkey patches to the server class.
   class Server
-    # If a server has hit the max role limit.
-    def role_limit?
-      roles.count == 250
-    end
-
     # Creates a role on this server which can then be modified. It will be initialized
     # with the regular role defaults the client uses unless specified, i.e. name is "new role",
     # permissions are the default, colour is the default etc.
@@ -90,28 +85,6 @@ module Discordrb
       API::Channel.update_permission(@bot.token, @id, thing.id, computed_allow, computed_deny, thing.type, reason)
     end
 
-    # The same as define overwrite except it modifies the overwrites in place.
-    # @param thing [Overwrite] an Overwrite object to apply to this channel
-    # @param reason [String] The reason the for defining the overwrite.
-    # @overload define_overwrite(thing, allow, deny)
-    # @param thing [User, Role] What to define an overwrite for.
-    # @param allow [#bits, Permissions, Integer] The permission sets that should receive an `allow` override.
-    # @param deny [#bits, Permissions, Integer] The permission sets that should receive a `deny` override.
-    # @param reason [String] The reason the for defining the overwrite.
-    def destroy_overwrite(thing, allow: 0, deny: 0, reason: nil)
-      current_bits = overwrites(:role).find { |o| o.id == @server_id }
-      unless thing.is_a? Overwrite
-        allow_bits = allow.respond_to?(:bits) ? allow.bits : allow
-        deny_bits = current_bits.deny.bits & ~allow
-
-        thing = Overwrite.new thing, allow: allow_bits, deny: deny_bits
-      end
-
-      computed_allow = current_bits.allow.bits
-
-      API::Channel.update_permission(@bot.token, @id, thing.id, computed_allow, thing.deny.bits, thing.type, reason)
-    end
-
     # Deletes a list of messages on this channel using bulk delete.
     def bulk_delete(ids, strict = false, reason = nil)
       min_snowflake = IDObject.synthesise(Time.now - TWO_WEEKS)
@@ -157,16 +130,6 @@ module Discordrb
       file.write(Faraday.get("#{API.cdn_url}/emojis/#{@id}.png").body)
       file.rewind
       file
-    end
-  end
-end
-
-module Discordrb
-  # Monkey patch for member class.
-  class Member
-    # @return [Integer] Position of the highest role this member has.
-    def hierarchy
-      roles.max_by(&:position).position
     end
   end
 end
@@ -240,22 +203,6 @@ module Discordrb
   module API
     module Server
       module_function
-
-      # Gets the premium status of a booster.
-      # @param token [String] bot token to make the request.
-      # @param server_id [Integer] ID of the guild to request.
-      # @param user_id [Integer] ID od the member to request.
-      def resolve_booster(token, server_id, user_id)
-        !JSON.parse(Discordrb::API.request(
-                      :guilds_sid_members_uid,
-                      server_id,
-                      :get,
-                      "#{Discordrb::API.api_base}/guilds/#{server_id}/members/#{user_id}",
-                      Authorization: token
-                    ))["premium_since"].nil?
-      rescue StandardError
-        false
-      end
 
       # Create a role (parameters such as name and colour if not set can be set by update_role afterwards)
       # Permissions are the Discord defaults; allowed: invite creation, reading/sending messages,
@@ -406,87 +353,28 @@ module Discordrb
   end
 end
 
-# Monkey patches to the reaction class.
-module Discordrb
-  module Events
-    # Generic superclass for event handlers pertaining to adding and removing reactions
-    class ReactionEventHandler < EventHandler
-      def matches?(event)
-        # Check for the proper event type
-        return false unless event.is_a? ReactionEvent
-
-        [
-          matches_all(@attributes[:emoji], event.emoji) do |a, e|
-            case a
-            when Integer
-              e.id == a
-            when String
-              e.name == a || e.name == a.delete(":") || e.id == a.resolve_id
-            else
-              e == a
-            end
-          end,
-          matches_all(@attributes[:message], event.message_id) do |a, e|
-            a == e
-          end,
-          matches_all(@attributes[:in], event.channel) do |a, e|
-            case a
-            when String
-              # Make sure to remove the "#" from channel names in case it was specified
-              a.delete("#") == e.name
-            when Integer
-              a == e.id
-            else
-              a == e
-            end
-          end,
-          matches_all(@attributes[:from], event.user) do |a, e|
-            case a
-            when String
-              a == e.name
-            when :bot
-              e.current_bot?
-            else
-              a == e
-            end
-          end,
-          matches_all(@attributes[:type], event.emoji) do |a, e|
-            case a
-            when :custom
-              !e.id.nil?
-            end
-          end
-        ].reduce(true, &:&)
-      end
-    end
-  end
-end
-
 # Monkey patches to the Gateway class.
 module Discordrb
   # Standard Gateway class for DRB.
   class Gateway
     def members(server_id, members)
-      data = {
-        guild_id: server_id,
-        user_ids: members.count == 1 ? members.first : members
-      }.compact
-
-      send_packet(Opcodes::REQUEST_MEMBERS, data)
-    end
-  end
-end
-
-# Monkey patches to the role class.
-module Discordrb
-  # Role class.
-  class Role
-    # @param format ['webp', 'png', 'jpeg']
-    # @return [String] URL to the icon on Discord's CDN.
-    def icon_url(format = 'webp')
-      return nil unless @icon
-
-      Discordrb::API.role_icon_url(@id, @icon, "png")
+      if members.size == 1
+        data = {
+          guild_id: server_id,
+          user_ids: members.first
+        }.compact
+        sleep(1)
+        send_packet(Opcodes::REQUEST_MEMBERS, data)
+      else
+        members.each_slice(100).to_a.each do |chunk|
+          data = {
+            guild_id: server_id,
+            user_ids: chunk
+          }.compact
+          sleep(1)
+          send_packet(Opcodes::REQUEST_MEMBERS, data)
+        end
+      end
     end
   end
 end
@@ -495,7 +383,7 @@ end
 class Integer
   # Comma delimit numbers.
   def delimit
-    self.to_s.reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse
+    to_s.reverse.gsub(/(\d{3})(?=\d)/, '\1,').reverse
   end
 
   # Append an ordinal suffix to a number.

@@ -12,11 +12,11 @@ def bulk_ban(data)
   end
 
   members = data.options["members"].scan(REGEX[4]).uniq.map(&:to_i).reject do |member|
-    data.server.member(member).hierarchy >= data.user.hierarchy
+    data.server.member(member).highest_role.position >= data.user.highest_role.position
   end
 
   members = members.reject do |member|
-    data.server.bot.hierarchy <= data.server.member(member).hierarchy
+    data.server.bot.highest_role.position <= data.server.member(member).highest_role.position
   end
 
   [data.server.bot.id, data.user.id].each do |id|
@@ -34,5 +34,5 @@ def bulk_ban(data)
     data.server.bulk_ban(users, data.options["messages"], data.options["reason"])
   end
 
-  data.edit_response(content: format(RESPONSE[53], bans.count))
+  data.edit_response(content: format(RESPONSE[53], bans.flatten.sum))
 end

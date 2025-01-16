@@ -36,15 +36,15 @@ def music_pages(data)
     end
   end
 
-  unless page.second_row?
-    data.edit_response(components: page.buttons) do |builder|
-      builder.add_embed do |embed|
-        embed.colour = UI[5]
-        embed.title = format(EMBED[149], data.server.name)
-        embed.description = format(EMBED[150], fetch_queue(data, :SIZE))
-        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: page.index)
-        embed.add_field(name: EMBED[151], value: page.tracks(1), inline: true)
-      end
+  return if page.second_row?
+
+  data.edit_response(components: page.buttons) do |builder|
+    builder.add_embed do |embed|
+      embed.colour = UI[5]
+      embed.title = format(EMBED[149], data.server.name)
+      embed.description = format(EMBED[150], fetch_queue(data, :SIZE))
+      embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: page.index)
+      embed.add_field(name: EMBED[151], value: page.tracks(1), inline: true)
     end
   end
 end

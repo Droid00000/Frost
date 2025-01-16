@@ -43,16 +43,16 @@ def members_house(data)
     end
   end
 
-  if hash[:main].size <= 30
-    data.edit_response do |builder|
-      builder.add_embed do |embed|
-        embed.colour = Frost::Houses.cult(data).color
-        embed.title = format(EMBED[185], Frost::Houses.cult(data).name)
-        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: EMBED[198])
-        embed.add_field(name: EMBED[186], value: hash[:main].join, inline: true)
-        embed.description = format(EMBED[184], Frost::Houses.cult(data).members.size.delimit)
-        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: Frost::Houses.cult(data).icon_url)
-      end
+  return unless hash[:main].size <= 30
+
+  data.edit_response do |builder|
+    builder.add_embed do |embed|
+      embed.colour = Frost::Houses.cult(data).color
+      embed.title = format(EMBED[185], Frost::Houses.cult(data).name)
+      embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: EMBED[198])
+      embed.add_field(name: EMBED[186], value: hash[:main].join, inline: true)
+      embed.description = format(EMBED[184], Frost::Houses.cult(data).members.size.delimit)
+      embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: Frost::Houses.cult(data).icon_url)
     end
   end
 end

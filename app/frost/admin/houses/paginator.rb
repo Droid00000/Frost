@@ -22,16 +22,16 @@ def members_page(data)
     end
   end
 
-  unless page.second_row?
-    data.edit_response(components: page.buttons) do |builder|
-      builder.add_embed do |embed|
-        embed.colour = page.role.color
-        embed.title = format(EMBED[185], page.role.name)
-        embed.add_field(name: EMBED[186], value: page.map(1), inline: true)
-        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: page.index)
-        embed.description = format(EMBED[184], page.role.members.size.delimit)
-        embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: page.role.icon_url)
-      end
+  return if page.second_row?
+
+  data.edit_response(components: page.buttons) do |builder|
+    builder.add_embed do |embed|
+      embed.colour = page.role.color
+      embed.title = format(EMBED[185], page.role.name)
+      embed.add_field(name: EMBED[186], value: page.map(1), inline: true)
+      embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: page.index)
+      embed.description = format(EMBED[184], page.role.members.size.delimit)
+      embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: page.role.icon_url)
     end
   end
 end

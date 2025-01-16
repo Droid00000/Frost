@@ -16,7 +16,7 @@ end
 def fetch_queue(data, mode)
   return CALLIOPE.players[data.server.id].queue if mode == :ALL
 
-  return CALLIOPE.players[data.server.id].queue.size if mode == :SIZE
+  CALLIOPE.players[data.server.id].queue.size if mode == :SIZE
 end
 
 # Convienent way to disconnect from a voice channel.

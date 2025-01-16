@@ -183,20 +183,26 @@ module Frost
     end
 
     # Determine the chunk type.
-    def paginate(*data)
+    def paginate(*_data)
       case @custom_id["type"]
       when "H-UP"
-        house_forward; self
+        house_forward
+        self
       when "M-UP"
-        music_forward; self
+        music_forward
+        self
       when "AH-UP"
-        admin_forward; self
+        admin_forward
+        self
       when "H-DOWN"
-        house_backward; self
+        house_backward
+        self
       when "AH-DOWN"
-        admin_backward; self
+        admin_backward
+        self
       when "M-DOWN"
-        music_backward; self
+        music_backward
+        self
       end
     end
 
@@ -204,14 +210,24 @@ module Frost
     def map(index)
       return @mapped.take(15).join if index == 1
 
-      return @mapped[-[15, @mapped.size - 15].min, 15].join if index == 2
+      @mapped[-[15, @mapped.size - 15].min, 15].join if index == 2
     end
 
     # Get the values to return.
     def tracks(index)
       return @mapped.take(10).join if index == 1
 
-      return @mapped[-[10, @mapped.size - 10].min, 10].join if index == 2
+      @mapped[-[10, @mapped.size - 10].min, 10].join if index == 2
+    end
+
+    # Make a new ID.
+    def self.id(*data)
+      { type: data[0], chunk: [1, data[1].count], id: data.fetch(2, nil) }.compact.to_json
+    end
+
+    # Count the number of pages.
+    def self.count(id)
+      format(EMBED[199], JSON.parse(id)["chunk"][1])
     end
 
     private
@@ -232,16 +248,6 @@ module Frost
       end.each_slice(20).to_a.each_with_index do |tracks, count|
         @hash[count + 1] = tracks
       end
-    end
-
-    # Make a new ID.
-    def self.id(*data)
-      { type: data[0], chunk: [1, data[1].count], id: data.fetch(2, nil) }.compact.to_json
-    end
-
-    # Count the number of pages.
-    def self.count(id)
-      format(EMBED[199], JSON.parse(id)["chunk"][1])
     end
   end
 end

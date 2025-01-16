@@ -12,7 +12,7 @@ def create_role(data)
     return
   end
 
-  if data.server.role_limit?
+  if data.server.roles.count == 250
     data.edit_response(content: RESPONSE[46])
     return
   end

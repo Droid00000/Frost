@@ -52,15 +52,15 @@ def music_queue(data)
     end
   end
 
-  if hash[:main].size < 10
-    data.edit_response do |builder|
-      builder.add_embed do |embed|
-        embed.colour = UI[5]
-        embed.title = format(EMBED[149], data.server.name)
-        embed.description = format(EMBED[150], fetch_queue(data, :SIZE))
-        embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: EMBED[198])
-        embed.add_field(name: EMBED[151], value: hash[:main].join, inline: true)
-      end
+  return unless hash[:main].size < 10
+
+  data.edit_response do |builder|
+    builder.add_embed do |embed|
+      embed.colour = UI[5]
+      embed.title = format(EMBED[149], data.server.name)
+      embed.description = format(EMBED[150], fetch_queue(data, :SIZE))
+      embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: EMBED[198])
+      embed.add_field(name: EMBED[151], value: hash[:main].join, inline: true)
     end
   end
 end

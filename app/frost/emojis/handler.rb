@@ -34,15 +34,15 @@ module EmojiCommands
     select_click(event)
   end
 
-  reaction_add(type: :custom) do |event|
-    reaction_stats(event)
-  end
-
   message(contains: REGEX[3]) do |event|
     emoji_stats(event)
   end
 
   channel_create do |event|
     thread_join(event)
+  end
+
+  reaction_add do |event|
+    emoji_react(event)
   end
 end

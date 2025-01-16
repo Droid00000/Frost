@@ -2,9 +2,9 @@
 
 # Gets the release date of a chapter of a series.
 def general_chapter(data)
-  time = data.bot.channel(CONFIG['Chapter']["CHANNEL"]).name.delete_prefix("📖")
-  time = Time.parse("#{time.sub("3PM GMT", "").strip} #{Time.now.year}")
-  time = Time.new(time.year, time.month, time.day, '11', '05').to_i
+  time = data.bot.channel(CONFIG["Chapter"]["CHANNEL"]).name.delete_prefix("📖")
+  time = Time.parse("#{time.sub('3PM GMT', '').strip} #{Time.now.year}")
+  time = Time.new(time.year, time.month, time.day, "11", "05").to_i
   data.edit_response(content: format(RESPONSE[56], time))
 end
 
@@ -17,5 +17,5 @@ Rufus::Scheduler.new.cron "59 11 * * *" do
   wait = Selenium::WebDriver::Wait.new(timeout: 10)
   wait.until { driver.find_element(:css, CONFIG["Chapter"]["ELEMENT"]) }
   time = Date.parse(driver.find_element(:css, CONFIG["Chapter"]["ELEMENT"]).text)
-  @bot.channel(CONFIG['Chapter']['CHANNEL']).name = "📖 #{time.strftime("%B")} #{time.day.ordinal} 3PM GMT"
+  @bot.channel(CONFIG["Chapter"]["CHANNEL"]).name = "📖 #{time.strftime('%B')} #{time.day.ordinal} 3PM GMT"
 end
