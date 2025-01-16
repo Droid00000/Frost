@@ -28,8 +28,8 @@ module Frost
       @custom_id = JSON.parse(data.custom_id)
       @total_pages = JSON.parse(data.custom_id)["chunk"][1]
       @current_page = JSON.parse(data.custom_id)["chunk"][0]
-      @music_tracks = postgres.nil? ? nil : fetch_queue(data, :ALL)
-      @house_role = postgres ? postgres.cult(data) : (data.server.role(JSON.parse(data.custom_id)["id"]) if @custom_id["type"].match(REGEX[8]))
+      @music_tracks = postgres.nil? ? nil : (fetch_queue(data, :ALL) if @custom_id.match(REGEX[8]))
+      @house_role = postgres ? postgres.cult(data) : (data.server.role(JSON.parse(data.custom_id)["id"]) if @custom_id.match(REGEX[7]))
     end
 
     def house_forward
@@ -218,7 +218,7 @@ module Frost
 
     # Convert members into their own hash.
     def make_pages
-      house_role.members.each_with_index.map do |member, count|
+      @house_role.members.each_with_index.map do |member, count|
         "**#{(count + 1).delimit}** — *#{member.display_name}*\n"
       end.each_slice(30).to_a.each_with_index do |members, count|
         @hash[count + 1] = members
