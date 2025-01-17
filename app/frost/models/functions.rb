@@ -18,6 +18,13 @@ def safe_name?(name)
   !name.match(REGEX[9])
 end
 
+# Get an icon for a role.
+# @param [String] The icon to resolve.
+# @return [String, File] The resolved icon.
+def resolve_icon(icon)
+  icon&.emojis("icon")&.static_file || icon&.scan(Unicode::Emoji::REGEX).first
+end
+
 # Deletes a role in a guild.
 # @param guild [Integer, String] An ID that uniquely identifies a guild.
 # @param id [Integer, String] An ID that uniquely identifies a role.

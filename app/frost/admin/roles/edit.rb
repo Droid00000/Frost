@@ -30,7 +30,7 @@ def roles_edit(data)
     role: data.options["role"],
     name: data.options["name"],
     colour: resolve_color(data.options["color"]),
-    icon: data.emojis("icon")&.static_file,
+    icon: resolve_icon(data.options["icon"]),
     reason: REASON[5]
   )
 

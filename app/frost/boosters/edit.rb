@@ -36,7 +36,7 @@ def edit_role(data)
     role: Frost::Boosters::Members.role(data),
     name: data.options["name"],
     colour: resolve_color(data.options["color"]),
-    icon: data.emojis("icon")&.static_file,
+    icon: resolve_icon(data.options["icon"]),
     reason: REASON[2]
   )
 
