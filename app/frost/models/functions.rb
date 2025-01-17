@@ -22,7 +22,7 @@ end
 # @param [String] The icon to resolve.
 # @return [String, File] The resolved icon.
 def resolve_icon(icon)
-  icon&.emojis("icon")&.static_file || icon&.scan(Unicode::Emoji::REGEX).first
+  icon&.emojis("icon")&.static_file || icon&.scan(Unicode::Emoji::REGEX)&.first
 end
 
 # Deletes a role in a guild.
