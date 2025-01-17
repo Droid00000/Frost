@@ -72,21 +72,6 @@ bot.register_application_command(:block, 'Stop a member from being able to acces
 end
 
 # @!function [Moderation Operations] Belongs to a cog that manages moderation related commands!
-bot.register_application_command(:mute, 'Stop a member from being able to talk in this server.', contexts: [0], integration_types: [0], default_member_permissions: "1099511627776", name_localizations: { 'hi' => 'मूक' }, description_localizations: { 'hi' => 'किसी सदस्य को इस सर्वर में बात करने से रोकें' }) do |option|
-  option.user('member', 'Which member do you want to mute?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'आप किस सदस्य को म्यूट करना चाहते हैं' })
-  option.string('duration', 'How long the mute should last. Max 28 days. ', required: true, name_localizations: { 'hi' => 'लंबाई' }, description_localizations: { 'hi' => 'कितनी देर तक मौन रहना चाहिए. अधिकतम अट्ठाईस दिन' })
-end
-
-# @!function [Moderation Operations] Belongs to a cog that manages moderation related commands!
-bot.register_application_command(:bulk, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'थोक' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }, default_member_permissions: "36") do |command|
-  command.subcommand('ban', 'Ban multiple members at once!', name_localizations: { 'hi' => 'प्रतिबंध' }, description_localizations: { 'hi' => 'एक साथ कई सदस्यों पर प्रतिबंध लगाएं' }) do |option|
-    option.string('members', 'Which members do you want to ban?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'आप किन सदस्यों पर प्रतिबंध लगाना चाहते हैं?' })
-    option.integer('messages', 'How many days worth of messages (1-7) should be deleted?', required: false, min_value: 0, max_value: 7, name_localizations: { 'hi' => 'संदेशों' }, description_localizations: { 'hi' => 'कितने दिनों के संदेश (1-7) हटाये जाने चाहिए?' })
-    option.string('reason', 'The reason for banning these members.', required: false, name_localizations: { 'hi' => 'कारण' }, description_localizations: { 'hi' => 'इन सदस्यों पर प्रतिबंध लगाने का कारण' })
-  end
-end
-
-# @!function [Moderation Operations] Belongs to a cog that manages moderation related commands!
 bot.register_application_command(:change, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'अद्यतन' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }, default_member_permissions: "201326592") do |command|
   command.subcommand('nickname', "Change a member's nickname!", name_localizations: { 'hi' => 'उपनाम' }, description_localizations: { 'hi' => 'किसी सदस्य का उपनाम बदलें' }) do |option|
     option.user('member', 'Which member needs to have their name changed?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'किस सदस्य को अपना नाम बदलना है' })

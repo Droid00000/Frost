@@ -45,16 +45,6 @@ module Discordrb
     rescue StandardError
       API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, nil, reason)
     end
-
-    # Bans multiple users at once.
-    # @param users [Array<Integer>] An array of snowflake ID's to ban.
-    # @param message_seconds [Integer] The number of seconds to delete messages from.
-    # @param reason [String] The reason for banning these users.
-    def bulk_ban(users, message_seconds, reason)
-      messages = message_seconds ? message_seconds * 86_400 : 0
-      response = JSON.parse(API::Server.bulk_ban(@bot.token, @id, users.map(&:to_i), messages, reason))
-      response["banned_users"]
-    end
   end
 end
 
@@ -139,7 +129,7 @@ module Discordrb
   class Message
     # @return [Array<Emoji>] the emotes that were used/mentioned in this message.
     def emoji
-      return nil if @content.nil?
+      return if @content.nil?
       return @emoji unless @emoji.empty?
 
       @emoji = @bot.parse_mentions(@content).select { |el| el.is_a? Discordrb::Emoji }
@@ -272,21 +262,6 @@ module Discordrb
           data.compact.to_json,
           Authorization: token,
           content_type: :json,
-          "X-Audit-Log-Reason": reason
-        )
-      end
-
-      # Bans multiple users in a guild at once.
-      # https://discord.com/developers/docs/resources/guild#bulk-guild-ban
-      def bulk_ban(token, server_id, user_ids, delete_message_seconds, reason)
-        Discordrb::API.request(
-          :guilds_sid_bans_uids,
-          server_id,
-          :post,
-          "#{Discordrb::API.api_base}/guilds/#{server_id}/bulk-ban",
-          { user_ids: user_ids, delete_message_seconds: delete_message_seconds }.to_json,
-          content_type: :json,
-          Authorization: token,
           "X-Audit-Log-Reason": reason
         )
       end
