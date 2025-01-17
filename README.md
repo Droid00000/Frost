@@ -41,13 +41,13 @@ Lavalink:
   URL: ""
   TOKEN: ""
 
-# Leaving this one undocumented.
+# Information about a manga chapter.
 Chapter:
+  LINK: ""
   CHANNEL: ""
   ELEMENT: ""
-  LINK: ""
 
-# Holds information about staff.
+# Holds information about houses.
 Houses:
   GUILD: ""
   STAFF: []
