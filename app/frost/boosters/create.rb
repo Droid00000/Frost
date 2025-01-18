@@ -40,7 +40,7 @@ def create_role(data)
   role = data.server.create_role(
     name: data.options["name"],
     colour: resolve_color(data.options["color"]),
-    icon: resolve_icon(data.options),
+    icon: resolve_icon(data),
     reason: REASON[1]
   )
 

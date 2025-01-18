@@ -322,6 +322,65 @@ EMBED = {
   237 => "1320638503109001238"
 }.freeze
 
+# Resolvable string color codes.
+COLORS = {
+  aquamarine: "7fffd4",
+  beige: "f5f5dc",
+  black: "000000",
+  blue: "0000ff",
+  brown: "a52a2a",
+  chocolate: "d2691e",
+  coral: "ff7f50",
+  crimson: "dc143c",
+  cyan: "00ffff",
+  dark_blue: "00008b",
+  dark_cyan: "008b8b",
+  dark_gray: "a9a9a9",
+  dark_green: "006400",
+  dark_magenta: "8b008b",
+  dark_orange: "ff8c00",
+  dark_red: "8b0000",
+  deep_pink: "ff1493",
+  fuchsia: "ff00ff",
+  gold: "ffd700",
+  gray: "808080",
+  green: "008000",
+  green_yellow: "adff2f",
+  hot_pink: "ff69b4",
+  indigo: "4b0082",
+  ivory: "fffff0",
+  khaki: "f0e68c",
+  lavender: "e6e6fa",
+  light_blue: "add8e6",
+  light_green: "90ee90",
+  light_pink: "ffb6c1",
+  light_yellow: "ffffe0",
+  lime: "00ff00",
+  magenta: "ff00ff",
+  maroon: "800000",
+  midnight_blue: "191970",
+  navy: "000080",
+  olive: "808000",
+  orange: "ffa500",
+  orange_red: "ff4500",
+  orchid: "da70d6",
+  pale_green: "98fb98",
+  pink: "ffc0cb",
+  powder_blue: "b0e0e6",
+  purple: "800080",
+  red: "ff0000",
+  royal_blue: "4169e1",
+  salmon: "fa8072",
+  silver: "c0c0c0",
+  sky_blue: "87ceeb",
+  tan: "d2b48c",
+  teal: "008080",
+  turquoise: "40e0d0",
+  violet: "ee82ee",
+  white: "ffffff",
+  yellow: "ffff00"
+}.freeze
+
 # The audit log reason shown whenever the bot does something.
 REASON = {
   1 => "server booster claimed role",
@@ -366,7 +425,7 @@ POSTGRES = Sequel.connect(CONFIG["Postgres"]["URL"], extensions: :connection_val
 POSTGRES.pool.connection_validation_timeout = -1
 
 # The lavalink client used by the bot to play music.
-CALLIOPE = Calliope::Client.new(CONFIG["Lavalink"]["URL"], CONFIG["Lavalink"]["TOKEN"], CONFIG["Lavalink"]["ID"])
+#CALLIOPE = Calliope::Client.new(CONFIG["Lavalink"]["URL"], CONFIG["Lavalink"]["TOKEN"], CONFIG["Lavalink"]["ID"])
 
 # A series of regular expressions utilized by the bot.
 REGEX = {

@@ -4,7 +4,9 @@
 # @param [String] The hex color to resolve.
 # @return [ColourRGB] A colourRGB object.
 def resolve_color(color)
-  return nil if color.nil? || !color.match(REGEX[2])
+  return nil if color.nil? || (!COLORS.get(color) && !color.match(REGEX[2]))
+
+  color = COLORS.get(color) if COLORS.get(color)
 
   Discordrb::ColourRGB.new(color.strip.delete("#"))
 end
@@ -13,18 +15,7 @@ end
 # @param [String] The string to check for slurs and words.
 # @return [Boolean] If the name contains any bad words.
 def safe_name?(name)
-  return true if name.nil?
-
-  !name.match(REGEX[9])
-end
-
-# Get an icon for a role.
-# @param [String] The icon to resolve.
-# @return [String, File] The resolved icon.
-def resolve_icon(icon)
-  return nil if icon["icon"].nil? || icon["icon"].empty?
-
-  icon.emojis("icon").static_file || icon["icon"].scan(Unicode::Emoji::REGEX).first
+  !name&.match(REGEX[9])
 end
 
 # Deletes a role in a guild.
@@ -34,6 +25,15 @@ def delete_guild_role(guild, id)
   Discordrb::API::Server.delete_role(CONFIG["Discord"]["TOKEN"], guild, id, REASON[6])
 rescue StandardError
   true
+end
+
+# Get an icon for a role.
+# @param [String] The icon to resolve.
+# @return [String, File] The resolved icon.
+def resolve_icon(icon)
+  return nil if icon.options["icon"].nil? || icon.options["icon"].empty?
+
+  icon.emojis("icon")&.static_file || icon.options["icon"].scan(Unicode::Emoji::REGEX).first
 end
 
 # Returns a random GIF link for use by the affection and snowball commands.

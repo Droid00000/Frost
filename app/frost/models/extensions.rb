@@ -199,18 +199,16 @@ module Discordrb
       # sending TTS messages, embedding links, sending files, reading the history, mentioning everybody,
       # connecting to voice, speaking and voice activity (push-to-talk isn't mandatory)
       # https://discord.com/developers/docs/resources/guild#get-guild-roles
-      def create_role(token, server_id, name, colour, hoist, mentionable, packed_permissions, icon, reason = nil)
-        emoji = nil
-
+      def create_role(token, server_id, name, colour, hoist, mentionable, packed_permissions, icon, reason = nil, emoji: nil)
         if !icon.is_a?(String) && icon
           path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
 
           mime = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || "image/jpeg"
-          image = "data:#{mime};base64,#{Base64.encode64(icon.read).strip}"
+          icon = "data:#{mime};base64,#{Base64.encode64(icon.read).strip}"
         elsif icon.is_a?(String)
           emoji = icon
         else
-          image = nil
+          icon = nil
         end
 
         Discordrb::API.request(
@@ -218,7 +216,7 @@ module Discordrb
           server_id,
           :post,
           "#{Discordrb::API.api_base}/guilds/#{server_id}/roles",
-          { color: colour, name: name, hoist: hoist, mentionable: mentionable, permissions: packed_permissions, icon: image, unicode_emoji: emoji }.compact.to_json,
+          { color: colour, name: name, hoist: false, mentionable: nil, permissions: packed_permissions, icon: icon, unicode_emoji: emoji }.compact.to_json,
           Authorization: token,
           content_type: :json,
           "X-Audit-Log-Reason": reason
@@ -231,26 +229,17 @@ module Discordrb
       # connecting to voice, speaking and voice activity (push-to-talk isn't mandatory)
       # https://discord.com/developers/docs/resources/guild#batch-modify-guild-role
       # @param icon [:undef, File]
-      def update_role(token, server_id, role_id, name, colour, hoist, mentionable, packed_permissions, icon = :undef,
-                      reason = nil)
-        data = { color: colour, name: name, hoist: hoist, mentionable: mentionable,
-                 permissions: packed_permissions }
-
-        if icon != :undef && icon && !icon.is_a?(String)
+      def update_role(token, server_id, role_id, name, colour, hoist, mentionable, packed_permissions, icon = :undef, reason = nil, emoji: nil)
+        
+        if !icon.is_a?(String) && icon
           path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
 
-          unless path_method
-            raise ArgumentError,
-                  "File object must respond to original_filename, path, or local path."
-          end
-          raise ArgumentError, "File must respond to read" unless icon.respond_to? :read
-
-          mime_type = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || "image/jpeg"
-          data[:icon] = "data:#{mime_type};base64,#{Base64.encode64(icon.read).strip}"
-        elsif icon.nil?
-          data[:icon] = nil
+          mime = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || "image/jpeg"
+          icon = "data:#{mime};base64,#{Base64.encode64(icon.read).strip}"
         elsif icon.is_a?(String)
-          data[:unicode_emoji] = icon
+          emoji = icon
+        else
+          icon = nil
         end
 
         Discordrb::API.request(
@@ -258,7 +247,7 @@ module Discordrb
           server_id,
           :patch,
           "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{role_id}",
-          data.compact.to_json,
+          { color: colour, name: name, icon: icon, unicode_emoji: emoji }.compact.to_json,
           Authorization: token,
           content_type: :json,
           "X-Audit-Log-Reason": reason
@@ -372,5 +361,13 @@ class Integer
     else
       "#{self}th"
     end
+  end
+end
+
+# Monkey patches to the hash.
+class Hash
+  # Get a given key from a hash.
+  def get(k)
+    self[(k&.gsub(/([a-z0-9])([A-Z])/, '\1_\2')&.downcase&.to_sym)]
   end
 end
