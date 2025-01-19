@@ -17,11 +17,6 @@ def edit_role(data)
     return
   end
 
-  if Frost::Boosters::Ban.user?(data)
-    data.edit_response(content: RESPONSE[6])
-    return
-  end
-
   unless Frost::Boosters::Settings.get(data)
     data.edit_response(content: RESPONSE[5])
     return
@@ -29,6 +24,11 @@ def edit_role(data)
 
   unless Frost::Boosters::Members.role(data)
     data.edit_response(content: RESPONSE[9])
+    return
+  end
+
+  if Frost::Boosters::Ban.user?(data)
+    data.edit_response(content: RESPONSE[6])
     return
   end
 
