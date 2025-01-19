@@ -26,7 +26,7 @@ def music_skip(data)
     return
   end
 
-  index = data.options["index"] ? data.options["index"].delete(",").strip - 1 : 0
+  index = data.options["index"] ? data.options["index"].to_s.delete(",").strip.to_i - 1 : 0
 
   if CALLIOPE.players[data.server.id].queue.size - 1 < index
     data.edit_response(content: RESPONSE[102])

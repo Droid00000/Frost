@@ -158,7 +158,7 @@ bot.register_application_command(:event, 'Event roles', contexts: [0], integrati
     group.subcommand(:edit, 'Edit your event role.', name_localizations: { 'hi' => 'परिवर्तन' }, description_localizations: { 'hi' => 'अपने इवेंट रोल को संपादित करें' }) do |option|
       option.role('role', 'Which role do you want to modify?', required: true, name_localizations: { 'hi' => 'रोल' }, description_localizations: { 'hi' => 'आप कौन सा रोल संपादित करना चाहते हैं' })
       option.string('name', 'Provide a name for your role.', required: false, max_length: 100, name_localizations: { 'hi' => 'नाम' }, description_localizations: { 'hi' => 'अपने रोल के लिए एक नाम दें' })
-      option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 6, max_length: 7, name_localizations: { 'hi' => 'रंग' }, description_localizations: { 'hi' => 'अपने रोल के लिए एक HEX रंग दें' })
+      option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 3, max_length: 16, name_localizations: { 'hi' => 'रंग' }, description_localizations: { 'hi' => 'अपने रोल के लिए एक HEX रंग दें' })
       option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => 'आइकन' }, description_localizations: { 'hi' => 'अपने रोल आइकन के रूप में एक इमोजी दें' })
     end
 
@@ -177,21 +177,24 @@ end
 # @!function [Music Operations] Belongs to a cog that can stream songs!
 bot.register_application_command(:music, 'Connect and play songs!', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'संगीत' }, description_localizations: { 'hi' => 'कनेक्ट करें और गाने चलाएं' }) do |command|
   command.subcommand(:disconnect, 'Disconnect from a voice channel.', name_localizations: { 'hi' => 'छुट्टी' }, description_localizations: { 'hi' => 'वॉइस चैनल से डिस्कनेक्ट करें' })
+  command.subcommand(:previous, 'Play the previous track.', name_localizations: { 'hi' => 'पीछे' }, description_localizations: { 'hi' => 'पिछला ट्रैक चलाएँ' })
   command.subcommand(:shuffle, 'Shuffle the tracks in the queue.', name_localizations: { 'hi' => 'मिश्रण' }, description_localizations: { 'hi' => 'कतार में पटरियों को फेरें' })
-  command.subcommand(:current, "View the track that's playing.", name_localizations: { 'hi' => 'मौजूदा' }, description_localizations: { 'hi' => 'वह ट्रैक देखें जो वर्तमान में चल रहा है' })
   command.subcommand(:resume, 'Continue playback ater pausing.', name_localizations: { 'hi' => 'फिरशुरूकरना' }, description_localizations: { 'hi' => 'रुकने के बाद प्लेबैक जारी रखें' })
   command.subcommand(:pause, 'Stop playing the current track.', name_localizations: { 'hi' => 'रुकना' }, description_localizations: { 'hi' => 'वर्तमान गाना बजाना बंद करें' })
   command.subcommand(:queue, 'View the  queued tracks.', name_localizations: { 'hi' => 'कतार' }, description_localizations: { 'hi' => 'वे ट्रैक देखें जो कतार में हैं' })
   command.subcommand(:clear, 'Remove all the queued tracks.', name_localizations: { 'hi' => 'स्पष्ट' }, description_localizations: { 'hi' => 'इस सर्वर के लिए कतार साफ़ करें' })
-  command.subcommand(:back, 'Play the previous track.', name_localizations: { 'hi' => 'पीछे' }, description_localizations: { 'hi' => 'पिछला ट्रैक चलाएँ' })
-
-  command.subcommand(:play, 'Play a track from a URL or a name.', name_localizations: { 'hi' => 'नाटक' }, description_localizations: { 'hi' => 'किसी यूआरएल या गाने के नाम से ऑडियो चलाएं' }) do |option|
-    option.string(:song, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, autocomplete: true, min_length: 2, name_localizations: { 'hi' => 'गाना' }, description_localizations: { 'hi' => 'एक गीत का लिंक' })
-  end
 
   command.subcommand(:skip, 'Skip to a specific track or the next one.', name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'अगला ट्रैक चलाएँ' }) do |option|
     option.integer(:index, 'The position of the track to skip to.', required: false, min_value: 1, name_localizations: { 'hi' => 'अनुक्रमणिका' }, description_localizations: { 'hi' => 'जाने के लिए ट्रैक की स्थिति' })
     option.boolean(:destructive, 'Whether all the tracks before this one should be removed.', required: false, name_localizations: { 'hi' => 'विनाशकारी' }, description_localizations: { 'hi' => 'क्या इससे पहले के सभी ट्रैक हटा दिए जाने चाहिए' })
+  end
+
+  command.subcommand_group(:currently, "View the track that's playin.", name_localizations: { 'hi' => 'वर्तमानमें' }, description_localizations: { 'hi' => 'वह ट्रैक देखें जो वर्तमान में चल रहा' }) do |group|
+    group.subcommand(:playing, "View the track that's playing.", name_localizations: { 'hi' => 'मौजूदा' }, description_localizations: { 'hi' => 'वह ट्रैक देखें जो वर्तमान में चल रहा है' })
+  end
+
+  command.subcommand(:play, 'Play a track from a URL or a name.', name_localizations: { 'hi' => 'नाटक' }, description_localizations: { 'hi' => 'किसी यूआरएल या गाने के नाम से ऑडियो चलाएं' }) do |option|
+    option.string(:song, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, autocomplete: true, min_length: 2, name_localizations: { 'hi' => 'गाना' }, description_localizations: { 'hi' => 'एक गीत का लिंक' })
   end
 
   command.subcommand(:move, 'Move the bot to a different channel.', name_localizations: { 'hi' => 'कदम' }, description_localizations: { 'hi' => 'बॉट को किसी भिन्न चैनल पर ले जाएं' }) do |option|
@@ -220,13 +223,13 @@ bot.register_application_command(:booster, 'Booster perks', contexts: [0], integ
   command.subcommand_group(:role, 'Booster roles!') do |group|
     group.subcommand('claim', 'Claim your custom booster role!') do |option|
       option.string('name', 'Provide a name for your role.', required: true, max_length: 100)
-      option.string('color', 'Provide a HEX color for your role.', required: true, min_length: 6, max_length: 7)
+      option.string('color', 'Provide a HEX color for your role.', required: true, min_length: 3, max_length: 16)
       option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
     end
 
     group.subcommand('edit', 'Edit your custom booster role!') do |option|
       option.string('name', 'Provide a name for your role.', required: false, max_length: 100)
-      option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 6, max_length: 7)
+      option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 3, max_length: 16)
       option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
     end
 

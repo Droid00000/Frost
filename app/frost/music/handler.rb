@@ -25,14 +25,14 @@ module MusicCommands
     music_disconnect(event)
   end
 
+  application_command(:music).subcommand(:previous) do |event|
+    event.defer(ephemeral: false)
+    music_previous(event)
+  end
+
   application_command(:music).subcommand(:shuffle) do |event|
     event.defer(ephemeral: false)
     music_shuffle(event)
-  end
-
-  application_command(:music).subcommand(:current) do |event|
-    event.defer(ephemeral: true)
-    music_current(event)
   end
 
   application_command(:music).subcommand(:volume) do |event|
@@ -70,11 +70,6 @@ module MusicCommands
     music_play(event)
   end
 
-  application_command(:music).subcommand(:back) do |event|
-    event.defer(ephemeral: false)
-    music_previous(event)
-  end
-
   application_command(:music).subcommand(:seek) do |event|
     event.defer(ephemeral: false)
     music_seek(event)
@@ -83,6 +78,13 @@ module MusicCommands
   application_command(:music).subcommand(:move) do |event|
     event.defer(ephemeral: false)
     music_move(event)
+  end
+
+  application_command(:music).group(:currently) do |group|
+    group.subcommand(:playing) do |event|
+      event.defer(ephemeral: true)
+      music_current(event)
+    end
   end
 
   button(custom_id: REGEX[8]) do |event|
