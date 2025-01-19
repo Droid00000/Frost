@@ -28,12 +28,18 @@ def music_skip(data)
 
   index = data.options["index"] ? data.options["index"].to_s.delete(",").strip.to_i - 1 : 0
 
-  if CALLIOPE.players[data.server.id].queue.size - 1 < index
+  if CALLIOPE.players[data.server.id].queue.size - 1 < index && !random
     data.edit_response(content: RESPONSE[102])
     return
   end
 
-  track = CALLIOPE.players[data.server.id].next(index, data.options["destructive"])
+  if data.options["random"]
+    track = CALLIOPE.players[data.server.id].play_random
+  end
+
+  unless data.options["random"] 
+    track = CALLIOPE.players[data.server.id].next(index, data.options["destructive"])
+  end
 
   data.edit_response do |builder|
     builder.add_embed do |embed|

@@ -186,6 +186,7 @@ bot.register_application_command(:music, 'Connect and play songs!', contexts: [0
 
   command.subcommand(:skip, 'Skip to a specific track or the next one.', name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'अगला ट्रैक चलाएँ' }) do |option|
     option.integer(:index, 'The position of the track to skip to.', required: false, min_value: 1, name_localizations: { 'hi' => 'अनुक्रमणिका' }, description_localizations: { 'hi' => 'जाने के लिए ट्रैक की स्थिति' })
+    option.boolean(:random, "If the next track should be randomly picked.", required: false, name_localizations: { 'hi' => 'यादृच्छिक' }, description_localizations: { 'hi' => 'जाने के लिए ट्रैक की स्थिति' })
     option.boolean(:destructive, 'Whether all the tracks before this one should be removed.', required: false, name_localizations: { 'hi' => 'विनाशकारी' }, description_localizations: { 'hi' => 'क्या इससे पहले के सभी ट्रैक हटा दिए जाने चाहिए' })
   end
 
