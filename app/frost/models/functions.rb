@@ -4,9 +4,11 @@
 # @param [String] The hex color to resolve.
 # @return [ColourRGB] A colourRGB object.
 def resolve_color(color)
-  return nil if color.nil? || (!COLORS.get(color) && !color.match(REGEX[2]))
+  return nil if color.nil? || !color.match(REGEX[9])
 
   color = COLORS.get(color) if COLORS.get(color)
+
+  color = "00000c" if color.delete("#") == "000000"
 
   Discordrb::ColourRGB.new(color.strip.delete("#"))
 end
@@ -15,7 +17,7 @@ end
 # @param [String] The string to check for slurs and words.
 # @return [Boolean] If the name contains any bad words.
 def safe_name?(name)
-  !name&.match(REGEX[9])
+  !name&.match(REGEX[10])
 end
 
 # Deletes a role in a guild.

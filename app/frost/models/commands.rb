@@ -184,10 +184,14 @@ bot.register_application_command(:music, 'Connect and play songs!', contexts: [0
   command.subcommand(:queue, 'View the tracks that are in the queue.', name_localizations: { 'hi' => 'कतार' }, description_localizations: { 'hi' => 'वे ट्रैक देखें जो कतार में हैं' })
   command.subcommand(:clear, 'Clear the queue for this server.', name_localizations: { 'hi' => 'स्पष्ट' }, description_localizations: { 'hi' => 'इस सर्वर के लिए कतार साफ़ करें' })
   command.subcommand(:back, 'Play the previous track.', name_localizations: { 'hi' => 'पीछे' }, description_localizations: { 'hi' => 'पिछला ट्रैक चलाएँ' })
-  command.subcommand(:next, 'Play the next track.', name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'अगला ट्रैक चलाएँ' })
 
   command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => 'नाटक' }, description_localizations: { 'hi' => 'किसी यूआरएल या गाने के नाम से ऑडियो चलाएं' }) do |option|
-    option.string(:song, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, min_length: 2, name_localizations: { 'hi' => 'गाना' }, description_localizations: { 'hi' => 'एक गीत का लिंक' })
+    option.string(:song, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, autocomplete: true, min_length: 2, name_localizations: { 'hi' => 'गाना' }, description_localizations: { 'hi' => 'एक गीत का लिंक' })
+  end
+
+  command.subcommand(:skip, 'Play the next track.', name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'अगला ट्रैक चलाएँ' }) do |option|
+    option.integer(:index, 'The position of the track to skip to.', required: false, min_value: 1, name_localizations: { 'hi' => 'अनुक्रमणिका' }, description_localizations: { 'hi' => 'जाने के लिए ट्रैक की स्थिति' })
+    option.boolean(:destructive, 'Whether all the tracks before this one should be removed.', required: false, name_localizations: { 'hi' => 'विनाशकारी' }, description_localizations: { 'hi' => 'क्या इससे पहले के सभी ट्रैक हटा दिए जाने चाहिए' })
   end
 
   command.subcommand(:move, 'Move the bot to a different channel.', name_localizations: { 'hi' => 'कदम' }, description_localizations: { 'hi' => 'बॉट को किसी भिन्न चैनल पर ले जाएं' }) do |option|

@@ -3,10 +3,11 @@
 require_relative "move"
 require_relative "seek"
 require_relative "play"
-require_relative "next"
+require_relative "skip"
 require_relative "queue"
 require_relative "pause"
 require_relative "volume"
+require_relative "search"
 require_relative "resume"
 require_relative "remove"
 require_relative "shuffle"
@@ -59,9 +60,9 @@ module MusicCommands
     music_pause(event)
   end
 
-  application_command(:music).subcommand(:next) do |event|
+  application_command(:music).subcommand(:skip) do |event|
     event.defer(ephemeral: false)
-    music_next(event)
+    music_skip(event)
   end
 
   application_command(:music).subcommand(:play) do |event|
@@ -87,6 +88,10 @@ module MusicCommands
   button(custom_id: REGEX[8]) do |event|
     event.defer_update
     music_pages(event)
+  end
+
+  interaction_create(type: 4) do |event|
+    music_search(event)
   end
 
   voice_server_update do |event|

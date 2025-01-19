@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-def music_next(data)
+def music_skip(data)
   if data.user.voice_channel.nil?
     data.edit_response(content: RESPONSE[71])
     return
@@ -26,7 +26,14 @@ def music_next(data)
     return
   end
 
-  track = CALLIOPE.players[data.server.id].next_track
+  index = data.options["index"] ? data.options["index"].delete(",").strip - 1 : 0
+
+  if CALLIOPE.players[data.server.id].queue.size - 1 < index
+    data.edit_response(content: RESPONSE[102])
+    return
+  end
+
+  track = CALLIOPE.players[data.server.id].next(index, data.options["destructive"])
 
   data.edit_response do |builder|
     builder.add_embed do |embed|

@@ -28,8 +28,8 @@ module Frost
       @custom_id = JSON.parse(data.custom_id)
       @total_pages = JSON.parse(data.custom_id)["chunk"][1]
       @current_page = JSON.parse(data.custom_id)["chunk"][0]
-      @music_tracks = postgres.nil? ? nil : (fetch_queue(data, :ALL) if @custom_id.match(REGEX[8]))
-      @house_role = postgres ? postgres.cult(data) : (data.server.role(JSON.parse(data.custom_id)["id"]) if @custom_id.match(REGEX[7]))
+      @music_tracks = (fetch_queue(data, :ALL) if @custom_id.to_json.match(REGEX[8]))
+      @house_role = postgres ? postgres.cult(data) : (data.server.role(JSON.parse(data.custom_id)["id"]) if @custom_id.to_json.match(REGEX[7]))
     end
 
     def house_forward

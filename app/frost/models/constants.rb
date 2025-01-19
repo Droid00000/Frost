@@ -102,7 +102,8 @@ RESPONSE = {
   98 => "The bot isn't playing anything!",
   99 => "The bot doesn't have permission to move to this channel.",
   100 => "Successfully moved channels.",
-  101 => "This command can't be used here."
+  101 => "This command can't be used here.",
+  102 => "This index is greater than the size of the queue."
 }.freeze
 
 # Values for embed responses.
@@ -248,17 +249,17 @@ EMBED = {
   163 => "``/music queue``",
   164 => "``/music clear``",
   165 => "``/music pause``",
-  166 => "``/music next``",
+  166 => "``/music skip``",
   167 => "``/music play``",
   168 => "Disconnects the bot from the current voice channel. Permenantly deletes the queue and stops playback.",
   169 => "Shuffles the current queue. The current song will continue playing.",
   170 => "View the track that is currently playing.",
   171 => "Resume playback after previously pausing playback.",
   172 => "Set the bot's volume. This can be any value between 1 and 200.",
-  173 => "View the first 15 and last 15 song in the bot's queue.",
+  173 => "View the tracks in the bot's queue.",
   174 => "Completely deletes the queue. The current song will continue playing.",
   175 => "Pause playback of the current track.",
-  176 => "Skips to the next track in the queue.",
+  176 => "Skips to the specified track in the queue.",
   177 => "Connects the bot to a voice channel, and adds the specified track to the queue.",
   178 => "``/music back``",
   179 => "Play the track that was previously playing.",
@@ -326,7 +327,7 @@ EMBED = {
 COLORS = {
   aquamarine: "7fffd4",
   beige: "f5f5dc",
-  black: "000000",
+  black: "00000c",
   blue: "0000ff",
   brown: "a52a2a",
   chocolate: "d2691e",
@@ -425,19 +426,25 @@ POSTGRES = Sequel.connect(CONFIG["Postgres"]["URL"], extensions: :connection_val
 POSTGRES.pool.connection_validation_timeout = -1
 
 # The lavalink client used by the bot to play music.
-#CALLIOPE = Calliope::Client.new(CONFIG["Lavalink"]["URL"], CONFIG["Lavalink"]["TOKEN"], CONFIG["Lavalink"]["ID"])
+CALLIOPE = Calliope::Client.new(CONFIG["Lavalink"]["URL"], CONFIG["Lavalink"]["TOKEN"], CONFIG["Lavalink"]["ID"])
 
 # A series of regular expressions utilized by the bot.
 REGEX = {
-  1 => /:(\d+)>$/,
-  2 => /\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z/,
   3 => /<(a?):([a-zA-Z0-9_]{1,32}):([0-9]{15,20})>/,
   4 => /(?<=<@|\s|^)\d+(?=>|\s|$)/,
   5 => /(\d+):(\d+)/,
   6 => /"type":\s*"(?![AM])[^"]*"/,
   7 => /"type":\s*"A[^"]*"/,
   8 => /"type":\s*"(?!A)[M][^"]*"/,
-  9 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
+  9 => /(?:aquamarine|beige|black|blue|brown|chocolate|coral|crimson|
+       cyan|dark[\s_]?blue|dark[\s_]?cyan|dark[\s_]?gray|dark[\s_]?green|
+       dark[\s_]?magenta|dark[\s_]?orange|dark[\s_]?red|deep[\s_]?pink|fuchsia|
+       gold|gray|green|green[\s_]?yellow|hot[\s_]?pink|indigo|ivory|khaki|lavender|
+       light[\s_]?blue|light[\s_]?green|light[\s_]?pink|light[\s_]?yellow|lime|magenta|
+       maroon|midnight[\s_]?blue|navy|olive|orange|orange[\s_]?red|orchid|pale[\s_]?green|
+       pink|powder[\s_]?blue|purple|red|royal[\s_]?blue|salmon|silver|sky[\s_]?blue|tan|teal|
+       turquoise|violet|white|yellow|\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z)/i,
+  10 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|
           xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|
