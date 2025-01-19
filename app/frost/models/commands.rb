@@ -140,6 +140,14 @@ bot.register_application_command(:update, 'Contributors', contexts: [0, 1, 2], i
   end
 end
 
+# @!function [General Operations] Belongs to a cog that manages general information!
+bot.register_application_command(:next, 'Manga Chapter!', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'मंगा अध्याय' }) do |command|
+  command.subcommand_group(:chapter, 'Comics!', name_localizations: { 'hi' => 'प्रकरण' }, description_localizations: { 'hi' => 'कॉमिक्स' }) do |group|
+    group.subcommand(:when, 'When is the next chapter coming out?', name_localizations: { 'hi' => 'कब' }, description_localizations: { 'hi' => 'अगला अध्याय कब आ रहा है' }) do |option|
+    end
+  end
+end
+
 # @!function [Pin Operations] Belongs to a cog that manages pins in a channel!
 bot.register_application_command(:pin, 'Pin archive', default_member_permissions: "16", contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'पिन' }, description_localizations: { 'hi' => 'की पुरातत्' }) do |command|
   command.subcommand_group(:archiver, 'Pin Archival!', name_localizations: { 'hi' => 'संग्रहकर्ता' }, description_localizations: { 'hi' => 'की पुरातत्व' }) do |group|
@@ -208,14 +216,6 @@ bot.register_application_command(:music, 'Connect and play songs!', contexts: [0
 
   command.subcommand(:seek, 'Skip to a specific duration of a track.', name_localizations: { 'hi' => 'तलाश' }, description_localizations: { 'hi' => 'किसी ट्रैक की विशिष्ट अवधि पर जाएं' }) do |option|
     option.string(:position, "The duration to skip to.", max_length: 10, required: true, min_length: 2, name_localizations: { 'hi' => 'स्थिति' }, description_localizations: { 'hi' => 'छोड़ने की अवधि' })
-  end
-end
-
-# @!function [General Operations] Belongs to a cog that manages general information!
-bot.register_application_command(:next, 'Manga Chapter!', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'मंगा अध्याय' }) do |command|
-  command.subcommand_group(:chapter, 'Comics!', name_localizations: { 'hi' => 'प्रकरण' }, description_localizations: { 'hi' => 'कॉमिक्स' }) do |group|
-    group.subcommand(:when, 'When is the next chapter coming out?', name_localizations: { 'hi' => 'कब' }, description_localizations: { 'hi' => 'अगला अध्याय कब आ रहा है' }) do |option|
-    end
   end
 end
 
