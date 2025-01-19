@@ -178,18 +178,18 @@ end
 bot.register_application_command(:music, 'Connect and play songs!', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'संगीत' }, description_localizations: { 'hi' => 'कनेक्ट करें और गाने चलाएं' }) do |command|
   command.subcommand(:disconnect, 'Disconnect from a voice channel.', name_localizations: { 'hi' => 'छुट्टी' }, description_localizations: { 'hi' => 'वॉइस चैनल से डिस्कनेक्ट करें' })
   command.subcommand(:shuffle, 'Shuffle the tracks in the queue.', name_localizations: { 'hi' => 'मिश्रण' }, description_localizations: { 'hi' => 'कतार में पटरियों को फेरें' })
-  command.subcommand(:current, "View the track that's currently playing.", name_localizations: { 'hi' => 'मौजूदा' }, description_localizations: { 'hi' => 'वह ट्रैक देखें जो वर्तमान में चल रहा है' })
+  command.subcommand(:current, "View the track that's playing.", name_localizations: { 'hi' => 'मौजूदा' }, description_localizations: { 'hi' => 'वह ट्रैक देखें जो वर्तमान में चल रहा है' })
   command.subcommand(:resume, 'Continue playback ater pausing.', name_localizations: { 'hi' => 'फिरशुरूकरना' }, description_localizations: { 'hi' => 'रुकने के बाद प्लेबैक जारी रखें' })
-  command.subcommand(:pause, 'Stop playing the current song.', name_localizations: { 'hi' => 'रुकना' }, description_localizations: { 'hi' => 'वर्तमान गाना बजाना बंद करें' })
-  command.subcommand(:queue, 'View the tracks that are in the queue.', name_localizations: { 'hi' => 'कतार' }, description_localizations: { 'hi' => 'वे ट्रैक देखें जो कतार में हैं' })
-  command.subcommand(:clear, 'Clear the queue for this server.', name_localizations: { 'hi' => 'स्पष्ट' }, description_localizations: { 'hi' => 'इस सर्वर के लिए कतार साफ़ करें' })
+  command.subcommand(:pause, 'Stop playing the current track.', name_localizations: { 'hi' => 'रुकना' }, description_localizations: { 'hi' => 'वर्तमान गाना बजाना बंद करें' })
+  command.subcommand(:queue, 'View the  queued tracks.', name_localizations: { 'hi' => 'कतार' }, description_localizations: { 'hi' => 'वे ट्रैक देखें जो कतार में हैं' })
+  command.subcommand(:clear, 'Remove all the queued tracks.', name_localizations: { 'hi' => 'स्पष्ट' }, description_localizations: { 'hi' => 'इस सर्वर के लिए कतार साफ़ करें' })
   command.subcommand(:back, 'Play the previous track.', name_localizations: { 'hi' => 'पीछे' }, description_localizations: { 'hi' => 'पिछला ट्रैक चलाएँ' })
 
-  command.subcommand(:play, 'Play audio from a URL or a song name.', name_localizations: { 'hi' => 'नाटक' }, description_localizations: { 'hi' => 'किसी यूआरएल या गाने के नाम से ऑडियो चलाएं' }) do |option|
+  command.subcommand(:play, 'Play a track from a URL or a name.', name_localizations: { 'hi' => 'नाटक' }, description_localizations: { 'hi' => 'किसी यूआरएल या गाने के नाम से ऑडियो चलाएं' }) do |option|
     option.string(:song, 'Spotify, Apple Music, YouTube URL, or a song name.', required: true, autocomplete: true, min_length: 2, name_localizations: { 'hi' => 'गाना' }, description_localizations: { 'hi' => 'एक गीत का लिंक' })
   end
 
-  command.subcommand(:skip, 'Play the next track.', name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'अगला ट्रैक चलाएँ' }) do |option|
+  command.subcommand(:skip, 'Skip to a specific track or the next one.', name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'अगला ट्रैक चलाएँ' }) do |option|
     option.integer(:index, 'The position of the track to skip to.', required: false, min_value: 1, name_localizations: { 'hi' => 'अनुक्रमणिका' }, description_localizations: { 'hi' => 'जाने के लिए ट्रैक की स्थिति' })
     option.boolean(:destructive, 'Whether all the tracks before this one should be removed.', required: false, name_localizations: { 'hi' => 'विनाशकारी' }, description_localizations: { 'hi' => 'क्या इससे पहले के सभी ट्रैक हटा दिए जाने चाहिए' })
   end
