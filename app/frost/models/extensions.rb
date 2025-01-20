@@ -194,6 +194,19 @@ module Discordrb
     module Server
       module_function
 
+      def channel_name(token, id, name, reason)
+        Discordrb::API.request(
+          :channels_cid,
+          :channel_id,
+          :patch,
+          "#{Discordrb::API.api_base}/channels/#{id}",
+          { name: name }.to_json,
+          Authorization: token,
+          content_type: :json,
+          'X-Audit-Log-Reason': reason
+        )
+      end
+
       # Create a role (parameters such as name and colour if not set can be set by update_role afterwards)
       # Permissions are the Discord defaults; allowed: invite creation, reading/sending messages,
       # sending TTS messages, embedding links, sending files, reading the history, mentioning everybody,

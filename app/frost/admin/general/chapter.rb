@@ -17,5 +17,6 @@ Rufus::Scheduler.new.cron "59 11 * * *" do
   wait = Selenium::WebDriver::Wait.new(timeout: 10)
   wait.until { driver.find_element(:css, CONFIG["Chapter"]["ELEMENT"]) }
   time = Date.parse(driver.find_element(:css, CONFIG["Chapter"]["ELEMENT"]).text)
-  @bot.channel(CONFIG["Chapter"]["CHANNEL"]).name = "📖 #{time.strftime('%B')} #{time.day.ordinal} 3PM GMT"
+  name = "📖 #{time.strftime('%B')} #{time.day.ordinal} 3PM GMT"
+  Discordrb::API::Server.channel_name(@bot.token, CONFIG["Chapter"]["CHANNEL"], name, "update release date")
 end

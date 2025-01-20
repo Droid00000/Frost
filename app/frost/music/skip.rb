@@ -37,7 +37,7 @@ def music_skip(data)
     track = CALLIOPE.players[data.server.id].play_random
   end
 
-  unless data.options["random"] 
+  unless data.options["random"]
     track = CALLIOPE.players[data.server.id].next(index, data.options["destructive"])
   end
 
