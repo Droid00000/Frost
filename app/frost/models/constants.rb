@@ -2,7 +2,7 @@
 
 # A response message to an interaction.
 RESPONSE = {
-  1 => "Your role has been created! You can always edit your role using the </booster role edit:1325631222990372915> command.",
+  1 => "Your role has been created! You can always edit your role using the </booster role edit:1330463676414693407> command.",
   2 => "Your role has been successfully edited!",
   3 => "Your role has been successfully deleted! Feel free to make a new role at any time.",
   4 => "You've already claimed your custom role on this server.",
@@ -10,7 +10,7 @@ RESPONSE = {
   6 => "You have been banned from using this feature.",
   7 => "Invalid name parameter.",
   8 => "You aren't boosting this server.",
-  9 => "We couldn't find your role. Please use the </booster role claim:1325631222990372915> command to claim your role.",
+  9 => "We couldn't find your role. Please use the </booster role claim:1330463676414693407å> command to claim your role.",
   10 => "Made by *droid00000* using the [discordrb library!](<https://github.com/shardlab/discordrb>)",
   11 => "Invalid status parameter.",
   12 => "You must be a contributor to use this command.",
