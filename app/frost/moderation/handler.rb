@@ -9,16 +9,16 @@ module ModerationCommands
 
   application_command(:change).subcommand(:nickname) do |event|
     event.defer(ephemeral: true)
-    update_nickname(event)
+    Moderation.nickname(event)
   end
 
   application_command(:purge).subcommand(:messages) do |event|
     event.defer(ephemeral: true)
-    delete_messages(event)
+    Moderation.purge(event)
   end
 
   application_command(:block) do |event|
     event.defer(ephemeral: false)
-    block_member(event)
+    Moderation.block(event)
   end
 end

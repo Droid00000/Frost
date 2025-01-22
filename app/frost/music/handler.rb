@@ -22,78 +22,78 @@ module MusicCommands
 
   application_command(:music).subcommand(:disconnect) do |event|
     event.defer(ephemeral: false)
-    music_disconnect(event)
+    Music.disconnect(event)
   end
 
   application_command(:music).subcommand(:previous) do |event|
     event.defer(ephemeral: false)
-    music_previous(event)
+    Music.previous(event)
   end
 
   application_command(:music).subcommand(:shuffle) do |event|
     event.defer(ephemeral: false)
-    music_shuffle(event)
+    Music.shuffle(event)
   end
 
   application_command(:music).subcommand(:volume) do |event|
     event.defer(ephemeral: false)
-    music_volume(event)
+    Music.volume(event)
   end
 
   application_command(:music).subcommand(:resume) do |event|
     event.defer(ephemeral: false)
-    music_resume(event)
+    Music.resume(event)
   end
 
   application_command(:music).subcommand(:queue) do |event|
     event.defer(ephemeral: true)
-    music_queue(event)
+    Music.queue(event)
   end
 
   application_command(:music).subcommand(:clear) do |event|
     event.defer(ephemeral: false)
-    music_remove(event)
+    Music.remove(event)
   end
 
   application_command(:music).subcommand(:pause) do |event|
     event.defer(ephemeral: false)
-    music_pause(event)
+    Music.pause(event)
   end
 
   application_command(:music).subcommand(:skip) do |event|
     event.defer(ephemeral: false)
-    music_skip(event)
+    Music.skip(event)
   end
 
   application_command(:music).subcommand(:play) do |event|
     event.defer(ephemeral: false)
-    music_play(event)
+    Music.play(event)
   end
 
   application_command(:music).subcommand(:seek) do |event|
     event.defer(ephemeral: false)
-    music_seek(event)
+    Music.seek(event)
   end
 
   application_command(:music).subcommand(:move) do |event|
     event.defer(ephemeral: false)
-    music_move(event)
+    Music.move(event)
   end
 
   application_command(:music).group(:currently) do |group|
     group.subcommand(:playing) do |event|
       event.defer(ephemeral: true)
-      music_current(event)
+      Music.current(event)
     end
   end
 
   button(custom_id: REGEX[8]) do |event|
     event.defer_update
-    music_pages(event)
+    Music.pages(event)
   end
 
   interaction_create(type: 4) do |event|
-    music_search(event)
+    Music.search(event)
   end
 
   voice_server_update do |event|

@@ -12,30 +12,30 @@ module AffectionCommands
   extend Discordrb::EventContainer
 
   application_command(:hug) do |event|
-    hug_member(event)
+    Affections.hug(event)
   end
 
   application_command(:nom) do |event|
-    nom_member(event)
+    Affections.nom(event)
   end
 
   application_command(:bonk) do |event|
-    bonk_member(event)
+    Affections.bonk(event)
   end
 
   application_command(:poke) do |event|
-    poke_member(event)
+    Affections.poke(event)
   end
 
   application_command(:punch) do |event|
-    punch_member(event)
+    Affections.punch(event)
   end
 
   application_command(:sleep) do |event|
-    sleep_member(event)
+    Affections.bedtime(event)
   end
 
   application_command(:angered) do |event|
-    angry_member(event)
+    Affections.anger(event)
   end
 end

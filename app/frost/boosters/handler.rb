@@ -11,17 +11,17 @@ module BoosterPerks
   application_command(:booster).group(:role) do |group|
     group.subcommand(:claim) do |event|
       event.defer(ephemeral: false)
-      create_role(event)
+      Boosters.create(event)
     end
 
     group.subcommand(:delete) do |event|
       event.defer(ephemeral: true)
-      delete_role(event)
+      Boosters.delete(event)
     end
 
     group.subcommand(:edit) do |event|
       event.defer(ephemeral: false)
-      edit_role(event)
+      Boosters.edit(event)
     end
   end
 end
