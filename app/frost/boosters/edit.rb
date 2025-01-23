@@ -3,6 +3,11 @@
 module Boosters
   # Command handler for /booster role edit.
   def self.edit(data)
+    if data.options.empty?
+      data.edit_response(content: "#{RESPONSE[2]} #{EMOJI[2]}")
+      return
+    end
+
     unless data.server.bot.permission?(:manage_roles)
       data.edit_response(content: RESPONSE[47])
       return
