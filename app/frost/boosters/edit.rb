@@ -38,13 +38,15 @@ module Boosters
       return
     end
 
-    data.server.update_role(
+    payload = {
       role: Frost::Boosters::Members.role(data),
-      name: data.options["name"],
       colour: resolve_color(data.options["color"]),
+      name: data.options["name"],
       icon: resolve_icon(data),
       reason: REASON[2]
-    )
+    }
+
+    data.server.update_role(**payload)
 
     data.edit_response(content: "#{RESPONSE[2]} #{EMOJI[2]}")
   end

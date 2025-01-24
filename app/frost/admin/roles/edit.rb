@@ -26,13 +26,15 @@ def roles_edit(data)
     return
   end
 
-  data.server.update_role(
+  payload = {
+    colour: resolve_color(data.options["color"]),
     role: data.options["role"],
     name: data.options["name"],
-    colour: resolve_color(data.options["color"]),
     icon: resolve_icon(data),
     reason: REASON[5]
-  )
+  }
+
+  data.server.update_role(**payload)
 
   data.edit_response(content: "#{RESPONSE[2]} #{EMOJI[3]}")
 end

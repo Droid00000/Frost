@@ -3,13 +3,13 @@
 module Boosters
   # Command handler for /booster role delete.
   def self.delete(data)
-    unless data.user.boosting?
-      data.edit_response(content: RESPONSE[8])
+    unless data.server.bot.permission?(:manage_roles)
+      data.edit_response(content: RESPONSE[47])
       return
     end
 
-    unless data.server.bot.permission?(:manage_roles)
-      data.edit_response(content: RESPONSE[47])
+    unless data.user.boosting?
+      data.edit_response(content: RESPONSE[8])
       return
     end
 
@@ -28,7 +28,9 @@ module Boosters
       return
     end
 
-    data.server.role(Frost::Boosters::Members.role(data))&.delete(REASON[3])
+    role = Frost::Boosters::Members.role(data)
+
+    data.server.role(role)&.delete(REASON[3])
 
     Frost::Boosters::Members.delete(data)
 

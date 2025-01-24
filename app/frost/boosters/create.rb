@@ -38,12 +38,14 @@ module Boosters
       return
     end
 
-    role = data.server.create_role(
-      name: data.options["name"],
+    payload = {
       colour: resolve_color(data.options["color"]),
+      name: data.options["name"],
       icon: resolve_icon(data),
       reason: REASON[1]
-    )
+    }
+
+    role = data.server.create_role(**payload)
 
     data.user.add_role(role, REASON[1])
 
