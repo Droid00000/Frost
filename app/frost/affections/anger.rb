@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Affections
-  # Get med at a member.
+  # Get mad at a member.
   def self.anger(data)
     data.respond(content: data.member("target").mention) do |builder|
       builder.add_embed do |embed|
