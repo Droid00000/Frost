@@ -18,7 +18,7 @@ module Moderation
       return
     end
 
-    if data.member("member").hierarchy >= data.user.hierarchy
+    if data.member("member").highest_role.position >= data.user.highest_role.position
       data.edit_response(content: RESPONSE[58])
       return
     end
