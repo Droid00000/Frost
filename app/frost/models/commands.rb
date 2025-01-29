@@ -219,6 +219,34 @@ bot.register_application_command(:music, 'Connect and play songs!', contexts: [0
   end
 end
 
+# @!function [Birthday Operations] Belongs to a cog that manages birthday roles!
+bot.register_application_command(:birthday, 'birthday roles', contexts: [0], integration_types: [0]) do |command|
+  command.subcommand('set', 'Set your date of birth.') do |option|
+    option.string('date', 'Your date of birth in the mm/dd format.', required: true, min_length: 5, max_length: 5)
+    option.string('timezone', 'Your timezone identifier, for example, Asia/Baku.', required: true, min_length: 5, max_length: 75)
+    option.boolean('announcement', 'Should a happy birthday message be posted on your birthday?', required: true)
+  end
+
+  command.subcommand('edit', 'Edit your date of birth or timezone.') do |option|
+    option.string('date', 'Your date of birth in the mm/dd format.', required: false, min_length: 5, max_length: 5)
+    option.string('timezone', 'Your timezone identifier (e.g., Asia/Baku).', required: false, min_length: 5, max_length: 75)
+    option.boolean('announcement', 'Should a happy birthday message be posted on your birthday?', required: false)
+  end
+
+  command.subcommand('delete', 'Remove your date of birth from the bot.')
+
+  command.subcommand_group(:admin, 'Birthday admin!') do |group|
+    group.subcommand('setup', "Setup the birthday roles functionality.") do |option|
+      option.role('role', 'Which role should members be given on their birthday?', required: true)
+      option.channel('channel', 'Which channel should birthday announcements be sent to?', required: false)
+    end
+
+    group.subcommand('disable', 'Disable the birthday roles functionality.') do |option|
+      option.boolean('prune', 'Should all birthdays be removed from the database?', required: true)
+    end
+  end
+end
+
 # @!function [Booster Operations] Belongs to a cog that manages booster roles!
 bot.register_application_command(:booster, 'Booster perks', contexts: [0], integration_types: [0]) do |command|
   command.subcommand_group(:role, 'Booster roles!') do |group|

@@ -23,6 +23,14 @@ CREATE TABLE IF NOT EXISTS booster_settings (
   PRIMARY KEY (hoist_role, guild_id)
 );
 
+-- Holds info about birthday settings.
+CREATE TABLE IF NOT EXISTS birthday_settings (
+  role_id BIGINT NOT NULL,
+  guild_id BIGINT NOT NULL,
+  channel_id BIGINT DEFAULT NULL,
+  PRIMARY KEY (role_id, guild_id)
+);
+
 -- Holds info about snowball players.
 CREATE TABLE IF NOT EXISTS snowball_players (
   user_id BIGINT NOT NULL UNIQUE,
@@ -42,6 +50,16 @@ CREATE TABLE IF NOT EXISTS guild_boosters (
   user_id BIGINT NOT NULL,
   role_id BIGINT NOT NULL,
   guild_id BIGINT NOT NULL,
+  PRIMARY KEY (user_id, guild_id)
+);
+
+-- Holds info about member birthdays.
+CREATE TABLE IF NOT EXISTS guild_birthdays (
+  active BOOLEAN NOT NULL,
+  notify BOOLEAN NOT NULL,
+  user_id BIGINT NOT NULL,
+  guild_id BIGINT NOT NULL,
+  birthday TIMESTAMPTZ NOT NULL,
   PRIMARY KEY (user_id, guild_id)
 );
 
