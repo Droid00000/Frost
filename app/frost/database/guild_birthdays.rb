@@ -11,7 +11,7 @@ module Frost
     # Edit an existing birthday in the DB.
     def self.edit(data, **keys)
       POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id, user_id: data.user.id).update(@@pg.insert(**keys))
+        @@pg.where(guild_id: data.server.id, user_id: data.user.id).update(**keys)
       end
     end
 
@@ -61,14 +61,14 @@ module Frost
       @@pg = POSTGRES[:guild_birthdays]
 
       # Edit an existing birthday in the DB.
-      def self.edit(**data)
+      def self.edit(data, **keys)
         POSTGRES.transaction do
-          @@pg.where(guild_id: data[:guild]).update(@@pg.insert(**data))
+          @@pg.where(guild_id: data.server.id).update(**keys)
         end
       end
 
       # Insert a new birthday into the DB.
-      def self.setup(**data)
+      def self.setup(data)
         POSTGRES.transaction do
           @@pg.insert(**data)
         end
