@@ -9,9 +9,9 @@ module Frost
     @@pg = POSTGRES[:guild_birthdays]
 
     # Edit an existing birthday in the DB.
-    def self.edit(data, **keys)
+    def self.edit(*data)
       POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id, user_id: data.user.id).update(**keys)
+        @@pg.where(guild_id: data[0].server.id, user_id: data[0].user.id).update(**data[1])
       end
     end
 
@@ -23,9 +23,9 @@ module Frost
     end
 
     # Get a user from the DB.
-    def self.user(data, **key)
+    def self.user(*data)
       POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id, user_id: data.user.id).get(**key.values.first.to_sym)
+        @@pg.where(guild_id: data[0].server.id, user_id: data[0].user.id).get(data[1])
       end
     end
 
@@ -58,12 +58,12 @@ module Frost
     # Represents a birthday settings DB.
     class Settings
       # Easy way to access the DB.
-      @@pg = POSTGRES[:guild_birthdays]
+      @@pg = POSTGRES[:birthday_settings]
 
       # Edit an existing birthday in the DB.
-      def self.edit(data, **keys)
+      def self.edit(*data)
         POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id).update(**keys)
+          @@pg.where(guild_id: data[0].server.id).update(**data[1])
         end
       end
 
@@ -91,7 +91,7 @@ module Frost
       # Get the role from the DB.
       def self.role(data)
         POSTGRES.transaction do
-          @@pg.where(guild_id: data.id).get(:role_id)
+          @@pg.where(guild_id: data.server.id).get(:role_id)
         end
       end
     end

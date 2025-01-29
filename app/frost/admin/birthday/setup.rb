@@ -13,11 +13,11 @@ def setup_birthdays(data)
   }.compact
 
   if Frost::Birthdays::Settings.role(data)
-    Frost::Birthdays::Settings.update(data, payload)
+    Frost::Birthdays::Settings.edit(data, payload)
   end
 
   unless Frost::Birthdays::Settings.role(data)
-    Frost::Birthdays::Settings.setup(data)
+    Frost::Birthdays::Settings.setup(payload)
   end
 
   data.edit_response(content: RESPONSE[1])

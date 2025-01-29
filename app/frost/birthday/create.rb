@@ -10,10 +10,11 @@ module Birthday
 
     begin
       date = Time.parse(data.options["date"])
-      zone = TZInfo::Timezone.get(data.options["timezone"].split("/").map!(&:capitalize))
+      zone = TZInfo::Timezone.get(data.options["timezone"].split("/").map!(&:capitalize).join("/"))
       date = zone.local_time(date.year, date.month, date.day)
     rescue StandardError
       data.edit_response(content: RESPONSE[1])
+      return
     end
 
     active = (date.month == Time.now.month) && (date.day == Time.now.day) ? true : false

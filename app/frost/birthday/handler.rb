@@ -4,7 +4,7 @@ require_relative "edit"
 require_relative "create"
 require_relative "delete"
 
-module BirthdayRoles
+module BirthdayCommands
   extend Discordrb::EventContainer
 
   application_command(:birthday).subcommand(:delete) do |event|
