@@ -114,7 +114,8 @@ RESPONSE = {
   110 => "Successfully updated your notification settings for this server.",
   112 => "You've already set your birthday.",
   113 => "You must provide at least one option.",
-  114 => "Happiest of birthdays <@%s>! I hope you have an amazing one! %s"
+  114 => "Happiest of birthdays <@%s>! I hope you have an amazing one! %s",
+  115 => "You must provide a role when setting up this feature."
 }.freeze
 
 # Values for embed responses.

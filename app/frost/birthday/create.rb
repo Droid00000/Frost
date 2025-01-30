@@ -13,15 +13,15 @@ module Birthday
       return
     end
 
-    begin
+    #begin
       date = DateTime.parse(data.options["date"])
-      zone = TZInfo::Timezone.get(data.options["timezone"].split("/").map!(&:capitalize).join("/"))
+      zone = TZInfo::Timezone.get(data.options["timezone"].split("/").map { |tz| tz.split(/[\s_]+/).map(&:capitalize).join("_") }.join("/"))
       year = date.month < Time.now.month ? date.year + 1 : date.year
       date = zone.local_time(year, date.month, date.day)
-    rescue StandardError
-      data.edit_response(content: RESPONSE[105])
-      return
-    end
+    #rescue StandardError
+    #  data.edit_response(content: RESPONSE[105])
+    #  return
+    #end
 
     active = (date.month == Time.now.month) && (date.day == Time.now.day) ? true : false
 

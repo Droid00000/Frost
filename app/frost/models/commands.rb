@@ -237,7 +237,7 @@ bot.register_application_command(:birthday, 'birthday roles', contexts: [0], int
 
   command.subcommand_group(:admin, 'Birthday admin!') do |group|
     group.subcommand('setup', "Setup the birthday roles functionality.") do |option|
-      option.role('role', 'Which role should members be given on their birthday?', required: true)
+      option.role('role', 'Which role should members be given on their birthday?', required: false)
       option.channel('channel', 'Which channel should birthday announcements be sent to?', types: [:text], required: false)
     end
 

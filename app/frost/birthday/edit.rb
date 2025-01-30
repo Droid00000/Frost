@@ -27,8 +27,7 @@ module Birthday
       end
 
       if data.options["timezone"]
-        zone = data.options["timezone"].split("/").map { |tz| tz.split(" ").map(&:capitalize).join(" ") }.join("/").sub(" ", "_")
-        zone = TZInfo::Timezone.get(zone)
+        zone = TZInfo::Timezone.get(data.options["timezone"].split("/").map { |tz| tz.split(/[\s_]+/).map(&:capitalize).join("_") }.join("/"))
         old_birthday = zone.local_time(old_birthday.year, old_birthday.month, old_birthday.day)
       end
     rescue StandardError
