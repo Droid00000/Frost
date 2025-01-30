@@ -52,7 +52,7 @@ RESPONSE = {
   48 => "The bot needs to have the ``manage expressions`` permission to do this.",
   49 => "The bot needs to have the ``manage channels`` permission to do this.",
   50 => "Successfully restarting the bot.",
-  51 => "The bot needs to have the ``ban members`` permission to do this.",
+  51 => "You need to have the ``administrator`` permission to do this.",
   52 => "The bot needs to have the ``manage server`` permission to do this.",
   53 => "Successfully banned **%s** user(s).",
   54 => "You do not have permission to ban any user you've specified.",
@@ -103,7 +103,17 @@ RESPONSE = {
   99 => "The bot doesn't have permission to move to this channel.",
   100 => "Successfully moved channels.",
   101 => "This command can't be used here.",
-  102 => "This index is greater than the size of the queue."
+  102 => "This index is greater than the size of the queue.",
+  103 => "You haven't set your birthday.",
+  104 => "This server hasn't enabled birthday perks.",
+  105 => "I failed to process your birthday or timezone.",
+  106 => "Successfully deleted your birthday from the database.",
+  107 => "Success! Your next birthday should occur on <t:%s:d>.",
+  108 => "Successfully setup birthday perks for this server.",
+  109 => "Successfully disabled birthday perks for this server.",
+  110 => "Successfully updated your notification settings for this server.",
+  112 => "You've already set your birthday.",
+  113 => "You must provide at least one option."
 }.freeze
 
 # Values for embed responses.

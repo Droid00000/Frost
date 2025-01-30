@@ -2,7 +2,7 @@
 
 def setup_birthdays(data)
   unless data.user.permission?(:administrator)
-    data.edit_response(content: RESPONSE[1])
+    data.edit_response(content: RESPONSE[51])
     return
   end
 
@@ -20,5 +20,5 @@ def setup_birthdays(data)
     Frost::Birthdays::Settings.setup(payload)
   end
 
-  data.edit_response(content: RESPONSE[1])
+  data.edit_response(content: RESPONSE[108])
 end

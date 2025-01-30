@@ -4,16 +4,22 @@ module Birthday
   # setup and add your birthday.
   def self.create(data)
     unless Frost::Birthdays::Settings.role(data)
-      data.edit_response(content: RESPONSE[1])
+      data.edit_response(content: RESPONSE[104])
+      return
+    end
+
+    if Frost::Birthdays.user?(data)
+      data.edit_response(content: RESPONSE[112])
       return
     end
 
     begin
-      date = Time.parse(data.options["date"])
+      date = DateTime.parse(data.options["date"])
       zone = TZInfo::Timezone.get(data.options["timezone"].split("/").map!(&:capitalize).join("/"))
-      date = zone.local_time(date.year, date.month, date.day)
+      year = date.month < Time.now.month ? date.year + 1 : date.year
+      date = zone.local_time(year, date.month, date.day)
     rescue StandardError
-      data.edit_response(content: RESPONSE[1])
+      data.edit_response(content: RESPONSE[105])
       return
     end
 
@@ -24,11 +30,11 @@ module Birthday
       notify: data.options["announcement"],
       user_id: data.user.id,
       guild_id: data.server.id,
-      birthday: date.iso8601
+      birthday: date.to_time.iso8601
     }
 
     Frost::Birthdays.add(**payload)
 
-    data.edit_response(content: format(RESPONSE[1]))
+    data.edit_response(content: format(RESPONSE[107], date.to_time.to_i))
   end
 end

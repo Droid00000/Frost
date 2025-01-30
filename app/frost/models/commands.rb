@@ -222,13 +222,13 @@ end
 # @!function [Birthday Operations] Belongs to a cog that manages birthday roles!
 bot.register_application_command(:birthday, 'birthday roles', contexts: [0], integration_types: [0]) do |command|
   command.subcommand('set', 'Set your date of birth.') do |option|
-    option.string('date', 'Your date of birth in the mm/dd format.', required: true, min_length: 5, max_length: 5)
+    option.string('date', 'Your date of birth in the mm/dd format.', required: true, min_length: 3, max_length: 5)
     option.string('timezone', 'Your timezone identifier, for example, Asia/Baku.', required: true, min_length: 5, max_length: 75)
     option.boolean('announcement', 'Should a happy birthday message be posted on your birthday?', required: true)
   end
 
   command.subcommand('edit', 'Edit your date of birth or timezone.') do |option|
-    option.string('date', 'Your date of birth in the mm/dd format.', required: false, min_length: 5, max_length: 5)
+    option.string('date', 'Your date of birth in the mm/dd format.', required: false, min_length: 3, max_length: 5)
     option.string('timezone', 'Your timezone identifier (e.g., Asia/Baku).', required: false, min_length: 5, max_length: 75)
     option.boolean('announcement', 'Should a happy birthday message be posted on your birthday?', required: false)
   end

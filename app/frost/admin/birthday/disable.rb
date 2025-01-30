@@ -2,7 +2,7 @@
 
 def disable_birthdays(data)
   unless data.user.permission?(:administrator)
-    data.edit_response(content: RESPONSE[1])
+    data.edit_response(content: RESPONSE[51])
     return
   end
 
@@ -12,5 +12,5 @@ def disable_birthdays(data)
     Frost::Birthdays.prune(data)
   end
 
-  data.edit_response(content: RESPONSE[1])
+  data.edit_response(content: RESPONSE[109])
 end
