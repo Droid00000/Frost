@@ -113,7 +113,8 @@ RESPONSE = {
   109 => "Successfully disabled birthday perks for this server.",
   110 => "Successfully updated your notification settings for this server.",
   112 => "You've already set your birthday.",
-  113 => "You must provide at least one option."
+  113 => "You must provide at least one option.",
+  114 => "Happiest of birthdays <@%s>! I hope you have an amazing one! %s"
 }.freeze
 
 # Values for embed responses.
@@ -412,7 +413,8 @@ EMOJI = {
   4 => "<:AnyaPeek_Enzo:1276327731113627679>",
   5 => "<a:LoidDance_Maomao:1295667431674482741>",
   6 => "<a:LoidBell_Maomao:1295667609961758731>",
-  7 => "<:AnyaPlead_Maomao:1310804270240628816>"
+  7 => "<:AnyaPlead_Maomao:1310804270240628816>",
+  8 => "<:DevsGrandson:1334337064317095936>"
 }.freeze
 
 # UI components including color values.

@@ -7,7 +7,7 @@ module Birthday
       data.edit_response(content: RESPONSE[103])
       return
     end
-    
+
     Frost::Birthdays.delete(data)
 
     data.edit_response(content: format(RESPONSE[106]))

@@ -44,7 +44,7 @@ module Birthday
       data.edit_response(content: RESPONSE[110])
       return
     end
-    
+
     data.edit_response(content: format(RESPONSE[107], old_birthday&.to_time&.to_i))
   end
 end

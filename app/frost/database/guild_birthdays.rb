@@ -43,6 +43,20 @@ module Frost
       end
     end
 
+    # Mark a member as having a birthday role.
+    def self.mark(*data)
+      POSTGRES.transaction do
+        @@pg.where(guild_id: data[0], user_id: data[1]).update(active: true)
+      end
+    end
+
+    # Unmark a member from having the birthday role.
+    def self.unmark(*data)
+      POSTGRES.transaction do
+        @@pg.where(guild_id: data[0], user_id: data[1]).update(active: false)
+      end
+    end
+
     # Insert a new birthday into the DB.
     def self.add(data)
       POSTGRES.transaction do
@@ -77,7 +91,7 @@ module Frost
       # Get the channel from the DB.
       def self.channel(data)
         POSTGRES.transaction do
-          @@pg.where(guild_id: data.id).get(:channel_id)
+          @@pg.where(guild_id: data).get(:channel_id)
         end
       end
 
@@ -92,6 +106,13 @@ module Frost
       def self.role(data)
         POSTGRES.transaction do
           @@pg.where(guild_id: data.server.id).get(:role_id)
+        end
+      end
+
+      # Get the role from the DB.
+      def self.fetch_role(data)
+        POSTGRES.transaction do
+          @@pg.where(guild_id: data).get(:role_id)
         end
       end
     end
