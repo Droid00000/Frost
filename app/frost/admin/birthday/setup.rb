@@ -12,7 +12,7 @@ def setup_birthdays(data)
     channel_id: data.options["channel"]
   }.compact
 
-  unless Frost::Birthdays::Settings.role(data) && data.options["role"]
+  if !Frost::Birthdays::Settings.role(data) && !data.options["role"]
     data.edit_response(content: RESPONSE[115])
     return
   end
