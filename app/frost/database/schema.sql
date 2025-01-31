@@ -56,10 +56,10 @@ CREATE TABLE IF NOT EXISTS guild_boosters (
 -- Holds info about member birthdays.
 CREATE TABLE IF NOT EXISTS guild_birthdays (
   active BOOLEAN NOT NULL,
-  notify BOOLEAN NOT NULL,
   user_id BIGINT NOT NULL,
   guild_id BIGINT NOT NULL,
-  birthday TIMESTAMPTZ NOT NULL,
+  birthday TIMESTAMP NOT NULL,
+  timezone VARCHAR(75) NOT NULL,
   PRIMARY KEY (user_id, guild_id)
 );
 

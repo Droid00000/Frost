@@ -57,6 +57,13 @@ module Frost
       end
     end
 
+    # Check if there are any birthdays for this timezone.
+    def self.zone(zone)
+      POSTGRES.transaction do
+        !@@pg.where(timezone: zone).empty?
+      end
+    end
+
     # Insert a new birthday into the DB.
     def self.add(data)
       POSTGRES.transaction do

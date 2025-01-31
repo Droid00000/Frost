@@ -19,31 +19,27 @@ module Birthday
     end
 
     begin
-      old_birthday = Frost::Birthdays.user(data, :birthday)
-
-      if data.options["date"]
-        new_date = DateTime.parse(data.options["date"])
-        old_birthday = DateTime.parse(old_birthday.strftime("%Y-#{new_date.month}-#{new_date.day}T%H:%M:%S%:z"))
-      end
+      date = Time.parse(data.options["date"]) if data.options["date"]
 
       if data.options["timezone"]
-        zone = TZInfo::Timezone.get(data.options["timezone"].split("/").map { |tz| tz.split(/[\s_]+/).map(&:capitalize).join("_") }.join("/"))
-        old_birthday = zone.local_time(old_birthday.year, old_birthday.month, old_birthday.day)
+        raw_timezone = data.options["timezone"]
+
+        split = data.options["timezone"].split("/").map do |part|
+          part.split(/[\s_]+/).map(&:capitalize).join("_")
+        end
+
+        zone = TZInfo::Timezone.get(split.join("/"))
       end
+
     rescue StandardError
       data.edit_response(content: RESPONSE[105])
       return
     end
 
-    payload = { notify: data.options["announcement"], birthday: old_birthday&.to_time&.iso8601 }.compact
+    payload = { birthday: date&.iso8601, timezone: zone&.identifier }.compact
 
     Frost::Birthdays.edit(data, payload)
 
-    if old_birthday.nil? && data.options["announcement"]
-      data.edit_response(content: RESPONSE[110])
-      return
-    end
-
-    data.edit_response(content: format(RESPONSE[107], old_birthday&.to_time&.to_i))
+    data.edit_response(content: format(RESPONSE[107], date&.to_time&.to_i))
   end
 end
