@@ -18,7 +18,7 @@ module Birthday
       return
     end
 
-    if Birthday.timezone(data).nil? && !data.options["timezone"]
+    if Birthday.timezone(data).nil? && data.options["timezone"]
       data.edit_response(content: RESPONSE[105])
       return
     end
@@ -34,6 +34,6 @@ module Birthday
 
     Frost::Birthdays.edit(data, payload.compact)
 
-    data.edit_response(content: RESPONSE[107])
+    data.edit_response(content: RESPONSE[117])
   end
 end

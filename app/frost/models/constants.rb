@@ -108,7 +108,7 @@ RESPONSE = {
   104 => "This server hasn't enabled birthday perks.",
   105 => "I failed to process your birthday or timezone.",
   106 => "Successfully deleted your birthday from the database.",
-  107 => "Success! Your next birthday should occur on <t:%s:d>.",
+  107 => "Successfully added your birthday!",
   108 => "Successfully setup birthday perks for this server.",
   109 => "Successfully disabled birthday perks for this server.",
   110 => "Successfully updated your notification settings for this server.",
@@ -116,7 +116,8 @@ RESPONSE = {
   113 => "You must provide at least one option.",
   114 => "**Happy Birthday <@%s>!** I hope you have an amazing one, thanks for spending some time with us! %s",
   115 => "You must provide a role when setting up this feature.",
-  116 => "Successfully updated birthday perks for this server."
+  116 => "Successfully updated birthday perks for this server.",
+  117 => "Successfully updated your birthday!"
 }.freeze
 
 # Values for embed responses.
