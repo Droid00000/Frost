@@ -349,7 +349,9 @@ EMBED = {
   249 => "Enables birthday perks for this server.",
   250 => "Diables birthday perks for this server.",
   251 => "Removes your birthday from the database.",
-  252 => "BIRTHDAY"
+  252 => "BIRTHDAY",
+  253 => "``/birthdays``",
+  254 => "**Role:** <@&%s>"
 }.freeze
 
 # The audit log reason shown whenever the bot does something.

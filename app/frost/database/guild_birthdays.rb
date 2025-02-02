@@ -114,6 +114,20 @@ module Frost
         end
       end
 
+      # Removes all instances of this role.
+      def self.remove(data)
+        POSTGRES.transaction do
+          @@pg.where(role_id: data.id, guild_id: data.server.id).delete
+        end
+      end
+
+      # Removes all instances of this channel.
+      def self.remove(data)
+        POSTGRES.transaction do
+          @@pg.where(channel_id: data.id, guild_id: data.server.id).delete
+        end
+      end
+
       # Get the role from the DB.
       def self.fetch_role(data)
         POSTGRES.transaction do
