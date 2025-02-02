@@ -18,28 +18,22 @@ module Birthday
       return
     end
 
-    begin
-      date = Time.parse(data.options["date"]) if data.options["date"]
-
-      if data.options["timezone"]
-        raw_timezone = data.options["timezone"]
-
-        split = data.options["timezone"].split("/").map do |part|
-          part.split(/[\s_]+/).map(&:capitalize).join("_")
-        end
-
-        zone = TZInfo::Timezone.get(split.join("/"))
-      end
-
-    rescue StandardError
+    if Birthday.timezone(data).nil? && !data.options["timezone"]
       data.edit_response(content: RESPONSE[105])
       return
     end
 
-    payload = { birthday: date&.iso8601, timezone: zone&.identifier }.compact
+    if data.options["date"]
+      date = Time.parse(data.options["date"])
+    end
 
-    Frost::Birthdays.edit(data, payload)
+    payload = {
+      birthday: date&.iso8601,
+      timezone: Birthday.timezone(data)
+    }
 
-    data.edit_response(content: format(RESPONSE[107], date&.to_time&.to_i))
+    Frost::Birthdays.edit(data, payload.compact)
+
+    data.edit_response(content: RESPONSE[107])
   end
 end

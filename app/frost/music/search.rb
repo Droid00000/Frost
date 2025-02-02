@@ -3,7 +3,7 @@
 module Music
   # Search for tracks.
   def self.search(data)
-    return if data.resolve_options["song"].empty?
+    return unless data.resolve_options["song"]
 
     if CALLIOPE.send(:url?, data.resolve_options["song"])
       search = CALLIOPE.search(data.resolve_options["song"])

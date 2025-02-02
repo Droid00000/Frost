@@ -7,6 +7,7 @@ require_relative "index"
 require_relative "emoji"
 require_relative "admin"
 require_relative "boosters"
+require_relative "birthday"
 require_relative "moderation"
 
 module AdminCommands
@@ -27,6 +28,8 @@ module AdminCommands
       help_music(event)
     when "BOOST"
       help_booster(event)
+    when "BIRTHDAY"
+      help_birthday(event)
     end
   end
 

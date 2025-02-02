@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# frozen_string_literal: true
-
 module Frost
   # Represents a birthday DB.
   class Birthdays

@@ -203,7 +203,7 @@ module Discordrb
           { name: name }.to_json,
           Authorization: token,
           content_type: :json,
-          'X-Audit-Log-Reason': reason
+          "X-Audit-Log-Reason": reason
         )
       end
 
@@ -212,7 +212,7 @@ module Discordrb
       # sending TTS messages, embedding links, sending files, reading the history, mentioning everybody,
       # connecting to voice, speaking and voice activity (push-to-talk isn't mandatory)
       # https://discord.com/developers/docs/resources/guild#get-guild-roles
-      def create_role(token, server_id, name, colour, hoist, mentionable, packed_permissions, icon, reason = nil, emoji: nil)
+      def create_role(token, server_id, name, colour, _hoist, _mentionable, packed_permissions, icon, reason = nil, emoji: nil)
         if !icon.is_a?(String) && icon
           path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
 
@@ -242,7 +242,7 @@ module Discordrb
       # connecting to voice, speaking and voice activity (push-to-talk isn't mandatory)
       # https://discord.com/developers/docs/resources/guild#batch-modify-guild-role
       # @param icon [:undef, File]
-      def update_role(token, server_id, role_id, name, colour, hoist, mentionable, packed_permissions, icon = :undef, reason = nil, emoji: nil)
+      def update_role(token, server_id, role_id, name, colour, _hoist, _mentionable, _packed_permissions, icon = :undef, reason = nil, emoji: nil)
         if !icon.is_a?(String) && icon
           path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
 
@@ -379,8 +379,8 @@ end
 # Monkey patches to the hash.
 class Hash
   # Get a given key from a hash.
-  def get(k)
-    self[(k&.gsub(/([a-z0-9])([A-Z])/, '\1_\2')&.downcase&.to_sym)]
+  def get(data)
+    self[(data&.gsub(/([a-z0-9])([A-Z])/, '\1_\2')&.downcase&.to_sym)]
   end
 end
 
@@ -391,19 +391,19 @@ module Discordrb
       def resolve_options
         options = @interaction.data["options"]
 
-        case options[0]['type']
+        case options[0]["type"]
         when 2
           options = options[0]
-          @subcommand_group = options['name'].to_sym
-          @subcommand = options['options'][0]['name'].to_sym
-          options = options['options'][0]['options']
+          @subcommand_group = options["name"].to_sym
+          @subcommand = options["options"][0]["name"].to_sym
+          options = options["options"][0]["options"]
         when 1
           options = options[0]
-          @subcommand = options['name'].to_sym
-          options = options['options']
+          @subcommand = options["name"].to_sym
+          options = options["options"]
         end
 
-        options.to_h { |opt| [opt['name'], opt['options'] || opt['value']] }
+        options.to_h { |opt| [opt["name"], opt["options"] || opt["value"]] }
       end
     end
   end

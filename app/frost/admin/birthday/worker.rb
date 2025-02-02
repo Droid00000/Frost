@@ -2,43 +2,51 @@
 
 def process_birthdays(zone)
   Frost::Birthdays.drain.each do |member|
-    return unless Frost::Birthdays.zone(zone.identifier)
+    next if currently_birthday?(member, zone) == false
 
-    utc_birthday = member[:birthday]
+    add_guild_role(member[:guild_id], member[:user_id])
 
-    local_birthday = zone.now.to_time
-
-    next unless member[:active] == false &&
-                utc_birthday.month == zone.now.to_time.month &&
-                utc_birthday.day == zone.now.to_time.day &&
-                zone.identifier == member[:timezone]
-
-                @bot.member(member[:guild_id], member[:user_id]).add_role(Frost::Birthdays::Settings.fetch_role(member[:guild_id]))
-
-    Frost::Birthdays.mark(member[:guild_id], member[:user_id])
     schedule_removal(member[:guild_id], member[:user_id])
 
-    if Frost::Birthdays::Settings.channel(member[:guild_id])
-      begin
-        @bot.channel(Frost::Birthdays::Settings.channel(member[:guild_id])).send_message(format(RESPONSE[114], member[:user_id], EMOJI[8]))
-      rescue Discordrb::Errors::NoPermission
-        true
-      end
-    end
+    send_birthday_message(member[:guild_id], member[:user_id])
   end
 end
 
 Rufus::Scheduler.new.every "60s" do
   TZInfo::Timezone.all.each do |zone|
-    if zone.now.hour == 0 && (0..5).to_a.include?(zone.now.min)
-      process_birthdays(zone)
-    end
+    process_birthdays(zone) if zone.now.hour.zero? && (0..5).to_a.include?(zone.now.min)
   end
 end
 
 def schedule_removal(guild, user)
+  Frost::Birthdays.mark(guild, user)
+
   Rufus::Scheduler.new.in "24h" do
     Frost::Birthdays.unmark(guild, user)
     @bot.member(guild, user).remove_role(Frost::Birthdays::Settings.fetch_role(guild))
   end
+end
+
+def currently_birthday?(member, timezone)
+  return false unless member[:active] == false
+
+  return false unless timezone.identifier == member[:timezone]
+
+  return false unless Frost::Birthdays.zone(timezone.identifier)
+
+  return false unless member[:birthday].day == timezone.now.to_time.day
+
+  false unless member[:birthday].month == timezone.now.to_time.month
+end
+
+def add_guild_role(guild, user)
+  @bot.member(guild, user).add_role(Frost::Birthdays::Settings.fetch_role(guild))
+end
+
+def send_birthday_message(guild, user)
+  message = format(RESPONSE[114], user, EMOJI[8])
+
+  return unless Frost::Birthdays::Settings.channel(guild)
+
+  @bot.channel(Frost::Birthdays::Settings.channel(guild)).send_message(message)
 end

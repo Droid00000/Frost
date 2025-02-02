@@ -10,6 +10,6 @@ module Birthday
 
     Frost::Birthdays.delete(data)
 
-    data.edit_response(content: format(RESPONSE[106]))
+    data.edit_response(content: RESPONSE[106])
   end
 end

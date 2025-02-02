@@ -3,6 +3,7 @@
 require_relative "edit"
 require_relative "create"
 require_relative "delete"
+require_relative "timezone"
 
 module BirthdayCommands
   extend Discordrb::EventContainer
@@ -20,5 +21,9 @@ module BirthdayCommands
   application_command(:birthday).subcommand(:set) do |event|
     event.defer(ephemeral: true)
     Birthday.create(event)
+  end
+
+  interaction_create(type: 4) do |event|
+    Birthday.search(event)
   end
 end

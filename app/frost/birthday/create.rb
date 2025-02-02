@@ -13,36 +13,21 @@ module Birthday
       return
     end
 
-    begin
-      date = Time.parse(data.options["date"])
-
-      if data.options["timezone"]
-        raw_timezone = data.options["timezone"]
-
-        split = data.options["timezone"].split("/").map do |part|
-          part.split(/[\s_]+/).map(&:capitalize).join("_")
-        end
-
-        zone = TZInfo::Timezone.get(split.join("/"))
-      end
-
-    rescue StandardError
+    if Birthday.timezone(data).nil?
       data.edit_response(content: RESPONSE[105])
       return
     end
 
-    active = true if (date.month == Time.now.month) && (date.day == Time.now.day)
-
     payload = {
-      active: !!active,
+      active: false,
       user_id: data.user.id,
       guild_id: data.server.id,
-      birthday: date.iso8601,
-      timezone: zone.identifier
+      timezone: Birthday.timezone(data),
+      birthday: Time.parse(data.options["date"]).iso8601
     }
 
     Frost::Birthdays.add(**payload)
 
-    data.edit_response(content: format(RESPONSE[107], Time.parse(data.options["date"]).to_i))
+    data.edit_response(content: RESPONSE[107])
   end
 end

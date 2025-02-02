@@ -234,19 +234,23 @@ module Frost
 
     # Convert members into their own hash.
     def make_pages
-      @house_role.members.each_with_index.map do |member, count|
+      roles = @house_role.members.each_with_index.map do |member, count|
         "**#{(count + 1).delimit}** — *#{member.display_name}*\n"
-      end.each_slice(30).to_a.each_with_index do |members, count|
+      end
+
+      roles.each_slice(30).to_a.each_with_index do |members, count|
         @hash[count + 1] = members
       end
     end
 
     # Converts tracks into their own hash.
     def make_tracks
-      @music_tracks.each_with_index.map do |track, count|
+      tracks = @music_tracks.each_with_index.map do |track, count|
         "**#{(count + 1).delimit}** — [#{track.name}](#{track.url})\n"
-      end.each_slice(20).to_a.each_with_index do |tracks, count|
-        @hash[count + 1] = tracks
+      end
+
+      tracks.each_slice(20).to_a.each_with_index do |track, count|
+        @hash[count + 1] = track
       end
     end
   end

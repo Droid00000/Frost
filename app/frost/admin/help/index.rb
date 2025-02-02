@@ -5,6 +5,7 @@ def help_index(data)
     components.row do |menu|
       menu.select_menu(custom_id: EMBED[126], placeholder: EMBED[65], min_values: 1) do |options|
         options.option(label: EMBED[57], value: EMBED[81], description: EMBED[61], emoji: 1_320_928_322_804_388_003)
+        options.option(label: EMBED[238], value: EMBED[252], description: EMBED[239], emoji: 1335520417468911617)
         options.option(label: EMBED[66], value: EMBED[85], description: EMBED[67], emoji: 1_320_936_043_020_554_251)
         options.option(label: EMBED[58], value: EMBED[84], description: EMBED[62], emoji: 1_320_971_944_627_146_752)
         options.option(label: EMBED[60], value: EMBED[83], description: EMBED[64], emoji: 1_320_933_556_645_793_822)
