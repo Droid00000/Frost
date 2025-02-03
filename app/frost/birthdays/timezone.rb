@@ -5,20 +5,20 @@ module Birthday
   def self.search(data)
     return unless data.resolve_options["timezone"]
 
-    zones = ZONES.select do |key, value|
-      key.start_with?(data.resolve_options["timezone"].upcase)
+    zones = ::ZONES.select do |key, value|
+      key.to_s.include?(data.resolve_options["timezone"].upcase)
     end
 
     if zones.empty?
       zones = TZInfo::Timezone.all.select do |zone|
-        zone.identifier.start_with?(Birthday.parser(data.resolve_options["timezone"]).join("/"))
+        zone.identifier.include?(Birthday.parser(data.resolve_options["timezone"]).join("/"))
       end
     end
 
     if zones.empty?
-      zones = ZONES.select do |key, value|
+      zones = ::ZONES.filter_map do |key, value|
         value.each do |identifier|
-          identifier.start_with?(data.resolve_options["timezone"])
+          identifier.include?(data.resolve_options["timezone"])
         end
       end
     end
