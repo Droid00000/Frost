@@ -28,7 +28,7 @@ def members_house(data)
 
   if hash[:main].size > 30
     data.edit_response do |builder, components|
-      buttons.row do |component|
+      components.row do |component|
         builder.add_embed do |embed|
           embed.colour = Frost::Houses.cult(data).color
           embed.title = format(EMBED[185], Frost::Houses.cult(data).name)

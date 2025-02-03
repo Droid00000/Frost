@@ -274,6 +274,8 @@ module Discordrb
   class Bot
     # Calculates the intents payload.
     def calculate_intents(intents)
+      LOGGER.mode = :quiet
+      
       intents = [intents] unless intents.is_a? Array
 
       intents.reduce(0) do |sum, intent|
