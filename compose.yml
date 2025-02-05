@@ -10,7 +10,7 @@ services:
     environment:
       - _JAVA_OPTIONS=-Xmx6G
       - SERVER_PORT=2333
-      - LAVALINK_SERVER_PASSWORD=DroidDevelopment
+      - LAVALINK_SERVER_PASSWORD=YOUR_PASSWORD_HERE
     volumes:
       - './application.yml:/opt/Lavalink/application.yml'
       - './plugins/:/opt/Lavalink/plugins/'
