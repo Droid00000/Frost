@@ -101,7 +101,7 @@ bot.register_application_command(:eval, 'Allows the bot owner to execute code.',
 end
 
 # @!function [General Operations] Belongs to a cog that manages general information!
-bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: "32", contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'सेटिंग्स' }, description_localizations: { 'hi' => 'आपना सर्वर कॉन्फिग्रेशन देखो' }) do |option|
+bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: "268443648", contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'सेटिंग्स' }, description_localizations: { 'hi' => 'आपना सर्वर कॉन्फिग्रेशन देखो' }) do |option|
 end
 
 # @!function [General Operations] Belongs to a cog that manages general information!
