@@ -11,8 +11,10 @@ module Frost
       POSTGRES.transaction do
         if hash
           @@pg.where(user_id: data.options["member"]).get(:balance)
-        else
+        elsif @@pg.where(user_id: data.user.id).get(:balance)
           @@pg.where(user_id: data.user.id).get(:balance) >= 1
+        else
+          false
         end
       end
     end
