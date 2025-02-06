@@ -3,10 +3,10 @@
 def handle_roles(data)
   Frost::Roles.remove(data)
 
-  Frost::Boosters.remove_role(data)
-
   Frost::Birthdays::Settings.remove(data)
 
+  Frost::Boosters::Members.remove_role(data)
+  
   Frost::Boosters::Settings.remove_role(data)
 end
 
