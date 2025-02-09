@@ -11,7 +11,7 @@ module Frost
       !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
     end
 
-    # Adds a head of house to the houses DB..
+    # Adds a head of house to the houses DB.
     def self.add(data)
       @@pg.insert(guild_id: data.server.id, user_id: data.user.id, role_id: data.options["role"])
     end
