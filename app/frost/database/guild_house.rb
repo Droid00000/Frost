@@ -16,6 +16,11 @@ module Frost
       @@pg.insert(guild_id: data.server.id, user_id: data.user.id, role_id: data.options["role"])
     end
 
+    # Returns the proper cult role of a member.
+    def self.find(data)
+      data.server.role(@@pg.where(guild_id: data.server.id, user_id: data.user.id).get(:role_id))
+    end
+
     # Returns the cult role of a member.
     def self.cult(data)
       data.server.role(@@pg.where(guild_id: data.server.id, user_id: data.message.interaction.user.id).get(:role_id))

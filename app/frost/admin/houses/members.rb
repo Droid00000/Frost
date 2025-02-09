@@ -18,7 +18,7 @@ def members_house(data)
 
   hash = { main: [], cut: [], id: [] }
 
-  Frost::Houses.cult(data).members.each_with_index do |user, count|
+  Frost::Houses.find(data).members.each_with_index do |user, count|
     hash[:main] << "**#{count + 1}** — *#{user.display_name}*\n"
   end
 
