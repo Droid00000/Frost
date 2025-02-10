@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 def members_page(data)
-  unless data.message.interaction.user.id == data.user.id || CONFIG["Houses"]["STAFF"].include?(data.user.id)
+  unless data.message.initiating_user == data.user.id || CONFIG["Houses"]["STAFF"].include?(data.user.id)
     data.send_message(content: RESPONSE[96], ephemeral: true)
     return
   end

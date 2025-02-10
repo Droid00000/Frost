@@ -30,14 +30,14 @@ def members_house(data)
     data.edit_response do |builder, components|
       components.row do |component|
         builder.add_embed do |embed|
-          embed.colour = Frost::Houses.cult(data).color
-          embed.title = format(EMBED[185], Frost::Houses.cult(data).name)
+          embed.colour = Frost::Houses.find(data).color
+          embed.title = format(EMBED[185], Frost::Houses.find(data).name)
           embed.add_field(name: EMBED[186], value: hash[:cut][0].join, inline: true)
           embed.add_field(name: EMBED[186], value: hash[:cut][1].join, inline: true)
-          embed.description = format(EMBED[184], Frost::Houses.cult(data).members.size.delimit)
+          embed.description = format(EMBED[184], Frost::Houses.find(data).members.size.delimit)
           component.button(style: 1, label: EMBED[183], emoji: EMBED[190], custom_id: hash[:id])
           embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: Frost::Paginator.count(hash[:id]))
-          embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: Frost::Houses.cult(data).icon_url)
+          embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: Frost::Houses.find(data).icon_url)
         end
       end
     end
@@ -47,12 +47,12 @@ def members_house(data)
 
   data.edit_response do |builder|
     builder.add_embed do |embed|
-      embed.colour = Frost::Houses.cult(data).color
-      embed.title = format(EMBED[185], Frost::Houses.cult(data).name)
+      embed.colour = Frost::Houses.find(data).color
+      embed.title = format(EMBED[185], Frost::Houses.find(data).name)
       embed.footer = Discordrb::Webhooks::EmbedFooter.new(text: EMBED[198])
       embed.add_field(name: EMBED[186], value: hash[:main].join, inline: true)
-      embed.description = format(EMBED[184], Frost::Houses.cult(data).members.size.delimit)
-      embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: Frost::Houses.cult(data).icon_url)
+      embed.description = format(EMBED[184], Frost::Houses.find(data).members.size.delimit)
+      embed.thumbnail = Discordrb::Webhooks::EmbedThumbnail.new(url: Frost::Houses.find(data).icon_url)
     end
   end
 end

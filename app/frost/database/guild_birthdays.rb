@@ -69,7 +69,14 @@ module Frost
       end
     end
 
-    # Returns all emojis.
+    # Get all the marked members from the database.
+    def self.marked
+      POSTGRES.transaction do
+        @@pg.where(active: true)
+      end
+    end
+
+    # Returns all birthdays.
     def self.drain
       @@pg
     end

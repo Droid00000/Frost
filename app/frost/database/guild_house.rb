@@ -23,7 +23,7 @@ module Frost
 
     # Returns the cult role of a member.
     def self.cult(data)
-      data.server.role(@@pg.where(guild_id: data.server.id, user_id: data.message.interaction.user.id).get(:role_id))
+      data.server.role(@@pg.where(guild_id: data.server.id, user_id: data.message.initiating_user).get(:role_id))
     end
 
     # The entrite DB.
