@@ -27,9 +27,7 @@ def currently_birthday?(member, timezone)
 
   return false unless timezone.identifier == member[:timezone]
 
-  return false unless Frost::Birthdays.zone(timezone.identifier)
-
   return false unless member[:birthday].day == timezone.now.to_time.day
 
-  false unless member[:birthday].month == timezone.now.to_time.month
+  return false unless member[:birthday].month == timezone.now.to_time.month
 end

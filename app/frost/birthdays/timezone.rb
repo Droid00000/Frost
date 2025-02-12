@@ -43,6 +43,11 @@ module Birthday
     end
   end
 
+  # Get a timezone without any validation.
+  def self.zone(zone)
+    TZInfo::Timezone.get(zone)&.now
+  end
+
   # Get a timezone including error handling.
   def self.timezone(data)
     return nil unless data.options["timezone"]

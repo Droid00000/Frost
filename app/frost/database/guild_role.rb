@@ -35,7 +35,7 @@ module Frost
     end
 
     # Removes all instances of this role.
-    def self.remove(data)
+    def self.remove_role(data)
       POSTGRES.transaction do
         @@pg.where(role_id: data.id, guild_id: data.server.id).delete
       end
