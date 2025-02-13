@@ -390,6 +390,9 @@ UI = {
   8 => 0x849fe8
 }.freeze
 
+# The time zone database source.
+TZInfo::DataSource.set(:zoneinfo)
+
 # The YAML configuration file used by the bot.
 CONFIG = YAML.load_file("#{$LOAD_PATH.first}/config.yml")
 

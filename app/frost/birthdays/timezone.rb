@@ -5,33 +5,27 @@ module Birthday
   def self.search(data)
     return unless data.resolve_options["timezone"]
 
-    zones = ::ZONES.select do |key, value|
-      key.to_s.include?(data.resolve_options["timezone"].upcase)
-    end
+    choices = TZInfo::Country.all.map do |country|
+      next if country.name == "Antarctica"
 
-    if zones.empty?
-      zones = TZInfo::Timezone.all.select do |zone|
-        zone.identifier.include?(Birthday.parser(data.resolve_options["timezone"]).join("/"))
+      country.zone_names.map do |zone|
+        split = zone.split("/").last.gsub("_", " ")
+
+        { name: "#{split}, #{country.name}", value: zone }
       end
     end
 
-    if zones.empty?
-      zones = ::ZONES.filter_map do |key, value|
-        value.each do |identifier|
-          identifier.include?(data.resolve_options["timezone"])
-        end
-      end
+    choices = choices.flatten.compact.reject! do |hash|
+      hash[:value].include?("Antarctica")
     end
 
-    choices = if zones.is_a?(Hash)
-                zones.values.flatten.map! do |zone|
-                  { name: zone, value: zone }
-                end
-              else
-                zones.map! do |zone|
-                  { name: zone, value: zone.identifier }
-                end
-              end
+    choices = choices.uniq.select do |hash|
+      option = data.resolve_options["timezone"]
+
+      hash.values.map(&:downcase).any? do |word|
+        word.include?(option.downcase)
+      end
+    end
 
     data.interaction.create_autocomplete_response(choices.take(25)) unless choices&.empty?
   end
