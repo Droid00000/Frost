@@ -56,6 +56,15 @@ module Frost
       end
     end
 
+    # Search for a specific timezone entry.
+    def self.search(query)
+      hits = @@ts.search(q: query, preset: "Generic")["hits"].map do |hits|
+        hits["document"]["resolved"].take(25)
+      end
+
+      hits.flatten.take(25)
+    end
+
     # Delete all the birthdays for this server.
     def self.prune(data)
       POSTGRES.transaction do
