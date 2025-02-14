@@ -41,6 +41,11 @@ Lavalink:
   URL: ""
   TOKEN: ""
 
+# Information about the typesense node.
+Typesense:
+  NODE: []
+  TOKEN: ""
+
 # Information about a manga chapter.
 Chapter:
   LINK: ""

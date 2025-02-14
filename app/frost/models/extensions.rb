@@ -386,6 +386,14 @@ class Hash
   end
 end
 
+# Monkey patches to the array.
+class Array
+  # Convert all the keys to a hash.
+  def sym
+    first.transform_keys(&:to_sym)
+  end
+end
+
 module Discordrb
   module Events
     # Monkey patches for interactions.

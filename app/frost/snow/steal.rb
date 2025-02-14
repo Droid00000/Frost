@@ -3,7 +3,7 @@
 module Snowballs
   # Steal a snowball.
   def self.steal(data)
-    unless CONFIG["Discord"]["CONTRIBUTORS"].include?(data.user.id)
+    unless CONFIG[:Discord][:CONTRIBUTORS].include?(data.user.id)
       data.edit_response(content: RESPONSE[12])
       return
     end

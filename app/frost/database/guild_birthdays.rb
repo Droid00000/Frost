@@ -6,17 +6,18 @@ module Frost
     # Easy way to access the DB.
     @@pg = POSTGRES[:guild_birthdays]
 
+    # Easy way to search timezones.
+    @@ts = SEARCH.collections['timezones'].documents
+
+    # Search for a generic timezone entry.
+    def self.generic(*data)
+      @@ts.search(q: "Generic", preset: "Generic")["hits"][0]["document"]["resolved"].take(25)
+    end
+
     # Edit an existing birthday in the DB.
     def self.edit(*data)
       POSTGRES.transaction do
         @@pg.where(guild_id: data[0].server.id, user_id: data[0].user.id).update(**data[1])
-      end
-    end
-
-    # Check if a user exists in the DB.
-    def self.user?(data)
-      POSTGRES.transaction do
-        !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
       end
     end
 
@@ -27,17 +28,17 @@ module Frost
       end
     end
 
+    # Check if a user exists in the DB.
+    def self.user?(data)
+      POSTGRES.transaction do
+        !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
+      end
+    end
+
     # Delete the birthday of a user.
     def self.delete(data)
       POSTGRES.transaction do
         @@pg.where(guild_id: data.server.id, user_id: data.user.id).delete
-      end
-    end
-
-    # Delete all the birthdays for this server.
-    def self.prune(data)
-      POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id).delete
       end
     end
 
@@ -55,17 +56,17 @@ module Frost
       end
     end
 
-    # Check if there are any birthdays for this timezone.
-    def self.zone(zone)
+    # Delete all the birthdays for this server.
+    def self.prune(data)
       POSTGRES.transaction do
-        !@@pg.where(timezone: zone).empty?
+        @@pg.where(guild_id: data.server.id).delete
       end
     end
 
-    # Insert a new birthday into the DB.
-    def self.add(data)
+    # Check birthdays for this timezone.
+    def self.zone(zone)
       POSTGRES.transaction do
-        @@pg.insert(**data)
+        !@@pg.where(timezone: zone).empty?
       end
     end
 
@@ -73,6 +74,13 @@ module Frost
     def self.marked
       POSTGRES.transaction do
         @@pg.where(active: true)
+      end
+    end
+
+    # Insert a new birthday into the DB.
+    def self.add(data)
+      POSTGRES.transaction do
+        @@pg.insert(**data)
       end
     end
 
@@ -86,6 +94,13 @@ module Frost
       # Easy way to access the DB.
       @@pg = POSTGRES[:birthday_settings]
 
+      # Removes all instances of this role.
+      def self.remove(data)
+        POSTGRES.transaction do
+          @@pg.where(role_id: data.id, guild_id: data.server.id).delete
+        end
+      end
+
       # Edit an existing birthday in the DB.
       def self.edit(*data)
         POSTGRES.transaction do
@@ -93,10 +108,10 @@ module Frost
         end
       end
 
-      # Insert a new birthday into the DB.
-      def self.setup(data)
+      # Get the role from the DB.
+      def self.role(data)
         POSTGRES.transaction do
-          @@pg.insert(**data)
+          @@pg.where(guild_id: data.server.id).get(:role_id)
         end
       end
 
@@ -115,23 +130,16 @@ module Frost
       end
 
       # Get the role from the DB.
-      def self.role(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id).get(:role_id)
-        end
-      end
-
-      # Removes all instances of this role.
-      def self.remove(data)
-        POSTGRES.transaction do
-          @@pg.where(role_id: data.id, guild_id: data.server.id).delete
-        end
-      end
-
-      # Get the role from the DB.
       def self.fetch_role(data)
         POSTGRES.transaction do
           @@pg.where(guild_id: data).get(:role_id)
+        end
+      end
+
+      # Insert a new birthday into the DB.
+      def self.setup(data)
+        POSTGRES.transaction do
+          @@pg.insert(**data)
         end
       end
     end

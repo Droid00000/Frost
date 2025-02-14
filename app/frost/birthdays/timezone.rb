@@ -5,29 +5,13 @@ module Birthday
   def self.search(data)
     return unless data.resolve_options["timezone"]
 
-    choices = TZInfo::Country.all.map do |country|
-      next if country.name == "Antarctica"
+    choices = if data.resolve_options["timezone"].empty?
+                Frost::Birthdays.generic
+              else
+                Frost::Birthdays.search(data.resolve_options["timezone"])
+              end
 
-      country.zone_names.map do |zone|
-        split = zone.split("/").last.gsub("_", " ")
-
-        { name: "#{split}, #{country.name}", value: zone }
-      end
-    end
-
-    choices = choices.flatten.compact.reject! do |hash|
-      hash[:value].include?("Antarctica")
-    end
-
-    choices = choices.uniq.select do |hash|
-      option = data.resolve_options["timezone"]
-
-      hash.values.map(&:downcase).any? do |word|
-        word.include?(option.downcase)
-      end
-    end
-
-    data.interaction.create_autocomplete_response(choices.take(25)) unless choices&.empty?
+    data.interaction.create_autocomplete_response(choices) unless choices&.empty?
   end
 
   # Parse the timezone.

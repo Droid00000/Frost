@@ -6,7 +6,7 @@ def owner_status(data)
     return
   end
 
-  unless CONFIG["Discord"]["CONTRIBUTORS"].include?(data.user.id)
+  unless CONFIG[:Discord][:CONTRIBUTORS].include?(data.user.id)
     data.edit_response(content: RESPONSE[12])
     return
   end

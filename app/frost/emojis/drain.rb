@@ -3,7 +3,7 @@
 module Emojis
   # Drain the emoji cache.
   def self.drain(data)
-    unless data.user.id == CONFIG["Discord"]["OWNER"]
+    unless data.user.id == CONFIG[:Discord][:OWNER]
       data.edit_response(content: RESPONSE[18])
       return
     end

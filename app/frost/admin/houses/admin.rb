@@ -29,7 +29,7 @@ def admin_houses_menu(data)
 end
 
 def admin_house(data)
-  unless CONFIG["Houses"]["STAFF"].include?(data.user.id)
+  unless CONFIG[:Houses][:STAFF].include?(data.user.id)
     data.send_message(content: RESPONSE[96], ephemeral: true)
     return
   end
@@ -77,7 +77,7 @@ def admin_house(data)
 end
 
 def staff_page(data)
-  unless CONFIG["Houses"]["STAFF"].include?(data.user.id)
+  unless CONFIG[:Houses][:STAFF].include?(data.user.id)
     data.send_message(content: RESPONSE[96], ephemeral: true)
     return
   end

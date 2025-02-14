@@ -394,15 +394,18 @@ UI = {
 TZInfo::DataSource.set(:zoneinfo)
 
 # The YAML configuration file used by the bot.
-CONFIG = YAML.load_file("#{$LOAD_PATH.first}/config.yml")
+CONFIG = YAML.load_file("#{$LOAD_PATH.first}/config.yml", symbolize_names: true)
 
 # The Postgres database instance used by the bot.
-POSTGRES = Sequel.connect(CONFIG["Postgres"]["URL"], extensions: :connection_validator)
+POSTGRES = Sequel.connect(CONFIG[:Postgres][:URL], extensions: :connection_validator)
 
 POSTGRES.pool.connection_validation_timeout = -1
 
+# The typesense client that implements fuzzy search.
+SEARCH = Typesense::Client.new(nodes: CONFIG[:Typesense][:NODE], api_key: CONFIG[:Typesense][:TOKEN])
+
 # The lavalink client used by the bot to play music.
-CALLIOPE = Calliope::Client.new(CONFIG["Lavalink"]["URL"], CONFIG["Lavalink"]["TOKEN"], CONFIG["Lavalink"]["ID"])
+# CALLIOPE = Calliope::Client.new(CONFIG[:Lavalink][:URL], CONFIG[:Lavalink][:TOKEN], CONFIG[:Lavalink][:ID])
 
 # A series of regular expressions utilized by the bot.
 REGEX = {

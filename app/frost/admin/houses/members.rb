@@ -6,7 +6,7 @@ def members_house(data)
     return
   end
 
-  if CONFIG["Houses"]["STAFF"].include?(data.user.id)
+  if CONFIG[:Houses][:STAFF].include?(data.user.id)
     admin_houses_menu(data)
     return
   end
