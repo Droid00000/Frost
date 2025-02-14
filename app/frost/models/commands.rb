@@ -79,13 +79,6 @@ bot.register_application_command(:change, 'Moderation Commands', contexts: [0], 
   end
 end
 
-# @!function [Moderation Operations] Belongs to a cog that manages moderation related commands!
-bot.register_application_command(:purge, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'शुद्ध' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }, default_member_permissions: "73760") do |command|
-  command.subcommand('messages', "Delete messages in the current channel.", name_localizations: { 'hi' => 'सूचना' }, description_localizations: { 'hi' => 'वर्तमान चैनल में संदेश हटाएँ' }) do |option|
-    option.integer('amount', 'How many messages do you want to delete?', required: true, min_value: 1, max_value: 600, name_localizations: { 'hi' => 'रकम' }, description_localizations: { 'hi' => 'आप कितने मैसेज डिलीट करना चाहते हैं' })
-  end
-end
-
 # @!function [House Operations] Belongs to a cog that manages houses for a specific community!
 bot.register_application_command(:house, 'Head of houses', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'घर' }, description_localizations: { 'hi' => 'घरों का मुखिया' }) do |command|
   command.subcommand('members', "View the members in your house.", name_localizations: { 'hi' => 'सदस्यों' }, description_localizations: { 'hi' => 'अपने घर के सदस्यों को देखें' })
@@ -157,6 +150,22 @@ bot.register_application_command(:pin, 'Pin archive', default_member_permissions
 
     group.subcommand(:disable, 'disable the pin archiver functionality.', name_localizations: { 'hi' => 'बंदकरने' }, description_localizations: { 'hi' => 'पिन पुरातत्व कंडीशन को बंद करो' }) do |option|
     end
+  end
+end
+
+# @!function [Moderation Operations] Belongs to a cog that manages moderation related commands!
+bot.register_application_command(:purge, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'शुद्ध' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }, default_member_permissions: "10256") do |command|
+  command.subcommand('messages', "Remove messages that meet a criteria.", name_localizations: { 'hi' => 'सूचना' }, description_localizations: { 'hi' => 'वर्तमान चैनल में संदेश हटाएँ' }) do |option|
+    option.integer('amount', 'The maximum number of messages to delete', required: true, min_value: 1, max_value: 700, name_localizations: { 'hi' => 'रकम' }, description_localizations: { 'hi' => 'आप कितने मैसेज डिलीट करना चाहते हैं' })
+    option.user('member', 'Remove messages from a specific user', required: false, name_localizations: { 'hi' => 'सदस्य' }, description_localizations: { 'hi' => 'किसी विशिष्ट उपयोगकर्ता के संदेश हटाएँ' })
+    option.string('contains', 'Remove messages that contain this string (case sensitive)', required: false, min_length: 1, name_localizations: { 'hi' => 'रोकना' }, description_localizations: { 'hi' => 'इस स्ट्रिंग वाले संदेश हटाएँ (केस सेंसिटिव)' })
+    option.boolean('reactions', 'Remove messages that have reactions', required: false, name_localizations: { 'hi' => 'प्रतिक्रिया' }, description_localizations: { 'hi' => 'प्रतिक्रिया वाले संदेश हटाएँ' })
+    option.boolean('embeds', 'Remove messages that have embeds', required: false, name_localizations: { 'hi' => 'एम्बेड' }, description_localizations: { 'hi' => 'एम्बेड किए गए संदेश हटाएं' })
+    option.string('prefix', 'Remove messages that start with this string (case sensitive)', required: false, min_length: 1, name_localizations: { 'hi' => 'उपसर्ग' }, description_localizations: { 'hi' => 'इस स्ट्रिंग से शुरू होने वाले संदेश हटाएँ (केस सेंसिटिव)' })
+    option.string('suffix', 'Remove messages that end with this string (case sensitive)', required: false, min_length: 1, name_localizations: { 'hi' => 'प्रत्यय' }, description_localizations: { 'hi' => 'इस स्ट्रिंग से समाप्त होने वाले संदेश हटाएँ (केस सेंसिटिव)' })
+    option.string('limit', 'Remove messages the come after this message ID', required: false, min_length: 16, max_length: 21, name_localizations: { 'hi' => 'बाद' }, description_localizations: { 'hi' => 'इस संदेश आईडी के बाद आने वाले संदेशों को हटाएँ' })
+    option.boolean('emoji', 'Remove messages that have custom emojis', required: false, name_localizations: { 'hi' => 'इमोजी' }, description_localizations: { 'hi' => 'कस्टम इमोजी वाले संदेश हटाएं' })
+    option.boolean('files','Remove messages that have attachments', required: false, name_localizations: { 'hi' => 'फ़ाइलें' }, description_localizations: { 'hi' => 'ऐसे संदेश हटाएँ जिनमें अनुलग्नक हों' })
   end
 end
 

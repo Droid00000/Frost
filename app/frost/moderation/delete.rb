@@ -8,45 +8,45 @@ module Moderation
       return
     end
 
-    count, pass = 0, [true]
+    count, pass = 0, []
 
     ([1] * data.options["amount"]).each_slice(100) do |chunk|
       count += data.channel.prune(chunk.sum) do |logic|
-        pass = pass[true] if pass.any? && pass.size > 1
+        pass.clear unless pass.empty?
 
         if data.options["contains"]
           pass << logic.content&.include?(data.options["contains"])
         end
 
         if data.options["prefix"]
-          pass << logic.content&.start_with?(data.options["prefix"])
+          pass << logic.text&.start_with?(data.options["prefix"])
         end
 
         if data.options["suffix"]
-          pass << logic.content&.end_with?(data.options["suffix"])
+          pass << logic.text&.end_with?(data.options["suffix"])
         end
 
         if data.options["member"]
-          pass << logic.user == data.member("member")
+          pass << logic.user.id == data.member("member").id
         end
 
         if data.options["limit"]
-          pass << logic.id <= data.options["limit"]
-        end
-
-        if data.options["robot"]
-          pass << logic.user.bot_account?
+          pass << (logic.id > data.options["limit"].to_i)
         end
 
         if data.options["files"]
           pass << logic.attachments.any?
         end
 
+        if data.options["reactions"]
+          pass << logic.reactions.any?
+        end
+
         if data.options["embeds"]
           pass << logic.embeds.any?
         end
 
-        if data.options["emojis"]
+        if data.options["emoji"]
           pass << logic.emoji?
         end
 
