@@ -8,6 +8,7 @@ RUN apk add --no-cache \
     build-base \
     ruby-dev \
     firefox \
+    tzdata \
     git
 
 WORKDIR /app
