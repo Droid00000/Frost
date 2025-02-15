@@ -117,7 +117,12 @@ RESPONSE = {
   114 => "**Happy Birthday <@%s>!** I hope you have an amazing one, thanks for spending some time with us! %s",
   115 => "You must provide a role when setting up this feature.",
   116 => "Successfully updated birthday perks for this server.",
-  117 => "Successfully updated your birthday!"
+  117 => "Successfully updated your birthday!",
+  118 => "Please provide a valid duration.",
+  119 => "The duration must be less than **twenty-four** hours.",
+  120 => "Successfully disabled invites for this server.",
+  121 => "Invites are currently enabled for this server.",
+  122 => "Successfully enabled invites for this server."
 }.freeze
 
 # Values for embed responses.
@@ -150,7 +155,7 @@ EMBED = {
   48 => "**Server Boosters**",
   49 => "**Server Settings**",
   50 => "Emoji Statistics for %s",
-  51 => "These are the current emoji stats for your server. Non-animated, animated emojis, and reactions are mixed. If you enjoy using the bot, please consider supporting it [here.](<https://www.youtube.com/watch?v=i4eVTUi7LD4>)",
+  51 => "These are the current emoji stats for your server. Non-animated, animated emojis, and reactions are mixed.",
   52 => "Top Emojis ⬆️",
   53 => "Boring Emojis ⬇️",
   54 => "**Archive Channel:** <#%s>",
@@ -170,7 +175,7 @@ EMBED = {
   68 => "**Main Menu**",
   69 => "Hi! Welcome to the help page. Use the dropdown menu below to view a category.",
   70 => "About Me",
-  71 => "I was made by *droid00000*! My code is open source and can be viewed [here!](<https://github.com/Droid00000/Frost>)",
+  71 => "I was made by *droid00000*. My code is open source and can be viewed [here!](<https://github.com/Droid00000/Frost>)",
   72 => "**Server Moderation**",
   73 => "**Pin Archiver**",
   74 => "The Pin archiver automatically archives pins when the pinned message limit is reached. The second most recent pinned message is the one that's archived.",
@@ -213,7 +218,7 @@ EMBED = {
   111 => "Prevents members from talking in a server for a specified amount of time or indefinetely.",
   112 => "Removes the timeout caused by the freeze command.",
   113 => "Changes a members nickname to the specified option.",
-  114 => "Blocks the member from viewing the channel the command is used in. If cascade is set to true applies to every channel in the server.",
+  114 => "Blocks the member from viewing the channel the command is used in. If cascade is set to true, the block is applied to every channel in the server.",
   115 => "`/purge messages`",
   116 => "Deletes up to 600 messages in the channel the command is used in. Cannot delete messages older than 2 weeks.",
   117 => "``/booster role delete``",
@@ -351,7 +356,11 @@ EMBED = {
   251 => "Removes your birthday from the database.",
   252 => "BIRTHDAY",
   253 => "``/birthdays``",
-  254 => "**Role:** <@&%s>"
+  254 => "**Role:** <@&%s>",
+  255 => "``/gatekeeper disable``",
+  256 => "``/gatekeeper enable``",
+  257 => "Allow new members to join your server.",
+  258 => "Prevents new members from joining your server. The duration is indefinite if it isn't provided."
 }.freeze
 
 # Resolvable string color codes.

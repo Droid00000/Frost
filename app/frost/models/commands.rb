@@ -4,74 +4,74 @@ require 'discordrb'
 
 bot = Discordrb::Bot.new(token: ENV.fetch('TOKEN'), intents: :none)
 
-# @!function [Affections] This command is part of a cog that does expressions! 
+# @!function [Affections] This command is part of a module that does expressions.
 bot.register_application_command(:hug, 'Hugs another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गलेमिलना' }, description_localizations: { 'hi' => 'सर्वर मित्र के गले मिलना' }) do |option|
   option.user('target', 'Who do you want to hug?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको गले मिलना है' })
 end
 
-# @!function [Affections] This command is part of a cog that does expressions! 
+# @!function [Affections] This command is part of a module that does expressions. 
 bot.register_application_command(:poke, 'Pokes another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'बुलाना' }, description_localizations: { 'hi' => 'कोई सर्वर मित्र को बुलाना' }) do |option|
   option.user('target', 'Who do you want to poke?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको बुलाना है' })
 end
-# @!function [Affections] This command is part of a cog that does expressions! 
+# @!function [Affections] This command is part of a module that does expressions.
 bot.register_application_command(:nom, 'Noms another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'कुतरना' }, description_localizations: { 'hi' => 'किसी अन्य सर्वर सदस्य को काटता है' }) do |option|
   option.user('target', 'Who do you want to nom?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'आप किसे काटना चाहते हैं?' })
 end
 
-# @!function [Affections] This command is part of a cog that does expressions!
+# @!function [Affections] This command is part of a module that does expressions.
 bot.register_application_command(:angered, 'Show your anger towards another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'गुस्साकरना' }, description_localizations: { 'hi' => 'कोई सर्वर मित्र पे गुस्सा दिखाना' }) do |option|
   option.user('target', 'Who are you mad at?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसपे आपको गुस्सा दिखाना है' })
 end
 
-# @!function [Affections] This command is part of a cog that does expressions!
+# @!function [Affections] This command is part of a module that does expressions.
 bot.register_application_command(:bonk, 'Bonk another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'टपलीमारना' }, description_localizations: { 'hi' => 'किसी सर्वर मित्र को टपाली मारना' }) do |option|
   option.user('target', 'Who do you want to bonk?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको टपाली मारना है' })
 end
 
-# @!function [Affections] This command is part of a cog that does expressions! 
+# @!function [Affections] This command is part of a module that does expressions.
 bot.register_application_command(:punch, 'Punch another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'मुक्का' }, description_localizations: { 'hi' => 'एक सर्वर मित्र को मुक्का मारो' }) do |option|
   option.user('target', 'Who do you want to punch?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'आप किसे मुक्का मारना चाहते हैं?' })
 end
 
-# @!function [Affections] This command is part of a cog that does expressions!
+# @!function [Affections] This command is part of a module that does expressions.
 bot.register_application_command(:sleep, 'Tells another server member to go and sleep.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'नींद' }, description_localizations: { 'hi' => 'किसी सर्वर मित्र को बोलो जाके सो जाए' }) do |option|
   option.user('target', 'Who needs to go to sleep?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको सोने जाने बोलना है' })
 end
 
-# @!function [Emoji Operations] Belongs to a cog that manages emoji related commands!
+# @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
 bot.register_application_command(:emoji, 'View some emoji stats.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'इमोजी' }, description_localizations: { 'hi' => 'कुछ इमोजी आँकड़े देखें' }) do |command|
   command.subcommand(:stats, 'View the most and least used emojis.', name_localizations: { 'hi' => 'आँकड़े' }, description_localizations: { 'hi' => 'शीर्ष इमोजी के बारे में जानकारी यहां प्राप्त करें' })
 end
 
-# @!function [General Operations] Belongs to a cog that manages general information!
+# @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:help, "Open the bot's help menu.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'हेल्प' }, description_localizations: { 'hi' => 'बोट का उपयोग कैसे करना है उसके जानकारी चाहिए।' }) do |option|
 end
 
-# @!function [Emoji Operations] Belongs to a cog that manages emoji related commands!
+# @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
 bot.register_application_command(:"Add Emoji(s)", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: "1073741824", name_localizations: { 'hi' => 'कई इमोजी जोड़ें' }) do |command|
 end
 
-# @!function [Emoji Operations] Belongs to a cog that manages emoji related commands!
+# @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
 bot.register_application_command(:"Add Emojis", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: "1073741824", name_localizations: { 'hi' => 'इमोजी जोड़ें' }) do |command|
 end
 
-# @!function [Emoji Operations] Belongs to a cog that manages emoji related commands!
+# @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
 bot.register_application_command(:drain, "View some emoji stats.", contexts: [1], integration_types: [1], name_localizations: { 'hi' => 'निकास' }, description_localizations: { 'hi' => 'कुछ इमोजी आँकड़े देखें' }) do |command|
   command.subcommand(:emojis, 'Add all the cached emojis to the database.', name_localizations: { 'hi' => 'इमोजी' }, description_localizations: { 'hi' => 'सभी कैश्ड इमोजी को डेटाबेस में हटा देता है' })
 end
 
-# @!function [General Operations] Belongs to a cog that manages general information!
+# @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:coin, 'Flip a coin!', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'मुद्रा' }, description_localizations: { 'hi' => 'एक सिक्का पलटें' }) do |command|
   command.subcommand(:flip, 'Flip a coin.', name_localizations: { 'hi' => 'पलटना' }, description_localizations: { 'hi' => 'एक सिक्का पलटें' })
 end
 
-# @!function [Moderation Operations] Belongs to a cog that manages moderation related commands!
+# @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
 bot.register_application_command(:block, 'Stop a member from being able to access this channel.', contexts: [0], integration_types: [0], default_member_permissions: "268435456", name_localizations: { 'hi' => 'ब्लॉक' }, description_localizations: { 'hi' => 'किसी सदस्य को चैनल का उपयोग करने से रोकें।' }) do |option|
   option.user('member', 'Which member do you want to lock out?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'आप किस सदस्य को लॉक आउट करना चाहते हैं' })
   option.boolean('cascade', 'Should this member be blocked from every channel in this server?', required: true, name_localizations: { 'hi' => 'झरना' }, description_localizations: { 'hi' => 'क्या इस सदस्य को इस सर्वर के प्रत्येक चैनल से ब्लॉक कर दिया जाना चाहिए' })
 end
 
-# @!function [Moderation Operations] Belongs to a cog that manages moderation related commands!
+# @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
 bot.register_application_command(:change, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'अद्यतन' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }, default_member_permissions: "201326592") do |command|
   command.subcommand('nickname', "Modify a member's nickname.", name_localizations: { 'hi' => 'उपनाम' }, description_localizations: { 'hi' => 'किसी सदस्य का उपनाम बदलें' }) do |option|
     option.user('member', 'Which member needs to have their name changed?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'किस सदस्य को अपना नाम बदलना है' })
@@ -79,45 +79,54 @@ bot.register_application_command(:change, 'Moderation Commands', contexts: [0], 
   end
 end
 
-# @!function [House Operations] Belongs to a cog that manages houses for a specific community!
+# @!function [House Operations] Belongs to a module that manages houses for a specific community.
 bot.register_application_command(:house, 'Head of houses', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'घर' }, description_localizations: { 'hi' => 'घरों का मुखिया' }) do |command|
   command.subcommand('members', "View the members in your house.", name_localizations: { 'hi' => 'सदस्यों' }, description_localizations: { 'hi' => 'अपने घर के सदस्यों को देखें' })
 end
 
-# @!function [Pin Operations] Belongs to a cog that manages pins in a channel!
+# @!function [Pin Operations] Belongs to a module that manages pins in a channel.
 bot.register_application_command(:archive, 'Archives the pinned messages in the current channel.', default_member_permissions: "8192", contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'पुरातत्व' }, description_localizations: { 'hi' => 'पुरातत्व पिंस कोई चुनित चैनल मै' }) do |option|
 end
 
-# @!function [General Operations] Belongs to a cog that manages general information!
+# @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:evaluate, 'Remotely execute and evaluate code.', default_member_permissions: "0", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'लगाना' }, description_localizations: { 'hi' => 'बोट ऑनर को कोड रन करनेकी इजाजत है' }) do |option|
   option.string('code', 'The code you want to execute.', required: true, name_localizations: { 'hi' => 'कोड' }, description_localizations: { 'hi' => 'कोड जो रन करना है' })
 end
 
-# @!function [General Operations] Belongs to a cog that manages general information!
+# @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:settings, 'View your server configuration.', default_member_permissions: "268443648", contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'सेटिंग्स' }, description_localizations: { 'hi' => 'आपना सर्वर कॉन्फिग्रेशन देखो' }) do |option|
 end
 
-# @!function [General Operations] Belongs to a cog that manages general information!
+# @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.', default_member_permissions: "0", contexts: [0, 1], integration_types: [0, 1], name_localizations: { 'hi' => 'बंधकरो' }, description_localizations: { 'hi' => 'सावधानी से बोट को गेटवे से डिसकनेक्ट करो' }) do |option|
 end
 
-# @!function [General Operations] Belongs to a cog that manages general information!
+# @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:restart, 'Safely restarts and reconnects the bot to the Gateway.', default_member_permissions: "0", contexts: [0, 1], integration_types: [0, 1], name_localizations: { 'hi' => 'फिरसेकरो' }, description_localizations: { 'hi' => 'सुरक्षित रूप से पुनरारंभ होता है और बॉट को गेटवे से पुनः कनेक्ट करता है' }) do |option|
 end
 
-# @!function [Snowball Operations] Belongs to a cog that does snowball fights between members!
+# @!function [Snowball Operations] Belongs to a module that does snowball fights between members.
 bot.register_application_command(:throw, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'फेंको' }, description_localizations: { 'hi' => 'बर्फ का गोला की लड़ीं' }) do |command|
   command.subcommand('snowball', 'Throw a snowball at someone.', name_localizations: { 'hi' => 'बर्फकालोग' }, description_localizations: { 'hi' => 'बर्फ का गोला फेक' }) do |option|
     option.user('member', 'Who do you want to hit with a snowball?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'बर्फ का गोला किसे मारना चाहते हो' })
   end
 end
 
-# @!function [Snowball Operations] Belongs to a cog that does snowball fights between members!
+# @!function [Snowball Operations] Belongs to a module that does snowball fights between members.
 bot.register_application_command(:collect, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'जमा' }, description_localizations: { 'hi' => 'बर्फ का गोला की लड़ीं' }) do |command|
   command.subcommand('snowball', 'Collect a snowball.', name_localizations: { 'hi' => 'बर्फकालोग' }, description_localizations: { 'hi' => 'बर्फ का गोला जमा करो' })
 end
 
-# @!function [Snowball Operations] Belongs to a cog that does snowball fights between members!
+# @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
+bot.register_application_command(:gatekeeper, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'द्वारपाल' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }, default_member_permissions: "32") do |command|
+  command.subcommand('disable', 'Allow new members to join this server.', name_localizations: { 'hi' => 'अपंग' }, description_localizations: { 'hi' => 'नये सदस्यों को इस सर्वर से जुड़ने की अनुमति दें' })
+
+  command.subcommand('enable', "Stop new members from joining this server.", name_localizations: { 'hi' => 'सक्षम' }, description_localizations: { 'hi' => 'नये सदस्यों को इस सर्वर से जुड़ने से रोकें' }) do |option|
+    option.string('duration', 'When should invites be enabled again? ', required: false, min_length: 1, max_length: 10, name_localizations: { 'hi' => 'अवधि' }, description_localizations: { 'hi' => 'आमंत्रण सुविधा को पुनः कब सक्षम किया जाना चाहिए' })
+  end
+end
+
+# @!function [Snowball Operations] Belongs to a module that does snowball fights between members.
 bot.register_application_command(:steal, 'Snowball fights', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'चोरी' }, description_localizations: { 'hi' => 'बर्फ का गोला की लड़ीं' }) do |command|
   command.subcommand('snowball', 'Steal a snowball from someone.', name_localizations: { 'hi' => 'बर्फकालोग' }, description_localizations: { 'hi' => 'बर्फ का लोग किसी से चूरो' }) do |option|
     option.user('member', 'Who do you want to steal snowballs from?', required: true, name_localizations: { 'hi' => 'लोग' }, description_localizations: { 'hi' => 'किस से बर्फ का लोग चोरी करना है' })
@@ -125,7 +134,7 @@ bot.register_application_command(:steal, 'Snowball fights', contexts: [0, 1, 2],
   end
 end
 
-# @!function [General Operations] Belongs to a cog that manages general information!
+# @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:update, 'Contributors', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'अपडेट' }, description_localizations: { 'hi' => 'सहकारी गण' }) do |command|
   command.subcommand('status', "Update the status show by the bot.", name_localizations: { 'hi' => 'स्टेटस' }, description_localizations: { 'hi' => 'अपटेड स्टेटस जो बोट दिखा रहा है' }) do |option|
     option.string('description', 'The status that the bot should display.', required: false, name_localizations: { 'hi' => 'डिस्क्रिप्शन' }, description_localizations: { 'hi' => 'स्टेटस जो बोट की दिखाना चाहिए' })
@@ -133,7 +142,7 @@ bot.register_application_command(:update, 'Contributors', contexts: [0, 1, 2], i
   end
 end
 
-# @!function [General Operations] Belongs to a cog that manages general information!
+# @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:next, 'Manga Chapter!', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'मंगा अध्याय' }) do |command|
   command.subcommand_group(:chapter, 'Comics!', name_localizations: { 'hi' => 'प्रकरण' }, description_localizations: { 'hi' => 'कॉमिक्स' }) do |group|
     group.subcommand(:when, 'View the release date of the next chapter.', name_localizations: { 'hi' => 'कब' }, description_localizations: { 'hi' => 'अगला अध्याय कब आ रहा है' }) do |option|
@@ -141,7 +150,7 @@ bot.register_application_command(:next, 'Manga Chapter!', contexts: [0, 1, 2], i
   end
 end
 
-# @!function [Pin Operations] Belongs to a cog that manages pins in a channel!
+# @!function [Pin Operations] Belongs to a module that manages pins in a channel.
 bot.register_application_command(:pin, 'Pin archive', default_member_permissions: "16", contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'पिन' }, description_localizations: { 'hi' => 'की पुरातत्' }) do |command|
   command.subcommand_group(:archiver, 'Pin Archival!', name_localizations: { 'hi' => 'संग्रहकर्ता' }, description_localizations: { 'hi' => 'की पुरातत्व' }) do |group|
     group.subcommand(:setup, 'Setup the pin archiver functionality.', name_localizations: { 'hi' => 'बंदोबस्त' }, description_localizations: { 'hi' => 'पिन की पुरातत्व की कंडीशन' }) do |option|
@@ -153,7 +162,7 @@ bot.register_application_command(:pin, 'Pin archive', default_member_permissions
   end
 end
 
-# @!function [Moderation Operations] Belongs to a cog that manages moderation related commands!
+# @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
 bot.register_application_command(:purge, 'Moderation Commands', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'शुद्ध' }, description_localizations: { 'hi' => 'मॉडरेशन आदेश' }, default_member_permissions: "10256") do |command|
   command.subcommand('messages', "Remove messages that meet a criteria.", name_localizations: { 'hi' => 'सूचना' }, description_localizations: { 'hi' => 'वर्तमान चैनल में संदेश हटाएँ' }) do |option|
     option.integer('amount', 'The maximum number of messages to delete.', required: true, min_value: 1, max_value: 700, name_localizations: { 'hi' => 'रकम' }, description_localizations: { 'hi' => 'आप कितने मैसेज डिलीट करना चाहते हैं' })
@@ -170,7 +179,7 @@ bot.register_application_command(:purge, 'Moderation Commands', contexts: [0], i
   end
 end
 
-# @!function [Event Operations] Belongs to a cog that manages custom roles!
+# @!function [Event Operations] Belongs to a module that manages custom roles.
 bot.register_application_command(:event, 'Event roles', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'इवेंट' }, description_localizations: { 'hi' => 'इवेंट रोल्स' }) do |command|
   command.subcommand_group(:roles, 'Event roles!', name_localizations: { 'hi' => 'रोल्स' }, description_localizations: { 'hi' => 'इवेंट रोल्स' }) do |group|
     group.subcommand(:edit, 'Edit your event role.', name_localizations: { 'hi' => 'परिवर्तन' }, description_localizations: { 'hi' => 'अपने इवेंट रोल को संपादित करें' }) do |option|
@@ -192,7 +201,7 @@ bot.register_application_command(:event, 'Event roles', contexts: [0], integrati
   end
 end
 
-# @!function [Music Operations] Belongs to a cog that can stream songs!
+# @!function [Music Operations] Belongs to a module that can stream songs.
 bot.register_application_command(:music, 'Connect and play songs!', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'संगीत' }, description_localizations: { 'hi' => 'कनेक्ट करें और गाने चलाएं' }) do |command|
   command.subcommand(:disconnect, 'Disconnect from a voice channel.', name_localizations: { 'hi' => 'छुट्टी' }, description_localizations: { 'hi' => 'वॉइस चैनल से डिस्कनेक्ट करें' })
   command.subcommand(:previous, 'Play the previous track.', name_localizations: { 'hi' => 'पीछे' }, description_localizations: { 'hi' => 'पिछला ट्रैक चलाएँ' })
@@ -229,7 +238,7 @@ bot.register_application_command(:music, 'Connect and play songs!', contexts: [0
   end
 end
 
-# @!function [Birthday Operations] Belongs to a cog that manages birthday roles!
+# @!function [Birthday Operations] Belongs to a module that manages birthday roles.
 bot.register_application_command(:birthday, 'birthday roles', contexts: [0], integration_types: [0]) do |command|
   command.subcommand('set', 'Set your date of birth.') do |option|
     option.string('date', 'Your date of birth in the mm/dd format.', required: true, min_length: 3, max_length: 5)
@@ -255,7 +264,7 @@ bot.register_application_command(:birthday, 'birthday roles', contexts: [0], int
   end
 end
 
-# @!function [Booster Operations] Belongs to a cog that manages booster roles!
+# @!function [Booster Operations] Belongs to a module that manages booster roles.
 bot.register_application_command(:booster, 'Booster perks', contexts: [0], integration_types: [0]) do |command|
   command.subcommand_group(:role, 'Booster roles!') do |group|
     group.subcommand('claim', 'Claim your custom booster role.') do |option|

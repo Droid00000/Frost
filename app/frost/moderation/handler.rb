@@ -3,9 +3,20 @@
 require_relative "block"
 require_relative "delete"
 require_relative "nickname"
+require_relative "invitation"
 
 module ModerationCommands
   extend Discordrb::EventContainer
+
+  application_command(:gatekeeper).subcommand(:disable) do |event|
+    event.defer(ephemeral: true)
+    Moderation.resume(event)
+  end
+
+  application_command(:gatekeeper).subcommand(:enable) do |event|
+    event.defer(ephemeral: true)
+    Moderation.pause(event)
+  end
 
   application_command(:change).subcommand(:nickname) do |event|
     event.defer(ephemeral: true)
