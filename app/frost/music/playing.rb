@@ -8,11 +8,6 @@ module Music
       return
     end
 
-    if CALLIOPE.players[data.server.id].paused?
-      data.edit_response(content: RESPONSE[98])
-      return
-    end
-
     if CALLIOPE.players[data.server.id].track.nil?
       data.edit_response(content: RESPONSE[98])
       return

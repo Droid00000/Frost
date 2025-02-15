@@ -8,16 +8,6 @@ module Music
       return
     end
 
-    if data.server.bot.voice_channel.nil?
-      data.edit_response(content: RESPONSE[75])
-      return
-    end
-
-    if CALLIOPE.players[data.server.id].paused?
-      data.edit_response(content: RESPONSE[81])
-      return
-    end
-
     unless CALLIOPE.players[data.server.id].queue
       data.edit_response(content: RESPONSE[79])
       return
