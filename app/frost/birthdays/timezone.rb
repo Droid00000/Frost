@@ -30,7 +30,7 @@ module Birthday
   def self.timezone(data)
     return nil unless data.options["timezone"]
 
-    zones = TZInfo::Timezone.all.map { |zone| zone.identifier }
+    zones = TZInfo::Timezone.all.map(&:identifier)
 
     if zones.include?(data.options["timezone"])
       return data.options["timezone"]

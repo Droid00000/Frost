@@ -86,7 +86,7 @@ module Discordrb
     #   channel.prune(100) { |m| m.author.id == 83283213010599936 }
     # @return [Integer] The amount of messages that were successfully deleted
     def prune(amount, limit, strict = false, reason = nil, &block)
-      raise ArgumentError, 'Can only delete between 1 and 100 messages!' unless amount.between?(1, 100)
+      raise ArgumentError, "Can only delete between 1 and 100 messages!" unless amount.between?(1, 100)
 
       before = limit.options["before"]&.to_i&.positive? ? limit.options["before"].to_i : nil
 
@@ -122,7 +122,6 @@ module Discordrb
         message = "Attempted to bulk_delete message #{e} which is too old (min = #{min_snowflake})"
         raise ArgumentError, message if strict
 
-        Discordrb::LOGGER.warn(message)
         true
       end
 
@@ -419,7 +418,9 @@ end
 class Hash
   # Get a given key from a hash.
   def get(data)
-    self[(data&.gsub(/([a-z0-9])([A-Z])/, '\1_\2')&.downcase&.to_sym)]
+    return unless data
+
+    self[(data.gsub(/([a-z0-9])([A-Z])/, '\1_\2')&.downcase&.to_sym)]
   end
 end
 

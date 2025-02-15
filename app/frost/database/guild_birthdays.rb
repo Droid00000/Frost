@@ -7,10 +7,10 @@ module Frost
     @@pg = POSTGRES[:guild_birthdays]
 
     # Easy way to search timezones.
-    @@ts = SEARCH.collections['timezones'].documents
+    @@ts = SEARCH.collections["timezones"].documents
 
     # Search for a generic timezone entry.
-    def self.generic(*data)
+    def self.generic
       @@ts.search(q: "Generic", preset: "Generic")["hits"][0]["document"]["resolved"].take(25)
     end
 
@@ -30,10 +30,10 @@ module Frost
 
     # Search for a specific timezone entry.
     def self.search(query)
-      hits = @@ts.search(q: query, preset: "Generic", limit: 250)["hits"].map do |hits|
-        next if hits["document"]["country"] == "Generic"
+      hits = @@ts.search(q: query, preset: "Generic", limit: 250)["hits"].map do |hit|
+        next if hit["document"]["country"] == "Generic"
 
-        hits["document"]["resolved"].first(25)
+        hit["document"]["resolved"].first(25)
       end
 
       hits.flatten.compact.take(25)

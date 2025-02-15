@@ -8,7 +8,7 @@ module Emojis
       return
     end
 
-    data.send_message do |builder, components|
+    data.send_message do |_, components|
       components.row do |menu|
         menu.select_menu(custom_id: "emoji", placeholder: EMBED[34], min_values: 1) do |options|
           data.target.emoji.uniq.each_with_index do |emoji, count|

@@ -11,7 +11,7 @@ module Moderation
     if data.options["duration"]
       begin
         time = Rufus::Scheduler.parse_duration(data.options["duration"])
-      rescue
+      rescue StandardError
         return data.edit_response(content: RESPONSE[118])
       end
     end
@@ -46,7 +46,7 @@ module Moderation
       data.server.pause_invites(nil)
       data.server.features = data.server.features - [:invites_disabled]
     end
-    
+
     data.edit_response(content: RESPONSE[122])
   end
 end

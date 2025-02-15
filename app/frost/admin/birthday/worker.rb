@@ -29,5 +29,5 @@ def currently_birthday?(member, timezone)
 
   return false unless member[:birthday].day == timezone.now.to_time.day
 
-  return false unless member[:birthday].month == timezone.now.to_time.month
+  false unless member[:birthday].month == timezone.now.to_time.month
 end
