@@ -8,7 +8,7 @@ module Affections
         embed.title = EMBED[42]
         embed.colour = data.user.color
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:SLEEPY))
-        embed.description = format(EMBED[23], data.user.display_name, data.member("target").display_name)
+        embed.description = format(EMBED[23], data.member("target").display_name)
       end
     end
   end

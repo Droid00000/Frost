@@ -122,17 +122,17 @@ RESPONSE = {
 
 # Values for embed responses.
 EMBED = {
-  23 => "**%s** says **%s** should go to bed!",
-  24 => "**%s** punches **%s**!",
-  25 => "**%s** pokes **%s**!",
-  26 => "**%s** hugs **%s**!",
-  27 => "**%s** noms **%s**!",
-  28 => "**%s** bonks **%s**!",
-  29 => "Watch out **%s**! Someone seems to be angry today!",
-  30 => "**%s** collected one snowball!",
+  23 => "**%s should go to bed!**",
+  24 => "**%s punches %s!**",
+  25 => "**%s pokes %s!**",
+  26 => "**%s hugs %s!**",
+  27 => "**%s noms %s!**",
+  28 => "**%s bonks %s!**",
+  29 => "**Watch out %s! Someone seems to be angry today!**",
+  30 => "**%s collected one snowball!**",
   31 => "Successfully stole **%s** snowball(s)!",
-  32 => "**%s** missed!",
-  33 => "**%s** threw a snowball at <@%s>!",
+  32 => "**%s missed!**",
+  33 => "**%s threw a snowball at %s!**",
   34 => "Select the Emojis you want to add!",
   35 => "**Enabled:** No",
   36 => "**ANGER**",
@@ -354,6 +354,67 @@ EMBED = {
   254 => "**Role:** <@&%s>"
 }.freeze
 
+# Resolvable string color codes.
+COLORS = {
+  aquamarine: "7fffd4",
+  beige: "f5f5dc",
+  black: "00000c",
+  blue: "3498DB",
+  brown: "a52a2a",
+  chocolate: "d2691e",
+  coral: "ff7f50",
+  crimson: "dc143c",
+  cyan: "00ffff",
+  dark_blue: "206694",
+  dark_cyan: "008b8b",
+  dark_gray: "607d8b",
+  dark_green: "1F8B4C",
+  dark_magenta: "AD1457",
+  dark_orange: "A84300",
+  dark_red: "992D22",
+  deep_pink: "ff1493",
+  fuchsia: "EB459E",
+  gold: "F1C40F",
+  gray: "808080",
+  green: "2ECC71",
+  green_yellow: "adff2f",
+  hot_pink: "ff69b4",
+  indigo: "4b0082",
+  ivory: "fffff0",
+  khaki: "f0e68c",
+  lavender: "e6e6fa",
+  light_blue: "add8e6",
+  light_green: "90ee90",
+  light_pink: "ffb6c1",
+  light_yellow: "ffffe0",
+  lime: "00ff00",
+  magenta: "E91E63",
+  maroon: "800000",
+  midnight_blue: "191970",
+  navy: "000080",
+  olive: "808000",
+  orange: "E67E22",
+  orange_red: "ff4500",
+  orchid: "da70d6",
+  pale_green: "98fb98",
+  pink: "EB459F",
+  powder_blue: "b0e0e6",
+  purple: "9B59B6",
+  red: "E74C3C",
+  royal_blue: "4169e1",
+  salmon: "fa8072",
+  silver: "c0c0c0",
+  sky_blue: "87ceeb",
+  tan: "d2b48c",
+  teal: "1ABC9C",
+  turquoise: "40e0d0",
+  violet: "ee82ee",
+  white: "ffffff",
+  yellow: "FEE75C",
+  blurple: "5865F2",
+  original_blurple: "7289DA"
+}.freeze
+
 # The audit log reason shown whenever the bot does something.
 REASON = {
   1 => "server booster claimed role",
@@ -422,7 +483,7 @@ REGEX = {
        light[\s_]?blue|light[\s_]?green|light[\s_]?pink|light[\s_]?yellow|lime|magenta|
        maroon|midnight[\s_]?blue|navy|olive|orange|orange[\s_]?red|orchid|pale[\s_]?green|
        pink|powder[\s_]?blue|purple|red|royal[\s_]?blue|salmon|silver|sky[\s_]?blue|tan|teal|
-       turquoise|violet|white|yellow|\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z)/i,
+       turquoise|violet|white|yellow|blurple|original[\s_]?blurple|\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z)/i,
   10 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
           nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
           @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|.gg|xxxvideos|

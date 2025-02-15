@@ -16,7 +16,7 @@ module Snowballs
           embed.color = UI[6]
           embed.title = EMBED[44]
           embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:THROW))
-          embed.description = format(EMBED[33], data.user.display_name, data.options["member"])
+          embed.description = format(EMBED[33], data.user.display_name, data.member("member").display_name)
         end
       end
 
