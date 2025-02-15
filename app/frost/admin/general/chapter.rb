@@ -13,7 +13,7 @@ Rufus::Scheduler.new.cron "59 11 * * *" do
   options = Selenium::WebDriver::Firefox::Options.new
   options.add_argument("--headless")
   driver = Selenium::WebDriver.for :firefox, options: options
-  driver.navigate.to CONFIG["Chapter"]["LINK"]
+  driver.navigate.to CONFIG[:Chapter][:LINK]
   wait = Selenium::WebDriver::Wait.new(timeout: 10)
   wait.until { driver.find_element(:css, CONFIG[:Chapter][:ELEMENT]) }
   time = Date.parse(driver.find_element(:css, CONFIG[:Chapter][:ELEMENT]).text)

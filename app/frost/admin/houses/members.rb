@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 def members_house(data)
-  unless CONFIG["Houses"]["GUILD"] == data.server.id
+  unless CONFIG[:Houses][:GUILD] == data.server.id
     data.edit_response(content: RESPONSE[101])
     return
   end

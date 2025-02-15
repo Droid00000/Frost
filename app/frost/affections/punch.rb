@@ -3,7 +3,7 @@
 module Affections
   # Punch a member.
   def self.punch(data)
-    unless CONFIG["Discord"]["CONTRIBUTORS"].include?(data.user.id)
+    unless CONFIG[:Discord][:CONTRIBUTORS].include?(data.user.id)
       data.respond(content: RESPONSE[18], ephemeral: true)
       return
     end
