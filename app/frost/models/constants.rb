@@ -103,15 +103,15 @@ RESPONSE = {
   99 => "The bot doesn't have permission to move to this channel.",
   100 => "Successfully moved channels.",
   101 => "This command can't be used here.",
-  102 => "This index is greater than the size of the queue.",
+  102 => "Your index is too large.",
   103 => "You haven't set your birthday.",
   104 => "This server hasn't enabled birthday perks.",
   105 => "I failed to process your birthday or timezone.",
-  106 => "Successfully deleted your birthday from the database.",
+  106 => "Successfully removed your birthday.",
   107 => "Successfully added your birthday!",
-  108 => "Successfully setup birthday perks for this server.",
-  109 => "Successfully disabled birthday perks for this server.",
-  110 => "Successfully updated your notification settings for this server.",
+  108 => "Successfully setup birthday perks.",
+  109 => "Successfully disabled birthday perks.",
+  110 => "Successfully updated your notification settings.",
   112 => "You've already set your birthday.",
   113 => "You must provide at least one option.",
   114 => "**Happy Birthday <@%s>!** I hope you have an amazing one, thanks for spending some time with us! %s",
@@ -466,7 +466,7 @@ POSTGRES.pool.connection_validation_timeout = -1
 SEARCH = Typesense::Client.new(nodes: CONFIG[:Typesense][:NODE], api_key: CONFIG[:Typesense][:TOKEN])
 
 # The lavalink client used by the bot to play music.
-CALLIOPE = Calliope::Client.new(CONFIG[:Lavalink][:URL], CONFIG[:Lavalink][:TOKEN], CONFIG[:Lavalink][:ID])
+# CALLIOPE = Calliope::Client.new(CONFIG[:Lavalink][:URL], CONFIG[:Lavalink][:TOKEN], CONFIG[:Lavalink][:ID])
 
 # A series of regular expressions utilized by the bot.
 REGEX = {

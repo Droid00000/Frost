@@ -30,14 +30,20 @@ module Birthday
   def self.timezone(data)
     return nil unless data.options["timezone"]
 
-    return CODES[data.options["timezone"]] if CODES[data.options["timezone"]]
+    zones = TZInfo::Timezone.all.map { |zone| zone.identifier }
+
+    if zones.include?(data.options["timezone"])
+      return data.options["timezone"]
+    end
 
     split = data.options["timezone"].split("/").map do |part|
       part.split(/[\s_]+/).map(&:capitalize).join("_")
     end
 
-    TZInfo::Timezone.get(split.join("/")).identifier
-  rescue StandardError
-    nil
+    begin
+      TZInfo::Timezone.get(split.join("/")).identifier
+    rescue StandardError
+      nil
+    end
   end
 end
