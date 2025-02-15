@@ -8,10 +8,10 @@ module Moderation
       return
     end
 
-    count, pass, limit = 0, [], data.options["after"]
+    count, pass = 0, []
 
     ([1] * data.options["amount"]).each_slice(100) do |chunk|
-      count += data.channel.prune(chunk.sum, limit) do |logic|
+      count += data.channel.prune(chunk.sum, data) do |logic|
         pass.clear unless pass.empty?
 
         if data.options["contains"]
