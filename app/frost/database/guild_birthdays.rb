@@ -28,6 +28,17 @@ module Frost
       end
     end
 
+    # Search for a specific timezone entry.
+    def self.search(query)
+      hits = @@ts.search(q: query, preset: "Generic", limit: 250)["hits"].map do |hits|
+        next if hits["document"]["country"] == "Generic"
+
+        hits["document"]["resolved"].first(25)
+      end
+
+      hits.flatten.compact.take(25)
+    end
+
     # Check if a user exists in the DB.
     def self.user?(data)
       POSTGRES.transaction do
@@ -54,15 +65,6 @@ module Frost
       POSTGRES.transaction do
         @@pg.where(guild_id: data[0], user_id: data[1]).update(active: false)
       end
-    end
-
-    # Search for a specific timezone entry.
-    def self.search(query)
-      hits = @@ts.search(q: query, preset: "Generic")["hits"].map do |hits|
-        hits["document"]["resolved"].take(25)
-      end
-
-      hits.flatten.take(25)
     end
 
     # Delete all the birthdays for this server.

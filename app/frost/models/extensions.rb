@@ -75,6 +75,39 @@ module Discordrb
       API::Channel.update_permission(@bot.token, @id, thing.id, computed_allow, computed_deny, thing.type, reason)
     end
 
+    # Delete the last N messages on this channel.
+    # @param amount [Integer] The amount of message history to consider for pruning. Must be a value between 2 and 100 (Discord limitation)
+    # @param strict [true, false] Whether an error should be raised when a message is reached that is too old to be bulk
+    #   deleted. If this is false only a warning message will be output to the console.
+    # @param reason [String, nil] The reason for pruning
+    # @raise [ArgumentError] if the amount of messages is not a value between 2 and 100
+    # @yield [message] Yields each message in this channels history for filtering the messages to delete
+    # @example Pruning messages from a specific user ID
+    #   channel.prune(100) { |m| m.author.id == 83283213010599936 }
+    # @return [Integer] The amount of messages that were successfully deleted
+    def prune(amount, limit, strict = false, reason = nil, &block)
+      raise ArgumentError, 'Can only delete between 1 and 100 messages!' unless amount.between?(1, 100)
+
+      messages =
+        if block && limit
+          history(amount, nil, limit.to_i, nil).select(&block).map(&:id)
+        elsif block && !limit
+          history(amount).select(&block).map(&:id)
+        else
+          history_ids(amount)
+        end
+
+      case messages.size
+      when 0
+        0
+      when 1
+        API::Channel.delete_message(@bot.token, @id, messages.first, reason)
+        1
+      else
+        bulk_delete(messages, strict, reason)
+      end
+    end
+
     # Deletes a list of messages on this channel using bulk delete.
     def bulk_delete(ids, strict = false, reason = nil)
       min_snowflake = IDObject.synthesise(Time.now - TWO_WEEKS)

@@ -8,10 +8,10 @@ module Moderation
       return
     end
 
-    count, pass = 0, []
+    count, pass, limit = 0, [], data.options["after"]
 
     ([1] * data.options["amount"]).each_slice(100) do |chunk|
-      count += data.channel.prune(chunk.sum) do |logic|
+      count += data.channel.prune(chunk.sum, limit) do |logic|
         pass.clear unless pass.empty?
 
         if data.options["contains"]
@@ -28,10 +28,6 @@ module Moderation
 
         if data.options["member"]
           pass << logic.user.id == data.member("member").id
-        end
-
-        if data.options["limit"]
-          pass << (logic.id > data.options["limit"].to_i)
         end
 
         if data.options["files"]
