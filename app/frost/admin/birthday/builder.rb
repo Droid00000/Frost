@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-def add_role(guild, user)
+def add_guild_role(guild, user)
   @bot.member(guild, user).add_role(Frost::Birthdays::Settings.fetch_role(guild))
 end
 

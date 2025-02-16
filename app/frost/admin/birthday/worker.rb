@@ -4,7 +4,7 @@ def process_birthdays(zone)
   Frost::Birthdays.drain.each do |member|
     next if currently_birthday?(member, zone) == false
 
-    remove_user_role(member[:guild_id], member[:user_id])
+    add_guild_role(member[:guild_id], member[:user_id])
 
     schedule_removal(member[:guild_id], member[:user_id])
 
