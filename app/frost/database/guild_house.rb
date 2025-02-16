@@ -6,6 +6,9 @@ module Frost
     # Easy way to access the DB.
     @@pg = POSTGRES[:house_settings]
 
+    # The entire DB
+    def self.all; self; end
+
     # @param data [Discordrb::Interaction]
     def self.head?(data)
       !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
@@ -24,11 +27,6 @@ module Frost
     # Returns the cult role of a member.
     def self.cult(data)
       data.server.role(@@pg.where(guild_id: data.server.id, user_id: data.message.initiating_user).get(:role_id))
-    end
-
-    # The entrite DB.
-    def self.all
-      self
     end
   end
 end

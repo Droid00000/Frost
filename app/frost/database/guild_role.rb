@@ -30,7 +30,7 @@ module Frost
     # Remove a single role from the DB.
     def self.remove(data)
       POSTGRES.transaction do
-        !@@pg.where(guild_id: data.server.id, role_id: data.options["role"]).delete
+        @@pg.where(guild_id: data.server.id, role_id: data.options["role"]).delete
       end
     end
 

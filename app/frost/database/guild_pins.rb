@@ -14,7 +14,7 @@ module Frost
       end
     end
 
-    # Removes all instances of this role.
+    # Removes all instances of this channel.
     def self.remove(data)
       POSTGRES.transaction do
         @@pg.where(channel_id: data.id, guild_id: data.server.id).delete

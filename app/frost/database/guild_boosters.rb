@@ -29,17 +29,17 @@ module Frost
         end
       end
 
-      # Checks if a user is in the DB.
-      def self.user?(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
-        end
-      end
-
       # Gets all the members in a format the Discord gateway can understand.
       def self.chunks
         @@pg.all.group_by { |member| member[:guild_id] }.map do |guild, users|
           { guild_id: guild, members: users.map { |user| user[:user_id] } }
+        end
+      end
+
+      # Checks if a user is in the DB.
+      def self.user?(data)
+        POSTGRES.transaction do
+          @@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
         end
       end
 
@@ -59,8 +59,7 @@ module Frost
 
       # Gets all the members.
       def self.fetch
-        sleep(5)
-        @@pg
+        sleep(5); @@pg
       end
     end
 
@@ -102,13 +101,6 @@ module Frost
       # Easy way to access the DB.
       @@pg = POSTGRES
 
-      # Removes all instances of this role.
-      def self.remove_role(data)
-        POSTGRES.transaction do
-          @@pg[:booster_settings].where(role_id: data.id, guild_id: data.server.id).delete
-        end
-      end
-
       # Deletes all members from the database.
       def self.delete_all(data)
         @@pg[:guild_boosters].where(guild_id: data.server.id).delete
@@ -125,6 +117,13 @@ module Frost
       def self.get(data)
         POSTGRES.transaction do
           @@pg[:booster_settings].where(guild_id: data.server.id).get(:hoist_role)
+        end
+      end
+
+      # Removes all instances of this role.
+      def self.remove_role(data)
+        POSTGRES.transaction do
+          @@pg[:booster_settings].where(role_id: data.id, guild_id: data.server.id).delete
         end
       end
 
@@ -161,8 +160,7 @@ module Frost
       # Add a user manually.
       def self.post_user(data)
         POSTGRES.transaction do
-          @@pg[:guild_boosters].insert(guild_id: data.server.id, user_id: data.options["member"],
-                                       role_id: data.options["role"])
+          @@pg[:guild_boosters].insert(guild_id: data.server.id, user_id: data.options["member"], role_id: data.options["role"])
         end
       end
     end

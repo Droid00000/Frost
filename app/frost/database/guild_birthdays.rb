@@ -105,6 +105,13 @@ module Frost
       # Easy way to access the DB.
       @@pg = POSTGRES[:birthday_settings]
 
+      # Removes an instance of a  channel from the DB.
+      def self.remove_channel(data)
+        POSTGRES.transaction do
+          @@pg.where(guild_id: data.server.id, channel_id: data.id).update(channel_id: nil)
+        end
+      end
+
       # Removes all instances of this role.
       def self.remove(data)
         POSTGRES.transaction do
