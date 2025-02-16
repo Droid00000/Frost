@@ -161,6 +161,16 @@ module Discordrb
 end
 
 module Discordrb
+  # Monkey patches to the member class.
+  class Member
+    # The position of a member's highest role.
+    def hierarchy
+      highest_role.position
+    end
+  end
+end
+
+module Discordrb
   # Monkey patch for message class.
   class Message
     # @return [Array<Emoji>] the emotes that were used/mentioned in this message.
