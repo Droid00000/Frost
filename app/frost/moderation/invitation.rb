@@ -21,7 +21,7 @@ module Moderation
       return
     end
 
-    if time && !data.server.features.include?(:community)
+    unless time || data.server.features.include?(:community)
       data.edit_response(content: RESPONSE[123])
       return
     end
