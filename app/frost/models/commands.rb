@@ -294,6 +294,7 @@ bot.register_application_command(:booster, 'Booster perks', contexts: [0], integ
 
     group.subcommand('ban', 'Ban a user from using the booster perks functionality.') do |option|
       option.user('member', 'The user to ban.', required: true)
+      option.boolean('prune', "Should this member's custom role be deleted?", required: true)
     end
 
     group.subcommand('unban', 'Unban a user from using the booster perks functionality.') do |option|
