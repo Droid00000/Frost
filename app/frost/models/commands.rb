@@ -98,11 +98,11 @@ bot.register_application_command(:settings, 'View your server configuration.', d
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:shutdown, 'Safely disconnects the bot from the Gateway.', default_member_permissions: "0", contexts: [0, 1], integration_types: [0, 1], name_localizations: { 'hi' => 'बंधकरो' }, description_localizations: { 'hi' => 'सावधानी से बोट को गेटवे से डिसकनेक्ट करो' }) do |option|
+bot.register_application_command(:shutdown, 'Safely disconnects the bot from Discord.', default_member_permissions: "0", contexts: [0, 1], integration_types: [0, 1], name_localizations: { 'hi' => 'बंधकरो' }, description_localizations: { 'hi' => 'सावधानी से बोट को गेटवे से डिसकनेक्ट करो' }) do |option|
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:restart, 'Safely restarts and reconnects the bot to the Gateway.', default_member_permissions: "0", contexts: [0, 1], integration_types: [0, 1], name_localizations: { 'hi' => 'फिरसेकरो' }, description_localizations: { 'hi' => 'सुरक्षित रूप से पुनरारंभ होता है और बॉट को गेटवे से पुनः कनेक्ट करता है' }) do |option|
+bot.register_application_command(:restart, 'Safely restarts the bot.', default_member_permissions: "0", contexts: [0, 1], integration_types: [0, 1], name_localizations: { 'hi' => 'फिरसेकरो' }, description_localizations: { 'hi' => 'सुरक्षित रूप से पुनरारंभ होता है और बॉट को गेटवे से पुनः कनेक्ट करता है' }) do |option|
 end
 
 # @!function [Snowball Operations] Belongs to a module that does snowball fights between members.
