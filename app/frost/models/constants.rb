@@ -122,7 +122,8 @@ RESPONSE = {
   119 => "The duration must be less than **twenty-four** hours.",
   120 => "Successfully disabled invites for this server.",
   121 => "Invites are currently enabled for this server.",
-  122 => "Successfully enabled invites for this server."
+  122 => "Successfully enabled invites for this server.",
+  123 => "You can only indefinitely disable invites in `community` servers."
 }.freeze
 
 # Values for embed responses.
