@@ -15,7 +15,7 @@ module EmojiCommands
     Emojis.drain(event)
   end
 
-  application_command(:emoji).subcommand(:stats) do |event|
+  application_command(:top).subcommand(:emojis) do |event|
     event.defer(ephemeral: false)
     Emojis.stats(event)
   end

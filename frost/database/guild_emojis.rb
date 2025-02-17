@@ -32,11 +32,6 @@ module Frost
       @@pg.where(guild_id: data.server.id).order(Sequel.desc(:balance)).limit(15)
     end
 
-    # Returns the bottom 15 emojis.
-    def self.bottom(data)
-      @@pg.where(guild_id: data.server.id).order(Sequel.asc(:balance)).limit(15)
-    end
-
     # Returns all emojis.
     def self.drain
       @@emojis

@@ -24,24 +24,16 @@ module Emojis
       return
     end
 
-    emojis = [[], []]
+    emojis = []
 
     Frost::Emojis.top(data).map do |emoji|
       next unless data.bot.emoji(emoji[:emoji_id])
 
-      emojis[0] << { main: data.bot.emoji(emoji[:emoji_id]), count: emoji[:balance] }
+      emojis << { main: data.bot.emoji(emoji[:emoji_id]), count: emoji[:balance] }
     end
 
-    Frost::Emojis.bottom(data).map do |emoji|
-      next unless data.bot.emoji(emoji[:emoji_id])
-
-      emojis[1] << { main: data.bot.emoji(emoji[:emoji_id]), count: emoji[:balance] }
-    end
-
-    emojis.each do |stats|
-      stats.map! do |emoji|
-        "#{emoji[:main].mention} — #{emoji[:main].name} **(#{emoji[:count].delimit})**\n"
-      end
+    emojis.map do |stats|
+      "#{emoji[:main].mention} — #{emoji[:main].name} **(#{emoji[:count].delimit})**\n"
     end
 
     data.edit_response do |builder|
@@ -51,7 +43,6 @@ module Emojis
         embed.description = EMBED[51]
         embed.title = format(EMBED[50], data.server.name)
         embed.add_field(name: EMBED[52], value: emojis[0].join, inline: true)
-        embed.add_field(name: EMBED[53], value: emojis[1].join, inline: true)
       end
     end
   end

@@ -9,7 +9,7 @@ bot.register_application_command(:hug, 'Hugs another server member.', contexts: 
   option.user('target', 'Who do you want to hug?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको गले मिलना है' })
 end
 
-# @!function [Affections] This command is part of a module that does expressions. 
+# @!function [Affections] This command is part of a module that does expressions.
 bot.register_application_command(:poke, 'Pokes another server member.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'बुलाना' }, description_localizations: { 'hi' => 'कोई सर्वर मित्र को बुलाना' }) do |option|
   option.user('target', 'Who do you want to poke?', required: true, name_localizations: { 'hi' => 'इशारालगाना' }, description_localizations: { 'hi' => 'किसको बुलाना है' })
 end
@@ -39,8 +39,8 @@ bot.register_application_command(:sleep, 'Tells another server member to go and 
 end
 
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
-bot.register_application_command(:emoji, 'View some emoji stats.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'इमोजी' }, description_localizations: { 'hi' => 'कुछ इमोजी आँकड़े देखें' }) do |command|
-  command.subcommand(:stats, 'View the most and least used emojis.', name_localizations: { 'hi' => 'आँकड़े' }, description_localizations: { 'hi' => 'शीर्ष इमोजी के बारे में जानकारी यहां प्राप्त करें' })
+bot.register_application_command(:top, 'View some emoji stats.', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'इमोजी' }, description_localizations: { 'hi' => 'कुछ इमोजी आँकड़े देखें' }) do |command|
+  command.subcommand(:emojis, 'View the most used emojis in this server.', name_localizations: { 'hi' => 'आँकड़े' }, description_localizations: { 'hi' => 'शीर्ष इमोजी के बारे में जानकारी यहां प्राप्त करें' })
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
@@ -175,7 +175,7 @@ bot.register_application_command(:purge, 'Moderation Commands', contexts: [0], i
     option.string('suffix', 'Remove messages that end with this string (case sensitive).', required: false, min_length: 1, name_localizations: { 'hi' => 'प्रत्यय' }, description_localizations: { 'hi' => 'इस स्ट्रिंग से समाप्त होने वाले संदेश हटाएँ (केस सेंसिटिव)' })
     option.boolean('emoji', 'Remove messages that have custom emojis.', required: false, name_localizations: { 'hi' => 'इमोजी' }, description_localizations: { 'hi' => 'कस्टम इमोजी वाले संदेश हटाएं' })
     option.string('after', 'Remove messages the come after this message ID.', required: false, min_length: 16, max_length: 21, name_localizations: { 'hi' => 'बाद' }, description_localizations: { 'hi' => 'इस संदेश आईडी के बाद आने वाले संदेशों को हटाएँ' })
-    option.boolean('files','Remove messages that have attachments.', required: false, name_localizations: { 'hi' => 'फ़ाइलें' }, description_localizations: { 'hi' => 'ऐसे संदेश हटाएँ जिनमें अनुलग्नक हों' })
+    option.boolean('files', 'Remove messages that have attachments.', required: false, name_localizations: { 'hi' => 'फ़ाइलें' }, description_localizations: { 'hi' => 'ऐसे संदेश हटाएँ जिनमें अनुलग्नक हों' })
   end
 end
 
@@ -197,7 +197,7 @@ bot.register_application_command(:event, 'Event roles', contexts: [0], integrati
       option.role('role', 'Which role needs to be removed?', required: true, name_localizations: { 'hi' => 'रोल' }, description_localizations: { 'hi' => 'किस भूमिका को हटाने की जरूरत है' })
     end
 
-    group.subcommand(:disable, 'Disable the event roles functionality.', name_localizations: { 'hi' => 'असमर्थ' }, description_localizations: { 'hi' => 'इवेंट रोल्स कार्यक्षमता को अक्षम करें' }) 
+    group.subcommand(:disable, 'Disable the event roles functionality.', name_localizations: { 'hi' => 'असमर्थ' }, description_localizations: { 'hi' => 'इवेंट रोल्स कार्यक्षमता को अक्षम करें' })
   end
 end
 
@@ -230,7 +230,7 @@ bot.register_application_command(:music, 'Connect and play songs!', contexts: [0
   end
 
   command.subcommand(:volume, 'Adjust the volume of the player.', name_localizations: { 'hi' => 'आयतन' }, description_localizations: { 'hi' => 'प्लेयर का वॉल्यूम समायोजित करें' }) do |option|
-    option.integer(:volume, 'Number between 1 and 200 to set the volume to.', required: true, min_value: 1, max_value: 200, name_localizations: { 'hi' => 'आयतन' }, description_localizations: { "hi" => "वॉल्यूम सेट करने के लिए 1 और 1,000 के बीच की संख्या।" } )
+    option.integer(:volume, 'Number between 1 and 200 to set the volume to.', required: true, min_value: 1, max_value: 200, name_localizations: { 'hi' => 'आयतन' }, description_localizations: { "hi" => "वॉल्यूम सेट करने के लिए 1 और 1,000 के बीच की संख्या।" })
   end
 
   command.subcommand(:seek, 'Skip to a specific duration of a track.', name_localizations: { 'hi' => 'तलाश' }, description_localizations: { 'hi' => 'किसी ट्रैक की विशिष्ट अवधि पर जाएं' }) do |option|
@@ -304,7 +304,7 @@ bot.register_application_command(:booster, 'Booster perks', contexts: [0], integ
     group.subcommand('disable', 'Disable the booster perks functionality.') do |option|
       option.boolean('prune', 'If all roles should be removed from the database.', required: true)
     end
-    
+
     group.subcommand('setup', 'Setup the booster perks functionality.') do |option|
       option.role('role', 'Which role should all custom booster roles be placed above?', required: false)
       option.boolean('icon', 'Should external emojis be allowed as role icons?', required: false)

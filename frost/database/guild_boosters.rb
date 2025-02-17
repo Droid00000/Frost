@@ -158,12 +158,12 @@ module Frost
       end
 
       # Adds a hoist role and icon setting for this guild.
-      def self.setup(data)        
+      def self.setup(data)
         POSTGRES.transaction do
-          @@pg[:booster_settings].insert_conflict(target: :guild_id, update: conflict.delete(:guild_id)).insert(**data)
+          @@pg[:booster_settings].insert_conflict(target: :guild_id, update: data.delete(:guild_id)).insert(**data)
         end
       end
-      
+
       # Add a user manually.
       def self.post_user(data)
         POSTGRES.transaction do
