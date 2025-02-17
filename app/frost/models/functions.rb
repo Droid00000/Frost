@@ -30,12 +30,23 @@ rescue StandardError
 end
 
 # Get an icon for a role.
-# @param [String] The icon to resolve.
-# @return [String, File] The resolved icon.
+# @param [icon] The icon to resolve.
+# @return [String, File, nil] The resolved icon.
 def resolve_icon(icon)
   return nil if icon.options["icon"].nil? || icon.options["icon"].empty?
 
   icon.emojis("icon")&.static_file || icon.options["icon"].scan(Unicode::Emoji::REGEX).first
+end
+
+# Check if we have a valid role icon.
+# @param [data] The icon to resolve for.
+# @return [Boolean] If the icon is valid.
+def valid_icon?(data)
+  return true if resolve_icon(data).nil? || resolve_icon(data).is_a?(String)
+
+  return true if data.emojis("icon") && Frost::Boosters::settings.any_icon?(data)
+
+  data.emojis("icon").server && data.emojis("icon").server.id == data.server.id
 end
 
 # Returns a random GIF link for use by the affection and snowball commands.

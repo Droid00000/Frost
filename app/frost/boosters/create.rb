@@ -45,6 +45,8 @@ module Boosters
       reason: REASON[1]
     }
 
+    payload.delete(:icon) unless valid_icon?(data)
+
     role = data.server.create_role(**payload)
 
     data.user.add_role(role, REASON[1])

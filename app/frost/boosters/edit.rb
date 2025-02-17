@@ -46,6 +46,8 @@ module Boosters
       reason: REASON[2]
     }
 
+    payload.delete(:icon) unless valid_icon?(data)
+
     data.server.update_role(**payload)
 
     data.edit_response(content: "#{RESPONSE[2]} #{EMOJI[2]}")

@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS archiver_settings (
 -- Holds info about booster settings.
 CREATE TABLE IF NOT EXISTS booster_settings (
   guild_id BIGINT NOT NULL UNIQUE,
+  guild_icon BOOLEAN DEFAULT FALSE,
   hoist_role BIGINT NOT NULL UNIQUE,
   PRIMARY KEY (hoist_role, guild_id)
 );
@@ -100,6 +101,8 @@ CREATE INDEX IF NOT EXISTS guilds_emoji_idx ON emoji_tracker (guild_id);
 CREATE INDEX IF NOT EXISTS guild_booster_idx ON guild_boosters (user_id);
 
 CREATE INDEX IF NOT EXISTS guild_premium_idx ON guild_boosters (guild_id);
+
+CREATE INDEX IF NOT EXISTS guild_icon_idx ON booster_settings (guild_icon);
 
 CREATE INDEX IF NOT EXISTS guild_house_head_idx ON house_settings (user_id);
 

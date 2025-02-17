@@ -123,7 +123,8 @@ RESPONSE = {
   120 => "Successfully disabled invites for this server.",
   121 => "Invites are currently enabled for this server.",
   122 => "Successfully enabled invites for this server.",
-  123 => "You can only indefinitely disable invites in `community` servers."
+  123 => "You can only indefinitely disable invites in `community` servers.",
+  124 => "You must provide a role when initally setting up booster perks."
 }.freeze
 
 # Values for embed responses.

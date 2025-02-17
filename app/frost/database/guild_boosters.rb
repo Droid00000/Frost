@@ -103,13 +103,22 @@ module Frost
 
       # Deletes all members from the database.
       def self.delete_all(data)
-        @@pg[:guild_boosters].where(guild_id: data.server.id).delete
+        POSTGRES.transaction do
+          @@pg[:guild_boosters].where(guild_id: data.server.id).delete
+        end
       end
 
       # Removes a hoist role for this guild.
       def self.disable(data)
         POSTGRES.transaction do
           @@pg[:booster_settings].where(guild_id: data.server.id).delete
+        end
+      end
+
+      # Check if any role icon can be used here.
+      def self.any_icon?(data)
+        POSTGRES.transaction do
+          @@pg[:booster_settings].where(guild_id: data.server.id).get(:guild_icon)
         end
       end
 
@@ -148,15 +157,13 @@ module Frost
         end
       end
 
-      # Adds a hoist role for this guild.
-      def self.setup(data)
+      # Adds a hoist role and icon setting for this guild.
+      def self.setup(data)        
         POSTGRES.transaction do
-          @@pg[:booster_settings].insert_conflict(target: :guild_id, update: { hoist_role: data.options["role"] }).insert(
-            guild_id: data.server.id, hoist_role: data.options["role"]
-          )
+          @@pg[:booster_settings].insert_conflict(target: :guild_id, update: conflict.delete(:guild_id)).insert(**data)
         end
       end
-
+      
       # Add a user manually.
       def self.post_user(data)
         POSTGRES.transaction do

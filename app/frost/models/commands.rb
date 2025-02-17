@@ -80,7 +80,7 @@ bot.register_application_command(:change, 'Moderation Commands', contexts: [0], 
 end
 
 # @!function [House Operations] Belongs to a module that manages houses for a specific community.
-bot.register_application_command(:house, 'Head of houses', contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'घर' }, description_localizations: { 'hi' => 'घरों का मुखिया' }) do |command|
+bot.register_application_command(:house, 'Head of houses', server_id: ENV.fetch("HOUSE_GUILD"), contexts: [0], integration_types: [0], name_localizations: { 'hi' => 'घर' }, description_localizations: { 'hi' => 'घरों का मुखिया' }) do |command|
   command.subcommand('members', "View the members in your house.", name_localizations: { 'hi' => 'सदस्यों' }, description_localizations: { 'hi' => 'अपने घर के सदस्यों को देखें' })
 end
 
@@ -143,7 +143,7 @@ bot.register_application_command(:update, 'Contributors', contexts: [0, 1, 2], i
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:next, 'Manga Chapter!', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'मंगा अध्याय' }) do |command|
+bot.register_application_command(:next, 'Manga Chapter!', server_id: ENV.fetch("MANGA_GUILD"), contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'अगला' }, description_localizations: { 'hi' => 'मंगा अध्याय' }) do |command|
   command.subcommand_group(:chapter, 'Comics!', name_localizations: { 'hi' => 'प्रकरण' }, description_localizations: { 'hi' => 'कॉमिक्स' }) do |group|
     group.subcommand(:when, 'View the release date of the next chapter.', name_localizations: { 'hi' => 'कब' }, description_localizations: { 'hi' => 'अगला अध्याय कब आ रहा है' }) do |option|
     end
@@ -306,7 +306,8 @@ bot.register_application_command(:booster, 'Booster perks', contexts: [0], integ
     end
     
     group.subcommand('setup', 'Setup the booster perks functionality.') do |option|
-      option.role('role', 'Which role should all custom booster roles be placed above?', required: true)
+      option.role('role', 'Which role should all custom booster roles be placed above?', required: false)
+      option.boolean('icon', 'Should external emojis be allowed as role icons?', required: false)
     end
   end
 end
