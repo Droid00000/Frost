@@ -25,16 +25,18 @@ module Moderation
 
     overwrite = Discordrb::Overwrite.new(data.member("member"), deny: 1024)
 
+    reason = format(REASON[3], data.user.display_name, data.user.id)
+
     if data.options["cascade"]
       data.server.channels.each do |channel|
         next unless data.server.bot.permission?(:manage_roles, channel)
 
-        channel.produce_overwrite(overwrite, reason: REASON[8])
+        channel.produce_overwrite(overwrite, reason: reason)
       end
     end
 
     unless data.options["cascade"]
-      data.channel.produce_overwrite(overwrite, reason: REASON[8])
+      data.channel.produce_overwrite(overwrite, reason: reason)
     end
 
     data.edit_response(content: format(RESPONSE[57], data.options["member"]))

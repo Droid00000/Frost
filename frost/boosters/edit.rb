@@ -43,7 +43,7 @@ module Boosters
       colour: resolve_color(data.options["color"]),
       name: data.options["name"],
       icon: resolve_icon(data),
-      reason: REASON[2]
+      reason: REASON[1]
     }
 
     payload.delete(:icon) unless valid_icon?(data)

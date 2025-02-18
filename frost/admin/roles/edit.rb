@@ -31,7 +31,7 @@ def roles_edit(data)
     role: data.options["role"],
     name: data.options["name"],
     icon: resolve_icon(data),
-    reason: REASON[5]
+    reason: format(REASON[3], data.user.display_name, data.user.id)
   }
 
   data.server.update_role(**payload)

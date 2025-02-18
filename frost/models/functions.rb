@@ -24,7 +24,7 @@ end
 # @param guild [Integer, String] An ID that uniquely identifies a guild.
 # @param id [Integer, String] An ID that uniquely identifies a role.
 def delete_guild_role(guild, id)
-  Discordrb::API::Server.delete_role(CONFIG[:Discord][:TOKEN], guild, id, REASON[6])
+  Discordrb::API::Server.delete_role(CONFIG[:Discord][:TOKEN], guild, id, REASON[1])
 rescue StandardError
   true
 end

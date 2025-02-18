@@ -30,7 +30,7 @@ module Boosters
 
     role = Frost::Boosters::Members.role(data)
 
-    data.server.role(role)&.delete(REASON[3])
+    data.server.role(role)&.delete(REASON[1])
 
     Frost::Boosters::Members.delete(data)
 
