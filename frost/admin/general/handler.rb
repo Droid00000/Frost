@@ -3,6 +3,7 @@
 require_relative "process"
 require_relative "chapter"
 require_relative "settings"
+require_relative "timezone"
 
 module AdminCommands
   extend Discordrb::EventContainer
@@ -17,6 +18,11 @@ module AdminCommands
   application_command(:settings) do |event|
     event.defer(ephemeral: true)
     general_settings(event)
+  end
+
+  application_command(:time) do |event|
+    event.defer(ephemeral: false)
+    general_timezone(event)
   end
 
   server_role_delete do |event|

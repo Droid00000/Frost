@@ -43,6 +43,11 @@ bot.register_application_command(:top, 'View some emoji stats.', contexts: [0], 
   command.subcommand(:emojis, 'View the most used emojis in this server.', name_localizations: { 'hi' => 'आँकड़े' }, description_localizations: { 'hi' => 'शीर्ष इमोजी के बारे में जानकारी यहां प्राप्त करें' })
 end
 
+# @!function [Affections] This command is part of a module that manages general information.
+bot.register_application_command(:time, 'View the current time.', contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'समय' }, description_localizations: { 'hi' => 'वर्तमान समय देखें' }) do |option|
+  option.string('timezone', 'Which timezone do you want to view the time for?', required: true, autocomplete: true, name_localizations: { 'hi' => 'समयक्षेत्र' }, description_localizations: { 'hi' => 'आप किस समयक्षेत्र का समय देखना चाहते हैं' })
+end
+
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:help, "Open the bot's help menu.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { 'hi' => 'हेल्प' }, description_localizations: { 'hi' => 'बोट का उपयोग कैसे करना है उसके जानकारी चाहिए।' }) do |option|
 end

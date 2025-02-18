@@ -5,7 +5,7 @@ module Birthday
   def self.search(data)
     return unless data.resolve_options["timezone"]
 
-    choices = if data.resolve_options["timezone"].empty?
+    choices = if data.resolve_options["timezone"]&.empty?
                 Frost::Birthdays.generic
               else
                 Frost::Birthdays.search(data.resolve_options["timezone"])

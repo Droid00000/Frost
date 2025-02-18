@@ -32,7 +32,7 @@ module Emojis
       emojis << { main: data.bot.emoji(emoji[:emoji_id]), count: emoji[:balance] }
     end
 
-    emojis.map do |stats|
+    emojis.map! do |stats|
       "#{emoji[:main].mention} — #{emoji[:main].name} **(#{emoji[:count].delimit})**\n"
     end
 
@@ -42,7 +42,7 @@ module Emojis
         embed.timestamp = Time.now
         embed.description = EMBED[51]
         embed.title = format(EMBED[50], data.server.name)
-        embed.add_field(name: EMBED[52], value: emojis[0].join, inline: true)
+        embed.add_field(name: EMBED[52], value: emojis.join, inline: true)
       end
     end
   end
