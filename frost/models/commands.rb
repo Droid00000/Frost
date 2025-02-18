@@ -191,7 +191,7 @@ bot.register_application_command(:event, 'Event roles', contexts: [0], integrati
       option.role('role', 'Which role do you want to modify?', required: true, name_localizations: { 'hi' => 'रोल' }, description_localizations: { 'hi' => 'आप कौन सा रोल संपादित करना चाहते हैं' })
       option.string('name', 'Provide a name for your role.', required: false, max_length: 100, name_localizations: { 'hi' => 'नाम' }, description_localizations: { 'hi' => 'अपने रोल के लिए एक नाम दें' })
       option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 3, max_length: 16, name_localizations: { 'hi' => 'रंग' }, description_localizations: { 'hi' => 'अपने रोल के लिए एक HEX रंग दें' })
-      option.string('icon', 'Provide an emoji to serve as your role icon.', required: false, name_localizations: { 'hi' => 'आइकन' }, description_localizations: { 'hi' => 'अपने रोल आइकन के रूप में एक इमोजी दें' })
+      option.string('icon', 'Provide an emoji for your role icon.', required: false, name_localizations: { 'hi' => 'आइकन' }, description_localizations: { 'hi' => 'अपने रोल आइकन के रूप में एक इमोजी दें' })
     end
 
     group.subcommand(:setup, 'Setup the event roles functionality.', name_localizations: { 'hi' => 'व्यवस्था' }, description_localizations: { 'hi' => 'इवेंट रोल्स कार्यक्षमता सेटअप करें' }) do |option|
@@ -275,13 +275,13 @@ bot.register_application_command(:booster, 'Booster perks', contexts: [0], integ
     group.subcommand('claim', 'Claim your custom booster role.') do |option|
       option.string('name', 'Provide a name for your role.', required: true, max_length: 100)
       option.string('color', 'Provide a HEX color for your role.', required: true, min_length: 3, max_length: 16)
-      option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
+      option.string('icon', 'Provide an emoji for your role icon.', required: false)
     end
 
     group.subcommand('edit', 'Edit your custom booster role.') do |option|
       option.string('name', 'Provide a name for your role.', required: false, max_length: 100)
       option.string('color', 'Provide a HEX color for your role.', required: false, min_length: 3, max_length: 16)
-      option.string('icon', 'Provide an emoji to serve as your role icon.', required: false)
+      option.string('icon', 'Provide an emoji for your role icon.', required: false)
     end
 
     group.subcommand('delete', 'Delete your custom booster role.')
