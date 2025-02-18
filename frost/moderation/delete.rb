@@ -12,7 +12,11 @@ module Moderation
 
     ([1] * data.options["amount"]).each_slice(100) do |chunk|
       count += data.channel.prune(chunk.sum, data) do |logic|
-        pass = [] unless pass.empty?
+        pass.clear unless pass.empty?
+
+        if data.options["member"]
+          pass << (logic.author.id.to_i == data.options["member"].to_i)
+        end
 
         if data.options["contains"]
           pass << logic.content&.include?(data.options["contains"])
@@ -24,10 +28,6 @@ module Moderation
 
         if data.options["suffix"]
           pass << logic.text&.end_with?(data.options["suffix"])
-        end
-
-        if data.options["member"]
-          pass << (logic.user.id == data.options["member"])
         end
 
         if data.options["files"]
@@ -46,7 +46,7 @@ module Moderation
           pass << logic.emoji?
         end
 
-        return pass.any?
+        pass.all?
       end
     end
 
