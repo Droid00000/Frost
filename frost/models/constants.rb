@@ -473,7 +473,7 @@ POSTGRES.pool.connection_validation_timeout = -1
 SEARCH = Typesense::Client.new(nodes: CONFIG[:Typesense][:NODE], api_key: CONFIG[:Typesense][:TOKEN])
 
 # The lavalink client used by the bot to play music.
-# CALLIOPE = Calliope::Client.new(CONFIG[:Lavalink][:URL], CONFIG[:Lavalink][:TOKEN], CONFIG[:Lavalink][:ID])
+CALLIOPE = Calliope::Client.new(CONFIG[:Lavalink][:URL], CONFIG[:Lavalink][:TOKEN], CONFIG[:Lavalink][:ID])
 
 # A series of regular expressions utilized by the bot.
 REGEX = {
