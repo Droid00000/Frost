@@ -9,6 +9,9 @@ module Frost
     # Easy way to search timezones.
     @@ts = SEARCH.collections["timezones"].documents
 
+    # Easy way to query results from Typesense.
+    @@query = { preset: "Generic", max_candidates: 10000 }
+
     # Search for a generic timezone entry.
     def self.generic
       @@ts.search(q: "Generic", preset: "Generic")["hits"][0]["document"]["resolved"].take(25)
@@ -30,7 +33,7 @@ module Frost
 
     # Search for a specific timezone entry.
     def self.search(query)
-      hits = @@ts.search(q: query, preset: "Generic", limit: 250)["hits"].map do |hit|
+      hits = @@ts.search(q: query, limit: 250, **@@query)["hits"].map do |hit|
         next if hit["document"]["country"] == "Generic"
 
         hit["document"]["resolved"].first(25)
