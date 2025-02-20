@@ -194,8 +194,9 @@ bot.register_application_command(:event, 'Event roles', contexts: [0], integrati
       option.string('icon', 'Provide an emoji for your role icon.', required: false, name_localizations: { 'hi' => 'आइकन' }, description_localizations: { 'hi' => 'अपने रोल आइकन के रूप में एक इमोजी दें' })
     end
 
-    group.subcommand(:setup, 'Setup the event roles functionality.', name_localizations: { 'hi' => 'व्यवस्था' }, description_localizations: { 'hi' => 'इवेंट रोल्स कार्यक्षमता सेटअप करें' }) do |option|
+    group.subcommand(:add, 'Setup the event roles functionality.', name_localizations: { 'hi' => 'व्यवस्था' }, description_localizations: { 'hi' => 'इवेंट रोल्स कार्यक्षमता सेटअप करें' }) do |option|
       option.role('role', 'Which role should be modifiable by its users?', required: true, name_localizations: { 'hi' => 'रोल' }, description_localizations: { 'hi' => 'कौन सा रोल उपयोगकर्ताओं द्वारा संपादित किया जा सकता है' })
+      option.boolean('icon', 'Should external emojis be allowed as role icons?', required: true, name_localizations: { 'hi' => 'आइकन' }, description_localizations: { 'hi' => 'क्या बाह्य इमोजी को भूमिका चिह्न के रूप में अनुमति दी जानी चाहिए' })
     end
 
     group.subcommand(:remove, 'Remove event roles functionality from a role.', name_localizations: { 'hi' => 'निकालना' }, description_localizations: { 'hi' => 'किसी भूमिका से ईवेंट भूमिका कार्यक्षमता हटाएँ' }) do |option|

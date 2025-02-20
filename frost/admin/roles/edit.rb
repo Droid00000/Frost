@@ -34,6 +34,16 @@ def roles_edit(data)
     reason: format(REASON[3], data.user.display_name, data.user.id)
   }
 
+  icon_logic = lambda do |icon|
+    return true if Frost::Roles.any_icon?(data)
+
+    return true if resolve_icon(data).nil? || resolve_icon(data).is_a?(String)
+
+    data.emojis("icon").server && data.emojis("icon").server.id == data.server.id
+  end
+
+  payload.delete(:icon) unless icon_logic.call(data)
+
   data.server.update_role(**payload)
 
   data.edit_response(content: "#{RESPONSE[2]} #{EMOJI[3]}")

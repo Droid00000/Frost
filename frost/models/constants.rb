@@ -125,7 +125,8 @@ RESPONSE = {
   122 => "Successfully enabled invites for this server.",
   123 => "You can only indefinitely disable invites in `community` servers.",
   124 => "You must provide a role when initally setting up booster perks.",
-  125 => "This is not a valid timezone."
+  125 => "This is not a valid timezone.",
+  126 => "Successfully updated your icon settings."
 }.freeze
 
 # Values for embed responses.

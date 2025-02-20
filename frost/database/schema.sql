@@ -6,6 +6,7 @@
 CREATE TABLE IF NOT EXISTS event_settings (
   role_id BIGINT NOT NULL, 
   guild_id BIGINT NOT NULL,
+  guild_icon BOOLEAN NOT NULL,
   PRIMARY KEY (role_id, guild_id)
 );
 

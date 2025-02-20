@@ -6,6 +6,20 @@ module Frost
     # Easy way to access the DB.
     @@pg = POSTGRES[:event_settings]
 
+    # Modify the icon settings for a role.
+    def self.icon(data)
+      POSTGRES.transaction do
+        @@pg.where(guild_id: data.server.id, role_id: data.options["role"]).update(guild_icon: data.options["icon"])
+      end
+    end
+
+    # Add a new role to the database.
+    def self.add(data)
+      POSTGRES.transaction do
+        @@pg.insert(guild_id: data.server.id, role_id: data.options["role"], guild_icon: data.options["icon"])
+      end
+    end
+
     # Gets all the setup roles for a guild.
     def self.all(data)
       POSTGRES.transaction do
@@ -13,10 +27,10 @@ module Frost
       end
     end
 
-    # Add a new role to the database.
-    def self.add(data)
+    # Get the icon settings for a role.
+    def self.any_icon?(data)
       POSTGRES.transaction do
-        @@pg.insert_conflict.insert(guild_id: data.server.id, role_id: data.options["role"])
+        @@pg.where(guild_id: data.server.id, role_id: data.options["role"]).get(:guild_icon)
       end
     end
 

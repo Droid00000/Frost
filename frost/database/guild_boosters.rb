@@ -143,6 +143,13 @@ module Frost
         end
       end
 
+      # Manually delete a user.
+      def self.delete_user(data)
+        POSTGRES.transaction do
+          @@pg[:guild_boosters].where(guild_id: data.server.id, user_id: data.options["member"]).delete
+        end
+      end
+      
       # Manually get a ban.
       def self.get_ban(data)
         POSTGRES.transaction do
@@ -150,17 +157,10 @@ module Frost
         end
       end
 
-      # Manually delete a user.
-      def self.delete_user(data)
-        POSTGRES.transaction do
-          @@pg[:guild_boosters].where(guild_id: data.server.id, user_id: data.options["member"]).delete
-        end
-      end
-
       # Adds a hoist role and icon setting for this guild.
       def self.setup(data)
         POSTGRES.transaction do
-          @@pg[:booster_settings].insert_conflict(target: :guild_id, update: data.delete(:guild_id)).insert(**data)
+          @@pg[:booster_settings].insert_conflict(target: :guild_id, update: data.except(:guild_id)).insert(**data)
         end
       end
 
