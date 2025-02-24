@@ -454,7 +454,7 @@ module Discordrb
   module Events
     # Monkey patches for interactions.
     class InteractionCreateEvent
-      def resolve_options
+      def option
         options = @interaction.data["options"]
 
         case options[0]["type"]

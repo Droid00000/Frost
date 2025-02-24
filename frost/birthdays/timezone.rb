@@ -3,12 +3,12 @@
 module Birthday
   # Search for timezones.
   def self.search(data)
-    return unless data.resolve_options["timezone"]
+    return unless data.option["timezone"]
 
-    choices = if data.resolve_options["timezone"]&.empty?
+    choices = if data.option["timezone"]&.empty?
                 Frost::Birthdays.generic
               else
-                Frost::Birthdays.search(data.resolve_options["timezone"])
+                Frost::Birthdays.search(data.option["timezone"])
               end
 
     data.interaction.create_autocomplete_response(choices) unless choices&.empty?
@@ -24,6 +24,39 @@ module Birthday
   # Get a timezone without any validation.
   def self.zone(zone)
     TZInfo::Timezone.get(zone)&.now
+  end
+
+  # Create autocomplete choices for a date.
+  def self.date(data)
+    return unless data.option["date"]
+
+    option, choices = data.option["date"], []
+
+    begin
+      time_1 = Time.parse(option)
+    rescue StandardError
+      time_1 = nil
+    end
+
+    begin
+      time_2 = Time.strptime(option, "%d/%m")
+    rescue StandardError
+      time_2 = nil
+    end
+
+    view = lambda do |time|
+      time.strftime("%B #{time.day.ordinal}")
+    end
+
+    if time_1
+      choices << { name: view.call(time_1), value: time_1.strftime("%m/%d") }
+    end
+
+    if time_2
+      choices << { name: view.call(time_2), value: time_2.strftime("%m/%d") }
+    end
+
+    data.interaction.create_autocomplete_response(choices.uniq) unless choices.empty?
   end
 
   # Get a timezone including error handling.
