@@ -149,7 +149,7 @@ module Frost
           @@pg[:guild_boosters].where(guild_id: data.server.id, user_id: data.options["member"]).delete
         end
       end
-      
+
       # Manually get a ban.
       def self.get_ban(data)
         POSTGRES.transaction do

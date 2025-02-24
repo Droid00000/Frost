@@ -16,8 +16,7 @@ Simply do: `bundle install`.
 
 3. **Create the database in PostgreSQL**
 
-You'll need to be using PostgreSQL 14 or higher. If you want an easy solution, [Neon](https://neon.tech/home) is a great choice. Type the following
-into the PostgreSQL manager:
+You'll need to be using PostgreSQL 14 or higher. Type the following into the PostgreSQL manager:
 
 ```sql
 CREATE ROLE frost WITH LOGIN PASSWORD 'yourpasswordhere';

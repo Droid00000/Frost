@@ -29,6 +29,6 @@ def setup_booster(data)
     data.edit_response(content: RESPONSE[126])
     return
   end
-  
+
   data.edit_response(content: format(RESPONSE[33], data.options["role"]))
 end

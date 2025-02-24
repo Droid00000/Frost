@@ -14,6 +14,13 @@ module Frost
       end
     end
 
+    # Gets the existing archive channel.
+    def self.channel(data)
+      POSTGRES.transaction do
+        data.bot.channel(@@pg.where(guild_id: data.server.id).get(:channel_id))
+      end
+    end
+
     # Removes all instances of this channel.
     def self.remove(data)
       POSTGRES.transaction do

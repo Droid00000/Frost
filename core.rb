@@ -15,8 +15,6 @@ require "frost/models/constants"
 require "frost/models/functions"
 require "frost/models/paginator"
 require "frost/models/extensions"
-require "frost/pins/auto_archiver"
-require "frost/pins/manual_archiver"
 
 Dir["frost/database/*.rb"].each { |file| require file }
 

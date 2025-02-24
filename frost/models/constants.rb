@@ -126,7 +126,9 @@ RESPONSE = {
   123 => "You can only indefinitely disable invites in `community` servers.",
   124 => "You must provide a role when initally setting up booster perks.",
   125 => "This is not a valid timezone.",
-  126 => "Successfully updated your icon settings."
+  126 => "Successfully updated your icon settings.",
+  127 => "There must be at least fifty pins in this channel.",
+  128 => "This server hasn't enabled the pin archiver."
 }.freeze
 
 # Values for embed responses.
