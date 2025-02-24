@@ -4,7 +4,6 @@ $LOAD_PATH.unshift Dir.pwd
 
 require "yaml"
 require "sequel"
-require "calliope"
 require "typesense"
 require "discordrb"
 require "tzinfo/data"
@@ -29,7 +28,6 @@ at_exit { @bot.stop }
 
 @bot.include! PinArchiver
 @bot.include! BoosterPerks
-@bot.include! MusicCommands
 @bot.include! EmojiCommands
 @bot.include! AdminCommands
 @bot.include! SnowballFights

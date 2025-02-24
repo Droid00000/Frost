@@ -4,12 +4,6 @@ Discord:
   TOKEN: "Bot TOKEN_HERE"
   CONTRIBUTORS: []
 
-# Information about the Lavalink node.
-Lavalink:
-  ID: ""
-  URL: ""
-  TOKEN: ""
-
 # Information about the typesense node.
 Typesense:
   NODE: []
