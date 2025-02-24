@@ -44,9 +44,7 @@ module Birthday
       time_2 = nil
     end
 
-    view = lambda do |time|
-      time.strftime("%B #{time.day.ordinal}")
-    end
+    view = lambda { |time| time.strftime("%B #{time.day.ordinal}") }
 
     if time_1
       choices << { name: view.call(time_1), value: time_1.strftime("%m/%d") }
