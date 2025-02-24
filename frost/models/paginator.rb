@@ -28,7 +28,7 @@ module Frost
       @custom_id = JSON.parse(data.custom_id)
       @total_pages = JSON.parse(data.custom_id)["chunk"][1]
       @current_page = JSON.parse(data.custom_id)["chunk"][0]
-      @house_role = postgres ? postgres.cult(data) : (data.server.role(JSON.parse(data.custom_id)["id"]) if @custom_id.to_json.match(REGEX[7]))
+      @house_role = postgres ? postgres.cult(data) : data.server.role(JSON.parse(data.custom_id)["id"])
     end
 
     def house_forward
@@ -132,13 +132,10 @@ module Frost
     end
 
     # Determine the chunk type.
-    def paginate(*_data)
+    def paginate
       case @custom_id["type"]
       when "H-UP"
         house_forward
-        self
-      when "M-UP"
-        music_forward
         self
       when "AH-UP"
         admin_forward
@@ -148,9 +145,6 @@ module Frost
         self
       when "AH-DOWN"
         admin_backward
-        self
-      when "M-DOWN"
-        music_backward
         self
       end
     end
