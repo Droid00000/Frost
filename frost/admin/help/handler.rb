@@ -24,8 +24,6 @@ module AdminCommands
       help_snow(event)
     when "EMOJI"
       help_emoji(event)
-    when "MUSIC"
-      help_music(event)
     when "BOOST"
       help_booster(event)
     when "BIRTHDAY"
