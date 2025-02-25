@@ -2,7 +2,6 @@
 
 require_relative "pins"
 require_relative "snow"
-require_relative "music"
 require_relative "index"
 require_relative "emoji"
 require_relative "admin"
