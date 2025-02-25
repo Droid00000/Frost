@@ -34,6 +34,13 @@ module Frost
       end
     end
 
+    # @param data [Discordrb::Interaction]
+    def self.count(data)
+      POSTGRES.transaction do
+        @@pg.where(guild_id: data.server.id).size.delimit
+      end
+    end
+
     # Insert a new emoji into the DB.
     def self.add(emoji, guild)
       POSTGRES.transaction do
