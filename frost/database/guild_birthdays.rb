@@ -6,17 +6,6 @@ module Frost
     # Easy way to access the DB.
     @@pg = POSTGRES[:guild_birthdays]
 
-    # Easy way to search timezones.
-    @@ts = SEARCH.collections["timezones"].documents
-
-    # Easy way to query results from Typesense.
-    @@query = { preset: "Generic", max_candidates: 10000 }
-
-    # Search for a generic timezone entry.
-    def self.generic
-      @@ts.search(q: "Generic", preset: "Generic")["hits"][0]["document"]["resolved"].take(25)
-    end
-
     # Edit an existing birthday in the DB.
     def self.edit(*data)
       POSTGRES.transaction do
@@ -33,13 +22,19 @@ module Frost
 
     # Search for a specific timezone entry.
     def self.search(query)
-      hits = @@ts.search(q: query, limit: 250, **@@query)["hits"].map do |hit|
-        next if hit["document"]["country"] == "Generic"
-
-        hit["document"]["resolved"].first(25)
+      url = URI("")
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+      request = Net::HTTP::Post.new(url)
+      request["Content-Type"] = "application/json"
+      request["authorization"] = "Bearer"
+      request.body = JSON.dump({ limit: 25, q: query })
+      mapped = JSON.parse(https.request(request).read_body)
+      mapped = mapped["hits"].map do |hit|
+        hit["resolved"]
       end
 
-      hits.flatten.compact.take(25)
+      mapped.flatten.compact.take(25)
     end
 
     # Check if a user exists in the DB.
