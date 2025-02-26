@@ -4,7 +4,6 @@ $LOAD_PATH.unshift Dir.pwd
 
 require "yaml"
 require "sequel"
-require "typesense"
 require "discordrb"
 require "tzinfo/data"
 require "unicode/emoji"

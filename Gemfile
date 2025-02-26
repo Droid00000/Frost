@@ -12,8 +12,6 @@ gem "rufus-scheduler"
 
 gem "tzinfo-data"
 
-gem "typesense"
-
 gem "sequel"
 
 gem "pg"

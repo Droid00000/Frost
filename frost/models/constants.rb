@@ -430,9 +430,6 @@ POSTGRES = Sequel.connect(CONFIG[:Postgres][:URL], extensions: :connection_valid
 
 POSTGRES.pool.connection_validation_timeout = -1
 
-# The typesense client that implements fuzzy search.
-SEARCH = Typesense::Client.new(nodes: CONFIG[:Typesense][:NODE], api_key: CONFIG[:Typesense][:TOKEN])
-
 # A series of regular expressions utilized by the bot.
 REGEX = {
   3 => /<(a?):([a-zA-Z0-9_]{1,32}):([0-9]{15,20})>/,

@@ -34,11 +34,6 @@ Discord:
   TOKEN: "Bot TOKEN_HERE"
   CONTRIBUTORS: []
 
-# Information about the typesense node.
-Typesense:
-  NODE: []
-  TOKEN: ""
-
 # Information about a manga chapter.
 Chapter:
   LINK: ""
