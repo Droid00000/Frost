@@ -22,13 +22,6 @@ module Frost
         end
       end
 
-      # Removes all instances of this role.
-      def self.remove_role(data)
-        POSTGRES.transaction do
-          @@pg[:guild_boosters].where(role_id: data.id, guild_id: data.server.id).delete
-        end
-      end
-
       # Gets the role of a booster.
       def self.role(data)
         POSTGRES.transaction do
@@ -47,6 +40,13 @@ module Frost
       def self.delete(data)
         POSTGRES.transaction do
           @@pg.where(guild_id: data.server.id, user_id: data.user.id).delete
+        end
+      end
+
+      # Removes all instances of this role.
+      def self.remove_role(data)
+        POSTGRES.transaction do
+          @@pg.where(role_id: data.id, guild_id: data.server.id).delete
         end
       end
 

@@ -6,12 +6,26 @@ module Birthday
     return unless data.option["timezone"]
 
     choices = if data.option["timezone"]&.empty?
-                Frost::Birthdays.generic
+                Frost::Birthdays::DEFAULT_ZONES
               else
                 Frost::Birthdays.search(data.option["timezone"])
               end
 
-    data.interaction.create_autocomplete_response(choices) unless choices&.empty?
+    if choices.is_a?(Hash)
+      choices = choices.map do |key, zone|
+        { name: "#{key}", value: "#{zone}" }
+      end
+    end
+
+    unless choices.is_a?(Array)
+      choices = choices.map do |result|
+        { name: result[:name], value: result[:timezone] }
+      end
+    end
+
+    unless choices.empty?
+      data.interaction.create_autocomplete_response(choices)
+    end
   end
 
   # Parse the timezone.

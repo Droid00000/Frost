@@ -3,8 +3,45 @@
 module Frost
   # Represents a birthday DB.
   class Birthdays
+    # Default timezones used.
+    DEFAULT_ZONES = {
+      "New York, United States": "America/New_York",
+      "Los Angeles, United States": "America/Los_Angeles",
+      "Chicago, United States": "America/Chicago",
+      "Denver, United States": "America/Denver",
+      "Kolkata, India": "Asia/Kolkata",
+      "Istanbul, Türkiye": "Europe/Istanbul",
+      "Moscow, Russia": "Europe/Moscow",
+      "London, United Kingdom": "Europe/London",
+      "Paris, France": "Europe/Paris",
+      "Madrid, Spain": "Europe/Madrid",
+      "Berlin, Germany": "Europe/Berlin",
+      "Athens, Greece": "Europe/Athens",
+      "Kyiv, Ukraine": "Europe/Kyiv",
+      "Rome, Italy": "Europe/Rome",
+      "Amsterdam, Netherlands": "Europe/Amsterdam",
+      "Warsaw, Poland": "Europe/Warsaw",
+      "Toronto, Canada": "America/Toronto",
+      "Brisbane, Australia": "Australia/Brisbane",
+      "Sydney, Australia": "Australia/Sydney",
+      "Melbourne, Australia": "Australia/Melbourne",
+      "São Paulo, Brazil": "America/Sao_Paulo",
+      "Tokyo, Japan": "Asia/Tokyo",
+      "Shanghai, China": "Asia/Shanghai"
+    }.freeze
+
     # Easy way to access the DB.
     @@pg = POSTGRES[:guild_birthdays]
+
+    # Easy way to access timezones.
+    @@zones = POSTGRES[:guild_timezones]
+
+    # Search for a specific timezone entry from the DB.
+    def self.search(query)
+      POSTGRES.transaction do
+        @@zones.where { (Sequel.lit('name % ?', query)) | (Sequel.lit('timezone % ?', query)) }.limit(25)
+      end
+    end
 
     # Edit an existing birthday in the DB.
     def self.edit(*data)
@@ -18,23 +55,6 @@ module Frost
       POSTGRES.transaction do
         @@pg.where(guild_id: data[0].server.id, user_id: data[0].user.id).get(data[1])
       end
-    end
-
-    # Search for a specific timezone entry.
-    def self.search(query)
-      url = URI("")
-      https = Net::HTTP.new(url.host, url.port)
-      https.use_ssl = true
-      request = Net::HTTP::Post.new(url)
-      request["Content-Type"] = "application/json"
-      request["authorization"] = "Bearer"
-      request.body = JSON.dump({ limit: 25, q: query })
-      mapped = JSON.parse(https.request(request).read_body)
-      mapped = mapped["hits"].map do |hit|
-        hit["resolved"]
-      end
-
-      mapped.flatten.compact.take(25)
     end
 
     # Check if a user exists in the DB.

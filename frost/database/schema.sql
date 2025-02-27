@@ -10,6 +10,13 @@ CREATE TABLE IF NOT EXISTS event_settings (
   PRIMARY KEY (role_id, guild_id)
 );
 
+-- Holds info about world timezones.
+CREATE TABLE IF NOT EXISTS guild_timezones (
+  name TEXT NOT NULL,
+  timezone TEXT NOT NULL,
+  PRIMARY KEY (timezone, name)
+);
+
 -- Holds info about the pin archiver.
 CREATE TABLE IF NOT EXISTS archiver_settings (
   guild_id BIGINT NOT NULL UNIQUE,
@@ -120,6 +127,10 @@ CREATE UNIQUE INDEX IF NOT EXISTS guild_channel_idx ON archiver_settings (guild_
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
 
 CREATE UNIQUE INDEX IF NOT EXISTS app_snowball_user_idx ON snowball_players (user_id);
+
+CREATE INDEX IF NOT EXISTS guild_names_idx ON guild_timezones USING GIN (name gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS guild_timezones_idx ON guild_timezones USING GIN (timezone gin_trgm_ops);
 
 CREATE TRIGGER guild_emoji_udx BEFORE INSERT ON emoji_tracker FOR EACH ROW EXECUTE FUNCTION balance_manager();
 
