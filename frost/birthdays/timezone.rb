@@ -68,7 +68,7 @@ module Birthday
       choices << { name: view.call(second), value: second.strftime("%m/%d") }
     end
 
-    return unless choices.empty?
+    return if choices.empty?
 
     data.interaction.create_autocomplete_response(choices.uniq)
   end
