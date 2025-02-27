@@ -3,7 +3,7 @@
 module Birthday
   # Search for timezones.
   def self.search(data)
-    return unless data.option["timezone"]
+    return unless data.focused?("timezone")
 
     choices = if data.option["timezone"] && data.option["timezone"].empty?
                 Frost::Birthdays::DEFAULT_ZONES
@@ -42,7 +42,7 @@ module Birthday
 
   # Create autocomplete choices for a date.
   def self.date(data)
-    return unless data.option["date"]
+    return unless data.focused?("date")
 
     option, choices = data.option["date"], []
 

@@ -471,6 +471,24 @@ module Discordrb
 
         options.to_h { |opt| [opt["name"], opt["options"] || opt["value"]] }
       end
+
+      def focused?(option)
+        options = @interaction.data["options"]
+
+        case options[0]["type"]
+        when 2
+          options = options[0]
+          @subcommand_group = options["name"].to_sym
+          @subcommand = options["options"][0]["name"].to_sym
+          options = options["options"][0]["options"]
+        when 1
+          options = options[0]
+          @subcommand = options["name"].to_sym
+          options = options["options"]
+        end
+
+        options.find { |option| option.key?("focused") }["name"] == option 
+      end
     end
   end
 end
