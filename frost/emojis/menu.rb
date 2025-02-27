@@ -10,7 +10,7 @@ module Emojis
 
     data.send_message do |_, components|
       components.row do |menu|
-        menu.select_menu(custom_id: "emoji", placeholder: EMBED[34], min_values: 1) do |options|
+        menu.select_menu(custom_id: "emoji", placeholder: RESPONSE[1], min_values: 1) do |options|
           data.target.emoji.uniq.each_with_index do |emoji, count|
             break if count > 24
 

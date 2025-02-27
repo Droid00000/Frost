@@ -2,6 +2,7 @@
 
 require_relative "send"
 require_relative "steal"
+require_relative "values"
 require_relative "collect"
 
 module SnowballFights

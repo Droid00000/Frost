@@ -487,7 +487,7 @@ module Discordrb
           options = options["options"]
         end
 
-        options.find { |option| option.key?("focused") }["name"] == option 
+        options.find { |option| option.key?("focused") }["name"] == option
       end
     end
   end

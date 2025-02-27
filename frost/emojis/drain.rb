@@ -4,7 +4,7 @@ module Emojis
   # Drain the emoji cache.
   def self.drain(data)
     unless data.user.id == CONFIG[:Discord][:OWNER]
-      data.edit_response(content: RESPONSE[18])
+      data.edit_response(content: RESPONSE[1])
       return
     end
 
@@ -12,6 +12,6 @@ module Emojis
       Frost::Emojis.add(emoji[:emoji], emoji[:guild])
     end
 
-    data.edit_response(content: RESPONSE[97])
+    data.edit_response(content: RESPONSE[])
   end
 end

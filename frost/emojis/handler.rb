@@ -6,6 +6,7 @@ require_relative "drain"
 require_relative "stats"
 require_relative "click"
 require_relative "steal"
+require_relative "values"
 
 module EmojiCommands
   extend Discordrb::EventContainer

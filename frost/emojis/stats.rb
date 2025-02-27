@@ -20,7 +20,7 @@ module Emojis
 
   def self.stats(data)
     unless Frost::Emojis.any?(data)
-      data.edit_response(content: RESPONSE[64])
+      data.edit_response(content: RESPONSE[1])
       return
     end
 
@@ -40,7 +40,7 @@ module Emojis
       builder.add_embed do |embed|
         embed.colour = UI[6]
         embed.timestamp = Time.now
-        embed.description = EMBED[51]
+        embed.description = EMBED[]
         embed.title = format(EMBED[50], data.server.name)
         embed.add_field(name: EMBED[52], value: emojis.join, inline: true)
       end
