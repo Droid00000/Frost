@@ -3,8 +3,6 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 3.3
   Exclude:
-  - 'app/frost/pins/manual_archiver.rb'
-  - 'app/frost/pins/auto_archiver.rb'
   - 'app/frost/models/commands.rb'
   - 'app/frost/models/embeds.rb'
 

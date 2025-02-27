@@ -5,7 +5,7 @@ module Birthday
   def self.search(data)
     return unless data.option["timezone"]
 
-    choices = if data.option["timezone"]&.empty?
+    choices = if data.option["timezone"] && data.option["timezone"].empty?
                 Frost::Birthdays::DEFAULT_ZONES
               else
                 Frost::Birthdays.search(data.option["timezone"])
@@ -13,7 +13,7 @@ module Birthday
 
     if choices.is_a?(Hash)
       choices = choices.map do |key, zone|
-        { name: "#{key}", value: "#{zone}" }
+        { name: key.to_s, value: zone.to_s }
       end
     end
 
@@ -23,9 +23,9 @@ module Birthday
       end
     end
 
-    unless choices.empty?
-      data.interaction.create_autocomplete_response(choices)
-    end
+    return if choices.empty?
+
+    data.interaction.create_autocomplete_response(choices)
   end
 
   # Parse the timezone.
@@ -47,28 +47,30 @@ module Birthday
     option, choices = data.option["date"], []
 
     begin
-      time_1 = Time.parse(option)
+      first = Time.parse(option)
     rescue StandardError
-      time_1 = nil
+      first = nil
     end
 
     begin
-      time_2 = Time.strptime(option, "%d/%m")
+      second = Time.strptime(option, "%d/%m")
     rescue StandardError
-      time_2 = nil
+      second = nil
     end
 
-    view = lambda { |time| time.strftime("%B #{time.day.ordinal}") }
+    view = ->(time) { time.strftime("%B #{time.day.ordinal}") }
 
-    if time_1
-      choices << { name: view.call(time_1), value: time_1.strftime("%m/%d") }
+    if first
+      choices << { name: view.call(first), value: first.strftime("%m/%d") }
     end
 
-    if time_2
-      choices << { name: view.call(time_2), value: time_2.strftime("%m/%d") }
+    if second
+      choices << { name: view.call(second), value: second.strftime("%m/%d") }
     end
 
-    data.interaction.create_autocomplete_response(choices.uniq) unless choices.empty?
+    return unless choices.empty?
+
+    data.interaction.create_autocomplete_response(choices.uniq)
   end
 
   # Get a timezone including error handling.

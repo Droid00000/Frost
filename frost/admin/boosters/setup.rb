@@ -20,7 +20,7 @@ def setup_booster(data)
   payload = {
     guild_id: data.server.id,
     hoist_role: data.options["role"],
-    guild_icon: data.options["icon"],
+    guild_icon: data.options["icon"]
   }
 
   Frost::Boosters::Settings.setup(payload.compact)

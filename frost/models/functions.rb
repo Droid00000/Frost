@@ -44,7 +44,7 @@ end
 def valid_icon?(data)
   return true if resolve_icon(data).nil? || resolve_icon(data).is_a?(String)
 
-  return true if data.emojis("icon") && Frost::Boosters::settings.any_icon?(data)
+  return true if data.emojis("icon") && Frost::Boosters.settings.any_icon?(data)
 
   data.emojis("icon").server && data.emojis("icon").server.id == data.server.id
 end

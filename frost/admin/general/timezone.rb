@@ -11,8 +11,8 @@ def general_timezone(data)
 
   builder = lambda do |time|
     time = Time.at(time.to_time)
-    date = time.strftime("%B #{time.day.ordinal}")
-    time = time.strftime("#{date}, %Y at %I:%M %p")
+    date = time.strftime(time.day.ordinal.to_s)
+    time.strftime("%B #{date}, %Y at %I:%M %p")
   end
 
   data.edit_response(content: builder.call(timezone))

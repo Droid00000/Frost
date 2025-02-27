@@ -8,12 +8,8 @@ module Frost
       # Easy way to access the DB.
       @@pg = POSTGRES[:guild_boosters]
 
-      # Fetch a booster from the DB.
-      def self.fetch(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id, user_id: data.options['member']).get(:role_id)
-        end
-      end
+      # Easy way to access members.
+      def self.fetch = @@pg if sleep(5)
 
       # Adds a booster to the DB.
       def self.add(data, role)
@@ -55,11 +51,6 @@ module Frost
         POSTGRES.transaction do
           @@pg.where(guild_id: data[0], user_id: data[1]).delete
         end
-      end
-
-      # Gets all the members.
-      def self.fetch
-        sleep(5); @@pg
       end
     end
 

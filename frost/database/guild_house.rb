@@ -7,7 +7,7 @@ module Frost
     @@pg = POSTGRES[:house_settings]
 
     # The entire DB
-    def self.all; self; end
+    def self.all = self
 
     # @param data [Discordrb::Interaction]
     def self.head?(data)

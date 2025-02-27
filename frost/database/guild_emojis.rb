@@ -7,7 +7,7 @@ module Frost
     @@emojis = []
 
     # Returns all emojis.
-    def self.drain; @@emojis; end
+    def self.drain = @@emojis
 
     # Easy way to access the DB.
     @@pg = POSTGRES[:emoji_tracker]

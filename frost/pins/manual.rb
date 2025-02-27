@@ -24,6 +24,6 @@ module Pins
       embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: pin.author.display_name, icon_url: pin.author.avatar_url)
     end
 
-    data.edit_response(content: "#{RESPONSE[20]}") && pin.unpin
+    data.edit_response(content: RESPONSE[20]) && pin.unpin
   end
 end

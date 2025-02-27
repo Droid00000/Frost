@@ -32,7 +32,7 @@ module Emojis
       emojis << { main: data.bot.emoji(emoji[:emoji_id]), count: emoji[:balance] }
     end
 
-    emojis.map! do |stats|
+    emojis.map! do |emoji|
       "#{emoji[:main].mention} — #{emoji[:main].name} **(#{emoji[:count].delimit})**\n"
     end
 
