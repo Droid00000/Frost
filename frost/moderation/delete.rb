@@ -15,7 +15,7 @@ module Moderation
         pass.clear unless pass.empty?
 
         if data.options["member"]
-          pass << (logic.author.id.to_i == data.options["member"].to_i)
+          pass << (logic.author.id.to_s == data.options["member"].to_s)
         end
 
         if data.options["contains"]
@@ -43,7 +43,7 @@ module Moderation
         end
 
         if data.options["emoji"]
-          pass << logic.emoji?
+          pass << logic.emoji.any?
         end
 
         pass.all?
