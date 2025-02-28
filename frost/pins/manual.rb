@@ -3,6 +3,11 @@
 module Pins
   # Archive all the pins in the current channel.
   def self.archive(data)
+    unless data.server.bot.permission?(:manage_message, data.channel)
+      data.edit_response(content: RESPONSE[47])
+      return
+    end
+  
     unless data.channel.pins.count == 50
       data.edit_response(content: RESPONSE[127])
       return
