@@ -6,7 +6,7 @@ module Birthday
     return unless data.focused?("timezone")
 
     choices = if data.option["timezone"] && data.option["timezone"].empty?
-                Frost::Birthdays::DEFAULT_ZONES
+                DEFAULT_ZONES
               else
                 Frost::Birthdays.search(data.option["timezone"])
               end

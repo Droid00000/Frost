@@ -7,7 +7,7 @@ module Pins
       data.edit_response(content: RESPONSE[47])
       return
     end
-  
+
     unless data.channel.pins.count == 50
       data.edit_response(content: RESPONSE[127])
       return

@@ -8,11 +8,11 @@ module Moderation
       return
     end
 
-    count, pass = 0, []
+    count = 0
 
     ([1] * data.options["amount"]).each_slice(100) do |chunk|
       count += data.channel.prune(chunk.sum, data) do |logic|
-        pass.clear unless pass.empty?
+        pass = [] && pass.clear unless pass.empty?
 
         if data.options["member"]
           pass << (logic.author.id.to_s == data.options["member"].to_s)

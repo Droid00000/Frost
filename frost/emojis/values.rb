@@ -12,7 +12,7 @@ module Emojis
     7 => "Viewing %s out of %s cached emojis.",
     8 => "Added this emoji to the server:",
     9 => "### Emoji Statistics for %s",
-    10 => "Unable to drain emojis.",
+    10 => "Unable to drain emojis."
   }.freeze
 
   # Application commands for emojis.
