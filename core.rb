@@ -26,7 +26,6 @@ at_exit { @bot.stop }
 @bot.include! BoosterPerks
 @bot.include! EmojiCommands
 @bot.include! AdminCommands
-@bot.include! SnowballFights
 @bot.include! BirthdayCommands
 @bot.include! AffectionCommands
 @bot.include! ModerationCommands

@@ -98,32 +98,12 @@ bot.register_application_command(:evaluate, "Remotely execute and evaluate code.
   option.string("code", "The code you want to execute.", required: true, name_localizations: { "hi" => "कोड" }, description_localizations: { "hi" => "कोड जो रन करना है" })
 end
 
-# @!function [Snowball Operations] Belongs to a module that does snowball fights between members.
-bot.register_application_command(:throw, "Snowball fights", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "फेंको" }, description_localizations: { "hi" => "बर्फ का गोला की लड़ीं" }) do |command|
-  command.subcommand("snowball", "Throw a snowball at someone.", name_localizations: { "hi" => "बर्फकालोग" }, description_localizations: { "hi" => "बर्फ का गोला फेक" }) do |option|
-    option.user("member", "Who do you want to hit with a snowball?", required: true, name_localizations: { "hi" => "लोग" }, description_localizations: { "hi" => "बर्फ का गोला किसे मारना चाहते हो" })
-  end
-end
-
-# @!function [Snowball Operations] Belongs to a module that does snowball fights between members.
-bot.register_application_command(:collect, "Snowball fights", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "जमा" }, description_localizations: { "hi" => "बर्फ का गोला की लड़ीं" }) do |command|
-  command.subcommand("snowball", "Collect a snowball.", name_localizations: { "hi" => "बर्फकालोग" }, description_localizations: { "hi" => "बर्फ का गोला जमा करो" })
-end
-
 # @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
 bot.register_application_command(:gatekeeper, "Moderation Commands", contexts: [0], integration_types: [0], name_localizations: { "hi" => "द्वारपाल" }, description_localizations: { "hi" => "मॉडरेशन आदेश" }, default_member_permissions: "32") do |command|
   command.subcommand("disable", "Allow new members to join this server.", name_localizations: { "hi" => "अपंग" }, description_localizations: { "hi" => "नये सदस्यों को इस सर्वर से जुड़ने की अनुमति दें" })
 
   command.subcommand("enable", "Prevent new members from joining this server.", name_localizations: { "hi" => "सक्षम" }, description_localizations: { "hi" => "नये सदस्यों को इस सर्वर से जुड़ने से रोकें" }) do |option|
     option.string("duration", "When should invites be enabled again? ", required: false, min_length: 1, max_length: 10, name_localizations: { "hi" => "अवधि" }, description_localizations: { "hi" => "आमंत्रण सुविधा को पुनः कब सक्षम किया जाना चाहिए" })
-  end
-end
-
-# @!function [Snowball Operations] Belongs to a module that does snowball fights between members.
-bot.register_application_command(:steal, "Snowball fights", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "चोरी" }, description_localizations: { "hi" => "बर्फ का गोला की लड़ीं" }) do |command|
-  command.subcommand("snowball", "Steal a snowball from someone.", name_localizations: { "hi" => "बर्फकालोग" }, description_localizations: { "hi" => "बर्फ का लोग किसी से चूरो" }) do |option|
-    option.user("member", "Who do you want to steal snowballs from?", required: true, name_localizations: { "hi" => "लोग" }, description_localizations: { "hi" => "किस से बर्फ का लोग चोरी करना है" })
-    option.integer("amount", "How many snowballs do you want to steal?", choices: { two: "2", three: "3", four: "4", five: "5" }, required: true, name_localizations: { "hi" => "अमाउंट" }, description_localizations: { "hi" => "कितने बर्फ के गोले चुराने है" })
   end
 end
 

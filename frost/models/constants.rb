@@ -322,9 +322,10 @@ COLORS = {
 
 # The audit log reason shown whenever the bot does something.
 REASON = {
-  1 => "Booster Roles",
-  2 => "Release Date",
-  3 => "%s (ID: %s)"
+  1 => "Birthday Roles",
+  2 => "Booster Roles",
+  3 => "Release Date",
+  4 => "%s (ID: %s)"
 }.freeze
 
 # Emojis that the bot can use.
@@ -341,14 +342,13 @@ EMOJI = {
 
 # UI components including color values.
 UI = {
-  1 => "https://cdn.discordapp.com/avatars/1268769768920580156/1551613008086970c244a81d043d354e?size=1024",
-  2 => 0x89abd2,
-  3 => 0x33363b,
-  4 => 0x8da99b,
-  5 => 0xd4f0ff,
-  6 => 0x4d94e8,
-  7 => 0x6bb7ed,
-  8 => 0x849fe8
+  1 => 0x89abd2,
+  2 => 0x33363b,
+  3 => 0x8da99b,
+  4 => 0xd4f0ff,
+  5 => 0x4d94e8,
+  6 => 0x6bb7ed,
+  7 => 0x849fe8
 }.freeze
 
 # The time zone database source.

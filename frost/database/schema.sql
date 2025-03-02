@@ -41,13 +41,6 @@ CREATE TABLE IF NOT EXISTS birthday_settings (
   PRIMARY KEY (role_id, guild_id)
 );
 
--- Holds info about snowball players.
-CREATE TABLE IF NOT EXISTS snowball_players (
-  user_id BIGINT NOT NULL UNIQUE,
-  balance BIGINT NOT NULL DEFAULT 0,
-  PRIMARY KEY (user_id, balance)
-);
-
 -- Holds info about banned boosters.
 CREATE TABLE IF NOT EXISTS banned_boosters (  
   user_id BIGINT NOT NULL,
@@ -114,8 +107,6 @@ CREATE UNIQUE INDEX IF NOT EXISTS guilds_events_idx ON event_settings (role_id);
 CREATE UNIQUE INDEX IF NOT EXISTS guild_channel_idx ON archiver_settings (guild_id);
 
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
-
-CREATE UNIQUE INDEX IF NOT EXISTS app_snowball_user_idx ON snowball_players (user_id);
 
 CREATE INDEX IF NOT EXISTS guild_names_idx ON guild_timezones USING GIN (name gin_trgm_ops);
 
