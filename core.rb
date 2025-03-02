@@ -12,7 +12,6 @@ require "selenium-webdriver"
 require "frost/models/embeds"
 require "frost/models/constants"
 require "frost/models/functions"
-require "frost/models/paginator"
 require "frost/models/extensions"
 
 Dir["frost/database/*.rb"].each { |file| require file }

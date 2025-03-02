@@ -41,11 +41,6 @@ Chapter:
   CHANNEL: ""
   ELEMENT: ""
 
-# Holds information about houses.
-Houses:
-  GUILD: ""
-  STAFF: []
-
 # Database related credentials.
 Postgres:
   URL: "postgres://URI_HERE"

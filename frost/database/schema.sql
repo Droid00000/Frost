@@ -1,4 +1,4 @@
--- Revision: V0
+-- Revision: V1
 -- Creation Date: 2025-01-02 12:31:07.804358 UTC
 -- Reason: Initial Migration
 
@@ -80,14 +80,6 @@ CREATE TABLE IF NOT EXISTS emoji_tracker (
   PRIMARY KEY (emoji_id, guild_id)
 );
 
--- Holds info about house settings.
-CREATE TABLE IF NOT EXISTS house_settings (
-  user_id BIGINT NOT NULL,
-  role_id BIGINT NOT NULL,
-  guild_id BIGINT NOT NULL,
-  PRIMARY KEY (guild_id, user_id)
-);
-
 -- Function for managing the balance of an emoji.
 CREATE OR REPLACE FUNCTION balance_manager() RETURNS TRIGGER AS $$
 BEGIN
@@ -112,13 +104,9 @@ CREATE INDEX IF NOT EXISTS guild_premium_idx ON guild_boosters (guild_id);
 
 CREATE INDEX IF NOT EXISTS guild_icon_idx ON booster_settings (guild_icon);
 
-CREATE INDEX IF NOT EXISTS guild_house_head_idx ON house_settings (user_id);
-
 CREATE INDEX IF NOT EXISTS guild_booster_ban_idx ON banned_boosters (user_id);
 
 CREATE INDEX IF NOT EXISTS guild_premium_ban_idx ON banned_boosters (guild_id);
-
-CREATE UNIQUE INDEX IF NOT EXISTS guild_houses_idx ON house_settings (role_id);
 
 CREATE UNIQUE INDEX IF NOT EXISTS guilds_events_idx ON event_settings (role_id);
 

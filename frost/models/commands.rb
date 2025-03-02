@@ -93,11 +93,6 @@ bot.register_application_command(:change, "Moderation Commands", contexts: [0], 
   end
 end
 
-# @!function [House Operations] Belongs to a module that manages houses for a specific community.
-bot.register_application_command(:house, "Head of houses", server_id: ENV.fetch("HOUSE_GUILD"), contexts: [0], integration_types: [0], name_localizations: { "hi" => "घर" }, description_localizations: { "hi" => "घरों का मुखिया" }) do |command|
-  command.subcommand("members", "View the members in your house.", name_localizations: { "hi" => "सदस्यों" }, description_localizations: { "hi" => "अपने घर के सदस्यों को देखें" })
-end
-
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:evaluate, "Remotely execute and evaluate code.", default_member_permissions: "0", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "लगाना" }, description_localizations: { "hi" => "बोट ऑनर को कोड रन करनेकी इजाजत है" }) do |option|
   option.string("code", "The code you want to execute.", required: true, name_localizations: { "hi" => "कोड" }, description_localizations: { "hi" => "कोड जो रन करना है" })
