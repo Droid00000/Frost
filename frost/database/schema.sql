@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS event_settings (
 -- Holds info about world timezones.
 CREATE TABLE IF NOT EXISTS guild_timezones (
   name TEXT NOT NULL,
+  country TEXT NOT NULL,
   timezone TEXT NOT NULL,
   PRIMARY KEY (timezone, name)
 );
@@ -117,6 +118,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guil
 CREATE UNIQUE INDEX IF NOT EXISTS app_snowball_user_idx ON snowball_players (user_id);
 
 CREATE INDEX IF NOT EXISTS guild_names_idx ON guild_timezones USING GIN (name gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS guild_countries_idx ON guild_timezones USING GIN (country gin_trgm_ops);
 
 CREATE INDEX IF NOT EXISTS guild_timezones_idx ON guild_timezones USING GIN (timezone gin_trgm_ops);
 
