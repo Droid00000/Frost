@@ -1,12 +1,10 @@
 # Dependencies and Development 
 Gemfile.lock
 travis.yml
-plugins
 
 # System Files
 .DS_Store
 .DS_Store?
 
 # Credentials
-application.yml
 config.yml
