@@ -1,10 +1,9 @@
-# Dependencies and Development 
-Gemfile.lock
-travis.yml
-
 # System Files
 .DS_Store
 .DS_Store?
+
+# Dependencies 
+Gemfile.lock
 
 # Credentials
 config.yml
