@@ -39,7 +39,7 @@ module Frost
     # Search for a specific timezone entry from the DB.
     def self.search(query)
       POSTGRES.transaction do
-        @@zones.where { (Sequel.lit("name % ?", query)) | (Sequel.lit("timezone % ?", query)) }.limit(25)
+        @@zones.where { (Sequel.lit("name % ?", query)) | (Sequel.lit("timezone % ?", query)) | (Sequel.lit("country % ?", query)) }.limit(25)
       end
     end
 
