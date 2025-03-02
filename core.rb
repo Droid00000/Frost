@@ -9,10 +9,10 @@ require "tzinfo/data"
 require "unicode/emoji"
 require "rufus-scheduler"
 require "selenium-webdriver"
-require "frost/models/embeds"
-require "frost/models/constants"
-require "frost/models/functions"
-require "frost/models/extensions"
+require "frost/utilities/embeds"
+require "frost/utilities/constants"
+require "frost/utilities/functions"
+require "frost/utilities/extensions"
 
 Dir["frost/database/*.rb"].each { |file| require file }
 
