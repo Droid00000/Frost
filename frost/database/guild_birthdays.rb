@@ -30,6 +30,13 @@ module Frost
       end
     end
 
+    # Fetch a user from the DB.
+    def self.fetch(data)
+      POSTGRES.transaction do
+        @@pg.where(guild_id: data.server.id, user_id: data.user.id).get(:birthday)
+      end
+    end
+
     # Check if a user exists in the DB.
     def self.user?(data)
       POSTGRES.transaction do

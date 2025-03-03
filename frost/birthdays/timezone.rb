@@ -6,7 +6,7 @@ module Birthday
     return unless data.focused?("timezone")
 
     choices = if data.option["timezone"] && data.option["timezone"].empty?
-                DEFAULT_ZONES
+                Frost::Birthdays::DEFAULT_ZONES
               else
                 Frost::Birthdays.search(data.option["timezone"])
               end
@@ -40,41 +40,30 @@ module Birthday
     TZInfo::Timezone.get(zone)&.now
   end
 
-  # Create autocomplete choices for a date.
+  # Parse a date given to us.
   def self.date(data)
-    return unless data.focused?("date")
-
-    option, choices = data.option["date"], []
+    data = data.options.except("timezone").values
 
     begin
-      first = Time.parse(option)
+      Date.parse(data.join("/")).iso8601
     rescue StandardError
-      first = nil
+      nil
     end
+  end
+
+  # Modify an existing date given to us.
+  def self.change_date(data)
+    old = Frost::Birthdays.fetch(data)
+
+    month = data.options["month"] || old.month
+
+    day = data.options["day"] || old.month
 
     begin
-      second = Time.strptime(option, "%d/%m")
+      Date.new(old.year, month, day)
     rescue StandardError
-      second = nil
+      nil
     end
-
-    view = ->(time) { time.strftime("%B #{time.day.ordinal}") }
-
-    if first
-      choices << { name: view.call(first), value: first.strftime("%m/%d") }
-    end
-
-    if second
-      choices << { name: view.call(second), value: second.strftime("%m/%d") }
-    end
-
-    if choices.empty?
-      choices = DEFAULT_DATES.map do |key, zone|
-        { name: key.to_s, value: zone.to_s }
-      end
-    end
-
-    data.interaction.create_autocomplete_response(choices.uniq)
   end
 
   # Get a timezone including error handling.
