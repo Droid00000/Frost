@@ -34,9 +34,9 @@ module Affections
     7 => "`/hug`"
   }.freeze
 
-  # Returns a random GIF link for use by the affection and snowball commands.
-  # @param [Integer] An integer from 1-7 representing the type of action.
-  # @return [String] The appropriate GIF for the action.
+  # Returns a random GIF link for use by affection commands.
+  # @param [Symbol] A symbol representing the type of affection.
+  # @return [String] The appropriate GIF for the affection.
   def gif(type)
     case type
     when :ANGRY
@@ -59,8 +59,6 @@ module Affections
       BONK.sample
     when :PUNCH
       PUNCH.sample
-    else
-      UI[21]
     end
   end
 end
