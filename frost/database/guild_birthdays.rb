@@ -27,7 +27,8 @@ module Frost
       "Melbourne, Australia": "Australia/Melbourne",
       "São Paulo, Brazil": "America/Sao_Paulo",
       "Tokyo, Japan": "Asia/Tokyo",
-      "Shanghai, China": "Asia/Shanghai"
+      "Shanghai, China": "Asia/Shanghai",
+      "Lagos, Nigeria": "Africa/Lagos"
     }.freeze
 
     # Easy way to access the DB.
