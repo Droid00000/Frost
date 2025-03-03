@@ -23,13 +23,12 @@ module Boosters
   }.freeze
 
   # Check if we have a valid role icon.
-  # @param [data] The icon to resolve for.
   # @return [Boolean] If the icon is valid.
   def self.valid_icon?(data)
-    return true if resolve_icon(data).nil? || resolve_icon(data).is_a?(String)
+    return true if Frost::Boosters.settings.any_icon?(data)
 
-    return true if data.emojis("icon") && Frost::Boosters.settings.any_icon?(data)
-
+    return true if [NilClass, String].include?(resolve_icon(data).class)
+    
     data.emojis("icon").server && data.emojis("icon").server.id == data.server.id
   end
 end
