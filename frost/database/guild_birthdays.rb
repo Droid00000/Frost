@@ -31,6 +31,27 @@ module Frost
       "Lagos, Nigeria": "Africa/Lagos"
     }.freeze
 
+    # Default birthdays used.
+    DEFAULT_DATES = {
+      "September 9th": "9/9",
+      "September 11th": "9/11",
+      "July 13th": "7/13",
+      "December 25th": "12/25",
+      "October 31st": "10/31",
+      "February 14th": "2/14",
+      "November 11th": "11/11",
+      "May 22nd": "5/22",   
+      "March 2nd": "3/2",   
+      "June 12th": "6/12",
+      "August 13th": "8/13",
+      "April 1st": "4/1",
+      "November 25th": "11/25",
+      "February 28th": "2/28",
+      "June 21st": "6/21",
+      "December 30th": "12/30",
+      "November 1st": "11/1"
+    }.freeze
+
     # Easy way to access the DB.
     @@pg = POSTGRES[:guild_birthdays]
 

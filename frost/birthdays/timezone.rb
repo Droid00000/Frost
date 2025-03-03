@@ -68,7 +68,11 @@ module Birthday
       choices << { name: view.call(second), value: second.strftime("%m/%d") }
     end
 
-    return if choices.empty?
+    if choices.empty?
+      choices = Frost::Birthdays::DEFAULT_DATES.map do |key, zone|
+        { name: key.to_s, value: zone.to_s }
+      end
+    end
 
     data.interaction.create_autocomplete_response(choices.uniq)
   end
