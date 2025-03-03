@@ -23,8 +23,13 @@ module Birthday
       return
     end
 
-    if data.options["date"]
-      date = Time.parse(data.options["date"])
+    if data.options["month"] || data.options["day"]
+      date = Birthday.change_date(data)
+    end
+
+    if date.nil?
+      data.edit_response(content: "RESPONSE[105]")
+      return
     end
 
     payload = {

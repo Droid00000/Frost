@@ -14,7 +14,12 @@ module Birthday
     end
 
     if Birthday.timezone(data).nil?
-      data.edit_response(content: RESPONSE[105])
+      data.edit_response(content: RESPONSE[129])
+      return
+    end
+
+    if Birthday.date(data).nil?
+      data.edit_response(content: RESPONSE[130])
       return
     end
 
@@ -22,8 +27,8 @@ module Birthday
       active: false,
       user_id: data.user.id,
       guild_id: data.server.id,
-      timezone: Birthday.timezone(data),
-      birthday: Time.parse(data.options["date"]).iso8601
+      birthday: Birthday.date(data),
+      timezone: Birthday.timezone(data)
     }
 
     Frost::Birthdays.add(**payload)

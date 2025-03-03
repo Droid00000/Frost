@@ -128,7 +128,9 @@ RESPONSE = {
   125 => "This is not a valid timezone.",
   126 => "Successfully updated your icon settings.",
   127 => "There must be at least fifty pins in this channel.",
-  128 => "This server hasn't enabled the pin archiver."
+  128 => "This server hasn't enabled the pin archiver.",
+  129 => "I failed to process your timezone.",
+  130 => "I failed to process your date."
 }.freeze
 
 # Values for embed responses.

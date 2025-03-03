@@ -26,8 +26,4 @@ module BirthdayCommands
   interaction_create(type: 4) do |event|
     Birthday.search(event)
   end
-
-  interaction_create(type: 4) do |event|
-    Birthday.date(event)
-  end
 end

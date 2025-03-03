@@ -197,13 +197,15 @@ end
 # @!function [Birthday Operations] Belongs to a module that manages birthday roles.
 bot.register_application_command(:birthday, "birthday roles", contexts: [0], integration_types: [0]) do |command|
   command.subcommand("set", "Set your date of birth.") do |option|
-    option.string("date", "Your date of birth in the mm/dd format.", required: true, autocomplete: true, min_length: 3, max_length: 5)
-    option.string("timezone", "Your timezone identifier, for example, Asia/Baku.", required: true, autocomplete: true, min_length: 5, max_length: 95)
+    option.string("month", "The month you were born in", required: true, choices: { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 })
+    option.integer("day", "The day you were born on.", required: true, min_value: 1, max_value: 31)
+    option.string("timezone", "Your timezone identifier, for example, Asia/Baku.", required: true, autocomplete: true, min_length: 5, max_length: 35)
   end
 
   command.subcommand("edit", "Edit your date of birth or timezone.") do |option|
-    option.string("date", "Your date of birth in the mm/dd format.", required: false, autocomplete: true, min_length: 3, max_length: 5)
-    option.string("timezone", "Your timezone identifier (e.g., Asia/Baku).", required: false, autocomplete: true, min_length: 5, max_length: 95)
+    option.string("month", "The month you were born in", required: false, choices: { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 })
+    option.integer("day", "The day you were born on.", required: false, min_value: 1, max_value: 31)
+    option.string("timezone", "Your timezone identifier (e.g., Asia/Baku).", required: false, autocomplete: true, min_length: 5, max_length: 35)
   end
 
   command.subcommand("delete", "Remove your date of birth from the bot.")
