@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS guild_timezones (
   name TEXT NOT NULL,
   country TEXT NOT NULL,
   timezone TEXT NOT NULL,
+  identifier TEXT NOT NULL,
   PRIMARY KEY (timezone, name)
 );
 
