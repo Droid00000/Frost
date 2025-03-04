@@ -49,12 +49,6 @@ module Affections
       POKES.sample
     when :SLEEPY
       SLEEPY.sample
-    when :COLLECT
-      COLLECT.sample
-    when :THROW
-      THROW.sample
-    when :MISS
-      MISS.sample
     when :BONK
       BONK.sample
     when :PUNCH

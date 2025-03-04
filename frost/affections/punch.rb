@@ -3,17 +3,48 @@
 module Affections
   # Punch a member.
   def self.punch(data)
+    # Since this command was a request by one of our contributors,
+    # we have to validate the permissions of the user attempting
+    # to use this command. We return an error message if the user
+    # isn't a contributor, and thus cannot use this app command.
     unless CONFIG[:Discord][:CONTRIBUTORS].include?(data.user.id)
-      data.respond(content: RESPONSE[18], ephemeral: true)
+      data.respond(content: PERMISSION[1], ephemeral: true)
       return
     end
 
-    data.respond(content: data.member("target").mention) do |builder|
-      builder.add_embed do |embed|
-        embed.title = EMBED[41]
-        embed.colour = data.user.color
-        embed.image = Discordrb::Webhooks::EmbedImage.new(url: gif(:PUNCH))
-        embed.description = format(EMBED[24], data.user.display_name, data.member("target").display_name)
+    # Manually enable the `IS_COMPONENTS_V2 (1 << 15)`
+    # flags so we can use the new interaction components.
+    data.respond(new_components: true) do |_, builder|
+      # Add a text display container to mention our user
+      # outside of the container we're building. This is
+      # done in order to emulate the content field, since
+      # that gets disabled with these new fancy ass components.
+      builder.text_display(text: data.member("target").mention)
+
+      # Create a container in order to simulate the old look and
+      # feel of an embed. I'm hoping there's some improvements to
+      # how this looks and feels on mobile, since it currently looks
+      # like hot garbage. Looks great on the mobile clients though!
+      builder.container do |container|
+        # Set the accent color of the container to the color of the
+        # role, the user is basing their color off of in the client.
+        # I believe DRB sets this to null if there isn't a color, since
+        # a container isn't required to have an accent color, unlike embeds.
+        container.color = event.user.color
+
+        # Add our main header text here which denotes the type of action we're
+        # performing on the target user. Using `###` triple heading makes for
+        # a nice header like display similar to what we had with embeds.
+        container.text_display(text: HEADERS[4])
+
+        # Add a bit of text explaining the type of action we're doing, including
+        # the target user and the initiating user. E.g. "Droid punches Hermit!"
+        container.text_display(text: format(RESPONSE[3], data.user.display_name,
+                                            data.member("target").display_name))
+
+        # Finally we can add a media gallery in order to contain our randomized
+        # embed that we're using to provide a visual and fun representation of the action.
+        container.media_gallery { |media| media.gallery_item(media: gif(:PUNCH)) }
       end
     end
   end
