@@ -4,9 +4,6 @@ require "discordrb"
 
 bot = Discordrb::Bot.new(token: ENV.fetch("TOKEN"), intents: :none)
 
-# @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:help, "Open the bot's help menu.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "हेल्प" }, description_localizations: { "hi" => "बोट का उपयोग कैसे करना है उसके जानकारी चाहिए।" })
-
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
 bot.register_application_command(:"Add Emoji(s)", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: "1073741824", name_localizations: { "hi" => "कई इमोजी जोड़ें" })
 
@@ -17,7 +14,7 @@ bot.register_application_command(:"Add Emojis", nil, type: :message, contexts: [
 bot.register_application_command(:archive, "Archives the pinned messages in the current channel.", default_member_permissions: "8192", contexts: [0], integration_types: [0], name_localizations: { "hi" => "पुरातत्व" }, description_localizations: { "hi" => "पुरातत्व पिंस कोई चुनित चैनल मै" })
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:settings, "View your server configuration.", default_member_permissions: "268443648", contexts: [0], integration_types: [0], name_localizations: { "hi" => "सेटिंग्स" }, description_localizations: { "hi" => "आपना सर्वर कॉन्फिग्रेशन देखो" })
+bot.register_application_command(:info, "View info about the bot.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "सेटिंग्स" }, description_localizations: { "hi" => "आपना सर्वर कॉन्फिग्रेशन देखो" })
 
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:shutdown, "Safely disconnects the bot from Discord.", default_member_permissions: "0", contexts: [0, 1], integration_types: [0, 1], name_localizations: { "hi" => "बंधकरो" }, description_localizations: { "hi" => "सावधानी से बोट को गेटवे से डिसकनेक्ट करो" })

@@ -1,17 +1,21 @@
 # frozen_string_literal: true
 
-def handle_roles(data)
-  Frost::Roles.remove_role(data)
+module General
+  # Prune deleted roles.
+  def self.roles(data)
+    Frost::Roles.remove_role(data)
 
-  Frost::Birthdays::Settings.remove(data)
+    Frost::Birthdays::Settings.remove(data)
 
-  Frost::Boosters::Members.remove_role(data)
+    Frost::Boosters::Members.remove_role(data)
 
-  Frost::Boosters::Settings.remove_role(data)
-end
+    Frost::Boosters::Settings.remove_role(data)
+  end
 
-def handle_channels(data)
-  Frost::Pins.remove(data)
+  # Prune deleted channels.
+  def self.channels(data)
+    Frost::Pins.remove(data)
 
-  Frost::Birthdays::Settings.remove_channel(data)
+    Frost::Birthdays::Settings.remove_channel(data)
+  end
 end

@@ -2,7 +2,7 @@
 
 module General
   # An embed with data about a guild's enabled functionality.
-  def self.settings(data)
+  def self.info(data)
     data.edit_response(new_components: true) do |_, builder|
       # Create the main string with all the content we're planning on
       # sending to Discord in the response body. This is seperated by

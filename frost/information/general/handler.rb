@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "values"
 require_relative "process"
 require_relative "chapter"
 require_relative "settings"
@@ -11,25 +12,25 @@ module AdminCommands
   application_command(:next).group(:chapter) do |group|
     group.subcommand("when") do |event|
       event.defer(ephemeral: false)
-      general_chapter(event)
+      General.chapter(event)
     end
   end
 
   application_command(:settings) do |event|
     event.defer(ephemeral: true)
-    general_settings(event)
+    General.info(event)
   end
 
   application_command(:time) do |event|
     event.defer(ephemeral: false)
-    general_timezone(event)
+    General.time(event)
   end
 
   server_role_delete do |event|
-    handle_roles(event)
+    General.roles(event)
   end
 
   channel_delete do |event|
-    handle_channels(event)
+    General.channels(event)
   end
 end
