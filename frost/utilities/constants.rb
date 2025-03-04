@@ -364,24 +364,7 @@ POSTGRES.pool.connection_validation_timeout = -1
 
 # A series of regular expressions utilized by the bot.
 REGEX = {
-  3 => /<(a?):([a-zA-Z0-9_]{1,32}):([0-9]{15,20})>/,
-  9 => /(?:aquamarine|beige|black|blue|brown|chocolate|coral|crimson|cyan|dark[\s_]?blue|dark[\s_]?cyan|dark[\s_]?gray|dark[\s_]?green|dark[\s_]?magenta|dark[\s_]?orange|dark[\s_]?red|deep[\s_]?pink|fuchsia|gold|gray|green|green[\s_]?yellow|hot[\s_]?pink|indigo|ivory|khaki|lavender|light[\s_]?blue|light[\s_]?green|light[\s_]?pink|light[\s_]?yellow|lime|magenta|maroon|midnight[\s_]?blue|navy|olive|orange|orange[\s_]?red|orchid|pale[\s_]?green|pink|powder[\s_]?blue|purple|red|royal[\s_]?blue|salmon|silver|sky[\s_]?blue|tan|teal|turquoise|violet|white|yellow|blurple|original[\s_]?blurple|\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z)/i,
-  10 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|
-          nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|
-          @everyone|r34|porn|hentai|sakimichan|patron only|pornhub|\.gg|xxxvideos|
-          xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|
-          khyleri|dyke|anus|anal|blowjob|boner|cum|chink|chinky|paki|futanari|
-          titjob|boobjob|scat|jizz|gangbang|chingchong|ziggaboo|mexcrement|
-          kill yourself|kys|clit|orgasm|semen|foreskin|cock|ahegao|pedophile|
-          pedophille|autist|pedos|gook|negro|rape|raper|rapist|slut|fellatio|
-          cuck|\.com|\.org|\.net|pussy|penis|uterus|cnc|bdsm|cunt|kink|kinky|discord\.gg|
-          join my server|thighs|th1ghs|smut|wanker|vulva|wank|titty|topless|tit|tits|swinger|
-          hitler|swastika|strapon|spooge|jizz|shibari|cumshot|shemale|sex|chaturbate|scat|
-          masochist|scissoring|schlong|shibari|sadism|raping|queef|pornography|pissing|pegging|
-          pegged|paedophile|orgy|pedobear|ponyplay|nympho|nudes|nude|octopussy|omorashi|masturbate|
-          milf|dilf|lolita|missionary|missionary style|m!ssionary style|m!ss!onary style|m!ss!0nary style|
-          d0ggy style| kike|incest|nhentai|jailbait|handjob|g-spot|futanari|fisting|fingering|
-          femdom|squirting|ecchi|ejaculation|erotic|doggiestyle|doggy style|doggystyle|deepthroat|
-          date rape|daterape|dildo|clit|clitoris|camgirl|camslut|camwhore|butthole|anal|bitches|
-          black cock|erotic|disboard|invite\.gg|higger|nate higgers|gooner|kys|kms/i
+  1 => /<(a?):([a-zA-Z0-9_]{1,32}):([0-9]{15,20})>/,
+  2 => /(?:aquamarine|beige|black|blue|brown|chocolate|coral|crimson|cyan|dark[\s_]?blue|dark[\s_]?cyan|dark[\s_]?gray|dark[\s_]?green|dark[\s_]?magenta|dark[\s_]?orange|dark[\s_]?red|deep[\s_]?pink|fuchsia|gold|gray|green|green[\s_]?yellow|hot[\s_]?pink|indigo|ivory|khaki|lavender|light[\s_]?blue|light[\s_]?green|light[\s_]?pink|light[\s_]?yellow|lime|magenta|maroon|midnight[\s_]?blue|navy|olive|orange|orange[\s_]?red|orchid|pale[\s_]?green|pink|powder[\s_]?blue|purple|red|royal[\s_]?blue|salmon|silver|sky[\s_]?blue|tan|teal|turquoise|violet|white|yellow|blurple|original[\s_]?blurple|\A#?[0-9A-Fa-f]{3}([0-9A-Fa-f]{3})?\z)/i,
+  3 => /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|@everyone|r34|porn|hentai|sakimichan|patron only|pornhub|\.gg|xxxvideos|xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|khyleri|dyke|anus|anal|blowjob|boner|cum|chink|chinky|paki|futanari|titjob|boobjob|scat|jizz|gangbang|chingchong|ziggaboo|mexcrement|kill yourself|kys|clit|orgasm|semen|foreskin|cock|ahegao|pedophile|pedophille|autist|pedos|gook|negro|rape|raper|rapist|slut|fellatio|cuck|\.com|\.org|\.net|pussy|penis|uterus|cnc|bdsm|cunt|kink|kinky|discord\.gg|join my server|thighs|th1ghs|smut|wanker|vulva|wank|titty|topless|tit|tits|swinger|hitler|swastika|strapon|spooge|jizz|shibari|cumshot|shemale|sex|chaturbate|scat|masochist|scissoring|schlong|shibari|sadism|raping|queef|pornography|pissing|pegging|pegged|paedophile|orgy|pedobear|ponyplay|nympho|nudes|nude|octopussy|omorashi|masturbate|milf|dilf|lolita|missionary|missionary style|m!ssionary style|m!ss!onary style|m!ss!0nary style|d0ggy style| kike|incest|nhentai|jailbait|handjob|g-spot|futanari|fisting|fingering|femdom|squirting|ecchi|ejaculation|erotic|doggiestyle|doggy style|doggystyle|deepthroat|date rape|daterape|dildo|clit|clitoris|camgirl|camslut|camwhore|butthole|anal|bitches|black cock|erotic|disboard|invite\.gg|higger|nate higgers|gooner|kys|kms/i
 }.freeze

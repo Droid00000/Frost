@@ -36,7 +36,7 @@ module EmojiCommands
     Emojis.click(event)
   end
 
-  message(contains: REGEX[3]) do |event|
+  message(contains: REGEX[1]) do |event|
     Emojis.cache(event)
   end
 
