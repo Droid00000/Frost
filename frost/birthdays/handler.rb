@@ -3,7 +3,7 @@
 require_relative "edit"
 require_relative "create"
 require_relative "delete"
-require_relative "timezone"
+require_relative "builder"
 
 module BirthdayCommands
   extend Discordrb::EventContainer

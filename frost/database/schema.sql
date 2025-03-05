@@ -97,6 +97,8 @@ CREATE INDEX IF NOT EXISTS guild_booster_idx ON guild_boosters (user_id);
 
 CREATE INDEX IF NOT EXISTS guild_premium_idx ON guild_boosters (guild_id);
 
+CREATE INDEX IF NOT EXISTS guild_codes_idx on guild_timezones (identifier);
+
 CREATE INDEX IF NOT EXISTS guild_icon_idx ON booster_settings (guild_icon);
 
 CREATE INDEX IF NOT EXISTS guild_booster_ban_idx ON banned_boosters (user_id);
