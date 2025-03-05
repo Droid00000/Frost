@@ -11,17 +11,15 @@ module Birthday
                 Frost::Birthdays.search(data.option["timezone"])
               end
 
-    if choices.is_a?(Hash)
-      choices = choices.map do |key, zone|
-        { name: key.to_s, value: zone.to_s }
-      end
-    end
-
-    unless choices.is_a?(Array)
-      choices = choices.map do |result|
-        { name: result[:name], value: result[:timezone] }
-      end
-    end
+    choices = if choices.is_a?(Hash)
+                choices.map do |key, zone|
+                  { name: key.to_s, value: zone.to_s }
+                end
+              else
+                choices.map do |result|
+                  { name: result[:name], value: result[:timezone] }
+                end
+              end
 
     return if choices.empty?
 

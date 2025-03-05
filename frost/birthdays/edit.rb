@@ -32,6 +32,8 @@ module Birthday
       return
     end
 
+    puts date
+
     payload = {
       birthday: date&.iso8601,
       timezone: Birthday.timezone(data)
