@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS guild_timezones (
   country TEXT NOT NULL,
   timezone TEXT NOT NULL,
   identifier TEXT NOT NULL,
+  starts_with TEXT NOT NULL,
   PRIMARY KEY (timezone, name)
 );
 
@@ -100,6 +101,8 @@ CREATE INDEX IF NOT EXISTS guild_premium_idx ON guild_boosters (guild_id);
 CREATE INDEX IF NOT EXISTS guild_codes_idx on guild_timezones (identifier);
 
 CREATE INDEX IF NOT EXISTS guild_icon_idx ON booster_settings (guild_icon);
+
+CREATE INDEX IF NOT EXISTS guild_prefix_idx on guild_timezones (starts_with);
 
 CREATE INDEX IF NOT EXISTS guild_booster_ban_idx ON banned_boosters (user_id);
 

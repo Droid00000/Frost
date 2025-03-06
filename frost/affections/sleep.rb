@@ -30,7 +30,7 @@ module Affections
 
         # Add a bit of text explaining the type of action we're doing, including
         # the target user and the initiating user. E.g. "Droid punches Hermit!"
-        container.text_display(text: format(RESPOSNE[2xw],
+        container.text_display(text: format(RESPOSNE[2],
                                             data.member("target").display_name))
 
         # Finally we can add a media gallery in order to contain our randomized
