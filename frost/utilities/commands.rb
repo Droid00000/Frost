@@ -14,45 +14,45 @@ bot.register_application_command(:"Add Emojis", nil, type: :message, contexts: [
 bot.register_application_command(:archive, "Archives the pinned messages in the current channel.", default_member_permissions: "8192", contexts: [0], integration_types: [0], name_localizations: { "hi" => "पुरातत्व" }, description_localizations: { "hi" => "पुरातत्व पिंस कोई चुनित चैनल मै" })
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:info, "View info about the bot.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "सेटिंग्स" }, description_localizations: { "hi" => "आपना सर्वर कॉन्फिग्रेशन देखो" })
+bot.register_application_command(:info, "View some helpful info about the bot.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "सेटिंग्स" }, description_localizations: { "hi" => "आपना सर्वर कॉन्फिग्रेशन देखो" })
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:shutdown, "Safely disconnects the bot from Discord.", default_member_permissions: "0", contexts: [0, 1], integration_types: [0, 1], name_localizations: { "hi" => "बंधकरो" }, description_localizations: { "hi" => "सावधानी से बोट को गेटवे से डिसकनेक्ट करो" })
+bot.register_application_command(:shutdown, "Safely disconnects the bot from Discord.", default_member_permissions: "0", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "बंधकरो" }, description_localizations: { "hi" => "सावधानी से बोट को गेटवे से डिसकनेक्ट करो" })
 
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:restart, "Safely restarts the bot.", default_member_permissions: "0", contexts: [0, 1], integration_types: [0, 1], name_localizations: { "hi" => "फिरसेकरो" }, description_localizations: { "hi" => "सुरक्षित रूप से पुनरारंभ होता है और बॉट को गेटवे से पुनः कनेक्ट करता है" })
 
 # @!function [Affections] This command is part of a module that does expressions.
-bot.register_application_command(:hug, "Hugs another server member.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "गलेमिलना" }, description_localizations: { "hi" => "सर्वर मित्र के गले मिलना" }) do |option|
+bot.register_application_command(:hug, "Hugs another user.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "गलेमिलना" }, description_localizations: { "hi" => "सर्वर मित्र के गले मिलना" }) do |option|
   option.user("target", "Who do you want to hug?", required: true, name_localizations: { "hi" => "इशारालगाना" }, description_localizations: { "hi" => "किसको गले मिलना है" })
 end
 
 # @!function [Affections] This command is part of a module that does expressions.
-bot.register_application_command(:poke, "Pokes another server member.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "बुलाना" }, description_localizations: { "hi" => "कोई सर्वर मित्र को बुलाना" }) do |option|
+bot.register_application_command(:poke, "Pokes another user.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "बुलाना" }, description_localizations: { "hi" => "कोई सर्वर मित्र को बुलाना" }) do |option|
   option.user("target", "Who do you want to poke?", required: true, name_localizations: { "hi" => "इशारालगाना" }, description_localizations: { "hi" => "किसको बुलाना है" })
 end
 # @!function [Affections] This command is part of a module that does expressions.
-bot.register_application_command(:nom, "Noms another server member.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "कुतरना" }, description_localizations: { "hi" => "किसी अन्य सर्वर सदस्य को काटता है" }) do |option|
+bot.register_application_command(:nom, "Noms another user.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "कुतरना" }, description_localizations: { "hi" => "किसी अन्य सर्वर सदस्य को काटता है" }) do |option|
   option.user("target", "Who do you want to nom?", required: true, name_localizations: { "hi" => "इशारालगाना" }, description_localizations: { "hi" => "आप किसे काटना चाहते हैं?" })
 end
 
 # @!function [Affections] This command is part of a module that does expressions.
-bot.register_application_command(:angered, "Show your anger towards another server member.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "गुस्साकरना" }, description_localizations: { "hi" => "कोई सर्वर मित्र पे गुस्सा दिखाना" }) do |option|
+bot.register_application_command(:angered, "Show your anger towards a user.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "गुस्साकरना" }, description_localizations: { "hi" => "कोई सर्वर मित्र पे गुस्सा दिखाना" }) do |option|
   option.user("target", "Who are you mad at?", required: true, name_localizations: { "hi" => "इशारालगाना" }, description_localizations: { "hi" => "किसपे आपको गुस्सा दिखाना है" })
 end
 
 # @!function [Affections] This command is part of a module that does expressions.
-bot.register_application_command(:bonk, "Bonk another server member.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "टपलीमारना" }, description_localizations: { "hi" => "किसी सर्वर मित्र को टपाली मारना" }) do |option|
+bot.register_application_command(:bonk, "Bonk another user.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "टपलीमारना" }, description_localizations: { "hi" => "किसी सर्वर मित्र को टपाली मारना" }) do |option|
   option.user("target", "Who do you want to bonk?", required: true, name_localizations: { "hi" => "इशारालगाना" }, description_localizations: { "hi" => "किसको टपाली मारना है" })
 end
 
 # @!function [Affections] This command is part of a module that does expressions.
-bot.register_application_command(:punch, "Punch another server member.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "मुक्का" }, description_localizations: { "hi" => "एक सर्वर मित्र को मुक्का मारो" }) do |option|
+bot.register_application_command(:punch, "Punch another user.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "मुक्का" }, description_localizations: { "hi" => "एक सर्वर मित्र को मुक्का मारो" }) do |option|
   option.user("target", "Who do you want to punch?", required: true, name_localizations: { "hi" => "इशारालगाना" }, description_localizations: { "hi" => "आप किसे मुक्का मारना चाहते हैं?" })
 end
 
 # @!function [Affections] This command is part of a module that does expressions.
-bot.register_application_command(:sleep, "Tells another server member to go and sleep.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "नींद" }, description_localizations: { "hi" => "किसी सर्वर मित्र को बोलो जाके सो जाए" }) do |option|
+bot.register_application_command(:sleep, "Tell a user to head to bed.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "नींद" }, description_localizations: { "hi" => "किसी सर्वर मित्र को बोलो जाके सो जाए" }) do |option|
   option.user("target", "Who needs to go to sleep?", required: true, name_localizations: { "hi" => "इशारालगाना" }, description_localizations: { "hi" => "किसको सोने जाने बोलना है" })
 end
 
@@ -113,7 +113,7 @@ bot.register_application_command(:update, "Contributors", contexts: [0, 1, 2], i
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:next, "Manga Chapter!", server_id: ENV.fetch("MANGA_GUILD"), contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "अगला" }, description_localizations: { "hi" => "मंगा अध्याय" }) do |command|
+bot.register_application_command(:next, "Manga Chapter!", server_id: ENV.fetch("MANGA_GUILD"), contexts: [0], integration_types: [0], name_localizations: { "hi" => "अगला" }, description_localizations: { "hi" => "मंगा अध्याय" }) do |command|
   command.subcommand_group(:chapter, "Comics!", name_localizations: { "hi" => "प्रकरण" }, description_localizations: { "hi" => "कॉमिक्स" }) do |group|
     group.subcommand(:when, "View the release date of the next chapter.", name_localizations: { "hi" => "कब" }, description_localizations: { "hi" => "अगला अध्याय कब आ रहा है" })
   end
@@ -218,7 +218,7 @@ bot.register_application_command(:booster, "Booster perks", contexts: [0], integ
   end
 
   command.subcommand_group(:admin, "Booster admin!") do |group|
-    group.subcommand("add", "Manually add a \"booster\" to this server.") do |option|
+    group.subcommand("add", "Manually add a 'booster' to this server.") do |option|
       option.user("member", "The user to add to the database.", required: true)
       option.role("role", "The role to add to the database.", required: true)
     end

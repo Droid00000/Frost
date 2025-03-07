@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS guild_timezones (
   lookup_by TEXT NOT NULL,
   identifier TEXT NOT NULL,
   starts_with TEXT NOT NULL,
+  lookup_by_duo TEXT NOT NULL,
   PRIMARY KEY (timezone, name)
 );
 
@@ -103,7 +104,9 @@ CREATE INDEX IF NOT EXISTS guild_codes_idx on guild_timezones (identifier);
 
 CREATE INDEX IF NOT EXISTS guild_icon_idx ON booster_settings (guild_icon);
 
-CREATE INDEX IF NOT EXISTS guild_lookup_idex ON guild_timezones (lookup_by);
+CREATE INDEX IF NOT EXISTS guild_lookup_idx ON guild_timezones (lookup_by);
+
+CREATE INDEX IF NOT EXISTS guild_duo_idx ON guild_timezones (lookup_by_duo);
 
 CREATE INDEX IF NOT EXISTS guild_prefix_idx on guild_timezones (starts_with);
 
