@@ -8,33 +8,29 @@ module Birthday
       return
     end
 
-    if data.options.empty?
-      data.edit_response(content: RESPONSE[113])
-      return
-    end
-
     unless Frost::Birthdays.user?(data)
       data.edit_response(content: RESPONSE[103])
       return
     end
 
-    if data.options["month"] || data.options["day"]
-      date = Birthday.change_date(data)
-    end
-
-    if date.nil?
-      data.edit_response(content: "RESPONSE[105]")
+    if data.options.empty?
+      data.edit_response(content: RESPONSE[113])
       return
     end
 
-    if Birthday.timezone(data).nil? && data.options["timezone"]
+    if invalid_birthday?(data)
+      data.edit_response(content: RESPONSE[105])
+      return
+    end
+
+    if invalid_timezone?(data)
       data.edit_response(content: RESPONSE[105])
       return
     end
 
     payload = {
-      birthday: date&.iso8601,
-      timezone: Birthday.timezone(data)
+      timezone: Birthday.timezone(data),
+      birthday: Birthday.change_date(data)
     }.compact
 
     Frost::Birthdays.edit(data, payload)

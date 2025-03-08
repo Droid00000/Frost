@@ -23,13 +23,6 @@ module Frost
       end
     end
 
-    # Get a user from the DB.
-    def self.user(*data)
-      POSTGRES.transaction do
-        @@pg.where(guild_id: data[0].server.id, user_id: data[0].user.id).get(data[1])
-      end
-    end
-
     # Fetch a user from the DB.
     def self.fetch(data)
       POSTGRES.transaction do
@@ -62,6 +55,13 @@ module Frost
     def self.unmark(*data)
       POSTGRES.transaction do
         @@pg.where(guild_id: data[0], user_id: data[1]).update(active: false)
+      end
+    end
+
+    # Get a user from the DB.
+    def self.user(data)
+      POSTGRES.transaction do
+        @@pg.where(guild_id: data.server.id, user_id: data.user.id).first
       end
     end
 

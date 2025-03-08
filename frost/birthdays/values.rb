@@ -37,13 +37,15 @@ module Birthday
     "Melbourne, Australia": "Australia/Melbourne",
     "São Paulo, Brazil": "America/Sao_Paulo",
     "Tokyo, Japan": "Asia/Tokyo",
-    "Shanghai, China": "Asia/Shanghai"
+    "Shanghai, China": "Asia/Shanghai",
+    "Lagos, Nigeria": "Africa/Lagos"
   }.freeze
 
   # Application commands for birthday commands.
   COMMANDS = {
     1 => "`/birthday delete`",
     2 => "`/birthday edit`",
-    3 => "`/birthday set`"
+    3 => "`/birthday sync`",
+    4 => "`/birthday add`"
   }.freeze
 end

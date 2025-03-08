@@ -20,7 +20,7 @@ module Affections
         # Set the accent color of the container to the color of the
         # role, the user is basing their color off of in the client.
         # I believe DRB sets this to null if there isn't a color, since
-        # a container isn't required to have an accent color, unlike embeds. 
+        # a container isn't required to have an accent color, unlike embeds.
         container.color = event.user.color
 
         # Add our main header text here which denotes the type of action we're

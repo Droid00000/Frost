@@ -33,6 +33,20 @@ module Birthday
     end
   end
 
+  # Validate a timezone given to us.
+  def self.invalid_timezone?(data)
+    return false unless data.options["timezone"]
+
+    timezone(data.options["timezone"]).nil?
+  end
+
+  # Validate a birthday given to us.
+  def self.invalid_birthday?(data)
+    return false if data.options.except("timezone").empty?
+
+    change_date(data).nil?
+  end
+
   # Get a timezone without any validation.
   def self.zone(zone)
     TZInfo::Timezone.get(zone)&.now
@@ -58,7 +72,7 @@ module Birthday
     day = data.options["day"] || old.month
 
     begin
-      Date.new(old.year, month, day)
+      Date.new(old.year, month, day).iso8601
     rescue StandardError
       nil
     end
