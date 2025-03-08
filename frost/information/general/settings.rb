@@ -38,11 +38,11 @@ module General
         # altogether if we don't have any enabled features in
         # the current server we're operating on.
         container.row do |row|
-          row.select_menu(custom_id: 'settings', placeholder: 'Pick a category...', min_values: 1) do |menu|
-            menu.option(label: 'Event Roles', value: 'Roles', description: 'Settings for custom server roles.', emoji: 1281715509750005831)
-            menu.option(label: 'Birthdays', value: 'Birthday', description: 'Settings for server birthdays.', emoji: 733787070123737109)
-            menu.option(label: 'Boosters', value: 'Boosters', description: 'Settings for server boosters.', emoji: 1320971944627146752)
-            menu.option(label: 'Pins', value: 'Pins', description: "Settings for the pin archiver.", emoji: 1320929329307324497)
+          row.select_menu(custom_id: "settings", placeholder: "Pick a category...", min_values: 1) do |menu|
+            menu.option(label: "Event Roles", value: "Roles", description: "Settings for custom server roles.", emoji: 1_281_715_509_750_005_831)
+            menu.option(label: "Birthdays", value: "Birthday", description: "Settings for server birthdays.", emoji: 733_787_070_123_737_109)
+            menu.option(label: "Boosters", value: "Boosters", description: "Settings for server boosters.", emoji: 1_320_971_944_627_146_752)
+            menu.option(label: "Pins", value: "Pins", description: "Settings for the pin archiver.", emoji: 1_320_929_329_307_324_497)
           end
         end
       end

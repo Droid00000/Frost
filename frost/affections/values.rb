@@ -9,7 +9,7 @@ module Affections
     4 => "**%s pokes %s!**",
     5 => "**%s bonks %s!**",
     6 => "**%s hugs %s!**",
-    7 => "**%s noms %s!**",
+    7 => "**%s noms %s!**"
   }.freeze
 
   # The main header of text showing the action.

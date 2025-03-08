@@ -118,17 +118,11 @@ EMBED = {
   54 => "**Archive Channel:** <#%s>",
   55 => "**Hoist Role:** <@&%s>",
   56 => "**Roles:** %s",
-  61 => "Moderation related commands.",
-  62 => "Commands for server boosters.",
-  63 => "Commands for the pin archiver.",
-  64 => "Commands for emoji operations.",
   65 => "Select a category...",
-  66 => "Snowballs",
-  67 => "Commands for snowball fights.",
   68 => "**Main Menu**",
   69 => "Hi! Welcome to the help page. Use the dropdown menu below to view a category.",
   70 => "About Me",
-  71 => "I was made by *droid00000*. My code is open source and can be viewed [here!](<https://github.com/Droid00000/Frost>)",
+  71 => "I was made by *droid00000*. My code is open source and can be viewed [here!](<https://github.com/Droid00000/Frost>)"
 }.freeze
 
 # Resolvable string color codes.

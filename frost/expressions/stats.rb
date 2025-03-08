@@ -3,17 +3,16 @@
 module Emojis
   # Stats related stuff.
   def self.cache(data)
+    # Cache statistics for reactions.
+    if data.emoji.id && !data.respond_to?(:emojis)
+      Frost::Emojis.new(data.emoji, data.server)
+      return
+    end
+
+    # Cache statistics for emojis.
     data.message.emoji.each do |emoji|
       Frost::Emojis.new(emoji, data.server)
     end
-  end
-
-  # Add a message reaction to the pool of emojis queued for collection at
-  # at a later date. Functions similary to the `#cache` method we've defined above.
-  def self.react(data)
-    return unless data.emoji.id
-
-    Frost::Emojis.new(data.emoji, data.server)
   end
 
   # Join a thread channel so we can track stats for it,
@@ -37,9 +36,9 @@ module Emojis
     emojis = Frost::Emojis.top(data).map do |emoji|
       next unless data.bot.emoji(emoji[:emoji_id])
 
-      emoji = { main: data.bot.emoji(emoji[:emoji_id]), count: emoji[:balance] }
+      emoji = { key: data.bot.emoji(emoji[:emoji_id]), value: emoji[:balance] }
 
-      "#{emoji[:main].mention} — #{emoji[:main].name} **(#{emoji[:count].delimit})**\n"
+      "#{emoji[:key].mention} — #{emoji[:key].name} **(#{emoji[:value].delimit})**"
     end
 
     # The `new_components` argument must be manually set to true
@@ -57,7 +56,7 @@ module Emojis
         # default preferred role color. In the future
         # I want to allow server staff to pick any color,
         # but for now, this can only be determined by us.
-        container.color = '#5c9aff'
+        container.color = "#5c9aff"
 
         # Add a spacing between all of our descriptors and
         # titles, so we can put an emphasis on the main content.
@@ -67,7 +66,7 @@ module Emojis
         # I'm hoping that discord allows a field like component to
         # allow for some degree of veritcal seperation, but I doubt
         # it's going to happen due to challenges with mobile devices.
-        container.text_display(text: emojis.compact.join)
+        container.text_display(text: emojis.compact.join("\n"))
 
         # Add a fininshing bit of spacing between the main content
         # and the text we're attempting to emulate as a footer.
