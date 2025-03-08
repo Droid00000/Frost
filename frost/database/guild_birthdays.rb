@@ -40,7 +40,7 @@ module Frost
     # Search for a specific timezone entry from the DB.
     def self.search(query)
       POSTGRES.transaction do
-        POSTGRES.fetch('SELECT * FROM guild_timezones WHERE (name % ? OR timezone % ? OR country % ? OR identifier ILIKE ? OR starts_with ILIKE ?) ORDER BY GREATEST(similarity(name, ?), similarity(timezone, ?), similarity(country, ?), similarity(identifier, ?), similarity(starts_with, ?)) DESC LIMIT 25;', *([query] * 10)).all
+        POSTGRES.fetch("SELECT * FROM guild_timezones WHERE (name % ? OR country % ? OR timezone % ? OR identifier ILIKE ? OR lookup_by ILIKE '%' || ? || '%' OR lookup_by_duo ILIKE '%' || ? || '%' OR starts_with ILIKE '%' || ? || '%') ORDER BY GREATEST(similarity(name, ?), similarity(timezone, ?), similarity(country, ?), similarity(identifier, ?), similarity(lookup_by, ?), similarity(lookup_by_duo, ?), similarity(starts_with, ?)) DESC LIMIT 25;", *([query] * 14)).all
       end
     end
 
