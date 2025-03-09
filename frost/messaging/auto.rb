@@ -7,11 +7,10 @@ module Pins
 
     channel, pin = Frost::Pins.channel(data), data.channel.pins[1]
 
-    channel.send_embed do |embed|
-      embed.colour = UI[2]
+    channel.send_embed(pin.link) do |embed|
+      embed.colour = pin.author.color
       embed.timestamp = pin.timestamp
       embed.description = pin.content
-      embed.add_field(name: "Source", value: "[Jump!](#{pin.link})")
       embed.image = Discordrb::Webhooks::EmbedImage.new(url: pin.attachments.first.url) if pin.attachments.any?
       embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: pin.author.display_name, icon_url: pin.author.avatar_url)
     end

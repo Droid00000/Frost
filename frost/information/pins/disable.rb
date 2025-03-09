@@ -5,6 +5,6 @@ module Pins
   def self.disable(data)
     Frost::Pins.disable(data)
 
-    data.edit_response(content: RESPONSE[37])
+    data.edit_response(content: RESPONSE[5])
   end
 end

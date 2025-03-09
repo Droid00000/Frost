@@ -194,29 +194,6 @@ REASON = {
   4 => "%s (ID: %s)"
 }.freeze
 
-# Emojis that the bot can use.
-EMOJI = {
-  1 => "<a:RubyPandaHeart:1269075581031546880>",
-  2 => "<a:LoidClap_Maomao:1276327798104920175>",
-  3 => "<a:YorClap_Maomao:1287269908157038592>",
-  4 => "<:AnyaPeek_Enzo:1276327731113627679>",
-  5 => "<a:LoidDance_Maomao:1295667431674482741>",
-  6 => "<a:LoidBell_Maomao:1295667609961758731>",
-  7 => "<:AnyaPlead_Maomao:1310804270240628816>",
-  8 => "<:DevsGrandson:1334337064317095936>"
-}.freeze
-
-# UI components including color values.
-UI = {
-  1 => 0x89abd2,
-  2 => 0x33363b,
-  3 => 0x8da99b,
-  4 => 0xd4f0ff,
-  5 => 0x4d94e8,
-  6 => 0x6bb7ed,
-  7 => 0x849fe8
-}.freeze
-
 # The time zone database source.
 TZInfo::DataSource.set(:zoneinfo)
 

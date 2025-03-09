@@ -16,7 +16,7 @@ module AdminCommands
     end
   end
 
-  application_command(:settings) do |event|
+  application_command(:info) do |event|
     event.defer(ephemeral: true)
     General.info(event)
   end

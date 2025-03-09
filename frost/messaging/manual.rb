@@ -4,31 +4,30 @@ module Pins
   # Archive all the pins in the current channel.
   def self.archive(data)
     unless data.server.bot.permission?(:manage_message, data.channel)
-      data.edit_response(content: RESPONSE[47])
+      data.edit_response(content: RESPONSE[1])
       return
     end
 
     unless data.channel.pins.count == 50
-      data.edit_response(content: RESPONSE[127])
+      data.edit_response(content: RESPONSE[2])
       return
     end
 
     unless Frost::Pins.get(data)
-      data.edit_response(content: RESPONSE[128])
+      data.edit_response(content: RESPONSE[6])
       return
     end
 
     channel, pin = Frost::Pins.channel(data), data.channel.pins[1]
 
-    channel.send_embed do |embed|
-      embed.colour = UI[2]
+    channel.send_embed(pin.link) do |embed|
+      embed.colour = pin.author.color
       embed.timestamp = pin.timestamp
       embed.description = pin.content
-      embed.add_field(name: "Source", value: "[Jump!](#{pin.link})")
       embed.image = Discordrb::Webhooks::EmbedImage.new(url: pin.attachments.first.url) if pin.attachments.any?
       embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: pin.author.display_name, icon_url: pin.author.avatar_url)
     end
 
-    data.edit_response(content: RESPONSE[20]) && pin.unpin
+    data.edit_response(content: RESPONSE[4]) && pin.unpin
   end
 end

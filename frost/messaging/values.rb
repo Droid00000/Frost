@@ -3,13 +3,18 @@
 module Pins
   # Responses and fields for pins.
   RESPONSE = {
-    2 => "The bot needs to have the ``manage messages`` permission to do this.",
-    3 => "A channel must have fifty pins in order to begin archival.",
-    3 => "The pin archiver has not been enabled."
+    1 => "The bot needs to have the ``manage messages`` permission to do this.",
+    2 => "This channel must have fifty pinned messages to begin archival.",
+    3 => "Successfully set the archive channel to: <#%s>",
+    4 => "Successfully archived one pinned message.",
+    5 => "Successfully disabled the pin archiver.",
+    6 => "The pin archiver has not been enabled."
   }.freeze
 
   # Application commands for pins.
   COMMANDS = {
+    1 => "`/pin archiver disable`",
+    2 => "`/pin archiver setup`",
     1 => "`/archive`"
   }.freeze
 end

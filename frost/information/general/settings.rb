@@ -11,39 +11,31 @@ module General
       # how this looks and feels on mobile, since it currently looks
       # like hot garbage. Looks great on the mobile clients though!
       builder.container(colour: nil) do |container|
-        # Create the main string with all the content we're planning on
-        # sending to Discord in the response body. This is seperated by
-        # newlines to achieve something that looks similar to embeds fields.
-        section_body = "#{RESPONSE[1]}\n\n#{RESPONSE[1]}\n\n#{RESPONSE[1]}"
-
         # Add our main menu header here in a seperate text display
         # container in order to get some of that natural padding
         # that's tricky to stimulate with the other types of seperators.
-        section.text_display(text: HEADER[1])
+        section.text_display(text: RESPONSE[6])
 
         # Create our main section body that contains all of the text we want
         # to show to our user. Currently, we have to use one big string, since
         # if we use multiple text displays, something kinda seems to look off.
-        section.text_display(text: build_content(data))
+        section.text_display(text: "#{RESPONSE[2]}#{RESPONSE[1]}#{stats(data)}")
 
-        # Add some spacing between the content of our container
-        # and the select menu that we're going to show the user.
-        container.seperator(divider: true, spacing: :small)
+        # Check if we're in a server, and if the user has the
+        # manage roles permission in the server this command's called from.
+        if data.server && data.user.permission?(:manage_roles)
+          # Add some spacing between the content of our container
+          # and the select menu that we're going to show the user.
+          container.seperator(divider: true, spacing: :small)
 
-        # container.text_display(text: "**About Me**\nI was made by droid00000. My code is open source and can be viewed here!")
-
-        # container.text_display(text: "**Stats**\nI'm on 6 servers with a total of 62,344 members and 379 channels.")
-        
-        # Add a select menu for the enabled features a server has.
-        # We should avoid adding the select menu and the divider
-        # altogether if we don't have any enabled features in
-        # the current server we're operating on.
-        container.row do |row|
-          row.select_menu(custom_id: "settings", placeholder: "Pick a category...", min_values: 1) do |menu|
-            menu.option(label: "Event Roles", value: "Roles", description: "Settings for custom server roles.", emoji: "1281715509750005831")
-            menu.option(label: "Birthdays", value: "Birthday", description: "Settings for server birthdays.", emoji: "733787070123737109")
-            menu.option(label: "Boosters", value: "Boosters", description: "Settings for server boosters.", emoji: "1320971944627146752")
-            menu.option(label: "Pins", value: "Pins", description: "Settings for the pin archiver.", emoji: "1320929329307324497")
+          # Add a select menu for the enabled features a server has.
+          container.row do |row|
+            row.select_menu(custom_id: "settings", placeholder: "Pick a category...", min_values: 1) do |menu|
+              menu.option(label: "Event Roles", value: "Roles", description: "Settings for custom server roles.", emoji: "1281715509750005831")
+              menu.option(label: "Birthdays", value: "Birthday", description: "Settings for server birthdays.", emoji: "733787070123737109")
+              menu.option(label: "Boosters", value: "Boosters", description: "Settings for server boosters.", emoji: "1320971944627146752")
+              menu.option(label: "Pins", value: "Pins", description: "Settings for the pin archiver.", emoji: "1320929329307324497")
+            end
           end
         end
       end

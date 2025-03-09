@@ -22,6 +22,26 @@ module Boosters
     3 => "`/booster role edit`"
   }.freeze
 
+  # Returns true if a string doesn't contain any bad words.
+  # @param [String] The string to check for slurs and words.
+  # @return [Boolean] If the name contains any bad words.
+  def self.safe_name?(name)
+    !name&.match(REGEX[3])
+  end
+
+  # Initilaze a new color object for a role.
+  # @param [String] The hex color to resolve.
+  # @return [ColourRGB] A colourRGB object.
+  def self.resolve_color(color)
+    return nil if color.nil? || !color.match(REGEX[2])
+
+    color = COLORS.get(color) if COLORS.get(color)
+
+    color = "00000c" if color.delete("#") == "000000"
+
+    Discordrb::ColourRGB.new(color.strip.delete("#"))
+  end
+
   # Check if we have a valid role icon.
   # @return [Boolean] If the icon is valid.
   def self.valid_icon?(data)

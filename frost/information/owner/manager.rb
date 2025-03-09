@@ -4,17 +4,17 @@ module Owner
   # Disconnect the bot from the gateway.
   def self.shutdown(data)
     unless data.user.id == CONFIG[:Discord][:OWNER]&.to_i
-      data.edit_response(content: RESPONSE[18])
+      data.edit_response(content: RESPONSE[1])
       return
     end
 
-    bot.stop && data.edit_response(content: RESPONSE[19])
+    bot.stop && data.edit_response(content: RESPONSE[2])
   end
 
   # Reconnect the bot to the gateway.
   def self.restart
     unless data.user.id == CONFIG[:Discord][:OWNER]&.to_i
-      data.edit_response(content: RESPONSE[18])
+      data.edit_response(content: RESPONSE[1])
       return
     end
 
