@@ -9,14 +9,14 @@ module Frost
     # Modify the icon settings for a role.
     def self.icon(data)
       POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id, role_id: data.options["role"]).update(guild_icon: data.options["icon"])
+        @@pg.where(guild_id: data.server.id, role_id: data.options["role"]).update(any_icon: data.options["icon"])
       end
     end
 
     # Add a new role to the database.
     def self.add(data)
       POSTGRES.transaction do
-        @@pg.insert(guild_id: data.server.id, role_id: data.options["role"], guild_icon: data.options["icon"])
+        @@pg.insert(guild_id: data.server.id, role_id: data.options["role"], any_icon: data.options["icon"])
       end
     end
 
@@ -30,7 +30,7 @@ module Frost
     # Get the icon settings for a role.
     def self.any_icon?(data)
       POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id, role_id: data.options["role"]).get(:guild_icon)
+        @@pg.where(guild_id: data.server.id, role_id: data.options["role"]).get(:any_icon)
       end
     end
 
@@ -52,6 +52,13 @@ module Frost
     def self.remove_role(data)
       POSTGRES.transaction do
         @@pg.where(role_id: data.id, guild_id: data.server.id).delete
+      end
+    end
+
+    # Get the total amount of roles.
+    def self.count(data)
+      POSTGRES.transaction do
+        @@pg.where(guild_id: data.server.id).size.delimit
       end
     end
 

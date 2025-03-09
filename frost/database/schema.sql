@@ -6,7 +6,7 @@
 CREATE TABLE IF NOT EXISTS event_settings (
   role_id BIGINT NOT NULL, 
   guild_id BIGINT NOT NULL,
-  guild_icon BOOLEAN NOT NULL,
+  any_icon BOOLEAN NOT NULL,
   PRIMARY KEY (role_id, guild_id)
 );
 
@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS archiver_settings (
 
 -- Holds info about booster settings.
 CREATE TABLE IF NOT EXISTS booster_settings (
+  any_icon BOOLEAN NOT NULL,
   guild_id BIGINT NOT NULL UNIQUE,
-  guild_icon BOOLEAN DEFAULT FALSE,
   hoist_role BIGINT NOT NULL UNIQUE,
   PRIMARY KEY (hoist_role, guild_id)
 );

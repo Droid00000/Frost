@@ -11,22 +11,22 @@ module AdminCommands
   application_command(:event).group(:roles) do |group|
     group.subcommand("disable") do |event|
       event.defer(ephemeral: true)
-      roles_disable(event)
+      Events.disable(event)
     end
 
     group.subcommand("remove") do |event|
       event.defer(ephemeral: true)
-      roles_remove(event)
+      Events.remove(event)
     end
 
     group.subcommand("edit") do |event|
       event.defer(ephemeral: true)
-      roles_edit(event)
+      Events.edit(event)
     end
 
     group.subcommand("add") do |event|
       event.defer(ephemeral: true)
-      roles_add(event)
+      Event.add(event)
     end
   end
 end

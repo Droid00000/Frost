@@ -10,9 +10,10 @@ module Emojis
     5 => "Success. All emojis have been drained.",
     6 => "Added **%s** emoji(s) to the server.",
     7 => "Viewing %s out of %s cached emojis.",
-    8 => "Added this emoji to the server:",
-    9 => "### Emoji Statistics for %s",
-    10 => "Unable to drain emojis."
+    8 => "Select the Emojis you want to add!",
+    9 => "Added this emoji to the server:",
+    10 => "### Emoji Statistics for %s",
+    11 => "Unable to drain emojis."
   }.freeze
 
   # Application commands for emojis.

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Birthday
+module Birthdays
   # Search for timezones.
   def self.search(data)
     return unless data.focused?("timezone")

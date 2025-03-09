@@ -11,25 +11,25 @@ module BirthdayCommands
 
   application_command(:birthday).subcommand(:delete) do |event|
     event.defer(ephemeral: true)
-    Birthday.delete(event)
+    Birthdays.delete(event)
   end
 
   application_command(:birthday).subcommand(:sync) do |event|
     event.defer(ephemeral: true)
-    Birthday.sync(event)
+    Birthdays.sync(event)
   end
 
   application_command(:birthday).subcommand(:edit) do |event|
     event.defer(ephemeral: true)
-    Birthday.edit(event)
+    Birthdays.edit(event)
   end
 
   application_command(:birthday).subcommand(:add) do |event|
     event.defer(ephemeral: true)
-    Birthday.create(event)
+    Birthdays.create(event)
   end
 
   interaction_create(type: 4) do |event|
-    Birthday.search(event)
+    Birthdays.search(event)
   end
 end

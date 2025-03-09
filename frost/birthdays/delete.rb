@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Birthday
+module Birthdays
   # setup and add your birthday.
   def self.delete(data)
     unless Frost::Birthdays.user?(data)

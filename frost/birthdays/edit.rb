@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Birthday
+module Birthdays
   # setup and add your birthday.
   def self.edit(data)
     unless Frost::Birthdays::Settings.role(data)
@@ -29,8 +29,8 @@ module Birthday
     end
 
     payload = {
-      timezone: Birthday.timezone(data),
-      birthday: Birthday.change_date(data)
+      timezone: Birthdays.timezone(data),
+      birthday: Birthdays.change_date(data)
     }.compact
 
     Frost::Birthdays.edit(data, payload)

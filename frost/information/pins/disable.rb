@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-# Deletes the pin archiver channel in the database.
-def pins_disable(data)
-  Frost::Pins.disable(data)
+module Pins
+  # Disable the pin archiver.
+  def self.disable(data)
+    Frost::Pins.disable(data)
 
-  data.edit_response(content: RESPONSE[37])
+    data.edit_response(content: RESPONSE[37])
+  end
 end

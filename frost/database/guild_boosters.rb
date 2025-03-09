@@ -109,7 +109,7 @@ module Frost
       # Check if any role icon can be used here.
       def self.any_icon?(data)
         POSTGRES.transaction do
-          @@pg[:booster_settings].where(guild_id: data.server.id).get(:guild_icon)
+          @@pg[:booster_settings].where(guild_id: data.server.id).get(:any_icon)
         end
       end
 

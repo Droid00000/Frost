@@ -245,7 +245,6 @@ bot.register_application_command(:booster, "Booster perks", contexts: [0], integ
     group.subcommand("setup", "Setup the booster perks functionality.") do |option|
       option.role("role", "Which role should all custom booster roles be placed above?", required: false)
       option.boolean("icon", "Should external emojis be allowed as role icons?", required: false)
-      option.integer("mode", "What mode should the booster perks functionality use?", required: false, choices: { Queue: 0, "Self-Service": 1 })
     end
   end
 end

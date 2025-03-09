@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Birthday
+module Birthdays
   # setup and add your birthday.
   def self.create(data)
     unless Frost::Birthdays::Settings.role(data)
@@ -13,12 +13,12 @@ module Birthday
       return
     end
 
-    if Birthday.timezone(data).nil?
+    if Birthdays.timezone(data).nil?
       data.edit_response(content: RESPONSE[129])
       return
     end
 
-    if Birthday.date(data).nil?
+    if Birthdays.date(data).nil?
       data.edit_response(content: RESPONSE[130])
       return
     end
@@ -27,8 +27,8 @@ module Birthday
       active: false,
       user_id: data.user.id,
       guild_id: data.server.id,
-      birthday: Birthday.date(data),
-      timezone: Birthday.timezone(data)
+      birthday: Birthdays.date(data),
+      timezone: Birthdays.timezone(data)
     }
 
     Frost::Birthdays.add(**payload)

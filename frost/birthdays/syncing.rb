@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Birthday
+module Birthdays
   # Sync your birthday to a server.
   def self.sync(data)
     unless Frost::Birthdays::Settings.role(data)

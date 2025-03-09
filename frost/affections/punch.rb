@@ -25,13 +25,7 @@ module Affections
       # feel of an embed. I'm hoping there's some improvements to
       # how this looks and feels on mobile, since it currently looks
       # like hot garbage. Looks great on the mobile clients though!
-      builder.container do |container|
-        # Set the accent color of the container to the color of the
-        # role, the user is basing their color off of in the client.
-        # I believe DRB sets this to null if there isn't a color, since
-        # a container isn't required to have an accent color, unlike embeds.
-        container.color = event.user.color
-
+      builder.container(colour: event.user.color) do |container|
         # Add our main header text here which denotes the type of action we're
         # performing on the target user. Using `###` triple heading makes for
         # a nice header like display similar to what we had with embeds.

@@ -15,7 +15,7 @@ def ban_booster(data)
   if data.options["prune"]
     role = Frost::Boosters::Members.role(data)
 
-    data.server.role(role)&.delete unless role.nil?
+    data.server.role(role)&.delete if role
   end
 
   Frost::Boosters::Ban.add(data)

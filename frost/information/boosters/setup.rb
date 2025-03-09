@@ -7,28 +7,20 @@ def setup_booster(data)
     return
   end
 
-  if data.options.empty?
-    data.edit_response(content: RESPONSE[113])
-    return
-  end
-
-  unless Frost::Boosters::Settings.role || data.options["role"]
+  unless enabled?(data)
     data.edit_response(content: RESPONSE[124])
     return
   end
 
   payload = {
     guild_id: data.server.id,
-    hoist_role: data.options["role"],
-    guild_icon: data.options["icon"]
+    any_icon: data.options["icon"],
+    hoist_role: data.options["role"]
   }
 
-  Frost::Boosters::Settings.setup(payload.compact)
-
-  unless data.options["role"]
-    data.edit_response(content: RESPONSE[126])
-    return
+  unless payload.except(:guild_id).empty?
+    Frost::Boosters::Settings.setup(payload.compact)
   end
 
-  data.edit_response(content: format(RESPONSE[33], data.options["role"]))
+  data.edit_response(content: RESPONSE[33])
 end

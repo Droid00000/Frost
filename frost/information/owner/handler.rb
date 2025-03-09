@@ -1,36 +1,29 @@
 # frozen_string_literal: true
 
-require_relative "flip"
-require_relative "eval"
-require_relative "status"
-require_relative "restart"
-require_relative "shutdown"
+require_relative "flipper"
+require_relative "manager"
+require_relative "evaluate"
 
 module AdminCommands
   extend Discordrb::EventContainer
 
-  application_command(:update).subcommand(:status) do |event|
-    event.defer(ephemeral: true)
-    owner_status(event)
-  end
-
   application_command(:coin).subcommand(:flip) do |event|
     event.defer(ephemeral: false)
-    coin_flip(event)
+    Owner.flip(event)
   end
 
   application_command(:shutdown) do |event|
     event.defer(ephemeral: true)
-    owner_shutdown(event)
+    Owner.shutdown(event)
   end
 
   application_command(:restart) do |event|
     event.defer(ephemeral: true)
-    owner_restart(event)
+    Owner.restart(event)
   end
 
   application_command(:eval) do |event|
     event.defer(ephemeral: true)
-    owner_eval(event)
+    Owner.evaluate(event)
   end
 end

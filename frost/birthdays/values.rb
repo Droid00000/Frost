@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Birthday
+module Birthdays
   # Responses and fields for birthday commands.
   RESPONSE = {
     1 => "Your birthday couldn't be found. Please add your birthday using the </birthday add:1334725009427664970> command.",

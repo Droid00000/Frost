@@ -47,8 +47,8 @@ module Emojis
       # Add a top level container here to container all of our other components.
       builder.container do |container|
         container.section do |section|
-          section.thumbnail(media: data.server.icon_url)
           section.text_display(text: format(RESPONSE[9], data.server.name))
+          section.thumbnail(media: data.server.icon_url)
           section.text_display(text: RESPONSE[1])
         end
 

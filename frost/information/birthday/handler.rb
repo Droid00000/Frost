@@ -12,12 +12,12 @@ module AdminCommands
   application_command(:birthday).group(:admin) do |group|
     group.subcommand("setup") do |event|
       event.defer(ephemeral: true)
-      setup_birthdays(event)
+      Birthdays.setup(event)
     end
 
     group.subcommand("disable") do |event|
       event.defer(ephemeral: true)
-      disable_birthdays(event)
+      Birthdays.disable(event)
     end
   end
 end
