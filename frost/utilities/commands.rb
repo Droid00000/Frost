@@ -105,14 +105,6 @@ bot.register_application_command(:gatekeeper, "Moderation Commands", contexts: [
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:update, "Contributors", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "अपडेट" }, description_localizations: { "hi" => "सहकारी गण" }) do |command|
-  command.subcommand("status", "Update the status show by the bot.", name_localizations: { "hi" => "स्टेटस" }, description_localizations: { "hi" => "अपटेड स्टेटस जो बोट दिखा रहा है" }) do |option|
-    option.string("description", "The status that the bot should display.", required: false, name_localizations: { "hi" => "डिस्क्रिप्शन" }, description_localizations: { "hi" => "स्टेटस जो बोट की दिखाना चाहिए" })
-    option.string("type", "The type of online status that the bot should display.", choices: { online: "Online", idle: "Idle", dnd: "DND" }, required: false, name_localizations: { "hi" => "प्रजाति" }, description_localizations: { "hi" => "कौनसी प्रजाति का स्टेटस बोट की दिखाना चाहिए" })
-  end
-end
-
-# @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:next, "Manga Chapter!", server_id: ENV.fetch("MANGA_GUILD"), contexts: [0], integration_types: [0], name_localizations: { "hi" => "अगला" }, description_localizations: { "hi" => "मंगा अध्याय" }) do |command|
   command.subcommand_group(:chapter, "Comics!", name_localizations: { "hi" => "प्रकरण" }, description_localizations: { "hi" => "कॉमिक्स" }) do |group|
     group.subcommand(:when, "View the release date of the next chapter.", name_localizations: { "hi" => "कब" }, description_localizations: { "hi" => "अगला अध्याय कब आ रहा है" })

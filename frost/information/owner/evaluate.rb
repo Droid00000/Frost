@@ -9,10 +9,23 @@ module Owner
     end
 
     begin
-      result = eval(data.options["code"])
-      data.edit_response(content: "**Success:** ```#{data.options['code']}``` **Result:** ```#{result}```")
+      code = eval(escape(data.options["code"]))
     rescue StandardError, SyntaxError => e
-      data.edit_response(content: "**Error:** ```#{e.message}```")
+      data.edit_response(content: format(RESPONSE[4], e.message))
+      return
+    end
+
+    if code.size > Discordrb::CHARACTER_LIMIT
+      Tempfile.open("output.txt") do |file|
+        data.edit_response(attachments: [file.write(code)])
+        return
+      end
+    end
+
+    if code.empty?
+      data.edit_response(content: RESPONSE[3])
+    else
+      data.edit_response(content: format(RESPONSE[6], code))
     end
   end
 end
