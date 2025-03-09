@@ -45,6 +45,6 @@ module EmojiCommands
   end
 
   reaction_add do |event|
-    Emojis.react(event)
+    Emojis.cache(event)
   end
 end

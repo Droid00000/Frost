@@ -33,9 +33,9 @@ module Boosters
   # @param [String] The hex color to resolve.
   # @return [ColourRGB] A colourRGB object.
   def self.resolve_color(color)
-    return nil if color.nil? || !color.match(REGEX[2])
-
     color = COLORS.get(color) if COLORS.get(color)
+
+    return nil if color.nil? || !color.match(REGEX[2])
 
     color = "00000c" if color.delete("#") == "000000"
 
@@ -50,5 +50,14 @@ module Boosters
     return true if [NilClass, String].include?(resolve_icon(data).class)
 
     data.emojis("icon").server && data.emojis("icon").server.id == data.server.id
+  end
+
+  # Get an icon for a role.
+  # @param [icon] The icon to resolve.
+  # @return [String, File, nil] The resolved icon.
+  def self.resolve_icon(icon)
+    return nil if icon.options["icon"].nil? || icon.options["icon"].empty?
+
+    icon.emojis("icon")&.static_file || icon.options["icon"].scan(Unicode::Emoji::REGEX).first
   end
 end

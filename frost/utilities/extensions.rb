@@ -365,6 +365,15 @@ module Discordrb
       servers.values.map(&:member_count).sum.delimit
     end
 
+    # Deletes a role in a guild.
+    # @param guild [Integer, String] An ID that uniquely identifies a guild.
+    # @param id [Integer, String] An ID that uniquely identifies a role.
+    def remove_guild_role(guild, id)
+      Discordrb::API::Server.delete_role(@token, guild, id)
+    rescue StandardError
+      nil
+    end
+
     # Updates presence status.
     # @param status [String] The status the bot should show up as. Can be `online`, `dnd`, `idle`, or `invisible`
     # @param activity [String, nil] The name of the activity to be played/watched/listened to/stream name on the stream.
@@ -436,7 +445,7 @@ end
 class Hash
   # Get a given key from a hash.
   def get(data)
-    return unless data
+    return nil unless data
 
     self[(data.gsub(/([a-z0-9])([A-Z])/, '\1_\2')&.downcase&.to_sym)]
   end
