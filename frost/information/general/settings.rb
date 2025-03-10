@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 module General
-  # An embed with data about a guild's enabled functionality.
+  # A container with data about a guild's enabled functionality.
   def self.info(data)
     # Manually enable the `IS_COMPONENTS_V2 (1 << 15)`
     # flags so we can use the new interaction components.
-    data.edit_response(new_components: true) do |_, builder|
+    data.edit_response(new_components: true, flags: 64) do |_, builder|
       # Create a container in order to simulate the old look and
       # feel of an embed. I'm hoping there's some improvements to
       # how this looks and feels on mobile, since it currently looks
       # like hot garbage. Looks great on the mobile clients though!
-      builder.container(colour: nil) do |container|
+      builder.container(colour: "#a2bffe") do |container|
         # Add our main menu header here in a seperate text display
         # container in order to get some of that natural padding
         # that's tricky to stimulate with the other types of seperators.
@@ -31,14 +31,73 @@ module General
           # Add a select menu for the enabled features a server has.
           container.row do |row|
             row.select_menu(custom_id: "settings", placeholder: "Pick a category...", min_values: 1) do |menu|
-              menu.option(label: "Event Roles", value: "Roles", description: "Settings for custom server roles.", emoji: "1281715509750005831")
-              menu.option(label: "Birthdays", value: "Birthday", description: "Settings for server birthdays.", emoji: "733787070123737109")
+              menu.option(label: "Event Roles", value: "Events", description: "Settings for custom server roles.", emoji: "1281715509750005831")
+              menu.option(label: "Birthdays", value: "Birthdays", description: "Settings for server birthdays.", emoji: "733787070123737109")
               menu.option(label: "Boosters", value: "Boosters", description: "Settings for server boosters.", emoji: "1320971944627146752")
               menu.option(label: "Pins", value: "Pins", description: "Settings for the pin archiver.", emoji: "1320929329307324497")
             end
           end
         end
       end
+    end
+  end
+
+  # A container with data about a guild's event roles.
+  def self.events(data)
+    # Return early unless we have roles we can show the user.
+    # Else there's no point in going any further with this command.
+    unless Frost::Roles.enabled?(data)
+      data.edit_response(content: RESPONSE[1])
+      return
+    end
+
+    # Manually enable the `IS_COMPONENTS_V2 (1 << 15)`
+    # flags so we can use the new interaction components.
+    data.edit_response(new_components: true, flags: 64) do |_, builder|
+      # Create a container in order to simulate the old look and
+      # feel of an embed. I'm hoping there's some improvements to
+      # how this looks and feels on mobile, since it currently looks
+      # like hot garbage. Looks great on the mobile clients though!
+      builder.container(colour: "#a2bffe") do |container|
+      # Create a section to contain all of our main content, since
+      # if we attempt to only wrap our main heading text into a section
+      # we get some very weird spacing due to the fact that the thumbnail
+      # does not resize the spacing. This is a weird limitation that I hope
+      # gets addressed sometime in the future. For now, this will do though.
+      container.section do |section|
+        # Add our main title heading here.
+        section.text_display do |display|
+          display.text = format(RESPONSE[5], data.server.name)
+        end 
+
+        # Add the icon of the server as our thumbnail.
+        section.thumbnail(media: data.server.icon_url)
+        
+        # Add the description text at the botton.
+        section.text_display do |display|
+          display.text = RESPONSE[1]
+        end
+      end
+
+      # Add some spacing between the content of our container
+      # and the select menu that we're conditionally adding.
+      container.seperator(divider: true, spacing: :small)
+
+      # Add some spacing between the content of our container
+      # and the select menu that we're conditionally adding.
+      container.seperator(divider: true, spacing: :small)
+
+      # Add our main role content here. Take the first twenty
+      # roles and join them all together by a newline character.
+      container.text_display(text: Frost::Roles(data).all)
+
+      # Add some spacing between the content of our container
+      # and the footer text that we're adding.
+      container.seperator(divider: true, spacing: :small)
+
+      # Add our footer text. Eventually this can be swapped out for
+      # an action row with buttons for pagination if needed.
+      container.text_display(text: format(RESPONSE[5], roles.size, Frost::Roles.count(data)))
     end
   end
 end

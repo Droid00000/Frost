@@ -5,8 +5,8 @@ module General
   def self.chapter(data)
     time = data.bot.channel(CONFIG[:Chapter][:CHANNEL]).name.delete_prefix("📖")
     time = Time.parse("#{time.sub('3PM GMT', '').strip} #{Time.now.year}")
-    time = Time.new(time.year, time.month, time.day, "11", "05").to_i
-    data.edit_response(content: format(RESPONSE[56], time))
+    time = Time.new(time.year, time.month, time.day, "11", "05")
+    data.edit_response(content: format(RESPONSE[56], time.to_i))
   end
 end
 

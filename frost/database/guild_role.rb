@@ -5,6 +5,13 @@ module Frost
   class Roles
     # Easy way to access the DB.
     @@pg = POSTGRES[:event_settings]
+    
+    # Gets all the setup roles for a guild.
+    def self.all(data)
+      POSTGRES.transaction do
+        @@pg.where(guild_id: data.server.id).select(:role_id).limit(20)&.map.index(1) { |role, count| "**#{count}.** <@&#{role[:role_id]}>" }
+      end
+    end
 
     # Modify the icon settings for a role.
     def self.icon(data)
@@ -17,13 +24,6 @@ module Frost
     def self.add(data)
       POSTGRES.transaction do
         @@pg.insert(guild_id: data.server.id, role_id: data.options["role"], any_icon: data.options["icon"])
-      end
-    end
-
-    # Gets all the setup roles for a guild.
-    def self.all(data)
-      POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id).select(:role_id)&.map { |role| "<@&#{role[:role_id]}>" }
       end
     end
 
