@@ -5,7 +5,7 @@ module Frost
   class Roles
     # Easy way to access the DB.
     @@pg = POSTGRES[:event_settings]
-    
+
     # Gets all the setup roles for a guild.
     def self.all(data)
       POSTGRES.transaction do
