@@ -34,16 +34,6 @@ module Frost
     # Easy way to access the DB.
     @@pg = POSTGRES[:guild_birthdays]
 
-    # Easy way to access timezones.
-    @@zones = POSTGRES[:guild_timezones]
-
-    # Search for a specific timezone entry from the DB.
-    def self.search(query)
-      POSTGRES.transaction do
-        POSTGRES.fetch("SELECT * FROM guild_timezones WHERE (name % ? OR country % ? OR timezone % ? OR identifier ILIKE ? OR lookup_by ILIKE '%' || ? || '%' OR lookup_by_duo ILIKE '%' || ? || '%' OR starts_with ILIKE '%' || ? || '%') ORDER BY GREATEST(similarity(name, ?), similarity(timezone, ?), similarity(country, ?), similarity(identifier, ?), similarity(lookup_by, ?), similarity(lookup_by_duo, ?), similarity(starts_with, ?)) DESC LIMIT 25;", *([query] * 14)).all
-      end
-    end
-
     # Edit an existing birthday in the DB.
     def self.edit(*data)
       POSTGRES.transaction do
@@ -90,6 +80,13 @@ module Frost
     def self.unmark(*data)
       POSTGRES.transaction do
         @@pg.where(guild_id: data[0], user_id: data[1]).update(active: false)
+      end
+    end
+
+    # Search for a specific timezone entry from the DB.
+    def self.search(query)
+      POSTGRES.transaction do
+        POSTGRES.fetch("SELECT * FROM search_timezones(?);", query).all
       end
     end
 
