@@ -15,10 +15,7 @@ CREATE TABLE IF NOT EXISTS guild_timezones (
   name TEXT NOT NULL,
   country TEXT NOT NULL,
   timezone TEXT NOT NULL,
-  lookup_by TEXT NOT NULL,
   identifier TEXT NOT NULL,
-  starts_with TEXT NOT NULL,
-  lookup_by_duo TEXT NOT NULL,
   PRIMARY KEY (timezone, name)
 );
 
@@ -78,6 +75,74 @@ CREATE TABLE IF NOT EXISTS emoji_tracker (
   PRIMARY KEY (emoji_id, guild_id)
 );
 
+-- Function for searching for a timezone.
+CREATE OR REPLACE FUNCTION search_timezones (query text)
+    RETURNS SETOF guild_timezones
+    AS $$
+BEGIN
+    RETURN query WITH tokens AS (
+        SELECT
+            unnest(string_to_array(query, ' ')) AS t
+)
+    SELECT
+        NAME,
+        country,
+        timezone,
+        identifier
+    FROM
+        guild_timezones,
+        tokens
+    WHERE (NAME ILIKE '%' || tokens.t || '%'
+        OR similarity (NAME, tokens.t) > 0.2)
+        OR (country ILIKE '%' || tokens.t || '%'
+            OR similarity (country, tokens.t) > 0.2)
+        OR (timezone ILIKE '%' || tokens.t || '%'
+            OR similarity (timezone, tokens.t) > 0.2)
+        OR (identifier ILIKE '%' || tokens.t || '%'
+            OR similarity (identifier, tokens.t) > 0.2)
+    GROUP BY
+        NAME,
+        country,
+        timezone,
+        identifier
+    ORDER BY
+        sum(
+            CASE WHEN NAME ILIKE '%' || tokens.t || '%' THEN
+                1.0 - (tokens.t <-> NAME)
+            ELSE
+                0
+            END + CASE WHEN similarity (NAME, tokens.t) > 0.2 THEN
+                similarity (NAME, tokens.t)
+            ELSE
+                0
+            END + CASE WHEN country ILIKE '%' || tokens.t || '%' THEN
+                1.0 - (tokens.t <-> country)
+            ELSE
+                0
+            END + CASE WHEN similarity (country, tokens.t) > 0.2 THEN
+                similarity (country, tokens.t)
+            ELSE
+                0
+            END + CASE WHEN timezone ILIKE '%' || tokens.t || '%' THEN
+                1.0 - (tokens.t <-> timezone)
+            ELSE
+                0
+            END + CASE WHEN similarity (timezone, tokens.t) > 0.2 THEN
+                similarity (timezone, tokens.t)
+            ELSE
+                0
+            END + CASE WHEN identifier ILIKE '%' || tokens.t || '%' THEN
+                1.0 - (tokens.t <-> identifier)
+            ELSE
+                0
+            END + CASE WHEN similarity (identifier, tokens.t) > 0.2 THEN
+                similarity (identifier, tokens.t)
+            ELSE
+                0
+            END) DESC
+    LIMIT 25;
+END;
+
 -- Function for managing the balance of an emoji.
 CREATE OR REPLACE FUNCTION balance_manager() RETURNS TRIGGER AS $$
 BEGIN
@@ -100,15 +165,7 @@ CREATE INDEX IF NOT EXISTS guild_booster_idx ON guild_boosters (user_id);
 
 CREATE INDEX IF NOT EXISTS guild_premium_idx ON guild_boosters (guild_id);
 
-CREATE INDEX IF NOT EXISTS guild_codes_idx on guild_timezones (identifier);
-
 CREATE INDEX IF NOT EXISTS guild_icon_idx ON booster_settings (guild_icon);
-
-CREATE INDEX IF NOT EXISTS guild_lookup_idx ON guild_timezones (lookup_by);
-
-CREATE INDEX IF NOT EXISTS guild_duo_idx ON guild_timezones (lookup_by_duo);
-
-CREATE INDEX IF NOT EXISTS guild_prefix_idx on guild_timezones (starts_with);
 
 CREATE INDEX IF NOT EXISTS guild_booster_ban_idx ON banned_boosters (user_id);
 
@@ -121,6 +178,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS guild_channel_idx ON archiver_settings (guild_
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
 
 CREATE INDEX IF NOT EXISTS guild_names_idx ON guild_timezones USING GIN (name gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS guild_codes_idx ON guild_timezones USING GIN (identifier gin_trgm_ops);
 
 CREATE INDEX IF NOT EXISTS guild_countries_idx ON guild_timezones USING GIN (country gin_trgm_ops);
 
