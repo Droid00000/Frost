@@ -178,7 +178,7 @@ bot.register_application_command(:birthday, "birthday roles", contexts: [0], int
   end
 
   command.subcommand("grant", "Grant the birthday role to a member.") do |option|
-    option.user("target", "Who do you want to give the birthday role to?", required: true)
+    option.user("member", "Who do you want to give the birthday role to?", required: true)
   end
 
   command.subcommand("sync", "Add your date of birth to this server.")
