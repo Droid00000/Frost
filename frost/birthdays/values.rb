@@ -5,12 +5,13 @@ module Birthdays
   RESPONSE = {
     1 => "Your birthday couldn't be found. Please add your birthday using the </birthday add:1334725009427664970> command.",
     2 => "This server has not enabled birthday perks.",
-    3 => "Successfully removed your birthday.",
-    4 => "Please provide at least one option.",
-    5 => "I failed to process your timezone.",
-    6 => "Successfully added your birthday.",
-    7 => "You've already set your birthday.",
-    8 => "I failed to process your date."
+    3 => "Successfully granted the birthday role.",
+    4 => "Successfully removed your birthday.",
+    5 => "Please provide at least one option.",
+    6 => "I failed to process your timezone.",
+    7 => "Successfully added your birthday.",
+    8 => "You've already set your birthday.",
+    9 => "I failed to process your date."
   }.freeze
 
   # Default timezones used.
@@ -44,8 +45,9 @@ module Birthdays
   # Application commands for birthday commands.
   COMMANDS = {
     1 => "`/birthday delete`",
-    2 => "`/birthday edit`",
-    3 => "`/birthday sync`",
-    4 => "`/birthday add`"
+    2 => "`/birthday grant`",
+    3 => "`/birthday edit`",
+    4 => "`/birthday sync`",
+    5 => "`/birthday add`"
   }.freeze
 end

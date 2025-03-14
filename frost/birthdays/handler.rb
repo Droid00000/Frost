@@ -4,6 +4,7 @@ require_relative "modify"
 require_relative "create"
 require_relative "delete"
 require_relative "builder"
+require_relative "granter"
 require_relative "syncing"
 
 module BirthdayCommands
@@ -12,6 +13,11 @@ module BirthdayCommands
   application_command(:birthday).subcommand(:delete) do |event|
     event.defer(ephemeral: true)
     Birthdays.delete(event)
+  end
+
+  application_command(:birthday).subcommand(:grant) do |event|
+    event.defer(ephemeral: true)
+    Birthdays.grant(event)
   end
 
   application_command(:birthday).subcommand(:sync) do |event|
@@ -29,7 +35,7 @@ module BirthdayCommands
     Birthdays.create(event)
   end
 
-  interaction_create(type: 4) do |event|
+  autocomplete(:timezone) do |event|
     Birthdays.search(event)
   end
 end

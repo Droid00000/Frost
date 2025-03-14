@@ -5,8 +5,6 @@ def add_guild_role(guild, user)
 end
 
 def remove_user_role(guild, user)
-  Frost::Birthdays.unmark(guild, user)
-
   @bot.member(guild, user).remove_role(Frost::Birthdays::Settings.fetch_role(guild))
 end
 
@@ -23,5 +21,6 @@ def schedule_removal(guild, user)
 
   Rufus::Scheduler.new.in "24h" do
     remove_user_role(guild, user)
+    Frost::Birthdays.unmark(guild, user)
   end
 end

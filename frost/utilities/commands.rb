@@ -177,6 +177,10 @@ bot.register_application_command(:birthday, "birthday roles", contexts: [0], int
     option.string("timezone", "Your timezone identifier, for example, Asia/Baku.", required: false, autocomplete: true, min_length: 5, max_length: 35)
   end
 
+  command.subcommand("grant", "Grant the birthday role to a member.") do |option|
+    option.user("target", "Who do you want to give the birthday role to?", required: true)
+  end
+
   command.subcommand("sync", "Add your date of birth to this server.")
 
   command.subcommand("delete", "Remove your date of birth from the bot.")

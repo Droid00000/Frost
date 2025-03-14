@@ -3,27 +3,22 @@
 module Birthdays
   # Search for timezones.
   def self.search(data)
-    return unless data.focused?("timezone")
-
-    choices = if data.option["timezone"] && data.option["timezone"].empty?
+    choices = if data.options["timezone"].empty?
                 DEFAULT_ZONES
               else
-                Frost::Birthdays.search(data.option["timezone"])
+                Frost::Birthdays.search(data.options["timezone"])
               end
 
     choices = if choices.is_a?(Hash)
-                choices.map do |key, zone|
-                  { name: key.to_s, value: zone.to_s }
+                data.choices.merge!(choices)
                 end
               else
                 choices.map do |result|
-                  { name: result[:name], value: result[:timezone] }
+                  data.choices[result[:name]] = result[:timezone]
                 end
               end
 
-    return if choices.empty?
-
-    data.interaction.create_autocomplete_response(choices)
+    data.respond unless data.choices.empty?
   end
 
   # Parse the timezone.

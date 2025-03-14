@@ -25,7 +25,7 @@ module Affections
       # feel of an embed. I'm hoping there's some improvements to
       # how this looks and feels on mobile, since it currently looks
       # like hot garbage. Looks great on the mobile clients though!
-      builder.container(colour: event.user.color) do |container|
+      builder.container(color: to_color(data.user)) do |container|
         # Add our main header text here which denotes the type of action we're
         # performing on the target user. Using `###` triple heading makes for
         # a nice header like display similar to what we had with embeds.
