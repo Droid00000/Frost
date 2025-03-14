@@ -15,7 +15,7 @@ module Owner
       return
     end
 
-    if code.size > Discordrb::CHARACTER_LIMIT
+    if code.length > Discordrb::CHARACTER_LIMIT
       Tempfile.open("output.txt") do |file|
         data.edit_response(attachments: [file.write(code)])
         return

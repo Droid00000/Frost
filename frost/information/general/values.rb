@@ -23,12 +23,12 @@ module General
 
   # Format the stats string.
   def self.stats(bot)
-    format(RESPONSE[3], bot.bot.count_servers, bot.bot.count_members, bot.bot.count_channels)
+    format(RESPONSE[3], bot.servers.values.size, bot.servers.values.map(&:member_count).sum.delimit, bot.servers.values.map(&:channels).flatten.size)
   end
 
   # Resolve the select menu.
   def self.menu(data)
-    case data.values
+    case data.values[0]
     when "Pins"
       pins(data)
     when "Events"

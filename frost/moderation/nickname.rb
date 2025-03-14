@@ -3,7 +3,7 @@
 module Moderation
   # Change someone's nickname.
   def self.nickname(data)
-    if data.server.bot.id == data.options["member"]
+    if data.server.bot.id == data.options["member"].to_i
       data.edit_response(content: RESPONSE[58])
       return
     end

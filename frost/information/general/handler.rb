@@ -18,7 +18,7 @@ module AdminCommands
 
   select_menu(custom_id: "settings") do |event|
     event.defer_update
-    menu(event)
+    General.menu(event)
   end
 
   application_command(:info) do |event|

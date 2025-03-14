@@ -19,7 +19,7 @@ module General
         # Create our main section body that contains all of the text we want
         # to show to our user. Currently, we have to use one big string, since
         # if we use multiple text displays, something kinda seems to look off.
-        section.text_display(text: "#{RESPONSE[2]}#{RESPONSE[1]}#{stats(data)}")
+        section.text_display(text: "#{RESPONSE[2]}#{RESPONSE[1]}#{stats(data.bot)}")
 
         # Check if we're in a server, and if the user has the
         # manage roles permission in the server this command's called from.

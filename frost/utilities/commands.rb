@@ -77,12 +77,6 @@ bot.register_application_command(:coin, "Flip a coin!", contexts: [0, 1, 2], int
 end
 
 # @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
-bot.register_application_command(:block, "Stop a member from being able to access this channel.", contexts: [0], integration_types: [0], default_member_permissions: "268435456", name_localizations: { "hi" => "ब्लॉक" }, description_localizations: { "hi" => "किसी सदस्य को चैनल का उपयोग करने से रोकें।" }) do |option|
-  option.user("member", "Which member do you want to lock out?", required: true, name_localizations: { "hi" => "लोग" }, description_localizations: { "hi" => "आप किस सदस्य को लॉक आउट करना चाहते हैं" })
-  option.boolean("cascade", "Should this member be blocked from every channel in this server?", required: true, name_localizations: { "hi" => "झरना" }, description_localizations: { "hi" => "क्या इस सदस्य को इस सर्वर के प्रत्येक चैनल से ब्लॉक कर दिया जाना चाहिए" })
-end
-
-# @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
 bot.register_application_command(:change, "Moderation Commands", contexts: [0], integration_types: [0], name_localizations: { "hi" => "अद्यतन" }, description_localizations: { "hi" => "मॉडरेशन आदेश" }, default_member_permissions: "201326592") do |command|
   command.subcommand("nickname", "Modify a member's nickname.", name_localizations: { "hi" => "उपनाम" }, description_localizations: { "hi" => "किसी सदस्य का उपनाम बदलें" }) do |option|
     option.user("member", "Which member needs to have their name changed?", required: true, name_localizations: { "hi" => "लोग" }, description_localizations: { "hi" => "किस सदस्य को अपना नाम बदलना है" })

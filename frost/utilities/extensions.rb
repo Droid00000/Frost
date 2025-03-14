@@ -59,30 +59,6 @@ end
 module Discordrb
   # Monkey patches to the channel class.
   class Channel
-    # The same as define overwrite except it modifies the overwrites in place.
-    # @param thing [Overwrite] an Overwrite object to apply to this channel
-    # @param reason [String] The reason the for defining the overwrite.
-    # @overload define_overwrite(thing, allow, deny)
-    # @param thing [User, Role] What to define an overwrite for.
-    # @param allow [#bits, Permissions, Integer] The permission sets that should receive an `allow` override.
-    # @param deny [#bits, Permissions, Integer] The permission sets that should receive a `deny` override.
-    # @param reason [String] The reason the for defining the overwrite.
-    def produce_overwrite(thing, allow: 0, deny: 0, reason: nil)
-      unless thing.is_a? Overwrite
-        allow_bits = allow.respond_to?(:bits) ? allow.bits : allow
-        deny_bits = deny.respond_to?(:bits) ? deny.bits : deny
-
-        thing = Overwrite.new thing, allow: allow_bits, deny: deny_bits
-      end
-
-      current_bits = overwrites(:member).find { |o| o.id == thing.id }
-
-      computed_allow = thing.allow.bits | current_bits.allow.bits
-      computed_deny = thing.deny.bits | current_bits.deny.bits
-
-      API::Channel.update_permission(@bot.token, @id, thing.id, computed_allow, computed_deny, thing.type, reason)
-    end
-
     # Delete the last N messages on this channel.
     # @param amount [Integer] The amount of message history to consider for pruning. Must be a value between 2 and 100 (Discord limitation)
     # @param strict [true, false] Whether an error should be raised when a message is reached that is too old to be bulk
@@ -226,18 +202,11 @@ module Discordrb
   module Events
     # Monkey patch for select menus.
     class StringSelectEvent
-      # Producer for this event.
-      def initialize(data, bot)
-        super
-
-        @values = data["data"]["values"].first
-      end
-
       # @return [Emoji] Emojis sent in this interaction.
       def emoji
-        return nil if @values.nil?
+        return nil if @values.first.nil?
 
-        @bot.parse_mentions(@values).find { |e| e.is_a? Discordrb::Emoji }
+        @bot.parse_mentions(@values[0]).find { |e| e.is_a? Discordrb::Emoji }
       end
     end
   end
@@ -350,21 +319,6 @@ module Discordrb
       end
     end
 
-    # Count the total number of servers.
-    def count_servers
-      servers.values.count
-    end
-
-    # Count the total number of channels.
-    def count_channels
-      servers.values.map(&:channels).flatten.count.delimit
-    end
-
-    # Count the total number of members.
-    def count_members
-      servers.values.map(&:member_count).sum.delimit
-    end
-
     # Deletes a role in a guild.
     # @param guild [Integer, String] An ID that uniquely identifies a guild.
     # @param id [Integer, String] An ID that uniquely identifies a role.
@@ -372,23 +326,6 @@ module Discordrb
       Discordrb::API::Server.delete_role(@token, guild, id)
     rescue StandardError
       nil
-    end
-
-    # Updates presence status.
-    # @param status [String] The status the bot should show up as. Can be `online`, `dnd`, `idle`, or `invisible`
-    # @param activity [String, nil] The name of the activity to be played/watched/listened to/stream name on the stream.
-    # @param url [String, nil] The Twitch URL to display as a stream. nil for no stream.
-    # @param since [Integer] When this status was set.
-    # @param afk [true, false] Whether the bot is AFK.
-    # @param activity_type [Integer] The type of activity status to display.
-    # Can be 0 (Playing), 1 (Streaming), 2 (Listening), 3 (Watching), or 5 (Competing).
-    # @see Gateway#send_status_update
-    def update_status(status, name, _url = nil, since = 0, _activity_type = 0)
-      data = { name: name, type: 4, state: name }.compact
-
-      @status = status&.downcase if status
-
-      @gateway.send_status_update(@status, since, data, false)
     end
   end
 end
@@ -448,56 +385,5 @@ class Hash
     return nil unless data
 
     self[(data.gsub(/([a-z0-9])([A-Z])/, '\1_\2')&.downcase&.to_sym)]
-  end
-end
-
-# Monkey patches to the array.
-class Array
-  # Convert all the keys to a hash.
-  def sym
-    first.transform_keys(&:to_sym)
-  end
-end
-
-module Discordrb
-  module Events
-    # Monkey patches for interactions.
-    class InteractionCreateEvent
-      def option
-        options = @interaction.data["options"]
-
-        case options[0]["type"]
-        when 2
-          options = options[0]
-          @subcommand_group = options["name"].to_sym
-          @subcommand = options["options"][0]["name"].to_sym
-          options = options["options"][0]["options"]
-        when 1
-          options = options[0]
-          @subcommand = options["name"].to_sym
-          options = options["options"]
-        end
-
-        options.to_h { |opt| [opt["name"], opt["options"] || opt["value"]] }
-      end
-
-      def focused?(option)
-        options = @interaction.data["options"]
-
-        case options[0]["type"]
-        when 2
-          options = options[0]
-          @subcommand_group = options["name"].to_sym
-          @subcommand = options["options"][0]["name"].to_sym
-          options = options["options"][0]["options"]
-        when 1
-          options = options[0]
-          @subcommand = options["name"].to_sym
-          options = options["options"]
-        end
-
-        options.find { |option| option.key?("focused") }["name"] == option
-      end
-    end
   end
 end
