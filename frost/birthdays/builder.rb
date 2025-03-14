@@ -11,7 +11,6 @@ module Birthdays
 
     choices = if choices.is_a?(Hash)
                 data.choices.merge!(choices)
-                end
               else
                 choices.map do |result|
                   data.choices[result[:name]] = result[:timezone]
