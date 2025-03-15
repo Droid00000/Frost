@@ -99,7 +99,7 @@ bot.register_application_command(:gatekeeper, "Moderation Commands", contexts: [
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:next, "Manga Chapter!", server_id: ENV.fetch("MANGA_GUILD"), contexts: [0], integration_types: [0], name_localizations: { "hi" => "अगला" }, description_localizations: { "hi" => "मंगा अध्याय" }) do |command|
+bot.register_application_command(:next, "Manga Chapter!", server_id: ENV.fetch("GUILD"), contexts: [0], integration_types: [0], name_localizations: { "hi" => "अगला" }, description_localizations: { "hi" => "मंगा अध्याय" }) do |command|
   command.subcommand_group(:chapter, "Comics!", name_localizations: { "hi" => "प्रकरण" }, description_localizations: { "hi" => "कॉमिक्स" }) do |group|
     group.subcommand(:when, "View the release date of the next chapter.", name_localizations: { "hi" => "कब" }, description_localizations: { "hi" => "अगला अध्याय कब आ रहा है" })
   end
