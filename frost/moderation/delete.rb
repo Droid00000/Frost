@@ -54,6 +54,6 @@ module Moderation
       end
     end
 
-    data.edit_response(content: format(RESPONSE[68], count))
+    data.edit_response(content: plural(count))
   end
 end

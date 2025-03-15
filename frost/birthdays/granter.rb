@@ -15,14 +15,14 @@ module Birthdays
     member = data.member("member")
 
     # Add the role to the member.
-    add_guild_role(data.server, member)
+    add_guild_role(data.server.id, member)
 
     # Send the birthday message if enabled.
-    birthday_message(data.server, member)
+    birthday_message(data.server.id, member)
 
     # Schedule the role for removal in a day.
     Rufus::Scheduler.new.in "24h" do
-      remove_user_role(data.server, member)
+      remove_user_role(data.server.id, member)
     end
 
     data.edit_response(content: RESPONSE[3])

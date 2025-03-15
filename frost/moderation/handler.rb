@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "values"
 require_relative "delete"
 require_relative "nickname"
 require_relative "invitation"
