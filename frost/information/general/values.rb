@@ -3,7 +3,7 @@
 module General
   # Responses and fields for general commands.
   RESPONSE = {
-    1 => "These are the enabled event roles for your server. Roles can be removed with the </component:1342292560378466346> command, and added with the  </component:1342292560378466346> command."
+    1 => "These are the enabled event roles for your server. Roles can be removed with the </component:1342292560378466346> command, and added with the  </component:1342292560378466346> command.",
     2 => "**About Me**\nI was made by droid00000. My code is open source and can be viewed [here](https://github.com/Droid00000/Frost)!\n\n",
     3 => "Hi! Welcome to my help page. Use the dropdown menu below to view a category.\n\n",
     4 => "**Stats**\nI'm on %s servers with a total of %s members and %s channels.",

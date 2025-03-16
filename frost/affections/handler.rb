@@ -7,6 +7,7 @@ require_relative "poke"
 require_relative "punch"
 require_relative "sleep"
 require_relative "anger"
+require_relative "values"
 
 module AffectionCommands
   extend Discordrb::EventContainer

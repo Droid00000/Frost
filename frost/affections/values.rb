@@ -37,14 +37,14 @@ module Affections
   # Set no color for the container if the user has no color.
   # @param [Discordrb::User] The user to check the color for.
   # @return [Discordrb::ColorRGB, nil] The color or nil.
-  def to_color(user)
-    user.color.zero? ? nil : user.color
+  def self.to_color(user)
+    user.color.to_i.zero? ? nil : user.color
   end
 
   # Returns a random GIF link for use by affection commands.
   # @param [Symbol] A symbol representing the type of affection.
   # @return [String] The appropriate GIF for the affection.
-  def gif(type)
+  def self.gif(type)
     case type
     when :ANGRY
       ANGRY.sample

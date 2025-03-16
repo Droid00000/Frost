@@ -15,6 +15,6 @@ module Pins
   COMMANDS = {
     1 => "`/pin archiver disable`",
     2 => "`/pin archiver setup`",
-    1 => "`/archive`"
+    3 => "`/archive`"
   }.freeze
 end
