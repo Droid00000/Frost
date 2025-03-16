@@ -5,16 +5,16 @@ module Moderation
   RESPONSE = {
     1 => "The bot needs to have the ``manage messages`` permission to do this.",
     2 => "The bot needs to have the ``manage server`` permission to do this.",
-    3 => "Invites can only be permanently paused in community servers."
-    4 => "The duration cannot be greater than 24 hours.",
-    5 => "Successfully disabled invites in this server.",
-    6 => "Successfully enabled invites in this server.",
-    7 => "This user is too powerful for you to modify.",
-    8 => "This user is too powerful for me to modify.",
-    9 => "Invites aren't disabled in this server."
-    10 => "Successfully updated <@%s> nickname."
+    3 => "Invites can only be permanently paused in community servers.",
+    4 => "Successfully disabled invites in this server.",
+    5 => "Successfully enabled invites in this server.",
+    6 => "This user is too powerful for you to modify.",
+    7 => "This user is too powerful for me to modify.",
+    8 => "The duration cannot exceed **24** hours.",
+    9 => "Invites aren't disabled in this server.",
+    10 => "Successfully updated <@%s> nickname.",
     11 => "Successfully deleted %s message.",
-    12 => "Please provide a valid duration.",
+    12 => "Please provide a valid duration."
   }.freeze
 
   # Application commands for moderation.
