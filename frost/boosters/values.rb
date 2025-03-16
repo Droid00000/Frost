@@ -32,7 +32,7 @@ module Boosters
   # Initilaze a new color object for a role.
   # @param [String] The hex color to resolve.
   # @return [ColourRGB] A colourRGB object.
-  def self.resolve_color(color)
+  def self.to_color(color)
     color = COLORS.get(color) if COLORS.get(color)
 
     return nil if color.nil? || !color.match(REGEX[2])
@@ -47,7 +47,7 @@ module Boosters
   def self.valid_icon?(data)
     return true if Frost::Boosters.settings.any_icon?(data)
 
-    return true if [NilClass, String].include?(resolve_icon(data).class)
+    return true if [NilClass, String].include?(to_icon(data).class)
 
     data.emojis("icon").server && data.emojis("icon").server.id == data.server.id
   end
@@ -55,7 +55,7 @@ module Boosters
   # Get an icon for a role.
   # @param [icon] The icon to resolve.
   # @return [String, File, nil] The resolved icon.
-  def self.resolve_icon(icon)
+  def self.to_icon(icon)
     return nil if icon.options["icon"].nil? || icon.options["icon"].empty?
 
     icon.emojis("icon")&.static_file || icon.options["icon"].scan(Unicode::Emoji::REGEX).first

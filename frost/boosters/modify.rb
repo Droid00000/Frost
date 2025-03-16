@@ -40,9 +40,9 @@ module Boosters
 
     payload = {
       role: Frost::Boosters::Members.role(data),
-      colour: resolve_color(data.options["color"]),
+      colour: to_color(data.options["color"]),
       name: data.options["name"],
-      icon: resolve_icon(data),
+      icon: to_icon(data),
       reason: REASON[1]
     }
 

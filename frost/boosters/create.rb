@@ -13,7 +13,7 @@ module Boosters
       return
     end
 
-    if data.server.roles.count == 250
+    if data.server.roles.size == 250
       data.edit_response(content: RESPONSE[46])
       return
     end
@@ -39,9 +39,9 @@ module Boosters
     end
 
     payload = {
-      colour: resolve_color(data.options["color"]),
+      colour: to_color(data.options["color"]),
       name: data.options["name"],
-      icon: resolve_icon(data),
+      icon: to_icon(data),
       reason: REASON[1]
     }
 
