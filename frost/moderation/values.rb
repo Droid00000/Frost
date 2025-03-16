@@ -15,7 +15,7 @@ module Moderation
     10 => "Successfully updated <@%s> nickname."
     11 => "Successfully deleted %s message.",
     12 => "Please provide a valid duration.",
-  }.freezex
+  }.freeze
 
   # Application commands for moderation.
   COMMANDS = {
