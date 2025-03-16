@@ -38,8 +38,16 @@ module Moderation
           pass << logic.attachments.any?
         end
 
-        if data.options["reactions"]
+        if data.options["webhook"]
+          pass << logic.author.webhook?
+        end
+
+        if data.options["reaction"]
           pass << logic.reactions.any?
+        end
+
+        if data.options["sticker"]
+          pass << logic.stickers.any?
         end
 
         if data.options["embeds"]

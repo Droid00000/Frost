@@ -72,9 +72,9 @@ module Discordrb
     def prune(amount, limit, strict = false, reason = nil, &block)
       raise ArgumentError, "Can only delete between 1 and 100 messages!" unless amount.between?(1, 100)
 
-      before = limit.options["before"]&.to_i&.positive? ? limit.options["before"].to_i : nil
+      before = limit.options["before"].strip.to_i unless limit.options["before"]&.to_i&.zero?
 
-      after = limit.options["after"]&.to_i&.positive? ? limit.options["after"].to_i : nil
+      after = limit.options["after"].strip.to_i unless limit.options["after"]&.to_i&.zero?
 
       messages =
         if block && limit
