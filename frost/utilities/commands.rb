@@ -5,22 +5,13 @@ require "discordrb"
 bot = Discordrb::Bot.new(token: ENV.fetch("TOKEN"), intents: :none)
 
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
-bot.register_application_command(:"Add Emoji(s)", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: "1073741824", name_localizations: { "hi" => "कई इमोजी जोड़ें" })
-
-# @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
-bot.register_application_command(:"Add Emojis", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: "1073741824", name_localizations: { "hi" => "इमोजी जोड़ें" })
+bot.register_application_command(:"Add Emojis", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: "1073741824", name_localizations: { "hi" => "कई इमोजी जोड़ें" })
 
 # @!function [Pin Operations] Belongs to a module that manages pins in a channel.
 bot.register_application_command(:archive, "Archives the pinned messages in the current channel.", default_member_permissions: "8192", contexts: [0], integration_types: [0], name_localizations: { "hi" => "पुरातत्व" }, description_localizations: { "hi" => "पुरातत्व पिंस कोई चुनित चैनल मै" })
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:info, "View some helpful info about the bot.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "सेटिंग्स" }, description_localizations: { "hi" => "आपना सर्वर कॉन्फिग्रेशन देखो" })
-
-# @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:shutdown, "Safely disconnects the bot from Discord.", default_member_permissions: "0", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "बंधकरो" }, description_localizations: { "hi" => "सावधानी से बोट को गेटवे से डिसकनेक्ट करो" })
-
-# @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:restart, "Safely restarts the bot.", default_member_permissions: "0", contexts: [0, 1], integration_types: [0, 1], name_localizations: { "hi" => "फिरसेकरो" }, description_localizations: { "hi" => "सुरक्षित रूप से पुनरारंभ होता है और बॉट को गेटवे से पुनः कनेक्ट करता है" })
+bot.register_application_command(:info, "View some information about the bot.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "सेटिंग्स" }, description_localizations: { "hi" => "आपना सर्वर कॉन्फिग्रेशन देखो" })
 
 # @!function [Affections] This command is part of a module that does expressions.
 bot.register_application_command(:hug, "Hugs another user.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "गलेमिलना" }, description_localizations: { "hi" => "सर्वर मित्र के गले मिलना" }) do |option|
@@ -56,19 +47,24 @@ bot.register_application_command(:sleep, "Tell a user to head to bed.", contexts
   option.user("target", "Who needs to go to sleep?", required: true, name_localizations: { "hi" => "इशारालगाना" }, description_localizations: { "hi" => "किसको सोने जाने बोलना है" })
 end
 
-# @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
-bot.register_application_command(:top, "View some emoji stats.", contexts: [0], integration_types: [0], name_localizations: { "hi" => "इमोजी" }, description_localizations: { "hi" => "कुछ इमोजी आँकड़े देखें" }) do |command|
-  command.subcommand(:emojis, "View the most used emojis in this server.", name_localizations: { "hi" => "आँकड़े" }, description_localizations: { "hi" => "शीर्ष इमोजी के बारे में जानकारी यहां प्राप्त करें" })
-end
-
 # @!function [Affections] This command is part of a module that manages general information.
 bot.register_application_command(:time, "View the current time.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "समय" }, description_localizations: { "hi" => "वर्तमान समय देखें" }) do |option|
   option.string("timezone", "Which timezone do you want to view the time for?", required: true, autocomplete: true, name_localizations: { "hi" => "समयक्षेत्र" }, description_localizations: { "hi" => "आप किस समयक्षेत्र का समय देखना चाहते हैं" })
 end
 
+# @!function [General Operations] Belongs to a module that manages general information.
+bot.register_application_command(:evaluate, "Remotely execute and evaluate code.", default_member_permissions: "0", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "लगाना" }, description_localizations: { "hi" => "बोट ऑनर को कोड रन करनेकी इजाजत है" }) do |option|
+  option.string("code", "The code you want to execute.", required: true, name_localizations: { "hi" => "कोड" }, description_localizations: { "hi" => "कोड जो रन करना है" })
+end
+
+# @!function [General Operations] Belongs to a module that manages general information.
+bot.register_application_command(:science, "Access the bot's control panel.", contexts: [0, 1, 2], integration_types: [0, 1], default_member_permissions: "0", name_localizations: { "hi" => "विज्ञान" }, description_localizations: { "hi" => "बॉट के नियंत्रण पैनल तक पहुंचें" }) do |command|
+  option.integer("dial", "Which action do you want to perform?", required: true, choices: { "Drain Emojis" => 1, "Shutdown" => 2, "Restart" => 3 }, name_localizations: { "hi" => "फ़ोनकरना" }, description_localization: { "hi" => "आप कौन सी कार्रवाई करना चाहते हैं" })
+end
+
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
-bot.register_application_command(:drain, "View some emoji stats.", contexts: [1], integration_types: [1], name_localizations: { "hi" => "निकास" }, description_localizations: { "hi" => "कुछ इमोजी आँकड़े देखें" }) do |command|
-  command.subcommand(:emojis, "Add all the cached emojis to the database.", name_localizations: { "hi" => "इमोजी" }, description_localizations: { "hi" => "सभी कैश्ड इमोजी को डेटाबेस में हटा देता है" })
+bot.register_application_command(:top, "View some emoji stats.", contexts: [0], integration_types: [0], name_localizations: { "hi" => "इमोजी" }, description_localizations: { "hi" => "कुछ इमोजी आँकड़े देखें" }) do |command|
+  command.subcommand(:emojis, "View the most used emojis in this server.", name_localizations: { "hi" => "आँकड़े" }, description_localizations: { "hi" => "शीर्ष इमोजी के बारे में जानकारी यहां प्राप्त करें" })
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
@@ -82,11 +78,6 @@ bot.register_application_command(:change, "Moderation Commands", contexts: [0], 
     option.user("member", "Which member needs to have their name changed?", required: true, name_localizations: { "hi" => "लोग" }, description_localizations: { "hi" => "किस सदस्य को अपना नाम बदलना है" })
     option.string("nickname", "What should this member's new nickname be?", required: true, name_localizations: { "hi" => "उपनाम" }, description_localizations: { "hi" => "इस सदस्य का नया उपनाम क्या होना चाहिए" })
   end
-end
-
-# @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:evaluate, "Remotely execute and evaluate code.", default_member_permissions: "0", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "लगाना" }, description_localizations: { "hi" => "बोट ऑनर को कोड रन करनेकी इजाजत है" }) do |option|
-  option.string("code", "The code you want to execute.", required: true, name_localizations: { "hi" => "कोड" }, description_localizations: { "hi" => "कोड जो रन करना है" })
 end
 
 # @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
@@ -162,14 +153,14 @@ end
 # @!function [Birthday Operations] Belongs to a module that manages birthday roles.
 bot.register_application_command(:birthday, "birthday roles", contexts: [0], integration_types: [0]) do |command|
   command.subcommand("add", "Add your date of birth.") do |option|
-    option.integer("day", "The day you were born on.", required: false, min_value: 1, max_value: 31)
-    option.string("month", "The month you were born in.", required: false, choices: { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 })
+    option.integer("day", "The day you were born on.", required: true, min_value: 1, max_value: 31)
+    option.integer("month", "The month you were born in.", required: true, choices: { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 })
     option.string("timezone", "Your timezone identifier, for example, Asia/Baku.", required: true, autocomplete: true, min_length: 5, max_length: 35)
   end
 
   command.subcommand("edit", "Edit your date of birth or timezone.") do |option|
     option.integer("day", "The day you were born on.", required: false, min_value: 1, max_value: 31)
-    option.string("month", "The month you were born in.", required: false, choices: { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 })
+    option.integer("month", "The month you were born in.", required: false, choices: { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 })
     option.string("timezone", "Your timezone identifier, for example, Asia/Baku.", required: false, autocomplete: true, min_length: 5, max_length: 35)
   end
 

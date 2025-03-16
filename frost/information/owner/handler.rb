@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "flipper"
-require_relative "manager"
+require_relative "science"
 require_relative "evaluate"
 
 module AdminCommands
@@ -12,14 +12,9 @@ module AdminCommands
     Owner.flip(event)
   end
 
-  application_command(:shutdown) do |event|
+  application_command(:science) do |event|
     event.defer(ephemeral: true)
-    Owner.shutdown(event)
-  end
-
-  application_command(:restart) do |event|
-    event.defer(ephemeral: true)
-    Owner.restart(event)
+    Owner.science(event)
   end
 
   application_command(:eval) do |event|

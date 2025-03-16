@@ -4,22 +4,15 @@ module Emojis
   # Stats related stuff.
   def self.cache(data)
     # Cache statistics for reactions.
-    if data.emoji.id && !data.respond_to?(:emojis)
+    if !data.respond_to?(:file) && data.emoji.id
       Frost::Emojis.new(data.emoji, data.server)
       return
     end
 
-    # Cache statistics for emojis.
+    # Cache statistics for messages.
     data.message.emoji.each do |emoji|
       Frost::Emojis.new(emoji, data.server)
     end
-  end
-
-  # Join a thread channel so we can track stats for it,
-  # otherwise we won't reccive any message events, and
-  # thus the stats we're collecting can easily become innacurate.
-  def self.thread(data)
-    data.channel.join if data.channel.thread?
   end
 
   def self.stats(data)
@@ -36,9 +29,9 @@ module Emojis
     emojis = Frost::Emojis.top(data).map do |emoji|
       next unless data.bot.emoji(emoji[:emoji_id])
 
-      emoji = { key: data.bot.emoji(emoji[:emoji_id]), value: emoji[:balance] }
+      emoji = { key: data.bot.emoji(emoji[:emoji_id]), data: emoji[:balance] }
 
-      "#{emoji[:key].mention} — #{emoji[:key].name} **(#{emoji[:value].delimit})**"
+      "#{emoji[:key].mention} — #{emoji[:key].name} **(#{emoji[:data].delimit})**"
     end
 
     # The `new_components` argument must be manually set to true

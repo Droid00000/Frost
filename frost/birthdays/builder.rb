@@ -4,18 +4,16 @@ module Birthdays
   # Search for timezones.
   def self.search(data)
     choices = if data.options["timezone"].empty?
-                DEFAULT_ZONES
+                data.choices.merge!(DEFAULT_ZONES)
               else
                 Frost::Birthdays.search(data.options["timezone"])
               end
 
-    choices = if choices.is_a?(Hash)
-                data.choices.merge!(choices)
-              else
-                choices.map do |result|
-                  data.choices[result[:name]] = result[:timezone]
-                end
-              end
+    unless choices.is_a?(Hash)
+      choices.map do |result|
+        data.choices[result[:name]] = result[:timezone]
+      end
+    end
 
     data.respond unless data.choices.empty?
   end

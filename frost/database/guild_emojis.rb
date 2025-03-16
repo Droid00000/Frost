@@ -13,11 +13,9 @@ module Frost
     @@pg = POSTGRES[:emoji_tracker]
 
     # Prune un-used emojis from the DB.
-    def self.prune(range)
-      range.to_a.each do |number|
-        POSTGRES.transaction do
-          @@pg.where(balance: number).delete
-        end
+    def self.prune(number)
+      POSTGRES.transaction do
+        @@pg.where(balance: number).delete
       end
     end
 
