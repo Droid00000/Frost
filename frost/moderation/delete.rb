@@ -30,6 +30,10 @@ module Moderation
           pass << logic.text&.end_with?(data.options["suffix"])
         end
 
+        if data.options["mentions"]
+          pass << logic.mentions?(data.options["mentions"])
+        end
+
         if data.options["robot"]
           pass << logic.author.bot_account?
         end

@@ -170,6 +170,16 @@ module Discordrb
     def emoji?
       !emoji&.empty?
     end
+
+    # Check if someone was mentioned in a message.
+    # @param [User, Role, Integer, String, #to_i]
+    def mentions?(mention)
+      mentions = (@role_mentions + @user_mentions)
+
+      mentions.push(@server) if @mention_everyone
+
+      mentions.map(&:to_i).include?(mention.to_i)
+    end
   end
 end
 

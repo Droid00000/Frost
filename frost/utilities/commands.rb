@@ -111,8 +111,9 @@ end
 bot.register_application_command(:purge, "Moderation Commands", contexts: [0], integration_types: [0], name_localizations: { "hi" => "शुद्ध" }, description_localizations: { "hi" => "मॉडरेशन आदेश" }, default_member_permissions: "10256") do |command|
   command.subcommand("messages", "Remove messages that meet a criteria.", name_localizations: { "hi" => "सूचना" }, description_localizations: { "hi" => "वर्तमान चैनल में संदेश हटाएँ" }) do |option|
     option.integer("amount", "The maximum number of messages to delete.", required: true, min_value: 1, max_value: 700, name_localizations: { "hi" => "रकम" }, description_localizations: { "hi" => "आप कितने मैसेज डिलीट करना चाहते हैं" })
-    option.user("member", "Remove messages from a specific user.", required: false, name_localizations: { "hi" => "सदस्य" }, description_localizations: { "hi" => "किसी विशिष्ट उपयोगकर्ता के संदेश हटाएँ" })
+    option.user("member", "Remove messages from a specific member.", required: false, name_localizations: { "hi" => "सदस्य" }, description_localizations: { "hi" => "किसी विशिष्ट उपयोगकर्ता के संदेश हटाएँ" })
     option.string("contains", "Remove messages that contain this text (case sensitive).", required: false, min_length: 1, name_localizations: { "hi" => "रोकना" }, description_localizations: { "hi" => "इस स्ट्रिंग वाले संदेश हटाएँ (केस सेंसिटिव)" })
+    option.mentionable("mentions", "Remove messages that mention this entity.", required: false, name_localizations: { "hi" => "हवाला" }, description_localizations: { "hi" => "इस इकाई का उल्लेख करने वाले संदेश हटाएँ" })
     option.boolean("reaction", "Remove messages that have reactions.", required: false, name_localizations: { "hi" => "प्रतिक्रिया" }, description_localizations: { "hi" => "प्रतिक्रिया वाले संदेश हटाएँ" })
     option.boolean("webhook", "Remove messages from webhooks.", required: false, name_localizations: { "hi" => "वेबहुक" }, description_localizations: { "hi" => "वेबहुक से संदेश हटाएँ" })
     option.boolean("sticker", "Remove messages that have stickers.", required: false, name_localizations: { "hi" => "कँटिया" }, description_localizations: { "hi" => "स्टिकर वाले संदेश हटाएँ" })
