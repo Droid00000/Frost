@@ -21,15 +21,10 @@ module Owner
   }.freeze
 
   # Mapping of quotes to escape.
-  QUOTES = {
-    "‘" => "\"",
-    "’" => "\"",
-    "“" => "\"",
-    "”" => "\""
-  }.freeze
+  QUOTES = %w[‘ ’ “ ”].freeze
 
   # Escape curly quotes into straight quotes.
   def self.escape(code)
-    QUOTES.map { |old, new| code.gsub!(old, new) }
+    QUOTES.map { |old| code.gsub!(old, '"') }
   end
 end
