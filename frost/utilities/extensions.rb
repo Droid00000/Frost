@@ -180,6 +180,10 @@ module Discordrb
 
       mentions.map(&:to_i).include?(mention.to_i)
     end
+
+    def has_poll?
+      !@poll.nil?
+    end
   end
 end
 

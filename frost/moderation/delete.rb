@@ -42,10 +42,6 @@ module Moderation
           pass << logic.attachments.any?
         end
 
-        if data.options["webhook"]
-          pass << logic.author.webhook?
-        end
-
         if data.options["reaction"]
           pass << logic.reactions.any?
         end
