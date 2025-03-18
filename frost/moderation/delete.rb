@@ -62,6 +62,10 @@ module Moderation
           pass << logic.emoji.any?
         end
 
+        if data.options["poll"]
+          pass << logic.has_poll?
+        end
+
         pass.all?
       end
     end
