@@ -9,7 +9,7 @@ module General
     4 => "**Stats**\nI'm on %s servers with a total of %s members and %s channels.",
     5 => "-# Viewing %s out of %s roles",
     6 => "**Next Chapter:** <t:%s:D>",
-    7 =>  "### Event Roles for %s",
+    7 => "### Event Roles for %s",
     8 => "Invalid timezone.",
     9 => "### Main Menu"
   }.freeze

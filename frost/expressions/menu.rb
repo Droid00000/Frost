@@ -9,12 +9,12 @@ module Emojis
     end
 
     data.send_message do |_, components|
-      components.row do |menu|
-        menu.select_menu(custom_id: "emojis", placeholder: RESPONSE[1], min_values: 1) do |options|
+      components.row do |row|
+        row.select_menu(custom_id: "emojis", placeholder: RESPONSE[1], min_values: 1) do |menu|
           data.target.emoji.uniq.each_with_index do |emoji, count|
             break if count > 24
 
-            options.option(label: emoji.name, value: emoji.mention, emoji: emoji.id)
+            menu.option(label: emoji.name, value: emoji.mention, emoji: emoji.id)
           end
         end
       end

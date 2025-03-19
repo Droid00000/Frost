@@ -2,7 +2,7 @@
 
 module Owner
   # Run some code on the bot.
-  def self.evaluate(data)
+  def self.experiment(data)
     unless data.user.id == CONFIG[:Discord][:OWNER]&.to_i
       data.edit_response(content: RESPONSE[1])
       return

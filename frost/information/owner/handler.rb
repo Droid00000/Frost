@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "eval"
 require_relative "flipper"
 require_relative "science"
-require_relative "evaluate"
 
 module AdminCommands
   extend Discordrb::EventContainer
@@ -19,6 +19,6 @@ module AdminCommands
 
   application_command(:eval) do |event|
     event.defer(ephemeral: true)
-    Owner.evaluate(event)
+    Owner.experiment(event)
   end
 end

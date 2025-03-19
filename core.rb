@@ -10,7 +10,7 @@ require "unicode/emoji"
 require "rufus-scheduler"
 require "selenium-webdriver"
 require "frost/utilities/embedded"
-require "frost/utilities/constants"
+require "frost/utilities/mappings"
 require "frost/utilities/extensions"
 
 Dir["frost/database/*.rb"].each { |file| require file }

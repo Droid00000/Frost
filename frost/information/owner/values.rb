@@ -25,6 +25,6 @@ module Owner
 
   # Escape curly quotes into straight quotes.
   def self.escape(code)
-    QUOTES.map { |old| code.gsub!(old, '"') }
+    code if QUOTES.map { |old| code.gsub!(old, '"') }
   end
 end
