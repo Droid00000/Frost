@@ -38,7 +38,7 @@ module Affections
   # @param [Discordrb::User] The user to check the color for.
   # @return [Discordrb::ColorRGB, nil] The color or nil.
   def self.to_color(user)
-    user.color.to_i.zero? ? nil : user.color
+    user.color unless user.color.to_i.zero?
   end
 
   # Returns a random GIF link for use by affection commands.
@@ -46,20 +46,20 @@ module Affections
   # @return [String] The appropriate GIF for the affection.
   def self.gif(type)
     case type
-    when :ANGRY
-      ANGRY.sample
     when :HUGS
       HUGS.sample
     when :NOMS
       NOMS.sample
-    when :POKES
-      POKES.sample
-    when :SLEEPY
-      SLEEPY.sample
     when :BONK
       BONK.sample
     when :PUNCH
       PUNCH.sample
+    when :ANGRY
+      ANGRY.sample
+    when :POKES
+      POKES.sample
+    when :SLEEPY
+      SLEEPY.sample
     end
   end
 end

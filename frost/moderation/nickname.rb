@@ -8,12 +8,12 @@ module Moderation
       return
     end
 
-    if data.member("member").hierarchy >= data.user.hierarchy
+    if hierarchy(data.member("member")) >= hierarchy(data.user)
       data.edit_response(content: RESPONSE[58])
       return
     end
 
-    if data.member("member").hierarchy >= data.server.bot.hierarchy
+    if hierarchy(data.member("member")) >= hierarchy(data.server.bot)
       data.edit_response(content: RESPONSE[69])
       return
     end

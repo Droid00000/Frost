@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "eval"
+require_relative "values"
 require_relative "flipper"
 require_relative "science"
 
@@ -17,8 +18,7 @@ module AdminCommands
     Owner.science(event)
   end
 
-  application_command(:eval) do |event|
-    event.defer(ephemeral: true)
+  modal_submit(user: owner) do |event|
     Owner.experiment(event)
   end
 end

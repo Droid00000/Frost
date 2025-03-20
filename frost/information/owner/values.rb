@@ -16,12 +16,21 @@ module Owner
   # Application commands for owner commands.
   COMMANDS = {
     1 => "`/coin flip`",
-    2 => "`/evaluate`",
     3 => "`/science`"
   }.freeze
 
   # Mapping of quotes to escape.
-  QUOTES = %w[‘ ’ “ ”].freeze
+  QUOTES = {
+   "‘" => "'",
+   "’" => "'",
+   "“" => "'",
+   "”" => "'"
+  }.freeze
+
+  # Get the owner of the bot.
+  def self.owner
+    CONFIG[:Discord][:OWNER]&.to_i
+  end
 
   # Escape curly quotes into straight quotes.
   def self.escape(code)

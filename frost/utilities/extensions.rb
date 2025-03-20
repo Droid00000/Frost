@@ -14,8 +14,7 @@ module Discordrb
     # @param icon [String, #read] A role icon for this role.
     # @param reason [String] The reason the for the creation of this role.
     # @return [Role] the created role.
-    def create_role(name: "new role", colour: 0, hoist: false, mentionable: false, permissions: 0, icon: nil,
-                    reason: nil)
+    def create_role(name: "new role", colour: 0, hoist: false, mentionable: false, permissions: 0, icon: nil, reason: nil)
       colour = colour.combined if colour.respond_to?(:combined)
 
       begin
@@ -120,36 +119,17 @@ module Discordrb
   class Emoji
     # Returns a tempfile object of the emoji.
     # @return [File] a file.
-    def file
+    def file(static: false)
       gif_url = "#{API.cdn_url}/emojis/#{@id}.gif"
       png_url = "#{API.cdn_url}/emojis/#{@id}.png"
       response = Faraday.get(gif_url)
       chosen_url = response.status == 415 ? png_url : gif_url
+      chosen_url = png_url if static == true
       file = Tempfile.new(Time.now.to_s)
       file.binmode
       file.write(Faraday.get(chosen_url).body)
       file.rewind
       file
-    end
-
-    # Returns a tempfile object of the emoji.
-    # @return [File] a file.
-    def static_file
-      file = Tempfile.new(Time.now.to_s)
-      file.binmode
-      file.write(Faraday.get("#{API.cdn_url}/emojis/#{@id}.png").body)
-      file.rewind
-      file
-    end
-  end
-end
-
-module Discordrb
-  # Monkey patches to the member class.
-  class Member
-    # The position of a member's highest role.
-    def hierarchy
-      highest_role.position
     end
   end
 end
@@ -159,10 +139,7 @@ module Discordrb
   class Message
     # @return [Array<Emoji>] the emotes that were used/mentioned in this message.
     def emoji
-      return if @content.nil?
-      return @emoji unless @emoji.empty?
-
-      @emoji = @bot.parse_mentions(@content).select { |el| el.is_a? Discordrb::Emoji }
+      @content.nil? ? nil : @bot.parse_mentions(@content).select { |el| el.is_a? Discordrb::Emoji }
     end
 
     # Check if any emoji were used in this message.
@@ -178,7 +155,7 @@ module Discordrb
 
       mentions.push(@server) if @mention_everyone
 
-      mentions.map(&:to_i).include?(mention.to_i)
+      mentions.map(&:id).include?(mention.to_i)
     end
 
     def has_poll?
@@ -194,9 +171,7 @@ module Discordrb
       # @param name [String] The name of the option.
       # @return [Emoji] Emojis sent in this interaction.
       def emojis(name)
-        return nil unless @options[name]
-
-        @bot.parse_mentions(@options[name]).find { |e| e.is_a? Discordrb::Emoji }
+        @options[name] ? @bot.parse_mentions(@options[name]).find { |e| e.is_a? Discordrb::Emoji } : nil
       end
 
       # @param name [String] The name of the option.
@@ -313,9 +288,7 @@ module Discordrb
     def calculate_intents(intents)
       LOGGER.mode = :quiet
 
-      intents = [intents] unless intents.is_a? Array
-
-      intents.reduce(0) do |sum, intent|
+      [*intents].reduce(0) do |sum, intent|
         case intent
         when Symbol
           if INTENTS[intent]

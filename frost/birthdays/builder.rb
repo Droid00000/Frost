@@ -18,13 +18,6 @@ module Birthdays
     data.respond unless data.choices.empty?
   end
 
-  # Parse the timezone.
-  def self.parser(data)
-    data.split("/").map do |part|
-      part.split(/[\s_]+/).map(&:capitalize).join("_")
-    end
-  end
-
   # Validate a timezone given to us.
   def self.invalid_timezone?(data)
     return false unless data.options["timezone"]

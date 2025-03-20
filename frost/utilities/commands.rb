@@ -53,13 +53,8 @@ bot.register_application_command(:time, "View the current time.", contexts: [0, 
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:evaluate, "Remotely execute and evaluate code.", default_member_permissions: "0", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "लगाना" }, description_localizations: { "hi" => "बोट ऑनर को कोड रन करनेकी इजाजत है" }) do |option|
-  option.string("code", "The code you want to execute.", required: true, name_localizations: { "hi" => "कोड" }, description_localizations: { "hi" => "कोड जो रन करना है" })
-end
-
-# @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:science, "Access the bot's control panel.", contexts: [0, 1, 2], integration_types: [0, 1], default_member_permissions: "0", name_localizations: { "hi" => "विज्ञान" }, description_localizations: { "hi" => "बॉट के नियंत्रण पैनल तक पहुंचें" }) do |command|
-  option.integer("dial", "Which action do you want to perform?", required: true, choices: { "Drain Emojis" => 1, "Shutdown" => 2, "Restart" => 3 }, name_localizations: { "hi" => "फ़ोनकरना" }, description_localization: { "hi" => "आप कौन सी कार्रवाई करना चाहते हैं" })
+  option.integer("dial", "Which action do you want to perform?", required: true, choices: { "Drain Emojis" => 1, "Shutdown" => 2, "Restart" => 3, "Evaluate" => 4 }, name_localizations: { "hi" => "फ़ोनकरना" }, description_localization: { "hi" => "आप कौन सी कार्रवाई करना चाहते हैं" })
 end
 
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
