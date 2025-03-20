@@ -10,8 +10,8 @@ module Emojis
 
     begin
       emoji = data.server.add_emoji(data.emoji.name, data.emoji.file)
-    rescue StandardError
-      data.send_message(content: RESPONSE[45], ephemeral: true)
+    rescue StandardError => error
+      data.send_message(content: "#{error.message}.", ephemeral: true)
       return
     end
 
