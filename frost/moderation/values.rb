@@ -28,7 +28,7 @@ module Moderation
   # Pluralize a string from the given integer.
   # @param sum [Integer] Any numeric integer.
   def self.plural(sum)
-    "#{format(RESPONSE[11], sum)}#{"s" if sum > 1}"
+    "#{format(RESPONSE[11], sum)}#{"s" if sum != 1}"
   end
 
   # Get the postion of a user's highest role.
