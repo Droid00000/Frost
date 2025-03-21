@@ -3,11 +3,16 @@
 require_relative "menu"
 require_relative "audit"
 require_relative "stats"
-require_relative "click"
+require_relative "create"
 require_relative "values"
 
 module EmojiCommands
   extend Discordrb::EventContainer
+
+  application_command(:create).subcommand(:emoji) do |event|
+    event.defer(ephemeral: true)
+    Emojis.add(event)
+  end
 
   application_command(:top).subcommand(:emojis) do |event|
     event.defer(ephemeral: false)
@@ -21,7 +26,7 @@ module EmojiCommands
 
   select_menu(custom_id: "emojis") do |event|
     event.defer_update
-    Emojis.click(event)
+    Emojis.add(event)
   end
 
   message(contains: REGEX[1]) do |event|

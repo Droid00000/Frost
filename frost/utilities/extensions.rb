@@ -158,7 +158,7 @@ module Discordrb
       mentions.map(&:id).include?(mention.to_i)
     end
 
-    def has_poll?
+    def poll?
       !@poll.nil?
     end
   end

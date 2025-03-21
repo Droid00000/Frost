@@ -12,7 +12,7 @@ def add_booster(data)
     return
   end
 
-  if Frost::Boosters::Settings.get_user(data)
+  if Frost::Boosters::Settings.user(data)
     data.edit_response(content: RESPONSE[25])
     return
   end

@@ -59,7 +59,7 @@ module Moderation
         end
 
         if data.options["poll"]
-          pass << logic.has_poll?
+          pass << logic.poll?
         end
 
         pass.all?

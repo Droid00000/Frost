@@ -15,7 +15,7 @@ module AdminCommands
       8 => "Successfully removed <@%s> from being a booster.",
       9 => "Successfully added <@%s> as a booster.",
       10 => "The target user could not be found. ",
-      11 => "This user is already a booster.",
+      11 => "This user is already a booster."
     }.freeze
 
     # Check if we have perms enabled or set.

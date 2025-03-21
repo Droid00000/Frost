@@ -128,7 +128,7 @@ module Frost
       end
 
       # Manually get a user.
-      def self.get_user(data)
+      def self.user(data)
         POSTGRES.transaction do
           !@@pg[:guild_boosters].where(guild_id: data.server.id, user_id: data.options["member"]).empty?
         end

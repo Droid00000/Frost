@@ -12,7 +12,7 @@ def delete_booster(data)
     return
   end
 
-  unless Frost::Boosters::Settings.get_user(data)
+  unless Frost::Boosters::Settings.user(data)
     data.edit_response(content: RESPONSE[27])
     return
   end

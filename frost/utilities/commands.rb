@@ -53,7 +53,7 @@ bot.register_application_command(:time, "View the current time.", contexts: [0, 
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:science, "Access the bot's control panel.", contexts: [0, 1, 2], integration_types: [0, 1], default_member_permissions: "0", name_localizations: { "hi" => "विज्ञान" }, description_localizations: { "hi" => "बॉट के नियंत्रण पैनल तक पहुंचें" }) do |command|
+bot.register_application_command(:science, "Access the bot's control panel.", contexts: [0, 1, 2], integration_types: [0, 1], default_member_permissions: "0", name_localizations: { "hi" => "विज्ञान" }, description_localizations: { "hi" => "बॉट के नियंत्रण पैनल तक पहुंचें" }) do |option|
   option.integer("dial", "Which action do you want to perform?", required: true, choices: { "Drain Emojis" => 1, "Shutdown" => 2, "Restart" => 3, "Evaluate" => 4 }, name_localizations: { "hi" => "फ़ोनकरना" }, description_localization: { "hi" => "आप कौन सी कार्रवाई करना चाहते हैं" })
 end
 
@@ -65,6 +65,14 @@ end
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:coin, "Flip a coin!", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "मुद्रा" }, description_localizations: { "hi" => "एक सिक्का पलटें" }) do |command|
   command.subcommand(:flip, "Flip a coin.", name_localizations: { "hi" => "पलटना" }, description_localizations: { "hi" => "एक सिक्का पलटें" })
+end
+
+# @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
+bot.register_application_command(:create, "Add an emoji to this server.", contexts: [0], integration_types: [0], name_localizations: { "hi" => "बनाएं" }, description_localizations: { "hi" => "इस सर्वर में एक इमोजी जोड़ें" }, default_member_permissions: "1073741824") do |command|
+  command.subcommand("emoji", "Create an emoji on this server.", name_localizations: { "hi" => "इमोजी" }, description_localizations: { "hi" => "इस सर्वर पर एक इमोजी बनाएं" }) do |option|
+    option.string("emoji", "The emoji to create on this server.", required: true, name_localizations: { "hi" => "इमोजी" }, description_localizations: { "hi" => "इस सर्वर पर बनाए जाने वाले इमोजी" })
+    option.string("name", "The new name to give to this emoji.", required: false, name_localizations: { "hi" => "नाम" }, description_localizations: { "hi" => "इस इमोजी को दिया जाने वाला नया नाम" })
+  end
 end
 
 # @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
