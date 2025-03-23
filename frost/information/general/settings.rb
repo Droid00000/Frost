@@ -23,7 +23,7 @@ module General
 
         # Check if we're in a server, and if the user has the
         # manage roles permission in the server this command's called from.
-        disabled = data.server && data.user.permission?(:manage_roles)
+        disabled = data.server_id && data.user.permission?(:manage_roles)
 
         # Add some spacing between the content of our container
         # and the select menu that we're going to show the user.
@@ -85,7 +85,7 @@ module General
 
         # Add our main role content here. Take the first twenty
         # roles and join them all together by a newline character.
-        container.text_display(text: Frost::Roles(data).all)
+        container.text_display(text: Frost::Roles.all(data))
 
         # Add some spacing between the content of our container
         # and the footer text that we're adding.
