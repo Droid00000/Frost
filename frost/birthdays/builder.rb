@@ -20,16 +20,12 @@ module Birthdays
 
   # Validate a timezone given to us.
   def self.invalid_timezone?(data)
-    return false unless data.options["timezone"]
-
-    timezone(data.options["timezone"]).nil?
+    data.options["timezone"] ? timezone(data.options["timezone"]).nil? : false
   end
 
   # Validate a birthday given to us.
   def self.invalid_birthday?(data)
-    return false if data.options.except("timezone").empty?
-
-    change_date(data).nil?
+    data.options.except("timezone").empty? ? false : change_date(data).nil?
   end
 
   # Get a timezone without any validation.

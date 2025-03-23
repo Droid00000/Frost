@@ -42,7 +42,8 @@ module Boosters
       colour: to_color(data.options["color"]),
       name: data.options["name"],
       icon: to_icon(data),
-      reason: REASON[1]
+      reason: REASON[1],
+      permissions: 0
     }
 
     payload.delete(:icon) unless valid_icon?(data)
