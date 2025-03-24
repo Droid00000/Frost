@@ -29,7 +29,7 @@ module Affections
 
         # Finally we can add a media gallery in order to contain our randomized
         # embed that we're using to provide a visual and fun representation of the action.
-        container.media_gallery { |media| media.gallery_item(media: gif(:ANGRY)) }
+        container.media_gallery { |media| media.gallery_item(media: ANGRY.sample) }
       end
     end
   end

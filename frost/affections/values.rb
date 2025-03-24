@@ -42,26 +42,4 @@ module Affections
 
     user.color unless user.color.to_i.zero?
   end
-
-  # Returns a random GIF link for use by affection commands.
-  # @param [Symbol] A symbol representing the type of affection.
-  # @return [String] The appropriate GIF for the affection.
-  def self.gif(type)
-    case type
-    when :HUGS
-      HUGS.sample
-    when :NOMS
-      NOMS.sample
-    when :BONK
-      BONK.sample
-    when :PUNCH
-      PUNCH.sample
-    when :ANGRY
-      ANGRY.sample
-    when :POKES
-      POKES.sample
-    when :SLEEPY
-      SLEEPY.sample
-    end
-  end
 end

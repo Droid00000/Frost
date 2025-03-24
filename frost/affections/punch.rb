@@ -8,7 +8,7 @@ module Affections
     # to use this command. We return an error message if the user
     # isn't a contributor, and thus cannot use this app command.
     unless CONFIG[:Discord][:CONTRIBUTORS].include?(data.user.id)
-      data.respond(content: PERMISSION[1], ephemeral: true)
+      data.respond(content: "Missing access.", ephemeral: true)
       return
     end
 
@@ -38,7 +38,7 @@ module Affections
 
         # Finally we can add a media gallery in order to contain our randomized
         # embed that we're using to provide a visual and fun representation of the action.
-        container.media_gallery { |media| media.gallery_item(media: gif(:PUNCH)) }
+        container.media_gallery { |media| media.gallery_item(media: PUNCH.sample) }
       end
     end
   end
