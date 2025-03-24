@@ -38,6 +38,8 @@ module Affections
   # @param [Discordrb::User] The user to check the color for.
   # @return [Discordrb::ColorRGB, nil] The color or nil.
   def self.to_color(user)
+    return unless user.respond_to?(:color)
+
     user.color unless user.color.to_i.zero?
   end
 
