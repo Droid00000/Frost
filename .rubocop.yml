@@ -2,9 +2,6 @@
 AllCops:
   NewCops: enable
   TargetRubyVersion: 3.3
-  Exclude:
-  - 'app/frost/models/commands.rb'
-  - 'app/frost/models/embeds.rb'
 
 # Double quotes are preferable for me.
 Style/StringLiterals:
@@ -32,10 +29,6 @@ Style/IfUnlessModifier:
 
 # Many of our interaction responses are lengthy.
 Layout/LineLength:
-  Enabled: false
-
-# I see no reason to disabled this.
-Style/ParallelAssignment:
   Enabled: false
 
 # I prefer positional arguments.
