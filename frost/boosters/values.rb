@@ -49,15 +49,15 @@ module Boosters
 
     return true if [NilClass, String].include?(to_icon(data).class)
 
-    data.emojis("icon").server && data.emojis("icon").server.id == data.server.id
+    data.emoji("icon").server && data.emoji("icon").server.id == data.server.id
   end
 
   # Get an icon for a role.
   # @param [icon] The icon to resolve.
   # @return [String, File, nil] The resolved icon.
   def self.to_icon(icon)
-    return nil if icon.emojis("icon").nil? || icon.options["icon"].empty?
+    return nil if icon.emoji("icon").nil? || icon.options["icon"].empty?
 
-    icon.emojis("icon").file(static: true) || icon.options["icon"].scan(Unicode::Emoji::REGEX).first
+    icon.emoji("icon").file(static: true) || icon.options["icon"].scan(Unicode::Emoji::REGEX).first
   end
 end
