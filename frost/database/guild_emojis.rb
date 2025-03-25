@@ -12,7 +12,7 @@ module Frost
     # Prune un-used emojis from the DB.
     def self.prune(number)
       POSTGRES.transaction do
-        @@pg.where(balance: number).delete
+        @@pg.where("balance < 3").delete
       end
     end
 
