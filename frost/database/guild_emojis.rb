@@ -37,7 +37,7 @@ module Frost
     end
 
     # Insert a new emoji into the DB.
-    def self.dump(emoji, guild)
+    def self.drain
       POSTGRES.transaction do
         @@emojis.clear if @@pg.multi_insert(@@emojis)
       end
