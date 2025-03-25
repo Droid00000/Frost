@@ -22,7 +22,7 @@ module Frost
     # @param emoji [Discordrb::Emoji]
     # @param guild [Discordrb::Server]
     def initialize(emoji, guild)
-      @@emojis << { emoji: emoji, guild: guild }
+      @@emojis << { emoji_id: emoji.id, guild_id: guild.id }
     end
 
     # @param data [Discordrb::Interaction]
@@ -40,9 +40,9 @@ module Frost
     end
 
     # Insert a new emoji into the DB.
-    def self.add(emoji, guild)
+    def self.dump(emoji, guild)
       POSTGRES.transaction do
-        @@pg.insert(emoji_id: emoji.id, guild_id: guild.id)
+        @@emojis.clear if @@pg.multi_insert(@@emojis)
       end
     end
 
