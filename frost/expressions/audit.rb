@@ -2,8 +2,4 @@
 
 Rufus::Scheduler.new.cron "0 0 * * *" { Frost::Emojis.drain }
 
-Rufus::Scheduler.new.every "30d" do
-  (1..2).to_a.each do |numeric|
-    Frost::Emojis.prune(numeric)
-  end
-end
+Rufus::Scheduler.new.every "30d" { Frost::Emojis.prune } 
