@@ -9,10 +9,10 @@ module Frost
     # Easy way to access the DB.
     @@pg = POSTGRES[:emoji_tracker]
 
-    # Prune un-used emojis from the DB.
-    def self.prune
+    # Returns the top 15 emojis.
+    def self.top(data)
       POSTGRES.transaction do
-        @@pg.where("balance < 3").delete
+        @@pg.where(guild_id: data.server.id).order(Sequel.desc(:balance)).limit(15)
       end
     end
 
@@ -20,13 +20,6 @@ module Frost
     # @param guild [Discordrb::Server]
     def initialize(emoji, guild)
       @@emojis << { emoji_id: emoji.id, guild_id: guild.id }
-    end
-
-    # @param data [Discordrb::Interaction]
-    def self.any?(data)
-      POSTGRES.transaction do
-        !@@pg.where(guild_id: data.server.id).empty?
-      end
     end
 
     # @param data [Discordrb::Interaction]
@@ -43,10 +36,17 @@ module Frost
       end
     end
 
-    # Returns the top 15 emojis.
-    def self.top(data)
+    # @param data [Discordrb::Interaction]
+    def self.any?(data)
       POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id).order(Sequel.desc(:balance)).limit(15)
+        !@@pg.where(guild_id: data.server.id).empty?
+      end
+    end
+
+    # Prune un-used emojis from the DB.
+    def self.prune
+      POSTGRES.transaction do
+        @@pg.where("balance < 3").delete
       end
     end
   end

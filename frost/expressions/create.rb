@@ -9,7 +9,7 @@ module Emojis
     end
 
     emoji = if data.respond_to?(:options)
-              data.options["name"] || data.emoji("emoji).name
+              data.options["name"] || data.emoji("emoji").name
             else
               data.emoji.name
             end
