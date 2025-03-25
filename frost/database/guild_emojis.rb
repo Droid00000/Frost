@@ -10,7 +10,7 @@ module Frost
     @@pg = POSTGRES[:emoji_tracker]
 
     # Prune un-used emojis from the DB.
-    def self.prune(number)
+    def self.prune
       POSTGRES.transaction do
         @@pg.where("balance < 3").delete
       end
