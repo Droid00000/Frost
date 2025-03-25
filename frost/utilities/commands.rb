@@ -22,6 +22,7 @@ end
 bot.register_application_command(:poke, "Pokes another user.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "बुलाना" }, description_localizations: { "hi" => "कोई सर्वर मित्र को बुलाना" }) do |option|
   option.user("target", "Who do you want to poke?", required: true, name_localizations: { "hi" => "इशारालगाना" }, description_localizations: { "hi" => "किसको बुलाना है" })
 end
+
 # @!function [Affections] This command is part of a module that does expressions.
 bot.register_application_command(:nom, "Noms another user.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "कुतरना" }, description_localizations: { "hi" => "किसी अन्य सर्वर सदस्य को काटता है" }) do |option|
   option.user("target", "Who do you want to nom?", required: true, name_localizations: { "hi" => "इशारालगाना" }, description_localizations: { "hi" => "आप किसे काटना चाहते हैं?" })
