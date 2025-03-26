@@ -284,28 +284,6 @@ end
 module Discordrb
   # Monkey patches to the bot class.
   class Bot
-    # Calculates the intents payload.
-    def calculate_intents(intents)
-      LOGGER.mode = :quiet
-
-      [*intents].reduce(0) do |sum, intent|
-        case intent
-        when Symbol
-          if INTENTS[intent]
-            sum | INTENTS[intent]
-          else
-            LOGGER.warn("Unknown intent: #{intent}")
-            sum
-          end
-        when Integer
-          sum | intent
-        else
-          LOGGER.warn("Invalid intent: #{intent}")
-          sum
-        end
-      end
-    end
-
     # Deletes a role in a guild.
     # @param guild [Integer, String] An ID that uniquely identifies a guild.
     # @param id [Integer, String] An ID that uniquely identifies a role.

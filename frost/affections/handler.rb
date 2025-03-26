@@ -2,6 +2,7 @@
 
 require_relative "hug"
 require_relative "nom"
+require_relative "data"
 require_relative "bonk"
 require_relative "poke"
 require_relative "punch"

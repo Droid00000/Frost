@@ -30,7 +30,3 @@ Style/IfUnlessModifier:
 # Many of our interaction responses are lengthy.
 Layout/LineLength:
   Enabled: false
-
-# I prefer positional arguments.
-Style/OptionalBooleanParameter:
-  Enabled: false
