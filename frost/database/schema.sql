@@ -1,4 +1,4 @@
--- Revision: V1
+-- Revision: V2
 -- Creation Date: 2025-01-02 12:31:07.804358 UTC
 -- Reason: Initial Migration
 
@@ -28,7 +28,9 @@ CREATE TABLE IF NOT EXISTS archiver_settings (
 
 -- Holds info about booster settings.
 CREATE TABLE IF NOT EXISTS booster_settings (
+  manager BIGINT NOT NULL,
   any_icon BOOLEAN NOT NULL,
+  established BIGINT NOT NULL,
   guild_id BIGINT NOT NULL UNIQUE,
   hoist_role BIGINT NOT NULL UNIQUE,
   PRIMARY KEY (hoist_role, guild_id)
@@ -187,13 +189,17 @@ CREATE INDEX IF NOT EXISTS guild_birthday_role_idx ON birthday_settings (role_id
 
 CREATE INDEX IF NOT EXISTS guild_birthdays_status_idx ON guild_birthdays (active);
 
-CREATE INDEX IF NOT EXISTS guild_booster_role_idx ON booster_settings (hoist_role); 
+CREATE INDEX IF NOT EXISTS guild_booster_role_idx ON booster_settings (hoist_role);
+
+CREATE INDEX IF NOT EXISTS guild_booster_manager_idx ON booster_settings (manager);
 
 CREATE UNIQUE INDEX IF NOT EXISTS guild_channel_idx ON archiver_settings (guild_id);
 
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
 
 CREATE INDEX IF NOT EXISTS guild_birthday_channel_idx ON birthday_settings (channel_id);
+
+CREATE INDEX IF NOT EXISTS guild_booster_creation_idx ON booster_settings (established);
 
 CREATE INDEX IF NOT EXISTS guild_names_idx ON guild_timezones USING GIN (name gin_trgm_ops);
 
