@@ -9,13 +9,12 @@ module Affections
       # Add a text display container to mention our user
       # outside of the container we're building. This is
       # done in order to emulate the content field, since
-      # that gets disabled with these new fancy ass components.
+      # that gets disabled with these new component types.
       builder.text_display(text: data.member("target").mention)
 
       # Create a container in order to simulate the old look and
-      # feel of an embed. I'm hoping there's some improvements to
-      # how this looks and feels on mobile, since it currently looks
-      # like hot garbage. Looks great on the mobile clients though!
+      # feel of an embed. I'm hoping they improve how this looks
+      # on desktop clients with custom colored themes.
       builder.container(color: to_color(data.user)) do |container|
         # Add our main header text here which denotes the type of action we're
         # performing on the target user. Using `###` triple heading makes for
