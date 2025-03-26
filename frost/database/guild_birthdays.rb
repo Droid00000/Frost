@@ -58,7 +58,7 @@ module Frost
     # Search for a specific timezone entry from the DB.
     def self.search(query)
       POSTGRES.transaction do
-        POSTGRES.fetch("SELECT * FROM search_timezones(?);", query).all
+        POSTGRES["SELECT * FROM search_timezones(?);", query].all
       end
     end
 
