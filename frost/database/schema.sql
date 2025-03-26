@@ -167,15 +167,33 @@ CREATE INDEX IF NOT EXISTS guild_premium_idx ON guild_boosters (guild_id);
 
 CREATE INDEX IF NOT EXISTS guild_icon_idx ON booster_settings (guild_icon);
 
+CREATE INDEX IF NOT EXISTS guild_birthdays_idx ON guild_birthdays (guild_id);
+
 CREATE INDEX IF NOT EXISTS guild_booster_ban_idx ON banned_boosters (user_id);
+
+CREATE INDEX IF NOT EXISTS guild_birthday_idx ON birthday_settings (guild_id);
 
 CREATE INDEX IF NOT EXISTS guild_premium_ban_idx ON banned_boosters (guild_id);
 
+CREATE INDEX IF NOT EXISTS guild_birthday_user_idx ON guild_birthdays (user_id);
+
 CREATE UNIQUE INDEX IF NOT EXISTS guilds_events_idx ON event_settings (role_id);
+
+CREATE INDEX IF NOT EXISTS guild_birthday_date_idx ON guild_birthdays (birthday);
+
+CREATE INDEX IF NOT EXISTS guild_birthday_zone_idx ON guild_birthdays (timezone);
+
+CREATE INDEX IF NOT EXISTS guild_birthday_role_idx ON birthday_settings (role_id);
+
+CREATE INDEX IF NOT EXISTS guild_birthdays_status_idx ON guild_birthdays (active);
+
+CREATE INDEX IF NOT EXISTS guild_booster_role_idx ON booster_settings (hoist_role); 
 
 CREATE UNIQUE INDEX IF NOT EXISTS guild_channel_idx ON archiver_settings (guild_id);
 
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
+
+CREATE INDEX IF NOT EXISTS guild_birthday_channel_idx ON birthday_settings (channel_id);
 
 CREATE INDEX IF NOT EXISTS guild_names_idx ON guild_timezones USING GIN (name gin_trgm_ops);
 
