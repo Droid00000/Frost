@@ -24,7 +24,7 @@ module EmojiCommands
     Emojis.menu(event)
   end
 
-  select_menu(custom_id: "emojis") do |event|
+  select_menu(custom_id: "emoji") do |event|
     event.defer_update
     Emojis.add(event)
   end
