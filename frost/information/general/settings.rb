@@ -7,9 +7,8 @@ module General
     # flags so we can use the new interaction components.
     data.edit_response(new_components: true, flags: 64) do |_, builder|
       # Create a container in order to simulate the old look and
-      # feel of an embed. I'm hoping there's some improvements to
-      # how this looks and feels on mobile, since it currently looks
-      # like hot garbage. Looks great on the mobile clients though!
+      # feel of an embed. This looks okay on mobile, but not so
+      # good on desktop.
       builder.container(colour: "#a2bffe") do |container|
         # Add our main menu header here in a seperate text display
         # container in order to get some of that natural padding
@@ -31,7 +30,7 @@ module General
 
         # Add a select menu for the enabled features a server has.
         container.row do |row|
-          row.select_menu(custom_id: "settings", placeholder: "Pick a category...", min_values: 1, disabled: disabled) do |menu|
+          row.select_menu(custom_id: "settings", placeholder: "Pick a category...", min_values: 1, disabled: !disabled) do |menu|
             menu.option(label: "Event Roles", value: "Events", description: "Settings for custom server roles.", emoji: "1281715509750005831")
             menu.option(label: "Birthdays", value: "Birthdays", description: "Settings for server birthdays.", emoji: "733787070123737109")
             menu.option(label: "Boosters", value: "Boosters", description: "Settings for server boosters.", emoji: "1320971944627146752")
@@ -55,9 +54,8 @@ module General
     # flags so we can use the new interaction components.
     data.send_message(new_components: true, flags: 64) do |_, builder|
       # Create a container in order to simulate the old look and
-      # feel of an embed. I'm hoping there's some improvements to
-      # how this looks and feels on mobile, since it currently looks
-      # like hot garbage. Looks great on the mobile clients though!
+      # feel of an embed. This looks okay on mobile, but not so
+      # good on desktop.
       builder.container(colour: "#a2bffe") do |container|
         # Create a section to contain all of our main content, since
         # if we attempt to only wrap our main heading text into a section
@@ -74,9 +72,7 @@ module General
           section.thumbnail(media: data.server.icon_url)
 
           # Add the description text at the botton.
-          section.text_display do |display|
-            display.text = RESPONSE[1]
-          end
+          section.text_display(text: RESPONSE[1])
         end
 
         # Add some spacing between the content of our container
@@ -94,6 +90,61 @@ module General
         # Add our footer text. Eventually this can be swapped out for
         # an action row with buttons for pagination if needed.
         container.text_display(text: format(RESPONSE[5], roles.size, Frost::Roles.count(data)))
+      end
+    end
+  end
+
+  def self.boosters(data)
+    # Return early unless booster perks are enabled in this server.
+    unless Frost::Boosters::Settings.get(data)
+      data.send_message(content: RESPONSE[1])
+      return
+    end
+
+    # Manually enable the `IS_COMPONENTS_V2 (1 << 15)`
+    # flags so we can use the new interaction components.
+    data.send_message(new_components: true, flags: 64) do |_, builder|
+      # Create a container in order to simulate the old look and
+      # feel of an embed. This looks okay on mobile, but not so
+      # good on desktop.
+      builder.container do |container|
+        # Create a section to contain all of our main content, since
+        # if we attempt to only wrap our main heading text into a section
+        # we get some very weird spacing due to the fact that the thumbnail
+        # does not resize the spacing. This is a weird limitation that I hope
+        # gets addressed sometime in the future. For now, this will do though.
+        container.section do |section|
+          # Add our main title heading here.
+          section.text_display do |display|
+            display.text = format(RESPONSE[5], data.server.name)
+          end
+
+          # Add the icon of the server as our thumbnail.
+          section.thumbnail(media: data.server.icon_url)
+
+          # Add the description text at the botton.
+          section.text_display(text: RESPONSE[])
+        end
+
+        # Add some spacing between the section content of our
+        # container and the remaining content we're adding.
+        container.seperator(divider: true, spacing: :small)
+
+        # Add our main role content here. Take the first twenty
+        # roles and join them all together by a newline character.
+        container.text_display(text: Frost::Roles.all(data))
+
+        # Add some spacing between the content of our container
+        # and the footer text that we're adding.
+        container.text_display(text: format(RESPONSE[1], Frost::Boosters::Settings.get(data)))
+
+        # Add the manager information we're now showing 
+        # and tracking. Includes the sanction timestamp.
+        container.text_display(text: format(RESPONSE[1], Frost::Boosters::Settings.info(data)))
+
+        # Add our footer text. Eventually this can be swapped out for
+        # an action row with buttons for pagination if needed.
+        container.text_display(text: format(RESPONSE[1], Frost::Boosters::Settings.icon(data)))
       end
     end
   end
