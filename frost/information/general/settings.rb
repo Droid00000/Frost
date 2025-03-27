@@ -138,7 +138,7 @@ module General
         # and the footer text that we're adding.
         container.text_display(text: format(RESPONSE[1], Frost::Boosters::Settings.get(data)))
 
-        # Add the manager information we're now showing 
+        # Add the manager information we're now showing
         # and tracking. Includes the sanction timestamp.
         container.text_display(text: format(RESPONSE[1], Frost::Boosters::Settings.info(data)))
 

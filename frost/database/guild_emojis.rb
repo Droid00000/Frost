@@ -46,7 +46,7 @@ module Frost
     # Prune un-used emojis from the DB.
     def self.prune
       POSTGRES.transaction do
-        @@pg.where{ balance < 3 }.delete
+        @@pg.where { balance < 3 }.delete
       end
     end
   end

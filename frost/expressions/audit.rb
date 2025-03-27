@@ -6,4 +6,4 @@ end
 
 Rufus::Scheduler.new.cron "0 0 1 * *" do
   Frost::Emojis.prune
-end 
+end
