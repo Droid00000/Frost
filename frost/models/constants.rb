@@ -436,10 +436,6 @@ POSTGRES.pool.connection_validation_timeout = -1
 REGEX = {
   3 => /<(a?):([a-zA-Z0-9_]{1,32}):([0-9]{15,20})>/,
   4 => /(?<=<@|\s|^)\d+(?=>|\s|$)/,
-  5 => /(\d+):(\d+)/,
-  6 => /"type":\s*"(?![AM])[^"]*"/,
-  7 => /"type":\s*"A[^"]*"/,
-  8 => /"type":\s*"(?!A)[M][^"]*"/,
   9 => /(?:aquamarine|beige|black|blue|brown|chocolate|coral|crimson|
        cyan|dark[\s_]?blue|dark[\s_]?cyan|dark[\s_]?gray|dark[\s_]?green|
        dark[\s_]?magenta|dark[\s_]?orange|dark[\s_]?red|deep[\s_]?pink|fuchsia|
