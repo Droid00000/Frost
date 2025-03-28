@@ -54,8 +54,8 @@ module Boosters
 
     Frost::Boosters::Members.add(data, role)
 
-    role.sort_above(Frost::Boosters::Settings.get(data))
+    data.edit_response(content: RESPONSE[1])
 
-    data.edit_response(content: "#{RESPONSE[1]} #{EMOJI[4]}")
+    role.sort_above(Frost::Boosters::Settings.get(data))
   end
 end
