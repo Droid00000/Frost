@@ -7,16 +7,16 @@ module General
     2 => "These are the booster settings for your server. Server boosters can be added, removed, banned, unbanned, and managed with the </booster admin:1354295411258429452> command group.",
     3 => "**About Me**\nI was made by droid00000. My code is open source and can be viewed [here](https://github.com/Droid00000/Frost)!\n\n",
     4 => "**Hoist Role**\nAll newly created roles will be moved above this role: <@&%s>\n\n",
-    4 => "**Manager**\nBooster perks were enabled in this server by **%s** on <t:%s:D>\n\n",
-    5 => "Hi! Welcome to my help page. Use the dropdown menu below to view a category.\n\n",
-    6 => "**Stats**\nI'm on %s servers with a total of %s members and %s channels.",
-    7 => "Server boosters may use any emoji on Discord as their role icon.",
-    8 => "-# Viewing %s out of %s roles",
-    9 => "**Next Chapter:** <t:%s:D>",
-    10 => "### Booster Perks for %s",
-    11 => "### Event Roles for %s",
-    12 => "Invalid timezone.",
-    13 => "### Main Menu"
+    5 => "**Manager**\nBooster perks were enabled in this server by **%s** on <t:%s:D>\n\n",
+    6 => "Hi! Welcome to my help page. Use the dropdown menu below to view a category.\n\n",
+    7 => "**Stats**\nI'm on %s servers with a total of %s members and %s channels.",
+    8 => "Server boosters may use any emoji on Discord as their role icon.",
+    9 => "-# Viewing %s out of %s roles",
+    10 => "**Next Chapter:** <t:%s:D>",
+    11 => "### Booster Perks for %s",
+    12 => "### Event Roles for %s",
+    13 => "Invalid timezone.",
+    14 => "### Main Menu"
   }.freeze
 
   # Application commands for general commands.

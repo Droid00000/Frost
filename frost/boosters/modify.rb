@@ -33,22 +33,17 @@ module Boosters
       return
     end
 
-    if data.options.empty?
-      data.edit_response(content: "#{RESPONSE[2]} #{EMOJI[2]}")
-      return
-    end
-
     payload = {
       role: Frost::Boosters::Members.role(data),
       colour: to_color(data.options["color"]),
       name: data.options["name"],
       icon: to_icon(data),
       reason: REASON[1]
-    }
+    }.compact
 
     payload.delete(:icon) unless valid_icon?(data)
 
-    data.server.update_role(**payload)
+    data.server.update_role(**payload) if payload.size != 2
 
     data.edit_response(content: "#{RESPONSE[2]} #{EMOJI[2]}")
   end

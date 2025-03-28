@@ -29,7 +29,7 @@ module EmojiCommands
     Emojis.add(event)
   end
 
-  message(contains: REGEX[1]) do |event|
+  message(contains: REGEX[2]) do |event|
     Emojis.cache(event)
   end
 

@@ -295,6 +295,16 @@ module Discordrb
   end
 end
 
+module Discordrb
+  # Monkey patches to the color class.
+  class ColourRGB
+    # Get the combined value of this color.
+    def combined
+      @combined.zero? ? 12 : @combined
+    end
+  end
+end
+
 # Monkey patches to the Gateway class.
 module Discordrb
   # Standard Gateway class for DRB.

@@ -5,7 +5,8 @@ module Pins
   def self.audit(data)
     return unless data.channel.pins.count == 50 && Frost::Pins.get(data)
 
-    channel, pin = Frost::Pins.channel(data), data.channel.pins[1]
+    channel = Frost::Pins.channel(data)
+    pin = data.channel.pins[1]
 
     channel.send_embed(pin.link) do |embed|
       embed.colour = pin.author.color
