@@ -331,7 +331,7 @@ module Discordrb
   end
 end
 
-# Monkey patches for string.
+# Monkey patches for integer.
 class Integer
   # Comma delimit numbers.
   def delimit
@@ -349,6 +349,25 @@ class Integer
       "#{self}rd"
     else
       "#{self}th"
+    end
+  end
+end
+
+# Monkey patches for string.
+class String
+  # Pluralize a string.
+  def plural
+    case self
+    when /[bcdfghjklmnpqrtvwxyz]y$/
+      "#{self[0..-2]}ies"
+    when /(s|x|z|ch|sh)$/
+      "#{self}es"
+    when /fe$/
+      "#{self[0..-3]}ves"
+    when /f$/
+      "#{self[0..-2]}ves"
+    else
+      "#{self}s"
     end
   end
 end

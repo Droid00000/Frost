@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Settings
+  # Settings page for boosters.
   def self.boosters(data)
     # Return early unless booster perks are enabled in this server.
     unless Frost::Boosters::Settings.get(data)

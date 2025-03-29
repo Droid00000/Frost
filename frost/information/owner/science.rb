@@ -21,7 +21,7 @@ module Owner
     end
 
     if data.options["dial"] == 4
-      data.show_modal(title: "Eval", custom_id: "|") do |view|
+      data.show_modal(title: "Eval", custom_id: ":") do |view|
         view.row do |ui|
           ui.text_input(
             label: "Code",
@@ -32,7 +32,9 @@ module Owner
       end
     end
 
-    return if data.options["dial"] == 3 || 4
+    stats(data) if data.options["dial"] == 5
+
+    return if data.options["dial"] == 4 || 5
 
     data.edit_response(content: RESPONSE[1])
   end

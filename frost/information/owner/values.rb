@@ -3,14 +3,31 @@
 module Owner
   # Responses and fields for owner commands.
   RESPONSE = {
-    1 => "Success. All emojis have been drained.",
-    2 => "This command is owner only.",
-    3 => "The bot has powered off.",
-    4 => "Success! No content.",
-    5 => "**Error:** ``%s``",
-    6 => "Heads!",
-    7 => "``%s``",
-    8 => "Tails!"
+    1 => "**%s**\nThere have been %s %s in the current lifecycle.\n\n"
+    2 => "Success. All emojis have been drained.",
+    3 => "**Primitive Garbage Collection Stats**",
+    4 => "-# %s total objects since: <t:%s:D>",
+    5 => "This command is owner only.",
+    6 => "The bot has powered off.",
+    7 => "Success! No content.",
+    8 => "**Error:** ``%s``",
+    9 => "Heads!",
+    10 => "``%s``",
+    11 => "Tails!"
+  }.freeze
+
+  # Mapping of object types to exclude.
+  TYPES = {
+    FREE: nil,
+    TOTAL: nil,
+    T_DATA: nil,
+    T_MATCH: nil,
+    T_IMEMO: nil,
+    T_FLOAT: nil,
+    T_BIGNUM: nil,
+    T_ICLASS: nil,
+    T_COMPLEX: nil,
+    T_RATIONAL: nil
   }.freeze
 
   # Application commands for owner commands.
@@ -20,12 +37,7 @@ module Owner
   }.freeze
 
   # Mapping of quotes to escape.
-  QUOTES = {
-    "‘" => "'",
-    "’" => "'",
-    "“" => "'",
-    "”" => "'"
-  }.freeze
+  QUOTES = %w[‘ ’ “ ”].freeze
 
   # Get the owner of the bot.
   def self.owner

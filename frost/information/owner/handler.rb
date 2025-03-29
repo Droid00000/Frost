@@ -4,6 +4,7 @@ require_relative "eval"
 require_relative "values"
 require_relative "flipper"
 require_relative "science"
+require_relative "garbage"
 
 module AdminCommands
   extend Discordrb::EventContainer
