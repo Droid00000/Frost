@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS guild_timezones (
 
 -- Holds info about the pin archiver.
 CREATE TABLE IF NOT EXISTS archiver_settings (
+  manager BIGINT NOT NULL,
+  setup_at BIGINT NOT NULL,
   guild_id BIGINT NOT NULL UNIQUE,
   channel_id BIGINT NOT NULL UNIQUE,
   PRIMARY KEY (channel_id, guild_id)
@@ -171,11 +173,6 @@ CREATE INDEX IF NOT EXISTS guild_booster_ban_idx ON banned_boosters (user_id);
 
 CREATE INDEX IF NOT EXISTS guild_premium_ban_idx ON banned_boosters (guild_id);
 
--- Indexes for the `archiver_settings` table.
-CREATE UNIQUE INDEX IF NOT EXISTS guild_channel_idx ON archiver_settings (guild_id);
-
-CREATE UNIQUE INDEX IF NOT EXISTS guild_store_idx ON archiver_settings (channel_id);
-
 -- Indexes for the `emoji_tracker` table.
 CREATE INDEX IF NOT EXISTS guild_emoji_idx ON emoji_tracker (emoji_id);
 
@@ -204,6 +201,15 @@ CREATE INDEX IF NOT EXISTS guild_birthday_epoch_idx ON birthday_settings (setup_
 CREATE INDEX IF NOT EXISTS guild_birthday_creator_idx ON birthday_settings (manager);
 
 CREATE INDEX IF NOT EXISTS guild_birthday_channel_idx ON birthday_settings (channel_id);
+
+-- Indexes for the `archiver_settings` table.
+CREATE INDEX IF NOT EXISTS guild_pins_epoch_idx ON archiver_settings (setup_at);
+
+CREATE UNIQUE INDEX IF NOT EXISTS guild_pins_idx ON archiver_settings (guild_id);
+
+CREATE INDEX IF NOT EXISTS guild_pins_manager_idx ON archiver_settings (manager);
+
+CREATE UNIQUE INDEX IF NOT EXISTS guild_channel_idx ON archiver_settings (channel_id);
 
 -- Indexes for the `booster_settings` table.
 CREATE INDEX IF NOT EXISTS guild_icon_idx ON booster_settings (any_icon);

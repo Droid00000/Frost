@@ -3,7 +3,6 @@
 require_relative "values"
 require_relative "process"
 require_relative "chapter"
-require_relative "settings"
 require_relative "timezone"
 
 module AdminCommands
@@ -14,16 +13,6 @@ module AdminCommands
       event.defer(ephemeral: false)
       General.chapter(event)
     end
-  end
-
-  select_menu(custom_id: "settings") do |event|
-    event.defer_update
-    General.menu(event)
-  end
-
-  application_command(:info) do |event|
-    event.defer(ephemeral: true)
-    General.info(event)
   end
 
   application_command(:time) do |event|

@@ -9,7 +9,7 @@ module Frost
     # Gets all the setup roles for a guild.
     def self.all(data)
       POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id).select(:role_id).limit(20).map.index(1) { |role, count| "**#{count}.** <@&#{role[:role_id]}>" }
+        @@pg.where(guild_id: data.server.id).select(:role_id).map.index(1) { |role, count| "**#{count}.** <@&#{role[:role_id]}>\n" }
       end
     end
 
