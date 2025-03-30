@@ -32,7 +32,7 @@ module Settings
   # @param bot [Discordrb::Interaction] The interaction.
   # @param view [Sequel::Dataset] The dataset to operate on.
   def manager(bot, view)
-    [bot.bot.user(view[:manager]).name, view[:setup_at]]
+    [bot.bot.user(view[:manager])&.name, view[:setup_at]]
   end
 
   # Resolve the select menu.
