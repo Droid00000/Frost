@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS guild_timezones (
 
 -- Holds info about the pin archiver.
 CREATE TABLE IF NOT EXISTS archiver_settings (
-  manager BIGINT NOT NULL,
+  setup_by BIGINT NOT NULL,
   setup_at BIGINT NOT NULL,
   guild_id BIGINT NOT NULL UNIQUE,
   channel_id BIGINT NOT NULL UNIQUE,
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS archiver_settings (
 
 -- Holds info about booster settings.
 CREATE TABLE IF NOT EXISTS booster_settings (
-  manager BIGINT NOT NULL,
+  setup_by BIGINT NOT NULL,
   setup_at BIGINT NOT NULL,
   any_icon BOOLEAN NOT NULL,
   guild_id BIGINT NOT NULL UNIQUE,
@@ -40,8 +40,8 @@ CREATE TABLE IF NOT EXISTS booster_settings (
 
 -- Holds info about birthday settings.
 CREATE TABLE IF NOT EXISTS birthday_settings (
-  manager BIGINT NOT NULL,
   role_id BIGINT NOT NULL,
+  setup_by BIGINT NOT NULL,
   setup_at BIGINT NOT NULL,
   guild_id BIGINT NOT NULL,
   channel_id BIGINT DEFAULT NULL,
@@ -198,7 +198,7 @@ CREATE INDEX IF NOT EXISTS guild_birthday_role_idx ON birthday_settings (role_id
 
 CREATE INDEX IF NOT EXISTS guild_birthday_epoch_idx ON birthday_settings (setup_at);
 
-CREATE INDEX IF NOT EXISTS guild_birthday_creator_idx ON birthday_settings (manager);
+CREATE INDEX IF NOT EXISTS guild_birthday_creator_idx ON birthday_settings (setup_by);
 
 CREATE INDEX IF NOT EXISTS guild_birthday_channel_idx ON birthday_settings (channel_id);
 
@@ -207,7 +207,7 @@ CREATE INDEX IF NOT EXISTS guild_pins_epoch_idx ON archiver_settings (setup_at);
 
 CREATE UNIQUE INDEX IF NOT EXISTS guild_pins_idx ON archiver_settings (guild_id);
 
-CREATE INDEX IF NOT EXISTS guild_pins_manager_idx ON archiver_settings (manager);
+CREATE INDEX IF NOT EXISTS guild_pins_manager_idx ON archiver_settings (setup_by);
 
 CREATE UNIQUE INDEX IF NOT EXISTS guild_channel_idx ON archiver_settings (channel_id);
 
@@ -216,7 +216,7 @@ CREATE INDEX IF NOT EXISTS guild_icon_idx ON booster_settings (any_icon);
 
 CREATE INDEX IF NOT EXISTS guild_booster_role_idx ON booster_settings (hoist_role);
 
-CREATE INDEX IF NOT EXISTS guild_booster_manager_idx ON booster_settings (manager);
+CREATE INDEX IF NOT EXISTS guild_booster_manager_idx ON booster_settings (setup_by);
 
 CREATE INDEX IF NOT EXISTS guild_booster_creation_idx ON booster_settings (setup_at);
 

@@ -14,20 +14,14 @@ module Birthdays
     end
 
     payload = {
+      setup_by: data.user.id,
+      setup_at: Time.now.to_i,
       guild_id: data.server.id,
       role_id: data.options["role"],
       channel_id: data.options["channel"]
     }.compact
 
-    if Frost::Birthdays::Settings.role(data)
-      Frost::Birthdays::Settings.edit(data, payload)
-      data.edit_response(content: RESPONSE[116])
-      return
-    end
-
-    unless Frost::Birthdays::Settings.role(data)
-      Frost::Birthdays::Settings.setup(payload)
-    end
+    Frost::Birthdays::Settings.setup(payload)
 
     data.edit_response(content: RESPONSE[108])
   end

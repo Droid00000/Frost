@@ -99,6 +99,13 @@ module Frost
         end
       end
 
+      # Get a settings display view.
+      def self.view(data)
+        POSTGRES.transaction do
+          @@pg[:booster_settings].where(guild_id: data.server.id).first
+        end
+      end
+
       # Removes a hoist role for this guild.
       def self.disable(data)
         POSTGRES.transaction do
@@ -148,17 +155,17 @@ module Frost
         end
       end
 
-      # Adds a hoist role and icon setting for this guild.
-      def self.setup(data)
-        POSTGRES.transaction do
-          @@pg[:booster_settings].insert_conflict(target: :guild_id, update: data.except(:guild_id)).insert(**data)
-        end
-      end
-
       # Add a user manually.
       def self.post_user(data)
         POSTGRES.transaction do
           @@pg[:guild_boosters].insert(guild_id: data.server.id, user_id: data.options["member"], role_id: data.options["role"])
+        end
+      end
+
+      # Adds a hoist role and icon setting for this guild.
+      def self.setup(data)
+        POSTGRES.transaction do
+          @@pg[:booster_settings].insert_conflict(target: :guild_id, update: data.except(:guild_id, :setup_at, :setup_by)).insert(**data)
         end
       end
     end

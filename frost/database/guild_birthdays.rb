@@ -6,6 +6,9 @@ module Frost
     # Easy way to access the DB.
     @@pg = POSTGRES[:guild_birthdays]
 
+    # Returns all birthdays.
+    def self.drain = @@pg
+
     # Edit an existing birthday in the DB.
     def self.edit(*data)
       POSTGRES.transaction do
@@ -90,15 +93,17 @@ module Frost
       end
     end
 
-    # Returns all birthdays.
-    def self.drain
-      @@pg
-    end
-
     # Represents a birthday settings DB.
     class Settings
       # Easy way to access the DB.
       @@pg = POSTGRES[:birthday_settings]
+
+      # Insert a new birthday into the DB.
+      def self.setup(data)
+        POSTGRES.transaction do
+          @@pg.insert_conflict(target: :guild_id, update: data.except(:guild_id, :setup_at, :setup_by)).insert(**data)
+        end
+      end
 
       # Removes an instance of a  channel from the DB.
       def self.remove_channel(data)
@@ -113,7 +118,7 @@ module Frost
           @@pg.where(role_id: data.id, guild_id: data.server.id).delete
         end
       end
-
+  
       # Edit an existing birthday in the DB.
       def self.edit(*data)
         POSTGRES.transaction do
@@ -142,17 +147,17 @@ module Frost
         end
       end
 
+      # Get a settings display view.
+      def self.view(data)
+        POSTGRES.transaction do
+          @@pg.where(guild_id: data.server.id).first
+        end
+      end
+
       # Get the role from the DB.
       def self.fetch_role(data)
         POSTGRES.transaction do
           @@pg.where(guild_id: data).get(:role_id)
-        end
-      end
-
-      # Insert a new birthday into the DB.
-      def self.setup(data)
-        POSTGRES.transaction do
-          @@pg.insert(**data)
         end
       end
     end

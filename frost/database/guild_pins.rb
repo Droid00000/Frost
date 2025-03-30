@@ -9,8 +9,7 @@ module Frost
     # Sets up an existing archive channel.
     def self.setup(data)
       POSTGRES.transaction do
-        @@pg.insert_conflict(target: :guild_id, update: { channel_id: data.options["channel"] }).insert(guild_id: data.server.id,
-                                                                                                        channel_id: data.options["channel"])
+        @@pg.insert_conflict(target: :guild_id, update: { channel_id: data.options["channel"] }).insert(guild_id: data.server.id, channel_id: data.options["channel"], setup_at: Time.now.to_i, setup_by: data.user.id)
       end
     end
 
@@ -39,6 +38,13 @@ module Frost
     def self.disable(data)
       POSTGRES.transaction do
         @@pg.where(guild_id: data.server.id).delete
+      end
+    end
+
+    # Get a settings display view.
+    def self.view(data)
+      POSTGRES.transaction do
+        @@pg.where(guild_id: data.server.id).first
       end
     end
   end

@@ -13,13 +13,15 @@ def setup_booster(data)
   end
 
   payload = {
+    setup_by: data.user.id,
+    setup_at: Time.now.to_i,
     guild_id: data.server.id,
     any_icon: data.options["icon"],
     hoist_role: data.options["role"]
-  }
+  }.compact
 
   unless payload.except(:guild_id).empty?
-    Frost::Boosters::Settings.setup(payload.compact)
+    Frost::Boosters::Settings.setup(payload)
   end
 
   data.edit_response(content: RESPONSE[33])

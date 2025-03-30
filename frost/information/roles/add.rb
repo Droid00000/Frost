@@ -8,7 +8,13 @@ module Events
       return
     end
 
-    Frost::Roles.get?(data) ? Frost::Roles.icon(data) : Frost::Roles.add(data)
+    payload = {
+      guild_id: data.server.id,
+      role_id: data.options["role"],
+      any_icon: data.options["icon"]
+    }
+
+    Frost::Roles.add(payload)
 
     data.edit_response(content: format(RESPONSE[24], data.options["role"]))
   end

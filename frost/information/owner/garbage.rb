@@ -29,7 +29,7 @@ module Settings
         # from them. After that we convert back into a hash and map
         # our keys into an array of strings (transformed implicitly).
         count = lambda do |view|
-          view = view.dup.map do |key, value|
+          view = view.map do |key, value|
             view[key] = nil if TYPES[key]
 
             [key.downcase[2..].to_s, value&.delimit]

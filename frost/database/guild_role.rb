@@ -13,17 +13,10 @@ module Frost
       end
     end
 
-    # Modify the icon settings for a role.
-    def self.icon(data)
-      POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id, role_id: data.options["role"]).update(any_icon: data.options["icon"])
-      end
-    end
-
     # Add a new role to the database.
     def self.add(data)
       POSTGRES.transaction do
-        @@pg.insert(guild_id: data.server.id, role_id: data.options["role"], any_icon: data.options["icon"])
+        @@pg.insert_conflict(target: :guild_id, update: payload[:any_icon]).insert(**payload)
       end
     end
 
