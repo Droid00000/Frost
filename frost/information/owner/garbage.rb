@@ -30,7 +30,7 @@ module Settings
         # our keys into an array of strings (transformed implicitly).
         count = lambda do |view|
           view = view.dup.map do |key, value|
-            view[key] = nil if TYPES.key?(key)
+            view[key] = nil if TYPES[key]
 
             [key.downcase[2..].to_s, value&.delimit]
           end

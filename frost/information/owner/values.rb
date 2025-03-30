@@ -18,16 +18,16 @@ module Owner
 
   # Mapping of object types to exclude.
   TYPES = {
-    FREE: nil,
-    TOTAL: nil,
-    T_DATA: nil,
-    T_MATCH: nil,
-    T_IMEMO: nil,
-    T_FLOAT: nil,
-    T_BIGNUM: nil,
-    T_ICLASS: nil,
-    T_COMPLEX: nil,
-    T_RATIONAL: nil
+    FREE: 1,
+    TOTAL: 2,
+    T_DATA: 3,
+    T_MATCH: 4,
+    T_IMEMO: 5,
+    T_FLOAT: 6,
+    T_BIGNUM: 7,
+    T_ICLASS: 8,
+    T_COMPLEX: 9,
+    T_RATIONAL: 10
   }.freeze
 
   # Application commands for owner commands.
