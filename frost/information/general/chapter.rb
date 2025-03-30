@@ -11,7 +11,7 @@ module General
 end
 
 # Cron job to update the release channel.
-Rufus::Scheduler.new.cron "59 11 * * *" do
+Rufus::Scheduler.new.cron "30 12 * * *" do
   options = Selenium::WebDriver::Firefox::Options.new
   options.add_argument("--headless")
   driver = Selenium::WebDriver.for :firefox, options: options
