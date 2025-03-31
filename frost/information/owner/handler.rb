@@ -5,6 +5,7 @@ require_relative "values"
 require_relative "flipper"
 require_relative "science"
 require_relative "garbage"
+require_relative "logging"
 
 module AdminCommands
   extend Discordrb::EventContainer
@@ -21,5 +22,9 @@ module AdminCommands
 
   modal_submit(user: owner) do |event|
     Owner.experiment(event)
+  end
+
+  ready(resumed: false) do |event|
+    Owner.logs(event)
   end
 end
