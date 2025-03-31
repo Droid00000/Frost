@@ -118,7 +118,7 @@ module Frost
           @@pg.where(role_id: data.id, guild_id: data.server.id).delete
         end
       end
-  
+
       # Edit an existing birthday in the DB.
       def self.edit(*data)
         POSTGRES.transaction do
