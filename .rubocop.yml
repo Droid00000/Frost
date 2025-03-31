@@ -1,7 +1,7 @@
 # Ensure we're using the most up-to-date version of Ruby.
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.3
+  TargetRubyVersion: 3.4
 
 # Double quotes are preferable for me.
 Style/StringLiterals:
