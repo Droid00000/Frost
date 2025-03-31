@@ -5,7 +5,7 @@ require_relative "modify"
 require_relative "create"
 require_relative "delete"
 
-module BoosterPerks
+module BoosterCommands
   extend Discordrb::EventContainer
 
   application_command(:booster).group(:role) do |group|

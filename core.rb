@@ -22,9 +22,9 @@ Dir["frost/**/handler.rb"].each { |file| require file }
 at_exit { @bot.stop }
 
 @bot.include! PinArchiver
-@bot.include! BoosterPerks
 @bot.include! EmojiCommands
 @bot.include! AdminCommands
+@bot.include! BoosterCommands
 @bot.include! BirthdayCommands
 @bot.include! AffectionCommands
 @bot.include! ModerationCommands
