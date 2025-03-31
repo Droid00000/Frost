@@ -28,6 +28,17 @@ module Birthdays
     data.options.except("timezone").empty? ? false : change_date(data).nil?
   end
 
+  # Change a birthday given to us.
+  def self.change(data)
+    date = change_date(data)
+
+    timezone = timezone(data)
+
+    return date.iso861 unless timezone
+
+    TZInfo::Timezone.get(timezone).to_local(date).utc.iso8601
+  end
+
   # Get a timezone without any validation.
   def self.zone(zone)
     TZInfo::Timezone.get(zone)&.now
@@ -48,12 +59,18 @@ module Birthdays
   def self.change_date(data)
     old = Frost::Birthdays.fetch(data)
 
-    month = data.options["month"] || old.month
+    if data.options.except("timezone").empty?
+      return old.utc
+    end
 
     day = data.options["day"] || old.month
 
+    month = data.options["month"] || old.month
+
+    info = [old.hour, old.minute, old.second, old.zone]
+
     begin
-      Date.new(old.year, month, day).iso8601
+      Date.new(old.year, month, day, *info).utc
     rescue StandardError
       nil
     end
@@ -61,7 +78,7 @@ module Birthdays
 
   # Get a timezone including error handling.
   def self.timezone(data)
-    return nil unless data.options["timezone"]
+    return nil unless data && data.options["timezone"]
 
     zones = TZInfo::Timezone.all.map(&:identifier)
 

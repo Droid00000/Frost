@@ -28,10 +28,7 @@ module Birthdays
       return
     end
 
-    payload = {
-      timezone: Birthdays.timezone(data),
-      birthday: Birthdays.change_date(data)
-    }.compact
+    payload = { birthday: Birthdays.change(data) }
 
     Frost::Birthdays.edit(data, payload)
 
