@@ -26,9 +26,8 @@ module Birthdays
     payload = {
       active: false,
       user_id: data.user.id,
-      guild_id: data.server.id,
-      birthday: Birthdays.date(data),
-      timezone: Birthdays.timezone(data)
+      birthday: Birthdays.date(data).iso8601,
+      guild_ids: Sequel.pg_array([data.server.id])
     }
 
     Frost::Birthdays.add(**payload)

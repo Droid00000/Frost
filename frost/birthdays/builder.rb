@@ -49,10 +49,19 @@ module Birthdays
     data = data.options.except("timezone").values
 
     begin
-      Date.parse(data.join("/")).iso8601
+      Date.parse(data.join("/"))
     rescue StandardError
       nil
     end
+  end
+
+  # Create a date from the time given to us.
+  def self.build_date(data)
+    timezone = TZInfo::Timezone.get(timezone(data))
+
+    date = data.options.except("timezone").values.reverse
+
+    timezone.local_to_utc(Time.now.year, *date, *([0] * 3))
   end
 
   # Modify an existing date given to us.

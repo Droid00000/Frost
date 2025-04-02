@@ -16,14 +16,11 @@ module Birthdays
     member = Frost::Birthdays.user(data)
 
     payload = {
-      active: false,
       user_id: data.user.id,
-      guild_id: data.server.id,
-      timezone: member[:timezone],
-      birthday: member[:birthday].iso8601
+      guild_id: data.server.id
     }
 
-    Frost::Birthdays.add(**payload)
+    Frost::Birthdays.sync(**payload)
 
     data.edit_response(content: RESPONSE[117])
   end

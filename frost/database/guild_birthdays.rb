@@ -9,52 +9,17 @@ module Frost
     # Returns all birthdays.
     def self.drain = @@pg
 
-    # Edit an existing birthday in the DB.
-    def self.edit(*data)
+    # Delete all the birthdays for this server.
+    def self.prune(data)
       POSTGRES.transaction do
-        @@pg.where(guild_id: data[0].server.id, user_id: data[0].user.id).update(**data[1])
+        @@pg.where{ guild_ids @> data.server.id }.update(guild_ids: Sequel.function(:array_remove, :guild_ids, data.server.id))
       end
     end
 
-    # Fetch a user from the DB.
-    def self.fetch(data)
+    # Add this server to a memeber.
+    def self.sync(data)
       POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id, user_id: data.user.id).get(:birthday)
-      end
-    end
-
-    # Check if a user exists in the DB.
-    def self.user?(data)
-      POSTGRES.transaction do
-        !@@pg.where(guild_id: data.server.id, user_id: data.user.id).empty?
-      end
-    end
-
-    # Delete the birthday of a user.
-    def self.delete(data)
-      POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id, user_id: data.user.id).delete
-      end
-    end
-
-    # Mark a member as having a birthday role.
-    def self.mark(*data)
-      POSTGRES.transaction do
-        @@pg.where(guild_id: data[0], user_id: data[1]).update(active: true)
-      end
-    end
-
-    # Unmark a member from having the birthday role.
-    def self.unmark(*data)
-      POSTGRES.transaction do
-        @@pg.where(guild_id: data[0], user_id: data[1]).update(active: false)
-      end
-    end
-
-    # Get a user from the DB.
-    def self.user(data)
-      POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id, user_id: data.user.id).first
+        @@pg.where(user_id: data.user.id).update(guild_ids: Sequel.function(:array_append, :guild_ids, data.server.id))
       end
     end
 
@@ -65,17 +30,52 @@ module Frost
       end
     end
 
-    # Delete all the birthdays for this server.
-    def self.prune(data)
+    # Edit an existing birthday in the DB.
+    def self.edit(*data)
       POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id).delete
+        @@pg.where(user_id: data[0].user.id).update(**data[1])
       end
     end
 
-    # Check birthdays for this timezone.
-    def self.zone(zone)
+    # Unmark a member from having the birthday role.
+    def self.unmark(*data)
       POSTGRES.transaction do
-        !@@pg.where(timezone: zone).empty?
+        @@pg.where(user_id: data[1]).update(active: false)
+      end
+    end
+
+    # Mark a member as having a birthday role.
+    def self.mark(*data)
+      POSTGRES.transaction do
+        @@pg.where(user_id: data[1]).update(active: true)
+      end
+    end
+
+    # Fetch a user from the DB.
+    def self.fetch(data)
+      POSTGRES.transaction do
+        @@pg.where(user_id: data.user.id).get(:birthday)
+      end
+    end
+
+    # Check if a user exists in the DB.
+    def self.user?(data)
+      POSTGRES.transaction do
+        !@@pg.where(user_id: data.user.id).empty?
+      end
+    end
+
+    # Delete the birthday of a user.
+    def self.delete(data)
+      POSTGRES.transaction do
+        @@pg.where(user_id: data.user.id).delete
+      end
+    end
+
+    # Get a user from the DB.
+    def self.user(data)
+      POSTGRES.transaction do
+        @@pg.where(user_id: data.user.id).first
       end
     end
 

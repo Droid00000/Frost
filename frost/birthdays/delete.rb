@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Birthdays
-  # setup and add your birthday.
+  # Delete your birthday.
   def self.delete(data)
     unless Frost::Birthdays.user?(data)
       data.edit_response(content: RESPONSE[103])
