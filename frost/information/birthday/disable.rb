@@ -8,11 +8,9 @@ module Birthdays
       return
     end
 
+    Frost::Birthdays.prune(data)
+    
     Frost::Birthdays::Settings.disable(data)
-
-    if data.options["prune"]
-      Frost::Birthdays.prune(data)
-    end
 
     data.edit_response(content: RESPONSE[109])
   end

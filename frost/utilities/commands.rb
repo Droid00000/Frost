@@ -183,9 +183,7 @@ bot.register_application_command(:birthday, "birthday roles", contexts: [0], int
       option.channel("channel", "Which channel should birthday announcements be sent to?", types: [:text], required: false)
     end
 
-    group.subcommand("disable", "Disable the birthday roles functionality.") do |option|
-      option.boolean("prune", "Should all birthdays be removed from the database?", required: true)
-    end
+    group.subcommand("disable", "Disable the birthday roles functionality.")
   end
 end
 
