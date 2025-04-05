@@ -13,14 +13,7 @@ module Birthdays
       return
     end
 
-    member = Frost::Birthdays.user(data)
-
-    payload = {
-      user_id: data.user.id,
-      guild_id: data.server.id
-    }
-
-    Frost::Birthdays.sync(**payload)
+    Frost::Birthdays.sync(data)
 
     data.edit_response(content: RESPONSE[117])
   end
