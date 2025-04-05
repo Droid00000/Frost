@@ -32,9 +32,7 @@ module Owner
       end
     end
 
-    stats(data) if data.options["dial"] == 5
-
-    return if data.options["dial"] == 4 || 5
+    return if data.options["dial"] == 4
 
     data.edit_response(content: RESPONSE[1])
   end

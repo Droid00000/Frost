@@ -9,7 +9,7 @@ module Birthdays
     end
 
     Frost::Birthdays.prune(data)
-    
+
     Frost::Birthdays::Settings.disable(data)
 
     data.edit_response(content: RESPONSE[109])

@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS reminders (
   one_time BOOLEAN NOT NULL,
   identifier BIGINT NOT NULL,
   recurrence INTERVAL NOT NULL,
-  deliver_at TIMESTAMP NOT NULL,
+  deliver_at TIMESTAMPTZ NOT NULL,
   PRIMARY KEY (user_id, identifier)
 );
 
