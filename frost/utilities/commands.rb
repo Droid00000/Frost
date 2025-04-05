@@ -84,15 +84,6 @@ bot.register_application_command(:change, "Moderation Commands", contexts: [0], 
   end
 end
 
-# @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
-bot.register_application_command(:gatekeeper, "Moderation Commands", contexts: [0], integration_types: [0], name_localizations: { "hi" => "द्वारपाल" }, description_localizations: { "hi" => "मॉडरेशन आदेश" }, default_member_permissions: "32") do |command|
-  command.subcommand("disable", "Allow new members to join this server.", name_localizations: { "hi" => "अपंग" }, description_localizations: { "hi" => "नये सदस्यों को इस सर्वर से जुड़ने की अनुमति दें" })
-
-  command.subcommand("enable", "Prevent new members from joining this server.", name_localizations: { "hi" => "सक्षम" }, description_localizations: { "hi" => "नये सदस्यों को इस सर्वर से जुड़ने से रोकें" }) do |option|
-    option.string("duration", "When should invites be enabled again? ", required: false, min_length: 1, max_length: 10, name_localizations: { "hi" => "अवधि" }, description_localizations: { "hi" => "आमंत्रण सुविधा को पुनः कब सक्षम किया जाना चाहिए" })
-  end
-end
-
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:next, "Manga Chapter!", server_id: ENV.fetch("GUILD"), contexts: [0], integration_types: [0], name_localizations: { "hi" => "अगला" }, description_localizations: { "hi" => "मंगा अध्याय" }) do |command|
   command.subcommand_group(:chapter, "Comics!", name_localizations: { "hi" => "प्रकरण" }, description_localizations: { "hi" => "कॉमिक्स" }) do |group|
