@@ -61,7 +61,7 @@ module Birthdays
 
     date = data.options.except("timezone").values.reverse
 
-    timezone.local_to_utc(Time.now.year, *date, *([0] * 3))
+    timezone.local_to_utc(Time.now.year, *date, 0, 0, 0)
   end
 
   # Modify an existing date given to us.
