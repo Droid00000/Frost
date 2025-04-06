@@ -1,0 +1,15 @@
+# Discord related credentials.
+Discord:
+  OWNER: "YOUR_ID_HERE"
+  TOKEN: "Bot TOKEN_HERE"
+  CONTRIBUTORS: []
+
+# Information about a manga chapter.
+Chapter:
+  LINK: ""
+  CHANNEL: ""
+  ELEMENT: ""
+
+# Database related credentials.
+Postgres:
+  URL: "postgres://URI_HERE"
