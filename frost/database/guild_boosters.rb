@@ -58,6 +58,13 @@ module Frost
       # Easy way to access the DB.
       @@pg = POSTGRES[:banned_boosters]
 
+      # Deletes all members from the database.
+      def self.cascade(data)
+        POSTGRES.transaction do
+          @@pg.where(guild_id: data.server.id).delete
+        end
+      end
+  
       # Checks if a user is in the DB.
       def self.user?(data)
         POSTGRES.transaction do
@@ -93,7 +100,7 @@ module Frost
       @@pg = POSTGRES
 
       # Deletes all members from the database.
-      def self.delete_all(data)
+      def self.cascade(data)
         POSTGRES.transaction do
           @@pg[:guild_boosters].where(guild_id: data.server.id).delete
         end

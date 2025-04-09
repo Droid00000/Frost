@@ -5,12 +5,12 @@ def disable_booster(data)
     data.edit_response(content: RESPONSE[18])
     return
   end
-
-  if data.options["prune"]
-    Frost::Boosters::Settings.delete_all(data)
-  end
+  
+  Frost::Boosters::Bans.cascade(data)
 
   Frost::Boosters::Settings.disable(data)
+
+  Frost::Boosters::Settings.cascase(data)
 
   data.edit_response(content: RESPONSE[35])
 end
