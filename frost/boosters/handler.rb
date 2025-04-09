@@ -2,6 +2,7 @@
 
 require_relative "audit"
 require_relative "modify"
+require_relative "colors"
 require_relative "create"
 require_relative "delete"
 
@@ -12,6 +13,11 @@ module BoosterCommands
     group.subcommand(:claim) do |event|
       event.defer(ephemeral: false)
       Boosters.create(event)
+    end
+
+    group.subcommand(:gradient) do |event|
+      event.defer(ephemeral: false)
+      Boosters.colors(event)
     end
 
     group.subcommand(:delete) do |event|

@@ -193,6 +193,12 @@ bot.register_application_command(:booster, "Booster perks", contexts: [0], integ
       option.string("icon", "Provide an emoji for your role icon.", required: false)
     end
 
+    group.subcommand("gradient", "Edit the gradient of your custom booster role.") do |option|
+      option.string("first", "Provide a HEX color for your primary color.", required: false, min_length: 3, max_length: 16)
+      option.string("second", "Provide a HEX color for your secondary color.", required: false, min_length: 3, max_length: 16)
+      option.string("third", "Provide a HEX color for your ternary color.", required: false, min_length: 3, max_length: 16)
+    end
+
     group.subcommand("delete", "Delete your custom booster role.")
   end
 
