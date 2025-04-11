@@ -21,6 +21,11 @@ module AdminCommands
       disable_booster(event)
     end
 
+    group.subcommand("enable") do |event|
+      event.defer(ephemeral: true)
+      setup_booster(event)
+    end
+
     group.subcommand("delete") do |event|
       event.defer(ephemeral: true)
       delete_booster(event)
@@ -29,11 +34,6 @@ module AdminCommands
     group.subcommand("unban") do |event|
       event.defer(ephemeral: true)
       unban_booster(event)
-    end
-
-    group.subcommand("setup") do |event|
-      event.defer(ephemeral: true)
-      setup_booster(event)
     end
 
     group.subcommand("help") do |event|

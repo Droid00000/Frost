@@ -94,7 +94,7 @@ end
 # @!function [Pin Operations] Belongs to a module that manages pins in a channel.
 bot.register_application_command(:pin, "Pin archive", default_member_permissions: "16", contexts: [0], integration_types: [0], name_localizations: { "hi" => "पिन" }, description_localizations: { "hi" => "की पुरातत्" }) do |command|
   command.subcommand_group(:archiver, "Pin Archival!", name_localizations: { "hi" => "संग्रहकर्ता" }, description_localizations: { "hi" => "की पुरातत्व" }) do |group|
-    group.subcommand(:setup, "Setup the pin archiver functionality.", name_localizations: { "hi" => "बंदोबस्त" }, description_localizations: { "hi" => "पिन की पुरातत्व की कंडीशन" }) do |option|
+    group.subcommand(:enable, "Enable the pin archiver functionality.", name_localizations: { "hi" => "बंदोबस्त" }, description_localizations: { "hi" => "पिन की पुरातत्व की कंडीशन" }) do |option|
       option.channel("channel", "Which channel should archived pins be sent to?", required: true, types: [:text], name_localizations: { "hi" => "प्रवाह" }, description_localizations: { "hi" => "किधर पुरातात्विक पिंस जाने चाहिए" })
     end
 
@@ -133,12 +133,12 @@ bot.register_application_command(:event, "Event roles", contexts: [0], integrati
       option.string("icon", "Provide an emoji for your role icon.", required: false, name_localizations: { "hi" => "आइकन" }, description_localizations: { "hi" => "अपने रोल आइकन के रूप में एक इमोजी दें" })
     end
 
-    group.subcommand(:add, "Setup the event roles functionality.", name_localizations: { "hi" => "व्यवस्था" }, description_localizations: { "hi" => "इवेंट रोल्स कार्यक्षमता सेटअप करें" }) do |option|
+    group.subcommand(:add, "Enable the event roles functionality for a role.", name_localizations: { "hi" => "व्यवस्था" }, description_localizations: { "hi" => "इवेंट रोल्स कार्यक्षमता सेटअप करें" }) do |option|
       option.role("role", "Which role should be modifiable by its users?", required: true, name_localizations: { "hi" => "रोल" }, description_localizations: { "hi" => "कौन सा रोल उपयोगकर्ताओं द्वारा संपादित किया जा सकता है" })
       option.boolean("icon", "Should external emojis be allowed as role icons?", required: true, name_localizations: { "hi" => "आइकन" }, description_localizations: { "hi" => "क्या बाह्य इमोजी को भूमिका चिह्न के रूप में अनुमति दी जानी चाहिए" })
     end
 
-    group.subcommand(:remove, "Remove event roles functionality from a role.", name_localizations: { "hi" => "निकालना" }, description_localizations: { "hi" => "किसी भूमिका से ईवेंट भूमिका कार्यक्षमता हटाएँ" }) do |option|
+    group.subcommand(:remove, "Remove the event roles functionality from a role.", name_localizations: { "hi" => "निकालना" }, description_localizations: { "hi" => "किसी भूमिका से ईवेंट भूमिका कार्यक्षमता हटाएँ" }) do |option|
       option.role("role", "Which role needs to be removed?", required: true, name_localizations: { "hi" => "रोल" }, description_localizations: { "hi" => "किस भूमिका को हटाने की जरूरत है" })
     end
 
@@ -169,7 +169,7 @@ bot.register_application_command(:birthday, "birthday roles", contexts: [0], int
   command.subcommand("delete", "Remove your date of birth from the bot.")
 
   command.subcommand_group(:admin, "Birthday admin!") do |group|
-    group.subcommand("setup", "Setup the birthday roles functionality.") do |option|
+    group.subcommand("enable", "Enable the birthday roles functionality.") do |option|
       option.role("role", "Which role should members be given on their birthday?", required: false)
       option.channel("channel", "Which channel should birthday announcements be sent to?", types: [:text], required: false)
     end
@@ -225,7 +225,7 @@ bot.register_application_command(:booster, "Booster perks", contexts: [0], integ
       option.boolean("prune", "If all roles should be removed from the database.", required: true)
     end
 
-    group.subcommand("setup", "Setup the booster perks functionality.") do |option|
+    group.subcommand("enable", "Enable the booster perks functionality.") do |option|
       option.role("role", "Which role should all custom booster roles be placed above?", required: false)
       option.boolean("icon", "Should external emojis be allowed as role icons?", required: false)
     end

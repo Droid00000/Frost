@@ -73,7 +73,7 @@ REASON = {
 TZInfo::DataSource.set(:zoneinfo)
 
 # The YAML configuration file used by the bot.
-CONFIG = YAML.load_file("#{$LOAD_PATH.first}/config.yml", symbolize_names: true)
+CONFIG = YAML.load_file("#{$LOAD_PATH[0]}/config.yml", symbolize_names: true)
 
 # The Postgres database instance used by the bot.
 POSTGRES = Sequel.connect(CONFIG[:Postgres][:URL], extensions: :connection_validator)
