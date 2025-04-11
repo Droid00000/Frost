@@ -5,7 +5,7 @@ def disable_booster(data)
     data.edit_response(content: RESPONSE[18])
     return
   end
-  
+
   Frost::Boosters::Bans.cascade(data)
 
   Frost::Boosters::Settings.disable(data)

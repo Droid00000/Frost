@@ -64,7 +64,7 @@ module Frost
           @@pg.where(guild_id: data.server.id).delete
         end
       end
-  
+
       # Checks if a user is in the DB.
       def self.user?(data)
         POSTGRES.transaction do
