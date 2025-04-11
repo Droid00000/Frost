@@ -35,12 +35,20 @@ module Discordrb
     # @param colour [Integer, ColourRGB, #combined] The roles colour.
     # @param icon [String, #read] A role icon for this role.
     # @param reason [String] The reason for updating this role.
-    def update_role(role:, name: nil, colour: nil, icon: nil, reason: nil)
+    def update_role(role:, name: nil, colour: nil, icon: nil, primary: nil, secondary: nil, terneray: nil, reason: nil)
       return nil if self.role(role).nil?
 
       colour = colour.combined if colour.respond_to?(:combined)
 
-      API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason)
+      colors = if primary || secondary || ternerary
+                 self.role(role).colors.to_h.merge({
+                   primary: primary,
+                   secondary: secondary,
+                   terneray: terneray
+                 }.compact)
+               end
+
+      API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason, colors)
     rescue StandardError
       API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, nil, reason)
     end
@@ -108,7 +116,7 @@ module Discordrb
         true
       end
 
-      API::Channel.bulk_delete_messages(@bot.token, @id, ids, reason) unless ids.empty?
+      API::Channel.bulk_delete_messages(@bot.token, @id, ids, reason) if ids >= 2
       ids.size
     end
   end
@@ -153,9 +161,9 @@ module Discordrb
     def mentions?(mention)
       mentions = (@role_mentions + @user_mentions)
 
-      mentions.push(@server) if @mention_everyone
+      mentions << @server if @mention_everyone
 
-      mentions.map(&:id).include?(mention.to_i)
+      mentions.map(&:resolve_id).any?(mention.resolve_id)
     end
 
     def poll?
@@ -254,8 +262,8 @@ module Discordrb
       # connecting to voice, speaking and voice activity (push-to-talk isn't mandatory)
       # https://discord.com/developers/docs/resources/guild#batch-modify-guild-role
       # @param icon [:undef, File]
-      def update_role(token, server_id, role_id, name, colour, _hoist, _mentionable, _packed_permissions, icon = :undef, reason = nil, emoji: nil)
-        if !icon.is_a?(String) && icon
+      def update_role(token, server_id, role_id, name, colour, _hoist, _mentionable, _packed_permissions, icon = :undef, reason = nil, colors = nil, emoji: nil)
+        if !icon.is_a?(String) && icon != :undef && icon
           path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
 
           mime = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || "image/jpeg"
@@ -271,7 +279,7 @@ module Discordrb
           server_id,
           :patch,
           "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{role_id}",
-          { color: colour, name: name, icon: icon, unicode_emoji: emoji }.compact.to_json,
+          { color: colour, name: name, icon: icon, unicode_emoji: emoji, colors: colors }.compact.to_json,
           Authorization: token,
           content_type: :json,
           "X-Audit-Log-Reason": reason
@@ -353,31 +361,10 @@ class Integer
   end
 end
 
-# Monkey patches for string.
-class String
-  # Pluralize a string.
-  def plural
-    case self
-    when /[bcdfghjklmnpqrtvwxyz]y$/
-      "#{self[0..-2]}ies"
-    when /(s|x|z|ch|sh)$/
-      "#{self}es"
-    when /fe$/
-      "#{self[0..-3]}ves"
-    when /f$/
-      "#{self[0..-2]}ves"
-    else
-      "#{self}s"
-    end
-  end
-end
-
 # Monkey patches to the hash.
 class Hash
   # Get a given key from a hash.
   def get(data)
-    return nil unless data
-
-    self[(data.gsub(/([a-z0-9])([A-Z])/, '\1_\2')&.downcase&.to_sym)]
+    self[(data.gsub(/([a-z0-9])([A-Z])/, '\1_\2')&.downcase&.to_sym)] unless data
   end
 end

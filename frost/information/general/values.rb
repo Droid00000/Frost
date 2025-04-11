@@ -4,7 +4,7 @@ module General
   # Responses and fields for general commands.
   RESPONSE = {
     1 => "**Next Chapter:** <t:%s:D>",
-    2 => "Invalid timezone.",
+    2 => "Invalid timezone."
   }.freeze
 
   # Application commands for general commands.

@@ -19,8 +19,16 @@ module Pins
 
     # Return unless we have a channel to send
     # the pinned messages to.
-    unless channel.is_a?(Discordrb::Channel)
+    if channel.nil?
       data.edit_response(content: RESPONSE[6])
+      return
+    end
+
+    # Check if we have permission to manage messages in the
+    # channel we're logging pins to. If we don't, we can simply
+    # just return early here.
+    unless data.server.bot.permission?(:manage_messages, channel)
+      data.edit_response(content: RESPONSE[1])
       return
     end
 

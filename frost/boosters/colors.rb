@@ -42,6 +42,6 @@ module Boosters
 
     data.edit_response(content: RESPONSE[2])
 
-    data.server.update_role_colors(**payload) if payload.size != 2
+    data.server.update_role(**payload) if payload.size != 2
   end
 end

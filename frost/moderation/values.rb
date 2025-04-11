@@ -7,7 +7,7 @@ module Moderation
     2 => "This user is too powerful for you to modify.",
     3 => "This user is too powerful for me to modify.",
     4 => "Successfully updated <@%s> nickname.",
-    5 => "Successfully deleted %s message.",
+    5 => "Successfully deleted %s message."
   }.freeze
 
   # Application commands for moderation.

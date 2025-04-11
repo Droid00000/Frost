@@ -9,7 +9,7 @@ module Settings
       # Create a container in order to simulate the old look and
       # feel of an embed. This looks okay on mobile, but not so
       # good on desktop. I they make containers blend with themes.
-      builder.container(colour: 10665982) do |container|
+      builder.container(colour: 10_665_982) do |container|
         # Add our main menu header here in a seperate text display
         # container in order to get some of that natural padding
         # that's tricky to stimulate with the other types of seperators.
