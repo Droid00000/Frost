@@ -35,7 +35,7 @@ module Discordrb
     # @param colour [Integer, ColourRGB, #combined] The roles colour.
     # @param icon [String, #read] A role icon for this role.
     # @param reason [String] The reason for updating this role.
-    def update_role(role:, name:, colour:, icon:, reason:)
+    def update_role(role:, name: nil, colour: nil, icon: nil, reason: nil)
       return nil if self.role(role).nil?
 
       colour = colour.combined if colour.respond_to?(:combined)
