@@ -61,7 +61,7 @@ module Boosters
     data.edit_response(content: RESPONSE[2])
 
     # Remove the icon if it isn't valid.
-    payload.delete(:icon) unless valid_icon?(data)
+    payload.delete(:icon) unless valid_icon?(data, guild)
 
     # Make the actual request to update the role here.
     data.server.update_role(**payload) if payload.size > 2
