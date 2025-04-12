@@ -12,7 +12,7 @@ require "selenium-webdriver"
 require "frost/utilities/mappings"
 require "frost/utilities/extensions"
 
-Dir["frost/database/*.rb"].each { |file| require file }
+Dir["frost/**/storage.rb"].each { |file| require file }
 
 Dir["frost/**/handler.rb"].each { |file| require file }
 
