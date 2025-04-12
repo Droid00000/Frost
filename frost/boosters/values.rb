@@ -17,9 +17,10 @@ module Boosters
 
   # Application commands for boosters.
   COMMANDS = {
+    1 => "`/booster role gradient`",
     2 => "`/booster role delete`",
-    1 => "`/booster role claim`",
-    3 => "`/booster role edit`"
+    3 => "`/booster role claim`",
+    4 => "`/booster role edit`"
   }.freeze
 
   # Returns true if a string doesn't contain any bad words.
@@ -42,10 +43,8 @@ module Boosters
 
   # Check if we have a valid role icon.
   # @return [Boolean] If the icon is valid.
-  def self.valid_icon?(data)
-    return true if Frost::Boosters.settings.any_icon?(data)
-
-    return true if [NilClass, String].include?(to_icon(data).class)
+  def self.valid_icon?(data, guild)
+    return true if [NilClass, String].any?(to_icon(data).class) || guild.any_icon?
 
     data.emoji("icon").server && data.emoji("icon").server.id == data.server.id
   end
