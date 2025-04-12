@@ -80,17 +80,6 @@ CREATE TABLE IF NOT EXISTS emoji_tracker (
   PRIMARY KEY (emoji_id, guild_id)
 );
 
--- Holds info about the reminders.
-CREATE TABLE IF NOT EXISTS reminders (
-  content TEXT NOT NULL,
-  user_id BIGINT NOT NULL,
-  one_time BOOLEAN NOT NULL,
-  identifier BIGINT NOT NULL,
-  recurrence INTERVAL NOT NULL,
-  deliver_at TIMESTAMPTZ NOT NULL,
-  PRIMARY KEY (user_id, identifier)
-);
-
 -- Function for searching for a timezone.
 CREATE OR REPLACE FUNCTION search_timezones (query text)
     RETURNS SETOF guild_timezones
