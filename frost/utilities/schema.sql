@@ -87,7 +87,7 @@ CREATE OR REPLACE FUNCTION search_timezones (query text)
 BEGIN
     RETURN query WITH tokens AS (
         SELECT
-            unnest(string_to_array(query, ' ')) AS t
+            unnest(string_to_array(unaccent(query), ' ')) AS t
 )
     SELECT
         NAME,
@@ -147,6 +147,7 @@ BEGIN
             END) DESC
     LIMIT 25;
 END;
+$$ LANGUAGE PLPGSQL;
 
 -- Function for managing the balance of an emoji.
 CREATE OR REPLACE FUNCTION balance_manager() RETURNS TRIGGER AS $$

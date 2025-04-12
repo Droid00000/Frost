@@ -19,9 +19,9 @@ Simply do: `bundle install`.
 You'll need to be using PostgreSQL 14 or higher. Type the following into the PostgreSQL manager:
 
 ```sql
-CREATE ROLE frost WITH LOGIN PASSWORD 'yourpasswordhere';
-CREATE DATABASE frigid OWNER frost;
-CREATE EXTENSION pg_trgm;
+CREATE ROLE frost WITH LOGIN PASSWORD 'yourpasswordhere'; CREATE DATABASE frigid OWNER frost;
+
+CREATE EXTENSION IF NOT EXISTS unaccent; CREATE EXTENSION IF NOT EXISTS pg_trgm;
 ```
 
 4. **Fill in configuration variables**
