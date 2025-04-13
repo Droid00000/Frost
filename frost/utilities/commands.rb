@@ -2,7 +2,7 @@
 
 require "discordrb"
 
-return unless __FILE__ = $0
+return unless ENV.fetch("TOKEN", nil)
 
 bot = Discordrb::Bot.new(token: ENV.fetch("TOKEN"), intents: :none)
 
