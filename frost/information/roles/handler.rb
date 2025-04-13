@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "add"
-require_relative "edit"
-require_relative "remove"
-require_relative "disable"
-
 module AdminCommands
   extend Discordrb::EventContainer
 

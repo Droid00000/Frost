@@ -1,12 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "modify"
-require_relative "create"
-require_relative "delete"
-require_relative "builder"
-require_relative "granter"
-require_relative "syncing"
-
 module BirthdayCommands
   extend Discordrb::EventContainer
 

@@ -1,11 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "menu"
-require_relative "audit"
-require_relative "stats"
-require_relative "create"
-require_relative "values"
-
 module EmojiCommands
   extend Discordrb::EventContainer
 

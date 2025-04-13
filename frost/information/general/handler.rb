@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "values"
-require_relative "process"
-require_relative "chapter"
-require_relative "timezone"
-
 module AdminCommands
   extend Discordrb::EventContainer
 

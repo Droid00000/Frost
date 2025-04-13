@@ -1,11 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "audit"
-require_relative "modify"
-require_relative "colors"
-require_relative "create"
-require_relative "delete"
-
 module BoosterCommands
   extend Discordrb::EventContainer
 

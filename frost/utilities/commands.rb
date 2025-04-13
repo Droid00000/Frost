@@ -2,6 +2,8 @@
 
 require "discordrb"
 
+return unless __FILE__ = $0
+
 bot = Discordrb::Bot.new(token: ENV.fetch("TOKEN"), intents: :none)
 
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.

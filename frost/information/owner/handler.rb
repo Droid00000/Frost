@@ -1,11 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "eval"
-require_relative "values"
-require_relative "flipper"
-require_relative "science"
-require_relative "logging"
-
 module AdminCommands
   extend Discordrb::EventContainer
 

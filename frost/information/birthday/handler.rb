@@ -1,11 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "setup"
-require_relative "worker"
-require_relative "builder"
-require_relative "restart"
-require_relative "disable"
-
 module AdminCommands
   extend Discordrb::EventContainer
 

@@ -1,15 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "hug"
-require_relative "nom"
-require_relative "data"
-require_relative "bonk"
-require_relative "poke"
-require_relative "punch"
-require_relative "sleep"
-require_relative "anger"
-require_relative "values"
-
 module AffectionCommands
   extend Discordrb::EventContainer
 

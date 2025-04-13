@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "auto"
-require_relative "values"
-require_relative "manual"
-
 module PinArchiver
   extend Discordrb::EventContainer
 

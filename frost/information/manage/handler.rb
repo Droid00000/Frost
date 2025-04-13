@@ -1,12 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "index"
-require_relative "custom"
-require_relative "values"
-require_relative "booster"
-require_relative "archiver"
-require_relative "birthday"
-
 module AdminCommands
   extend Discordrb::EventContainer
 
