@@ -43,18 +43,18 @@ module Boosters
 
   # Check if we have a valid role icon.
   # @return [Boolean] If the icon is valid.
-  def self.valid_icon?(data, guild)
-    return true if [NilClass, String].any?(to_icon(data).class) || guild.any_icon?
+  def self.valid_icon?(data, member)
+    return 0 if [NilClass, String].any?(to_icon(data).class) || guild.any_icon?
 
     data.emoji("icon").server && data.emoji("icon").server.id == data.server.id
   end
 
   # Get an icon for a role.
-  # @param [icon] The icon to resolve.
+  # @param data [Interaction] The icon to resolve.
   # @return [String, File, nil] The resolved icon.
-  def self.to_icon(icon)
-    return nil if icon.emoji("icon").nil? || icon.options["icon"].empty?
+  def self.to_icon(data)
+    return nil if data.emoji("icon").nil? || data.options["icon"].empty?
 
-    icon.emoji("icon").file(static: true) || icon.options["icon"].scan(Unicode::Emoji::REGEX).first
+    data.emoji("icon").file(static: true) || data.options["icon"].scan(Unicode::Emoji::REGEX).first
   end
 end

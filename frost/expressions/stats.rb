@@ -25,7 +25,7 @@ module Emojis
 
     # Since someone's trying to view the stats, we should drain
     # our emojis in order to show accurate results to the user.
-    Frost::Emojis.drain
+    Thread.new { Frost::Emojis.drain }
 
     # Fetch the top emojis from the database and resolve them all
     # into a hash of emoji objects, so we can map them up into our desired
