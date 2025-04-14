@@ -9,14 +9,14 @@ module Boosters
       return
     end
 
+    # Initalize the invoking user.
+    member = Boosters::Member.new(data)
+
     # Check if the invoking user is boosting.
-    unless data.user.boosting?
+    unless member.boosting?
       data.edit_response(content: RESPONSE[8])
       return
     end
-
-    # Initalize the invoking user.
-    member = Member.new(data)
 
     # Check if the invoking user is banned.
     if member.banned?
