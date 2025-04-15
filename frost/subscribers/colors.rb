@@ -13,7 +13,7 @@ module Boosters
     member = Boosters::Member.new(data)
 
     # Check if the invoking user is boosting.
-    unless member.boosting?
+    unless data.user.boosting?
       data.edit_response(content: RESPONSE[8])
       return
     end

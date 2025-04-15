@@ -10,7 +10,7 @@ module Boosters
     end
 
     # Check if the invoking user is boosting.
-    unless data.member.boosting?
+    unless data.user.boosting?
       data.edit_response(content: RESPONSE[8])
       return
     end

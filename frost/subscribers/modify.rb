@@ -10,7 +10,7 @@ module Boosters
     end
 
     # Check if the invoking user is boosting.
-    unless data.member.boosting?
+    unless data.user.boosting?
       data.edit_response(content: RESPONSE[8])
       return
     end
@@ -48,7 +48,7 @@ module Boosters
     data.edit_response(content: RESPONSE[2])
 
     # Remove the icon if it isn't valid.
-    unless valid_icon?(data, guild.member)
+    unless valid_icon?(data, member.guild)
       payload.delete(:icon)
     end
 
