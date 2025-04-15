@@ -8,14 +8,14 @@ module Emojis
       return
     end
 
-    emoji = if data.respond_to?(:options)
-              data.options["name"] || data.emoji("emoji").name
-            else
-              data.emoji.name
-            end
+    name = if data.respond_to?(:options)
+             data.options["name"] || data.emoji("emoji").name
+           else
+             data.emoji.name
+           end
 
     begin
-      emoji = data.server.add_emoji(emoji, data.emoji.file)
+      emoji = data.server.add_emoji(name, data.emoji.file)
     rescue StandardError => e
       data.send_message(content: code(e.code), ephemeral: true)
       return

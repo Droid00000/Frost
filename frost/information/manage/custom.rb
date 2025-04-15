@@ -3,9 +3,12 @@
 module Settings
   # A container with data about a guild's event roles.
   def self.events(data)
+    # Initailize the guild we're operating on.
+    guild = Roles::Guild.new(data)
+
     # Return early unless we have roles we can show the user.
     # Else there's no point in going any further with this command.
-    unless Frost::Roles.enabled?(data)
+    if guild.roles.empty?(data)
       data.send_message(content: RESPONSE[1])
       return
     end
@@ -33,9 +36,10 @@ module Settings
           section.text_display(text: RESPONSE[1])
         end
 
-        # Request all our roles only once in order to prevent
-        # straining our DB, since we use this info later on.
-        roles = Frost::Roles.all(data)
+        # Map all of our roles into the format of index + mention.
+        roles = guild.roles.map.index do |role, count| 
+          "**#{count + 1}.** <@&#{role[:role_id]}>\n"
+        end
 
         # Add some spacing between the content of our container
         # and the select menu that we're conditionally adding.
