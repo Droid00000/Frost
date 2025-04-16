@@ -50,7 +50,7 @@ Many of these variables are undocumented because the bot is meant for personal u
 
 5. **Run the bot**
 
-Either build the Dockerfile, or do: `bundle exec ruby --yjit core.rb`.
+Build the Dockerfile with `docker build -t frost:latest --shm-size=2g`
 
 ## ToS and Privacy Policy
 

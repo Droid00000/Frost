@@ -3,7 +3,7 @@
 module General
   # Gets the release date of a chapter of a series.
   def self.chapter(data)
-    time = data.bot.channel(CONFIG[:Chapter][:CHANNEL]).name.delete_prefix("📖")
+    time = data.bot.channel(CONFIG[:Chapter][:CHANNEL]).name.delete("📖")
     time = Time.parse("#{time.sub('3PM GMT', '').strip} #{Time.now.year}")
     time = Time.new(time.year, time.month, time.day, "11", "05")
     data.edit_response(content: format(RESPONSE[1], time.to_i))
@@ -15,7 +15,7 @@ module General
     options.add_argument("--headless")
     driver = Selenium::WebDriver.for :firefox, options: options
     driver.navigate.to CONFIG[:Chapter][:LINK]
-    wait = Selenium::WebDriver::Wait.new(timeout: 10)
+    wait = Selenium::WebDriver::Wait.new(timeout: 20)
     wait.until { driver.find_element(:css, CONFIG[:Chapter][:ELEMENT]) }
     time = Date.parse(driver.find_element(:css, CONFIG[:Chapter][:ELEMENT]).text)
     name = "📖 #{time.strftime('%B')} #{time.day.ordinal} 3PM GMT"
@@ -24,6 +24,6 @@ module General
 end
 
 # Cron job to update the release channel.
-Rufus::Scheduler.new.cron "05 12 * * *" do
+Rufus::Scheduler.new.cron "30 11 * * *" do
   General.find_chapter
 end
