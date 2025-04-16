@@ -37,7 +37,7 @@ module Settings
         end
 
         # Map all of our roles into the format of index + mention.
-        roles = guild.roles.map.index do |role, count| 
+        roles = guild.roles.map.index do |role, count|
           "**#{count + 1}.** <@&#{role[:role_id]}>\n"
         end
 

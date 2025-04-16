@@ -128,16 +128,21 @@ module Discordrb
     # Returns a tempfile object of the emoji.
     # @return [File] a file.
     def file(static: false)
-      gif_url = "#{API.cdn_url}/emojis/#{@id}.gif"
-      png_url = "#{API.cdn_url}/emojis/#{@id}.png"
-      response = Faraday.get(gif_url)
-      chosen_url = response.status == 415 ? png_url : gif_url
-      chosen_url = png_url if static == true
-      file = Tempfile.new(Time.now.to_s)
-      file.binmode
-      file.write(Faraday.get(chosen_url).body)
-      file.rewind
-      file
+      url = if static || !animated
+              API.emoji_icon_url(id, 'png')
+            elsif !static && animated
+              API.emoji_icon_url(id, 'gif')
+            end
+
+      data = {
+        url: url,
+        method: :get,
+        raw_response: true
+      }
+
+      RestClient::Request.execute(data)&.file
+    rescue
+      nil
     end
   end
 end
@@ -165,10 +170,6 @@ module Discordrb
 
       mentions.map(&:resolve_id).any?(mention.resolve_id)
     end
-
-    def poll?
-      !@poll.nil?
-    end
   end
 end
 
@@ -191,7 +192,7 @@ module Discordrb
       end
 
       def channels(name)
-        @resolved[:channels][@options[name].to_i]
+        @resolved[:channels][@options[name].to_i] || @bot.channel(@options[name].to_i)
       end
     end
   end
