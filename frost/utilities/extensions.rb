@@ -57,8 +57,7 @@ module Discordrb
     # @param id [String, Integer] The role ID to look for.
     # @return [Role, nil] The role identified by the ID, or `nil` if it couldn't be found.
     def role(id)
-      id = id&.resolve_id
-      @roles.find { |e| e.id == id }
+      @roles.find { |e| e.id == id&.resolve_id }
     end
   end
 end
@@ -128,19 +127,19 @@ module Discordrb
     # Returns a tempfile object of the emoji.
     # @return [File] a file.
     def file(static: false)
-      url = if static || !animated
+      link = if static || !animated
               API.emoji_icon_url(id, 'png')
             elsif !static && animated
               API.emoji_icon_url(id, 'gif')
             end
 
       data = {
-        url: url,
+        url: link,
         method: :get,
         raw_response: true
       }
 
-      RestClient::Request.execute(data)&.file
+      RestClient::Request.execute(data).file
     rescue
       nil
     end
