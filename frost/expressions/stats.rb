@@ -30,7 +30,7 @@ module Emojis
     # Fetch the top emojis from the database and resolve them all
     # into a hash of emoji objects, so we can map them up into our desired
     # format of: `<:mention:103030303030> - NAME **(INT)**`.
-    emojis = Frost::Emojis.top(data).map do |emoji|
+    emojis = Frost::Emojis.top(data).filter_map do |emoji|
       next unless data.bot.emoji(emoji[:emoji_id])
 
       emoji = { key: data.bot.emoji(emoji[:emoji_id]), data: emoji[:balance] }
@@ -38,14 +38,19 @@ module Emojis
       "#{emoji[:key].mention} — #{emoji[:key].name} **(#{emoji[:data].delimit})**"
     end
 
-    # The `new_components` argument must be manually set to true
-    # to use V2 components. Enabling this disables the content and embeds fields.
-    event.edit_response(new_components: true) do |_, builder|
+    # Manually enable the `IS_COMPONENTS_V2 (1 << 15)`
+    # flags so we can use the new interaction components.
+    data.edit_response(new_components: true) do |_, builder|
       # Add a top level container here to container all of our other components.
       builder.container do |container|
         container.section do |section|
-          section.text_display(text: format(RESPONSE[9], data.server.name))
+          # Add our main title heading here.
+          section.text_display(text: format(RESPONSE[10], data.server.name))
+
+          # Add the icon of the server as our thumbnail.
           section.thumbnail(media: data.server.icon_url)
+
+          # Add the description text at the botton.
           section.text_display(text: RESPONSE[1])
         end
 
@@ -53,7 +58,7 @@ module Emojis
         # default preferred role color. In the future
         # I want to allow server staff to pick any color,
         # but for now, this can only be determined by us.
-        container.color = "#5c9aff"
+        container.color = 6068991
 
         # Add a spacing between all of our descriptors and
         # titles, so we can put an emphasis on the main content.
@@ -63,7 +68,7 @@ module Emojis
         # I'm hoping that discord allows a field like component to
         # allow for some degree of veritcal seperation, but I doubt
         # it's going to happen due to challenges with mobile devices.
-        container.text_display(text: emojis.compact.join("\n"))
+        container.text_display(text: emojis.take(15).join("\n"))
 
         # Add a fininshing bit of spacing between the main content
         # and the text we're attempting to emulate as a footer.
@@ -71,9 +76,8 @@ module Emojis
 
         # Add footer text showing how many emojis are being currently
         # displayed, and how many total emojis the bot has logged for
-        # this server. Maybe we can replace this with a select menu one
-        # day, allowing us to filter based on the usage type, e.g. reaction, message, etc.
-        container.text_display(text: format(RESPONSE[7], emojis.size, Frost::Emojis.count(data)))
+        # this server. Maybe we can replace this with a select menu one day.
+        container.text_display(text: RESPONSE[4])
       end
     end
   end

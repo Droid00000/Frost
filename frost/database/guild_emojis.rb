@@ -12,20 +12,13 @@ module Frost
     # Returns the top 15 emojis.
     def self.top(data)
       POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id).order(Sequel.desc(:balance)).limit(15)
+        @@pg.where(guild_id: data.server.id).order(Sequel.desc(:balance)).limit(500)
       end
     end
 
     # @!visibility private
     def initialize(emoji, guild)
       @@emojis << { emoji_id: emoji.id, guild_id: guild.id }
-    end
-
-    # Get the number of emojis for this guild.
-    def self.count(data)
-      POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id).size.delimit
-      end
     end
 
     # Insert a new emoji into the DB.
