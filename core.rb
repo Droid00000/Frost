@@ -9,7 +9,7 @@ require "tzinfo/data"
 require "unicode/emoji"
 require "rufus-scheduler"
 require "selenium-webdriver"
-require "frost/supervisors/mappings"
+require "frost/application/mappings"
 
 Dir["frost/**/*.rb"].each { |file| require file }
 
