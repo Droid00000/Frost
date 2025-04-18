@@ -11,9 +11,7 @@ module Emojis
     data.send_message do |_, components|
       components.row do |row|
         row.select_menu(custom_id: "emoji", placeholder: RESPONSE[1], min_values: 1) do |menu|
-          data.target.emoji.uniq.each_with_index do |emoji, count|
-            break if count > 24
-
+          data.target.emoji.uniq.first(25).each do |emoji|
             menu.option(label: emoji.name, value: emoji.mention, emoji: emoji.id)
           end
         end

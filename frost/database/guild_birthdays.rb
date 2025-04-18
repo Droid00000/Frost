@@ -12,7 +12,7 @@ module Frost
     # Delete all the birthdays for this server.
     def self.prune(data)
       POSTGRES.transaction do
-        @@pg.where{}.update(guild_ids: Sequel.function(:array_remove, :guild_ids, data.server.id))
+        @@pg.where {}.update(guild_ids: Sequel.function(:array_remove, :guild_ids, data.server.id))
       end
     end
 

@@ -10,24 +10,30 @@ module Settings
       # feel of an embed. This looks okay on mobile, but not so
       # good on desktop. I they make containers blend with themes.
       builder.container(colour: 10_665_982) do |container|
-        # Add our main menu header here in a seperate text display
-        # container in order to get some of that natural padding
-        # that's tricky to stimulate with the other types of seperators.
-        section.text_display(text: RESPONSE[6])
-
         # A lambda is defined here for building up a string containing
         # all of the stats and metrics about our bot, e.g. server count.
         stats = lambda do |data|
           guilds = data.bot.servers.values
           members = guilds.map(&:member_count).sum
-          channels = [*guilds.map(&:channels)].size
-          format(RESPONSE[3], guilds.size, members.delimit, channels)
+          channels = guilds.map(&:channels).flatten.size
+          format(RESPONSE[14], guilds.size, members.delimit, channels)
         end
 
-        # Create our main section body that contains all of the text we want
-        # to show to our user. Currently, we have to use one big string, since
-        # if we use multiple text displays, something kinda seems to look off.
-        section.text_display(text: "#{RESPONSE[2]}#{RESPONSE[1]}#{stats.call(data)}")
+        # Add a section to contain our main body content and our avatar.
+        container.section do |section|
+          # Add our main menu header here in a seperate text display
+          # container in order to get some of that natural padding
+          # that's tricky to stimulate with the other types of seperators.
+          section.text_display(text: RESPONSE[23])
+
+          # Add the avatar URL of our bot here.
+          section.thumbnail(media: data.bot.profile.avatar_url)
+
+          # Create our main section body that contains all of the text we want
+          # to show to our user. Currently, we have to use one big string, since
+          # if we use multiple text displays, something kinda seems to look off.
+          section.text_display(text: "#{RESPONSE[2]}#{stats.call(data)}")
+        end
 
         # Check if we're in a server, and if the user has the
         # manage roles permission in the server this command's called from.
