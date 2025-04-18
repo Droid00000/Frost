@@ -3,6 +3,9 @@
 # Return unless we want to register our commands.
 return unless ENV.fetch("REGISTER_COMMANDS", nil)
 
+# Create a bot instance since our main instance is currently undefined.
+bot = Discordrb::Bot.new(token: CONFIG[:Discord][:TOKEN], intents: :none)
+
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
 bot.register_application_command(:"Add Emojis", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: "1073741824", name_localizations: { "hi" => "कई इमोजी जोड़ें" })
 
@@ -54,7 +57,7 @@ end
 
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:science, "Access the bot's control panel.", contexts: [0, 1, 2], integration_types: [0, 1], default_member_permissions: "0", name_localizations: { "hi" => "विज्ञान" }, description_localizations: { "hi" => "बॉट के नियंत्रण पैनल तक पहुंचें" }) do |option|
-  option.integer("dial", "Which action do you want to perform?", required: true, choices: { "Drain Emojis" => 1, "Shutdown" => 2, "Restart" => 3, "Evaluate" => 4 }, name_localizations: { "hi" => "फ़ोनकरना" }, description_localization: { "hi" => "आप कौन सी कार्रवाई करना चाहते हैं" })
+  option.integer("dial", "Which action do you want to perform?", required: true, choices: { "Drain Emojis" => 1, "Shutdown" => 2, "Restart" => 3, "Evaluate" => 4 }, name_localizations: { "hi" => "फ़ोनकरना" }, description_localizations: { "hi" => "आप कौन सी कार्रवाई करना चाहते हैं" })
 end
 
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.

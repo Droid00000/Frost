@@ -7,3 +7,6 @@ Gemfile.lock
 
 # Credentials
 config.yml
+
+# Log Files
+logs.txt
