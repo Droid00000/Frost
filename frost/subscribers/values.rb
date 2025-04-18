@@ -36,9 +36,9 @@ module Boosters
   def self.to_color(color)
     return COLORS.get(color) if COLORS.get(color)
 
-    return if color.nil? || !color.match(REGEX[2])
+    return if color.nil? || !color.match?(REGEX[2])
 
-    Discordrb::ColorRGB.new(color.strip.match(REGEX[2]))
+    Discordrb::ColorRGB.new(color.match(REGEX[2])[0])
   end
 
   # Check if we have a valid role icon.
