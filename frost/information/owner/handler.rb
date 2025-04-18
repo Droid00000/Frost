@@ -13,8 +13,8 @@ module AdminCommands
     Owner.science(event)
   end
 
-  modal_submit(user: owner) do |event|
-    Owner.experiment(event)
+  modal_submit(custom_id: "4") do |event|
+    Owner.code(event)
   end
 
   ready(resumed: false) do |event|

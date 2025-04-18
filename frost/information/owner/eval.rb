@@ -2,7 +2,7 @@
 
 module Owner
   # Run some code on the bot.
-  def self.experiment(data)
+  def self.code(data)
     begin
       code = eval(escape(data.value["code"]))
     rescue StandardError, SyntaxError => e

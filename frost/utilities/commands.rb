@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
-require "discordrb"
-
-return unless ENV.fetch("TOKEN", nil)
-
-bot = Discordrb::Bot.new(token: ENV.fetch("TOKEN"), intents: :none)
+# Return unless we want to register our commands.
+return unless ENV.fetch("REGISTER_COMMANDS", nil)
 
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
 bot.register_application_command(:"Add Emojis", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: "1073741824", name_localizations: { "hi" => "कई इमोजी जोड़ें" })

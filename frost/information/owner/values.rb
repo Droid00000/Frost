@@ -19,13 +19,8 @@ module Owner
     3 => "`/science`"
   }.freeze
 
-  # Mapping of quotes to escape.
+  # Mapping of smart quotes to escape.
   QUOTES = %w[‘ ’ “ ”].freeze
-
-  # Get the owner of the bot.
-  def self.owner
-    CONFIG[:Discord][:OWNER]&.to_i
-  end
 
   # Escape curly quotes into straight quotes.
   def self.escape(code)

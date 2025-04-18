@@ -3,7 +3,7 @@
 module Owner
   # Manage actions in the bot.
   def self.science(data)
-    unless data.user.id == owner
+    unless data.user.id == CONFIG[:Discord][:OWNER]&.to_i
       data.edit_response(content: RESPONSE[1])
       return
     end
@@ -21,7 +21,7 @@ module Owner
     end
 
     if data.options["dial"] == 4
-      data.show_modal(title: "Eval", custom_id: ":") do |view|
+      data.show_modal(title: "Eval", custom_id: "4") do |view|
         view.row do |ui|
           ui.text_input(
             label: "Code",
