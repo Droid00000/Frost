@@ -2,7 +2,6 @@
 Discord:
   OWNER: "YOUR_ID_HERE"
   TOKEN: "Bot TOKEN_HERE"
-  CONTRIBUTORS: []
 
 # Information about a manga chapter.
 Chapter:

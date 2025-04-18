@@ -3,15 +3,6 @@
 module Affections
   # Punch a member.
   def self.punch(data)
-    # Since this command was a request by one of our contributors,
-    # we have to validate the permissions of the user attempting
-    # to use this command. We return an error message if the user
-    # isn't a contributor, and thus cannot use this app command.
-    unless CONFIG[:Discord][:CONTRIBUTORS].include?(data.user.id)
-      data.respond(content: "Missing access.", ephemeral: true)
-      return
-    end
-
     # Manually enable the `IS_COMPONENTS_V2 (1 << 15)`
     # flags so we can use the new interaction components.
     data.respond(new_components: true) do |_, builder|
