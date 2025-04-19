@@ -7,12 +7,10 @@ module Pins
     # request this once, as having a channel indicates that the archiver
     # was setup. This means we don't need to query the DB to check if the
     # server has setup the functionality for the archiver needlessly.
-    channel = Frost::Pins.channel(data)
+    guild, bot = Guild.new(data), data.server.bot
 
-    # Initialize the current bot member we're working with here.
-    # I could probably use #profile.on here as well, but #server.bot
-    # is just easier here.
-    bot = data.server.bot
+    # Conver our channel ID into a Discordrb object.
+    channel = guild.channel ? data.bot.channel(guild.channel) : nil
 
     # Return unless the bot has the manage messages permissions in
     # the current event originated from.
@@ -38,8 +36,11 @@ module Pins
       embed.timestamp = pins[1].timestamp
       embed.description = pins[1].content
       embed.colour = pins[1].author.color if pins[1].author.respond_to?(:color)
-      embed.image = Discordrb::Webhooks::EmbedImage.new(url: pins[1].attachments.first.url) if pins[1].attachments.any?
       embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: pins[1].author.display_name, icon_url: pins[1].author.avatar_url)
+      
+      if pins[1].attachments.any?
+        embed.image = Discordrb::Webhooks::EmbedImage.new(url: pins[1].attachments.first.url)
+      end
     end
 
     # If everything has worked successfully so far, then that means

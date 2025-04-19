@@ -15,10 +15,12 @@ module Pins
     # first, because we don't want to reuqest all of the
     # pins in a channel if we haven't been configured to
     # archive pins here.
-    channel = Frost::Pins.channel(data)
+    guild = Guild.new(data)
 
-    # Return unless we have a channel to send
-    # the pinned messages to.
+    # Check if this channel we're operating on is currently nil.
+    channel = guild.blank? ? nil : data.bot.channel(guild.channel)
+
+    # Return unless we have a channel to send the pinned messages to.
     if channel.nil?
       data.edit_response(content: RESPONSE[6])
       return
