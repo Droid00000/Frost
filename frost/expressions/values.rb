@@ -7,7 +7,7 @@ module Emojis
     2 => "The bot needs to have the ``manage expressions`` permission to do this.",
     3 => "Failed to add emoji. Maximum emoji limit reached.",
     4 => "This message does not contain any emojis.",
-    5 => "-# Tracking statistics since: 12/2/2024",
+    5 => "-# tracking statistics since: 12/2/2024",
     6 => "Select the Emojis you want to add!",
     7 => "Added this emoji to the server: %s",
     8 => "### Emoji Statistics for %s",
