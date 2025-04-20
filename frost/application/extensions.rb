@@ -128,9 +128,9 @@ module Discordrb
     # @return [File] a file.
     def file(static: false)
       link = if static || !animated
-               API.emoji_icon_url(id, 'png')
+               API.emoji_icon_url(id, "png")
              elsif !static && animated
-               API.emoji_icon_url(id, 'gif')
+               API.emoji_icon_url(id, "gif")
              end
 
       data = {
@@ -140,7 +140,7 @@ module Discordrb
       }
 
       RestClient::Request.execute(data).file
-    rescue
+    rescue StandardError
       nil
     end
   end

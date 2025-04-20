@@ -58,7 +58,7 @@ module Emojis
         # default preferred role color. In the future
         # I want to allow server staff to pick any color,
         # but for now, this can only be determined by us.
-        container.color = 6068991
+        container.color = 6_068_991
 
         # Add a spacing between all of our descriptors and
         # titles, so we can put an emphasis on the main content.

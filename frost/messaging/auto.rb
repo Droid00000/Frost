@@ -7,7 +7,10 @@ module Pins
     # request this once, as having a channel indicates that the archiver
     # was setup. This means we don't need to query the DB to check if the
     # server has setup the functionality for the archiver needlessly.
-    guild, bot = Guild.new(data), data.server.bot
+    guild = Guild.new(data)
+
+    # Initalize our bot instance here.
+    bot = data.server.bot
 
     # Conver our channel ID into a Discordrb object.
     channel = guild.channel ? data.bot.channel(guild.channel) : nil
@@ -37,7 +40,7 @@ module Pins
       embed.description = pins[1].content
       embed.colour = pins[1].author.color if pins[1].author.respond_to?(:color)
       embed.author = Discordrb::Webhooks::EmbedAuthor.new(name: pins[1].author.display_name, icon_url: pins[1].author.avatar_url)
-      
+
       if pins[1].attachments.any?
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: pins[1].attachments.first.url)
       end

@@ -124,9 +124,9 @@ module Boosters
       @guild_id = data.server.id
       @query = { guild_id: guild, user_id: user }
 
-      if data.options["member"]
-        @query[:user_id] = data.options["member"].to_i
-      end
+      return unless data.options["member"]
+
+      @query[:user_id] = data.options["member"].to_i
     end
 
     # Check if this user is nil, e.g. has no role.

@@ -11,8 +11,7 @@ module Emojis
     6 => "Select the Emojis you want to add!",
     7 => "Added this emoji to the server: %s",
     8 => "### Emoji Statistics for %s",
-    9 => "Emoji file is too large.",
-    10 => "Unable to drain emojis."
+    9 => "Emoji file is too large."
   }.freeze
 
   # Application commands for emojis.
