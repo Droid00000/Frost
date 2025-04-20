@@ -37,9 +37,9 @@ module Boosters
     payload = {
       role: member.role,
       reason: REASON[1],
-      primary: data.options["first"],
-      ternerary: data.options["third"],
-      secondary: data.options["second"]
+      primary: data.options["base"],
+      ternerary: data.options["end"],
+      secondary: data.options["start"]
     }.compact
 
     data.edit_response(content: RESPONSE[2])
