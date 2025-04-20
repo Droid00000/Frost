@@ -52,6 +52,11 @@ module Boosters
       payload.delete(:icon)
     end
 
+    # Remove the icon if the user wants to.
+    if data.options["icon"]&.match?(REGEX[1])
+      payload[:icon] = :NULL
+    end
+
     # Make the actual request to update the role here.
     data.server.update_role(**payload) if payload.size > 2
   end

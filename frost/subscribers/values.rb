@@ -27,7 +27,7 @@ module Boosters
   # @param [String] The string to check for slurs and words.
   # @return [Boolean] If the name contains any bad words.
   def self.safe_name?(name)
-    !name&.match?(REGEX[3])
+    !name&.match?(REGEX[4])
   end
 
   # Initilaze a new color object for a role.
@@ -36,9 +36,9 @@ module Boosters
   def self.to_color(color)
     return COLORS.get(color) if COLORS.get(color)
 
-    return if color.nil? || !color.match?(REGEX[2])
+    return if color.nil? || !color.match?(REGEX[1])
 
-    Discordrb::ColorRGB.new(color.match(REGEX[2])[0])
+    Discordrb::ColorRGB.new(color.match(REGEX[1])[0])
   end
 
   # Check if we have a valid role icon.

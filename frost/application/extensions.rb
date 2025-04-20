@@ -40,11 +40,11 @@ module Discordrb
 
       colour = colour.combined if colour.respond_to?(:combined)
 
-      colors = if primary || secondary || ternerary
+      colors = if primary || secondary || tertiary
                  self.role(role).colors.to_h.merge({
                    primary: primary,
+                   tertiary: tertiary
                    secondary: secondary,
-                   terneray: terneray
                  }.compact)
                end
 
@@ -149,11 +149,6 @@ end
 module Discordrb
   # Monkey patch for message class.
   class Message
-    # @return [Array<Emoji>] the emotes that were used/mentioned in this message.
-    def emoji
-      @content.nil? ? nil : @bot.parse_mentions(@content).select { |el| el.is_a? Discordrb::Emoji }
-    end
-
     # Check if any emoji were used in this message.
     # @return [true, false] whether or not any emoji were used.
     def emoji?
@@ -165,9 +160,9 @@ module Discordrb
     def mentions?(mention)
       mentions = (@role_mentions + @user_mentions)
 
-      mentions << @server if @mention_everyone
+      mentions.push(@server) if @mention_everyone
 
-      mentions.map(&:resolve_id).any?(mention.resolve_id)
+      mentions.map(&:resolve_id).include?(mention.resolve_id)
     end
   end
 end
@@ -178,7 +173,7 @@ module Discordrb
     class ApplicationCommandEvent
       # @param name [String] The name of the option.
       # @return [Emoji] Emojis sent in this interaction.
-      def emojis(name)
+      def emoji(name)
         @options[name] ? @bot.parse_mentions(@options[name]).find { |e| e.is_a? Discordrb::Emoji } : nil
       end
 
@@ -264,16 +259,24 @@ module Discordrb
       # connecting to voice, speaking and voice activity (push-to-talk isn't mandatory)
       # https://discord.com/developers/docs/resources/guild#batch-modify-guild-role
       # @param icon [:undef, File]
-      def update_role(token, server_id, role_id, name, colour, _hoist, _mentionable, _packed_permissions, icon = :undef, reason = nil, colors = nil, emoji: nil)
-        if !icon.is_a?(String) && icon != :undef && icon
+      def update_role(token, server_id, role_id, name, colour, _hoist, _mentionable, _packed_permissions, icon = :undef, reason = nil, colors = nil)
+        data = { color: colour, name: name, colors: colors }.compact
+
+        if !icon.is_a?(String) && icon != :undef && icon && icon != :NULL
           path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
 
           mime = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || "image/jpeg"
-          icon = "data:#{mime};base64,#{Base64.encode64(icon.read).strip}"
+          data[:icon] = "data:#{mime};base64,#{Base64.encode64(icon.read).strip}"
         elsif icon.is_a?(String)
-          emoji = icon
-        else
-          icon = nil
+          data[:unicode_emoji] = icon
+        elsif icon == :NULL
+          data[:icon] = nil; data[:unicode_emoji] = nil
+        end
+
+        if colors && colors.values.include?(:NULL)
+          data[:colors].each do |key, value|            
+            data[:colors][key] = nil if value != :NULL
+          end
         end
 
         Discordrb::API.request(
@@ -281,7 +284,7 @@ module Discordrb
           server_id,
           :patch,
           "#{Discordrb::API.api_base}/guilds/#{server_id}/roles/#{role_id}",
-          { color: colour, name: name, icon: icon, unicode_emoji: emoji, colors: colors }.compact.to_json,
+          data.to_json,
           Authorization: token,
           content_type: :json,
           "X-Audit-Log-Reason": reason
