@@ -12,8 +12,8 @@ module Settings
       builder.container(colour: 10_665_982) do |container|
         # A lambda is defined here for building up a string containing
         # all of the stats and metrics about our bot, e.g. server count.
-        stats = lambda do |data|
-          guilds = data.bot.servers.values
+        stats = lambda do |hash|
+          guilds = hash.bot.servers.values
           members = guilds.map(&:member_count).sum
           channels = guilds.map(&:channels).flatten.size
           format(RESPONSE[14], guilds.size, members.delimit, channels)

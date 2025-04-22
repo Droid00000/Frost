@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Frost
+module Emojis
   # Represents an emojis DB.
-  class Emojis
+  class Storage
     # Easy way to access emojis.
     @@emojis = []
 
@@ -16,8 +16,8 @@ module Frost
       end
     end
 
-    # @!visibility private
-    def initialize(emoji, guild)
+    # Add an emoji to the local cache.
+    def self.add(emoji, guild)
       @@emojis << { emoji_id: emoji.id, guild_id: guild.id }
     end
 
@@ -25,13 +25,6 @@ module Frost
     def self.drain
       POSTGRES.transaction do
         @@emojis.clear if @@pg.multi_insert(@@emojis)
-      end
-    end
-
-    # Check if we have any emojis for this guild.
-    def self.any?(data)
-      POSTGRES.transaction do
-        !@@pg.where(guild_id: data.server.id).empty?
       end
     end
 

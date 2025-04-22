@@ -24,6 +24,12 @@ module Emojis
   # Make an emoji error code message.
   # @return [String] The appropriate response.
   def self.code(code)
-    code == 501_38 ? RESPONSE[11] : RESPONSE[3]
+    code == 501_38 ? RESPONSE[9] : RESPONSE[3]
+  end
+
+  # Make an audit-log reason from an action.
+  # @return [String] The appropriate reason.
+  def self.reason(data)
+    "#{data.user.name} (ID: #{data.user.id})"
   end
 end

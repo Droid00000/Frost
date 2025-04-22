@@ -65,8 +65,7 @@ COLORS = {
 REASON = {
   1 => "Birthday Roles",
   2 => "Booster Roles",
-  3 => "Release Date",
-  4 => "%s (ID: %s)"
+  3 => "Release Date"
 }.freeze
 
 # The time zone database source.

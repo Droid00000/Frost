@@ -35,7 +35,7 @@ module Discordrb
     # @param colour [Integer, ColourRGB, #combined] The roles colour.
     # @param icon [String, #read] A role icon for this role.
     # @param reason [String] The reason for updating this role.
-    def update_role(role:, name: nil, colour: nil, icon: nil, primary: nil, secondary: nil, terneray: nil, reason: nil)
+    def update_role(role:, name: nil, colour: nil, icon: nil, primary: nil, secondary: nil, tertiary: nil, reason: nil)
       return nil if self.role(role).nil?
 
       colour = colour.combined if colour.respond_to?(:combined)
@@ -43,8 +43,8 @@ module Discordrb
       colors = if primary || secondary || tertiary
                  self.role(role).colors.to_h.merge({
                    primary: primary,
-                   tertiary: tertiary
-                   secondary: secondary,
+                   tertiary: tertiary,
+                   secondary: secondary
                  }.compact)
                end
 
@@ -197,7 +197,7 @@ module Discordrb
     # Monkey patch for select menus.
     class StringSelectEvent
       # @return [Emoji] Emojis sent in this interaction.
-      def emoji
+      def emoji(_ = nil)
         return nil if @values.first.nil?
 
         @bot.parse_mentions(@values[0]).find { |e| e.is_a? Discordrb::Emoji }
@@ -270,11 +270,12 @@ module Discordrb
         elsif icon.is_a?(String)
           data[:unicode_emoji] = icon
         elsif icon == :NULL
-          data[:icon] = nil; data[:unicode_emoji] = nil
+          data[:icon] = nil
+          data[:unicode_emoji] = nil
         end
 
-        if colors && colors.values.include?(:NULL)
-          data[:colors].each do |key, value|            
+        if colors&.values&.include?(:NULL)
+          data[:colors].each do |key, value|
             data[:colors][key] = nil if value != :NULL
           end
         end

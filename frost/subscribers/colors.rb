@@ -9,14 +9,14 @@ module Boosters
       return
     end
 
-    # Initalize the invoking user.
-    member = Boosters::Member.new(data)
-
     # Check if the invoking user is boosting.
     unless data.user.boosting?
       data.edit_response(content: RESPONSE[8])
       return
     end
+
+    # Initalize the invoking user.
+    member = Boosters::Member.new(data)
 
     # Check if the invoking user is banned.
     if member.banned?
@@ -32,11 +32,11 @@ module Boosters
 
     # Map to: { name => COLOR || name => :NULL }
     data.options.each do |name, value|
-      if value.match?(REGEX[1])
-        data.options[name] = :NULL
-      else
-        data.options[name] = to_color(value)
-      end
+      data.options[name] = if value.match?(REGEX[1])
+                             :NULL
+                           else
+                             to_color(value)
+                           end
     end
 
     payload = {

@@ -3,32 +3,33 @@
 module Affections
   # Poke a member.
   def self.poke(data)
-    # Manually enable the `IS_COMPONENTS_V2 (1 << 15)`
-    # flags so we can use the new interaction components.
-    data.respond(new_components: true) do |_, builder|
-      # Add a text display container to mention our user
-      # outside of the container we're building. This is
-      # done in order to emulate the content field, since
-      # that gets disabled with these new component types.
-      builder.text_display(text: data.member("target").mention)
+    # Set the ephemeral flag to false here.
+    data.respond(ephemeral: false) do |builder|
+      # Add our content which contains our user mention.
+      builder.content = data.member("target").mention
 
-      # Create a container in order to simulate the old look and
-      # feel of an embed. I'm hoping they improve how this looks
-      # on desktop clients with custom colored themes.
-      builder.container(color: to_color(data.user)) do |container|
+      # Add an embed here. The plan was to migrate this specific module
+      # entirely to components V2, but container look a little massive on
+      # desktop currently, so that plan already managed to fall through.
+      builder.add_embed do |embed|
         # Add our main header text here which denotes the type of action we're
         # performing on the target user. Using `###` triple heading makes for
-        # a nice header like display similar to what we had with embeds.
-        container.text_display(text: HEADERS[3])
+        # a nice header like display.
+        embed.title = HEADERS[3]
+
+        # Set an accent color for the embed we're currently operating on.
+        # I was going to originally swap this embed over to CV2, but, on
+        # desktop, V2 components look super large with images for some reason.
+        embed.color = to_color(data.user)
 
         # Add a bit of text explaining the type of action we're doing, including
         # the target user and the initiating user. E.g. "Droid punches Hermit!"
-        container.text_display(text: format(RESPONSE[4], data.user.display_name,
-                                            data.member("target").display_name))
+        embed.description = format(RESPOSNE[4], data.member("target").display_name,
+                                   data.member("target").display_name)
 
         # Finally we can add a media gallery in order to contain our randomized
         # embed that we're using to provide a visual and fun representation of the action.
-        container.media_gallery { |media| media.gallery_item(media: POKE.sample) }
+        embed.image = Discordrb::Webhooks::EmbedImage.new(url: POKE.sample)
       end
     end
   end

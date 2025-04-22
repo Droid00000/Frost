@@ -15,12 +15,13 @@ module Emojis
            end
 
     begin
-      emoji = data.server.add_emoji(name, data.emoji.file)
+      emoji = data.server.add_emoji(name, data.emoji("emoji").file,
+                                    reason: reason(data))
     rescue StandardError => e
       data.send_message(content: code(e.code), ephemeral: true)
       return
     end
 
-    data.send_message(content: format(RESPONSE[1], emoji.use), ephemeral: true)
+    data.send_message(content: format(RESPONSE[7], emoji.use), ephemeral: true)
   end
 end

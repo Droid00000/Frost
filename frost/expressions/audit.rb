@@ -2,15 +2,15 @@
 
 # Periodically drain emojis into the DB.
 Rufus::Scheduler.new.cron "0 */6 * * *" do
-  Frost::Emojis.large?
+  Emojis::Storage.large?
 end
 
 # Drain all of our emojis into the DB.
 Rufus::Scheduler.new.cron "0 0 * * *" do
-  Frost::Emojis.drain
+  Emojis::Storage.drain
 end
 
 # Clean out ununsed emojis from the DB.
 Rufus::Scheduler.new.cron "0 0 1 * *" do
-  Frost::Emojis.prune
+  Emojis::Storage.prune
 end

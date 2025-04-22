@@ -50,7 +50,7 @@ module Settings
 
         # Add our footer text. Eventually this can be swapped out for
         # an action row with buttons for pagination if needed.
-        container.text_display(text: view[:any_icon] ? RESPONSE[1] : RESPONSE[1])
+        container.text_display(text: view[:any_icon] ? RESPONSE[1] : RESPONSE[2])
       end
     end
   end
