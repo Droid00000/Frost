@@ -36,8 +36,7 @@ module Emojis
       "#{emoji[:key].mention} — #{emoji[:key].name} **(#{emoji[:data].delimit})**\n"
     end
 
-    # Return early unless we have emojis we can show the user
-    # else there's no point in going any further with this command.
+    # Return early unless we have emojis we can show.
     unless emojis.any?
       data.edit_response(content: RESPONSE[1])
       return
@@ -68,7 +67,7 @@ module Emojis
         # I'm hoping that discord allows a field like component to
         # allow for some degree of veritcal seperation, but I doubt
         # it's going to happen due to challenges with mobile devices.
-        container.text_display(text: emojis.take(15).join)
+        container.text_display(text: emojis.first(15).join)
 
         # Add a fininshing bit of spacing between the main content
         # and the text we're attempting to emulate as a footer.
