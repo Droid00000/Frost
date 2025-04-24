@@ -23,7 +23,7 @@ module Emojis
 
     # Since someone's trying to view the stats, we should run an
     # audit job her in order to index results on demand.
-    Ractor.new { Storage.large? }
+    Thread.new { Storage.large? }
 
     # Fetch the top emojis from the database and resolve them all
     # into a hash of emoji objects, so we can map them up into our desired
