@@ -21,16 +21,9 @@ module Emojis
     # having to make multiple round-trips to the database.
     emojis = Storage.top(data)
 
-    # Return early unless we have emojis we can show the user
-    # else there's no point in going any further with this command.
-    unless emojis.any?
-      data.edit_response(content: RESPONSE[1])
-      return
-    end
-
-    # Since someone's trying to view the stats, we should drain
-    # our emojis in order to show accurate results to the user.
-    Thread.new { Storage.large? }
+    # Since someone's trying to view the stats, we should run an
+    # audit job her in order to index results on demand.
+    Ractor.new { Storage.large? }
 
     # Fetch the top emojis from the database and resolve them all
     # into a hash of emoji objects, so we can map them up into our desired
@@ -41,6 +34,13 @@ module Emojis
       emoji = { key: data.bot.emoji(emoji[:emoji_id]), data: emoji[:balance] }
 
       "#{emoji[:key].mention} — #{emoji[:key].name} **(#{emoji[:data].delimit})**\n"
+    end
+
+    # Return early unless we have emojis we can show the user
+    # else there's no point in going any further with this command.
+    unless emojis.any?
+      data.edit_response(content: RESPONSE[1])
+      return
     end
 
     # Manually enable the `IS_COMPONENTS_V2 (1 << 15)`
