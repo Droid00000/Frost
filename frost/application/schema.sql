@@ -67,9 +67,9 @@ CREATE TABLE IF NOT EXISTS guild_boosters (
 CREATE TABLE IF NOT EXISTS guild_birthdays (
   active BOOLEAN NOT NULL,
   user_id BIGINT NOT NULL,
-  guild_ids BIGINT[] NOT NULL,
+  guild_id BIGINT[] NOT NULL,
   birthday TIMESTAMPTZ NOT NULL,
-  PRIMARY KEY (birthday, user_id)
+  PRIMARY KEY (guild_id, user_id)
 );
 
 -- Holds info about emoji stats.
@@ -164,16 +164,19 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 -- Index for the `emoji_tracker` table.
-CREATE INDEX IF NOT EXISTS guilds_emojis_idx ON emoji_tracker (guild_id);
+CREATE INDEX IF NOT EXISTS guild_emojis_idx ON emoji_tracker (guild_id);
 
 -- Index for the `archiver_settings` table.
 CREATE UNIQUE INDEX IF NOT EXISTS guild_pins_idx ON archiver_settings (guild_id);
 
 -- Index for the `banned_boosters` table.
-CREATE INDEX IF NOT EXISTS guild_bans_idx ON banned_boosters (guild_id, user_id);
+CREATE INDEX IF NOT EXISTS guild_bans_idx ON banned_boosters (user_id, guild_id);
+
+-- Index for the `event_settings` table.
+CREATE INDEX IF NOT EXISTS guild_events_idx ON event_settings (role_id, guild_id);
 
 -- Index for the `guild_boosters` table.
-CREATE INDEX IF NOT EXISTS guild_booster_idx ON guild_boosters (guild_id, user_id);
+CREATE INDEX IF NOT EXISTS guild_booster_idx ON guild_boosters (user_id, guild_id);
 
 -- Index for the `birthday_settings` table.
 CREATE UNIQUE INDEX IF NOT EXISTS guild_birthday_idx ON birthday_settings (guild_id);
@@ -182,7 +185,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS guild_birthday_idx ON birthday_settings (guild
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
 
 -- Index for the `guild_birthdays` table.
-CREATE UNIQUE INDEX IF NOT EXISTS guild_birthdays_idx ON guild_birthdays (user_id, guild_ids);
+CREATE UNIQUE INDEX IF NOT EXISTS guild_birthdays_idx ON guild_birthdays (user_id, guild_id);
 
 -- Index for the `guild_timezones` table.
 CREATE INDEX IF NOT EXISTS guild_names_idx ON guild_timezones USING GIN (name gin_trgm_ops);
