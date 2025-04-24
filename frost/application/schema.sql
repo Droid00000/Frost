@@ -163,64 +163,28 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
--- Indexes for the `guild_boosters` table.
-CREATE INDEX IF NOT EXISTS guild_booster_idx ON guild_boosters (user_id);
+-- Index for the `emoji_tracker` table.
+CREATE INDEX IF NOT EXISTS guilds_emojis_idx ON emoji_tracker (guild_id);
 
-CREATE INDEX IF NOT EXISTS guild_premium_idx ON guild_boosters (guild_id);
-
--- Indexes for the `banned_boosters` table.
-CREATE INDEX IF NOT EXISTS guild_booster_ban_idx ON banned_boosters (user_id);
-
-CREATE INDEX IF NOT EXISTS guild_premium_ban_idx ON banned_boosters (guild_id);
-
--- Indexes for the `emoji_tracker` table.
-CREATE INDEX IF NOT EXISTS guild_emoji_idx ON emoji_tracker (emoji_id);
-
-CREATE INDEX IF NOT EXISTS guilds_emoji_idx ON emoji_tracker (guild_id);
-
-CREATE INDEX IF NOT EXISTS guild_emoji_balance_idx ON emoji_tracker (balance);
-
--- Indexes for the `guild_birthdays` table.
-CREATE INDEX IF NOT EXISTS guild_birthdays_idx ON guild_birthdays (guild_ids);
-
-CREATE INDEX IF NOT EXISTS guild_birthday_user_idx ON guild_birthdays (user_id);
-
-CREATE INDEX IF NOT EXISTS guild_birthday_date_idx ON guild_birthdays (birthday);
-
-CREATE INDEX IF NOT EXISTS guild_birthdays_status_idx ON guild_birthdays (active);
-
--- Indexes for the `birthday_settings` table.
-CREATE INDEX IF NOT EXISTS guild_birthday_idx ON birthday_settings (guild_id);
-
-CREATE INDEX IF NOT EXISTS guild_birthday_role_idx ON birthday_settings (role_id);
-
-CREATE INDEX IF NOT EXISTS guild_birthday_epoch_idx ON birthday_settings (setup_at);
-
-CREATE INDEX IF NOT EXISTS guild_birthday_creator_idx ON birthday_settings (setup_by);
-
-CREATE INDEX IF NOT EXISTS guild_birthday_channel_idx ON birthday_settings (channel_id);
-
--- Indexes for the `archiver_settings` table.
-CREATE INDEX IF NOT EXISTS guild_pins_epoch_idx ON archiver_settings (setup_at);
-
+-- Index for the `archiver_settings` table.
 CREATE UNIQUE INDEX IF NOT EXISTS guild_pins_idx ON archiver_settings (guild_id);
 
-CREATE INDEX IF NOT EXISTS guild_pins_manager_idx ON archiver_settings (setup_by);
+-- Index for the `banned_boosters` table.
+CREATE INDEX IF NOT EXISTS guild_bans_idx ON banned_boosters (guild_id, user_id);
 
-CREATE UNIQUE INDEX IF NOT EXISTS guild_channel_idx ON archiver_settings (channel_id);
+-- Index for the `guild_boosters` table.
+CREATE INDEX IF NOT EXISTS guild_booster_idx ON guild_boosters (guild_id, user_id);
 
--- Indexes for the `booster_settings` table.
-CREATE INDEX IF NOT EXISTS guild_icon_idx ON booster_settings (any_icon);
+-- Index for the `birthday_settings` table.
+CREATE UNIQUE INDEX IF NOT EXISTS guild_birthday_idx ON birthday_settings (guild_id);
 
-CREATE INDEX IF NOT EXISTS guild_booster_role_idx ON booster_settings (hoist_role);
-
-CREATE INDEX IF NOT EXISTS guild_booster_manager_idx ON booster_settings (setup_by);
-
-CREATE INDEX IF NOT EXISTS guild_booster_creation_idx ON booster_settings (setup_at);
-
+-- Index for the `booster_settings` table.
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
 
--- Indexes for the `guild_timezones` table.
+-- Index for the `guild_birthdays` table.
+CREATE UNIQUE INDEX IF NOT EXISTS guild_birthdays_idx ON guild_birthdays (user_id, guild_ids);
+
+-- Index for the `guild_timezones` table.
 CREATE INDEX IF NOT EXISTS guild_names_idx ON guild_timezones USING GIN (name gin_trgm_ops);
 
 CREATE INDEX IF NOT EXISTS guild_codes_idx ON guild_timezones USING GIN (identifier gin_trgm_ops);

@@ -18,11 +18,6 @@ module Events
       return
     end
 
-    unless Frost::Roles.enabled?(data)
-      data.edit_response(content: RESPONSE[5])
-      return
-    end
-
     unless Frost::Roles.get?(data)
       data.edit_response(content: RESPONSE[17])
       return
@@ -33,7 +28,7 @@ module Events
       role: data.options["role"],
       name: data.options["name"],
       icon: resolve_icon(data),
-      reason: format(REASON[3], data.user.name, data.user.id)
+      reason: "#{data.user.name} (ID: #{data.user.id})"
     }
 
     payload.delete(:icon) unless valid_icon?(data)
