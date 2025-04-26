@@ -195,14 +195,3 @@ CREATE INDEX IF NOT EXISTS guild_codes_idx ON guild_timezones USING GIN (identif
 CREATE INDEX IF NOT EXISTS guild_countries_idx ON guild_timezones USING GIN (country gin_trgm_ops);
 
 CREATE INDEX IF NOT EXISTS guild_timezones_idx ON guild_timezones USING GIN (timezone gin_trgm_ops);
-
--- Triggers for suppressing redundant updates across almost all of our tables.
-CREATE TRIGGER guild_emoji_udx BEFORE INSERT ON emoji_tracker FOR EACH ROW EXECUTE FUNCTION balance_manager();
-
-CREATE TRIGGER guild_events_udx BEFORE UPDATE ON event_settings FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
-
-CREATE TRIGGER guild_channel_udx BEFORE UPDATE ON archiver_settings FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
-
-CREATE TRIGGER guild_hoist_role_udx BEFORE UPDATE ON booster_settings FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
-
-CREATE TRIGGER guild_booster_ban_udx BEFORE UPDATE ON banned_boosters FOR EACH ROW EXECUTE FUNCTION suppress_redundant_updates_trigger();
