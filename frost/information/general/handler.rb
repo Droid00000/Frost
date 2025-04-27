@@ -10,6 +10,11 @@ module AdminCommands
     end
   end
 
+  application_command(:temperature) do |event|
+    event.defer(ephemeral: false)
+    General.temperature(event)
+  end
+
   application_command(:time) do |event|
     event.defer(ephemeral: false)
     General.time(event)

@@ -50,7 +50,7 @@ bot.register_application_command(:sleep, "Tell a user to head to bed.", contexts
   option.user("target", "Who needs to go to sleep?", required: true, name_localizations: { "hi" => "इशारालगाना" }, description_localizations: { "hi" => "किसको सोने जाने बोलना है" })
 end
 
-# @!function [Affections] This command is part of a module that manages general information.
+# @!function [General Operations] This command is part of a module that manages general information.
 bot.register_application_command(:time, "View the current time.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "समय" }, description_localizations: { "hi" => "वर्तमान समय देखें" }) do |option|
   option.string("timezone", "Which timezone do you want to view the time for?", required: true, autocomplete: true, name_localizations: { "hi" => "समयक्षेत्र" }, description_localizations: { "hi" => "आप किस समयक्षेत्र का समय देखना चाहते हैं" })
 end
@@ -68,6 +68,12 @@ end
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:coin, "Flip a coin!", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "मुद्रा" }, description_localizations: { "hi" => "एक सिक्का पलटें" }) do |command|
   command.subcommand(:flip, "Flip a coin.", name_localizations: { "hi" => "पलटना" }, description_localizations: { "hi" => "एक सिक्का पलटें" })
+end
+
+# @!function [General Operations] This command is part of a module that manages general information.
+bot.register_application_command(:temperature, "Convert a temperature between celsius and fahrenheit.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "तापमान" }, description_localizations: { "hi" => "तापमान को सेल्सियस और फ़ारेनहाइट के बीच परिवर्तित करें" }) do |option|
+  option.number("input", "The temperature that you want to operate on.", required: true, name_localizations: { "hi" => "तापमान" }, description_localizations: { "hi" => "वह तापमान जिस पर आप काम करना चाहते हैं" })
+  option.number("output", "What unit do you want to convert the temperature to?", required: true, choices: { "Celsius" => 1, "Fahrenheit" => 2 }, name_localizations: { "hi" => "आउटपुट" }, description_localizations: { "hi" => "आप तापमान को किस इकाई में बदलना चाहते हैं" })
 end
 
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.

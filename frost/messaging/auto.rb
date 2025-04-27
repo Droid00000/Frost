@@ -12,7 +12,7 @@ module Pins
     return unless channel && bot.permission?(:send_messages, channel)
 
     pins = data.channel.pins
-    
+
     return unless pins.size == 50
 
     channel.send_embed(pins[1].link) do |embed|
