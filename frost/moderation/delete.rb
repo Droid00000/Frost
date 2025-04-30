@@ -8,6 +8,11 @@ module Moderation
       return
     end
 
+    unless data.server.bot.permission?(:read_messages, data.channel)
+      data.edit_response(content: RESPONSE[67])
+      return
+    end
+
     count = 0
 
     ([1] * data.options["amount"]).each_slice(100) do |chunk|
