@@ -18,9 +18,14 @@ module AdminCommands
       11 => "This user is already a booster."
     }.freeze
 
-    # Check if we have perms enabled or set.
-    def self.enabled?(data)
-      data.options["role"] || Frost::Boosters::Settings.role(data)
-    end
+    # Application commands for booster admins.
+    COMMANDS = {
+      1 => "`/booster admin add`",
+      2 => "`/booster admin ban`",
+      3 => "`/booster admin unban`",
+      4 => "`/booster admin delete`",
+      5 => "`/booster admin enable`",
+      6 => "`/booster admin disable`"
+    }.freeze
   end
 end

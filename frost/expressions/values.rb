@@ -5,13 +5,14 @@ module Emojis
   RESPONSE = {
     1 => "These are the currently most used emojis on your server. Non-animated, animated emojis, and reactions are mixed.",
     2 => "The bot needs to have the ``manage expressions`` permission to do this.",
-    3 => "Failed to add emoji. Maximum emoji limit reached.",
-    4 => "This message does not contain any emojis.",
-    5 => "-# tracking statistics since: 12/2/2024",
-    6 => "Select the Emojis you want to add!",
-    7 => "Added this emoji to the server: %s",
-    8 => "### Emoji Statistics for %s",
-    9 => "Emoji file is too large."
+    3 => "There are no emoji statistics available for this server.",
+    4 => "Failed to add emoji. Maximum emoji limit reached.",
+    5 => "This message does not contain any emojis.",
+    6 => "-# tracking statistics since: 12/2/2024",
+    7 => "Select the Emojis you want to add!",
+    8 => "Added this emoji to the server: %s",
+    9 => "### Emoji Statistics for %s",
+    10 => "Emoji file is too large."
   }.freeze
 
   # Application commands for emojis.

@@ -43,11 +43,7 @@ module Pins
 
     # Get metadata about the settings for this guild.
     # @return [Array<String, Integer>] Metadata info about this guild.
-    def view = [enabler&.name, enabled_at]
-
-    # Get the user who enabled this functionality in this guild.
-    # @return [Discordrb::User] The user who enabled this functionality.
-    def enabler = @enabler ||= @bot.user(enabled_by)
+    def view = [@bot.user(enabled_by)&.name, enabled_at]
 
     # Create a new record or update an existing record.
     # @param guild_id [Integer] ID of the guild this record is for.

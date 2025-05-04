@@ -8,11 +8,7 @@ module Owner
       return
     end
 
-    if data.options["dial"] == 1
-      while (emoji = Frost::Emojis.drain.shift)
-        Frost::Emojis.add(emoji[:emoji], emoji[:guild])
-      end
-    end
+    Emojis::Storage.drain if data.options["dial"] == 1
 
     data.bot.stop if data.options["dial"] == 2
 

@@ -3,7 +3,7 @@
 module Pins
   # Disable the pin archiver.
   def self.disable(data)
-    Frost::Pins.disable(data)
+    Guild.new(data, lazy: true).delete
 
     data.edit_response(content: RESPONSE[5])
   end

@@ -4,7 +4,7 @@ module Emojis
   # Handle an emoji creation command.
   def self.add(data)
     unless data.server.bot.permission?(:manage_emojis)
-      data.send_message(content: RESPONSE[1], ephemeral: true)
+      data.send_message(content: RESPONSE[2], ephemeral: true)
       return
     end
 
@@ -22,6 +22,6 @@ module Emojis
       return
     end
 
-    data.send_message(content: format(RESPONSE[7], emoji.use), ephemeral: true)
+    data.send_message(content: format(RESPONSE[8], emoji.use), ephemeral: true)
   end
 end

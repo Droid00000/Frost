@@ -4,13 +4,13 @@ module Emojis
   # make select menu.
   def self.menu(data)
     unless data.target.emoji?
-      data.edit_response(content: RESPONSE[42])
+      data.edit_response(content: RESPONSE[5])
       return
     end
 
     data.send_message do |_, components|
       components.row do |row|
-        row.select_menu(custom_id: "emoji", placeholder: RESPONSE[1], min_values: 1) do |menu|
+        row.select_menu(custom_id: "emoji", placeholder: RESPONSE[7], min_values: 1) do |menu|
           data.target.emoji.uniq.first(25).each do |emoji|
             menu.option(label: emoji.name, value: emoji.mention, emoji: emoji.id)
           end

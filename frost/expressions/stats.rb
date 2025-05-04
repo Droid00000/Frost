@@ -22,7 +22,7 @@ module Emojis
     emojis = Storage.top(data)
 
     # Since someone's trying to view the stats, we should run an
-    # audit job her in order to index results on demand.
+    # audit job here in order to update results on demand.
     Thread.new { Storage.large? }
 
     # Fetch the top emojis from the database and resolve them all
@@ -38,7 +38,7 @@ module Emojis
 
     # Return early unless we have emojis we can show.
     unless emojis.any?
-      data.edit_response(content: RESPONSE[1])
+      data.edit_response(content: RESPONSE[3])
       return
     end
 
@@ -50,7 +50,7 @@ module Emojis
         # Add a section (mainly so we can add a thumbnail).
         container.section do |section|
           # Add our main title heading here.
-          section.text_display(text: format(RESPONSE[8], data.server.name))
+          section.text_display(text: format(RESPONSE[9], data.server.name))
 
           # Add the icon of the server as our thumbnail.
           section.thumbnail(media: data.server.icon_url)
@@ -76,7 +76,7 @@ module Emojis
         # Add footer text showing how many emojis are being currently
         # displayed, and how many total emojis the bot has logged for
         # this server. Maybe we can replace this with a select menu one day.
-        container.text_display(text: RESPONSE[5])
+        container.text_display(text: RESPONSE[6])
       end
     end
   end

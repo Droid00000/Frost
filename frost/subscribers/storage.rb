@@ -26,6 +26,9 @@ module Boosters
     # @return [Dataset]
     @@pg = POSTGRES[:booster_settings]
 
+    # @return [Dataset]
+    @@users = POSTGRES[:guild_boosters]
+
     # @!visibility private
     def initialize(data)
       @bot = data.bot
@@ -43,11 +46,7 @@ module Boosters
 
     # Get metadata about the settings for this guild.
     # @return [Array<String, Integer>] Metadata info about this guild.
-    def view = [enabler&.name, enabled_at]
-
-    # Get the user who enabled this functionality in this guild.
-    # @return [Discordrb::User] The user who enabled this functionality.
-    def enabler = @enabler ||= @bot.user(enabled_by)
+    def view = [@bot.user(enabled_by)&.name, enabled_at]
 
     # Create a new record or update an existing record.
     # @param guild_id [Integer] ID of the guild this record is for.
@@ -89,7 +88,7 @@ module Boosters
 
     # @!visibility private
     def find_guild(*options)
-      POSTGRES.transaction { @@pg.where(guild: options[0]).first }
+      POSTGRES.transaction { @@pg.where(guild_id: options[0]).first }
     end
 
     # @!visibility private
@@ -176,7 +175,7 @@ module Boosters
 
     # @!visibility private
     def conflict(*options)
-      { target: :user_id, update: { role_id: options[0].id } }
+      { target: :user_id, update: { role_id: options[0].resolve_id } }
     end
   end
 end

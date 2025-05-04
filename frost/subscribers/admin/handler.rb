@@ -6,37 +6,32 @@ module AdminCommands
   application_command(:booster).group(:admin) do |group|
     group.subcommand("add") do |event|
       event.defer(ephemeral: true)
-      add_booster(event)
+      Boosters.add(event)
     end
 
     group.subcommand("disable") do |event|
       event.defer(ephemeral: true)
-      disable_booster(event)
+      Boosters.disable(event)
     end
 
     group.subcommand("enable") do |event|
       event.defer(ephemeral: true)
-      setup_booster(event)
+      Boosters.setup(event)
     end
 
     group.subcommand("delete") do |event|
       event.defer(ephemeral: true)
-      delete_booster(event)
+      Boosters.delete(event)
     end
 
     group.subcommand("unban") do |event|
       event.defer(ephemeral: true)
-      unban_booster(event)
-    end
-
-    group.subcommand("help") do |event|
-      event.defer(ephemeral: true)
-      help_booster(event)
+      Boosters.unban(event)
     end
 
     group.subcommand("ban") do |event|
       event.defer(ephemeral: true)
-      ban_booster(event)
+      Boosters.ban(event)
     end
   end
 end

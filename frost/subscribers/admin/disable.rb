@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
 module AdminCommands
-  # Namspace for admin commands.
-  module Roles
-    # Disable event perks for the calling server.
+  # namespace for booster admins.
+  module Boosters
+    # Disable booster perks for a server.
     def self.disable(data)
       unless data.user.permission?(:manage_roles)
         data.edit_response(content: RESPONSE[18])
         return
       end
 
-      Frost::Roles.disable(data)
+      Guild.new(data, lazy: true).delete
 
-      data.edit_response(content: RESPONSE[39])
+      data.edit_response(content: RESPONSE[35])
     end
   end
 end
