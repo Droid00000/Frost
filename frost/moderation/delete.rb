@@ -51,16 +51,16 @@ module Moderation
           pass << logic.reactions.any?
         end
 
-        if data.options["sticker"]
-          pass << logic.stickers.any?
-        end
-
         if data.options["embeds"]
           pass << logic.embeds.any?
         end
 
+        if data.options["sticker"]
+          pass << logic.stickers?
+        end
+
         if data.options["emoji"]
-          pass << logic.emoji.any?
+          pass << logic.emoji?
         end
 
         if data.options["poll"]

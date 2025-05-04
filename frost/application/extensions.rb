@@ -155,6 +155,18 @@ module Discordrb
       !emoji&.empty?
     end
 
+    # Check if this message contains a poll or not.
+    # @return [true, false] whether this message has a poll or not.
+    def poll?
+      !@poll.nil?
+    end
+
+    # Check if this message contains any stickers or not.
+    # @return [true, false] whether this message has any sticker or not.
+    def stickers?
+      !@stickers.empty?
+    end
+
     # Check if someone was mentioned in a message.
     # @param [User, Role, Integer, String, #to_i]
     def mentions?(mention)

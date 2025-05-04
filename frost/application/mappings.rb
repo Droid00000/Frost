@@ -68,6 +68,9 @@ REASON = {
   3 => "Release Date"
 }.freeze
 
+# The task scheduler for tasks.
+SCHEDULER = Rufus::Scheduler.new
+
 # The time zone database source.
 TZInfo::DataSource.set(:zoneinfo)
 

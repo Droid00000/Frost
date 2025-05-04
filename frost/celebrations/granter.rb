@@ -21,7 +21,7 @@ module Birthdays
     birthday_message(data.server.id, member)
 
     # Schedule the role for removal in a day.
-    Rufus::Scheduler.new.in "24h" do
+    SCHEDULER.in "24h" do
       remove_user_role(data.server.id, member)
     end
 

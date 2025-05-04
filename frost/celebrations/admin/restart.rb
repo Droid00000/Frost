@@ -11,12 +11,12 @@ end
 def reschedule_removal(member, timezone)
   seconds = compute_midnight(timezone) - timezone
 
-  Rufus::Scheduler.new.in "#{seconds}s" do
+  SCHEDULER.in "#{seconds}s" do
     remove_user_role(member[:guild_id], member[:user_id])
   end
 end
 
-Rufus::Scheduler.new.in "10s" do
+SCHEDULER.in "10s" do
   Frost::Birthdays.marked.each do |member|
     if past_birthday?(member, member[:timezone])
       remove_user_role(member[:guild_id], member[:user_id])
