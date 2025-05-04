@@ -5,6 +5,8 @@ module Owner
   def self.logs(_data)
     return if File.file?("logs.txt")
 
+    Rufus::Scheduler.s.stderr = File.open("tasks.txt", "ab")
+
     Discordrb::LOGGER.streams = [File.open("logs.txt", "w")]
   end
 end
