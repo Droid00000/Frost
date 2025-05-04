@@ -4,11 +4,11 @@ module Settings
   # A container with data about a guild's event roles.
   def self.events(data)
     # Initailize the guild we're operating on.
-    guild = Roles::Guild.new(data)
+    roles = POSTGRES[:event_settings].where(guild_id: data.server.id)
 
     # Return early unless we have roles we can show the user.
     # Else there's no point in going any further with this command.
-    if guild.roles.to_a.empty?(data)
+    if roles.empty?(data)
       data.send_message(content: RESPONSE[1])
       return
     end
@@ -37,7 +37,7 @@ module Settings
         end
 
         # Map all of our roles into the format of index + mention.
-        roles = guild.roles.map.index do |role, count|
+        roles = roles.map.index do |role, count|
           "**#{count + 1}.** <@&#{role[:role_id]}>\n"
         end
 
