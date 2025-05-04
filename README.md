@@ -1,6 +1,6 @@
 ## Introduction
 
-Frost is a personal Discord bot. It handles booster roles, birthday perks, and more.
+Frost is a personal Discord bot. It handles booster perks, birthday roles, and more.
 
 ## Installation
 
@@ -19,7 +19,7 @@ Simply do: `bundle install`.
 You'll need to be using PostgreSQL 14 or higher. Type the following into the PostgreSQL manager:
 
 ```sql
-CREATE ROLE frost WITH LOGIN PASSWORD 'yourpasswordhere'; CREATE DATABASE frigid OWNER frost;
+CREATE ROLE frost WITH LOGIN PASSWORD 'urpassword'; CREATE DATABASE frosty OWNER frost;
 
 CREATE EXTENSION IF NOT EXISTS unaccent; CREATE EXTENSION IF NOT EXISTS pg_trgm;
 ```
