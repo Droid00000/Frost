@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Rufus::Scheduler.s.cron "30 18 * * *" do
+Rufus::Scheduler.singleton.cron "30 18 * * *" do
   Boosters::Members.chunks.each do |chunk|
     @bot.gateway.members(chunk[:guild_id], chunk[:members])
   end

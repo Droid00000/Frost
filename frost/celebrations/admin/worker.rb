@@ -12,14 +12,14 @@ def process_birthdays(zone)
   end
 end
 
-Rufus::Scheduler.s.every "60s" do
+Rufus::Scheduler.singleton.every "60s" do
   TZInfo::Timezone.all.each do |zone|
     process_birthdays(zone) if currently_midnight?(zone)
   end
 end
 
 def currently_midnight?(zone)
-  zone.now.hour.zero? && (0..5).to_a.include?(zone.now.min)
+  zone.now.hour.zero? && [*0..5].include?(zone.now.min)
 end
 
 def currently_birthday?(member, timezone)

@@ -19,7 +19,7 @@ end
 def schedule_removal(guild, user)
   Frost::Birthdays.mark(guild, user)
 
-  Rufus::Scheduler.s.in "24h" do
+  Rufus::Scheduler.singleton.in "24h" do
     remove_user_role(guild, user)
     Frost::Birthdays.unmark(guild, user)
   end
