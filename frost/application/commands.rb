@@ -65,20 +65,9 @@ bot.register_application_command(:top, "View some emoji stats.", contexts: [0], 
   command.subcommand(:emojis, "View the most used emojis in this server.", name_localizations: { "hi" => "आँकड़े" }, description_localizations: { "hi" => "शीर्ष इमोजी के बारे में जानकारी यहां प्राप्त करें" })
 end
 
-# @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:coin, "Flip a coin!", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "मुद्रा" }, description_localizations: { "hi" => "एक सिक्का पलटें" }) do |command|
-  command.subcommand(:flip, "Flip a coin.", name_localizations: { "hi" => "पलटना" }, description_localizations: { "hi" => "एक सिक्का पलटें" })
-end
-
-# @!function [General Operations] This command is part of a module that manages general information.
-bot.register_application_command(:temperature, "Convert a temperature between celsius and fahrenheit.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "तापमान" }, description_localizations: { "hi" => "तापमान को सेल्सियस और फ़ारेनहाइट के बीच परिवर्तित करें" }) do |option|
-  option.number("input", "The temperature that you want to operate on.", required: true, name_localizations: { "hi" => "तापमान" }, description_localizations: { "hi" => "वह तापमान जिस पर आप काम करना चाहते हैं" })
-  option.number("output", "What unit do you want to convert the temperature to?", required: true, choices: { "Celsius" => 1, "Fahrenheit" => 2 }, name_localizations: { "hi" => "आउटपुट" }, description_localizations: { "hi" => "आप तापमान को किस इकाई में बदलना चाहते हैं" })
-end
-
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
 bot.register_application_command(:create, "Add an emoji to this server.", contexts: [0], integration_types: [0], name_localizations: { "hi" => "बनाएं" }, description_localizations: { "hi" => "इस सर्वर में एक इमोजी जोड़ें" }, default_member_permissions: "1073741824") do |command|
-  command.subcommand("emoji", "Create an emoji on this server.", name_localizations: { "hi" => "इमोजी" }, description_localizations: { "hi" => "इस सर्वर पर एक इमोजी बनाएं" }) do |option|
+  command.subcommand(:emoji, "Create an emoji on this server.", name_localizations: { "hi" => "इमोजी" }, description_localizations: { "hi" => "इस सर्वर पर एक इमोजी बनाएं" }) do |option|
     option.string("emoji", "The emoji to create on this server.", required: true, name_localizations: { "hi" => "इमोजी" }, description_localizations: { "hi" => "इस सर्वर पर बनाए जाने वाले इमोजी" })
     option.string("name", "The new name to give to this emoji.", required: false, name_localizations: { "hi" => "नाम" }, description_localizations: { "hi" => "इस इमोजी को दिया जाने वाला नया नाम" })
   end
@@ -86,7 +75,7 @@ end
 
 # @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
 bot.register_application_command(:change, "Moderation Commands", contexts: [0], integration_types: [0], name_localizations: { "hi" => "अद्यतन" }, description_localizations: { "hi" => "मॉडरेशन आदेश" }, default_member_permissions: "201326592") do |command|
-  command.subcommand("nickname", "Modify a member's nickname.", name_localizations: { "hi" => "उपनाम" }, description_localizations: { "hi" => "किसी सदस्य का उपनाम बदलें" }) do |option|
+  command.subcommand(:nickname, "Modify a member's nickname.", name_localizations: { "hi" => "उपनाम" }, description_localizations: { "hi" => "किसी सदस्य का उपनाम बदलें" }) do |option|
     option.user("member", "Which member needs to have their name changed?", required: true, name_localizations: { "hi" => "लोग" }, description_localizations: { "hi" => "किस सदस्य को अपना नाम बदलना है" })
     option.string("nickname", "What should this member's new nickname be?", required: true, name_localizations: { "hi" => "उपनाम" }, description_localizations: { "hi" => "इस सदस्य का नया उपनाम क्या होना चाहिए" })
   end
@@ -112,7 +101,7 @@ end
 
 # @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
 bot.register_application_command(:purge, "Moderation Commands", contexts: [0], integration_types: [0], name_localizations: { "hi" => "शुद्ध" }, description_localizations: { "hi" => "मॉडरेशन आदेश" }, default_member_permissions: "10256") do |command|
-  command.subcommand("messages", "Remove messages that meet a criteria.", name_localizations: { "hi" => "सूचना" }, description_localizations: { "hi" => "वर्तमान चैनल में संदेश हटाएँ" }) do |option|
+  command.subcommand(:messages, "Remove messages that meet a criteria.", name_localizations: { "hi" => "सूचना" }, description_localizations: { "hi" => "वर्तमान चैनल में संदेश हटाएँ" }) do |option|
     option.integer("amount", "The maximum number of messages to delete.", required: true, min_value: 1, max_value: 700, name_localizations: { "hi" => "रकम" }, description_localizations: { "hi" => "आप कितने मैसेज डिलीट करना चाहते हैं" })
     option.user("member", "Remove messages from a specific member.", required: false, name_localizations: { "hi" => "सदस्य" }, description_localizations: { "hi" => "किसी विशिष्ट उपयोगकर्ता के संदेश हटाएँ" })
     option.string("contains", "Remove messages that contain this text (case sensitive).", required: false, min_length: 1, name_localizations: { "hi" => "रोकना" }, description_localizations: { "hi" => "इस स्ट्रिंग वाले संदेश हटाएँ (केस सेंसिटिव)" })
@@ -133,106 +122,109 @@ end
 
 # @!function [Event Operations] Belongs to a module that manages custom roles.
 bot.register_application_command(:event, "Event roles", contexts: [0], integration_types: [0], name_localizations: { "hi" => "इवेंट" }, description_localizations: { "hi" => "इवेंट रोल्स" }) do |command|
-  command.subcommand_group(:roles, "Event roles!", name_localizations: { "hi" => "रोल्स" }, description_localizations: { "hi" => "इवेंट रोल्स" }) do |group|
-    group.subcommand(:edit, "Edit your event role.", name_localizations: { "hi" => "परिवर्तन" }, description_localizations: { "hi" => "अपने इवेंट रोल को संपादित करें" }) do |option|
+  command.subcommand_group(:role, "Event roles!", name_localizations: { "hi" => "रोल्स" }, description_localizations: { "hi" => "इवेंट रोल्स" }) do |group|
+    group.subcommand(:edit, "Edit an event role.", name_localizations: { "hi" => "परिवर्तन" }, description_localizations: { "hi" => "अपने इवेंट रोल को संपादित करें" }) do |option|
       option.role("role", "Which role do you want to modify?", required: true, name_localizations: { "hi" => "रोल" }, description_localizations: { "hi" => "आप कौन सा रोल संपादित करना चाहते हैं" })
       option.string("name", "Provide a name for your role.", required: false, max_length: 100, name_localizations: { "hi" => "नाम" }, description_localizations: { "hi" => "अपने रोल के लिए एक नाम दें" })
       option.string("color", "Provide a HEX color for your role.", required: false, min_length: 3, max_length: 16, name_localizations: { "hi" => "रंग" }, description_localizations: { "hi" => "अपने रोल के लिए एक HEX रंग दें" })
       option.string("icon", "Provide an emoji for your role icon.", required: false, name_localizations: { "hi" => "आइकन" }, description_localizations: { "hi" => "अपने रोल आइकन के रूप में एक इमोजी दें" })
     end
 
-    group.subcommand(:add, "Enable the event roles functionality for a role.", name_localizations: { "hi" => "व्यवस्था" }, description_localizations: { "hi" => "इवेंट रोल्स कार्यक्षमता सेटअप करें" }) do |option|
+    group.subcommand(:gradient, "Edit the gradient of an event role.", name_localizations: { "hi" => "ग्रेडियेंट" }, description_localizations: { "hi" => "किसी ईवेंट भूमिका का ग्रेडिएंट संपादित करें" }) do |option|
+      option.string("start", "Provide a HEX color for your gradient start color.", required: false, min_length: 3, max_length: 16, name_localizations: { "hi" => "शुरू" }, description_localizations: { "hi" => "अपने ग्रेडिएंट आरंभ रंग के लिए एक रंग प्रदान करें" })
+      option.string("end", "Provide a HEX color for your gradient end color.", required: false, min_length: 3, max_length: 16, name_localizations: { "hi" => "अंत" }, description_localizations: { "hi" => "अपने ग्रेडिएंट अंतिम रंग के लिए एक रंग प्रदान करें" })
+    end
+
+    group.subcommand(:enable, "Enable the event roles functionality for a role.", name_localizations: { "hi" => "व्यवस्था" }, description_localizations: { "hi" => "इवेंट रोल्स कार्यक्षमता सेटअप करें" }) do |option|
       option.role("role", "Which role should be modifiable by its users?", required: true, name_localizations: { "hi" => "रोल" }, description_localizations: { "hi" => "कौन सा रोल उपयोगकर्ताओं द्वारा संपादित किया जा सकता है" })
       option.boolean("icon", "Should external emojis be allowed as role icons?", required: true, name_localizations: { "hi" => "आइकन" }, description_localizations: { "hi" => "क्या बाह्य इमोजी को भूमिका चिह्न के रूप में अनुमति दी जानी चाहिए" })
     end
 
-    group.subcommand(:remove, "Remove the event roles functionality from a role.", name_localizations: { "hi" => "निकालना" }, description_localizations: { "hi" => "किसी भूमिका से ईवेंट भूमिका कार्यक्षमता हटाएँ" }) do |option|
+    group.subcommand(:disable, "Remove the event roles functionality from a role.", name_localizations: { "hi" => "निकालना" }, description_localizations: { "hi" => "किसी भूमिका से ईवेंट भूमिका कार्यक्षमता हटाएँ" }) do |option|
       option.role("role", "Which role needs to be removed?", required: true, name_localizations: { "hi" => "रोल" }, description_localizations: { "hi" => "किस भूमिका को हटाने की जरूरत है" })
     end
-
-    group.subcommand(:disable, "Disable the event roles functionality.", name_localizations: { "hi" => "असमर्थ" }, description_localizations: { "hi" => "इवेंट रोल्स कार्यक्षमता को अक्षम करें" })
   end
 end
 
 # @!function [Birthday Operations] Belongs to a module that manages birthday roles.
 bot.register_application_command(:birthday, "birthday roles", contexts: [0], integration_types: [0]) do |command|
-  command.subcommand("add", "Add your date of birth.") do |option|
+  command.subcommand(:add, "Add your date of birth.") do |option|
     option.integer("day", "The day you were born on.", required: true, min_value: 1, max_value: 31)
     option.integer("month", "The month you were born in.", required: true, choices: { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 })
-    option.string("timezone", "Your timezone identifier, for example, Asia/Baku.", required: true, autocomplete: true, min_length: 5, max_length: 35)
+    option.string("timezone", "The timezone you were born in.", required: true, autocomplete: true, min_length: 5, max_length: 35)
   end
 
-  command.subcommand("edit", "Edit your date of birth or timezone.") do |option|
+  command.subcommand(:edit, "Edit your date of birth or timezone.") do |option|
     option.integer("day", "The day you were born on.", required: false, min_value: 1, max_value: 31)
     option.integer("month", "The month you were born in.", required: false, choices: { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 })
-    option.string("timezone", "Your timezone identifier, for example, Asia/Baku.", required: false, autocomplete: true, min_length: 5, max_length: 35)
+    option.string("timezone", "The timezone you were born in.", required: false, autocomplete: true, min_length: 5, max_length: 35)
   end
 
-  command.subcommand("grant", "Grant the birthday role to a member.") do |option|
+  command.subcommand(:grant, "Grant the birthday role to a member.") do |option|
     option.user("member", "Who do you want to give the birthday role to?", required: true)
   end
 
-  command.subcommand("sync", "Add your date of birth to this server.")
+  command.subcommand(:sync, "Add your date of birth to this server.")
 
-  command.subcommand("delete", "Remove your date of birth from the bot.")
+  command.subcommand(:delete, "Remove your date of birth from the bot.")
 
   command.subcommand_group(:admin, "Birthday admin!") do |group|
-    group.subcommand("enable", "Enable the birthday roles functionality.") do |option|
+    group.subcommand(:enable, "Enable the birthday roles functionality.") do |option|
       option.role("role", "Which role should members be given on their birthday?", required: false)
       option.channel("channel", "Which channel should birthday announcements be sent to?", types: [:text], required: false)
     end
 
-    group.subcommand("disable", "Disable the birthday roles functionality.")
+    group.subcommand(:disable, "Disable the birthday roles functionality.")
   end
 end
 
 # @!function [Booster Operations] Belongs to a module that manages booster roles.
 bot.register_application_command(:booster, "Booster perks", contexts: [0], integration_types: [0]) do |command|
   command.subcommand_group(:role, "Booster roles!") do |group|
-    group.subcommand("claim", "Claim your custom booster role.") do |option|
+    group.subcommand(:claim, "Claim your custom booster role.") do |option|
       option.string("name", "Provide a name for your role.", required: true, max_length: 100)
       option.string("color", "Provide a HEX color for your role.", required: true, min_length: 3, max_length: 16)
       option.string("icon", "Provide an emoji for your role icon.", required: false)
     end
 
-    group.subcommand("edit", "Edit your custom booster role.") do |option|
+    group.subcommand(:edit, "Edit your custom booster role.") do |option|
       option.string("name", "Provide a name for your role.", required: false, max_length: 100)
       option.string("color", "Provide a HEX color for your role.", required: false, min_length: 3, max_length: 16)
       option.string("icon", "Provide an emoji for your role icon.", required: false)
     end
 
-    group.subcommand("gradient", "Edit the gradient of your custom booster role.") do |option|
+    group.subcommand(:gradient, "Edit the gradient of your custom booster role.") do |option|
       option.string("start", "Provide a HEX color for your gradient start color.", required: false, min_length: 3, max_length: 16)
       option.string("end", "Provide a HEX color for your gradient end color.", required: false, min_length: 3, max_length: 16)
     end
 
-    group.subcommand("delete", "Delete your custom booster role.")
+    group.subcommand(:delete, "Delete your custom booster role.")
   end
 
   command.subcommand_group(:admin, "Booster admin!") do |group|
-    group.subcommand("add", "Manually add a 'booster' to this server.") do |option|
+    group.subcommand(:add, "Manually add a booster to this server.") do |option|
       option.user("member", "The user to add to the database.", required: true)
       option.role("role", "The role to add to the database.", required: true)
     end
 
-    group.subcommand("delete", 'Manually remove a "booster" from this server.') do |option|
+    group.subcommand(:delete, 'Manually remove a booster from this server.') do |option|
       option.user("member", "The user to remove from the database.", required: true)
     end
 
-    group.subcommand("ban", "Ban a user from using the booster perks functionality.") do |option|
+    group.subcommand(:ban, "Ban a user from using the booster perks functionality.") do |option|
       option.user("member", "The user to ban.", required: true)
       option.boolean("prune", "Should this member's custom role be deleted?", required: true)
     end
 
-    group.subcommand("unban", "Unban a user from using the booster perks functionality.") do |option|
+    group.subcommand(:unban, "Unban a user from using the booster perks functionality.") do |option|
       option.user("member", "The user to unban.", required: true)
     end
 
-    group.subcommand("disable", "Disable the booster perks functionality.") do |option|
+    group.subcommand(:disable, "Disable the booster perks functionality.") do |option|
       option.boolean("prune", "If all roles should be removed from the database.", required: true)
     end
 
-    group.subcommand("enable", "Enable the booster perks functionality.") do |option|
+    group.subcommand(:enable, "Enable the booster perks functionality.") do |option|
       option.role("role", "Which role should all custom booster roles be placed above?", required: false)
       option.boolean("icon", "Should external emojis be allowed as role icons?", required: false)
     end

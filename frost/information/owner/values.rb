@@ -8,15 +8,12 @@ module Owner
     3 => "The bot has powered off.",
     4 => "Success! No content.",
     5 => "**Error:** ``%s``",
-    6 => "Heads!",
-    7 => "``%s``",
-    8 => "Tails!"
+    6 => "``%s``",
   }.freeze
 
   # Application commands for owner commands.
   COMMANDS = {
-    1 => "`/coin flip`",
-    3 => "`/science`"
+    1 => "`/science`"
   }.freeze
 
   # Mapping of smart quotes to escape.

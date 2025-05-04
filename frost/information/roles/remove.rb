@@ -10,7 +10,7 @@ module AdminCommands
         return
       end
 
-      Frost::Roles.remove(data)
+      Role.new(data, lazy: true).delete
 
       data.edit_response(content: format(RESPONSE[93], data.options["role"]))
     end
