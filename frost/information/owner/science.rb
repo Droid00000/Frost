@@ -12,11 +12,11 @@ module Owner
 
     data.bot.stop if data.options["dial"] == 2
 
-    if data.options["dial"] == 3
+    if data.options["dial"] == 4
       exec("bundle exec ruby --yjit core.rb")
     end
 
-    if data.options["dial"] == 4
+    if data.options["dial"] == 3
       data.show_modal(title: "Eval", custom_id: "4") do |view|
         view.row do |ui|
           ui.text_input(
@@ -26,6 +26,11 @@ module Owner
           )
         end
       end
+    end
+
+    if data.options["dial"] == 5
+      me = data.bot.user(CONFIG[:Discord][:OWNER])
+      me.send_file(File.open("logs.txt", "r"))
     end
 
     return if data.options["dial"] == 4
