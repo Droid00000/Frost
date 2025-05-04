@@ -371,6 +371,6 @@ end
 class Hash
   # Get a given key from a hash.
   def get(data)
-    self[(data.gsub(/([a-z0-9])([A-Z])/, '\1_\2')&.downcase&.to_sym)] unless data
+    data.nil? ? nil : self[data&.strip&.downcase&.gsub(/(?<=[^\,\.])\s+|\A\s+/, '_')&.to_sym]
   end
 end

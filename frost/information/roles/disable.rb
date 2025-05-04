@@ -10,7 +10,7 @@ module AdminCommands
         return
       end
 
-      Frost::Roles.disable(data)
+      Guild.new(data, lazy: true).delete
 
       data.edit_response(content: RESPONSE[39])
     end

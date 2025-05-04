@@ -19,8 +19,9 @@ module Roles
     @@pg = POSTGRES[:event_settings]
 
     # @!visibility private
-    def initialize(data)
+    def initialize(data, lazy: false)
       @bot = data.bot
+      @lazy = lazy == true
       @guild = data.server.id
       @model = find_role(data)
       @role_id = @model[:role_id]
@@ -70,7 +71,38 @@ module Roles
 
     # @!visibility private
     def find_role(*options)
-      POSTGRES.transaction { @@pg.where(guild_id: options[0].options["role"]).first }
+      @lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: options[0].options["role"]).first }
+    end
+  end
+
+  # A collection of roles for a specific server.
+  class Guild
+    # @return [Integer]
+    attr_reader :guild
+    alias guild_id guild
+
+    # @return [Array<Hash>]
+    attr_reader :roles
+
+    # @!visibility private
+    def initialize(data, lazy: false)
+      @bot = data.bot
+      @lazy = lazy == true
+      @guild = data.server.id
+      @roles = find_guild(data)
+    end
+
+    # Delete the records for this guild.
+    # @note This method takes arguments, but currently they're ignored.
+    def delete(**_options)
+      POSTGRES.transaction { @@pg.where(guild_id: guild).delete }
+    end
+
+    private
+
+    # @!visibility private
+    def find_guild(*options)
+      @lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: options[0].server.id) }
     end
   end
 end

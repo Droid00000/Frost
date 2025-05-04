@@ -3,19 +3,25 @@
 module General
   # Prune deleted roles.
   def self.roles(data)
-    Frost::Roles.remove_role(data)
+    # Remove the deleted role from server boosters.
+    POSTGRES[:guild_boosters].where(guild_id: data.server.id, role_id: data.id).delete
 
-    Frost::Birthdays::Settings.remove(data)
+    # Remove the deleted role from custom event roles.
+    POSTGRES[:event_settings].where(guild_id: data.server.id, role_id: data.id).delete
 
-    Frost::Boosters::Members.remove_role(data)
+    # Remove the deleted role from birthday settings.
+    POSTGRES[:birthday_settings].where(guild_id: data.server.id, role_id: data.id).delete
 
-    Frost::Boosters::Settings.remove_role(data)
+    # Remove the deleted role from server booster settings.
+    POSTGRES[:booster_settings].where(guild_id: data.server.id, hoist_role: data.id).delete
   end
 
   # Prune deleted channels.
   def self.channels(data)
-    Frost::Pins.remove(data)
+    # Remove the deleted channel from archiver settings.
+    POSTGRES[:archiver_settings].where(guild_id: data.server.id, channel_id: data.id).delete
 
-    Frost::Birthdays::Settings.remove_channel(data)
+    # Remove the deleted channel from birthday settings.
+    POSTGRES[:birthday_settings].where(guild_id: data.server.id, channel_id: data.id).update(channel_id: nil)
   end
 end

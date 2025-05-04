@@ -8,7 +8,7 @@ module Settings
 
     # Return early unless we have roles we can show the user.
     # Else there's no point in going any further with this command.
-    if guild.roles.empty?(data)
+    if guild.roles.to_a.empty?(data)
       data.send_message(content: RESPONSE[1])
       return
     end
@@ -47,7 +47,7 @@ module Settings
 
         # Add our main role content here. Take the first twenty
         # roles and join them all together by a newline character.
-        container.text_display(text: roles.take(20).join)
+        container.text_display(text: roles.take(50).join)
 
         # Add some spacing between the content of our container
         # and the footer text that we're adding.
@@ -55,7 +55,7 @@ module Settings
 
         # Add our footer text. Eventually this can be swapped out for
         # an action row with buttons for pagination if needed.
-        container.text_display(text: format(RESPONSE[5], roles.take(20).size, roles.size))
+        container.text_display(text: format(RESPONSE[5], roles.take(50).size, roles.size))
       end
     end
   end
