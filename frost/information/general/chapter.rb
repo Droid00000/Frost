@@ -24,6 +24,6 @@ module General
 end
 
 # Cron job to update the release channel.
-SCHEDULER.cron "30 11 * * *" do
+Rufus::Scheduler.singleton.cron "30 11 * * *" do
   General.find_chapter
 end
