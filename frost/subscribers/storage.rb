@@ -178,4 +178,26 @@ module Boosters
       { target: :user_id, update: { role_id: options[0].resolve_id } }
     end
   end
+
+  # Class for singleton methods that are required for for role audits.
+  class Members
+    # Get a list of all the boosters that are in the database.
+    # @return [Array<Hash<Symbol => Integer>>, Sequel::Dataset]
+    def self.stream = @@users.all.to_a
+
+    # Get a list of all the boosters that are in the database.
+    # @return [Array<Hash<Symbol => Integer, Symbol => Array>>]
+    def self.chunks
+      stream.group_by { |member| member[:guild_id] }.map do |guild, users|
+        { guild_id: guild, members: users.map { |user| user[:user_id] } }
+      end
+    end
+
+    # Delete a singular booster from the database from the given options.
+    # @param guild_id [Integer, String] ID of the guild the record is for.
+    # @param user_id [Integer, String] ID of the user the record is for.
+    def self.delete(*options)
+      POSTGRES.transaction { @@users.where(guild_id: options[0], user_id: options[1]) }
+    end
+  end
 end
