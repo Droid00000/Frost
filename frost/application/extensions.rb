@@ -241,16 +241,17 @@ module Discordrb
       # sending TTS messages, embedding links, sending files, reading the history, mentioning everybody,
       # connecting to voice, speaking and voice activity (push-to-talk isn't mandatory)
       # https://discord.com/developers/docs/resources/guild#get-guild-roles
-      def create_role(token, server_id, name, colour, _hoist, _mentionable, packed_permissions, icon, reason = nil, emoji: nil)
-        if !icon.is_a?(String) && icon
-          path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
+      def create_role(token, server_id, name, colour, _hoist, _mentionable, packed_permissions, icon = nil, reason = nil)
+        data = { color: colour, name: name, hoist: false, mentionable: nil, permissions: packed_permissions, icon: icon }
 
+        if icon&.respond_to?(:read)
+          path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
           mime = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || "image/jpeg"
-          icon = "data:#{mime};base64,#{Base64.encode64(icon.read).strip}"
-        elsif icon.is_a?(String)
-          emoji = icon
-        else
-          icon = nil
+          data[:icon] = "data:#{mime};base64,#{Base64.encode64(icon.read).strip}"
+        end
+
+        if icon&.is_a?(String)
+          data[:unicode_emoji] = icon
         end
 
         Discordrb::API.request(
@@ -258,7 +259,7 @@ module Discordrb
           server_id,
           :post,
           "#{Discordrb::API.api_base}/guilds/#{server_id}/roles",
-          { color: colour, name: name, hoist: false, mentionable: nil, permissions: packed_permissions, icon: icon, unicode_emoji: emoji }.compact.to_json,
+          data.compact.to_json,
           Authorization: token,
           content_type: :json,
           "X-Audit-Log-Reason": reason
@@ -274,16 +275,18 @@ module Discordrb
       def update_role(token, server_id, role_id, name, colour, _hoist, _mentionable, _packed_permissions, icon = :undef, reason = nil, colors = nil)
         data = { color: colour, name: name, colors: colors }.compact
 
-        if !icon.is_a?(String) && icon != :undef && icon && icon != :NULL
+        if icon&.respond_to?(:read)
           path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
-
           mime = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || "image/jpeg"
           data[:icon] = "data:#{mime};base64,#{Base64.encode64(icon.read).strip}"
-        elsif icon.is_a?(String)
+        end
+
+        if icon&.is_a?(String)
           data[:unicode_emoji] = icon
-        elsif icon == :NULL
-          data[:icon] = nil
-          data[:unicode_emoji] = nil
+        end
+
+        if icon && icon == :NULL
+          data.merge!(unicode_emoji: nil, icon: nil)
         end
 
         if colors&.values&.include?(:NULL)

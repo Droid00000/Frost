@@ -28,11 +28,11 @@ module Emojis
     # Fetch the top emojis from the database and resolve them all
     # into a hash of emoji objects, so we can map them into our desired format.
     emojis = emojis.filter_map do |emoji|
-      next unless data.bot.emoji(emoji[:emoji_id])
+      next unless data.bot.emoji(emoji[:emoji_id])&.server == data.server
 
-      emoji = { key: data.bot.emoji(emoji[:emoji_id]), data: emoji[:balance] }
+      emoji = [data.bot.emoji(emoji[:emoji_id]), emoji[:balance].delimit]
 
-      "#{emoji[:key].mention} — #{emoji[:key].name} **(#{emoji[:data].delimit})**\n"
+      "#{emoji.first.mention} — #{emoji.first.name} **(#{emoji.last})**\n"
     end
 
     # Return early unless we have emojis we can show.

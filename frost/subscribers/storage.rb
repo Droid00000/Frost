@@ -98,7 +98,7 @@ module Boosters
   end
 
   # Represents a singular booster.
-  class User
+  class Member
     # @return [Hash]
     attr_reader :query
 

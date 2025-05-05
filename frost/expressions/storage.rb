@@ -12,7 +12,7 @@ module Emojis
     # Returns the top 15 emojis.
     def self.top(data)
       POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id).order(Sequel.desc(:balance)).limit(500).select(:emoji_id, :balance)
+        @@pg.where(guild_id: data.server.id).order(Sequel.desc(:balance)).limit(650).select(:emoji_id, :balance)
       end
     end
 

@@ -53,8 +53,8 @@ module Boosters
   # @param data [Interaction] The icon to resolve.
   # @return [String, File, nil] The resolved icon.
   def self.to_icon(data)
-    return nil if data.emoji("icon").nil? || data.options["icon"].empty?
+    return nil if data.options["icon"].nil? || data.options["icon"].empty?
 
-    data.emoji("icon").file(static: true) || data.options["icon"].scan(Unicode::Emoji::REGEX).first
+    data.emoji("icon")&.file(static: true) || data.options["icon"].scan(Unicode::Emoji::REGEX).first
   end
 end
