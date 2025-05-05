@@ -3,15 +3,19 @@
 module Settings
   # Settings page for boosters.
   def self.pins(data)
-    # Return early unless booster perks are enabled in this server.
-    unless Frost::Pins.channel(data)
+    # Request all of our channel data up front in order
+    # to avoid making duplicate requested to the DB.
+    view = Pins::Guild.new(data)
+
+    # Return early unless the archiver is enabled.
+    if view.blank?
       data.send_message(content: RESPONSE[1])
       return
     end
 
     # Manually enable the `IS_COMPONENTS_V2 (1 << 15)`
     # flags so we can use the new interaction components.
-    data.send_message(new_components: true, flags: 64) do |_, builder|
+    data.send_message(has_components: true, flags: 64) do |_, builder|
       # Create a container in order to simulate the old look and
       # feel of an embed. This looks okay on mobile, but not so
       # good on desktop.
@@ -31,10 +35,6 @@ module Settings
           # Add the description text at the botton.
           section.text_display(text: RESPONSE[1])
         end
-
-        # Request all of our channel data up front in order
-        # to avoid making duplicate requested to the DB.
-        view = Frost::Pins.view(data)
 
         # Add some spacing between the section content of our
         # container and the remaining content we're adding.

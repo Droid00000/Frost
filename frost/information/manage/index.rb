@@ -5,7 +5,7 @@ module Settings
   def self.info(data)
     # Manually enable the `IS_COMPONENTS_V2 (1 << 15)`
     # flags so we can use the new interaction components.
-    data.edit_response(new_components: true, flags: 64) do |_, builder|
+    data.edit_response(has_components: true, flags: 64) do |_, builder|
       # Create a container in order to simulate the old look and
       # feel of an embed. This looks okay on mobile, but not so
       # good on desktop. I they make containers blend with themes.

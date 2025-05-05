@@ -5,7 +5,7 @@ module Affections
   def self.bedtime(data)
     # Manually enable the `IS_COMPONENTS_V2 (1 << 15)`
     # flags so we can use the new interaction components.
-    data.respond(new_components: true) do |_, builder|
+    data.respond(has_components: true) do |_, builder|
       # Add our content which contains our user mention.
       builder.content = data.member("target").mention
 

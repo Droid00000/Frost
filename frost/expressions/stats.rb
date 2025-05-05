@@ -26,8 +26,7 @@ module Emojis
     Thread.new { Storage.large? }
 
     # Fetch the top emojis from the database and resolve them all
-    # into a hash of emoji objects, so we can map them up into our desired
-    # format of: `<:mention:103030303030> - NAME **(INT)**`.
+    # into a hash of emoji objects, so we can map them into our desired format.
     emojis = emojis.filter_map do |emoji|
       next unless data.bot.emoji(emoji[:emoji_id])
 
@@ -44,7 +43,7 @@ module Emojis
 
     # Manually enable the `IS_COMPONENTS_V2 (1 << 15)`
     # flags so we can use the new interaction components.
-    data.edit_response(new_components: true) do |_, builder|
+    data.edit_response(has_components: true) do |_, builder|
       # Add a top level container here to container all of our other components.
       builder.container do |container|
         # Add a section (mainly so we can add a thumbnail).
