@@ -5,10 +5,10 @@ Rufus::Scheduler.s.cron "30 18 * * *" do
     @bot.gateway.members(chunk[:guild_id], chunk[:members])
   end
 
-  Boosters::Members.stream.each do |member|
-    next if @bot.member(member[:guild_id], member[:user_id])&.boosting?
+  Boosters::Members.stream.each do |user|
+    next if @bot.member(user[:guild_id], user[:user_id])&.boosting?
 
-    @bot.remove_guild_role(member[:guild_id], member[:role_id])
-    Boosters::Members.delete(member[:guild_id], member[:user_id])
+    @bot.remove_guild_role(user[:guild_id], user[:role_id])
+    Boosters::Members.delete(user[:guild_id], user[:user_id])
   end
 end
