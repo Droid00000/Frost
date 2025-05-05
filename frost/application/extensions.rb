@@ -223,12 +223,12 @@ module Discordrb
     module Server
       module_function
 
-      def channel_name(token, id, name, reason)
+      def channel_name(token, channel_id, name, reason)
         Discordrb::API.request(
           :channels_cid,
           :channel_id,
           :patch,
-          "#{Discordrb::API.api_base}/channels/#{id}",
+          "#{Discordrb::API.api_base}/channels/#{channel_id}",
           { name: name }.to_json,
           Authorization: token,
           content_type: :json,
