@@ -12,12 +12,12 @@ module Birthdays
     alias guild_id guild
 
     # @return [Integer]
-    attr_reeader :role_id
+    attr_reader :role_id
     alias role role_id
 
     # @return [Integer, nil]
     attr_reader :channel_id
-    alias channel channel
+    alias channel channel_id
 
     # @return [Integer, nil]
     attr_reader :enabled_at
@@ -31,7 +31,7 @@ module Birthdays
     @@pg = POSTGRES[:birthday_settings]
 
     # @return [Sequel::Dataset]
-    @@users = POSGTRES[:guild_birthdays]
+    @@users = POSTGRES[:guild_birthdays]
 
     # @!visibility private
     def initialize(data, lazy: false)

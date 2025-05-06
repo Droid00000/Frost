@@ -3,23 +3,31 @@
 module Owner
   # Run some code on the bot.
   def self.code(data)
-    begin
-      code = eval(escape(data.value["code"]))
-    rescue StandardError, SyntaxError => e
-      data.send_message(content: format(RESPONSE[4], e.message))
+    unless data.user.id == CONFIG[:Discord][:OWNER]&.to_i
+      data.edit_response(content: RESPONSE[1], ephemeral: true)
       return
     end
 
-    if (code.size + 6) > Discordrb::CHARACTER_LIMIT
-      Tempfile.open("output.txt") do |file|
-        return data.send_message(attachments: [file.write(code)])
-      end
+    begin
+      code = eval(escape(data.value("code"))).inspect
+    rescue StandardError, SyntaxError => e
+      data.respond(content: format(RESPONSE[5], e.message), ephemeral: true)
+      return
     end
 
-    if code.empty?
-      data.send_message(content: RESPONSE[3])
+    code = if ("#{code}".length + 5) >= Discordrb::CHARACTER_LIMIT
+             file = Tempfile.new(["output", ".txt"])
+             file if [file.write(code), file.rewind]
+           else
+             code
+           end
+
+    if code.is_a?(Tempfile)
+      data.respond(attachments: [code], ephemeral: true)
+    elsif "#{code}".empty?
+      data.respond(content: RESPONSE[3], ephemeral: true)
     else
-      data.send_message(content: format(RESPONSE[6], code))
+      data.respond(content: "``#{code}``", ephemeral: true)
     end
   end
 end

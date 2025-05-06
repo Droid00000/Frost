@@ -7,8 +7,7 @@ module Owner
     2 => "This command is owner only.",
     3 => "The bot has powered off.",
     4 => "Success! No content.",
-    5 => "**Error:** ``%s``",
-    6 => "``%s``",
+    5 => "**Error:** ``%s``"
   }.freeze
 
   # Application commands for owner commands.

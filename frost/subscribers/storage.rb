@@ -6,7 +6,7 @@ module Boosters
     # @return [Boolean]
     attr_reader :lazy
     alias lazy? lazy
-  
+
     # @return [Integer]
     attr_reader :guild
     alias guild_id guild

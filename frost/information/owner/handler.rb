@@ -4,11 +4,10 @@ module AdminCommands
   extend Discordrb::EventContainer
 
   application_command(:science) do |event|
-    event.defer(ephemeral: true)
     Owner.science(event)
   end
 
-  modal_submit(custom_id: "4") do |event|
+  modal_submit(custom_id: "3") do |event|
     Owner.code(event)
   end
 
