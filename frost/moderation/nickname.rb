@@ -14,7 +14,7 @@ module Moderation
     end
 
     if hierarchy(data.member("member")) >= hierarchy(data.server.bot)
-      data.edit_response(content: format(RESPONSE[58], "me")))
+      data.edit_response(content: format(RESPONSE[58], "me"))
       return
     end
 
