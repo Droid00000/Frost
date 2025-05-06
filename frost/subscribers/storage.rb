@@ -3,6 +3,10 @@
 module Boosters
   # A guild that a server booster belongs to.
   class Guild
+    # @return [Boolean]
+    attr_reader :lazy
+    alias lazy? lazy
+  
     # @return [Integer]
     attr_reader :guild
     alias guild_id guild
@@ -30,8 +34,9 @@ module Boosters
     @@users = POSTGRES[:guild_boosters]
 
     # @!visibility private
-    def initialize(data)
+    def initialize(data, lazy: false)
       @bot = data.bot
+      @lazy = lazy == true
       @guild = data.server.id
       @model = find_guild(@guild)
       @any_icon = @model[:any_icon]
@@ -87,8 +92,8 @@ module Boosters
     end
 
     # @!visibility private
-    def find_guild(*options)
-      POSTGRES.transaction { @@pg.where(guild_id: options[0]).first }
+    def find_guild(*_options)
+      lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: guild).first }
     end
 
     # @!visibility private

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Pins
-  # A guild which has the pin archiver enabled.
+module Birthdays
+  # Model for a birthday server.
   class Guild
     # @return [Boolean]
     attr_reader :lazy
@@ -12,8 +12,12 @@ module Pins
     alias guild_id guild
 
     # @return [Integer]
+    attr_reeader :role_id
+    alias role role_id
+
+    # @return [Integer, nil]
     attr_reader :channel_id
-    alias channel channel_id
+    alias channel channel
 
     # @return [Integer, nil]
     attr_reader :enabled_at
@@ -24,7 +28,10 @@ module Pins
     alias setup_by enabled_by
 
     # @return [Sequel::Dataset]
-    @@pg = POSTGRES[:archiver_settings]
+    @@pg = POSTGRES[:birthday_settings]
+
+    # @return [Sequel::Dataset]
+    @@users = POSGTRES[:guild_birthdays]
 
     # @!visibility private
     def initialize(data, lazy: false)
@@ -32,24 +39,26 @@ module Pins
       @lazy = lazy == true
       @guild = data.server.id
       @model = find_guild(@guild)
-      @channel_id = @model[:channel_id]
-      @enabled_at = @model[:enabled_at]
+      @role_id = @model[:role_id]
       @enabled_by = @model[:enabled_by]
+      @enabled_at = @model[:enabled_at]
+      @channel_id = @model[:channel_id]
     end
 
     # Check if this guild is nil, e.g. hasn't been setup.
     # @return [Boolean] Whether this guild is nil or not.
-    def blank? = channel_id&.nil?
+    def blank? = role_id.nil?
 
-    # Get metadata about the settings for this guild.
+    # Get metadata about the settings for this birthday guild.
     # @return [Array<String, Integer>] Metadata info about this guild.
     def view = [@bot.user(enabled_by)&.name, enabled_at]
 
     # Create a new record or update an existing record.
     # @param guild_id [Integer] ID of the guild this record is for.
-    # @param channel_id [Integer] ID of the archive channel for this guild.
-    # @param setup_by [Integer] ID of the user who setup the pin archiver for this guild.
-    # @param setup_at [Integer] Timestamp of when the pin archiver was setup for this guild.
+    # @param role_id [Integer] ID of the birthday role for this guild.
+    # @param channel_id [Integer] ID of the birthday annoucement channel for this guild.
+    # @param setup_by [Integer] ID of the user who setup birthday events for this guild.
+    # @param setup_at [Integer] Unix timestamp of when birthday events were setup for this guild.
     def edit(**options)
       POSTGRES.transaction do
         options = transform_options(options)
@@ -59,9 +68,13 @@ module Pins
     end
 
     # Delete the record for this guild.
-    # @note This method takes arguments, but currently they're ignored.
+    # @note This method takes arguments, but they're ignored.
     def delete(**_options)
-      POSTGRES.transaction { @@pg.where(guild_id: @guild_id).delete }
+      POSGTRES.transaction do
+        @@pg.where(guild_id: guild).delete
+
+        @@users.where(guild_id: [guild]).delete
+      end
     end
 
     private
@@ -80,12 +93,12 @@ module Pins
 
     # @!visibility private
     def find_guild(*_options)
-      lazy ? {} : POSTGRES.transaction { @@pg.where(guild: guild).first }
+      lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: guild).first }
     end
 
     # @!visibility private
     def conflict(*options)
-      { target: :guild_id, update: options[0].except(:enabled_by, :enabled_at) }
+      { target: :guild_id, update: arguments[0].except(:enabled_by, :enabled_at) }
     end
   end
 end
