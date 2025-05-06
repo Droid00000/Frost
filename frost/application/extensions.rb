@@ -242,7 +242,7 @@ module Discordrb
       # connecting to voice, speaking and voice activity (push-to-talk isn't mandatory)
       # https://discord.com/developers/docs/resources/guild#get-guild-roles
       def create_role(token, server_id, name, colour, _hoist, _mentionable, packed_permissions, icon = nil, reason = nil)
-        data = { color: colour, name: name, hoist: false, mentionable: nil, permissions: packed_permissions, icon: icon }
+        data = { color: colour, name: name, hoist: false, mentionable: nil, permissions: packed_permissions }
 
         if icon&.respond_to?(:read)
           path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
@@ -291,7 +291,7 @@ module Discordrb
 
         if colors&.values&.include?(:NULL)
           data[:colors].each do |key, value|
-            data[:colors][key] = nil if value != :NULL
+            data[:colors][key] = nil if value == :NULL
           end
         end
 
