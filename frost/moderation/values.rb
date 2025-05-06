@@ -3,12 +3,13 @@
 module Moderation
   # Responses and fields for moderation.
   RESPONSE = {
-    1 => "The bot needs to have the ``manage messages`` permission to do this.",
-    2 => "The bot needs to have the ``view channel`` permission to do this.",
-    3 => "This user is too powerful for you to modify.",
-    4 => "This user is too powerful for me to modify.",
-    5 => "Successfully updated <@%s> nickname.",
-    6 => "Successfully deleted %s message."
+    1 => "The bot needs to have the ``manage nicknames`` permission to do this.",
+    2 => "The bot needs to have the ``manage messages`` permission to do this.",
+    3 => "The bot needs to have the ``view channel`` permission to do this.",
+    4 => "This user is too powerful for you to modify.",
+    5 => "This user is too powerful for me to modify.",
+    6 => "Successfully updated <@%s> nickname.",
+    7 => "Successfully deleted %s message."
   }.freeze
 
   # Application commands for moderation.
