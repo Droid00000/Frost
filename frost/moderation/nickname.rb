@@ -18,7 +18,8 @@ module Moderation
       return
     end
 
-    data.member("member").nickname = data.options["nickname"]
+    data.member("member").set_nick(data.options["nickname"],
+                                   "#{data.user.name} (ID: #{data.user.id}")
 
     data.edit_response(content: format(RESPONSE[65], data.options["member"]))
   end
