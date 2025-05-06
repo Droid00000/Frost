@@ -15,7 +15,7 @@ module Owner
       return
     end
 
-    code = if ("#{code}".length + 5) >= Discordrb::CHARACTER_LIMIT
+    code = if ("#{code}".length + 5) >= 2000
              file = Tempfile.new(["output", ".txt"])
              file if [file.write(code), file.rewind]
            else
