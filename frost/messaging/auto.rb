@@ -3,11 +3,15 @@
 module Pins
   # Audits all the pins in the current event's channel.
   def self.audit(data)
-    guild, bot = [Guild.new(data), data.server.bot]
+    guild = Guild.new(data)
 
-    channel = guild.channel ? bot.channel(guild.channel) : nil
+    channel = data.bot.channel(guild.channel) if !guild.blank?
+
+    return unless bot.permission?(:read_messages, data.channel)
 
     return unless bot.permission?(:manage_messages, data.channel)
+
+    return unless channel && bot.permission?(:read_messages, channel)
 
     return unless channel && bot.permission?(:send_messages, channel)
 

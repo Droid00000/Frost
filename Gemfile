@@ -12,6 +12,8 @@ gem "rufus-scheduler"
 
 gem "tzinfo-data"
 
+gem "sequel_pg"
+
 gem "sequel"
 
 gem "pg"

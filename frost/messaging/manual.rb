@@ -8,16 +8,30 @@ module Pins
       return
     end
 
-    guild = Guild.new(data)
+    unless data.server.bot.permission?(:read_messages, data.channel)
+      data.edit_response(content: RESPONSE[1])
+      return
+    end
 
-    channel = guild.blank? ? nil : data.bot.channel(guild.channel)
+    guild = Guild.new(guild)
 
-    unless channel
+    channel = if !guild.blank?
+                data.bot.channel(guild.channel)
+              else
+                nil
+              end
+
+    if guild.blank?
       data.edit_response(content: RESPONSE[6])
       return
     end
 
     unless data.server.bot.permission?(:manage_messages, channel)
+      data.edit_response(content: RESPONSE[1])
+      return
+    end
+
+    unless data.server.bot.permission?(:read_messages, channel)
       data.edit_response(content: RESPONSE[1])
       return
     end
