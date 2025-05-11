@@ -9,8 +9,3 @@ end
 Rufus::Scheduler.singleton.cron "0 0 * * *" do
   Emojis::Storage.drain
 end
-
-# Clean out ununsed emojis from the DB.
-Rufus::Scheduler.singleton.cron "0 0 1 * *" do
-  Emojis::Storage.prune
-end

@@ -12,7 +12,7 @@ module Emojis
     # Returns the top 15 emojis.
     def self.top(data)
       POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id).order(Sequel.desc(:balance)).limit(650).select(:emoji_id, :balance)
+        @@pg.where(guild_id: data.server.id).order(Sequel.desc(:balance)).limit(700).select(:emoji_id, :balance)
       end
     end
 
@@ -21,17 +21,15 @@ module Emojis
       @@emojis << { emoji_id: emoji.id, guild_id: guild.id }
     end
 
+    # Check local emojis for a server.
+    def self.index?(guild)
+      @@emojis.any? { |emoji| emoji[:guild_id] == guild }
+    end
+
     # Insert a new emoji into the DB.
     def self.drain
       POSTGRES.transaction do
         @@emojis.clear if @@pg.multi_insert(@@emojis)
-      end
-    end
-
-    # Prune un-used emojis from the DB.
-    def self.prune
-      POSTGRES.transaction do
-        @@pg.where { balance < 3 }.delete
       end
     end
 
