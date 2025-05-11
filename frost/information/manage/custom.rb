@@ -19,7 +19,7 @@ module Settings
       # Create a container in order to simulate the old look and
       # feel of an embed. This looks okay on mobile, but not so
       # good on desktop.
-      builder.container(colour: "#a2bffe") do |container|
+      builder.container do |container|
         # Create a section to contain all of our main content, since
         # if we attempt to only wrap our main heading text into a section
         # we get some very weird spacing due to the fact that the thumbnail

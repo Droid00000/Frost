@@ -9,6 +9,11 @@ module AdminCommands
       Roles.disable(event)
     end
 
+    group.subcommand(:graident) do |event|
+      event.defer(ephemeral: true)
+      Roles.colors(event)
+    end
+
     group.subcommand(:enable) do |event|
       event.defer(ephemeral: true)
       Roles.add(event)

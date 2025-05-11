@@ -3,12 +3,12 @@
 module Settings
   # Settings page for boosters.
   def self.pins(data)
-    # Request all of our channel data up front in order
+    # Request all of our guild data up front in order
     # to avoid making duplicate requested to the DB.
-    view = Pins::Guild.new(data)
+    guild = Pins::Guild.new(data)
 
     # Return early unless the archiver is enabled.
-    if view.blank?
+    if guild.blank?
       data.send_message(content: RESPONSE[1])
       return
     end
@@ -42,11 +42,11 @@ module Settings
 
         # Add some spacing between the content of our container
         # and the footer text that we're adding.
-        container.text_display(text: format(RESPONSE[1], view[:role_id]))
+        container.text_display(text: format(RESPONSE[1], guild.role))
 
         # Add the manager information we're now showing
         # and tracking. Includes the sanction timestamp.
-        container.text_display(text: format(RESPONSE[1], *manager(data, view)))
+        container.text_display(text: format(RESPONSE[1], *guild.view))
 
         # Add our footer text. Eventually this can be swapped out for
         # an action row with buttons for pagination if needed.
