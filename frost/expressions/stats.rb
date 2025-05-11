@@ -72,7 +72,7 @@ module Emojis
         # I'm hoping that discord allows a field like component to
         # allow for some degree of veritcal seperation, but I doubt
         # it's going to happen due to challenges with mobile devices.
-        container.text_display(text: emojis.first(15).join)
+        container.text_display(text: emojis.first(17).join)
 
         # Add a fininshing bit of spacing between the main content
         # and the text we're attempting to emulate as a footer.
