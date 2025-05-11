@@ -33,13 +33,4 @@ module Affections
     6 => "`/nom`",
     7 => "`/hug`"
   }.freeze
-
-  # Set no color for the container if the user has no color.
-  # @param [Discordrb::User] The user to check the color for.
-  # @return [Discordrb::ColorRGB, nil] The color or nil.
-  def self.to_color(user)
-    return unless user.respond_to?(:color)
-
-    user.color unless user.color.to_i.zero?
-  end
 end

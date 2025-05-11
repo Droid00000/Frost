@@ -21,7 +21,7 @@ module Affections
         # Set an accent color for the embed we're currently operating on.
         # I was going to originally swap this embed over to CV2, but, on
         # desktop, V2 components look super large with images for some reason.
-        embed.color = to_color(data.user)
+        embed.color = data.user.respond_to?(:color) ? user.color : 0
 
         # Add a bit of text explaining the type of action we're doing, including
         # the target user and the initiating user. E.g. "Droid punches Hermit!"
