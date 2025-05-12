@@ -19,15 +19,6 @@ CREATE TABLE IF NOT EXISTS guild_timezones (
   PRIMARY KEY (timezone, name)
 );
 
--- Holds info about the pin archiver.
-CREATE TABLE IF NOT EXISTS archiver_settings (
-  setup_by BIGINT NOT NULL,
-  setup_at BIGINT NOT NULL,
-  guild_id BIGINT NOT NULL UNIQUE,
-  channel_id BIGINT NOT NULL UNIQUE,
-  PRIMARY KEY (channel_id, guild_id)
-);
-
 -- Holds info about booster settings.
 CREATE TABLE IF NOT EXISTS booster_settings (
   setup_by BIGINT NOT NULL,

@@ -17,7 +17,6 @@ Dir["frost/**/*.rb"].each { |file| require file }
 
 at_exit { @bot.stop }
 
-@bot.include! PinCommands
 @bot.include! EmojiCommands
 @bot.include! AdminCommands
 @bot.include! BoosterCommands

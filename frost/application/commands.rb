@@ -88,17 +88,6 @@ bot.register_application_command(:next, "Manga Chapter!", server_id: ENV.fetch("
   end
 end
 
-# @!function [Pin Operations] Belongs to a module that manages pins in a channel.
-bot.register_application_command(:pin, "Pin archive", default_member_permissions: "16", contexts: [0], integration_types: [0], name_localizations: { "hi" => "पिन" }, description_localizations: { "hi" => "की पुरातत्" }) do |command|
-  command.subcommand_group(:archiver, "Pin Archival!", name_localizations: { "hi" => "संग्रहकर्ता" }, description_localizations: { "hi" => "की पुरातत्व" }) do |group|
-    group.subcommand(:enable, "Enable the pin archiver functionality.", name_localizations: { "hi" => "बंदोबस्त" }, description_localizations: { "hi" => "पिन की पुरातत्व की कंडीशन" }) do |option|
-      option.channel("channel", "Which channel should archived pins be sent to?", required: true, types: [:text], name_localizations: { "hi" => "प्रवाह" }, description_localizations: { "hi" => "किधर पुरातात्विक पिंस जाने चाहिए" })
-    end
-
-    group.subcommand(:disable, "disable the pin archiver functionality.", name_localizations: { "hi" => "बंदकरने" }, description_localizations: { "hi" => "पिन पुरातत्व कंडीशन को बंद करो" })
-  end
-end
-
 # @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
 bot.register_application_command(:purge, "Moderation Commands", contexts: [0], integration_types: [0], name_localizations: { "hi" => "शुद्ध" }, description_localizations: { "hi" => "मॉडरेशन आदेश" }, default_member_permissions: "10256") do |command|
   command.subcommand(:messages, "Remove messages that meet a criteria.", name_localizations: { "hi" => "सूचना" }, description_localizations: { "hi" => "वर्तमान चैनल में संदेश हटाएँ" }) do |option|
