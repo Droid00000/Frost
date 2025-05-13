@@ -4,40 +4,40 @@ module Boosters
   # Command handler for /booster role claim.
   def self.create(data)
     unless data.server.bot.permission?(:manage_roles)
-      data.edit_response(content: RESPONSE[47])
+      data.edit_response(content: RESPONSE[6])
       return
     end
 
     unless data.user.boosting?
-      data.edit_response(content: RESPONSE[8])
+      data.edit_response(content: RESPONSE[9])
       return
     end
 
     if data.server.roles.size == 250
-      data.edit_response(content: RESPONSE[46])
+      data.edit_response(content: RESPONSE[5])
       return
     end
 
     unless safe_name?(data.options["name"])
-      data.edit_response(content: RESPONSE[7])
+      data.edit_response(content: RESPONSE[8])
       return
     end
 
     # Initalize the invoking user.
     member = Boosters::Member.new(data)
 
+    unless member.blank?
+      data.edit_response(content: RESPONSE[11])
+      return
+    end
+
     if member.guild.blank?
-      data.edit_response(content: RESPONSE[5])
+      data.edit_response(content: RESPONSE[10])
       return
     end
 
     if member.banned?
-      data.edit_response(content: RESPONSE[6])
-      return
-    end
-
-    unless member.blank?
-      data.edit_response(content: RESPONSE[4])
+      data.edit_response(content: RESPONSE[7])
       return
     end
 

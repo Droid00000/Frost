@@ -8,11 +8,12 @@ module Boosters
     3 => "Your role has been deleted! Feel free to make a new role at any time. <a:YorClap_Maomao:1287269908157038592>",
     4 => "Your role has been successfully edited! <a:LoidClap_Maomao:1276327798104920175>",
     5 => "Your role couldn't be created. The maximum role limit has been reached.",
-    6 => "You've been forbidden from using booster perks in this server.",
-    7 => "Your role name contains a word that may not be used.",
-    8 => "You must be a server booster to use this command.",
-    9 => "This server has not enabled booster perks.",
-    10 => "You've already claimed your custom role."
+    6 => "The bot needs to have the ``manage roles`` permission to do this.",
+    7 => "You've been forbidden from using booster perks in this server.",
+    8 => "Your role name contains a word that may not be used.",
+    9 => "You must be a server booster to use this command.",
+    10 => "This server has not enabled booster perks.",
+    11 => "You've already claimed your custom role."
   }.freeze
 
   # Application commands for boosters.

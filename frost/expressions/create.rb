@@ -22,6 +22,6 @@ module Emojis
       return
     end
 
-    data.send_message(content: format(RESPONSE[8], emoji.use), ephemeral: true)
+    data.send_message(content: format(RESPONSE[9], emoji.use), ephemeral: true)
   end
 end

@@ -37,7 +37,7 @@ module Emojis
 
     # Check if there are local emojis that aren't indexed.
     if Storage.index?(data.server.id) && emojis.empty?
-      data.edit_response(content: RESPONSE[4])
+      data.edit_response(content: RESPONSE[5])
       Storage.drain
       return
     end
@@ -56,7 +56,7 @@ module Emojis
         # Add a section (mainly so we can add a thumbnail).
         container.section do |section|
           # Add our main title heading here.
-          section.text_display(text: format(RESPONSE[9], data.server.name))
+          section.text_display(text: format(RESPONSE[10], data.server.name))
 
           # Add the icon of the server as our thumbnail.
           section.thumbnail(media: data.server.icon_url)
@@ -82,7 +82,7 @@ module Emojis
         # Add footer text showing how many emojis are being currently
         # displayed, and how many total emojis the bot has logged for
         # this server. Maybe we can replace this with a select menu one day.
-        container.text_display(text: RESPONSE[6])
+        container.text_display(text: RESPONSE[7])
       end
     end
   end
