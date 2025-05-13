@@ -285,7 +285,7 @@ module Discordrb
           data.merge!(icon: nil, unicode_emoji: icon)
         end
 
-        if icon && icon == :NULL
+        if icon == :NULL
           data.merge!(unicode_emoji: nil, icon: nil)
         end
 
