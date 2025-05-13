@@ -27,7 +27,7 @@ module Boosters
     end
 
     data.server.role(member.role)&.delete
-    
+
     # Delete the member after deleting their role.
     member.delete
 
