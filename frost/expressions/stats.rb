@@ -28,7 +28,7 @@ module Emojis
     # Fetch the top emojis from the database and resolve them all
     # into a hash of emoji objects, so we can map them into our desired format.
     emojis = emojis.filter_map do |emoji|
-      next unless data.server.emojis.key?(emoji[:emoji_id])
+      next unless data.bot.emoji(emoji[:emoji_id])
 
       emoji = [data.bot.emoji(emoji[:emoji_id]), emoji[:balance].delimit]
 
@@ -37,7 +37,8 @@ module Emojis
 
     # Check if there are local emojis that aren't indexed.
     if Storage.index?(data.server.id) && emojis.empty?
-      [data.edit_response(content: RESPONSE[4]), Storage.drain]
+      data.edit_response(content: RESPONSE[4])
+      Storage.drain
       return
     end
 
