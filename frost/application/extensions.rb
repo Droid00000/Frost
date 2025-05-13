@@ -282,7 +282,7 @@ module Discordrb
         end
 
         if icon&.is_a?(String)
-          data[:unicode_emoji] = icon
+          data.merge!(icon: nil, unicode_emoji: icon)
         end
 
         if icon && icon == :NULL
