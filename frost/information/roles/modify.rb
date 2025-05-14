@@ -28,7 +28,7 @@ module AdminCommands
       end
 
       payload = {
-        icon: resolve_icon(data),
+        icon: to_icon(data),
         role: data.options["role"],
         name: data.options["name"],
         colour: resolve_color(data.options["color"]),
