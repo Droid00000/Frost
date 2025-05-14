@@ -3,11 +3,10 @@
 module Owner
   # Responses and fields for owner commands.
   RESPONSE = {
-    1 => "Success. All emojis have been drained.",
-    2 => "This command is owner only.",
-    3 => "The bot has powered off.",
-    4 => "Success! No content.",
-    5 => "**Error:** ``%s``"
+    1 => "This command is owner only.",
+    2 => "acknowledged request!",
+    3 => "Success! No content.",
+    4 => "```ruby\n%s\n```"
   }.freeze
 
   # Application commands for owner commands.

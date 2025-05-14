@@ -18,9 +18,6 @@ module General
 
   # Prune deleted channels.
   def self.channels(data)
-    # Remove the deleted channel from archiver settings.
-    POSTGRES[:archiver_settings].where(guild_id: data.server.id, channel_id: data.id).delete
-
     # Remove the deleted channel from birthday settings.
     POSTGRES[:birthday_settings].where(guild_id: data.server.id, channel_id: data.id).update(channel_id: nil)
   end

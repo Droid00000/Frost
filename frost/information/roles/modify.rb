@@ -35,11 +35,17 @@ module AdminCommands
         reason: "#{data.user.name} (ID: #{data.user.id})"
       }
 
-      payload.delete(:icon) unless valid_icon?(data, role)
+      unless valid_icon?(data, role)
+        payload.delete(:icon)
+      end
+
+      if data.options["icon"]&.match?(REGEX[1])
+        payload[:icon] = :NULL
+      end
 
       data.server.update_role(**payload.compact)
 
-      data.edit_response(content: "#{RESPONSE[2]} #{EMOJI[3]}")
+      data.edit_response(content: RESPONSE[2])
     end
   end
 end
