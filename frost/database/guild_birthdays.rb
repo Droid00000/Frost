@@ -98,62 +98,6 @@ module Frost
       # Easy way to access the DB.
       @@pg = POSTGRES[:birthday_settings]
 
-      # Insert a new birthday into the DB.
-      def self.setup(data)
-        POSTGRES.transaction do
-          @@pg.insert_conflict(target: :guild_id, update: data.except(:guild_id, :setup_at, :setup_by)).insert(**data)
-        end
-      end
-
-      # Removes an instance of a  channel from the DB.
-      def self.remove_channel(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id, channel_id: data.id).update(channel_id: nil)
-        end
-      end
-
-      # Removes all instances of this role.
-      def self.remove(data)
-        POSTGRES.transaction do
-          @@pg.where(role_id: data.id, guild_id: data.server.id).delete
-        end
-      end
-
-      # Edit an existing birthday in the DB.
-      def self.edit(*data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data[0].server.id).update(**data[1])
-        end
-      end
-
-      # Get the role from the DB.
-      def self.role(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id).get(:role_id)
-        end
-      end
-
-      # Get the channel from the DB.
-      def self.channel(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data).get(:channel_id)
-        end
-      end
-
-      # Disable birthday perks.
-      def self.disable(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id).delete
-        end
-      end
-
-      # Get a settings display view.
-      def self.view(data)
-        POSTGRES.transaction do
-          @@pg.where(guild_id: data.server.id).first
-        end
-      end
-
       # Get the role from the DB.
       def self.fetch_role(data)
         POSTGRES.transaction do
