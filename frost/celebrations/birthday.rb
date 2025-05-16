@@ -15,7 +15,7 @@ module Birthdays
       end
     end
 
-    data.respond unless data.choices.empty?
+    data.respond(choices: event.choices)
   end
 
   # Validate a timezone given to us.
