@@ -242,15 +242,15 @@ module Discordrb
       # connecting to voice, speaking and voice activity (push-to-talk isn't mandatory)
       # https://discord.com/developers/docs/resources/guild#get-guild-roles
       def create_role(token, server_id, name, colour, _hoist, _mentionable, packed_permissions, icon = nil, reason = nil)
-        data = { color: colour, name: name, hoist: false, mentionable: nil, permissions: packed_permissions }
+        data = { color: colour, name: name, hoist: false, mentionable: false, permissions: packed_permissions }
 
-        if icon&.respond_to?(:read)
+        if icon && icon.respond_to?(:read)
           path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
           mime = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || "image/jpeg"
           data[:icon] = "data:#{mime};base64,#{Base64.encode64(icon.read).strip}"
         end
 
-        if icon&.is_a?(String)
+        if icon && icon.is_a?(String)
           data[:unicode_emoji] = icon
         end
 
@@ -278,7 +278,8 @@ module Discordrb
         if icon&.respond_to?(:read)
           path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
           mime = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || "image/jpeg"
-          data[:icon] = "data:#{mime};base64,#{Base64.encode64(icon.read).strip}"
+          icon_string = "data:#{mime};base64,#{Base64.encode64(icon.read).strip}"
+          data.merge!(icon: icon_string, unicode_emoji: nil)
         end
 
         if icon&.is_a?(String)
