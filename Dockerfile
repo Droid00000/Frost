@@ -1,7 +1,5 @@
 FROM ruby:3.4-alpine
 
-ENV TZ="America/Panama"
-
 RUN apk add --no-cache \
     postgresql-dev \
     icu-data-full \
