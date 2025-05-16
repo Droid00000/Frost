@@ -6,7 +6,8 @@ module Birthdays
     choices = if data.options["timezone"].empty?
                 data.choices.merge!(DEFAULT_ZONES)
               else
-                Frost::Birthdays.search(data.options["timezone"])
+                query = "SELECT * FROM search_timezones(?);"
+                POSTGRES[query, data.options["timezone"]].all
               end
 
     unless choices.is_a?(Hash)
