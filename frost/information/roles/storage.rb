@@ -38,8 +38,6 @@ module Roles
     # @param any_icon [Boolean] Whether this guild supports external role icons.
     def edit(**options)
       POSTGRES.transaction do
-        options = transform_options(options)
-
         @@pg.insert_conflict(**conflict(options)).insert(**options)
       end
     end
@@ -51,18 +49,6 @@ module Roles
     end
 
     private
-
-    # @!visibility private
-    def resolveable?(*options)
-      options[0].class.name.start_with?("Discordrb")
-    end
-
-    # @!visibility private
-    def transform_options(*options)
-      options[0].each do |key, value|
-        options[0][key] = value.resolve_id if resolveable?(value)
-      end
-    end
 
     # @!visibility private
     def conflict(*options)

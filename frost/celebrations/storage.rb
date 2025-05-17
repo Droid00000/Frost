@@ -61,8 +61,6 @@ module Birthdays
     # @param setup_at [Integer] Unix timestamp of when birthday events were setup for this guild.
     def edit(**options)
       POSTGRES.transaction do
-        options = transform_options(options)
-
         @@pg.insert_conflict(**conflict(options)).insert(**options)
       end
     end
@@ -78,18 +76,6 @@ module Birthdays
     end
 
     private
-
-    # @!visibility private
-    def resolveable?(*options)
-      options[0].class.name.start_with?("Discordrb")
-    end
-
-    # @!visibility private
-    def transform_options(*options)
-      options[0].each do |key, value|
-        options[0][key] = value.resolve_id if resolveable?(value)
-      end
-    end
 
     # @!visibility private
     def find_guild(*_options)

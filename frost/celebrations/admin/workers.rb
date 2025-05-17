@@ -17,7 +17,7 @@ module Birthdays
     def self.on_login
       @@pg.all.each do |user|
         @@scheduler.at(birthday(user), tags: user[:user_id]) do
-          [schedule_birthday_task(user), track_birthday_task(user)]
+          schedule_birthday_task(user[:user_id])
         end
       end
     end
@@ -35,7 +35,7 @@ module Birthdays
     def self.schedule(snowflake)
       @@pg.where(user_id: snowflake).each do |user|
         @@scheduler.at(birthday(user), tags: user[:user_id]) do
-          [schedule_birthday_task(user), track_birthday_task(user)]
+          schedule_birthday_task(user[:user_id])
         end
       end
     end
@@ -44,7 +44,11 @@ module Birthdays
 
     # @!visibility priivate
     def self.schedule_birthday_task(user)
-      user[:guilds].each do |guild|
+      user = @@pg.where(user_id: user)
+
+      return if user.empty?
+
+      user.first[:guilds].each do |guild|
         # Seperate class for backend guilds.
         guild = Backend::Guild.new(guild)
 
@@ -55,7 +59,7 @@ module Birthdays
         schedule_role_removal(guild, user[:user_id])
       end
 
-      @@pg.where(user_id: user).update(active: true)
+      @@pg.where(user_id: user[:user_id]).update(active: true)
     end
 
     # @!visibility private
@@ -76,7 +80,7 @@ module Birthdays
       channel = @@bot.channel(guild.channel)
 
       begin
-        channel&.send_message(RESPONSE[1] % user[:user_id])
+        channel&.send_message(RESPONSE[1] % user)
       rescue StandardError
         nil
       end
