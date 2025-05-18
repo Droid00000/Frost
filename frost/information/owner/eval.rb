@@ -12,22 +12,26 @@ module Owner
     data.respond(content: RESPONSE[2], ephemeral: true)
 
     begin
+      # rubocop:disable Security/Eval
       code = eval(escape(data.value("code"))).inspect
-    rescue StandardError, SyntaxError, RuntimeError => e
+      # rubocop:enable Security/Eval
+    rescue StandardError, SyntaxError => e
       data.edit_response(content: format(RESPONSE[4], e.message))
       return
     end
 
-    code = if ("#{code}".length + 5) >= 2000
+    code = if (code.to_s.length + 5) >= 2000
              file = Tempfile.new(["output", ".txt"])
+             # rubocop:disable Lint/LiteralAsCondition
              file if [file.write(code), file.rewind]
+             # rubocop:enable Lint/LiteralAsCondition
            else
              code
            end
 
     if code.is_a?(Tempfile)
       data.edit_response(attachments: [code])
-    elsif "#{code}".empty?
+    elsif code.to_s.empty?
       data.edit_response(content: RESPONSE[3])
     else
       data.edit_response(content: format(RESPONSE[4], code))

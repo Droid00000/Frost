@@ -40,8 +40,6 @@ module Birthdays
       end
     end
 
-    private
-
     # @!visibility priivate
     def self.schedule_birthday_task(user)
       user = @@pg.where(user_id: user)
@@ -88,11 +86,9 @@ module Birthdays
 
     # @!visibility private
     def self.add_birthday_role(guild, user)
-      begin
-        @@bot.member(user, guild.id).add_role(guild.role)
-      rescue StandardError
-        nil
-      end
+      @@bot.member(user, guild.id).add_role(guild.role)
+    rescue StandardError
+      nil
     end
   end
 end

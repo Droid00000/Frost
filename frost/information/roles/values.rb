@@ -11,7 +11,7 @@ module AdminCommands
       4 => "This role hasn't been configured to be editable.",
       5 => "Successfully disabled event perks for the role!",
       6 => "Successfully enabled event perks for the role!",
-      7 => "Only members of this role may edit it.",
+      7 => "Only members of this role may edit it."
     }.freeze
 
     # Application commands for event roles.

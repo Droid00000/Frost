@@ -196,7 +196,7 @@ bot.register_application_command(:booster, "Booster perks", contexts: [0], integ
       option.role("role", "The role to add to the database.", required: true)
     end
 
-    group.subcommand(:delete, 'Manually remove a booster from this server.') do |option|
+    group.subcommand(:delete, "Manually remove a booster from this server.") do |option|
       option.user("member", "The user to remove from the database.", required: true)
     end
 

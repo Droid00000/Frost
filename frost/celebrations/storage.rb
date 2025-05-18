@@ -84,7 +84,7 @@ module Birthdays
 
     # @!visibility private
     def conflict(*options)
-      { target: :guild_id, update: arguments[0].except(:enabled_by, :enabled_at) }
+      { target: :guild_id, update: options[0].except(:enabled_by, :enabled_at) }
     end
   end
 end

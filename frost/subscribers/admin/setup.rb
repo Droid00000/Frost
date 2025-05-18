@@ -10,7 +10,7 @@ module AdminCommands
         return
       end
 
-      payload = {
+      options = {
         setup_by: data.user.id,
         setup_at: Time.now.to_i,
         guild_id: data.server.id,

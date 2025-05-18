@@ -47,7 +47,7 @@ module Boosters
   def self.valid_icon?(data, guild)
     return 0 if [nil, String].include?(to_icon(data)&.class) || guild.any_icon?
 
-    data.emoji("icon").server && data.emoji("icon").server.id == data.server.id
+    data.emoji("icon")&.server && data.server.emojis.key?(data.emoji("icon").id)
   end
 
   # Get an icon for a role.

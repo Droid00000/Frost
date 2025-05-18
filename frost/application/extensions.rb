@@ -75,7 +75,9 @@ module Discordrb
     # @example Pruning messages from a specific user ID
     #   channel.prune(100) { |m| m.author.id == 83283213010599936 }
     # @return [Integer] The amount of messages that were successfully deleted
+    # rubocop:disable Style/OptionalBooleanParameter
     def prune(amount, limit, strict = false, reason = nil, &block)
+      # rubocop:enable Style/OptionalBooleanParameter
       raise ArgumentError, "Can only delete between 1 and 100 messages!" unless amount.between?(1, 100)
 
       before = limit.options["before"].strip.to_i unless limit.options["before"]&.to_i&.zero?
@@ -102,8 +104,10 @@ module Discordrb
       end
     end
 
+    # rubocop:disable Style/OptionalBooleanParameter
     # Deletes a list of messages on this channel using bulk delete.
     def bulk_delete(ids, strict = false, reason = nil)
+      # rubocop:enable Style/OptionalBooleanParameter
       min_snowflake = IDObject.synthesise(Time.now - TWO_WEEKS)
 
       ids.reject! do |e|
@@ -244,13 +248,13 @@ module Discordrb
       def create_role(token, server_id, name, colour, _hoist, _mentionable, packed_permissions, icon = nil, reason = nil)
         data = { color: colour, name: name, hoist: false, mentionable: false, permissions: packed_permissions }
 
-        if icon && icon.respond_to?(:read)
+        if icon.respond_to?(:read)
           path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
           mime = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || "image/jpeg"
           data[:icon] = "data:#{mime};base64,#{Base64.encode64(icon.read).strip}"
         end
 
-        if icon && icon.is_a?(String)
+        if icon.is_a?(String)
           data[:unicode_emoji] = icon
         end
 
@@ -275,14 +279,14 @@ module Discordrb
       def update_role(token, server_id, role_id, name, colour, _hoist, _mentionable, _packed_permissions, icon = :undef, reason = nil, colors = nil)
         data = { color: colour, name: name, colors: colors }.compact
 
-        if icon&.respond_to?(:read)
+        if icon.respond_to?(:read)
           path_method = %i[original_filename path local_path].find { |meth| icon.respond_to?(meth) }
           mime = MIME::Types.type_for(icon.__send__(path_method)).first&.to_s || "image/jpeg"
           icon_string = "data:#{mime};base64,#{Base64.encode64(icon.read).strip}"
           data.merge!(icon: icon_string, unicode_emoji: nil)
         end
 
-        if icon&.is_a?(String)
+        if icon.is_a?(String)
           data.merge!(icon: nil, unicode_emoji: icon)
         end
 
@@ -340,22 +344,12 @@ module Discordrb
   # Standard Gateway class for DRB.
   class Gateway
     def members(server_id, members)
-      if members.size == 1
-        data = {
-          guild_id: server_id,
-          user_ids: members.first
-        }.compact
-        sleep(1)
-        send_packet(Opcodes::REQUEST_MEMBERS, data)
-      else
-        members.each_slice(100).to_a.each do |chunk|
-          data = {
-            guild_id: server_id,
-            user_ids: chunk
-          }.compact
-          sleep(1)
-          send_packet(Opcodes::REQUEST_MEMBERS, data)
-        end
+      members.each_slice(100).to_a.each do |chunk|
+        packet = { guild_id: server_id, user_ids: chunk }
+
+        sleep(2.5)
+
+        send_packet(Opcodes::REQUEST_MEMBERS, packet)
       end
     end
   end
@@ -387,6 +381,6 @@ end
 class Hash
   # Get a given key from a hash.
   def get(data)
-    data.nil? ? nil : self[data&.strip&.downcase&.gsub(/(?<=[^\,\.])\s+|\A\s+/, '_')&.to_sym]
+    data.nil? ? nil : self[data.strip.downcase.gsub(/(?<=[^\,\.])\s+|\A\s+/, "_")&.to_sym]
   end
 end

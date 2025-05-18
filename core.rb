@@ -13,7 +13,7 @@ require "frost/application/mappings"
 
 Dir["frost/**/*.rb"].each { |file| require file }
 
-@bot = Discordrb::Bot.new(token: CONFIG[:Discord][:TOKEN], intents: 34_443)
+@bot = Discordrb::Bot.new(token: CONFIG[:Discord][:TOKEN], intents: 34_315)
 
 at_exit { @bot.stop }
 

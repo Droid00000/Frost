@@ -9,7 +9,7 @@ module AdminCommands
         return
       end
 
-      member = User.new(data).unban
+      User.new(data).unban
 
       data.edit_response(content: format(RESPONSE[32], data.options["member"]))
     end
