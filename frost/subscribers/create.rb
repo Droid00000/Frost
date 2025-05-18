@@ -60,7 +60,7 @@ module Boosters
 
     data.user.add_role(role, REASON[1])
 
-    user.role = role
+    user.role = role.resolve_id
 
     data.edit_response(content: RESPONSE[1])
   end

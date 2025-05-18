@@ -158,7 +158,7 @@ module Boosters
     # @note This will update the members role if it already exists.
     def role=(role)
       POSTGRES.transaction do
-        @@users.insert_conflict(**conflict(role)).insert(**query, role_id: role.id)
+        @@users.insert_conflict(**conflict(role)).insert(**query, role_id: role)
       end
     end
 
