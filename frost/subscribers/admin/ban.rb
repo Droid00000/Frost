@@ -10,7 +10,7 @@ module AdminCommands
         return
       end
 
-      member = User.new(data)
+      member = ::Boosters::Member.new(data)
 
       if member.guild.blank?
         data.edit_response(content: RESPONSE[34])
@@ -21,9 +21,10 @@ module AdminCommands
         data.server.role(member.role)&.delete
       end
 
-      [member.ban, member.delete]
+      member.ban(banned_by: data.user.id,
+                 banned_at: Time.now.to_i)
 
-      data.edit_response(content: format(RESPONSE[30], data.options["member"]))
+      data.edit_response(content: RESPONSE[30])
     end
   end
 end

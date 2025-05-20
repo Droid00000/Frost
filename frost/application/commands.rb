@@ -191,22 +191,22 @@ bot.register_application_command(:booster, "Booster perks", contexts: [0], integ
   end
 
   command.subcommand_group(:admin, "Booster admin!") do |group|
-    group.subcommand(:add, "Manually add a booster to this server.") do |option|
-      option.user("member", "The user to add to the database.", required: true)
-      option.role("role", "The role to add to the database.", required: true)
+    group.subcommand(:add, "Add a booster to this server.") do |option|
+      option.user("target", "The member to add to the database.", required: true)
+      option.role("role", "The role to associate with the member.", required: true)
     end
 
-    group.subcommand(:delete, "Manually remove a booster from this server.") do |option|
-      option.user("member", "The user to remove from the database.", required: true)
+    group.subcommand(:delete, "Remove a booster from this server.") do |option|
+      option.user("target", "The user to remove from the database.", required: true)
     end
 
-    group.subcommand(:ban, "Ban a user from using the booster perks functionality.") do |option|
-      option.user("member", "The user to ban.", required: true)
+    group.subcommand(:ban, "Ban a member from using booster perks.") do |option|
+      option.user("target", "The member to ban.", required: true)
       option.boolean("prune", "Should this member's custom role be deleted?", required: true)
     end
 
-    group.subcommand(:unban, "Unban a user from using the booster perks functionality.") do |option|
-      option.user("member", "The user to unban.", required: true)
+    group.subcommand(:unban, "Unban a member from using booster perks.") do |option|
+      option.user("target", "The member to unban.", required: true)
     end
 
     group.subcommand(:disable, "Disable the booster perks functionality.") do |option|

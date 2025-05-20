@@ -27,10 +27,10 @@ module Boosters
     attr_reader :any_icon
     alias any_icon? any_icon
 
-    # @return [Dataset]
+    # @return [Sequel::Dataset]
     @@pg = POSTGRES[:booster_settings]
 
-    # @return [Dataset]
+    # @return [Sequel::Dataset]
     @@users = POSTGRES[:guild_boosters]
 
     # @!visibility private
@@ -114,9 +114,9 @@ module Boosters
       @guild_id = data.server.id
       @query = { guild_id: guild, user_id: user }
 
-      return unless data.options["member"]
+      return unless data.options["target"]
 
-      @query[:user_id] = data.options["member"].to_i
+      @query[:user_id] = data.options["target"].to_i
     end
 
     # Check if this user is nil, e.g. has no role.
@@ -144,8 +144,12 @@ module Boosters
     end
 
     # Ban this user from using booster perks in this guild.
-    def ban
-      POSTGRES.transaction { @@bans.insert(**query) } && delete
+    def ban(**options)
+      POSTGRES.transaction do
+        @@users.where(**query).delete
+
+        @@bans.insert_conflict.insert(**query.merge(options))
+      end
     end
 
     # Get this members booster role in this guild.
@@ -174,7 +178,7 @@ module Boosters
   class Members
     # Get a list of all the boosters that are in the database.
     # @return [Array<Hash<Symbol => Integer>>, Sequel::Dataset]
-    def self.stream = @@users.all.to_a
+    def self.stream = POSTGRES[:booster_settings].all
 
     # Get a list of all the boosters that are in the database.
     # @return [Array<Hash<Symbol => Integer, Symbol => Array>>]

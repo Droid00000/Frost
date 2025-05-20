@@ -43,6 +43,8 @@ CREATE TABLE IF NOT EXISTS birthday_settings (
 CREATE TABLE IF NOT EXISTS banned_boosters (  
   user_id BIGINT NOT NULL,
   guild_id BIGINT NOT NULL,
+  banned_by BIGINT NOT NULL,
+  banned_at BIGINT NOT NULL,
   PRIMARY KEY (guild_id, user_id)
 );
 
