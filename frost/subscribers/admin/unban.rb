@@ -9,9 +9,9 @@ module AdminCommands
         return
       end
 
-      User.new(data).unban
+      ::Boosters::Member.new(data).unban
 
-      data.edit_response(content: format(RESPONSE[32], data.options["member"]))
+      data.edit_response(content: RESPONSE[32])
     end
   end
 end

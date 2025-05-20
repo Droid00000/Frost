@@ -10,7 +10,7 @@ module AdminCommands
         return
       end
 
-      member = User.new(data)
+      member = ::Boosters::Member.new(data)
 
       if member.guild.blank?
         data.edit_response(content: RESPONSE[34])
@@ -24,7 +24,7 @@ module AdminCommands
 
       member.role = data.options["role"]
 
-      data.edit_response(content: format(RESPONSE[26], data.options["member"]))
+      data.edit_response(content: RESPONSE[26])
     end
   end
 end
