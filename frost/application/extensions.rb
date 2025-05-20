@@ -35,18 +35,20 @@ module Discordrb
     # @param colour [Integer, ColourRGB, #combined] The roles colour.
     # @param icon [String, #read] A role icon for this role.
     # @param reason [String] The reason for updating this role.
-    def update_role(role:, name: nil, colour: nil, icon: nil, primary: nil, secondary: nil, tertiary: nil, reason: nil)
+    def update_role(role:, name: nil, colour: nil, icon: nil, secondary: nil, tertiary: nil, reason: nil)
       return nil if self.role(role).nil?
 
       colour = colour.combined if colour.respond_to?(:combined)
 
-      colors = if primary || secondary || tertiary
+      colors = if colour || secondary || tertiary
                  self.role(role).colors.to_h.merge({
-                   primary: primary,
-                   tertiary: tertiary,
-                   secondary: secondary
+                   primary_color: colour&.to_i
+                   tertiary_color: tertiary&.to_i,
+                   secondary_color: secondary&.to_i
                  }.compact)
                end
+      
+       
 
       API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason, colors)
     rescue StandardError
@@ -344,6 +346,18 @@ module Discordrb
 
         send_packet(Opcodes::REQUEST_MEMBERS, packet)
       end
+    end
+
+    # Separate method to wait an ever-increasing amount of time before reconnecting after being disconnected in an
+    # unexpected way
+    def wait_for_reconnect
+      # We disconnected in an unexpected way! Wait before reconnecting so we don't spam Discord's servers.
+      LOGGER.debug("Attempting to reconnect in #{@falloff} seconds.")
+      sleep @falloff
+
+      # Calculate new falloff
+      @falloff *= 1.5
+      @falloff = 20 + (rand * 10) if @falloff > 30 # Cap the falloff at 120 seconds and then add some random jitter
     end
   end
 end
