@@ -80,18 +80,11 @@ module Discordrb
       # rubocop:enable Style/OptionalBooleanParameter
       raise ArgumentError, "Can only delete between 1 and 100 messages!" unless amount.between?(1, 100)
 
-      before = limit.options["before"].strip.to_i unless limit.options["before"]&.to_i&.zero?
+      before = limit.options["before"]&.strip&.to_i unless limit.options["before"]&.to_i&.zero?
 
-      after = limit.options["after"].strip.to_i unless limit.options["after"]&.to_i&.zero?
+      after = limit.options["after"]&.strip&.to_i unless limit.options["after"]&.to_i&.zero?
 
-      messages =
-        if block && limit
-          history(amount, before, after).select(&block).map(&:id)
-        elsif block && !limit
-          history(amount).select(&block).map(&:id)
-        else
-          history_ids(amount)
-        end
+      messages = history(amount, before, after).select(&block).map(&:id)
 
       case messages.size
       when 0
@@ -119,7 +112,7 @@ module Discordrb
         true
       end
 
-      API::Channel.bulk_delete_messages(@bot.token, @id, ids, reason) if ids >= 2
+      API::Channel.bulk_delete_messages(@bot.token, @id, ids, reason) if ids.size >= 2
       ids.size
     end
   end

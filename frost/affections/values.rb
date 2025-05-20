@@ -14,13 +14,13 @@ module Affections
 
   # The main header of text showing the action.
   HEADERS = {
-    1 => "### ANGER",
-    2 => "### BONKS",
-    3 => "### POKES",
-    4 => "### PUNCH",
-    5 => "### SLEEP",
-    6 => "### HUGS",
-    7 => "### NOMS"
+    1 => "**ANGER**",
+    2 => "**BONKS**",
+    3 => "**POKES**",
+    4 => "**PUNCH**",
+    5 => "**SLEEP**",
+    6 => "**HUGS**",
+    7 => "**NOMS**"
   }.freeze
 
   # Application commands for affections.

@@ -195,7 +195,7 @@ bot.register_application_command(:booster, "Booster perks", contexts: [0], integ
 
     group.subcommand(:delete, "Remove a booster from this server.") do |option|
       option.user("target", "The booster to remove from the server.", required: true)
-      options.boolean("prune", "Whether to delete the booster's custom role.", required: true)
+      option.boolean("prune", "Whether to delete the booster's custom role.", required: true)
     end
 
     group.subcommand(:ban, "Ban a member from using booster perks.") do |option|

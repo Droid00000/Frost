@@ -20,11 +20,11 @@ module Affections
         # Set an accent color for the embed we're currently operating on.
         # I was going to originally swap this embed over to CV2, but, on
         # desktop, V2 components look super large with images for some reason.
-        embed.color = data.user.respond_to?(:color) ? user.color : 0
+        embed.color = data.user.respond_to?(:color) ? data.user.color : 0
 
         # Add a bit of text explaining the type of action we're doing, including
         # the target user and the initiating user. E.g. "Droid punches Hermit!"
-        embed.description = format(RESPOSNE[4], data.member("target").display_name,
+        embed.description = format(RESPONSE[4], data.user.display_name,
                                    data.member("target").display_name)
 
         # Finally we can add a media gallery in order to contain our randomized

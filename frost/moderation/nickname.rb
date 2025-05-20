@@ -8,19 +8,21 @@ module Moderation
       return
     end
 
-    if hierarchy(data.member("member")) >= hierarchy(data.user)
-      data.edit_response(content: format(RESPONSE[4], "you"))
-      return
-    end
+    unless data.user.owner?
+      if hierarchy(data.member("member")) >= hierarchy(data.user)
+        data.edit_response(content: format(RESPONSE[5], "you"))
+        return
+      end
 
-    if hierarchy(data.member("member")) >= hierarchy(data.server.bot)
-      data.edit_response(content: format(RESPONSE[4], "me"))
-      return
+      if hierarchy(data.member("member")) >= hierarchy(data.server.bot)
+        data.edit_response(content: format(RESPONSE[5], "me"))
+        return
+      end
     end
 
     data.member("member").set_nick(data.options["nickname"],
-                                   "#{data.user.name} (ID: #{data.user.id}")
+                                   "#{data.user.name} (ID: #{data.user.id})")
 
-    data.edit_response(content: format(RESPONSE[5], data.options["member"]))
+    data.edit_response(content: RESPONSE[4])
   end
 end
