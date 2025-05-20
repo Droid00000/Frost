@@ -9,9 +9,6 @@ bot = Discordrb::Bot.new(token: CONFIG[:Discord][:TOKEN], intents: :none)
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
 bot.register_application_command(:"Add Emojis", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: "1073741824", name_localizations: { "hi" => "कई इमोजी जोड़ें" })
 
-# @!function [Pin Operations] Belongs to a module that manages pins in a channel.
-bot.register_application_command(:archive, "Archives the pinned messages in the current channel.", default_member_permissions: "8192", contexts: [0], integration_types: [0], name_localizations: { "hi" => "पुरातत्व" }, description_localizations: { "hi" => "पुरातत्व पिंस कोई चुनित चैनल मै" })
-
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:info, "View some information about the bot.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "सेटिंग्स" }, description_localizations: { "hi" => "आपना सर्वर कॉन्फिग्रेशन देखो" })
 
@@ -192,30 +189,29 @@ bot.register_application_command(:booster, "Booster perks", contexts: [0], integ
 
   command.subcommand_group(:admin, "Booster admin!") do |group|
     group.subcommand(:add, "Add a booster to this server.") do |option|
-      option.user("target", "The member to add to the database.", required: true)
+      option.user("target", "The member to add as a booster.", required: true)
       option.role("role", "The role to associate with the member.", required: true)
     end
 
     group.subcommand(:delete, "Remove a booster from this server.") do |option|
-      option.user("target", "The user to remove from the database.", required: true)
+      option.user("target", "The booster to remove from the server.", required: true)
+      options.boolean("prune", "Whether to delete the booster's custom role.", required: true)
     end
 
     group.subcommand(:ban, "Ban a member from using booster perks.") do |option|
-      option.user("target", "The member to ban.", required: true)
-      option.boolean("prune", "Should this member's custom role be deleted?", required: true)
+      option.user("target", "The member that should be banned.", required: true)
+      option.boolean("prune", "Whether to delete the member's custom role.", required: true)
     end
 
     group.subcommand(:unban, "Unban a member from using booster perks.") do |option|
-      option.user("target", "The member to unban.", required: true)
-    end
-
-    group.subcommand(:disable, "Disable the booster perks functionality.") do |option|
-      option.boolean("prune", "If all roles should be removed from the database.", required: true)
+      option.user("target", "The member that should be unbanned.", required: true)
     end
 
     group.subcommand(:enable, "Enable the booster perks functionality.") do |option|
-      option.role("role", "Which role should all custom booster roles be placed above?", required: false)
-      option.boolean("icon", "Should external emojis be allowed as role icons?", required: false)
+      option.role("role", "The role that all booster roles should be moved above.", required: false)
+      option.boolean("icon", "Whether external emojis be allowed as role icons.", required: false)
     end
+
+    group.subcommand(:disable, "Disable the booster perks functionality.")
   end
 end
