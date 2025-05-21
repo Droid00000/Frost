@@ -6,16 +6,11 @@ module AdminCommands
     # Ban someone from using booster perks in a server.
     def self.ban(data)
       unless data.user.permission?(:manage_roles)
-        data.edit_response(content: RESPONSE[18])
+        data.edit_response(content: RESPONSE[5])
         return
       end
 
       member = ::Boosters::Member.new(data)
-
-      if member.guild.blank?
-        data.edit_response(content: RESPONSE[34])
-        return
-      end
 
       if data.options["prune"] && !member.blank?
         data.server.role(member.role)&.delete
@@ -24,7 +19,7 @@ module AdminCommands
       member.ban(banned_by: data.user.id,
                  banned_at: Time.now.to_i)
 
-      data.edit_response(content: RESPONSE[30])
+      data.edit_response(content: RESPONSE[13])
     end
   end
 end

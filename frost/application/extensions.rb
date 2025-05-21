@@ -316,8 +316,8 @@ module Discordrb
     # Deletes a role in a guild.
     # @param guild [Integer, String] An ID that uniquely identifies a guild.
     # @param id [Integer, String] An ID that uniquely identifies a role.
-    def remove_guild_role(guild, id)
-      Discordrb::API::Server.delete_role(@token, guild, id)
+    def remove_guild_role(guild, id, reason)
+      Discordrb::API::Server.delete_role(@token, guild, id, reason)
     rescue StandardError
       nil
     end
@@ -357,7 +357,7 @@ module Discordrb
 
       # Calculate new falloff
       @falloff *= 1.5
-      @falloff = 20 + (rand * 10) if @falloff > 30 # Cap the falloff at 120 seconds and then add some random jitter
+      @falloff = 20 + (rand * 10) if @falloff > 30 # Cap the falloff at 30 seconds and then add some random jitter
     end
   end
 end

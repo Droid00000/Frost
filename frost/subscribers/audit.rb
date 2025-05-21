@@ -7,8 +7,8 @@ Rufus::Scheduler.s.cron "30 18 * * *" do
 
   Boosters::Members.stream.each do |user|
     next if @bot.member(user[:guild_id], user[:user_id])&.boosting?
-
-    @bot.remove_guild_role(user[:guild_id], user[:role_id])
+    
     Boosters::Members.delete(user[:guild_id], user[:user_id])
+    @bot.remove_guild_role(user[:guild_id], user[:role_id], REASON[2])
   end
 end
