@@ -11,7 +11,7 @@ module AdminCommands
   end
 
   application_command(:time) do |event|
-    event.defer(ephemeral: false)
+    event.defer(ephemeral: true)
     General.time(event)
   end
 
