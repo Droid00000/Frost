@@ -8,19 +8,16 @@ module Emojis
     3 => "There are no emoji statistics available for this server.",
     4 => "Failed to add emoji. Maximum emoji limit reached.",
     5 => "Statistics aren't indexed yet. Try again later.",
-    6 => "This message doesn't contain any emojis.",
-    7 => "-# tracking statistics since: 12/2/2024",
-    8 => "Select the Emojis you want to add!",
-    9 => "Added this emoji to the server: %s",
-    10 => "### Emoji Statistics for %s",
-    11 => "Emoji file is too large."
+    6 => "-# tracking statistics since: 12/2/2024",
+    7 => "Added this emoji to the server: %s",
+    8 => "### Emoji Statistics for %s",
+    9 => "Emoji file is too large."
   }.freeze
 
   # Application commands for emojis.
   COMMANDS = {
     1 => "`/create emoji`",
-    2 => "`/add emojis`",
-    3 => "`/top emojis`"
+    2 => "`/top emojis`"
   }.freeze
 
   # Make an emoji error code message.

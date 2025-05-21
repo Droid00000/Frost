@@ -13,16 +13,6 @@ module EmojiCommands
     Emojis.stats(event)
   end
 
-  application_command(:"Add Emojis") do |event|
-    event.defer(ephemeral: true)
-    Emojis.menu(event)
-  end
-
-  select_menu(custom_id: "emoji") do |event|
-    event.defer_update
-    Emojis.add(event)
-  end
-
   message(contains: REGEX[3]) do |event|
     Emojis.cache(event)
   end

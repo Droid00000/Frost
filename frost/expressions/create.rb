@@ -4,24 +4,21 @@ module Emojis
   # Handle an emoji creation command.
   def self.add(data)
     unless data.server.bot.permission?(:manage_emojis)
-      data.send_message(content: RESPONSE[2], ephemeral: true)
+      data.edit_response(content: RESPONSE[2])
       return
     end
 
-    name = if data.respond_to?(:options)
-             data.options["name"] || data.emoji("emoji").name
-           else
-             data.emoji.name
-           end
+    # Use the user provided name, or fallback to the emoji name.
+    name = data.options["name"] || data.emoji("emoji").name
 
     begin
       emoji = data.server.add_emoji(name, data.emoji("emoji").file,
                                     reason: reason(data))
     rescue StandardError => e
-      data.send_message(content: code(e.code), ephemeral: true)
+      data.edit_response(content: code(e.code))
       return
     end
 
-    data.send_message(content: format(RESPONSE[9], emoji.use), ephemeral: true)
+    data.edit_response(content: format(RESPONSE[9], emoji.use))
   end
 end

@@ -6,9 +6,6 @@ return unless ENV.fetch("REGISTER_COMMANDS", nil)
 # Create a bot instance since our main instance is currently undefined.
 bot = Discordrb::Bot.new(token: CONFIG[:Discord][:TOKEN], intents: :none)
 
-# @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
-bot.register_application_command(:"Add Emojis", nil, type: :message, contexts: [0], integration_types: [0], default_member_permissions: "1073741824", name_localizations: { "hi" => "कई इमोजी जोड़ें" })
-
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:info, "View some information about the bot.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { "hi" => "सेटिंग्स" }, description_localizations: { "hi" => "आपना सर्वर कॉन्फिग्रेशन देखो" })
 
