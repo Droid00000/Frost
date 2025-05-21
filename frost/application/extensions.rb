@@ -21,12 +21,12 @@ module Discordrb
         response = API::Server.create_role(@bot.token, @id, name, colour, hoist, mentionable, permissions, icon, reason)
         role = Role.new(JSON.parse(response), @bot, self)
         @roles << role
-        role
+        return role
       rescue StandardError
         response = API::Server.create_role(@bot.token, @id, name, colour, hoist, mentionable, permissions, nil, reason)
         role = Role.new(JSON.parse(response), @bot, self)
         @roles << role
-        role
+        return role
       end
     end
 

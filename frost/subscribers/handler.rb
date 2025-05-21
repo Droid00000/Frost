@@ -15,7 +15,7 @@ module BoosterCommands
     end
 
     group.subcommand(:delete) do |event|
-      event.defer(ephemeral: true)
+      event.defer(ephemeral: false)
       Boosters.delete(event)
     end
 

@@ -37,7 +37,7 @@ module Boosters
 
     payload = {
       role: member.role,
-      reason: REASON[1],
+      reason: REASON[2],
       tertiary: data.options["end"],
       secondary: data.options["start"]
     }.compact

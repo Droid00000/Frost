@@ -18,7 +18,7 @@ module AdminCommands
         hoist_role: data.options["role"]
       }.compact
 
-      guild = Guild.new(data)
+      guild = ::Boosters::Guild.new(data)
 
       if guild.blank? && options[:hoist_role].nil?
         data.edit_response(content: RESPONSE[1])

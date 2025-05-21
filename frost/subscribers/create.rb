@@ -8,10 +8,10 @@ module Boosters
       return
     end
 
-    unless data.user.boosting?
-      data.edit_response(content: RESPONSE[9])
-      return
-    end
+    #unless data.user.boosting?
+    #  data.edit_response(content: RESPONSE[9])
+    #  return
+    #end
 
     if data.server.roles.size == 250
       data.edit_response(content: RESPONSE[5])
@@ -45,9 +45,9 @@ module Boosters
       colour: to_color(data.options["color"]),
       name: data.options["name"],
       mentionable: false,
-      reason: REASON[1],
+      reason: REASON[2],
       permissions: 0,
-      hoisted: false
+      hoist: false
     }
 
     if valid_icon?(data, member.guild)
@@ -56,11 +56,11 @@ module Boosters
 
     role = data.server.create_role(**payload)
 
-    role.sort_above(member.guild.hoist_role)
+    role.move_above(member.guild.hoist_role)
 
-    data.user.add_role(role, REASON[1])
+    data.user.add_role(role, REASON[2])
 
-    user.role = role.resolve_id
+    member.role = role.resolve_id
 
     data.edit_response(content: RESPONSE[1])
   end

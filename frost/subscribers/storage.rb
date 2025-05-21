@@ -79,7 +79,7 @@ module Boosters
 
     # @!visibility private
     def find_guild(*_options)
-      lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: guild).first }
+      @lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: @guild).first }
     end
 
     # @!visibility private
@@ -107,12 +107,12 @@ module Boosters
     @@users = POSTGRES[:guild_boosters]
 
     # @!visibility private
-    def initalize(data)
+    def initialize(data)
       @data = data
       @bot = data.bot
       @user_id = data.user.id
       @guild_id = data.server.id
-      @query = { guild_id: guild, user_id: user }
+      @query = { guild_id: @guild_id, user_id: @user_id }
 
       return unless data.options["target"]
 
@@ -170,7 +170,7 @@ module Boosters
 
     # @!visibility private
     def conflict(*options)
-      { target: :user_id, update: { role_id: options[0].resolve_id } }
+      { target: [:user_id, :guild_id], update: { role_id: options[0].resolve_id } }
     end
   end
 

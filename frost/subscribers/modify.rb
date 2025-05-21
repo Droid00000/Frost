@@ -36,7 +36,7 @@ module Boosters
       name: data.options["name"],
       role: member.role(data),
       icon: to_icon(data),
-      reason: REASON[1]
+      reason: REASON[2]
     }.compact
 
     data.edit_response(content: RESPONSE[4])
