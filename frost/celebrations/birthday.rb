@@ -16,7 +16,7 @@ module Birthdays
       end
     end
 
-    data.respond(choices: event.choices)
+    data.respond(choices: data.choices)
   end
 
   # Validate a timezone given to us.

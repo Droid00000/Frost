@@ -4,7 +4,7 @@ module Emojis
   # Responses and fields for emojis.
   RESPONSE = {
     1 => "These are the currently most used emojis on your server. Non-animated, animated emojis, and reactions are mixed.",
-    2 => "The bot needs to have the ``manage expressions`` permission to do this.",
+    2 => "The bot needs to have the `manage expressions` permission to do this.",
     3 => "There are no emoji statistics available for this server.",
     4 => "Failed to add emoji. Maximum emoji limit reached.",
     5 => "Statistics aren't indexed yet. Try again later.",
@@ -23,7 +23,7 @@ module Emojis
   # Make an emoji error code message.
   # @return [String] The appropriate response.
   def self.code(code)
-    code == 501_38 ? RESPONSE[11] : RESPONSE[4]
+    code == 501_38 ? RESPONSE[9] : RESPONSE[4]
   end
 
   # Make an audit-log reason from an action.

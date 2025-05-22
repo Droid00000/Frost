@@ -19,6 +19,6 @@ module Emojis
       return
     end
 
-    data.edit_response(content: format(RESPONSE[9], emoji.use))
+    data.edit_response(content: format(RESPONSE[7], emoji.use))
   end
 end

@@ -28,7 +28,7 @@ module Emojis
     # Fetch the top emojis from the database and resolve them all
     # into a hash of emoji objects, so we can map them into our desired format.
     emojis = emojis.filter_map do |emoji|
-      next unless data.server.emojis.key?(emoji[:emoji_id])
+      next unless data.bot.emoji?(emoji[:emoji_id])
 
       emoji = [data.bot.emoji(emoji[:emoji_id]), emoji[:balance].delimit]
 
@@ -59,7 +59,7 @@ module Emojis
           section.text_display(text: format(RESPONSE[10], data.server.name))
 
           # Add the icon of the server as our thumbnail.
-          section.thumbnail(media: data.server.icon_url)
+          section.thumbnail(url: data.server.icon_url)
 
           # Add the description text at the botton.
           section.text_display(text: RESPONSE[1])
