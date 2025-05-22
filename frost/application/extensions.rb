@@ -342,7 +342,11 @@ module Discordrb
 
         sleep(2.5)
 
-        send_packet(Opcodes::REQUEST_MEMBERS, packet)
+        begin
+          send_packet(Opcodes::REQUEST_MEMBERS, packet)
+        rescue StandardError
+          retry
+        end
       end
     end
 
