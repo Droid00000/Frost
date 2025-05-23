@@ -127,7 +127,7 @@ module Discordrb
       link = if static || !animated
                API.emoji_icon_url(id, "png")
              else
-               API.emoji_icon_url(id) + "?animated=true"
+               API.emoji_icon_url(id, "gif")
              end
 
       data = {
