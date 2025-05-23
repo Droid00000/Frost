@@ -59,14 +59,6 @@ bot.register_application_command(:top, "View some emoji stats.", contexts: [0], 
   command.subcommand(:emojis, "View the most used emojis in this server.", name_localizations: { "hi" => "आँकड़े" }, description_localizations: { "hi" => "शीर्ष इमोजी के बारे में जानकारी यहां प्राप्त करें" })
 end
 
-# @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
-bot.register_application_command(:create, "Add an emoji to this server.", contexts: [0], integration_types: [0], name_localizations: { "hi" => "बनाएं" }, description_localizations: { "hi" => "इस सर्वर में एक इमोजी जोड़ें" }, default_member_permissions: "1073741824") do |command|
-  command.subcommand(:emoji, "Create an emoji on this server.", name_localizations: { "hi" => "इमोजी" }, description_localizations: { "hi" => "इस सर्वर पर एक इमोजी बनाएं" }) do |option|
-    option.string("emoji", "The emoji to create on this server.", required: true, name_localizations: { "hi" => "इमोजी" }, description_localizations: { "hi" => "इस सर्वर पर बनाए जाने वाले इमोजी" })
-    option.string("name", "The new name to give to this emoji.", required: false, name_localizations: { "hi" => "नाम" }, description_localizations: { "hi" => "इस इमोजी को दिया जाने वाला नया नाम" })
-  end
-end
-
 # @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
 bot.register_application_command(:change, "Moderation Commands", contexts: [0], integration_types: [0], name_localizations: { "hi" => "अद्यतन" }, description_localizations: { "hi" => "मॉडरेशन आदेश" }, default_member_permissions: "201326592") do |command|
   command.subcommand(:nickname, "Modify a member's nickname.", name_localizations: { "hi" => "उपनाम" }, description_localizations: { "hi" => "किसी सदस्य का उपनाम बदलें" }) do |option|

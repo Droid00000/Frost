@@ -3,11 +3,6 @@
 module EmojiCommands
   extend Discordrb::EventContainer
 
-  application_command(:create).subcommand(:emoji) do |event|
-    event.defer(ephemeral: true)
-    Emojis.add(event)
-  end
-
   application_command(:top).subcommand(:emojis) do |event|
     event.defer(ephemeral: false)
     Emojis.stats(event)
