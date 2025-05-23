@@ -125,7 +125,7 @@ module Discordrb
     # @return [File] a file.
     def file(static: false)
       link = if static || !animated
-               API.emoji_icon_url(id)
+               API.emoji_icon_url(id, "png")
              else
                API.emoji_icon_url(id) + "?animated=true"
              end
