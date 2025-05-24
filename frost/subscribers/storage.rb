@@ -40,9 +40,9 @@ module Boosters
       @guild = data.server.id
       @model = find_guild(@guild)
       @any_icon = @model[:any_icon]
+      @enabled_by = @model[:setup_by]
+      @enabled_at = @model[:setup_at]
       @hoist_role = @model[:hoist_role]
-      @enabled_by = @model[:enabled_by]
-      @enabled_at = @model[:enabled_at]
     end
 
     # Check if this guild is nil, e.g. hasn't been setup.
@@ -144,11 +144,11 @@ module Boosters
     end
 
     # Ban this user from using booster perks in this guild.
-    def ban(**options)
+    def ban(**)
       POSTGRES.transaction do
         @@users.where(**query).delete
 
-        @@bans.insert_conflict.insert(**query.merge(options))
+        @@bans.insert_conflict.insert(**query, **)
       end
     end
 
@@ -170,7 +170,7 @@ module Boosters
 
     # @!visibility private
     def conflict(*options)
-      { target: [:user_id, :guild_id], update: { role_id: options[0].resolve_id } }
+      { target: %i[user_id guild_id], update: { role_id: options[0].resolve_id } }
     end
   end
 

@@ -12,7 +12,7 @@ module Affections
       # entirely to components V2, but containers look a little massive on
       # desktop currently, so that plan already managed to fall through.
       builder.add_embed do |embed|
-        # Trick, making the title bold makes it pop out just  a bit more.
+        # Trick, making the title bold makes it pop out just a bit more.
         embed.title = HEADERS[5]
 
         # We have to check if the user has a instance method called `#color`

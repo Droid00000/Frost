@@ -21,12 +21,12 @@ module Discordrb
         response = API::Server.create_role(@bot.token, @id, name, colour, hoist, mentionable, permissions, icon, reason)
         role = Role.new(JSON.parse(response), @bot, self)
         @roles << role
-        return role
+        role
       rescue StandardError
         response = API::Server.create_role(@bot.token, @id, name, colour, hoist, mentionable, permissions, nil, reason)
         role = Role.new(JSON.parse(response), @bot, self)
         @roles << role
-        return role
+        role
       end
     end
 
@@ -76,7 +76,7 @@ module Discordrb
     #   channel.prune(100) { |m| m.author.id == 83283213010599936 }
     # @return [Integer] The amount of messages that were successfully deleted
     # rubocop:disable Style/OptionalBooleanParameter
-    def prune(amount, limit, strict = false, reason = nil, &block)
+    def prune(amount, limit, strict = false, reason = nil, &)
       # rubocop:enable Style/OptionalBooleanParameter
       raise ArgumentError, "Can only delete between 1 and 100 messages!" unless amount.between?(1, 100)
 
@@ -84,7 +84,7 @@ module Discordrb
 
       after = limit.options["after"]&.strip&.to_i unless limit.options["after"]&.to_i&.zero?
 
-      messages = history(amount, before, after).select(&block).map(&:id)
+      messages = history(amount, before, after).select(&).map(&:id)
 
       case messages.size
       when 0

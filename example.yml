@@ -3,7 +3,7 @@ Discord:
   OWNER: "YOUR_ID_HERE"
   TOKEN: "Bot TOKEN_HERE"
 
-# Information about a manga chapter.
+# Manga chapter related credentials.
 Chapter:
   LINK: ""
   CHANNEL: ""

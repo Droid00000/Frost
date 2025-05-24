@@ -40,8 +40,8 @@ module Birthdays
       @guild = data.server.id
       @model = find_guild(@guild)
       @role_id = @model[:role_id]
-      @enabled_by = @model[:enabled_by]
-      @enabled_at = @model[:enabled_at]
+      @enabled_by = @model[:setup_by]
+      @enabled_at = @model[:setup_at]
       @channel_id = @model[:channel_id]
     end
 
@@ -79,7 +79,7 @@ module Birthdays
 
     # @!visibility private
     def find_guild(*_options)
-      lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: guild).first }
+      lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: @guild).first }
     end
 
     # @!visibility private

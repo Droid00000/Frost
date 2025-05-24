@@ -5,11 +5,11 @@ module Settings
   def self.boosters(data)
     # Request all of our guild data up front in order
     # to avoid making duplicate requested to the DB.
-    guild = Boosters::Guild.new(data)
+    guild = ::Boosters::Guild.new(data)
 
     # Return unless booster perks are enabled here.
     if guild.blank?
-      data.send_message(content: RESPONSE[1])
+      data.send_message(content: RESPONSE[13])
       return
     end
 
@@ -27,13 +27,13 @@ module Settings
         # gets addressed sometime in the future. For now, this will do though.
         container.section do |section|
           # Add our main title heading here.
-          section.text_display(text: format(RESPONSE[5], data.server.name))
+          section.text_display(text: format(RESPONSE[16], data.server.name))
 
           # Add the icon of the server as our thumbnail.
-          section.thumbnail(media: data.server.icon_url)
+          section.thumbnail(url: data.server.icon_url)
 
           # Add the description text at the botton.
-          section.text_display(text: RESPONSE[1])
+          section.text_display(text: RESPONSE[3])
         end
 
         # Add some spacing between the section content of our
@@ -42,15 +42,15 @@ module Settings
 
         # Add some spacing between the content of our container
         # and the footer text that we're adding.
-        container.text_display(text: format(RESPONSE[1], view.role))
+        container.text_display(text: format(RESPONSE[8], guild.role))
 
         # Add the manager information we're now showing
         # and tracking. Includes the sanction timestamp.
-        container.text_display(text: format(RESPONSE[1], *guild.view))
+        container.text_display(text: format(RESPONSE[10], *guild.view))
 
         # Add our footer text. Eventually this can be swapped out for
         # an action row with buttons for pagination if needed.
-        container.text_display(text: guild.any_icon? ? RESPONSE[1] : RESPONSE[2])
+        container.text_display(text: guild.any_icon? ? RESPONSE[5] : RESPONSE[6])
       end
     end
   end

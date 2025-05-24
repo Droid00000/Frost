@@ -27,7 +27,7 @@ module AdminCommands
       3 => "`/booster admin enable`",
       4 => "`/booster admin unban`",
       5 => "`/booster admin add`",
-      6 => "`/booster admin ban`",
+      6 => "`/booster admin ban`"
     }.freeze
   end
 end

@@ -16,7 +16,7 @@ Simply do: `bundle install`.
 
 3. **Create the database in PostgreSQL**
 
-You'll need to be using PostgreSQL V15 or higher. Type the following into the PostgreSQL manager:
+You'll need to be using PostgreSQL version 16 or higher. Type the following into the PostgreSQL manager:
 
 ```sql
 CREATE ROLE frost WITH LOGIN PASSWORD 'urpassword'; CREATE DATABASE frosty OWNER frost;
@@ -34,7 +34,7 @@ Discord:
   OWNER: "YOUR_ID_HERE"
   TOKEN: "Bot TOKEN_HERE"
 
-# Information about a manga chapter.
+# Manga chapter related credentials.
 Chapter:
   LINK: ""
   CHANNEL: ""

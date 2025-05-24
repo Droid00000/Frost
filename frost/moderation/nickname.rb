@@ -8,6 +8,7 @@ module Moderation
       return
     end
 
+    # rubocop:disable Style/SoleNestedConditional
     unless data.user.owner?
       if hierarchy(data.member("member")) >= hierarchy(data.user)
         data.edit_response(content: format(RESPONSE[5], "you"))
@@ -22,6 +23,7 @@ module Moderation
       end
     end
 
+    # rubocop:enable Style/SoleNestedConditional
     data.member("member").set_nick(data.options["nickname"],
                                    "#{data.user.name} (ID: #{data.user.id})")
 

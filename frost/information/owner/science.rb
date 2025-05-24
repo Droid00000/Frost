@@ -11,21 +11,23 @@ module Owner
     # If we need to show a modal, we can't defer here.
     data.defer(ephemeral: true) if data.options["dial"] != 3
 
-    if data.options["dial"] == 2
+    case data.options["dial"]
+    when 2
       data.edit_response(content: "Exiting!")
-    elsif data.options["dial"] == 4
+    when 4
       data.edit_response(content: "Restarting!")
-    elsif data.options["dial"] == 1
+    when 1
       data.edit_response(content: "Draining emojis!")
-    elsif data.options["dial"] == 5
+    when 5
       data.edit_response(attachments: [File.open("logs.txt")])
     end
 
-    if data.options["dial"] == 2
+    case data.options["dial"]
+    when 2
       exit
-    elsif data.options["dial"] == 1
+    when 1
       Emojis::Storage.drain
-    elsif data.options["dial"] == 4
+    when 4
       exec("bundle exec ruby --yjit core.rb")
     else
       data.show_modal(title: "Eval", custom_id: "3") do |view|

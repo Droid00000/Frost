@@ -3,32 +3,27 @@
 module Affections
   # Punch a member.
   def self.punch(data)
-    # Set the ephemeral flag to false here.
+    # Ephemeral has to be false here, otherwise mentions don't work.
     data.respond(ephemeral: false) do |builder|
       # Add our content which contains our user mention.
       builder.content = data.member("target").mention
 
       # Add an embed here. The plan was to migrate this specific module
-      # entirely to components V2, but container look a little massive on
+      # entirely to components V2, but containers look a little massive on
       # desktop currently, so that plan already managed to fall through.
       builder.add_embed do |embed|
-        # Add our main header text here which denotes the type of action we're
-        # performing on the target user. Using `###` triple heading makes for
-        # a nice header like display.
+        # Trick, making the title bold makes it pop out just a bit more.
         embed.title = HEADERS[4]
 
-        # Set an accent color for the embed we're currently operating on.
-        # I was going to originally swap this embed over to CV2, but, on
-        # desktop, V2 components look super large with images for some reason.
+        # We have to check if the user has a instance method called `#color`
+        # since color isn't provided on the base user object, e.g. user apps.
         embed.color = data.user.respond_to?(:color) ? data.user.color : 0
 
-        # Add a bit of text explaining the type of action we're doing, including
-        # the target user and the initiating user. E.g. "Droid punches Hermit!"
+        # This is where our main body text is going to go. E.g. Hermit punches Droid!
         embed.description = format(RESPONSE[3], data.user.display_name,
                                    data.member("target").display_name)
 
-        # Finally we can add a media gallery in order to contain our randomized
-        # embed that we're using to provide a visual and fun representation of the action.
+        # This is going to be the random GIF of the action we're performing.
         embed.image = Discordrb::Webhooks::EmbedImage.new(url: PUNCH.sample)
       end
     end

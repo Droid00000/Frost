@@ -16,7 +16,7 @@ module Settings
           guilds = hash.bot.servers.values
           members = guilds.map(&:member_count).sum
           channels = guilds.map(&:channels).flatten.size
-          format(RESPONSE[14], guilds.size, members.delimit, channels)
+          format(RESPONSE[12], guilds.size, members.delimit, channels)
         end
 
         # Add a section to contain our main body content and our avatar.
@@ -24,15 +24,15 @@ module Settings
           # Add our main menu header here in a seperate text display
           # container in order to get some of that natural padding
           # that's tricky to stimulate with the other types of seperators.
-          section.text_display(text: RESPONSE[23])
+          section.text_display(text: RESPONSE[18])
 
           # Add the avatar URL of our bot here.
-          section.thumbnail(media: data.bot.profile.avatar_url)
+          section.thumbnail(url: data.bot.profile.avatar_url)
 
           # Create our main section body that contains all of the text we want
           # to show to our user. Currently, we have to use one big string, since
           # if we use multiple text displays, something kinda seems to look off.
-          section.text_display(text: "#{RESPONSE[2]}#{stats.call(data)}")
+          section.text_display(text: "#{RESPONSE[1]}#{stats.call(data)}")
         end
 
         # Check if we're in a server, and if the user has the
