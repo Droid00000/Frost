@@ -56,7 +56,7 @@ module Boosters
 
     role = data.server.create_role(**payload)
 
-    role.move_above(member.guild.hoist_role)
+    role.sort_above(member.guild.hoist_role)
 
     data.user.add_role(role, reason(data))
 

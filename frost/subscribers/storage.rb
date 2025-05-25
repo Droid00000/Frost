@@ -61,7 +61,7 @@ module Boosters
     # @param setup_at [Integer] Timestamp of when booster perks were setup for this guild.
     def edit(**options)
       POSTGRES.transaction do
-        options.slice!(:hoist_role, :any_icon) unless blank?
+        options = options.slice(:hoist_role, :any_icon) unless blank?
 
         blank? ? @@pg.insert(**options) : @@pg.where(guild_id: guild).update(options)
       end

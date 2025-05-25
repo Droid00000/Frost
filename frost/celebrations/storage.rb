@@ -61,7 +61,7 @@ module Birthdays
     # @param setup_at [Integer] Unix timestamp of when birthday events were setup for this guild.
     def edit(**options)
       POSTGRES.transaction do
-        options.slice!(:role_id, :channel_id) unless blank?
+        options = options.slice(:role_id, :channel_id) unless blank?
 
         blank? ? @@pg.insert(**options) : @@pg.where(guild_id: guild).update(options)
       end
