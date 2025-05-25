@@ -24,12 +24,13 @@ module Boosters
     4 => "`/booster role edit`"
   }.freeze
 
+  # The audit log reason for boosters.
+  REASON = "Booster Roles (ID: %s)"
+
   # Returns true if a string doesn't contain any bad words.
   # @param [String] The string to check for slurs and words.
   # @return [Boolean] If the name contains any bad words.
-  def self.safe_name?(name)
-    !name&.match?(REGEX[4])
-  end
+  def self.safe_name?(name) = !name&.match?(REGEX[4])
 
   # Initilaze a new color object for a role.
   # @param [String] The hex color to resolve.
@@ -41,6 +42,11 @@ module Boosters
 
     Discordrb::ColorRGB.new(color.match(REGEX[1])[0])
   end
+
+  # Produce an audit log to show when operating on the current role.
+  # @param data [Interaction] The current interaction the entry is for.
+  # @return [String] A string that denotes the action type and current user ID.
+  def self.reason(interaction) = format(REASON, interaction.user.id)
 
   # Check if we have a valid role icon.
   # @return [Boolean] If the icon is valid.

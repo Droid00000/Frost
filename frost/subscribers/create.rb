@@ -44,8 +44,8 @@ module Boosters
     payload = {
       colour: to_color(data.options["color"]),
       name: data.options["name"],
+      reason: reason(data),
       mentionable: false,
-      reason: REASON[2],
       permissions: 0,
       hoist: false
     }
@@ -58,7 +58,7 @@ module Boosters
 
     role.move_above(member.guild.hoist_role)
 
-    data.user.add_role(role, REASON[2])
+    data.user.add_role(role, reason(data))
 
     member.role = role.resolve_id
 

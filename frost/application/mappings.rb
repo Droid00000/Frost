@@ -61,13 +61,6 @@ COLORS = {
   original_blurple: 7_506_394
 }.freeze
 
-# The audit log reason shown whenever the bot does something.
-REASON = {
-  1 => "Birthday Roles",
-  2 => "Booster Roles",
-  3 => "Release Date"
-}.freeze
-
 # The time zone database source.
 TZInfo::DataSource.set(:zoneinfo)
 

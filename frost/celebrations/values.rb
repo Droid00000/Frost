@@ -50,4 +50,7 @@ module Birthdays
     4 => "`/birthday sync`",
     5 => "`/birthday add`"
   }.freeze
+
+  # The audit log reason for birthday roles.
+  REASON = "Birthday Roles (ID: %s)"
 end

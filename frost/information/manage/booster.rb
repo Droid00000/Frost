@@ -33,7 +33,7 @@ module Settings
           section.thumbnail(url: data.server.icon_url)
 
           # Add the description text at the botton.
-          section.text_display(text: RESPONSE[3])
+          section.text_display(text: RESPONSE[2])
         end
 
         # Add some spacing between the section content of our
@@ -50,7 +50,7 @@ module Settings
 
         # Add our footer text. Eventually this can be swapped out for
         # an action row with buttons for pagination if needed.
-        container.text_display(text: guild.any_icon? ? RESPONSE[5] : RESPONSE[6])
+        container.text_display(text: guild.any_icon? ? RESPONSE[6] : RESPONSE[5])
       end
     end
   end

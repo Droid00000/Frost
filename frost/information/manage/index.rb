@@ -12,28 +12,22 @@ module Settings
       builder.container(colour: 10_665_982) do |container|
         # A lambda is defined here for building up a string containing
         # all of the stats and metrics about our bot, e.g. server count.
-        stats = lambda do |hash|
-          guilds = hash.bot.servers.values
+        stats = lambda do |context|
+          guilds = context.bot.servers.values
           members = guilds.map(&:member_count).sum
-          channels = guilds.map(&:channels).flatten.size
+          channels = guilds.flat_map(&:channels).size
           format(RESPONSE[12], guilds.size, members.delimit, channels)
         end
 
-        # Add a section to contain our main body content and our avatar.
-        container.section do |section|
-          # Add our main menu header here in a seperate text display
-          # container in order to get some of that natural padding
-          # that's tricky to stimulate with the other types of seperators.
-          section.text_display(text: RESPONSE[18])
+        # Add our main menu header here in a seperate text display
+        # container in order to get some of that natural padding
+        # that's tricky to stimulate with the other types of seperators.
+        container.text_display(text: RESPONSE[18])
 
-          # Add the avatar URL of our bot here.
-          section.thumbnail(url: data.bot.profile.avatar_url)
-
-          # Create our main section body that contains all of the text we want
-          # to show to our user. Currently, we have to use one big string, since
-          # if we use multiple text displays, something kinda seems to look off.
-          section.text_display(text: "#{RESPONSE[1]}#{stats.call(data)}")
-        end
+        # Create our main section body that contains all of the text we want
+        # to show to our user. Currently, we have to use one big string, since
+        # if we use multiple text displays, something kinda seems to look off.
+        container.text_display(text: "#{RESPONSE[1]}#{stats.call(data)}")
 
         # Check if we're in a server, and if the user has the
         # manage roles permission in the server this command's called from.

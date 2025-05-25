@@ -74,76 +74,31 @@ CREATE TABLE IF NOT EXISTS emoji_tracker (
 );
 
 -- Function for searching for a timezone.
-CREATE OR REPLACE FUNCTION search_timezones(query text) RETURNS
-SETOF guild_timezones ROWS 25 LANGUAGE SQL STABLE AS $$
-WITH tokens AS (
-    SELECT
-        unnest(string_to_array(unaccent(query), ' ')) AS t
+CREATE
+OR REPLACE FUNCTION search_timezones (query text) RETURNS SETOF guild_timezones ROWS 25 LANGUAGE SQL STABLE AS $$
+ WITH tokens AS (
+    SELECT unnest(string_to_array(unaccent(query), ' ')) AS t
 )
-SELECT
-    NAME,
-    country,
-    timezone,
-    identifier
-FROM
-    guild_timezones,
-    tokens
-WHERE (NAME ILIKE '%' || tokens.t || '%'
-    OR similarity(NAME, tokens.t) > 0.2)
-    OR (country ILIKE '%' || tokens.t || '%'
-        OR similarity(country, tokens.t) > 0.2)
-    OR (timezone ILIKE '%' || tokens.t || '%'
-        OR similarity(timezone, tokens.t) > 0.2)
-    OR (identifier ILIKE '%' || tokens.t || '%'
-        OR similarity(identifier, tokens.t) > 0.2)
-GROUP BY
-    NAME,
-    country,
-    timezone,
-    identifier
-ORDER BY
-    sum(
-        CASE WHEN NAME ILIKE '%' || tokens.t || '%' THEN
-            1.0 - (tokens.t <-> NAME)
-        ELSE
-            0
-        END +
-        CASE WHEN similarity(NAME, tokens.t) > 0.2 THEN
-            similarity(NAME, tokens.t)
-        ELSE
-            0
-        END +
-        CASE WHEN country ILIKE '%' || tokens.t || '%' THEN
-            1.0 - (tokens.t <-> country)
-        ELSE
-            0
-        END +
-        CASE WHEN similarity(country, tokens.t) > 0.2 THEN
-            similarity(country, tokens.t)
-        ELSE
-            0
-        END +
-        CASE WHEN timezone ILIKE '%' || tokens.t || '%' THEN
-            1.0 - (tokens.t <-> timezone)
-        ELSE
-            0
-        END +
-        CASE WHEN similarity(timezone, tokens.t) > 0.2 THEN
-            similarity(timezone, tokens.t)
-        ELSE
-            0
-        END +
-        CASE WHEN identifier ILIKE '%' || tokens.t || '%' THEN
-            1.0 - (tokens.t <-> identifier)
-        ELSE
-            0
-        END +
-        CASE WHEN similarity(identifier, tokens.t) > 0.2 THEN
-            similarity(identifier, tokens.t)
-        ELSE
-            0
-        END
-    ) DESC
+SELECT name, country, timezone, identifier
+FROM (
+    SELECT
+        g.*,
+        (
+            SELECT SUM(
+                CASE WHEN g.name ILIKE '%' || t.t || '%' THEN 1.0 - (t.t <-> g.name) ELSE 0 END +
+                CASE WHEN similarity(g.name, t.t) > 0.2 THEN similarity(g.name, t.t) ELSE 0 END +
+                CASE WHEN g.country ILIKE '%' || t.t || '%' THEN 1.0 - (t.t <-> g.country) ELSE 0 END +
+                CASE WHEN similarity(g.country, t.t) > 0.2 THEN similarity(g.country, t.t) ELSE 0 END +
+                CASE WHEN g.timezone ILIKE '%' || t.t || '%' THEN 1.0 - (t.t <-> g.timezone) ELSE 0 END +
+                CASE WHEN similarity(g.timezone, t.t) > 0.2 THEN similarity(g.timezone, t.t) ELSE 0 END +
+                CASE WHEN g.identifier ILIKE '%' || t.t || '%' THEN 1.0 - (t.t <-> g.identifier) ELSE 0 END +
+                CASE WHEN similarity(g.identifier, t.t) > 0.2 THEN similarity(g.identifier, t.t) ELSE 0 END
+            )
+            FROM tokens t
+        ) AS score
+    FROM guild_timezones g
+) sub
+ORDER BY score DESC
 LIMIT 25;
 $$;
 
@@ -185,7 +140,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guil
 -- Index for the `guild_birthdays` table.
 CREATE UNIQUE INDEX IF NOT EXISTS guild_birthdays_idx ON guild_birthdays (user_id, guild_id);
 
--- Index for the `guild_timezones` table.
+-- GIN indexes for the `guild_timezones` table.
 CREATE INDEX IF NOT EXISTS guild_names_idx ON guild_timezones USING GIN (name gin_trgm_ops);
 
 CREATE INDEX IF NOT EXISTS guild_codes_idx ON guild_timezones USING GIN (identifier gin_trgm_ops);

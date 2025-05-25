@@ -6,12 +6,16 @@ module AdminCommands
     # Responses and fields for event roles.
     RESPONSE = {
       1 => "The role has been successfully edited! <a:LoidClap_Maomao:1276327798104920175>",
-      2 => "The bot needs to have the ``manage roles`` permission to do this.",
-      3 => "The role name contains a word that may not be used.",
-      4 => "This role hasn't been configured to be editable.",
-      5 => "Successfully disabled event perks for the role!",
-      6 => "Successfully enabled event perks for the role!",
-      7 => "Only members of this role may edit it."
+      2 => "The bot needs to have the `manage roles` permission to do this.",
+      3 => "You need to have the `manage roles` permission to do this.",
+      4 => "The `icon` option must be provided when setting up a role.",
+      5 => "Event perks cannot be enabled for the @еveryone role.",
+      6 => "The role name contains a word that may not be used.",
+      7 => "This role hasn't been configured to be editable.",
+      8 => "Successfully disabled event perks for the role!",
+      9 => "Successfully enabled event perks for the role!",
+      10 => "Successfully updated event perks for the role!",
+      11 => "Only members of this role may edit it."
     }.freeze
 
     # Application commands for event roles.
@@ -54,7 +58,7 @@ module AdminCommands
     def self.to_icon(data)
       return nil if data.options["icon"].nil? || data.options["icon"].empty?
 
-      data.emoji("icon")&.file(static: true) || data.options["icon"].scan(Unicode::Emoji::REGEX).first
+      data.emoji("icon")&.file || data.options["icon"].scan(Unicode::Emoji::REGEX).first
     end
   end
 end

@@ -3,9 +3,6 @@
 module General
   # Prune deleted roles.
   def self.roles(data)
-    # Remove the deleted role from server boosters.
-    POSTGRES[:guild_boosters].where(guild_id: data.server.id, role_id: data.id).delete
-
     # Remove the deleted role from custom event roles.
     POSTGRES[:event_settings].where(guild_id: data.server.id, role_id: data.id).delete
 

@@ -26,10 +26,10 @@ module Boosters
       return
     end
 
-    data.server.role(member.role)&.delete
+    role = data.server.role(member.role)
 
-    # Delete the member after deleting their role.
-    member.delete
+    # The role may not exist sometimes.
+    [role&.delete(reason(data)), member.delete]
 
     data.edit_response(content: RESPONSE[3])
   end

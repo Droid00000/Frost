@@ -35,17 +35,16 @@ module Boosters
       colour: to_color(data.options["color"]),
       name: data.options["name"],
       role: member.role(data),
-      icon: to_icon(data),
-      reason: REASON[2]
+      reason: reason(data)
     }.compact
 
     data.edit_response(content: RESPONSE[4])
 
-    unless valid_icon?(data, member.guild)
-      payload.delete(:icon)
+    if valid_icon?(data, member.guild)
+      payload[:icon] = to_icon(data)
     end
 
-    if data.options["icon"]&.match?(REGEX[1])
+    if data.options["icon"]&.match?(REGEX[2])
       payload[:icon] = :NULL
     end
 

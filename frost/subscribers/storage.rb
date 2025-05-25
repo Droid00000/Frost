@@ -180,6 +180,10 @@ module Boosters
     # @return [Array<Hash<Symbol => Integer>>, Sequel::Dataset]
     def self.stream = POSTGRES[:booster_settings].all
 
+    # Get all the boosters that are in the database with a reason.
+    # @return [Array<Hash<Symbol => Integer Symbol => String>>]
+    def self.list = stream.to_a.each { it[:reason] = reason(it) }
+
     # Get a list of all the boosters that are in the database.
     # @return [Array<Hash<Symbol => Integer, Symbol => Array>>]
     def self.chunks
@@ -187,6 +191,11 @@ module Boosters
         { guild_id: guild, members: users.map { |user| user[:user_id] } }
       end
     end
+
+    # Produce an audit log to show when operating on the current role.
+    # @param data [Interaction] The current interaction the entry is for.
+    # @return [String] A string that denotes the action type and current user ID.
+    def self.reason(options) = format(Boosters::REASON, options[0][:user_id])
 
     # Delete a singular booster from the database from the given options.
     # @param guild_id [Integer, String] ID of the guild the record is for.

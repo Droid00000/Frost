@@ -6,12 +6,12 @@ module AdminCommands
     # Edit the graident colors for a role.
     def self.colors(data)
       unless data.server.bot.permission?(:manage_roles)
-        data.edit_response(content: RESPONSE[47])
+        data.edit_response(content: RESPONSE[2])
         return
       end
 
       unless data.user.role?(data.options["role"])
-        data.edit_response(content: RESPONSE[17])
+        data.edit_response(content: RESPONSE[11])
         return
       end
 
@@ -19,13 +19,13 @@ module AdminCommands
       role = Role.new(data.options["role"])
 
       if role.blank?
-        data.edit_response(content: RESPONSE[4])
+        data.edit_response(content: RESPONSE[7])
         return
       end
 
       # Map to: { name => COLOR || name => :NULL }
       data.options.each do |name, value|
-        data.options[name] = if value.match?(REGEX[1])
+        data.options[name] = if value.match?(REGEX[2])
                                :NULL
                              else
                                to_color(value)
@@ -36,10 +36,10 @@ module AdminCommands
         role: data.options["role"],
         tertiary: data.options["end"],
         secondary: data.options["start"],
-        reason: "#{data.user.name} (ID: #{data.user.id})"
+        reason: "Event Roles (ID: #{data.user.id})"
       }.compact
 
-      data.edit_response(content: RESPONSE[2])
+      data.edit_response(content: RESPONSE[1])
 
       data.server.update_role(**payload) if payload.size > 2
     end

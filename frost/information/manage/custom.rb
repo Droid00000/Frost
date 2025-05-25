@@ -33,7 +33,7 @@ module Settings
           section.thumbnail(url: data.server.icon_url)
 
           # Add the description text at the botton.
-          section.text_display(text: RESPONSE[2])
+          section.text_display(text: RESPONSE[3])
         end
 
         # Add some spacing between the content of our container

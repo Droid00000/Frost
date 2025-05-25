@@ -28,7 +28,7 @@ module Boosters
 
     # Map to: { name => COLOR || name => :NULL }
     data.options.each do |name, value|
-      data.options[name] = if value.match?(REGEX[1])
+      data.options[name] = if value.match?(REGEX[2])
                              :NULL
                            else
                              to_color(value)
@@ -37,7 +37,7 @@ module Boosters
 
     payload = {
       role: member.role,
-      reason: REASON[2],
+      reason: reason(data),
       tertiary: data.options["end"],
       secondary: data.options["start"]
     }.compact
