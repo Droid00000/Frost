@@ -8,10 +8,10 @@ module Boosters
       return
     end
 
-    unless data.user.boosting?
-      data.edit_response(content: RESPONSE[9])
-      return
-    end
+    #unless data.user.boosting?
+    #  data.edit_response(content: RESPONSE[9])
+    #  return
+    #end
 
     if data.server.roles.size == 250
       data.edit_response(content: RESPONSE[5])

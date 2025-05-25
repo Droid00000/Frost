@@ -30,7 +30,7 @@ module AdminCommands
         return
       end
 
-      guild.edit(**options)
+      guild.edit(**options.compact)
 
       if guild.blank?
         data.edit_response(content: RESPONSE[8])

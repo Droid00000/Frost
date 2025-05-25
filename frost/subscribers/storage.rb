@@ -61,7 +61,9 @@ module Boosters
     # @param setup_at [Integer] Timestamp of when booster perks were setup for this guild.
     def edit(**options)
       POSTGRES.transaction do
-        @@pg.insert_conflict(**conflict(options)).insert(**options)
+        options.slice!(:hoist_role, :any_icon) unless blank?
+
+        blank? ? @@pg.insert(**options) : @@pg.where(guild_id: guild).update(options)
       end
     end
 
@@ -80,11 +82,6 @@ module Boosters
     # @!visibility private
     def find_guild(*_options)
       @lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: @guild).first }
-    end
-
-    # @!visibility private
-    def conflict(*options)
-      { target: :guild_id, update: options[0].except(:enabled_by, :enabled_at) }
     end
   end
 
