@@ -74,73 +74,78 @@ CREATE TABLE IF NOT EXISTS emoji_tracker (
 );
 
 -- Function for searching for a timezone.
-CREATE OR REPLACE FUNCTION search_timezones (query text)
-    RETURNS SETOF guild_timezones
-    AS $$
-BEGIN
-    RETURN query WITH tokens AS (
-        SELECT
-            unnest(string_to_array(unaccent(query), ' ')) AS t
-)
+CREATE OR REPLACE FUNCTION search_timezones(query text) RETURNS
+SETOF guild_timezones ROWS 25 LANGUAGE SQL STABLE AS $$
+WITH tokens AS (
     SELECT
-        NAME,
-        country,
-        timezone,
-        identifier
-    FROM
-        guild_timezones,
-        tokens
-    WHERE (NAME ILIKE '%' || tokens.t || '%'
-        OR similarity (NAME, tokens.t) > 0.2)
-        OR (country ILIKE '%' || tokens.t || '%'
-            OR similarity (country, tokens.t) > 0.2)
-        OR (timezone ILIKE '%' || tokens.t || '%'
-            OR similarity (timezone, tokens.t) > 0.2)
-        OR (identifier ILIKE '%' || tokens.t || '%'
-            OR similarity (identifier, tokens.t) > 0.2)
-    GROUP BY
-        NAME,
-        country,
-        timezone,
-        identifier
-    ORDER BY
-        sum(
-            CASE WHEN NAME ILIKE '%' || tokens.t || '%' THEN
-                1.0 - (tokens.t <-> NAME)
-            ELSE
-                0
-            END + CASE WHEN similarity (NAME, tokens.t) > 0.2 THEN
-                similarity (NAME, tokens.t)
-            ELSE
-                0
-            END + CASE WHEN country ILIKE '%' || tokens.t || '%' THEN
-                1.0 - (tokens.t <-> country)
-            ELSE
-                0
-            END + CASE WHEN similarity (country, tokens.t) > 0.2 THEN
-                similarity (country, tokens.t)
-            ELSE
-                0
-            END + CASE WHEN timezone ILIKE '%' || tokens.t || '%' THEN
-                1.0 - (tokens.t <-> timezone)
-            ELSE
-                0
-            END + CASE WHEN similarity (timezone, tokens.t) > 0.2 THEN
-                similarity (timezone, tokens.t)
-            ELSE
-                0
-            END + CASE WHEN identifier ILIKE '%' || tokens.t || '%' THEN
-                1.0 - (tokens.t <-> identifier)
-            ELSE
-                0
-            END + CASE WHEN similarity (identifier, tokens.t) > 0.2 THEN
-                similarity (identifier, tokens.t)
-            ELSE
-                0
-            END) DESC
-    LIMIT 25;
-END;
-$$ LANGUAGE PLPGSQL;
+        unnest(string_to_array(unaccent(query), ' ')) AS t
+)
+SELECT
+    NAME,
+    country,
+    timezone,
+    identifier
+FROM
+    guild_timezones,
+    tokens
+WHERE (NAME ILIKE '%' || tokens.t || '%'
+    OR similarity(NAME, tokens.t) > 0.2)
+    OR (country ILIKE '%' || tokens.t || '%'
+        OR similarity(country, tokens.t) > 0.2)
+    OR (timezone ILIKE '%' || tokens.t || '%'
+        OR similarity(timezone, tokens.t) > 0.2)
+    OR (identifier ILIKE '%' || tokens.t || '%'
+        OR similarity(identifier, tokens.t) > 0.2)
+GROUP BY
+    NAME,
+    country,
+    timezone,
+    identifier
+ORDER BY
+    sum(
+        CASE WHEN NAME ILIKE '%' || tokens.t || '%' THEN
+            1.0 - (tokens.t <-> NAME)
+        ELSE
+            0
+        END +
+        CASE WHEN similarity(NAME, tokens.t) > 0.2 THEN
+            similarity(NAME, tokens.t)
+        ELSE
+            0
+        END +
+        CASE WHEN country ILIKE '%' || tokens.t || '%' THEN
+            1.0 - (tokens.t <-> country)
+        ELSE
+            0
+        END +
+        CASE WHEN similarity(country, tokens.t) > 0.2 THEN
+            similarity(country, tokens.t)
+        ELSE
+            0
+        END +
+        CASE WHEN timezone ILIKE '%' || tokens.t || '%' THEN
+            1.0 - (tokens.t <-> timezone)
+        ELSE
+            0
+        END +
+        CASE WHEN similarity(timezone, tokens.t) > 0.2 THEN
+            similarity(timezone, tokens.t)
+        ELSE
+            0
+        END +
+        CASE WHEN identifier ILIKE '%' || tokens.t || '%' THEN
+            1.0 - (tokens.t <-> identifier)
+        ELSE
+            0
+        END +
+        CASE WHEN similarity(identifier, tokens.t) > 0.2 THEN
+            similarity(identifier, tokens.t)
+        ELSE
+            0
+        END
+    ) DESC
+LIMIT 25;
+$$;
 
 -- Function for managing the balance of an emoji.
 CREATE OR REPLACE FUNCTION balance_manager() RETURNS TRIGGER AS $$
