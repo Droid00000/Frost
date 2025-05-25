@@ -8,10 +8,10 @@ module Boosters
       return
     end
 
-    #unless data.user.boosting?
+    # unless data.user.boosting?
     #  data.edit_response(content: RESPONSE[9])
     #  return
-    #end
+    # end
 
     if data.server.roles.size == 250
       data.edit_response(content: RESPONSE[5])
@@ -56,7 +56,7 @@ module Boosters
 
     role = data.server.create_role(**payload)
 
-    role.sort_above(member.guild.hoist_role)
+    role.place_above(member.guild.hoist_role)
 
     data.user.add_role(role, reason(data))
 
