@@ -56,7 +56,7 @@ module Moderation
     end
 
     users.map! do |bans|
-      bans.respond_to?(:server) ? bans.banned_users.size : 0
+      bans.respond_to?(:server) ? bans.banned_users.size : 1
     end
 
     data.edit_response(content: plural(RESPONSE[6], users.sum))
