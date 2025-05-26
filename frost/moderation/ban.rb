@@ -29,7 +29,11 @@ module Moderation
     end
 
     members = users.select do |user|
-      user.is_a?(Discordrb::Member) && !user.owner?
+      user.is_a?(Discordrb::Member)
+    end
+
+    members.reject! do |user|
+      user.current_bot? || user.owner?
     end
 
     members.select! do |user|
@@ -41,7 +45,7 @@ module Moderation
     end
 
     users = members + users.select do |user|
-      user.is_a?(Discordrb::User) && !user.current_bot?
+      user.is_a?(Discordrb::User)
     end
 
     users = users.each_slice(200).filter_map do |slice|
