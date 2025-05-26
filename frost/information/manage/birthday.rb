@@ -9,7 +9,7 @@ module Settings
 
     # Return unless birthday perks are enabled in this server.
     if guild.blank?
-      data.send_message(content: RESPONSE[13])
+      data.send_message(content: RESPONSE[13], ephemeral: true)
       return
     end
 

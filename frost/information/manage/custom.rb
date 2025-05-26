@@ -9,7 +9,7 @@ module Settings
     # Return early unless we have roles we can show the user.
     # Else there's no point in going any further with this command.
     if roles.empty?
-      data.send_message(content: RESPONSE[13])
+      data.send_message(content: RESPONSE[13], ephemeral: true)
       return
     end
 

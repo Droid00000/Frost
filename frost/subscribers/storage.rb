@@ -81,7 +81,7 @@ module Boosters
 
     # @!visibility private
     def find_guild(*_options)
-      @lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: @guild).first }
+      @lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: @guild).first } || {}
     end
   end
 
@@ -106,7 +106,6 @@ module Boosters
     # @!visibility private
     def initialize(data)
       @data = data
-      @bot = data.bot
       @user_id = data.user.id
       @guild_id = data.server.id
       @query = { guild_id: @guild_id, user_id: @user_id }
@@ -192,7 +191,7 @@ module Boosters
     # Produce an audit log to show when operating on the current role.
     # @param data [Interaction] The current interaction the entry is for.
     # @return [String] A string that denotes the action type and current user ID.
-    def self.reason(options) = format(Boosters::REASON, options[0][:user_id])
+    def self.reason(*options) = format(::Boosters::REASON, options[0][:user_id])
 
     # Delete a singular booster from the database from the given options.
     # @param guild_id [Integer, String] ID of the guild the record is for.

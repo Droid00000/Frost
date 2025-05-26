@@ -81,7 +81,7 @@ module Birthdays
 
     # @!visibility private
     def find_guild(*_options)
-      lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: @guild).first }
+      lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: @guild).first } || {}
     end
   end
 end
