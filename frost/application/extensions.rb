@@ -150,8 +150,8 @@ module Discordrb
     # @param role [Role, Integer, String] The role the current role should be moved above.
     # @return [Integer] The index of the newly updated role.
     def sort_above(role)
-      roles = @server.roles.uniq.sort_by do |role|
-        [role.position, role.id]
+      roles = @server.roles.uniq.sort_by do |role_|
+        [role_.position, role.id]
       end
 
       roles.reject! { |old_role| old_role.id == @id }
@@ -160,8 +160,8 @@ module Discordrb
 
       roles.insert(new_role_index + 1, self)
 
-      roles = roles.map.with_index do |role, position|
-        { id: role.resolve_id, position: position }
+      roles = roles.map.with_index do |role_, position|
+        { id: role_.resolve_id, position: position }
       end
 
       puts("Setting positions now #{roles.inspect}")
