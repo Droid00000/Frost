@@ -59,14 +59,6 @@ bot.register_application_command(:top, "View some emoji stats.", contexts: [0], 
   command.subcommand(:emojis, "View the most used emojis in this server.", name_localizations: { "hi" => "आँकड़े" }, description_localizations: { "hi" => "शीर्ष इमोजी के बारे में जानकारी यहां प्राप्त करें" })
 end
 
-# @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
-bot.register_application_command(:change, "Moderation Commands", contexts: [0], integration_types: [0], name_localizations: { "hi" => "अद्यतन" }, description_localizations: { "hi" => "मॉडरेशन आदेश" }, default_member_permissions: "201326592") do |command|
-  command.subcommand(:nickname, "Modify a member's nickname.", name_localizations: { "hi" => "उपनाम" }, description_localizations: { "hi" => "किसी सदस्य का उपनाम बदलें" }) do |option|
-    option.user("member", "Which member needs to have their name changed?", required: true, name_localizations: { "hi" => "लोग" }, description_localizations: { "hi" => "किस सदस्य को अपना नाम बदलना है" })
-    option.string("nickname", "What should this member's new nickname be?", required: true, name_localizations: { "hi" => "उपनाम" }, description_localizations: { "hi" => "इस सदस्य का नया उपनाम क्या होना चाहिए" })
-  end
-end
-
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:next, "Manga Chapter!", server_id: ENV.fetch("GUILD"), contexts: [0], integration_types: [0], name_localizations: { "hi" => "अगला" }, description_localizations: { "hi" => "मंगा अध्याय" }) do |command|
   command.subcommand_group(:chapter, "Comics!", name_localizations: { "hi" => "प्रकरण" }, description_localizations: { "hi" => "कॉमिक्स" }) do |group|
