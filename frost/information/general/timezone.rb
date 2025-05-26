@@ -8,7 +8,7 @@ module General
       return
     end
 
-    zone = Birthday.zone(Birthday.timezone(data))
+    zone = Birthdays.zone(Birthdays.timezone(data))
 
     builder = lambda do |time|
       time = Time.at(time.to_time)
