@@ -18,7 +18,7 @@ module Owner
 
     # Format our number into a percentage.
     percentage_data = lambda do |count, total|
-      ((count.to_f / total.to_f) * 100).round(2)
+      ((count.to_f / total) * 100).round(2)
     end
 
     # Sort our stats in descending order by count.

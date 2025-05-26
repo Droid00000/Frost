@@ -20,7 +20,7 @@ module Moderation
     users = data.bot.parse_mentions(data.options["members"])
 
     # The x-audit-log reason shown for all the ban entries.
-    reason = "#{data.options["reason"]} (ID: #{data.user.id})"
+    reason = "#{data.options['reason']} (ID: #{data.user.id})"
 
     users = users.filter_map do |user|
       if user.is_a?(Discordrb::User)
