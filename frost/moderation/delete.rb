@@ -71,6 +71,6 @@ module Moderation
       end
     end
 
-    data.edit_response(content: plural(count))
+    data.edit_response(content: plural(RESPONSE[3], count))
   end
 end
