@@ -14,4 +14,8 @@ module AdminCommands
   ready(resumed: false) do |event|
     Owner.logs(event)
   end
+
+  raw(filter: false) do |event|
+    Owner.raw(event)
+  end
 end

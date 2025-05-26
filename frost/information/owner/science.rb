@@ -18,7 +18,7 @@ module Owner
       data.edit_response(content: "Restarting!")
     when 1
       data.edit_response(content: "Draining emojis!")
-    when 5
+    when 6
       data.edit_response(attachments: [File.open("logs.txt")])
     end
 
@@ -27,6 +27,8 @@ module Owner
       exit
     when 1
       Emojis::Storage.drain
+    when 5
+      Owner.statistics(data)
     when 4
       exec("bundle exec ruby --yjit core.rb")
     else

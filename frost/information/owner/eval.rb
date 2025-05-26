@@ -9,14 +9,14 @@ module Owner
     end
 
     # Respond initally so some requests don't timeout.
-    data.respond(content: RESPONSE[2], ephemeral: true)
+    data.respond(content: RESPONSE[3], ephemeral: true)
 
     begin
       # rubocop:disable Security/Eval
       code = eval(escape(data.value("code"))).inspect
       # rubocop:enable Security/Eval
     rescue StandardError, SyntaxError => e
-      data.edit_response(content: format(RESPONSE[4], e.message))
+      data.edit_response(content: format(RESPONSE[7], e.message))
       return
     end
 
@@ -32,9 +32,9 @@ module Owner
     if code.is_a?(Tempfile)
       data.edit_response(attachments: [code])
     elsif code.to_s.empty?
-      data.edit_response(content: RESPONSE[3])
+      data.edit_response(content: RESPONSE[4])
     else
-      data.edit_response(content: format(RESPONSE[4], code))
+      data.edit_response(content: format(RESPONSE[7], code))
     end
   end
 end
