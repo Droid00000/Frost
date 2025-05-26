@@ -4,7 +4,7 @@ module AdminCommands
   extend Discordrb::EventContainer
 
   application_command(:next).group(:chapter) do |group|
-    group.subcommand("when") do |event|
+    group.subcommand(:when) do |event|
       event.defer(ephemeral: false)
       General.chapter(event)
     end
