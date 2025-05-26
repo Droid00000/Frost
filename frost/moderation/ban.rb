@@ -4,12 +4,12 @@ module Moderation
   # Ban multiple users.
   def self.ban(data)
     unless data.server.bot.permission?(:manage_server)
-      data.edit_response(content: RESPONSE[1])
+      data.edit_response(content: RESPONSE[2])
       return
     end
 
     unless data.server.bot.permission?(:ban_members)
-      data.edit_response(content: RESPONSE[2])
+      data.edit_response(content: RESPONSE[4])
       return
     end
 
@@ -55,6 +55,6 @@ module Moderation
       bans.respond_to?(:server) ? bans.banned_users.size : 0
     end
 
-    data.edit_response(content: plural(RESPONSE[1], users.sum))
+    data.edit_response(content: plural(RESPONSE[6], users.sum))
   end
 end

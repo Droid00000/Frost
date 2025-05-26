@@ -9,7 +9,7 @@ module Moderation
     end
 
     unless data.server.bot.permission?(:read_messages, data.channel)
-      data.edit_response(content: RESPONSE[2])
+      data.edit_response(content: RESPONSE[3])
       return
     end
 
@@ -71,6 +71,6 @@ module Moderation
       end
     end
 
-    data.edit_response(content: plural(RESPONSE[3], count))
+    data.edit_response(content: plural(RESPONSE[5], count))
   end
 end

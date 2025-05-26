@@ -4,8 +4,11 @@ module Moderation
   # Responses and fields for moderation.
   RESPONSE = {
     1 => "The bot needs to have the `manage messages` permission to do this.",
-    2 => "The bot needs to have the `view channel` permission to do this.",
-    3 => "successfully deleted %s message"
+    2 => "The bot needs to have the `manage server` permission to do this.",
+    3 => "The bot needs to have the `view channel` permission to do this.",
+    4 => "The bot needs to have the `ban members` permission to do this.",
+    5 => "Successfully deleted %s message",
+    6 => "Successfully banned %s member"
   }.freeze
 
   # Application commands for moderation.
