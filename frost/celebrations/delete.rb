@@ -3,13 +3,9 @@
 module Birthdays
   # Delete your birthday.
   def self.delete(data)
-    unless Frost::Birthdays.user?(data)
-      data.edit_response(content: RESPONSE[103])
-      return
-    end
+    # Initialize and delete in one go.
+    Member.new(data, lazy: true).delete
 
-    Frost::Birthdays.delete(data)
-
-    data.edit_response(content: RESPONSE[106])
+    data.edit_response(content: RESPONSE[4])
   end
 end

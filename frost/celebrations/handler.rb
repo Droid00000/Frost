@@ -8,11 +8,6 @@ module BirthdayCommands
     Birthdays.delete(event)
   end
 
-  application_command(:birthday).subcommand(:grant) do |event|
-    event.defer(ephemeral: true)
-    Birthdays.grant(event)
-  end
-
   application_command(:birthday).subcommand(:sync) do |event|
     event.defer(ephemeral: true)
     Birthdays.sync(event)

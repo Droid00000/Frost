@@ -6,12 +6,12 @@ module Birthdays
     1 => "Your birthday couldn't be found. Please add your birthday using the </birthday add:1334725009427664970> command.",
     2 => "This server has not enabled birthday perks.",
     3 => "Successfully granted the birthday role.",
-    4 => "Successfully removed your birthday.",
+    4 => "Successfully deleted your birthday.",
     5 => "Please provide at least one option.",
-    6 => "I failed to process your timezone.",
-    7 => "Successfully added your birthday.",
+    6 => "Successfully added your birthday.",
+    7 => "Please provide a valid timezone.",
     8 => "You've already set your birthday.",
-    9 => "I failed to process your date."
+    9 => "Please provide a valid date."
   }.freeze
 
   # Default timezones used.

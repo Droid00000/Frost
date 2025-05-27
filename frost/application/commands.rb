@@ -127,21 +127,17 @@ bot.register_application_command(:birthday, "birthday roles", contexts: [0], int
     option.string("timezone", "The timezone you were born in.", required: false, autocomplete: true, min_length: 5, max_length: 35)
   end
 
-  command.subcommand(:grant, "Grant the birthday role to a member.") do |option|
-    option.user("member", "Who do you want to give the birthday role to?", required: true)
-  end
-
   command.subcommand(:sync, "Add your date of birth to this server.")
 
   command.subcommand(:delete, "Remove your date of birth from the bot.")
 
   command.subcommand_group(:admin, "Birthday admin!") do |group|
-    group.subcommand(:enable, "Enable the birthday roles functionality.") do |option|
-      option.role("role", "Which role should members be given on their birthday?", required: false)
-      option.channel("channel", "Which channel should birthday announcements be sent to?", types: [:text], required: false)
+    group.subcommand(:enable, "Enable the birthday perks functionality.") do |option|
+      option.role("role", "The role members should be given on their birthday.", required: false)
+      option.channel("channel", "The channel birthday annoucements should be sent to.", types: [:text], required: false)
     end
 
-    group.subcommand(:disable, "Disable the birthday roles functionality.")
+    group.subcommand(:disable, "Disable the birthday perks functionality.")
   end
 end
 
