@@ -15,10 +15,14 @@ module Birthdays
     # A login hook that schedules all the birthday tasks for all
     # of the members that are stored in the database.
     def self.on_login
-      @@pg.all.each do |user|
+      @@pg.where(active: false).each do |user|
         @@scheduler.at(birthday(user), tags: user[:user_id]) do
-          schedule_birthday_task(user[:user_id])
+          [schedule_birthday_task(user[:user_id]), log_task(user)]
         end
+      end
+
+      @@pg.where(active: true).each do |user|
+        [handle_active_birthday(user[:user_id]), log_active_task(user)]
       end
     end
 
@@ -40,11 +44,14 @@ module Birthdays
       end
     end
 
-    # @!visibility priivate
+    # The actions take on a member's birthday.
+    # @param user [Integer] The user the actions are for.
     def self.schedule_birthday_task(user)
+      # Request the user when the actual code is run
+      # since this means we won't have to worry about
+      # the feature getting turned off by the time of
+      # the member's birthday.
       user = @@pg.where(user_id: user)
-
-      return if user.empty?
 
       user.first[:guilds].each do |guild|
         # Seperate class for backend guilds.
@@ -60,7 +67,9 @@ module Birthdays
       @@pg.where(user_id: user[:user_id]).update(active: true)
     end
 
-    # @!visibility private
+    # Remove the birthday role from a member after their birthday.
+    # @param guild [Integer] ID of the guild the role removal is for.
+    # @param user [Integer] ID of the user the role removal is for.
     def self.schedule_role_removal(guild, user)
       @@scheduler.in("24h", tag: "_#{user}") do
         @@pg.where(user_id: user).update(active: false)
@@ -73,7 +82,9 @@ module Birthdays
       end
     end
 
-    # @!visibility private
+    # Send a birthday message to a channel.
+    # @param guild [Integer] ID of the guild to get the channel for.
+    # @param user [Integer] The ID of the user to mention in the message.
     def self.send_birthday_message(guild, user)
       channel = @@bot.channel(guild.channel)
 
@@ -84,7 +95,9 @@ module Birthdays
       end
     end
 
-    # @!visibility private
+    # Add the birthday role to a member during their birthday.
+    # @param guild [Integer] ID of the guild the role addition is for.
+    # @param user [Integer] ID of the user the role addition is for.
     def self.add_birthday_role(guild, user)
       @@bot.member(user, guild.id).add_role(guild.role)
     rescue StandardError
