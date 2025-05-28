@@ -69,7 +69,7 @@ module Birthdays
 
     # Delete the record for this guild.
     # @note This method takes arguments, but they're ignored.
-    def delete(**_options)
+    def delete(**)
       POSGTRES.transaction do
         @@pg.where(guild_id: guild).delete
 
@@ -82,6 +82,66 @@ module Birthdays
     # @!visibility private
     def find_guild(*_options)
       lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: @guild).first } || {}
+    end
+  end
+
+  # Represents a single birthday record for a user.
+  class Member
+    # @return [Integer]
+    attr_reader :user_id
+
+    # @return [Integer]
+    attr_reader :guild_id
+
+    # @return [DateTime, nil]
+    attr_reader :birthday
+
+    # @return [Array<Integer>]
+    attr_reader :user_guilds
+
+    # @return [Sequel::Dataset]
+    @@pg = POSTGRES[:guild_birthdays]
+
+    # @!visibility private
+    def initialize(data, lazy: false)
+      @data = data
+      @lazy = lazy == true
+      @user_id = data.user.id
+      @guild_id = data.server.id
+      @model = find_user(@user_id)
+      @birthday = @model[:birthday]
+      @user_guilds = @model[:guild_ids]
+    end
+
+    # Check if this member is nil, e.g. doesn't have a record.
+    # @return [true, false] Whether the member itself is blank.
+    def blank? = birthday.nil?
+
+    # Get the birthday guild this member is a part of.
+    # @return [Guild] The birthday guild this member is part of.
+    def guild = @guild ||= Guild.new(@data)
+
+    # Check if this guild is synced into the user's guilds array.
+    # @return [true, false] Whether this guild is synced or not.
+    def synced? = user_guilds.to_a.any?(guild_id)
+
+    # Remove this members birthday records for every guild.
+    def delete
+      POSTGRES.transaction { @@pg.where(user_id: user_id).delete }
+    end
+
+    # Un-sync the guild from the user's guild's array.
+    def desync
+      POSTGRES.transaction do
+        @@pg.where(user_id: user_id).update(guild_ids: Sequel.function(:array_remove, :guild_ids, guild_id))
+      end
+    end
+
+    # Sync the guild into the user's guild's array.
+    def sync
+      POSTGRES.transaction do
+        @@pg.where(user_id: user_id).update(guild_ids: Sequel.function(:array_append, :guild_ids, guild_id))
+      end
     end
   end
 end

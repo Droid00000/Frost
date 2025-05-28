@@ -27,11 +27,6 @@ module Boosters
   # The audit log reason for boosters.
   REASON = "Booster Roles (ID: %s)"
 
-  # Returns true if a string doesn't contain any bad words.
-  # @param [String] The string to check for slurs and words.
-  # @return [Boolean] If the name contains any bad words.
-  def self.safe_name?(name) = !name&.match?(REGEX[4])
-
   # Initilaze a new color object for a role.
   # @param [String] The hex color to resolve.
   # @return [ColourRGB] A colourRGB object.
@@ -42,6 +37,11 @@ module Boosters
 
     Discordrb::ColorRGB.new(color.match(REGEX[1])[0])
   end
+
+  # Returns true if a string doesn't contain any bad words.
+  # @param [String] The string to check for slurs and words.
+  # @return [Boolean] If the name contains any bad words.
+  def self.safe_name?(name) = !name&.match?(REGEX[4])
 
   # Produce an audit log to show when operating on the current role.
   # @param data [Interaction] The current interaction the entry is for.

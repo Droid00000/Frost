@@ -92,7 +92,6 @@ module Boosters
 
     # @return [Integer]
     attr_reader :user_id
-    alias user user_id
 
     # @return [Integer]
     attr_reader :guild_id

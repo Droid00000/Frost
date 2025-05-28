@@ -60,9 +60,9 @@ CREATE TABLE IF NOT EXISTS guild_boosters (
 CREATE TABLE IF NOT EXISTS guild_birthdays (
   active BOOLEAN NOT NULL,
   user_id BIGINT NOT NULL,
-  guild_id BIGINT[] NOT NULL,
+  guild_ids BIGINT[] NOT NULL,
   birthday TIMESTAMPTZ NOT NULL,
-  PRIMARY KEY (guild_id, user_id)
+  PRIMARY KEY (guild_ids, user_id)
 );
 
 -- Holds info about emoji stats.
@@ -138,7 +138,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS guild_birthday_idx ON birthday_settings (guild
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
 
 -- Index for the `guild_birthdays` table.
-CREATE UNIQUE INDEX IF NOT EXISTS guild_birthdays_idx ON guild_birthdays (user_id, guild_id);
+CREATE UNIQUE INDEX IF NOT EXISTS guild_births_idx ON guild_birthdays (user_id, guild_ids);
 
 -- GIN indexes for the `guild_timezones` table.
 CREATE INDEX IF NOT EXISTS guild_names_idx ON guild_timezones USING GIN (name gin_trgm_ops);
