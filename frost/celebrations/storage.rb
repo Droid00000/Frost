@@ -93,11 +93,12 @@ module Birthdays
     # @return [Integer]
     attr_reader :guild_id
 
-    # @return [DateTime, nil]
+    # @return [Time, nil]
     attr_reader :birthday
 
     # @return [Array<Integer>]
     attr_reader :user_guilds
+    alias guilds user_guilds
 
     # @return [Sequel::Dataset]
     @@pg = POSTGRES[:guild_birthdays]
@@ -110,7 +111,7 @@ module Birthdays
       @guild_id = data.server.id
       @model = find_user(@user_id)
       @birthday = @model[:birthday]
-      @user_guilds = @model[:guild_ids]
+      @user_guilds = @model[:guilds]
     end
 
     # Check if this member is nil, e.g. doesn't have a record.
@@ -133,14 +134,14 @@ module Birthdays
     # Un-sync the guild from the user's guild's array.
     def desync
       POSTGRES.transaction do
-        @@pg.where(user_id: user_id).update(guild_ids: Sequel.function(:array_remove, :guild_ids, guild_id))
+        @@pg.where(user_id: user_id).update(guilds: Sequel.function(:array_remove, :guilds, guild_id))
       end
     end
 
     # Sync the guild into the user's guild's array.
     def sync
       POSTGRES.transaction do
-        @@pg.where(user_id: user_id).update(guild_ids: Sequel.function(:array_append, :guild_ids, guild_id))
+        @@pg.where(user_id: user_id).update(guilds: Sequel.function(:array_append, :guilds, guild_id))
       end
     end
   end

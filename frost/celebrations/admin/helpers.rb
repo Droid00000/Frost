@@ -47,10 +47,10 @@ module Birthdays
 
   # Parse a date given to us.
   def self.date(data)
-    data = data.options.except("timezone").values
+    data = data.options.except("timezone")
 
     begin
-      Date.parse(data.join("/"))
+      Date.parse(data.values.join("/"))
     rescue StandardError
       nil
     end

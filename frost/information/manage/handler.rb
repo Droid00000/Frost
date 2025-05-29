@@ -3,7 +3,7 @@
 module AdminCommands
   extend Discordrb::EventContainer
 
-  select_menu(custom_id: "settings") do |event|
+  select_menu(custom_id: /settings/) do |event|
     event.defer_update
     Settings.menu(event)
   end
