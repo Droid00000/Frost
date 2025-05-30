@@ -3,33 +3,36 @@
 module Birthdays
   # setup and add your birthday.
   def self.edit(data)
-    unless Frost::Birthdays::Settings.role(data)
-      data.edit_response(content: RESPONSE[104])
+    # Initialize the invoking user.
+    member = Birthdays::Member.new(data)
+
+    if member.blank?
+      data.edit_response(content: RESPONSE[1])
       return
     end
 
-    unless Frost::Birthdays.user?(data)
-      data.edit_response(content: RESPONSE[103])
+    if member.guild.blank?
+      data.edit_response(content: RESPONSE[4])
       return
     end
 
     if data.options.empty?
-      data.edit_response(content: RESPONSE[113])
+      data.edit_response(content: RESPONSE[8])
       return
     end
 
     unless valid_timezone?(data)
-      data.edit_response(content: RESPONSE[105])
+      data.edit_response(content: RESPONSE[11])
       return
     end
 
     unless valid_datetime?(data)
-      data.edit_response(content: RESPONSE[105])
+      data.edit_response(content: RESPONSE[12])
       return
     end
 
-    member.birthday = Birthdays.change(data)
+    member.edit_birthdate(data.options)
 
-    data.edit_response(content: RESPONSE[117])
+    data.edit_response(content: RESPONSE[9])
   end
 end

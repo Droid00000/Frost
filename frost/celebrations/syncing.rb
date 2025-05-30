@@ -3,18 +3,25 @@
 module Birthdays
   # Sync your birthday to a server.
   def self.sync(data)
-    unless Frost::Birthdays::Settings.role(data)
-      data.edit_response(content: RESPONSE[104])
+    # Initialize the invoking user.
+    member = Birthdays::Member.new(data)
+    
+    if member.blank?
+      data.edit_response(content: RESPONSE[1])
       return
     end
 
-    unless Frost::Birthdays.user?(data)
-      data.edit_response(content: RESPONSE[103])
+    if member.guild.blank?
+      data.edit_response(content: RESPONSE[4])
       return
     end
 
-    Frost::Birthdays.sync(data)
+    member.synced? ? member.desync : member.sync
 
-    data.edit_response(content: RESPONSE[117])
+    if member.synced?
+      data.edit_response(content: RESPONSE[2])
+    else
+      data.edit_response(content: RESPONSE[3])
+    end
   end
 end

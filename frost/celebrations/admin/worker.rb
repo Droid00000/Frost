@@ -68,7 +68,7 @@ module Birthdays
     # @param time [nil, Symbol] Whether to compute the role removal time.
     def self.schedule_role_removal(guild, user, time: nil)
       # Define a lambda to contain the actual removal logic.
-      handler = lambda do
+      handler = lambda do |user|
         @@bot.member(user, guild.id)&.remove_role(guild.role)
       end
 
@@ -76,13 +76,13 @@ module Birthdays
         case time
         # Immediately removes the role from the user.
         when :NOW
-          handler.call
+          handler.call(user)
         # Waits twenty-four hours before removing the role.
         when nil
-          Rufus::Scheduler.in("24h") { handler.call }
+          Rufus::Scheduler.in("24h") { handler.call(user) }
           # Waits until the day after the birthday to remove the role.
         when :OLD
-          Rufus::Scheduler.at(user[:birthdate].utc + 86_400) { handler.call }
+          Rufus::Scheduler.at(user[:birthdate].utc + 86_400) { handler.call(user[:user_id]) }
         end
       rescue StandardError
         nil

@@ -6,6 +6,6 @@ module Birthdays
     # Initialize and delete in one go.
     Member.new(data, lazy: true).delete
 
-    data.edit_response(content: RESPONSE[4])
+    data.edit_response(content: RESPONSE[7])
   end
 end

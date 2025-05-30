@@ -71,8 +71,10 @@ module Boosters
     # @note This method takes arguments, but currently they're ignored.
     def delete(**_options)
       POSTGRES.transaction do
+        # Remove the settings record.
         @@pg.where(guild_id: guild).delete
 
+        # Remove all active boosters.
         @@users.where(guild_id: guild).delete
       end
     end

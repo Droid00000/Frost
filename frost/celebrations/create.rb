@@ -7,22 +7,22 @@ module Birthdays
     member = Birthdays::Member.new(data)
 
     unless member.blank?
-      data.edit_response(content: RESPONSE[8])
+      data.edit_response(content: RESPONSE[6])
       return
     end
 
     if member.guild.blank?
-      data.edit_response(content: RESPONSE[2])
+      data.edit_response(content: RESPONSE[4])
       return
     end
 
     unless valid_timezone?(data.options)
-      data.edit_response(content: RESPONSE[7])
+      data.edit_response(content: RESPONSE[11])
       return
     end
 
     unless valid_datetime?(data.options)
-      data.edit_response(content: RESPONSE[9])
+      data.edit_response(content: RESPONSE[12])
       return
     end
 

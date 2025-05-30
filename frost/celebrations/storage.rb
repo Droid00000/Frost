@@ -111,7 +111,7 @@ module Birthdays
       @guild_id = data.server.id
       @model = find_user(@user_id)
       @birthday = @model[:birthday]
-      @user_guilds = @model[:guilds]
+      @guilds = @model[:guilds].to_a
     end
 
     # Check if this member is nil, e.g. doesn't have a record.
@@ -124,7 +124,7 @@ module Birthdays
 
     # Check if this guild is synced into the user's guilds array.
     # @return [true, false] Whether this guild is synced or not.
-    def synced? = user_guilds.to_a.any?(guild_id)
+    def synced? = user_guilds.include?(guild_id)
 
     # Remove this members birthday records for every guild.
     def delete

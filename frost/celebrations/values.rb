@@ -4,14 +4,17 @@ module Birthdays
   # Responses and fields for birthday commands.
   RESPONSE = {
     1 => "Your birthday couldn't be found. Please add your birthday using the </birthday add:1334725009427664970> command.",
-    2 => "This server has not enabled birthday perks.",
-    3 => "Successfully granted the birthday role.",
-    4 => "Successfully deleted your birthday.",
-    5 => "Please provide at least one option.",
-    6 => "Successfully added your birthday.",
-    7 => "Please provide a valid timezone.",
-    8 => "You've already set your birthday.",
-    9 => "Please provide a valid date."
+    2 => "Successfully de-synced your birthday from this server.",
+    3 => "Successfully synced your birthday to this server.",
+    4 => "This server has not enabled birthday perks.",
+    5 => "Successfully granted the birthday role.",
+    6 => "You've already added your birthday.",
+    7 => "Successfully deleted your birthday.",
+    8 => "Please provide at least one option.",
+    9 => "Successfully updated your birthday.",
+    10 => "Successfully added your birthday.",
+    11 => "Please provide a valid timezone.",
+    12 => "Please provide a valid date."
   }.freeze
 
   # Default timezones used.
@@ -50,7 +53,4 @@ module Birthdays
     4 => "`/birthday sync`",
     5 => "`/birthday add`"
   }.freeze
-
-  # The audit log reason for birthday roles.
-  REASON = "Birthday Roles (ID: %s)"
 end

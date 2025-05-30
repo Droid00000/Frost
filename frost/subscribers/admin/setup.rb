@@ -16,7 +16,7 @@ module AdminCommands
         guild_id: data.server.id,
         any_icon: data.options["icon"],
         hoist_role: data.options["role"]
-      }.compact
+      }
 
       guild = ::Boosters::Guild.new(data)
 
