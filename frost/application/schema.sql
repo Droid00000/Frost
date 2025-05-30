@@ -119,9 +119,6 @@ $$ LANGUAGE PLPGSQL;
 -- Index for the `emoji_tracker` table.
 CREATE INDEX IF NOT EXISTS guild_emojis_idx ON emoji_tracker (guild_id);
 
--- Index for the `archiver_settings` table.
-CREATE UNIQUE INDEX IF NOT EXISTS guild_pins_idx ON archiver_settings (guild_id);
-
 -- Index for the `banned_boosters` table.
 CREATE INDEX IF NOT EXISTS guild_bans_idx ON banned_boosters (user_id, guild_id);
 
