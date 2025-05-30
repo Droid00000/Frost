@@ -21,12 +21,12 @@ module AdminCommands
       guild = ::Boosters::Guild.new(data)
 
       if guild.blank? && options[:hoist_role].nil?
-        data.edit_response(content: RESPONSE[1])
+        data.edit_response(content: RESPONSE[2])
         return
       end
 
       if guild.blank? && options[:any_icon].nil?
-        data.edit_response(content: RESPONSE[2])
+        data.edit_response(content: RESPONSE[1])
         return
       end
 

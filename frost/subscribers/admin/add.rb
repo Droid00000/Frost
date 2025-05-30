@@ -22,11 +22,6 @@ module AdminCommands
         return
       end
 
-      unless member.blank?
-        data.edit_response(content: RESPONSE[10])
-        return
-      end
-
       member.role = data.options["role"]
 
       data.edit_response(content: RESPONSE[11])
