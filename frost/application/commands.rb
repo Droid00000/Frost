@@ -51,7 +51,7 @@ end
 
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:science, "Access the bot's control panel.", contexts: [0, 1, 2], integration_types: [0, 1], default_member_permissions: "0", name_localizations: { "hi" => "विज्ञान" }, description_localizations: { "hi" => "बॉट के नियंत्रण पैनल तक पहुंचें" }) do |option|
-  option.integer(:dial, "Which action do you want to perform?", required: true, choices: { "Drain Emojis" => 1, "Shutdown" => 2, "Evaluate" => 3, "Restart" => 4, "Gateway" => 5, "Logger" => 6 }, name_localizations: { "hi" => "फ़ोनकरना" }, description_localizations: { "hi" => "आप कौन सी कार्रवाई करना चाहते हैं" })
+  option.integer(:dial, "Which action do you want to perform?", required: true, choices: { "Drain Emojis" => 1, "Shutdown" => 2, "Evaluate" => 3, "Gateway" => 4, "Restart" => 5, "Logger" => 6 }, name_localizations: { "hi" => "फ़ोनकरना" }, description_localizations: { "hi" => "आप कौन सी कार्रवाई करना चाहते हैं" })
 end
 
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.

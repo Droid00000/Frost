@@ -14,7 +14,7 @@ module Owner
     case data.options["dial"]
     when 2
       data.edit_response(content: "Exiting!")
-    when 4
+    when 5
       data.edit_response(content: "Restarting!")
     when 1
       data.edit_response(content: "Draining emojis!")
@@ -27,9 +27,9 @@ module Owner
       exit
     when 1
       Emojis::Storage.drain
-    when 5
-      Owner.statistics(data)
     when 4
+      Owner.statistics(data)
+    when 5
       exec("bundle exec ruby --yjit core.rb")
     else
       data.show_modal(title: "Eval", custom_id: "3") do |view|
