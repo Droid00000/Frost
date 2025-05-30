@@ -131,14 +131,14 @@ CREATE INDEX IF NOT EXISTS guild_events_idx ON event_settings (role_id, guild_id
 -- Index for the `guild_boosters` table.
 CREATE INDEX IF NOT EXISTS guild_booster_idx ON guild_boosters (user_id, guild_id);
 
+-- Index for the `guild_birthdays` table.
+CREATE UNIQUE INDEX IF NOT EXISTS guild_birthdays_idx ON guild_birthdays (user_id);
+
 -- Index for the `birthday_settings` table.
 CREATE UNIQUE INDEX IF NOT EXISTS guild_birthday_idx ON birthday_settings (guild_id);
 
 -- Index for the `booster_settings` table.
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
-
--- Index for the `guild_birthdays` table.
-CREATE UNIQUE INDEX IF NOT EXISTS guild_birthdays_idx ON guild_birthdays (user_id, guilds);
 
 -- GIN indexes for the `guild_timezones` table.
 CREATE INDEX IF NOT EXISTS guild_names_idx ON guild_timezones USING GIN (name gin_trgm_ops);
