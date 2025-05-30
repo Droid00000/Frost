@@ -18,19 +18,17 @@ module Birthdays
       return
     end
 
-    if invalid_birthday?(data)
+    unless valid_timezone?(data)
       data.edit_response(content: RESPONSE[105])
       return
     end
 
-    if invalid_timezone?(data)
+    unless valid_datetime?(data)
       data.edit_response(content: RESPONSE[105])
       return
     end
 
-    payload = { birthday: Birthdays.change(data) }
-
-    Frost::Birthdays.edit(data, payload)
+    member.birthday = Birthdays.change(data)
 
     data.edit_response(content: RESPONSE[117])
   end

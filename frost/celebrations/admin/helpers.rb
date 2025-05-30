@@ -57,12 +57,12 @@ module Birthdays
   end
 
   # Create a date from the time given to us.
-  def self.build_date(data)
-    timezone = TZInfo::Timezone.get(timezone(data))
+  def self.date(data)
+    zone = TZInfo::Timezone.get(timezone(data))
 
-    date = data.options.except("timezone").values.reverse
+    date = [data.options["month"], data.options["day"]]
 
-    timezone.local_to_utc(Time.now.year, *date, 0, 0, 0)
+    zone.local_to_utc(Time.new(Time.now.year, *date, 0, 0, 0))
   end
 
   # Modify an existing date given to us.

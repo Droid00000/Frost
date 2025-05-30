@@ -347,6 +347,25 @@ module Discordrb
     rescue StandardError
       nil
     end
+
+    # @overload emoji(id)
+    #   Return an emoji by its ID
+    #   @param id [String, Integer] The emoji's ID.
+    #   @return [Emoji, nil] the emoji object. `nil` if the emoji was not found.
+    # @overload emoji
+    #   The list of emoji the bot can use.
+    #   @return [Array<Emoji>] the emoji available.
+    def emoji(id = nil)
+      emoji_hash = servers.values.map(&:emoji).reduce(&:merge)
+      if id
+        id = id.resolve_id
+        emoji_hash[id]
+      else
+        emoji_hash.values
+      end
+    rescue StandardError
+      nil
+    end
   end
 end
 

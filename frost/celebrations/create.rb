@@ -16,12 +16,12 @@ module Birthdays
       return
     end
 
-    if invalid_timezone?(data.options)
+    unless valid_timezone?(data.options)
       data.edit_response(content: RESPONSE[7])
       return
     end
 
-    if invalid_datetime?(data.options)
+    unless valid_datetime?(data.options)
       data.edit_response(content: RESPONSE[9])
       return
     end
