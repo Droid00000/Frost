@@ -14,20 +14,15 @@ module Discordrb
     # @param icon [String, #read] A role icon for this role.
     # @param reason [String] The reason the for the creation of this role.
     # @return [Role] the created role.
-    def create_role(name: "new role", colour: 0, hoist: false, mentionable: false, permissions: 0, icon: nil, reason: nil)
+    def create_role(name: "new role", colour: 0, hoist: false, mentionable: false, permissions: 0, icon: nil, reason: nil, guild_data: nil)
       colour = colour.combined if colour.respond_to?(:combined)
 
-      begin
-        response = API::Server.create_role(@bot.token, @id, name, colour, hoist, mentionable, permissions, icon, reason)
-        role = Role.new(JSON.parse(response), @bot, self)
-        @roles << role
-        role
-      rescue StandardError
-        response = API::Server.create_role(@bot.token, @id, name, colour, hoist, mentionable, permissions, nil, reason)
-        role = Role.new(JSON.parse(response), @bot, self)
-        @roles << role
-        role
-      end
+      icon = nil unless guild_data['features']&.include?("ROLE_ICONS")
+
+      response = API::Server.create_role(@bot.token, @id, name, colour, hoist, mentionable, permissions, icon, reason)
+      role = Role.new(JSON.parse(response), @bot, self)
+      @roles << role
+      role
     end
 
     # Updates a role on this server.
@@ -35,22 +30,24 @@ module Discordrb
     # @param colour [Integer, ColourRGB, #combined] The roles colour.
     # @param icon [String, #read] A role icon for this role.
     # @param reason [String] The reason for updating this role.
-    def update_role(role:, name: nil, colour: nil, icon: nil, secondary: nil, tertiary: nil, reason: nil)
+    # @param guild_data [Hash] A partial guild object used x
+    def update_role(role:, name: nil, colour: nil, icon: nil, secondary: nil, tertiary: nil, reason: nil, guild_data: nil)
       return nil if self.role(role).nil?
 
       colour = colour.combined if colour.respond_to?(:combined)
 
-      colors = if colour || secondary || tertiary
-                 self.role(role).colors.to_h.merge({
-                   primary_color: colour&.to_i,
-                   tertiary_color: tertiary&.to_i,
-                   secondary_color: secondary&.to_i
-                 }.compact)
-               end
+      icon = nil unless guild_data['features']&.include?("ROLE_ICONS")
+
+      if guild_data['features']&.include?("ENHANCED_ROLE_COLORS")
+        colors = if secondary || tertiary
+                   self.role(role).colors.to_h.merge({
+                     tertiary_color: tertiary&.to_i,
+                     secondary_color: secondary&.to_i
+                   }.compact)
+                 end
+      end
 
       API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason, colors)
-    rescue StandardError
-      API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, nil, reason)
     end
 
     # Gets a role on this server based on its ID.
@@ -228,20 +225,6 @@ module Discordrb
 end
 
 module Discordrb
-  module Events
-    # Monkey patch for select menus.
-    class StringSelectEvent
-      # @return [Emoji] Emojis sent in this interaction.
-      def emoji(_ = nil)
-        return nil if @values.first.nil?
-
-        @bot.parse_mentions(@values[0]).find { |e| e.is_a? Discordrb::Emoji }
-      end
-    end
-  end
-end
-
-module Discordrb
   module API
     module Server
       module_function
@@ -385,12 +368,10 @@ module Discordrb
       members.each_slice(100).to_a.each do |chunk|
         packet = { guild_id: server_id, user_ids: chunk }
 
-        sleep(2.5)
-
         begin
+          sleep(2.5)
           send_packet(Opcodes::REQUEST_MEMBERS, packet)
         rescue StandardError
-          sleep(2.5)
           retry
         end
       end

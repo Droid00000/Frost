@@ -5,7 +5,7 @@ module Birthdays
   def self.sync(data)
     # Initialize the invoking user.
     member = Birthdays::Member.new(data)
-    
+
     if member.blank?
       data.edit_response(content: RESPONSE[1])
       return
