@@ -33,7 +33,6 @@ module Boosters
 
     payload = {
       colour: to_color(data.options["color"]),
-      guild_data: data.interaction.guild,
       name: data.options["name"],
       role: member.role(data),
       reason: reason(data)

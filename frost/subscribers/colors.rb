@@ -39,8 +39,7 @@ module Boosters
       role: member.role,
       reason: reason(data),
       tertiary: data.options["end"],
-      secondary: data.options["start"],
-      guild_data: data.interaction.guild
+      secondary: data.options["start"]
     }.compact
 
     data.edit_response(content: RESPONSE[4])

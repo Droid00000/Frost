@@ -14,10 +14,10 @@ module Discordrb
     # @param icon [String, #read] A role icon for this role.
     # @param reason [String] The reason the for the creation of this role.
     # @return [Role] the created role.
-    def create_role(name: "new role", colour: 0, hoist: false, mentionable: false, permissions: 0, icon: nil, reason: nil, guild_data: nil)
+    def create_role(name: "new role", colour: 0, hoist: false, mentionable: false, permissions: 0, icon: nil, reason: nil)
       colour = colour.combined if colour.respond_to?(:combined)
 
-      icon = nil unless guild_data['features']&.include?("ROLE_ICONS")
+      icon = nil unless features.include?(:role_icons)
 
       response = API::Server.create_role(@bot.token, @id, name, colour, hoist, mentionable, permissions, icon, reason)
       role = Role.new(JSON.parse(response), @bot, self)
@@ -30,22 +30,19 @@ module Discordrb
     # @param colour [Integer, ColourRGB, #combined] The roles colour.
     # @param icon [String, #read] A role icon for this role.
     # @param reason [String] The reason for updating this role.
-    # @param guild_data [Hash] A partial guild object used x
-    def update_role(role:, name: nil, colour: nil, icon: nil, secondary: nil, tertiary: nil, reason: nil, guild_data: nil)
+    def update_role(role:, name: nil, colour: nil, icon: nil, secondary: nil, tertiary: nil, reason: nil)
       return nil if self.role(role).nil?
 
       colour = colour.combined if colour.respond_to?(:combined)
 
-      icon = nil unless guild_data['features']&.include?("ROLE_ICONS")
+      icon = nil unless features.include?(:role_icons)
 
-      if guild_data['features']&.include?("ENHANCED_ROLE_COLORS")
-        colors = if secondary || tertiary
-                   self.role(role).colors.to_h.merge({
-                     tertiary_color: tertiary&.to_i,
-                     secondary_color: secondary&.to_i
-                   }.compact)
-                 end
-      end
+      colors = if features.include?(:enhanced_role_colors) && (secondary || tertiary)
+                 self.role(role).colors.to_h.merge({
+                   tertiary_color: tertiary&.to_i,
+                   secondary_color: secondary&.to_i
+                 }.compact)
+               end
 
       API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason, colors)
     end
@@ -55,6 +52,14 @@ module Discordrb
     # @return [Role, nil] The role identified by the ID, or `nil` if it couldn't be found.
     def role(id)
       @roles.find { |e| e.id == id.resolve_id }
+    end
+
+    # Updates the cached data with new data from an interaction.
+    # @note For internal use only
+    # @!visibility private
+    def from_interaction
+      @locale = new_data['locale'] || @locale
+      @features = new_data['features'] ? new_data['features'].map { |element| element.downcase.to_sym } : @features || []
     end
   end
 end
