@@ -21,7 +21,7 @@ module Boosters
     # Initalize the invoking user.
     member = Boosters::Member.new(data)
 
-    if member.blank? || !data.server.role(member.role)
+    if member.blank?
       data.edit_response(content: RESPONSE[2])
       return
     end
