@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS event_settings (
 );
 
 -- Holds info about world timezones.
-CREATE TABLE IF NOT EXISTS guild_timezones (
+CREATE TABLE IF NOT EXISTS world_timezones (
   name TEXT NOT NULL,
   country TEXT NOT NULL,
   timezone TEXT NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS emoji_tracker (
 
 -- Function for searching for a timezone.
 CREATE
-OR REPLACE FUNCTION search_timezones (query text) RETURNS SETOF guild_timezones ROWS 25 LANGUAGE SQL STABLE AS $$
+OR REPLACE FUNCTION search_timezones (query text) RETURNS SETOF world_timezones ROWS 25 LANGUAGE SQL STABLE AS $$
  WITH tokens AS (
     SELECT unnest(string_to_array(unaccent(query), ' ')) AS t
 )
@@ -96,7 +96,7 @@ FROM (
             )
             FROM tokens t
         ) AS score
-    FROM guild_timezones g
+    FROM world_timezones g
 ) sub
 ORDER BY score DESC
 LIMIT 25;
@@ -137,11 +137,11 @@ CREATE UNIQUE INDEX IF NOT EXISTS guild_birthday_idx ON birthday_settings (guild
 -- Index for the `booster_settings` table.
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
 
--- GIN indexes for the `guild_timezones` table.
-CREATE INDEX IF NOT EXISTS guild_names_idx ON guild_timezones USING GIN (name gin_trgm_ops);
+-- GIN indexes for the `world_timezones` table.
+CREATE INDEX IF NOT EXISTS world_names_idx ON world_timezones USING GIN (name gin_trgm_ops);
 
-CREATE INDEX IF NOT EXISTS guild_codes_idx ON guild_timezones USING GIN (identifier gin_trgm_ops);
+CREATE INDEX IF NOT EXISTS world_codes_idx ON world_timezones USING GIN (identifier gin_trgm_ops);
 
-CREATE INDEX IF NOT EXISTS guild_countries_idx ON guild_timezones USING GIN (country gin_trgm_ops);
+CREATE INDEX IF NOT EXISTS world_countries_idx ON world_timezones USING GIN (country gin_trgm_ops);
 
-CREATE INDEX IF NOT EXISTS guild_timezones_idx ON guild_timezones USING GIN (timezone gin_trgm_ops);
+CREATE INDEX IF NOT EXISTS world_timezones_idx ON world_timezones USING GIN (timezone gin_trgm_ops);
