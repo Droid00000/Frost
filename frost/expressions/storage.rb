@@ -12,7 +12,17 @@ module Emojis
     # Inserts a set of new emojis into the DB.
     def self.drain
       POSTGRES.transaction do
-        @@emojis.clear if @@pg.insert_conflict({ target: %i[emoji_id guild_id], update: { balance: Sequel[:emoji_tracker][:balance] + 1 } }).multi_insert(@@emojis)
+        # Group all duplicate emojis together and then generate a single hash.
+        emojis = @@emojis.group_by(&:itself).values.map do |group|
+          { balance: group.size, **group.reduce(&:merge) }
+        end
+
+        # Try to create a new record, or update the existing record for each emoji
+        #   and then clear the local emoji cache if everything went well.
+        @@emojis.clear if @@pg.insert_conflict({
+                                                 update: { balance: Sequel[:emoji_tracker][:balance] + Sequel[:excluded][:balance] },
+                                                 target: %i[emoji_id guild_id]
+                                               }).multi_insert(emojis)
       end
     end
 
