@@ -9,6 +9,13 @@ module Emojis
     # Easy way to access the DB.
     @@pg = POSTGRES[:emoji_tracker]
 
+    # Inserts a set of new emojis into the DB.
+    def self.drain
+      POSTGRES.transaction do
+        @@emojis.clear if @@pg.insert_conflict({ target: %i[emoji_id guild_id], update: { balance: Sequel[:emoji_tracker][:balance] + 1 } }).multi_insert(@@emojis)
+      end
+    end
+
     # Returns the most used emojis.
     def self.top(data)
       POSTGRES.transaction do
@@ -16,7 +23,7 @@ module Emojis
       end
     end
 
-    # Adds an emoji to the local cache.
+    # Add an emoji to the local cache.
     def self.add(emoji, guild)
       @@emojis << { emoji_id: emoji.id, guild_id: guild.id }
     end
@@ -24,13 +31,6 @@ module Emojis
     # Checks the local cache for a guild.
     def self.index?(guild)
       @@emojis.any? { |emoji| emoji[:guild_id] == guild }
-    end
-
-    # Inserts a new emoji into the DB.
-    def self.drain
-      POSTGRES.transaction do
-        @@emojis.clear if @@pg.multi_insert(@@emojis)
-      end
     end
 
     # Checks if the cache is too large.
