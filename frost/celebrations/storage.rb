@@ -31,7 +31,7 @@ module Birthdays
     @@pg = POSTGRES[:birthday_settings]
 
     # @return [Sequel::Dataset]
-    @@users = POSTGRES[:guild_birthdays]
+    @@users = POSTGRES[:user_birthdays]
 
     # @!visibility private
     def initialize(data, lazy: false)
@@ -101,7 +101,7 @@ module Birthdays
     alias guilds user_guilds
 
     # @return [Sequel::Dataset]
-    @@pg = POSTGRES[:guild_birthdays]
+    @@pg = POSTGRES[:user_birthdays]
 
     # @!visibility private
     def initialize(data, lazy: false)

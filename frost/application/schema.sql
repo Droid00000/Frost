@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS guild_boosters (
 );
 
 -- Holds info about member birthdays.
-CREATE TABLE IF NOT EXISTS guild_birthdays (
+CREATE TABLE IF NOT EXISTS user_birthdays (
   guilds BIGINT ARRAY NOT NULL,
   pending BOOLEAN DEFAULT FALSE,
   user_id BIGINT UNIQUE NOT NULL,
@@ -128,11 +128,11 @@ CREATE INDEX IF NOT EXISTS guild_events_idx ON event_settings (role_id, guild_id
 -- Index for the `guild_boosters` table.
 CREATE INDEX IF NOT EXISTS guild_booster_idx ON guild_boosters (user_id, guild_id);
 
--- Index for the `guild_birthdays` table.
-CREATE UNIQUE INDEX IF NOT EXISTS guild_birthdays_idx ON guild_birthdays (user_id);
-
 -- Index for the `birthday_settings` table.
 CREATE UNIQUE INDEX IF NOT EXISTS guild_birthday_idx ON birthday_settings (guild_id);
+
+-- Index for the `guild_birthdays` table.
+CREATE UNIQUE INDEX IF NOT EXISTS guild_user_birthday_idx ON user_birthdays (user_id);
 
 -- Index for the `booster_settings` table.
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);

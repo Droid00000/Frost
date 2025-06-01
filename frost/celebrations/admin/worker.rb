@@ -7,7 +7,7 @@ module Birthdays
     @@bot = @bot
 
     # @return [Sequel::Dataset]
-    @@pg = POSTGRES[:guild_birthdays]
+    @@pg = POSTGRES[:user_birthdays]
 
     # @return [Rufus::Scheduler]
     @@scheduler = Rufus::Scheduler.singleton
