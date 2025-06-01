@@ -360,7 +360,7 @@ module Discordrb
   class ColourRGB
     # Get the combined value of this color.
     def combined
-      @combined.zero? ? 12 : @combined
+      @combined.zero? ? 131586 : @combined
     end
   end
 end
