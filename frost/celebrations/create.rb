@@ -28,6 +28,9 @@ module Birthdays
 
     member.birthday = Birthdays.date(data)
 
+    # Schedule the local task for the user here.
+    Scheduler.schedule(data.user.id)
+
     data.edit_response(content: RESPONSE[6])
   end
 end

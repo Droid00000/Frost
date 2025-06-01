@@ -6,6 +6,9 @@ module Birthdays
     # Initialize and delete in one go.
     Member.new(data, lazy: true).delete
 
+    # Delete the local record for the user.
+    Scheduler.delete(data.user.id)
+
     data.edit_response(content: RESPONSE[7])
   end
 end

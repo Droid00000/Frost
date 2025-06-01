@@ -33,6 +33,12 @@ module Birthdays
 
     member.edit_birthdate(data.options)
 
+    # Delete the existing local task for the user here.
+    Scheduler.delete(data.user.id)
+
+    # Re-schedule the local task for the user here.
+    Scheduler.schedule(data.user.id)
+
     data.edit_response(content: RESPONSE[9])
   end
 end

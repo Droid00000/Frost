@@ -27,15 +27,15 @@ module Birthdays
     # Unschedle a job based off of the task (user) ID.
     # this doesn't kill any actively running jobs.
     def self.delete(snowflake)
-      @@scheduler.job(tag: snowflake).map(&:unschedule)
+      @@scheduler.jobs(tag: snowflake).map(&:unschedule)
     end
 
     # Schedule a new job based off of a singular user ID.
     # @param snowflake [Integer] The user ID to schedule for.
     def self.schedule(snowflake)
       @@pg.where(user_id: snowflake).each do |user|
-        @@scheduler.at(user[:birthdate], tags: user[:user_id]) do
-          handle_birthday_task(user[:user_id])
+        @@scheduler.at(user[:birthdate], tags: snowflake) do
+          handle_birthday_task(user)
         end
       end
     end
@@ -44,7 +44,10 @@ module Birthdays
     # @param user [Integer] The ID for the user the actions are for.
     def self.handle_birthday_task(user)
       # Request the user at runtime, instead of upfront.
-      user = @@pg.where(user_id: user[:user_id]).first
+      user = @@pg.where(user_id: user).first
+
+      # Make sure the user still exists on their birthday.
+      return if user.nil?
 
       user[:guilds].each do |guild|
         # Use a seperate guild class for backend stuff.
@@ -57,7 +60,10 @@ module Birthdays
         schedule_role_removal(guild, user[:user_id])
       end
 
-      Rufus::Scheduler.in(user[:birthdate].utc + 86_400) do
+      # Mark the user as pending for now.
+      @@pg.where(user_id: user[:user_id]).update(pending: true)
+
+      @@scheduler.in((user[:birthdate].utc + 86_400), tags: user[:user_id]) do
         @@pg.where(user_id: user[:user_id]).update(pending: false)
       end
     end
@@ -79,10 +85,10 @@ module Birthdays
           handler.call(user)
         # Waits twenty-four hours before removing the role.
         when nil
-          Rufus::Scheduler.in("24h") { handler.call(user) }
+          @@scheduler.in("24h") { handler.call(user) }
           # Waits until the day after the birthday to remove the role.
         when :OLD
-          Rufus::Scheduler.at(user[:birthdate].utc + 86_400) { handler.call(user[:user_id]) }
+          @@scheduler.at(user[:birthdate].utc + 86_400) { handler.call(user[:user_id]) }
         end
       rescue StandardError
         nil
@@ -122,7 +128,7 @@ module Birthdays
           schedule_role_removal(guild, user_, time: :OLD)
 
           # Set pending to false at the next day to avoid repeats.
-          Rufus::Scheduler.at(user_[:birthdate].utc + 86_400) do
+          @@scheduler.at(user_[:birthdate].utc + 86_400) do
             @@pg.where(user_id: user_[:user_id]).update(pending: false)
           end
         end
