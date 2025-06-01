@@ -16,7 +16,7 @@ module Birthdays
     # of the members that are stored in the database.
     def self.on_login
       @@pg.where(pending: false).each do |user|
-        @@scheduler.at(user[:birthdate], tag: user[:user_id]) do
+        @@scheduler.at(now(user[:birthdate]), tag: user[:user_id]) do
           handle_birthday_task(user)
         end
       end
@@ -34,7 +34,7 @@ module Birthdays
     # @param snowflake [Integer] The user ID to schedule for.
     def self.schedule(snowflake)
       @@pg.where(user_id: snowflake).each do |user|
-        @@scheduler.at(user[:birthdate], tags: snowflake) do
+        @@scheduler.at(now(user[:birthdate]), tags: snowflake) do
           handle_birthday_task(user)
         end
       end
@@ -63,7 +63,7 @@ module Birthdays
       # Mark the user as pending for now.
       @@pg.where(user_id: user[:user_id]).update(pending: true)
 
-      @@scheduler.in((user[:birthdate].utc + 86_400), tags: user[:user_id]) do
+      @@scheduler.in((now(user[:birthdate]) + 86_400), tags: user[:user_id]) do
         @@pg.where(user_id: user[:user_id]).update(pending: false)
       end
     end
@@ -128,7 +128,7 @@ module Birthdays
           schedule_role_removal(guild, user_, time: :OLD)
 
           # Set pending to false at the next day to avoid repeats.
-          @@scheduler.at(user_[:birthdate].utc + 86_400) do
+          @@scheduler.at(now(user_[:birthdate]) + 86_400) do
             @@pg.where(user_id: user_[:user_id]).update(pending: false)
           end
         end
