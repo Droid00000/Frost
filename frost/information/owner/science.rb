@@ -4,7 +4,7 @@ module Owner
   # Manage actions in the bot.
   def self.science(data)
     unless data.user.id == CONFIG[:Discord][:OWNER]&.to_i
-      data.respond(content: RESPONSE[1], ephemeral: true)
+      data.respond(content: RESPONSE[2], ephemeral: true)
       return
     end
 

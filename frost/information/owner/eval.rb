@@ -4,12 +4,12 @@ module Owner
   # Run some code on the current ruby process.
   def self.code(data)
     unless data.user.id == CONFIG[:Discord][:OWNER]&.to_i
-      data.respond(content: RESPONSE[1], ephemeral: true)
+      data.respond(content: RESPONSE[2], ephemeral: true)
       return
     end
 
     # Respond initally so some requests don't timeout.
-    data.respond(content: RESPONSE[3], ephemeral: true)
+    data.respond(content: RESPONSE[4], ephemeral: true)
 
     begin
       # rubocop:disable Security/Eval
@@ -32,7 +32,7 @@ module Owner
     if code.is_a?(Tempfile)
       data.edit_response(attachments: [code])
     elsif code.to_s.empty?
-      data.edit_response(content: RESPONSE[4])
+      data.edit_response(content: RESPONSE[5])
     else
       data.edit_response(content: format(RESPONSE[7], code))
     end

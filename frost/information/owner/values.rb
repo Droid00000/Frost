@@ -3,12 +3,12 @@
 module Owner
   # Responses and fields for owner commands.
   RESPONSE = {
-    1 => "This command is owner only.",
-    2 => "### Gateway Statistics",
-    3 => "Acknowledged request!",
-    4 => "Success! No content.",
-    5 => "```prolog\n%s\n```",
-    6 => "-# %s total events",
+    1 => "-# %s total events since <t:%s:t>",
+    2 => "This command is owner only.",
+    3 => "### Gateway Statistics",
+    4 => "Acknowledged request!",
+    5 => "Success! No content.",
+    6 => "```prolog\n%s\n```",
     7 => "```ruby\n%s\n```"
   }.freeze
 

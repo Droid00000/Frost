@@ -3,6 +3,8 @@
 module Owner
   # Log statistics for raw events.
   def self.raw(data)
+    @@uptime ||= Time.now
+
     @@count ||= Hash.new(0)
 
     @@count[data.type] += 1
@@ -12,7 +14,7 @@ module Owner
   def self.statistics(data)
     # Permission check to make this owner only.
     unless data.user.id == CONFIG[:Discord][:OWNER]&.to_i
-      data.edit_response(content: RESPONSE[1])
+      data.edit_response(content: RESPONSE[2])
       return
     end
 
@@ -42,16 +44,16 @@ module Owner
       # good on desktop.
       builder.container do |container|
         # Add our main title heading here.
-        container.text_display(text: RESPONSE[2])
+        container.text_display(text: RESPONSE[3])
 
         # Add our main content markdown here.
-        container.text_display(text: format(RESPONSE[5], stats.join))
+        container.text_display(text: format(RESPONSE[6], stats.join))
 
         # Add a divider for a bit of visual seperation.
         container.seperator(divider: true, spacing: :small)
 
         # Add a little bit of footer text for total count.
-        container.text_display(text: format(RESPONSE[6], total))
+        container.text_display(text: format(RESPONSE[1], total, @@uptime.to_i))
       end
     end
   end
