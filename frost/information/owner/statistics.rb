@@ -3,8 +3,6 @@
 module Owner
   # Log statistics for raw events.
   def self.raw(data)
-    @@uptime ||= Time.now
-
     @@count ||= Hash.new(0)
 
     @@count[data.type] += 1
@@ -53,7 +51,7 @@ module Owner
         container.seperator(divider: true, spacing: :small)
 
         # Add a little bit of footer text for total count.
-        container.text_display(text: format(RESPONSE[1], total, @@uptime.to_i))
+        container.text_display(text: format(RESPONSE[1], total, @@uptime))
       end
     end
   end
