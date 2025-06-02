@@ -14,7 +14,7 @@ module Emojis
       POSTGRES.transaction do
         # Group all duplicate emojis together and then generate a single hash.
         emojis = @@emojis.group_by(&:itself).values.map do |group|
-          { balance: group.size, **group.reduce(&:merge) }
+          { balance: group.size, **group.first }
         end
 
         # Try to create a new record, or update the existing record for each emoji
