@@ -16,11 +16,6 @@ module Owner
       return
     end
 
-    # Format our number into a percentage.
-    percentage_data = lambda do |count, total|
-      ((count.to_f / total) * 100).round(2)
-    end
-
     # Sort our stats in descending order by count.
     stats = @@count.sort_by { |_, size| -size }
 
@@ -28,10 +23,8 @@ module Owner
     total = stats.map(&:last).sum
 
     # format everything in our desired form.
-    stats = stats.map do |type, count|
-      percent = percentage_data.call(count, total)
-
-      "#{type} —— #{count.delimit} (#{percent}%)\n"
+    stats.map! do |type, count|
+      "#{type} —— #{count.delimit}\n"
     end
 
     # Manually enable the `IS_COMPONENTS_V2 (1 << 15)`
