@@ -3,7 +3,7 @@
 module Owner
   # This is how we can handle logging.
   def self.logs(_)
-    # Log the first time we got a ready event.
+    # Log the time at which we firsr got a ready event.
     @@uptime ||= Time.now.to_i
 
     # Tell rufus to output any log info to our log file.
