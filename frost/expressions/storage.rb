@@ -8,7 +8,7 @@ module Emojis
 
     # Easy way to access the DB.
     @@pg = POSTGRES[:emoji_tracker]
-    
+
     # Returns the most used emojis.
     def self.top(data)
       POSTGRES.transaction do
