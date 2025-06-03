@@ -14,7 +14,7 @@ module Moderation
     end
 
     # The amount of time to delete messages for.
-    message_sec = data.options["messages"] * (86_400 || 0)
+    message_sec = (data.options["messages"] || 0) * 86_400
 
     # All the users that we want to ban, parsed by the bot.
     users = data.bot.parse_mentions(data.options["members"])
