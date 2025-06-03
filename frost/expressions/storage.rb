@@ -19,17 +19,10 @@ module Emojis
 
         # Try to create a new record, or update the existing record for each emoji
         #   and then clear the local emoji cache if everything went well.
-        @@emojis.clear if @@pg.insert_conflict({
-                                                 update: { balance: Sequel[:emoji_tracker][:balance] + Sequel[:excluded][:balance] },
-                                                 target: %i[emoji_id guild_id]
-                                               }).multi_insert(emojis)
-      end
-    end
-
-    # Returns the most used emojis.
-    def self.top(data)
-      POSTGRES.transaction do
-        @@pg.where(guild_id: data.server.id).order(Sequel.desc(:balance)).limit(700).select(:emoji_id, :balance)
+        @@emojis.clear if @@pg.insert_conflict(
+          update: { balance: Sequel[:emoji_tracker][:balance] + Sequel[:excluded][:balance] },
+          target: %i[emoji_id guild_id]
+        ).multi_insert(emojis)
       end
     end
 
