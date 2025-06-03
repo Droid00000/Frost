@@ -8,6 +8,13 @@ module Emojis
 
     # Easy way to access the DB.
     @@pg = POSTGRES[:emoji_tracker]
+    
+    # Returns the most used emojis.
+    def self.top(data)
+      POSTGRES.transaction do
+        @@pg.where(guild_id: data.server.id).order(Sequel.desc(:balance)).limit(700).select(:emoji_id, :balance)
+      end
+    end
 
     # Inserts a set of new emojis into the DB.
     def self.drain
