@@ -3,10 +3,8 @@
 module General
   # Gets the release date of a chapter of a series.
   def self.chapter(data)
-    time = data.bot.channel(CONFIG[:Chapter][:CHANNEL]).name.delete("📖")
-    time = Time.parse("#{time.sub('3PM GMT', '').strip} #{Time.now.year}")
-    time = Time.new(time.year, time.month, time.day, "11", "05")
-    data.edit_response(content: format(RESPONSE[1], time.to_i))
+    time = Time.parse(data.bot.channel(CONFIG[:Chapter][:CHANNEL]).name)
+    data.edit_response(content: Discordrb.timestamp(time, :short_datetime))
   end
 
   # Function to the find the date of the chapter.

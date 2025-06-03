@@ -4,7 +4,7 @@ module General
   # Localized time for a timezone.
   def self.time(data)
     if Birthdays.timezone(data).nil?
-      data.edit_response(content: RESPONSE[2])
+      data.edit_response(content: RESPONSE[1])
       return
     end
 
