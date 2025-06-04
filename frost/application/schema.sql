@@ -102,20 +102,6 @@ ORDER BY score DESC
 LIMIT 25;
 $$;
 
--- Function for managing the balance of an emoji.
-CREATE OR REPLACE FUNCTION balance_manager() RETURNS TRIGGER AS $$
-BEGIN
-    IF EXISTS (SELECT FROM emoji_tracker WHERE emoji_id = NEW.emoji_id AND guild_id = NEW.guild_id) THEN
-        UPDATE emoji_tracker
-        SET balance = balance + 1
-        WHERE emoji_id = NEW.emoji_id AND guild_id = NEW.guild_id;
-        RETURN NULL;
-    ELSE
-        RETURN NEW;
-    END IF;
-END;
-$$ LANGUAGE PLPGSQL;
-
 -- Index for the `emoji_tracker` table.
 CREATE INDEX IF NOT EXISTS guild_emojis_idx ON emoji_tracker (guild_id);
 
