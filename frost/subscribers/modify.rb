@@ -21,11 +21,6 @@ module Boosters
     # Initalize the invoking user.
     member = Boosters::Member.new(data)
 
-    if member.blank?
-      data.edit_response(content: RESPONSE[2])
-      return
-    end
-
     if member.banned?
       data.edit_response(content: RESPONSE[7])
       return
@@ -37,6 +32,16 @@ module Boosters
       role: member.role(data),
       reason: reason(data)
     }.compact
+    
+    if member.blank? && payload.size != 2
+      Boosters.create(data, member: member)
+      return
+    end
+    
+    if member.blank?
+      data.edit_response(content: RESPONSE[2])
+      return
+    end
 
     data.edit_response(content: RESPONSE[4])
 
