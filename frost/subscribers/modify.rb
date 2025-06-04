@@ -33,7 +33,7 @@ module Boosters
       reason: reason(data)
     }.compact
     
-    if member.blank? && payload.size != 2
+    if member.blank? && payload.size > 2
       Boosters.create(data, member: member)
       return
     end
@@ -43,8 +43,6 @@ module Boosters
       return
     end
 
-    data.edit_response(content: RESPONSE[4])
-
     if valid_icon?(data, member.guild)
       payload[:icon] = to_icon(data)
     end
@@ -52,7 +50,11 @@ module Boosters
     if data.options["icon"]&.match?(REGEX[2])
       payload[:icon] = :NULL
     end
-
-    data.server.update_role(**payload) if payload.size > 2
+    
+    if payload.size > 2
+      data.server.update_role(**payload)
+    end
+    
+    data.edit_response(content: RESPONSE[4])
   end
 end
