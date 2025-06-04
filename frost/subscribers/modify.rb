@@ -33,7 +33,7 @@ module Boosters
       reason: reason(data)
     }.compact
     
-    if member.blank? && payload.size > 2
+    if member.blank? && payload.size == 3
       Boosters.create(data, member: member)
       return
     end
