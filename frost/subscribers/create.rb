@@ -2,7 +2,7 @@
 
 module Boosters
   # Command handler for /booster role claim.
-  def self.create(data)
+  def self.create(data, member: nil)
     unless data.server.bot.permission?(:manage_roles)
       data.edit_response(content: RESPONSE[6])
       return
@@ -24,7 +24,7 @@ module Boosters
     end
 
     # Initalize the invoking user.
-    member = Boosters::Member.new(data)
+    member ||= Boosters::Member.new(data)
 
     unless member.blank?
       data.edit_response(content: RESPONSE[11])
