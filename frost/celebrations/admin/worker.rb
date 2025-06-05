@@ -3,9 +3,6 @@
 module Birthdays
   # Schedule birthday tasks.
   class Scheduler
-    # @return [Discordrb::Bot]
-    @@bot = @bot
-
     # @return [Sequel::Dataset]
     @@pg = POSTGRES[:user_birthdays]
 
@@ -75,7 +72,7 @@ module Birthdays
     def self.schedule_role_removal(guild, user, time: nil)
       # Define a lambda to contain the actual removal logic.
       handler = lambda do |user|
-        @@bot.member(user, guild.id)&.remove_role(guild.role)
+        BOT.member(user, guild.id)&.remove_role(guild.role)
       end
 
       begin
@@ -99,7 +96,7 @@ module Birthdays
     # @param guild [Integer] ID of the guild to get the channel for.
     # @param user [Integer] The ID of the user to mention in the message.
     def self.send_birthday_message(guild, user)
-      channel = @@bot.channel(guild.channel)
+      channel = BOT.channel(guild.channel)
 
       begin
         channel&.send_message(RESPONSE[1] % user)
@@ -112,7 +109,7 @@ module Birthdays
     # @param guild [Integer] ID of the guild the role addition is for.
     # @param user [Integer] ID of the user the role addition is for.
     def self.add_birthday_role(guild, user)
-      @@bot.member(user, guild.id)&.add_role(guild.role)
+      BOT.member(user, guild.id)&.add_role(guild.role)
     rescue StandardError
       nil
     end
