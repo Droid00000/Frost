@@ -13,15 +13,15 @@ require "frost/application/mappings"
 
 Dir["frost/**/*.rb"].each { |file| require file }
 
-@bot = Discordrb::Bot.new(token: CONFIG[:Discord][:TOKEN], intents: 34_315)
+BOT = Discordrb::Bot.new(token: CONFIG[:Discord][:TOKEN], intents: 34_315)
 
-at_exit { @bot.stop }
+at_exit { BOT.stop }
 
-@bot.include! EmojiCommands
-@bot.include! AdminCommands
-@bot.include! BoosterCommands
-@bot.include! BirthdayCommands
-@bot.include! AffectionCommands
-@bot.include! ModerationCommands
+BOT.include! EmojiCommands
+BOT.include! AdminCommands
+BOT.include! BoosterCommands
+BOT.include! BirthdayCommands
+BOT.include! AffectionCommands
+BOT.include! ModerationCommands
 
-@bot.run
+BOT.run
