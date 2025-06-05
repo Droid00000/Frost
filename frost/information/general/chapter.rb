@@ -17,7 +17,7 @@ module General
     wait.until { driver.find_element(:css, CONFIG[:Chapter][:ELEMENT]) }
     time = Date.parse(driver.find_element(:css, CONFIG[:Chapter][:ELEMENT]).text)
     name = "📖 #{time.strftime('%B')} #{time.day.ordinal} 3PM GMT"
-    Discordrb::API::Server.channel_name(CONFIG[:Discord][:TOKEN], CONFIG[:Chapter][:CHANNEL], name, "Release Date")
+    BOT.channel(CONFIG[:Chapter][:CHANNEL])&.name = name
   end
 end
 
