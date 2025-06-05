@@ -305,8 +305,11 @@ end
 
 # Monkey patches to the Gateway class.
 module Discordrb
-  # Standard Gateway class for DRB.
+  # Standard Gateway class for Discordrb.
   class Gateway
+    # Request members over the gateway.
+    # @param server_id [Integer, String] ID of the server to request members for.
+    # @param members [Array<Integer, String>] Array of user IDs to request.
     def members(server_id, members)
       members.each_slice(100).to_a.each do |chunk|
         packet = { guild_id: server_id, user_ids: chunk }
@@ -328,7 +331,7 @@ module Discordrb
       sleep @falloff
 
       # Calculate new falloff
-      @falloff *= 1.5
+      @falloff *= 1.2
       @falloff = 20 + (rand * 10) if @falloff > 30 # Cap the falloff at 30 seconds and then add some random jitter
     end
   end
