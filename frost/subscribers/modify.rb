@@ -45,11 +45,11 @@ module Boosters
     if data.options["icon"]&.match?(REGEX[2])
       options[:icon] = :NULL
     end
-    
+
     if options.size > 2
       data.server.update_role(**options)
     end
-    
+
     data.edit_response(content: RESPONSE[4])
   end
 end

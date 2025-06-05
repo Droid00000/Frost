@@ -54,11 +54,25 @@ module Boosters
       options[:icon] = to_icon(data)
     end
 
-    role = data.server.create_role(**options)
+    begin
+      role = data.server.create_role(**options)
+    rescue Discordrb::Errors::NoPermission
+      data.edit_response(content: RESPONSE[1])
+    end
 
-    role.sort_above(member.guild.hoist_role)
+    begin
+      role.sort_above(member.guild.hoist_role)
+    rescue Discordrb::Errors::NoPermission
+      data.edit_response(content: RESPONSE[1])
+      return role.delete
+    end
 
-    data.user.add_role(role, reason(data))
+    begin
+      data.user.add_role(role, reason(data))
+    rescue Discordrb::Errors::NoPermission
+      data.edit_response(content: RESPONSE[1])
+      return role.delete
+    end
 
     member.role = role.resolve_id
 
