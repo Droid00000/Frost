@@ -50,7 +50,7 @@ module Boosters
     def blank? = hoist_role.nil?
 
     # Get metadata about the settings for this guild.
-    # @return [Array<String, Integer>] Metadata info about this guild.
+    # @return [Array(String, Integer)] Metadata info about this guild.
     def view = [@bot.user(enabled_by)&.name, enabled_at]
 
     # Create a new record or update an existing record.
@@ -175,24 +175,19 @@ module Boosters
   class Members
     # Get a list of all the boosters that are in the database.
     # @return [Array<Hash<Symbol => Integer>>, Sequel::Dataset]
-    def self.stream = POSTGRES[:booster_settings].all
-
-    # Get all the boosters that are in the database with a reason.
-    # @return [Array<Hash<Symbol => Integer Symbol => String>>]
-    def self.list = stream.to_a.each { it[:reason] = reason(it) }
+    def self.stream
+      POSTGRES[:guild_boosters].all.map do |member|
+        { **member, reason: "Booster Roles (ID: #{member[:user_id]})" }
+      end
+    end
 
     # Get a list of all the boosters that are in the database.
     # @return [Array<Hash<Symbol => Integer, Symbol => Array>>]
     def self.chunks
-      stream.group_by { |member| member[:guild_id] }.map do |guild, users|
-        { guild_id: guild, members: users.map { |user| user[:user_id] } }
+      stream.group_by { |member| member[:guild_id] }.map do |guild, members|
+        { guild_id: guild, members: members.map { |user| user[:user_id] } }
       end
     end
-
-    # Produce an audit log to show when operating on the current role.
-    # @param data [Interaction] The current interaction the entry is for.
-    # @return [String] A string that denotes the action type and current user ID.
-    def self.reason(*options) = format(::Boosters::REASON, options[0][:user_id])
 
     # Delete a singular booster from the database from the given options.
     # @param guild_id [Integer, String] ID of the guild the record is for.
