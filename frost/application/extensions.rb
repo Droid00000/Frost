@@ -179,10 +179,10 @@ end
 
 module Discordrb
   module API
-    module Server
+    module Channel
       module_function
 
-      def channel_name(token, channel_id, name, reason)
+      def name(token, channel_id, name, reason)
         Discordrb::API.request(
           :channels_cid,
           :channel_id,
@@ -303,16 +303,6 @@ module Discordrb
   end
 end
 
-module Discordrb
-  # Monkey patches to the color class.
-  class ColourRGB
-    # Get the combined value of this color.
-    def combined
-      @combined.zero? ? 131586 : @combined
-    end
-  end
-end
-
 # Monkey patches to the Gateway class.
 module Discordrb
   # Standard Gateway class for DRB.
@@ -369,7 +359,7 @@ end
 # Monkey patches to the hash.
 class Hash
   # Get a given key from a hash.
-  def get(data)
+  def pull(data)
     data.nil? ? nil : self[data.strip.downcase.gsub(/(?<=[^\,\.])\s+|\A\s+/, "_")&.to_sym]
   end
 end

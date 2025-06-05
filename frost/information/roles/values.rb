@@ -37,11 +37,13 @@ module AdminCommands
     # @param [String] The hex color to resolve.
     # @return [ColourRGB] A colourRGB object.
     def self.to_color(color)
-      return COLORS.get(color) if COLORS.get(color)
+      return COLORS.pull(color) if COLORS.pull(color)
 
       return if color.nil? || !color.match?(REGEX[1])
 
-      Discordrb::ColorRGB.new(color.match(REGEX[1])[0])
+      color = Discordrb::ColorRGB.new(color.match(REGEX[1][0]))
+
+      color.combined.zero? ? COLORS.pull(:BLACK) : color.combined
     end
 
     # Check if we have a valid role icon.
@@ -58,7 +60,7 @@ module AdminCommands
     def self.to_icon(data)
       return nil if data.options["icon"].nil? || data.options["icon"].empty?
 
-      data.emoji("icon")&.file || data.options["icon"].scan(Unicode::Emoji::REGEX).first
+      data.emoji("icon").file || data.options["icon"].scan(Unicode::Emoji::REGEX).first
     end
   end
 end

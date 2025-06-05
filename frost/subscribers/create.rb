@@ -57,7 +57,7 @@ module Boosters
     begin
       role = data.server.create_role(**options)
     rescue Discordrb::Errors::NoPermission
-      data.edit_response(content: RESPONSE[1])
+      data.edit_response(content: RESPONSE[6])
     end
 
     begin
@@ -70,7 +70,7 @@ module Boosters
     begin
       data.user.add_role(role, reason(data))
     rescue Discordrb::Errors::NoPermission
-      data.edit_response(content: RESPONSE[1])
+      data.edit_response(content: RESPONSE[6])
       return role.delete
     end
 

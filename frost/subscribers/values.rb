@@ -5,6 +5,7 @@ module Boosters
   RESPONSE = {
     1 => "Your role has been created! You can always edit your role using the </booster role edit:1330463676414693407> command. <:AnyaPeek_Enzo:1276327731113627679>",
     2 => "Your role couldn't be found. Please use the </booster role claim:1330463676414693407> command to claim your role.",
+    4 => "Your role couldn't be created. The bot didn't have permission to move your role above this server's hoist role.",
     3 => "Your role has been deleted! Feel free to make a new role at any time. <a:YorClap_Maomao:1287269908157038592>",
     4 => "Your role has been successfully edited! <a:LoidClap_Maomao:1276327798104920175>",
     5 => "Your role couldn't be created. The maximum role limit has been reached.",
@@ -31,11 +32,13 @@ module Boosters
   # @param [String] The hex color to resolve.
   # @return [ColourRGB] A colourRGB object.
   def self.to_color(color)
-    return COLORS.get(color) if COLORS.get(color)
+    return COLORS.pull(color) if COLORS.pull(color)
 
     return if color.nil? || !color.match?(REGEX[1])
 
-    Discordrb::ColorRGB.new(color.match(REGEX[1])[0])
+    color = Discordrb::ColorRGB.new(color.match(REGEX[1][0]))
+
+    color.combined.zero? ? COLORS.pull(:BLACK) : color.combined
   end
 
   # Returns true if a string doesn't contain any bad words.
