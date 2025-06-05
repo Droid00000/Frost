@@ -2,16 +2,16 @@
 
 module Boosters
   # Command handler for /booster role claim.
-  def self.create(data, member: nil)
+  def self.create(data)
     unless data.server.bot.permission?(:manage_roles)
       data.edit_response(content: RESPONSE[6])
       return
     end
 
-    # unless data.user.boosting?
-    #  data.edit_response(content: RESPONSE[9])
-    #  return
-    # end
+    unless data.user.boosting?
+      data.edit_response(content: RESPONSE[9])
+      return
+    end
 
     if data.server.roles.size == 250
       data.edit_response(content: RESPONSE[5])
@@ -24,7 +24,7 @@ module Boosters
     end
 
     # Initalize the invoking user.
-    member ||= Boosters::Member.new(data)
+    member = Boosters::Member.new(data)
 
     unless member.blank?
       data.edit_response(content: RESPONSE[11])
@@ -41,7 +41,7 @@ module Boosters
       return
     end
 
-    payload = {
+    options = {
       colour: to_color(data.options["color"]),
       name: data.options["name"],
       reason: reason(data),
@@ -51,10 +51,10 @@ module Boosters
     }
 
     if valid_icon?(data, member.guild)
-      payload[:icon] = to_icon(data)
+      options[:icon] = to_icon(data)
     end
 
-    role = data.server.create_role(**payload)
+    role = data.server.create_role(**options)
 
     role.sort_above(member.guild.hoist_role)
 

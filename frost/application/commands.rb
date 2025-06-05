@@ -60,8 +60,8 @@ bot.register_application_command(:top, "View some emoji stats.", contexts: [0], 
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:next, "Manga Chapter!", server_id: ENV.fetch("GUILD"), contexts: [0], integration_types: [0], name_localizations: { "hi" => "अगला" }, description_localizations: { "hi" => "मंगा अध्याय" }) do |command|
-  command.subcommand_group(:chapter, "Comics!", name_localizations: { "hi" => "प्रकरण" }, description_localizations: { "hi" => "कॉमिक्स" }) do |group|
+bot.register_application_command(:next, "View the release date of the next chapter.", server_id: ENV.fetch("GUILD"), contexts: [0], integration_types: [0], name_localizations: { "hi" => "अगला" }, description_localizations: { "hi" => "मंगा अध्याय" }) do |command|
+  command.subcommand_group(:chapter, "View the release date of the next chapter.", name_localizations: { "hi" => "प्रकरण" }, description_localizations: { "hi" => "कॉमिक्स" }) do |group|
     group.subcommand(:when, "View the release date of the next chapter.", name_localizations: { "hi" => "कब" }, description_localizations: { "hi" => "अगला अध्याय कब आ रहा है" })
   end
 end
@@ -76,14 +76,12 @@ bot.register_application_command(:purge, "Moderation Commands", contexts: [0], i
     option.boolean(:reaction, "Remove messages that have reactions.", required: false, name_localizations: { "hi" => "प्रतिक्रिया" }, description_localizations: { "hi" => "प्रतिक्रिया वाले संदेश हटाएँ" })
     option.boolean(:embeds, "Remove messages that have embeds.", required: false, name_localizations: { "hi" => "एम्बेड" }, description_localizations: { "hi" => "एम्बेड किए गए संदेश हटाएं" })
     option.string(:before, "Remove messages the come before this message ID.", required: false, name_localizations: { "hi" => "पहले" }, description_localizations: { "hi" => "इस संदेश आईडी से पहले आने वाले संदेशों को हटाएँ" })
-    option.boolean(:sticker, "Remove messages that have stickers.", required: false, name_localizations: { "hi" => "कँटिया" }, description_localizations: { "hi" => "स्टिकर वाले संदेश हटाएँ" })
     option.string(:prefix, "Remove messages that start with this text (case sensitive).", required: false, min_length: 1, name_localizations: { "hi" => "उपसर्ग" }, description_localizations: { "hi" => "इस स्ट्रिंग से शुरू होने वाले संदेश हटाएँ (केस सेंसिटिव)" })
     option.string(:suffix, "Remove messages that end with this text (case sensitive).", required: false, min_length: 1, name_localizations: { "hi" => "प्रत्यय" }, description_localizations: { "hi" => "इस स्ट्रिंग से समाप्त होने वाले संदेश हटाएँ (केस सेंसिटिव)" })
     option.boolean(:robot, "Remove messages from bot accounts (not webhooks).", required: false, name_localizations: { "hi" => "रोबोट" }, description_localizations: { "hi" => "बॉट खातों से संदेश हटाएं (वेबहुक से नहीं)" })
     option.boolean(:emoji, "Remove messages that have custom emojis.", required: false, name_localizations: { "hi" => "इमोजी" }, description_localizations: { "hi" => "कस्टम इमोजी वाले संदेश हटाएं" })
     option.string(:after, "Remove messages the come after this message ID.", required: false, min_length: 16, max_length: 21, name_localizations: { "hi" => "बाद" }, description_localizations: { "hi" => "इस संदेश आईडी के बाद आने वाले संदेशों को हटाएँ" })
     option.boolean(:files, "Remove messages that have attachments.", required: false, name_localizations: { "hi" => "फ़ाइलें" }, description_localizations: { "hi" => "ऐसे संदेश हटाएँ जिनमें अनुलग्नक हों" })
-    option.boolean(:poll, "Remove messages that have a poll.", required: false, name_localizations: { "hi" => "मतदान" }, description_localizations: { "hi" => "पोल वाले संदेश हटाएँ" })
   end
 end
 

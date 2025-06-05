@@ -46,21 +46,6 @@ module Discordrb
 
       API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason, colors)
     end
-
-    # Gets a role on this server based on its ID.
-    # @param id [String, Integer] The role ID to look for.
-    # @return [Role, nil] The role identified by the ID, or `nil` if it couldn't be found.
-    def role(id)
-      @roles.find { |e| e.id == id.resolve_id }
-    end
-
-    # Updates the cached data with new data from an interaction.
-    # @note For internal use only
-    # @!visibility private
-    def from_interaction
-      @locale = new_data['locale'] || @locale
-      @features = new_data['features'] ? new_data['features'].map { |element| element.downcase.to_sym } : @features || []
-    end
   end
 end
 
@@ -97,25 +82,6 @@ module Discordrb
       else
         bulk_delete(messages, strict, reason)
       end
-    end
-
-    # rubocop:disable Style/OptionalBooleanParameter
-    # Deletes a list of messages on this channel using bulk delete.
-    def bulk_delete(ids, strict = false, reason = nil)
-      # rubocop:enable Style/OptionalBooleanParameter
-      min_snowflake = IDObject.synthesise(Time.now - TWO_WEEKS)
-
-      ids.reject! do |e|
-        next unless e < min_snowflake
-
-        message = "Attempted to bulk_delete message #{e} which is too old (min = #{min_snowflake})"
-        raise ArgumentError, message if strict
-
-        true
-      end
-
-      API::Channel.bulk_delete_messages(@bot.token, @id, ids, reason) if ids.size >= 2
-      ids.size
     end
   end
 end
@@ -174,24 +140,6 @@ end
 module Discordrb
   # Monkey patch for message class.
   class Message
-    # Check if any emoji were used in this message.
-    # @return [true, false] whether or not any emoji were used.
-    def emoji?
-      !emoji&.empty?
-    end
-
-    # Check if this message contains a poll or not.
-    # @return [true, false] whether this message has a poll or not.
-    def poll?
-      !@poll.nil?
-    end
-
-    # Check if this message contains any stickers or not.
-    # @return [true, false] whether this message has any sticker or not.
-    def stickers?
-      !@stickers.empty?
-    end
-
     # Check if someone was mentioned in a message.
     # @param [User, Role, Integer, String, #to_i]
     def mentions?(mention)
