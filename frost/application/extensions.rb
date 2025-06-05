@@ -159,7 +159,7 @@ module Discordrb
       # @param name [String] The name of the option.
       # @return [Emoji] Emojis sent in this interaction.
       def emoji(name)
-        @options[name] ? @bot.parse_mentions(@options[name]).find { |e| e.is_a? Discordrb::Emoji } : nil
+        @options[name] ? @bot.parse_mentions(@options[name]).find { it.is_a? Discordrb::Emoji } : nil
       end
 
       # @param name [String] The name of the option.
