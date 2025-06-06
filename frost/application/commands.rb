@@ -178,13 +178,13 @@ bot.register_application_command(:booster, "Booster perks", contexts: [0], integ
       option.boolean(:prune, "Whether to delete the member's custom role.", required: true)
     end
 
-    group.subcommand(:unban, "Unban a member from using booster perks.") do |option|
-      option.user(:target, "The member that should be unbanned.", required: true)
-    end
-
     group.subcommand(:enable, "Enable the booster perks functionality.") do |option|
       option.role(:role, "The role that all booster roles should be moved above.", required: false)
       option.boolean(:icon, "Whether external emojis be allowed as role icons.", required: false)
+    end
+
+    group.subcommand(:unban, "Unban a member from using booster perks.") do |option|
+      option.user(:target, "The member that should be unbanned.", required: true)
     end
 
     group.subcommand(:bans, "View which members are banned from using booster perks.") do |option|
