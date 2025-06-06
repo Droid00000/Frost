@@ -33,6 +33,9 @@ module Boosters
     # @return [Sequel::Dataset]
     @@users = POSTGRES[:guild_boosters]
 
+    # @return [Sequel::Dataset]
+    @@bans = POSTGRES[:banned_boosters]
+
     # @!visibility private
     def initialize(data, lazy: false)
       @bot = data.bot
@@ -77,6 +80,13 @@ module Boosters
         # Remove all active boosters.
         @@users.where(guild_id: guild).delete
       end
+    end
+
+    # Get a list of all the members banned in this guild.
+    # @return [Array<Sequel::Dataset>] An array of all the banned members.
+    # @note This method takes arguments, but currently they're ignored.
+    def bans(**_options)
+      @bans ||= POSTGRES.transaction { @@bans.where(guild_id: guild).all }
     end
 
     private
