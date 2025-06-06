@@ -60,7 +60,7 @@ module Birthdays
       # Mark the user as pending for now.
       @@pg.where(user_id: user[:user_id]).update(pending: true)
 
-      @@scheduler.in((now(user[:birthdate]) + 86_400), tags: user[:user_id]) do
+      @@scheduler.in(now(user[:birthdate]) + 86_400, tags: user[:user_id]) do
         @@pg.where(user_id: user[:user_id]).update(pending: false)
       end
     end

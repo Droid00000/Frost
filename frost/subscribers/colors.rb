@@ -4,12 +4,12 @@ module Boosters
   # Command handler for /booster role gradient.
   def self.colors(data)
     unless data.server.bot.permission?(:manage_roles)
-      data.edit_response(content: RESPONSE[6])
+      data.edit_response(content: RESPONSE[7])
       return
     end
 
     unless data.user.boosting?
-      data.edit_response(content: RESPONSE[9])
+      data.edit_response(content: RESPONSE[10])
       return
     end
 
@@ -22,7 +22,7 @@ module Boosters
     end
 
     if member.banned?
-      data.edit_response(content: RESPONSE[7])
+      data.edit_response(content: RESPONSE[8])
       return
     end
 
@@ -35,15 +35,22 @@ module Boosters
                            end
     end
 
-    payload = {
+    options = {
       role: member.role,
       reason: reason(data),
       tertiary: data.options["end"],
       secondary: data.options["start"]
     }.compact
 
-    data.edit_response(content: RESPONSE[4])
+    if options.size > 2
+      begin
+        data.server.update_role(**options)
+      rescue Discordrb::Errors::NoPermission
+        data.edit_response(content: RESPONSE[7])
+        return
+      end
+    end
 
-    data.server.update_role(**payload) if payload.size > 2
+    data.edit_response(content: RESPONSE[5])
   end
 end

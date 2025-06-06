@@ -5,16 +5,16 @@ module Boosters
   RESPONSE = {
     1 => "Your role has been created! You can always edit your role using the </booster role edit:1330463676414693407> command. <:AnyaPeek_Enzo:1276327731113627679>",
     2 => "Your role couldn't be found. Please use the </booster role claim:1330463676414693407> command to claim your role.",
-    4 => "Your role couldn't be created. The bot didn't have permission to move your role above this server's hoist role.",
-    3 => "Your role has been deleted! Feel free to make a new role at any time. <a:YorClap_Maomao:1287269908157038592>",
-    4 => "Your role has been successfully edited! <a:LoidClap_Maomao:1276327798104920175>",
-    5 => "Your role couldn't be created. The maximum role limit has been reached.",
-    6 => "The bot needs to have the ``manage roles`` permission to do this.",
-    7 => "You've been forbidden from using booster perks in this server.",
-    8 => "Your role name contains a word that may not be used.",
-    9 => "You must be a server booster to use this command.",
-    10 => "This server has not enabled booster perks.",
-    11 => "You've already claimed your custom role."
+    3 => "Your role couldn't be created. The bot doesn't have permission to move your role above this server's hoist role.",
+    4 => "Your role has been deleted! Feel free to make a new role at any time. <a:YorClap_Maomao:1287269908157038592>",
+    5 => "Your role has been successfully edited! <a:LoidClap_Maomao:1276327798104920175>",
+    6 => "Your role couldn't be created. The maximum role limit has been reached.",
+    7 => "The bot needs to have the `manage roles` permission to do this.",
+    8 => "You've been forbidden from using booster perks in this server.",
+    9 => "Your role name contains a word that may not be used.",
+    10 => "You must be a server booster to use this command.",
+    11 => "This server hasn't enabled booster perks.",
+    12 => "You've already claimed your custom role."
   }.freeze
 
   # Application commands for boosters.

@@ -67,7 +67,7 @@ bot.register_application_command(:next, "View the release date of the next chapt
 end
 
 # @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
-bot.register_application_command(:purge, "Moderation Commands", contexts: [0], integration_types: [0], name_localizations: { hi: "शुद्ध" }, description_localizations: { hi: "मॉडरेशन आदेश" }, default_member_permissions: 11264) do |command|
+bot.register_application_command(:purge, "Moderation Commands", contexts: [0], integration_types: [0], name_localizations: { hi: "शुद्ध" }, description_localizations: { hi: "मॉडरेशन आदेश" }, default_member_permissions: 11_264) do |command|
   command.subcommand(:messages, "Remove messages that meet a criteria.", name_localizations: { hi: "सूचना" }, description_localizations: { hi: "वर्तमान चैनल में संदेश हटाएँ" }) do |option|
     option.integer(:amount, "The maximum number of messages to delete.", required: true, min_value: 1, max_value: 700, name_localizations: { hi: "रकम" }, description_localizations: { hi: "आप कितने मैसेज डिलीट करना चाहते हैं" })
     option.user(:member, "Remove messages from a specific member.", required: false, name_localizations: { hi: "सदस्य" }, description_localizations: { hi: "किसी विशिष्ट उपयोगकर्ता के संदेश हटाएँ" })
@@ -170,7 +170,7 @@ bot.register_application_command(:booster, "Booster perks", contexts: [0], integ
 
     group.subcommand(:delete, "Remove a booster from this server.") do |option|
       option.user(:target, "The booster to remove from the server.", required: true)
-      option.boolean(:prune, "Whether to delete the booster's custom role.", required: true)
+      option.boolean(:prune, "Whether to delete the member's custom role.", required: true)
     end
 
     group.subcommand(:ban, "Ban a member from using booster perks.") do |option|
