@@ -41,7 +41,7 @@ module Settings
         container.seperator(divider: true, spacing: :small)
 
         # Map all of our roles into the format of index + mention.
-        filter = roles.filter_map.with_index do |role, count|
+        roles = roles.filter_map.with_index do |role, count|
           # Check for the existence of the role itself
           # since we don't want any failed role mentions.
           next unless data.server.role(role[:role_id])
@@ -50,12 +50,12 @@ module Settings
         end
 
         # Create all of our actual role content here.
-        filter.take(16).map.with_index do |text, count|
+        roles.take(16).map.with_index do |text, count|
           # Create the actual display container for the role.
           container.text_display(text: text)
 
           # Add a seperator for some nice evenly spaced padding.
-          unless (count + 1) == filter.take(16).size
+          unless (count + 1) == roles.take(16).size
             container.seperator(divider: false, spacing: :small)
           end
         end
@@ -66,7 +66,7 @@ module Settings
 
         # Add our footer text. Eventually this can be swapped out for
         # an action row with buttons for pagination if needed.
-        container.text_display(text: format(RESPONSE[14], filter.take(16).size, filter.size))
+        container.text_display(text: format(RESPONSE[14], roles.take(16).size, roles.size))
       end
     end
   end

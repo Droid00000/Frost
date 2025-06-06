@@ -187,7 +187,9 @@ bot.register_application_command(:booster, "Booster perks", contexts: [0], integ
       option.boolean(:icon, "Whether external emojis be allowed as role icons.", required: false)
     end
 
-    group.subcommand(:bans, "View the members that are banned from using booster perks.")
+    group.subcommand(:bans, "View which members are banned from using booster perks.") do |option|
+      option.integer(:offset, "The number of bans to skip before returning results.", max_value: 9999)
+    end
 
     group.subcommand(:disable, "Disable the booster perks functionality.")
   end

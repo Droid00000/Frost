@@ -11,17 +11,20 @@ module AdminCommands
       end
 
       # Initialize the invoking guild.
-      guild = Boosters::Guild.new(data, lazy: true)
+      guild = Boosters::Guild.new(data)
 
       # Return unless the guild's been setup.
       if guild.blank?
-        data.edit_response(content: RESPONSE[])
+        data.edit_response(content: RESPONSE[4])
         return
       end
 
+      # Fetch the bans with offset here.
+      bans = guild.bans(offset: data.options["offset"])
+
       # Return unless we have bans to show the user.
-      if guild.bans.empty?
-        data.edit_response(content: RESPONSE[])
+      if bans.empty?
+        data.edit_response(content: RESPONSE[14])
         return
       end
 
@@ -45,7 +48,7 @@ module AdminCommands
             section.thumbnail(url: data.server.icon_url)
 
             # Add the description text at the botton.
-            section.text_display(text: RESPONSE[3])
+            section.text_display(text: RESPONSE[1])
           end
 
           # Add some spacing between the content of our container
@@ -53,7 +56,7 @@ module AdminCommands
           container.seperator(divider: true, spacing: :small)
 
           # Map all of our roles into the format of index + mention.
-          bans = guild.bans.filter_map.with_index do |user, count|
+          bans = bans.filter_map.with_index do |user, count|
             # Check for the existence of the role itself
             # since we don't want any failed role mentions.
             next unless data.bot.user(user[:user_id])
@@ -78,7 +81,7 @@ module AdminCommands
 
           # Add our footer text. Eventually this can be swapped out for
           # an action row with buttons for pagination if needed.
-          container.text_display(text: format(RESPONSE[14], bans.take(16).size, bans.size))
+          container.text_display(text: format(RESPONSE[16], bans.take(16).size, bans.size))
         end
       end
     end

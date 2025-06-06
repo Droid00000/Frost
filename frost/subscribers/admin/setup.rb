@@ -6,7 +6,7 @@ module AdminCommands
     # Setup booster perks or edit them.
     def self.setup(data)
       unless data.user.permission?(:manage_roles)
-        data.edit_response(content: RESPONSE[5])
+        data.edit_response(content: RESPONSE[6])
         return
       end
 
@@ -26,16 +26,16 @@ module AdminCommands
       end
 
       if guild.blank? && options[:any_icon].nil?
-        data.edit_response(content: RESPONSE[1])
+        data.edit_response(content: RESPONSE[3])
         return
       end
 
       guild.edit(**options.compact)
 
       if guild.blank?
-        data.edit_response(content: RESPONSE[8])
+        data.edit_response(content: RESPONSE[9])
       else
-        data.edit_response(content: RESPONSE[7])
+        data.edit_response(content: RESPONSE[8])
       end
     end
   end

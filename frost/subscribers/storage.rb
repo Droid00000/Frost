@@ -70,6 +70,15 @@ module Boosters
       end
     end
 
+    # Get a list of all the members banned in this guild.
+    # @param offset [Integer, nil] The number of bans to skip before returning results.
+    # @return [Array<Sequel::Dataset>] An array of all the banned members for the guild.
+    def bans(**options)
+      POSTGRES.transaction do
+        @@bans.where(guild_id: guild).offset(options[:offset].to_i).order(:user_id)
+      end
+    end
+
     # Delete the record for this guild.
     # @note This method takes arguments, but currently they're ignored.
     def delete(**_options)
@@ -80,13 +89,6 @@ module Boosters
         # Remove all active boosters.
         @@users.where(guild_id: guild).delete
       end
-    end
-
-    # Get a list of all the members banned in this guild.
-    # @return [Array<Sequel::Dataset>] An array of all the banned members.
-    # @note This method takes arguments, but currently they're ignored.
-    def bans(**_options)
-      @bans ||= POSTGRES.transaction { @@bans.where(guild_id: guild).all }
     end
 
     private
@@ -181,7 +183,7 @@ module Boosters
     end
   end
 
-  # Class for singleton methods that are required for for role audits.
+  # Class for singleton methods that are required for role audits.
   class Members
     # Get a list of all the boosters that are in the database.
     # @return [Array<Hash<Symbol => Integer>>, Sequel::Dataset]
