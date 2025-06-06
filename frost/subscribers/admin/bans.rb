@@ -11,7 +11,7 @@ module AdminCommands
       end
 
       # Initialize the invoking guild.
-      guild = Boosters::Guild.new(data)
+      guild = ::Boosters::Guild.new(data)
 
       # Return unless the guild's been setup.
       if guild.blank?
@@ -28,9 +28,12 @@ module AdminCommands
         return
       end
 
+      # Disable any user mentions.
+      mentions = { allowed_mentions: { parse: [] } }
+
       # Manually enable the `IS_COMPONENTS_V2 (1 << 15)`
       # flags so we can use the new interaction components.
-      data.send_message(has_components: true, flags: 64) do |_, builder|
+      data.send_message(**mentions, flags: 32_832) do |_, builder|
         # Create a container in order to simulate the old look and
         # feel of an embed. This looks okay on mobile, but not so
         # good on desktop.
