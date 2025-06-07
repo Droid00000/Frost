@@ -7,14 +7,16 @@ module Boosters
     2 => "Your role couldn't be found. Please use the </booster role claim:1330463676414693407> command to claim your role.",
     3 => "Your role couldn't be created. The bot doesn't have permission to move your role above this server's hoist role.",
     4 => "Your role has been deleted! Feel free to make a new role at any time. <a:YorClap_Maomao:1287269908157038592>",
-    5 => "Your role has been successfully edited! <a:LoidClap_Maomao:1276327798104920175>",
-    6 => "Your role couldn't be created. The maximum role limit has been reached.",
-    7 => "The bot needs to have the `manage roles` permission to do this.",
-    8 => "You've been forbidden from using booster perks in this server.",
-    9 => "Your role name contains a word that may not be used.",
-    10 => "You must be a server booster to use this command.",
-    11 => "This server hasn't enabled booster perks.",
-    12 => "You've already claimed your custom role."
+    5 => "Your role couldn't be deleted. The bot's highest role is below your custom role.",
+    6 => "Your role couldn't be updated. The bot's highest role is below your custom role.",
+    7 => "Your role has been successfully edited! <a:LoidClap_Maomao:1276327798104920175>",
+    8 => "Your role couldn't be created. The maximum role limit has been reached.",
+    9 => "The bot needs to have the `manage roles` permission to do this.",
+    10 => "You've been banned from using booster perks in this server.",
+    11 => "Your role name contains a word that may not be used.",
+    12 => "You must be a server booster to use this command.",
+    13 => "This server hasn't enabled booster perks.",
+    14 => "You've already claimed your custom role."
   }.freeze
 
   # Application commands for boosters.
@@ -36,7 +38,7 @@ module Boosters
 
     return if color.nil? || !color.match?(REGEX[1])
 
-    color = Discordrb::ColorRGB.new(color.match(REGEX[1][0]))
+    color = Discordrb::ColorRGB.new(color.match(REGEX[1])[0])
 
     color.combined.zero? ? COLORS.pull(:BLACK) : color.combined
   end

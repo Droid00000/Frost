@@ -8,10 +8,10 @@ module Boosters
       return
     end
 
-    unless data.user.boosting?
-      data.edit_response(content: RESPONSE[10])
-      return
-    end
+    # unless data.user.boosting?
+    #  data.edit_response(content: RESPONSE[10])
+    #  return
+    # end
 
     # Initalize the invoking user.
     member = Boosters::Member.new(data)
@@ -34,7 +34,14 @@ module Boosters
     role = data.server.role(member.role)
 
     # The role may not exist sometimes.
-    [role&.delete(reason(data)), member.delete]
+    begin
+      role&.delete(reason(data))
+    rescue Discordrb::Errors::NoPermission
+      data.edit_response(content: RESPONSE[7])
+      return
+    end
+
+    member.delete
 
     data.edit_response(content: RESPONSE[4])
   end
