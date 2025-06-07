@@ -3,7 +3,7 @@
 module Owner
   # Responses and fields for owner commands.
   RESPONSE = {
-    1 => "-# %s total events since <t:%s:t>",
+    1 => "-# %s total events since <t:%s:f>",
     2 => "This command is owner only.",
     3 => "### Gateway Statistics",
     4 => "Acknowledged request!",

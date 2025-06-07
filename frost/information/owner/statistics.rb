@@ -17,7 +17,9 @@ module Owner
     end
 
     # Sort our stats in descending order by count.
-    stats = @@count.sort_by { |type, size| [-size, -type] }
+    stats = @@count.sort_by do |type, size|
+      [-size, -type.to_s]
+    end
 
     # Calculate the total amount of stats we have.
     total = stats.map(&:last).sum
