@@ -12,13 +12,15 @@ module Birthdays
     # A login hook that schedules all the birthday tasks for all
     # of the members that are stored in the database.
     def self.on_login
-      @@pg.where(pending: false).each do |user|
-        @@scheduler.at(now(user[:birthdate]), tag: user[:user_id]) do
-          handle_birthday_task(user)
+      Thread.new do
+        @@pg.where(pending: false).each do |user|
+          @@scheduler.at(now(user[:birthdate]), tag: user[:user_id]) do
+            handle_birthday_task(user)
+          end
         end
-      end
 
-      @@pg.where(pending: true).each { |user| handle_pending_task(user) }
+        @@pg.where(pending: true).each { |user| handle_pending_task(user) }
+      end
     end
 
     # Unschedle a job based off of the task (user) ID.
@@ -145,6 +147,18 @@ module Birthdays
         # Perform the actual check here.
         date_checker.call(Backend::Guild.new(guild), user)
       end
+    end
+
+    # Convert a birthdate to it's next occurance.
+    def self.now(birthdate)
+      # Convert this to an array of values, e.g. [47, 20, 14, 9, 6, 2025, 1, 160, false, "UTC"]
+      birthdate = birthdate.utc.to_a
+
+      # Set the fifth index to the current year we're operating on.
+      birthdate[5] = Time.now.year
+
+      # Create the new time with the current year.
+      Time.utc(*birthdate)
     end
   end
 end
