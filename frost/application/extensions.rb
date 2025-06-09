@@ -350,6 +350,6 @@ end
 class Hash
   # Get a given key from a hash.
   def pull(data)
-    data.nil? ? nil : self[data.strip.downcase.gsub(/(?<=[^\,\.])\s+|\A\s+/, "_")&.to_sym]
+    data.nil? ? nil : self[data.to_s.strip.downcase.gsub(/(?<=[^\,\.])\s+|\A\s+/, "_")&.to_sym]
   end
 end

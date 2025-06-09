@@ -7,8 +7,8 @@ class Role
   alias guild_id guild
 
   # @return [Integer]
-  attr_reader :role
-  alias role_id role
+  attr_reader :role_id
+  alias role role_id
 
   # @return [Boolean]
   attr_reader :any_icon
@@ -44,18 +44,18 @@ class Role
   # Delete the record for this role.
   # @note This method takes arguments, but currently they're ignored.
   def delete(**_options)
-    POSTGRES.transaction { @@pg.where(guild_id: guild, role_id: role).delete }
+    POSTGRES.transaction { @@pg.where(guild_id: guild, role_id: role_id).delete }
   end
 
   private
 
   # @!visibility private
   def conflict(*options)
-    { target: :role_id, update: { any_icon: options[0][:any_icon] } }
+    { target: %i[guild_id role_id], update: { any_icon: options[0][:any_icon] } }
   end
 
   # @!visibility private
-  def find_role(*options)
-    @lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: options[0].options["role"]).first }
+  def find_role(options)
+    @lazy ? {} : POSTGRES.transaction { @@pg.where(guild_id: @guild, role_id: options.options["role"]).first } || {}
   end
 end

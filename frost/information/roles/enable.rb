@@ -23,12 +23,6 @@ module AdminCommands
         any_icon: data.options["icon"]
       }
 
-      # Make sure the icon field is given at setup.
-      if payload[:any_icon].nil? && role.blank?
-        data.edit_response(content: RESPONSE[4])
-        return
-      end
-
       role.edit(**options)
 
       if role.blank?

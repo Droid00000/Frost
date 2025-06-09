@@ -39,8 +39,8 @@ module Boosters
     options = {
       colour: to_color(data.options["color"]),
       name: data.options["name"],
-      role: member.role(data),
-      reason: reason(data)
+      reason: reason(data),
+      role: member.role
     }.compact
 
     if valid_icon?(data, member.guild)
