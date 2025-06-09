@@ -8,7 +8,7 @@ module Boosters
     3 => "Your role couldn't be created. The bot doesn't have permission to move your role above this server's hoist role.",
     4 => "Your role has been deleted! Feel free to make a new role at any time. <a:YorClap_Maomao:1287269908157038592>",
     5 => "Your role couldn't be deleted. The bot's highest role is below your custom role.",
-    6 => "Your role couldn't be updated. The bot's highest role is below your custom role.",
+    6 => "Your role couldn't be edited. The bot's highest role is below your custom role.",
     7 => "Your role has been successfully edited! <a:LoidClap_Maomao:1276327798104920175>",
     8 => "Your role couldn't be created. The maximum role limit has been reached.",
     9 => "The bot needs to have the `manage roles` permission to do this.",
