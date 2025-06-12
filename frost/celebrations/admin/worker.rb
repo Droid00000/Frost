@@ -15,14 +15,18 @@ module Birthdays
       # Don't make a new thread if one already exists.
       return if @@thread
 
-      @@thread = Thread.new do
-        DB.where(pending: false).each do |user|
-          TASKS.at(now(user[:birthdate]), tag: user[:user_id]) do
-            handle_birthday_task(user)
+      begin
+        @@thread = Thread.new do
+          DB.where(pending: false).each do |user|
+            TASKS.at(now(user[:birthdate]), tag: user[:user_id]) do
+              handle_birthday_task(user)
+            end
           end
-        end
 
-        DB.where(pending: true).each { |user| handle_pending_task(user) }
+          DB.where(pending: true).each { |user| handle_pending_task(user) }
+        end
+      rescue StandardError => e
+        Discordrb::LOGGER.log_exception(e)
       end
     end
 
