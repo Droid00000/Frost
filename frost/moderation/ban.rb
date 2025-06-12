@@ -14,7 +14,7 @@ module Moderation
     end
 
     # The amount of time to delete messages for.
-    message_sec = (data.options["messages"] || 0) * 86_400
+    messages = data.options["messages"].to_i * 86_400
 
     # All the users that we want to ban, parsed by the bot.
     users = data.bot.parse_mentions(data.options["members"])
@@ -51,8 +51,8 @@ module Moderation
     users = users.each_slice(200).filter_map do |slice|
       next if slice.empty?
 
-      data.server.bulk_ban(users: slice, reason: reason,
-                           message_seconds: message_sec)
+      data.server.bulk_ban(slice, message_seconds: messages,
+                           reason: reason)
     end
 
     users.map! do |bans|
