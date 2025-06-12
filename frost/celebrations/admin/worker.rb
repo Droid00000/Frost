@@ -12,7 +12,10 @@ module Birthdays
     # A login hook that schedules all the birthday tasks for all
     # of the members that are stored in the database.
     def self.on_login
-      Thread.new do
+      # Don't make a new thread if one already exists.
+      return if @@thread
+
+      @@thread = Thread.new do
         @@pg.where(pending: false).each do |user|
           @@scheduler.at(now(user[:birthdate]), tag: user[:user_id]) do
             handle_birthday_task(user)
@@ -62,9 +65,12 @@ module Birthdays
       # Mark the user as pending for now.
       @@pg.where(user_id: user[:user_id]).update(pending: true)
 
-      @@scheduler.in(now(user[:birthdate]) + 86_400, tags: user[:user_id]) do
+      @@scheduler.in("24h", tag: user[:user_id]) do
         @@pg.where(user_id: user[:user_id]).update(pending: false)
       end
+
+      # Re-schedule the task recursively.
+      @@scheduler.in("24h", tag: user[:user_id]) { schedule(user[:user_id]) }
     end
 
     # Remove the birthday role from a member after their birthday.
@@ -89,8 +95,8 @@ module Birthdays
         when :OLD
           @@scheduler.at(user[:birthdate].utc + 86_400) { handler.call(user[:user_id]) }
         end
-      rescue StandardError
-        nil
+      rescue StandardError => e
+        Discordrb::LOGGER.log_exception(e)
       end
     end
 
@@ -102,8 +108,8 @@ module Birthdays
 
       begin
         channel&.send_message(RESPONSE[1] % user)
-      rescue StandardError
-        nil
+      rescue StandardError => e
+        Discordrb::LOGGER.log_exception(e)
       end
     end
 
@@ -112,8 +118,8 @@ module Birthdays
     # @param user [Integer] ID of the user the role addition is for.
     def self.add_birthday_role(guild, user)
       BOT.member(user, guild.id)&.add_role(guild.role)
-    rescue StandardError
-      nil
+    rescue StandardError => e
+      Discordrb::LOGGER.log_exception(e)
     end
 
     # Handle a user with the pending flag set to true.
@@ -127,7 +133,7 @@ module Birthdays
           schedule_role_removal(guild, user_, time: :OLD)
 
           # Set pending to false at the next day to avoid repeats.
-          @@scheduler.at(now(user_[:birthdate]) + 86_400) do
+          @@scheduler.at(now(user_[:birthdate], increment: false) + 86_400) do
             @@pg.where(user_id: user_[:user_id]).update(pending: false)
           end
         end
@@ -147,15 +153,23 @@ module Birthdays
         # Perform the actual check here.
         date_checker.call(Backend::Guild.new(guild), user)
       end
+
+      # Schedule the task again recursively.
+      schedule(user[:user_id]) if Time.now.utc >= user[:birthdate].utc
     end
 
     # Convert a birthdate to it's next occurance.
-    def self.now(birthdate)
+    def self.now(birthdate, increment: true)
       # Convert this to an array of values, e.g. [47, 20, 14, 9, 6, 2025, 1, 160, false, "UTC"]
       birthdate = birthdate.utc.to_a
 
       # Set the fifth index to the current year we're operating on.
       birthdate[5] = Time.now.year
+
+      if increment
+        # Increment the current year to the next one if desired.
+        birthdate[5] += 1 if Time.utc(*birthdate) < Time.now.utc
+      end
 
       # Create the new time with the current year.
       Time.utc(*birthdate)
