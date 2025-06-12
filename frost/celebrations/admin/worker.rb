@@ -4,10 +4,10 @@ module Birthdays
   # Schedule birthday tasks.
   class Scheduler
     # @return [Sequel::Dataset]
-    @@pg = POSTGRES[:user_birthdays]
+    DB = POSTGRES[:user_birthdays]
 
     # @return [Rufus::Scheduler]
-    @@scheduler = Rufus::Scheduler.singleton
+    TASKS = Rufus::Scheduler.singleton
 
     # A login hook that schedules all the birthday tasks for all
     # of the members that are stored in the database.
@@ -16,8 +16,8 @@ module Birthdays
       return if @@thread
 
       @@thread = Thread.new do
-        @@pg.where(pending: false).each do |user|
-          @@scheduler.at(now(user[:birthdate]), tag: user[:user_id]) do
+        DB.where(pending: false).each do |user|
+          TASKS.at(now(user[:birthdate]), tag: user[:user_id]) do
             handle_birthday_task(user)
           end
         end
