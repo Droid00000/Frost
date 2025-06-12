@@ -22,21 +22,21 @@ module Birthdays
           end
         end
 
-        @@pg.where(pending: true).each { |user| handle_pending_task(user) }
+        DB.where(pending: true).each { |user| handle_pending_task(user) }
       end
     end
 
     # Unschedle a job based off of the task (user) ID.
     # this doesn't kill any actively running jobs.
     def self.delete(snowflake)
-      @@scheduler.jobs(tag: snowflake).map(&:unschedule)
+      TASKS.jobs(tag: snowflake).map(&:unschedule)
     end
 
     # Schedule a new job based off of a singular user ID.
     # @param snowflake [Integer] The user ID to schedule for.
     def self.schedule(snowflake)
-      @@pg.where(user_id: snowflake).each do |user|
-        @@scheduler.at(now(user[:birthdate]), tags: snowflake) do
+      DB.where(user_id: snowflake).each do |user|
+        TASKS.at(now(user[:birthdate]), tags: snowflake) do
           handle_birthday_task(user)
         end
       end
@@ -46,7 +46,7 @@ module Birthdays
     # @param user [Integer] The ID for the user the actions are for.
     def self.handle_birthday_task(user)
       # Request the user at runtime, instead of upfront.
-      user = @@pg.where(user_id: user).first
+      user = DB.where(user_id: user).first
 
       # Make sure the user still exists on their birthday.
       return if user.nil?
@@ -63,14 +63,14 @@ module Birthdays
       end
 
       # Mark the user as pending for now.
-      @@pg.where(user_id: user[:user_id]).update(pending: true)
+      DB.where(user_id: user[:user_id]).update(pending: true)
 
-      @@scheduler.in("24h", tag: user[:user_id]) do
-        @@pg.where(user_id: user[:user_id]).update(pending: false)
+      TASKS.in("24h", tag: user[:user_id]) do
+        DB.where(user_id: user[:user_id]).update(pending: false)
       end
 
       # Re-schedule the task recursively.
-      @@scheduler.in("24h", tag: user[:user_id]) { schedule(user[:user_id]) }
+      TASKS.in("24h", tag: user[:user_id]) { schedule(user[:user_id]) }
     end
 
     # Remove the birthday role from a member after their birthday.
@@ -90,10 +90,10 @@ module Birthdays
           handler.call(user)
         # Waits twenty-four hours before removing the role.
         when nil
-          @@scheduler.in("24h") { handler.call(user) }
+          TASKS.in("24h") { handler.call(user) }
           # Waits until the day after the birthday to remove the role.
         when :OLD
-          @@scheduler.at(user[:birthdate].utc + 86_400) { handler.call(user[:user_id]) }
+          TASKS.at(user[:birthdate].utc + 86_400) { handler.call(user[:user_id]) }
         end
       rescue StandardError => e
         Discordrb::LOGGER.log_exception(e)
@@ -133,8 +133,8 @@ module Birthdays
           schedule_role_removal(guild, user_, time: :OLD)
 
           # Set pending to false at the next day to avoid repeats.
-          @@scheduler.at(now(user_[:birthdate], increment: false) + 86_400) do
-            @@pg.where(user_id: user_[:user_id]).update(pending: false)
+          TASKS.at(now(user_[:birthdate], increment: false) + 86_400) do
+            DB.where(user_id: user_[:user_id]).update(pending: false)
           end
         end
 
@@ -144,7 +144,7 @@ module Birthdays
           schedule_role_removal(guild, user, time: :NOW)
 
           # Immediately set pending to false to avoid repeats.
-          @@pg.where(user_id: user[:user_id]).update(pending: false)
+          DB.where(user_id: user[:user_id]).update(pending: false)
         end
       end
 
