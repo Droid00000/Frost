@@ -4,7 +4,7 @@ module Birthdays
   # Schedule birthday tasks.
   class Scheduler
     # @return [Sequel::Dataset]
-    DB = POSTGRES[:user_birthdays]
+    DB = POSTGRES[:member_birthdays]
 
     # @return [Rufus::Scheduler]
     TASKS = Rufus::Scheduler.singleton
@@ -13,10 +13,10 @@ module Birthdays
     # of the members that are stored in the database.
     def self.on_login
       # Don't make a new thread if one already exists.
-      return if @@thread
+      return unless @thread.nil?
 
       begin
-        @@thread = Thread.new do
+        @thread = Thread.new do
           DB.where(pending: false).each do |user|
             TASKS.at(now(user[:birthdate]), tag: user[:user_id]) do
               handle_birthday_task(user)
