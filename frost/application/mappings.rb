@@ -61,7 +61,7 @@ COLORS = {
   original_blurple: 7_506_394
 }.freeze
 
-# The time zone database source.
+# The local TZ database source.
 TZInfo::DataSource.set(:zoneinfo)
 
 # The YAML configuration file used by the bot.
@@ -71,7 +71,7 @@ CONFIG = YAML.load_file("#{$LOAD_PATH[0]}/config.yml", symbolize_names: true)
 POSTGRES = Sequel.connect(CONFIG[:Postgres][:URL], extensions: %i[connection_validator pg_streaming])
 
 # The extensions used by sequel and the database instance.
-[POSTGRES.pool.connection_validation_timeout = -1, POSTGRES.stream_all_queries = true]
+[POSTGRES.pool.connection_validation_timeout = -1, POSTGRES.stream_all_queries = true, Sequel.default_timezone = :utc]
 
 # A series of regular expressions utilized by the bot.
 REGEX = {

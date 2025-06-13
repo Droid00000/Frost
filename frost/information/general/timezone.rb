@@ -8,14 +8,13 @@ module General
       return
     end
 
-    zone = Birthdays.zone(Birthdays.timezone(data))
+    zone = Birthdays.timezone(data).now.to_time
 
-    builder = lambda do |time|
-      time = Time.at(time.to_time)
+    format = lambda do |time|
       date = time.strftime(time.day.ordinal)
       time.strftime("%B #{date}, %Y at %I:%M %p")
     end
 
-    data.edit_response(content: builder.call(zone))
+    data.edit_response(content: format.call(zone))
   end
 end

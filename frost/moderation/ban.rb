@@ -52,7 +52,7 @@ module Moderation
       next if slice.empty?
 
       data.server.bulk_ban(slice, message_seconds: messages,
-                           reason: reason)
+                                  reason: reason)
     end
 
     users.map! do |bans|

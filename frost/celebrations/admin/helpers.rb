@@ -1,109 +1,47 @@
 # frozen_string_literal: true
 
 module Birthdays
-  # Search for timezones.
-  def self.search(data)
-    choices = if data.options["timezone"].empty?
-                data.choices.merge!(DEFAULT_ZONES)
-              else
-                query = "SELECT * FROM search_timezones(?);"
-                POSTGRES[query, data.options["timezone"]].all
-              end
-
-    unless choices.is_a?(Hash)
-      choices.map do |result|
-        data.choices[result[:name]] = result[:timezone]
-      end
+  # Parse an IANA timezone given to use. This method is useful
+  #  because it allows us to ignore case-sensitivity and whitespace.
+  def self.timezone(timezone)
+    # Sometimes we might get an interaction instead of a proper
+    #  timezone string; handle this case appropriately here.
+    if timezone.respond_to?(:options)
+      timezone = timezone.options["timezone"]
     end
 
-    data.respond(choices: data.choices)
-  end
-
-  # Validate a timezone given to us.
-  def self.invalid_timezone?(data)
-    data.options["timezone"] ? timezone(data.options["timezone"]).nil? : false
-  end
-
-  # Validate a birthday given to us.
-  def self.invalid_birthday?(data)
-    data.options.except("timezone").empty? ? false : change_date(data).nil?
-  end
-
-  # Change a birthday given to us.
-  def self.change(data)
-    date = change_date(data)
-
-    timezone = timezone(data)
-
-    return date.iso861 unless timezone
-
-    TZInfo::Timezone.get(timezone).to_local(date).utc.iso8601
-  end
-
-  # Get a timezone without any validation.
-  def self.zone(zone)
-    TZInfo::Timezone.get(zone)&.now
-  end
-
-  # Parse a date given to us.
-  def self.date(data)
-    data = data.options.except("timezone")
-
-    begin
-      Date.parse(data.values.join("/"))
-    rescue StandardError
-      nil
-    end
-  end
-
-  # Create a date from the time given to us.
-  def self.date(data)
-    zone = TZInfo::Timezone.get(timezone(data))
-
-    date = [data.options["month"], data.options["day"]]
-
-    zone.local_to_utc(Time.new(Time.now.year, *date, 0, 0, 0))
-  end
-
-  # Modify an existing date given to us.
-  def self.change_date(data)
-    old = Frost::Birthdays.fetch(data)
-
-    if data.options.except("timezone").empty?
-      return old.utc
+    timezone = timezone.split("/").map do |shard|
+      shard.split(/[\s_]+/).map(&:capitalize).join("_")
     end
 
-    day = data.options["day"] || old.month
-
-    month = data.options["month"] || old.month
-
-    info = [old.hour, old.minute, old.second, old.zone]
-
-    begin
-      Date.new(old.year, month, day, *info).utc
-    rescue StandardError
-      nil
-    end
+    TZInfo::Timezone.get(timezone.join("/")) rescue nil
   end
 
-  # Get a timezone including error handling.
-  def self.timezone(data)
-    return nil unless data && data.options["timezone"]
+  # This is basically a pointless alias, but why not use it?
+  singleton_class.alias_method :zone, :timezone
 
-    zones = TZInfo::Timezone.all.map(&:identifier)
+  # Construct a new date from the given options hash. This method
+  #  is useful because it performs the validation for us and returns
+  #  an error in the form of an atom, e.g. :err_error_name_goes_here.
+  def self.create_datetime(options)
+    timezone = timezone(options["timezone"])
 
-    if zones.include?(data.options["timezone"])
-      return data.options["timezone"]
-    end
+    return :err_timezone_data if timezone.nil?
 
-    split = data.options["timezone"].split("/").map do |part|
-      part.split(/[\s_]+/).map(&:capitalize).join("_")
-    end
+    return :err_datetime_data unless valid_datetime?(options)
 
-    begin
-      TZInfo::Timezone.get(split.join("/")).identifier
-    rescue StandardError
-      nil
-    end
+    date = options.select { |key| ["month", "day"].include?(key) }
+
+    timezone.local_to_utc(Time.new(Time.now.year, *date.values, 0, 0, 0))
+  end
+
+  # Check if a date given to us is valid, e.g. it isn't something
+  #  like 02/30 which cannot occur. This has been seperated out into
+  #  its own method since Ruby's standard {Time} class does not make
+  #  sure that the date passed is actually a valid calender date.
+  def self.valid_datetime?(options)
+    return true if options.except("timezone").empty?
+
+    Date.parse(options.except("timezone").values.join("/")) rescue false
   end
 end
