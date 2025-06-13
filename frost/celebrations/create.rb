@@ -6,6 +6,9 @@ module Birthdays
     # Initialize the invoking user.
     member = Birthdays::Member.new(data)
 
+    # Process the datetime given to us here.
+    birthdate = create_datetime(data.options)
+
     unless member.blank?
       data.edit_response(content: RESPONSE[6])
       return
@@ -16,19 +19,18 @@ module Birthdays
       return
     end
 
-    unless valid_timezone?(data.options)
+    if birthdate == :err_timezone_data
       data.edit_response(content: RESPONSE[11])
       return
     end
 
-    unless valid_datetime?(data.options)
+    if birthdate == :err_datetime_data
       data.edit_response(content: RESPONSE[12])
       return
     end
 
-    member.birthday = Birthdays.date(data)
+    member.birthday = birthdate
 
-    # Schedule the local task for the user here.
     Scheduler.schedule(data.user.id)
 
     data.edit_response(content: RESPONSE[6])

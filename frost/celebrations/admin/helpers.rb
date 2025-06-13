@@ -3,18 +3,18 @@
 module Birthdays
   # Parse an IANA timezone given to use. This method is useful
   #  because it allows us to ignore case-sensitivity and whitespace.
-  def self.timezone(timezone)
+  def self.timezone(options)
     # Sometimes we might get an interaction instead of a proper
     #  timezone string; handle this case appropriately here.
-    if timezone.respond_to?(:options)
-      timezone = timezone.options["timezone"]
+    if options.respond_to?(:options)
+      options = options.options["timezone"]
     end
 
-    timezone = timezone.split("/").map do |shard|
-      shard.split(/[\s_]+/).map(&:capitalize).join("_")
+    options = options.split("/").map do |part|
+      part.split(/[\s_]+/).map(&:capitalize).join("_")
     end
 
-    TZInfo::Timezone.get(timezone.join("/")) rescue nil
+    TZInfo::Timezone.get(options.join("/")) rescue nil
   end
 
   # This is basically a pointless alias, but why not use it?
