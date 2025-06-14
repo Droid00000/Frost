@@ -166,7 +166,7 @@ module Birthdays
 
     # @!visibility private
     def on_insert(*options)
-      { user_id: user_id, guilds: Sequel.pg_array[guild_id], birthdate: options[0] }
+      { user_id: user_id, guilds: Sequel.pg_array([guild_id]), birthdate: options[0] }
     end
   end
 end

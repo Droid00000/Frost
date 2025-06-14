@@ -16,17 +16,15 @@ module Birthdays
       return unless @thread.nil?
 
       @thread = Thread.new do
-        begin
-          DB.where(pending: false).each do |user|
-            TASKS.at(now(user[:birthdate]), tag: user[:user_id]) do
-              handle_birthday_task(user)
-            end
+        DB.where(pending: false).each do |user|
+          TASKS.at(now(user[:birthdate]), tag: user[:user_id]) do
+            handle_birthday_task(user)
           end
-
-          DB.where(pending: true).each { |user| handle_pending_task(user) }
-        rescue StandardError => e
-          Discordrb::LOGGER.log_exception(e)
         end
+
+        DB.where(pending: true).each { |user| handle_pending_task(user) }
+      rescue StandardError => e
+        Discordrb::LOGGER.log_exception(e)
       end
     end
 
@@ -170,9 +168,9 @@ module Birthdays
       # Set the fifth index to the current year we're operating on.
       birthdate[5] = Time.now.year
 
-      if increment
+      if increment && (Time.utc(*birthdate) < Time.now.utc)
         # Increment the current year to the next one if desired.
-        birthdate[5] += 1 if Time.utc(*birthdate) < Time.now.utc
+        birthdate[5] += 1
       end
 
       # Create the new time with the current year.

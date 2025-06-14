@@ -10,7 +10,7 @@ module AdminCommands
       3 => "You need to have the `administrator` permission to do this.",
       4 => "Birthday perks have been successfully disabled.",
       5 => "Birthday perks have been successfully updated.",
-      6 => "Birthday perks have been successfully enabled.",
+      6 => "Birthday perks have been successfully enabled."
     }.freeze
 
     # Application commands for birthday admins.

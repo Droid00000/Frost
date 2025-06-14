@@ -30,7 +30,7 @@ module Birthdays
 
     return :err_datetime_data unless valid_datetime?(options)
 
-    date = options.select { |key| ["month", "day"].include?(key) }
+    date = options.select { |key| %w[month day].include?(key) }
 
     timezone.local_to_utc(Time.new(Time.now.year, *date.values, 0, 0, 0))
   end
