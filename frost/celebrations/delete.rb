@@ -7,8 +7,8 @@ module Birthdays
     Member.new(data, lazy: true).delete
 
     # Delete the local record for the user.
-    Scheduler.delete(data.user.id)
+    Birthdays::Scheduler.delete(data.user.id)
 
-    data.edit_response(content: RESPONSE[7])
+    data.edit_response(content: RESPONSE[5])
   end
 end

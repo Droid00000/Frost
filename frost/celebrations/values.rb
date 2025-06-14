@@ -3,10 +3,10 @@
 module Birthdays
   # Responses and fields for birthday commands.
   RESPONSE = {
-    1 => "Successfully de-synced your birthday from this server.",
-    2 => "Successfully synced your birthday to this server.",
-    3 => "This server has not enabled birthday perks.",
-    4 => "Successfully granted the birthday role.",
+    1 => "Your birthday couldn't be found. Please add your birthday using the </birthday add:1334725009427664970> command.",
+    2 => "Successfully de-synced your birthday from this server.",
+    3 => "Successfully synced your birthday to this server.",
+    4 => "This server hasn't enabled birthday perks.",
     5 => "Successfully deleted your birthday.",
     6 => "Successfully updated your birthday.",
     7 => "Successfully added your birthday.",
@@ -45,8 +45,7 @@ module Birthdays
   # Application commands for birthday commands.
   COMMANDS = {
     1 => "`/birthday delete`",
-    2 => "`/birthday edit`",
-    3 => "`/birthday sync`",
-    4 => "`/birthday add`"
+    2 => "`/birthday sync`",
+    3 => "`/birthday add`"
   }.freeze
 end
