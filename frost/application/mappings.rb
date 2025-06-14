@@ -65,10 +65,10 @@ COLORS = {
 TZInfo::DataSource.set(:zoneinfo)
 
 # The YAML configuration file used by the bot.
-CONFIG = YAML.load_file("#{$LOAD_PATH[0]}/config.yml", symbolize_names: true)
+CONFIG = YAML.load_file("#{File.expand_path('../../../', __FILE__)}/config.yml", symbolize_names: true)
 
 # The Postgres database instance used by the bot.
-POSTGRES = Sequel.connect(CONFIG[:Postgres][:URL], extensions: %i[connection_validator pg_streaming])
+POSTGRES = Sequel.connect(CONFIG[:Postgres][:URL], extensions: %i[connection_validator pg_streaming pg_array])
 
 # The extensions used by sequel and the database instance.
 [POSTGRES.pool.connection_validation_timeout = -1, POSTGRES.stream_all_queries = true, Sequel.default_timezone = :utc]

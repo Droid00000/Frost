@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-$LOAD_PATH.unshift Dir.pwd
-
 require "yaml"
 require "sequel"
 require "discordrb"
@@ -9,9 +7,8 @@ require "tzinfo/data"
 require "unicode/emoji"
 require "rufus-scheduler"
 require "selenium-webdriver"
-require "frost/application/mappings"
 
-Dir["frost/**/*.rb"].each { |file| require file }
+Dir["frost/**/*.rb"].each { |file| require_relative file }
 
 BOT = Discordrb::Bot.new(token: CONFIG[:Discord][:TOKEN], intents: 34_315)
 
