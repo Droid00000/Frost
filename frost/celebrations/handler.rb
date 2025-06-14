@@ -13,11 +13,6 @@ module BirthdayCommands
     Birthdays.sync(event)
   end
 
-  application_command(:birthday).subcommand(:edit) do |event|
-    event.defer(ephemeral: true)
-    Birthdays.edit(event)
-  end
-
   application_command(:birthday).subcommand(:add) do |event|
     event.defer(ephemeral: true)
     Birthdays.create(event)

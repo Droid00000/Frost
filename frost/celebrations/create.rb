@@ -33,6 +33,10 @@ module Birthdays
 
     Scheduler.schedule(data.user.id)
 
-    data.edit_response(content: RESPONSE[10])
+    if member.blank?
+      data.edit_response(content: RESPONSE[10])
+    else
+      data.edit_response(content: RESPONSE[9])
+    end
   end
 end
