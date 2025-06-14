@@ -33,6 +33,6 @@ module Birthdays
 
     Scheduler.schedule(data.user.id)
 
-    data.edit_response(content: RESPONSE[6])
+    data.edit_response(content: RESPONSE[10])
   end
 end

@@ -41,11 +41,11 @@ module Boosters
       @bot = data.bot
       @lazy = lazy == true
       @guild = data.server.id
-      @model = find_guild(@guild)
-      @any_icon = @model[:any_icon]
-      @enabled_by = @model[:setup_by]
-      @enabled_at = @model[:setup_at]
-      @hoist_role = @model[:hoist_role]
+      model = find_guild(@guild)
+      @any_icon = model[:any_icon]
+      @enabled_by = model[:setup_by]
+      @enabled_at = model[:setup_at]
+      @hoist_role = model[:hoist_role]
     end
 
     # Check if this guild is nil, e.g. hasn't been setup.

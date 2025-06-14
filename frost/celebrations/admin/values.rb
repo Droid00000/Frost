@@ -5,11 +5,12 @@ module AdminCommands
   module Birthdays
     # Responses and fields for birthday admins.
     RESPONSE = {
-      1 => "The `role` option must be provided when setting up birthday perks.",
-      2 => "You need to have the `administrator` permission to do this.",
-      3 => "Birthday perks have been successfully disabled.",
-      4 => "Birthday perks have been successfully updated.",
-      5 => "Birthday perks have been successfully enabled."
+      1 => "**Happy Birthday <@%s>!**\n\nI hope you have an amazing one, thanks for spending some time with us! <:DevsGrandson:1334337064317095936>",
+      2 => "The `role` option must be provided when setting up birthday perks.",
+      3 => "You need to have the `administrator` permission to do this.",
+      4 => "Birthday perks have been successfully disabled.",
+      5 => "Birthday perks have been successfully updated.",
+      6 => "Birthday perks have been successfully enabled.",
     }.freeze
 
     # Application commands for birthday admins.

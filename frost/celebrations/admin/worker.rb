@@ -4,7 +4,7 @@ module Birthdays
   # Schedule birthday tasks.
   class Scheduler
     # @return [Sequel::Dataset]
-    DB = POSTGRES[:member_birthdays]
+    DB = POSTGRES[:user_birthdays]
 
     # @return [Rufus::Scheduler]
     TASKS = Rufus::Scheduler.singleton

@@ -109,9 +109,9 @@ module Birthdays
       @lazy = lazy == true
       @user_id = data.user.id
       @guild_id = data.server.id
-      @model = find_user(@user_id)
-      @birthday = @model[:birthday]
-      @guilds = @model[:guilds].to_a
+      model = find_user(@user_id)
+      @birthday = model[:birthdate]
+      @user_guilds = model[:guilds]
     end
 
     # Check if this member is nil, e.g. doesn't have a record.
@@ -124,11 +124,18 @@ module Birthdays
 
     # Check if this guild is synced into the user's guilds array.
     # @return [true, false] Whether this guild is synced or not.
-    def synced? = user_guilds.include?(guild_id)
+    def synced? = guilds.include?(guild_id)
 
     # Remove this members birthday records for every guild.
     def delete
       POSTGRES.transaction { @@pg.where(user_id: user_id).delete }
+    end
+
+    # Set the birthday for the and inital state for this user.
+    def birthday=(birthday)
+      POSTGRES.transaction do
+        @@pg.insert(user_id: user_id, birthdate: birthday.utc, guilds: Sequel.pg_array([guild_id]))
+      end
     end
 
     # Un-sync the guild from the user's guild's array.
@@ -143,6 +150,13 @@ module Birthdays
       POSTGRES.transaction do
         @@pg.where(user_id: user_id).update(guilds: Sequel.function(:array_append, :guilds, guild_id))
       end
+    end
+
+    private
+
+    # @!visibility private
+    def find_user(*options)
+      POSTGRES.transaction { @@pg.where(user_id: options.first).first } || {}
     end
   end
 end

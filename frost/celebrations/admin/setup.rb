@@ -6,7 +6,7 @@ module AdminCommands
     # Enable birthday perks in this server.
     def self.setup(data)
       unless data.user.permission?(:administrator)
-        data.edit_response(content: RESPONSE[2])
+        data.edit_response(content: RESPONSE[3])
         return
       end
 
@@ -22,16 +22,16 @@ module AdminCommands
       }
 
       if guild.blank? && options[:role_id].nil?
-        data.edit_response(content: RESPONSE[1])
+        data.edit_response(content: RESPONSE[2])
         return
       end
 
       guild.edit(**options.compact)
 
       if guild.blank?
-        data.edit_response(content: RESPONSE[5])
+        data.edit_response(content: RESPONSE[6])
       else
-        data.edit_response(content: RESPONSE[4])
+        data.edit_response(content: RESPONSE[5])
       end
     end
   end
