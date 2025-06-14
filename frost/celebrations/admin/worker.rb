@@ -15,8 +15,8 @@ module Birthdays
       # Don't make a new thread if one already exists.
       return unless @thread.nil?
 
-      begin
-        @thread = Thread.new do
+      @thread = Thread.new do
+        begin
           DB.where(pending: false).each do |user|
             TASKS.at(now(user[:birthdate]), tag: user[:user_id]) do
               handle_birthday_task(user)
@@ -24,9 +24,9 @@ module Birthdays
           end
 
           DB.where(pending: true).each { |user| handle_pending_task(user) }
+        rescue StandardError => e
+          Discordrb::LOGGER.log_exception(e)
         end
-      rescue StandardError => e
-        Discordrb::LOGGER.log_exception(e)
       end
     end
 
