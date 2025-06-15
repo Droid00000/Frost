@@ -131,6 +131,13 @@ module Birthdays
       POSTGRES.transaction { @@pg.where(user_id: user_id).delete }
     end
 
+    # Set the birthday and inital state for the user.
+    def birthday=(birthday)
+      POSTGRES.transaction do
+        @@pg.insert_conflict(**on_conflict(birthday.utc)).insert(**on_insert(birthday.utc))
+      end
+    end
+
     # Un-sync the guild from the user's guild's array.
     def desync
       POSTGRES.transaction do
@@ -145,18 +152,11 @@ module Birthdays
       end
     end
 
-    # Set the birthday and inital state for the user.
-    def birthday=(birthday)
-      POSTGRES.transaction do
-        @@pg.insert_conflict(**on_conflict(birthday.utc)).insert(**on_insert(birthday.utc))
-      end
-    end
-
     private
 
     # @!visibility private
     def on_conflict(*options)
-      { conflict: :user_id, update: { birthdate: options.first } }
+      { target: :user_id, update: { birthdate: options.first } }
     end
 
     # @!visibility private

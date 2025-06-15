@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS emoji_tracker (
 CREATE
 OR REPLACE FUNCTION search_timezones (query text) RETURNS SETOF world_timezones ROWS 25 LANGUAGE SQL STABLE AS $$
  WITH tokens AS (
-    SELECT unnest(string_to_array(unaccent(query), ' ')) AS t
+    SELECT unnest(string_to_array(unaccent($1), ' ')) AS t
 )
 SELECT name, country, timezone, identifier
 FROM (
@@ -102,8 +102,11 @@ ORDER BY score DESC
 LIMIT 25;
 $$;
 
--- Index for the `emoji_tracker` table.
-CREATE INDEX IF NOT EXISTS guild_emojis_idx ON emoji_tracker (guild_id);
+-- Function for fetching guilds for birthdays.
+CREATE OR REPLACE FUNCTION birthday_guilds (user_id BIGINT) RETURNS
+SETOF birthday_settings ROWS 200 LANGUAGE SQL STABLE AS $$
+  SELECT * FROM birthday_settings WHERE guild_id = ANY(ARRAY(SELECT unnest(guilds) FROM user_birthdays WHERE user_id = $1)) LIMIT 200;
+$$;
 
 -- Index for the `banned_boosters` table.
 CREATE INDEX IF NOT EXISTS guild_bans_idx ON banned_boosters (user_id, guild_id);
@@ -119,6 +122,9 @@ CREATE UNIQUE INDEX IF NOT EXISTS guild_birthday_idx ON birthday_settings (guild
 
 -- Index for the `guild_birthdays` table.
 CREATE UNIQUE INDEX IF NOT EXISTS guild_user_birthday_idx ON user_birthdays (user_id);
+
+-- Index for the `emoji_tracker` table.
+CREATE INDEX IF NOT EXISTS guild_emojis_idx ON emoji_tracker (guild_id, balance DESC);
 
 -- Index for the `booster_settings` table.
 CREATE UNIQUE INDEX IF NOT EXISTS guild_hoist_role_idx ON booster_settings (guild_id);
