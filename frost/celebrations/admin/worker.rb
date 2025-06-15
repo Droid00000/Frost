@@ -13,7 +13,7 @@ module Birthdays
     # of the members that are stored in the database.
     def self.on_login
       # Don't make a new thread if one already exists.
-      return unless @thread.nil?
+      return if @thread&.alive?
 
       @thread = Thread.new do
         DB.where(pending: false).each do |user|
