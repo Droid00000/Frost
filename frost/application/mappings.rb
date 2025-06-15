@@ -61,9 +61,6 @@ COLORS = {
   original_blurple: 7_506_394
 }.freeze
 
-# The local TZ database source.
-TZInfo::DataSource.set(:zoneinfo)
-
 # The YAML configuration file used by the bot.
 CONFIG = YAML.load_file("#{File.expand_path('../..', __dir__)}/config.yml", symbolize_names: true)
 
