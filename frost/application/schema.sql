@@ -24,9 +24,8 @@ CREATE TABLE IF NOT EXISTS booster_settings (
   setup_by BIGINT NOT NULL,
   setup_at BIGINT NOT NULL,
   any_icon BOOLEAN NOT NULL,
-  guild_id BIGINT NOT NULL UNIQUE,
-  hoist_role BIGINT NOT NULL UNIQUE,
-  PRIMARY KEY (hoist_role, guild_id)
+  guild_id BIGINT PRIMARY KEY,
+  hoist_role BIGINT NOT NULL UNIQUE
 );
 
 -- Holds info about birthday settings.
@@ -34,9 +33,8 @@ CREATE TABLE IF NOT EXISTS birthday_settings (
   role_id BIGINT NOT NULL,
   setup_by BIGINT NOT NULL,
   setup_at BIGINT NOT NULL,
-  channel_id BIGINT DEFAULT NULL,
-  guild_id BIGINT NOT NULL UNIQUE,
-  PRIMARY KEY (role_id, guild_id)
+  guild_id BIGINT PRIMARY KEY,
+  channel_id BIGINT DEFAULT NULL
 );
 
 -- Holds info about banned boosters.
@@ -58,11 +56,10 @@ CREATE TABLE IF NOT EXISTS guild_boosters (
 
 -- Holds info about member birthdays.
 CREATE TABLE IF NOT EXISTS user_birthdays (
-  guilds BIGINT ARRAY NOT NULL,
+  guilds BIGINT NOT NULL,
+  user_id BIGINT PRIMARY KEY,
   pending BOOLEAN DEFAULT FALSE,
-  user_id BIGINT UNIQUE NOT NULL,
-  birthdate TIMESTAMPTZ NOT NULL,
-  PRIMARY KEY (user_id, birthdate)
+  birthdate TIMESTAMPTZ NOT NULL
 );
 
 -- Holds info about emoji stats.
