@@ -2,6 +2,14 @@
 -- Creation Date: 2025-01-02 12:31:07.804358 UTC
 -- Reason: Initial Migration
 
+-- Holds info about emoji stats.
+CREATE TABLE IF NOT EXISTS emoji_tracker (
+  balance BIGINT DEFAULT 1,
+  emoji_id BIGINT NOT NULL,
+  guild_id BIGINT NOT NULL,
+  PRIMARY KEY (emoji_id, guild_id)
+);
+
 -- Holds info about event roles.
 CREATE TABLE IF NOT EXISTS event_settings (
   role_id BIGINT NOT NULL, 
@@ -18,6 +26,24 @@ CREATE TABLE IF NOT EXISTS world_timezones (
   identifier TEXT NOT NULL,
   PRIMARY KEY (timezone, name)
 );
+
+-- Holds info about server boosters.
+CREATE TABLE IF NOT EXISTS guild_boosters (
+  user_id BIGINT NOT NULL,
+  role_id BIGINT NOT NULL,
+  guild_id BIGINT NOT NULL,
+  PRIMARY KEY (user_id, guild_id)
+);
+
+-- Holds info about banned boosters.
+CREATE TABLE IF NOT EXISTS banned_boosters (  
+  user_id BIGINT NOT NULL,
+  guild_id BIGINT NOT NULL,
+  banned_by BIGINT NOT NULL,
+  banned_at BIGINT NOT NULL,
+  PRIMARY KEY (guild_id, user_id)
+);
+
 
 -- Holds info about booster settings.
 CREATE TABLE IF NOT EXISTS booster_settings (
@@ -37,37 +63,12 @@ CREATE TABLE IF NOT EXISTS birthday_settings (
   channel_id BIGINT DEFAULT NULL
 );
 
--- Holds info about banned boosters.
-CREATE TABLE IF NOT EXISTS banned_boosters (  
-  user_id BIGINT NOT NULL,
-  guild_id BIGINT NOT NULL,
-  banned_by BIGINT NOT NULL,
-  banned_at BIGINT NOT NULL,
-  PRIMARY KEY (guild_id, user_id)
-);
-
--- Holds info about server boosters.
-CREATE TABLE IF NOT EXISTS guild_boosters (
-  user_id BIGINT NOT NULL,
-  role_id BIGINT NOT NULL,
-  guild_id BIGINT NOT NULL,
-  PRIMARY KEY (user_id, guild_id)
-);
-
 -- Holds info about member birthdays.
 CREATE TABLE IF NOT EXISTS user_birthdays (
   guilds BIGINT NOT NULL,
   user_id BIGINT PRIMARY KEY,
   pending BOOLEAN DEFAULT FALSE,
   birthdate TIMESTAMPTZ NOT NULL
-);
-
--- Holds info about emoji stats.
-CREATE TABLE IF NOT EXISTS emoji_tracker (
-  balance BIGINT DEFAULT 1,
-  emoji_id BIGINT NOT NULL,
-  guild_id BIGINT NOT NULL,
-  PRIMARY KEY (emoji_id, guild_id)
 );
 
 -- Function for searching for a timezone.
