@@ -34,8 +34,8 @@ CREATE TABLE IF NOT EXISTS birthday_settings (
   role_id BIGINT NOT NULL,
   setup_by BIGINT NOT NULL,
   setup_at BIGINT NOT NULL,
-  guild_id BIGINT NOT NULL,
   channel_id BIGINT DEFAULT NULL,
+  guild_id BIGINT NOT NULL UNIQUE,
   PRIMARY KEY (role_id, guild_id)
 );
 
@@ -100,12 +100,6 @@ FROM (
 ) sub
 ORDER BY score DESC
 LIMIT 25;
-$$;
-
--- Function for fetching guilds for birthdays.
-CREATE OR REPLACE FUNCTION birthday_guilds (user_id BIGINT) RETURNS
-SETOF birthday_settings ROWS 200 LANGUAGE SQL STABLE AS $$
-  SELECT * FROM birthday_settings WHERE guild_id = ANY(ARRAY(SELECT unnest(guilds) FROM user_birthdays WHERE user_id = $1)) LIMIT 200;
 $$;
 
 -- Index for the `banned_boosters` table.
