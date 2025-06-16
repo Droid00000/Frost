@@ -12,12 +12,12 @@ module Boosters
     alias guild_id guild
 
     # @return [Integer, nil]
-    attr_reader :enabled_by
-    alias setup_by enabled_by
+    attr_reader :role_id
+    alias hoist_role role_id
 
     # @return [Integer, nil]
-    attr_reader :hoist_role
-    alias role hoist_role
+    attr_reader :enabled_by
+    alias setup_by enabled_by
 
     # @return [Integer, nil]
     attr_reader :enabled_at
@@ -42,10 +42,10 @@ module Boosters
       @lazy = lazy == true
       @guild = data.server.id
       model = find_guild(@guild)
+      @role_id = model[:role_id]
       @any_icon = model[:any_icon]
       @enabled_by = model[:setup_by]
       @enabled_at = model[:setup_at]
-      @hoist_role = model[:hoist_role]
     end
 
     # Check if this guild is nil, e.g. hasn't been setup.
@@ -58,13 +58,13 @@ module Boosters
 
     # Create a new record or update an existing record.
     # @param guild_id [Integer] ID of the guild this record is for.
-    # @param hoist_role [Integer] ID of the hoist-role for this guild.
+    # @param role_id [Integer] ID of the hoist-role for this guild.
     # @param any_icon [Boolean] Whether this guild supports external role icons.
     # @param setup_by [Integer] ID of the user who setup booster perks for this guild.
     # @param setup_at [Integer] Timestamp of when booster perks were setup for this guild.
     def edit(**options)
       POSTGRES.transaction do
-        options = options.slice(:hoist_role, :any_icon) unless blank?
+        options = options.slice(:role_id, :any_icon) unless blank?
 
         blank? ? @@pg.insert(**options) : @@pg.where(guild_id: guild).update(options)
       end

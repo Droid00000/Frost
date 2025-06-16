@@ -14,13 +14,13 @@ module AdminCommands
         setup_by: data.user.id,
         setup_at: Time.now.to_i,
         guild_id: data.server.id,
+        role_id: data.options["role"]
         any_icon: data.options["icon"],
-        hoist_role: data.options["role"]
       }
 
       guild = ::Boosters::Guild.new(data)
 
-      if guild.blank? && options[:hoist_role].nil?
+      if guild.blank? && options[:role_id].nil?
         data.edit_response(content: RESPONSE[2])
         return
       end

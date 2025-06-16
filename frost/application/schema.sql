@@ -46,11 +46,11 @@ CREATE TABLE IF NOT EXISTS banned_boosters (
 
 -- Holds info about booster settings.
 CREATE TABLE IF NOT EXISTS booster_settings (
+  role_id BIGINT NOT NULL,
   setup_by BIGINT NOT NULL,
   setup_at BIGINT NOT NULL,
   any_icon BOOLEAN NOT NULL,
-  guild_id BIGINT PRIMARY KEY,
-  hoist_role BIGINT NOT NULL UNIQUE
+  guild_id BIGINT PRIMARY KEY
 );
 
 -- Holds info about birthday settings.
