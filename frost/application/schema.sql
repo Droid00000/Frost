@@ -44,7 +44,6 @@ CREATE TABLE IF NOT EXISTS banned_boosters (
   PRIMARY KEY (guild_id, user_id)
 );
 
-
 -- Holds info about booster settings.
 CREATE TABLE IF NOT EXISTS booster_settings (
   setup_by BIGINT NOT NULL,
