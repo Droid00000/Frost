@@ -43,8 +43,9 @@ module Boosters
     options = {
       role: member.role,
       reason: reason(data),
-      tertiary: data.options["end"],
+      colour: data.options["end"],
       secondary: data.options["start"]
+      tertiary: data.options["glow"]
     }.compact
 
     if options.size > 2
