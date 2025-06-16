@@ -19,14 +19,19 @@ module AdminCommands
         guild_id: data.server.id,
         role_id: data.options["role"],
         channel_id: data.options["channel"]
-      }
+      }.compact
 
       if guild.blank? && options[:role_id].nil?
         data.edit_response(content: RESPONSE[2])
         return
       end
 
-      guild.edit(**options.compact)
+      # This is optional, so allow it to be removed.
+      if options[:channel_id]&.match?(REGEX[2])
+        options[:channel_id] = nil
+      end
+
+      guild.edit(**options)
 
       if guild.blank?
         data.edit_response(content: RESPONSE[6])
