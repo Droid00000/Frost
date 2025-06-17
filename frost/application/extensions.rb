@@ -52,7 +52,7 @@ module Discordrb
         colors[:primary_color] = colors[:secondary_color]
       end
 
-      if colour && colour != :NULL 
+      if colour && colour != :NULL && colors
         colors[:primary_color] = colour&.to_i
       end
 
