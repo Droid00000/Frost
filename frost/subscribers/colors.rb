@@ -43,10 +43,13 @@ module Boosters
     options = {
       role: member.role,
       reason: reason(data),
-      colour: data.options["end"],
-      secondary: data.options["start"]
-      tertiary: data.options["glow"]
+      colour: data.options["start"],
+      secondary: data.options["end"]
     }.compact
+
+    if no_gradient?(**options)
+      options[:colour] = member.color
+    end
 
     if options.size > 2
       begin

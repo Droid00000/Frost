@@ -9,11 +9,11 @@ module General
     # Remove the deleted role from custom event roles.
     POSTGRES[:event_settings].where(guild_id: data.server.id, role_id: data.id).delete
 
+    # Remove the deleted role from server booster settings.
+    POSTGRES[:booster_settings].where(guild_id: data.server.id, role_id: data.id).delete
+
     # Remove the deleted role from birthday settings.
     POSTGRES[:birthday_settings].where(guild_id: data.server.id, role_id: data.id).delete
-
-    # Remove the deleted role from server booster settings.
-    POSTGRES[:booster_settings].where(guild_id: data.server.id, hoist_role: data.id).delete
   end
 
   # Prune deleted channels.

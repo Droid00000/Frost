@@ -22,7 +22,12 @@ module AdminCommands
         return
       end
 
-      member.role = data.options["role"]
+      # Resolve the role we need to add here.
+      role_id = data.options["role"].to_i
+
+      # We have to fetch the role first so we can
+      # capture the base color of the pre-existing role.
+      member.role = data.server.role(role_id)
 
       data.edit_response(content: RESPONSE[12])
     end

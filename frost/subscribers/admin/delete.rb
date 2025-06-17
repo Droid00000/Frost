@@ -22,6 +22,10 @@ module AdminCommands
         return
       end
 
+      if data.options["prune"] && member.role
+        data.server.role(member.role)&.delete
+      end
+
       member.delete
 
       data.edit_response(content: RESPONSE[10])

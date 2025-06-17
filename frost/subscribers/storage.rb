@@ -161,17 +161,31 @@ module Boosters
       end
     end
 
+    # Set the base role color used by this member.
+    # @param color [Discordrb::ColourRGB] The new base color.
+    def color=(color)
+      POSTGRES.transaction do
+        @@users.where(**query).update(color_id: color.to_i)
+      end
+    end
+
     # Get this members booster role in this guild.
     # @return [Integer] The role ID of the booster role.
     def role
       @role ||= POSTGRES.transaction { @@users.where(**query).get(:role_id) }
     end
 
+    # Get this members booster role's base color in this guild.
+    # @return [Integer] The combined integer value of the role's base color.
+    def color
+      @color ||= POSTGRES.transaction { @@users.where(**query).get(:color_id) }
+    end
+
     # Edit this members booster role in this guild.
     # @note This will update the members role if it already exists.
     def role=(role)
       POSTGRES.transaction do
-        @@users.insert_conflict(**conflict(role)).insert(**query, role_id: role)
+        @@users.insert_conflict(**conflict(role)).insert(**query, **conflict(role)[:update])
       end
     end
 
@@ -179,7 +193,13 @@ module Boosters
 
     # @!visibility private
     def conflict(*options)
-      { target: %i[user_id guild_id], update: { role_id: options[0].resolve_id } }
+      {
+        target: %i[user_id guild_id],
+        update: {
+          role_id: options[0].resolve_id,
+          color_id: options[0].color.to_i
+        }
+      }
     end
   end
 

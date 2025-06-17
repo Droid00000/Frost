@@ -43,6 +43,10 @@ module Boosters
       role: member.role
     }.compact
 
+    if options[:colour]
+      member.color = options[:colour]
+    end
+
     if valid_icon?(data, member.guild)
       options[:icon] = to_icon(data)
     end

@@ -14,8 +14,8 @@ module AdminCommands
         setup_by: data.user.id,
         setup_at: Time.now.to_i,
         guild_id: data.server.id,
-        role_id: data.options["role"]
-        any_icon: data.options["icon"],
+        role_id: data.options["role"],
+        any_icon: data.options["icon"]
       }
 
       guild = ::Boosters::Guild.new(data)

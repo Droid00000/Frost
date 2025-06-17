@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS world_timezones (
 CREATE TABLE IF NOT EXISTS guild_boosters (
   user_id BIGINT NOT NULL,
   role_id BIGINT NOT NULL,
+  color_id BIGINT NOT NULL,
   guild_id BIGINT NOT NULL,
   PRIMARY KEY (user_id, guild_id)
 );

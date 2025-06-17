@@ -39,10 +39,22 @@ module Discordrb
 
       colors = if features.include?(:enhanced_role_colors) && (secondary || tertiary)
                  self.role(role).colors.to_h.merge({
-                   tertiary_color: tertiary&.to_i,
-                   secondary_color: secondary&.to_i
+                   tertiary_color: tertiary,
+                   secondary_color: secondary
                  }.compact)
                end
+
+      colors&.transform_values! do |value|
+        value == :NULL ? nil : value&.to_i
+      end
+
+      if colour == :NULL
+        colors[:primary_color] = colors[:secondary_color]
+      end
+
+      if colour && colour != :NULL 
+        colors[:primary_color] = colour&.to_i
+      end
 
       API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason, colors)
     end
@@ -236,11 +248,7 @@ module Discordrb
           data.merge!(unicode_emoji: nil, icon: nil)
         end
 
-        if colors&.values&.include?(:NULL)
-          data[:colors].each do |key, value|
-            data[:colors][key] = nil if value == :NULL
-          end
-        end
+        data[:color] = nil if colour == :NULL
 
         Discordrb::API.request(
           :guilds_sid_roles_rid,
