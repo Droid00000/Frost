@@ -59,7 +59,7 @@ module Boosters
   def self.no_gradient?(colors)
     colors.values_at(:colour, :secondary).all? { it == :NULL }
   end
-  
+
   # Check if we have a valid role icon.
   # @return [Boolean] If the icon is valid.
   def self.valid_icon?(data, guild)
