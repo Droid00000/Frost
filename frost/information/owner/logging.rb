@@ -7,7 +7,7 @@ module Owner
     @@uptime ||= Time.now.to_i
 
     # Initialize all of our birthdays once we're ready.
-    Birthdays::Orchestrator::Scheduler.login
+    Birthdays::Orchestrator.login
 
     # Tell rufus to output any log info to our log file.
     Rufus::Scheduler.s.stderr = File.open("logs.txt", "ab")

@@ -187,7 +187,7 @@ module Birthdays
       Guild = Struct.new(:id, :role, :channel)
 
       # @!visibility private
-      def inititalize(data)
+      def initialize(data)
         @user_id = data[:user_id]
         @birthdate = data[:birthdate]
       end
