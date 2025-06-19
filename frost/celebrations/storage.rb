@@ -98,7 +98,6 @@ module Birthdays
 
     # @return [Array<Integer>]
     attr_reader :user_guilds
-    alias guilds user_guilds
 
     # @return [Sequel::Dataset]
     @@pg = POSTGRES[:user_birthdays]
@@ -124,7 +123,7 @@ module Birthdays
 
     # Check if this guild is synced into the user's guilds array.
     # @return [true, false] Whether this guild is synced or not.
-    def synced? = guilds.include?(guild_id)
+    def synced? = user_guilds.to_a.include?(guild_id)
 
     # Remove this members birthday records for every guild.
     def delete
@@ -167,6 +166,88 @@ module Birthdays
     # @!visibility private
     def on_insert(*options)
       { user_id: user_id, guilds: Sequel.pg_array([guild_id]), birthdate: options[0] }
+    end
+  end
+
+  # Models primarily used in background tasks.
+  module Backend
+    # Information about a user in the backend.
+    class Member
+      # @return [Integer]
+      attr_reader :user_id
+      alias resolve_id user_id
+
+      # @return [DateTime]
+      attr_reader :birthdate
+
+      # @return [Sequel::Dataset]
+      @@pg = POSTGRES[:user_birthdays]
+
+      # Lightweight struct for guilds.
+      Guild = Struct.new(:id, :role, :channel)
+
+      # @!visibility private
+      def inititalize(data)
+        @user_id = data[:user_id]
+        @birthdate = data[:birthdate]
+      end
+
+      # Set the pending state for the member.
+      # @param pending [true, false] if the member is pending or not.
+      def pending=(pending)
+        POSTGRES.transaction do
+          @@pg.where(user_id: user_id).update(pending: pending)
+        end
+      end
+
+      # Send the birthday message to a channel for a guild.
+      # @param guild [Guild] The guild to send the message to.
+      def send_message(guild)
+        message = ::AdminCommands::Birthdays::RESPONSE[1] % user_id
+
+        BOT.channel(guild.channel)&.send_message(message) rescue nil
+      end
+
+      # Add the birthday role to a member for a guild.
+      # @param guild [Guild] The guild to add the role for.
+      def add_role(guild)
+        BOT.member(guild.id, user_id)&.add_role(guild.role) rescue nil
+      end
+
+      # Remove the birthday role from a member for a guild.
+      # @param guild [Guild] The guild to remove the role for.
+      def remove_role(guild)
+        BOT.member(guild.id, user_id)&.remove_role(guild.role) rescue nil
+      end
+
+      # Get the member's birthdate but for the next calender year.
+      # @return [Time] The date at when the birthday will occur next year.
+      def next_birthdate
+        Time.utc(*birthdate.to_a.tap { it[5] = Time.now.utc.year + 1 })
+      end
+
+      # Get the next time the member's birthday will occur.
+      # @return [Time] The next time the member's birthday will occur.
+      def next_birthday
+        time = Time.utc(*birthdate.to_a.tap { it[5] = Time.now.utc.year })
+
+        (Time.now.utc.to_date > time.utc.to_date) ? next_birthdate : time
+      end
+
+      # Get a list of guilds that the member has synced to their account.
+      # @return [Array<Guild>] Guilds the member is a part of currently.
+      def guilds
+        query = <<~SQL
+          SELECT * FROM birthday_settings WHERE guild_id =
+          ANY(ARRAY(SELECT guilds FROM user_birthdays WHERE user_id = ?));
+        SQL
+
+        POSTGRES.transaction do
+          POSTGRES[query, user_id].all.map do |model|
+            Guild.new(model[:guild_id], model[:role_id], model[:channel_id])
+          end
+        end
+      end
     end
   end
 end
