@@ -18,15 +18,6 @@ CREATE TABLE IF NOT EXISTS event_settings (
   PRIMARY KEY (role_id, guild_id)
 );
 
--- Holds info about world timezones.
-CREATE TABLE IF NOT EXISTS world_timezones (
-  name TEXT NOT NULL,
-  country TEXT NOT NULL,
-  timezone TEXT NOT NULL,
-  identifier TEXT NOT NULL,
-  PRIMARY KEY (timezone, name)
-);
-
 -- Holds info about server boosters.
 CREATE TABLE IF NOT EXISTS guild_boosters (
   user_id BIGINT NOT NULL,
@@ -43,6 +34,14 @@ CREATE TABLE IF NOT EXISTS banned_boosters (
   banned_by BIGINT NOT NULL,
   banned_at BIGINT NOT NULL,
   PRIMARY KEY (guild_id, user_id)
+);
+
+-- Holds info about world timezones.
+CREATE TABLE IF NOT EXISTS world_timezones (
+  name TEXT NOT NULL,
+  country TEXT NOT NULL,
+  timezone TEXT NOT NULL,
+  identifier TEXT NOT NULL
 );
 
 -- Holds info about booster settings.
@@ -70,6 +69,9 @@ CREATE TABLE IF NOT EXISTS user_birthdays (
   pending BOOLEAN DEFAULT FALSE,
   birthdate TIMESTAMPTZ NOT NULL
 );
+
+-- Index for the `emoji_tracker` table.
+CREATE INDEX IF NOT EXISTS guild_emojis_idx ON emoji_tracker (guild_id, balance DESC);
 
 -- Function for searching for a timezone.
 CREATE
@@ -99,15 +101,3 @@ FROM (
 ORDER BY score DESC
 LIMIT 25;
 $$;
-
--- Index for the `emoji_tracker` table.
-CREATE INDEX IF NOT EXISTS guild_emojis_idx ON emoji_tracker (guild_id, balance DESC);
-
--- GIN indexes for the `world_timezones` table.
-CREATE INDEX IF NOT EXISTS world_names_idx ON world_timezones USING GIN (name gin_trgm_ops);
-
-CREATE INDEX IF NOT EXISTS world_codes_idx ON world_timezones USING GIN (identifier gin_trgm_ops);
-
-CREATE INDEX IF NOT EXISTS world_countries_idx ON world_timezones USING GIN (country gin_trgm_ops);
-
-CREATE INDEX IF NOT EXISTS world_timezones_idx ON world_timezones USING GIN (timezone gin_trgm_ops);
