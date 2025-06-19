@@ -70,7 +70,7 @@ POSTGRES = Sequel.connect(CONFIG[:Postgres][:URL], extensions: %i[connection_val
 # The extensions used by sequel and the database instance.
 [POSTGRES.pool.connection_validation_timeout = -1, POSTGRES.stream_all_queries = true, Sequel.default_timezone = :utc]
 
-# A series of regular expressions utilized by the bot.
+# Regular expression patterns utilized by the bot.
 REGEX = {
   1 => /([0-9A-Fa-f]{6})\b/i,
   2 => /remove|off|disable|delete|null|nil/i,
