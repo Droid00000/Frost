@@ -123,7 +123,7 @@ module Birthdays
 
     # Check if this guild is synced into the user's guilds array.
     # @return [true, false] Whether this guild is synced or not.
-    def synced? = user_guilds.to_a.include?(guild_id)
+    def synced? = user_guilds.any?(guild_id)
 
     # Remove this members birthday records for every guild.
     def delete
