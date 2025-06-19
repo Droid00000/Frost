@@ -47,9 +47,29 @@ module Birthdays
       # @param member [Integer, Hash] the ID of the member to resolve or a data hash.
       # @return [Birthdays::Backend::Member] the member as a backend user model.
       def self.serialize_member(member)
-        return Backend::Member.new(member) unless member.is_a?(Integer)
+        return Backend::Member.new(member) unless member.respond_to?(:resolve_id)
 
-        Backend::Member.new(POSTGRES[:user_birthdays].where(user_id: member).first)
+        Backend::Member.new(POSTGRES[:user_birthdays].where(user_id: member.resolve_id).first)
+      end
+
+      # The tasks that are peformed on the member's birthday.
+      listen(:ON_PUBLISH) do |member|
+        # Set the marker in the DB.
+        member.pending = true
+
+        # Add the birthday role and send a message for each server.
+        member.guilds.each do |guild|
+          [member.add_role(guild), member.send_message(guild)]
+        end
+      end
+
+      # The tasks that are performed after the member's birthday.
+      listen(:AFTER_PUBLISH) do |member|
+        # Reset the marker in the DB.
+        member.pending = false
+
+        # Remove the birthday role from the member for each server.
+        member.guilds.each { |guild| member.remove_role(guild) }
       end
     end
   end
