@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS birthday_settings (
 
 -- Holds info about member birthdays.
 CREATE TABLE IF NOT EXISTS user_birthdays (
-  guilds BIGINT NOT NULL,
+  guilds BIGINT[] NOT NULL,
   user_id BIGINT PRIMARY KEY,
   pending BOOLEAN DEFAULT FALSE,
   birthdate TIMESTAMPTZ NOT NULL
