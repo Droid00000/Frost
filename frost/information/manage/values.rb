@@ -4,7 +4,7 @@ module Settings
   # Responses and fields for setting commands.
   RESPONSE = {
     1 => "Hi! Welcome to my help page. Use the dropdown menu below to view a category.\n\n**About Me**\nI was made by droid00000. My code is open source and can be viewed [here!](https://github.com/Droid00000/Frost)\n\n",
-    2 => "These are the booster settings for your server. Server boosters can be added, removed, banned, unbanned, and managed with the **/booster admin** command group.",
+    2 => "These are the booster settings for your server. Server boosters can be added, removed, banned, and unbanned with the **/booster admin** command group.",
     3 => "These are the birthday settings for your server. Birthday perks can be enabled, edited, and disabled with the **/birthday admin** command group.",
     4 => "**Icon**\nServer boosters may only use server and unicode emojis as their role icon.",
     5 => "**Icon**\nServer boosters may use any custom or unicode emoji as their role icon.",

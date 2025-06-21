@@ -9,7 +9,7 @@ module Settings
 
     # Return unless booster perks are enabled here.
     if guild.blank?
-      data.send_message(content: RESPONSE[13], ephemeral: true)
+      data.send_message(content: RESPONSE[12], ephemeral: true)
       return
     end
 
@@ -27,7 +27,7 @@ module Settings
         # gets addressed sometime in the future. For now, this will do though.
         container.section do |section|
           # Add our main title heading here.
-          section.text_display(text: format(RESPONSE[16], data.server.name))
+          section.text_display(text: format(RESPONSE[14], data.server.name))
 
           # Add the icon of the server as our thumbnail.
           section.thumbnail(url: data.server.icon_url)
@@ -42,15 +42,15 @@ module Settings
 
         # Add some spacing between the content of our container
         # and the footer text that we're adding.
-        container.text_display(text: format(RESPONSE[8], guild.role_id))
+        container.text_display(text: format(RESPONSE[7], guild.role_id))
 
         # Add the manager information we're now showing
         # and tracking. Includes the sanction timestamp.
-        container.text_display(text: format(RESPONSE[10], *guild.view))
+        container.text_display(text: format(RESPONSE[9], *guild.view))
 
         # Add our footer text. Eventually this can be swapped out for
         # an action row with buttons for pagination if needed.
-        container.text_display(text: guild.any_icon? ? RESPONSE[6] : RESPONSE[5])
+        container.text_display(text: guild.any_icon? ? RESPONSE[5] : RESPONSE[4])
       end
     end
   end

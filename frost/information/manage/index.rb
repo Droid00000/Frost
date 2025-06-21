@@ -16,13 +16,13 @@ module Settings
           guilds = context.bot.servers.values
           members = guilds.map(&:member_count).sum
           channels = guilds.flat_map(&:channels).size
-          format(RESPONSE[12], guilds.size, members.delimit, channels)
+          format(RESPONSE[11], guilds.size, members.delimit, channels)
         end
 
         # Add our main menu header here in a seperate text display
         # container in order to get some of that natural padding
         # that's tricky to stimulate with the other types of seperators.
-        container.text_display(text: RESPONSE[18])
+        container.text_display(text: RESPONSE[15])
 
         # Create our main section body that contains all of the text we want
         # to show to our user. Currently, we have to use one big string, since
