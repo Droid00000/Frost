@@ -70,16 +70,16 @@ module Birthdays
     # Delete the record for this guild.
     # @note This method takes arguments, but they're ignored.
     def delete(**)
-      POSGTRES.transaction do
-        query = <<~SQL
-          UPDATE user_birthdays SET guilds = array_remove(guilds, ?)
-          WHERE ? = ANY(guilds);
-        SQL
+      query = <<~SQL
+        UPDATE user_birthdays SET
+        guilds = array_remove(guilds, ?) WHERE ? = ANY(guilds);
+      SQL
 
-        @@pg.where(guild_id: guild).delete
+      # Delete the settings record here from the DB.
+      POSGTRES.transaction { @@pg.where(guild_id: guild).delete }
 
-        POSTGRES[query, guild_id, guild_id]
-      end
+      # Filter and remove the guild from the guilds array.
+      POSTGRES.transaction {POSTGRES[query, guild_id, guild_id] }
     end
 
     private
