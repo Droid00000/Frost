@@ -51,9 +51,9 @@ module Birthdays
     # @param member [Integer, Hash] the ID of the member to resolve or a data hash.
     # @return [Birthdays::Backend::Member] the member as a backend user model.
     def self.serialize_member(member)
-      return ::Birthdays::Backend::Member.new(member) unless member.respond_to?(:resolve_id)
+      return User.new(member) unless member.respond_to?(:resolve_id)
 
-      Backend::Member.new(POSTGRES[:user_birthdays].where(user_id: member.resolve_id).first)
+      User.new(POSTGRES[:user_birthdays].where(user_id: member.resolve_id).first)
     end
 
     # The tasks that are peformed on the member's birthday.
