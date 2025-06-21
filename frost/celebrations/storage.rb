@@ -71,9 +71,14 @@ module Birthdays
     # @note This method takes arguments, but they're ignored.
     def delete(**)
       POSGTRES.transaction do
+        query = <<~SQL
+          UPDATE user_birthdays SET guilds = array_remove(guilds, ?)
+          WHERE ? = ANY(guilds);
+        SQL
+
         @@pg.where(guild_id: guild).delete
 
-        @@users.where(guild_id: [guild]).delete
+        POSTGRES[query, guild_id, guild_id]
       end
     end
 
@@ -217,7 +222,7 @@ module Birthdays
     def remove_role(guild)
       BOT.member(guild.id, user_id)&.remove_role(guild.role) rescue nil
     end
-    
+
     # Get the time at which the member's birthday occured this year.
     # @return [Time] The time at when the birthday occured this year.
     def this_birthdate
