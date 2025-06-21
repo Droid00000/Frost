@@ -217,9 +217,15 @@ module Birthdays
     def remove_role(guild)
       BOT.member(guild.id, user_id)&.remove_role(guild.role) rescue nil
     end
+    
+    # Get the time at which the member's birthday occured this year.
+    # @return [Time] The time at when the birthday occured this year.
+    def this_birthdate
+      Time.utc(*birthdate.to_a.tap { it[5] = Time.now.utc.year })
+    end
 
     # Get the member's birthdate but for the next calender year.
-    # @return [Time] The date at when the birthday will occur next year.
+    # @return [Time] The time at when the birthday will occur next year.
     def next_birthdate
       Time.utc(*birthdate.to_a.tap { it[5] = Time.now.utc.year + 1 })
     end
