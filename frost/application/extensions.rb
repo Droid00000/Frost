@@ -360,9 +360,9 @@ class Hash
   def pull(data)
     return nil if data.nil?
 
-    data = data.strip.downcase.gsub(/[^a-zA-Z_\s]/, '').strip.gsub(/(?<=[^\,\.])\s+|\A\s+/, "_")
+    data = data.strip.downcase.gsub(/[^a-zA-Z_\s]/, "").strip.gsub(/(?<=[^\,\.])\s+|\A\s+/, "_")
 
-    self[data.to_sym] || self.keys.map(&:to_s).find do |key|
+    self[data.to_sym] || keys.map(&:to_s).find do |key|
       key.start_with?(data) || key.include?(data)
     end
   end

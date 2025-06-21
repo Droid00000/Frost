@@ -31,9 +31,9 @@ module Boosters
 
   # The holographic style colors.
   HOLOGRAPHIC = {
-    colour: 11127295,
-    secondary: 16759788,
-    tertiary: 16761760
+    colour: 11_127_295,
+    secondary: 16_759_788,
+    tertiary: 16_761_760
   }.freeze
 
   # The audit log reason for boosters.

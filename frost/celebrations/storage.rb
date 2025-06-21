@@ -231,7 +231,7 @@ module Birthdays
       def next_birthday
         time = Time.utc(*birthdate.to_a.tap { it[5] = Time.now.utc.year })
 
-        (Time.now.utc.to_date > time.utc.to_date) ? next_birthdate : time
+        Time.now.utc.to_date > time.utc.to_date ? next_birthdate : time
       end
 
       # Get a list of guilds that the member has synced to their account.

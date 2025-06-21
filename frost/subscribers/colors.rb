@@ -38,7 +38,7 @@ module Boosters
       secondary: to_color(data.options["end"])
     }.compact
 
-    validate_gradient = -> do
+    validate_gradient_colors = proc do
       if options[:colour].nil?
         return data.edit_response(content: RESPONSE[13])
       end
@@ -54,7 +54,7 @@ module Boosters
     when 2
       options.merge!(HOLOGRAPHIC)
     when 1
-      validate_gradient?(options)
+      validate_gradient_colors
     end
 
     begin
