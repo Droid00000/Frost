@@ -39,17 +39,17 @@ module Boosters
     }.compact
 
     gradient_validator = proc do
-      if options[:colour].nil? && options[:secondary].nil?
+      if !options[:colour] && !options[:secondary]
         data.edit_response(content: RESPONSE[11])
         return
       end
 
-      if options[:colour].nil?
+      unless options[:colour]
         data.edit_response(content: RESPONSE[14])
         return
       end
 
-      if options[:secondary].nil?
+      unless options[:secondary]
         data.edit_response(content: RESPONSE[15])
         return
       end
