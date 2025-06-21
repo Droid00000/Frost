@@ -24,7 +24,7 @@ module Birthdays
     # A login hook that's called once `:READY` is raised.
     def self.login
       @on ||= POSTGRES[:user_birthdays].all.each do |user|
-        user[:pending] ? pending_user(user) : schedule(user)
+        #user[:pending] ? pending_user(user) : schedule(user)
       end
     end
 

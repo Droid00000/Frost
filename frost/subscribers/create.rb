@@ -27,12 +27,12 @@ module Boosters
     member = Boosters::Member.new(data)
 
     unless member.blank?
-      data.edit_response(content: RESPONSE[14])
+      data.edit_response(content: RESPONSE[16])
       return
     end
 
     if member.guild.blank?
-      data.edit_response(content: RESPONSE[13])
+      data.edit_response(content: RESPONSE[15])
       return
     end
 

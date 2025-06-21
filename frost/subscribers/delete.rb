@@ -27,7 +27,7 @@ module Boosters
     end
 
     if member.guild.blank?
-      data.edit_response(content: RESPONSE[13])
+      data.edit_response(content: RESPONSE[15])
       return
     end
 

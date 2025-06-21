@@ -15,8 +15,10 @@ module Boosters
     10 => "You've been banned from using booster perks in this server.",
     11 => "Your role name contains a word that may not be used.",
     12 => "You must be a server booster to use this command.",
-    13 => "This server hasn't enabled booster perks.",
-    14 => "You've already claimed your custom role."
+    13 => "Please provide a start color for your gradient.",
+    14 => "Please provide an end color for your gradient.",
+    15 => "This server hasn't enabled booster perks.",
+    16 => "You've already claimed your custom role."
   }.freeze
 
   # Application commands for boosters.
@@ -25,6 +27,13 @@ module Boosters
     2 => "`/booster role delete`",
     3 => "`/booster role claim`",
     4 => "`/booster role edit`"
+  }.freeze
+
+  # The holographic style colors.
+  HOLOGRAPHIC = {
+    colour: 11127295,
+    secondary: 16759788,
+    tertiary: 16761760
   }.freeze
 
   # The audit log reason for boosters.

@@ -27,17 +27,8 @@ module Boosters
     end
 
     if member.guild.blank?
-      data.edit_response(content: RESPONSE[13])
+      data.edit_response(content: RESPONSE[15])
       return
-    end
-
-    # Map to: { name => COLOR || name => :NULL }
-    data.options.each do |name, value|
-      data.options[name] = if value.match?(REGEX[2])
-                             :NULL
-                           else
-                             to_color(value)
-                           end
     end
 
     options = {
@@ -47,17 +38,30 @@ module Boosters
       secondary: data.options["end"]
     }.compact
 
-    if no_gradient?(**options)
-      options[:colour] = member.color
+    validate_gradient = proc do |opt|
+      if options[:colour].nil?
+        return data.edit_response(content: RESPONSE[])
+      end
+
+      if options[:secondary].nil?
+        return data.edit_response(content: RESPONSE[])
+      end
     end
 
-    if options.size > 2
-      begin
-        data.server.update_role(**options)
-      rescue Discordrb::Errors::NoPermission
-        data.edit_response(content: RESPONSE[6])
-        return
-      end
+    case data.options["style"]
+    when 0
+      options[:colour] = member.color
+    when 2
+      options.merge!(HOLOGRAPHIC)
+    when 1
+      validate_gradient?(options)
+    end
+
+    begin
+      data.server.update_role(**options)
+    rescue Discordrb::Errors::NoPermission
+      data.edit_response(content: RESPONSE[6])
+      return
     end
 
     data.edit_response(content: RESPONSE[7])

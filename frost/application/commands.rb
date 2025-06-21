@@ -96,8 +96,9 @@ bot.register_application_command(:event, "Event roles", contexts: [0], integrati
     end
 
     group.subcommand(:gradient, "Edit the gradient of an event role.", name_localizations: { hi: "ग्रेडियेंट" }, description_localizations: { hi: "किसी ईवेंट भूमिका का ग्रेडिएंट संपादित करें" }) do |option|
-      option.string(:start, "Provide a HEX color for your gradient start color.", required: true, min_length: 3, max_length: 16, name_localizations: { hi: "शुरू" }, description_localizations: { hi: "अपने ग्रेडिएंट आरंभ रंग के लिए एक रंग प्रदान करें" })
-      option.string(:end, "Provide a HEX color for your gradient end color.", required: true, min_length: 3, max_length: 16, name_localizations: { hi: "अंत" }, description_localizations: { hi: "अपने ग्रेडिएंट अंतिम रंग के लिए एक रंग प्रदान करें" })
+      option.integer(:style, "The style of the gradient to apply.", required: true, choices: { None: 0, Custom: 1, Holographic: 2 }, name_localizations: { hi: "प्रकार"}, description_localizations: { hi: "लागू करने के लिए ग्रेडिएंट की शैली" })
+      option.string(:start, "Provide a HEX color for your gradient start color.", required: false, min_length: 3, max_length: 16, name_localizations: { hi: "शुरू" }, description_localizations: { hi: "अपने ग्रेडिएंट आरंभ रंग के लिए एक रंग प्रदान करें" })
+      option.string(:end, "Provide a HEX color for your gradient end color.", required: false, min_length: 3, max_length: 16, name_localizations: { hi: "अंत" }, description_localizations: { hi: "अपने ग्रेडिएंट अंतिम रंग के लिए एक रंग प्रदान करें" })
     end
 
     group.subcommand(:enable, "Enable the event roles functionality for a role.", name_localizations: { hi: "व्यवस्था" }, description_localizations: { hi: "इवेंट रोल्स कार्यक्षमता सेटअप करें" }) do |option|
@@ -149,8 +150,9 @@ bot.register_application_command(:booster, "Booster perks", contexts: [0], integ
     end
 
     group.subcommand(:gradient, "Edit the gradient of your custom booster role.") do |option|
-      option.string(:start, "Provide a HEX color for your gradient start color.", required: true, min_length: 3, max_length: 16)
-      option.string(:end, "Provide a HEX color for your gradient end color.", required: true, min_length: 3, max_length: 16)
+      option.integer(:style, "The style of the gradient to apply.", required: true, choices: { None: 0, Custom: 1, Holographic: 2 })
+      option.string(:start, "Provide a HEX color for your gradient start color.", required: false, min_length: 3, max_length: 16)
+      option.string(:end, "Provide a HEX color for your gradient end color.", required: false, min_length: 3, max_length: 16)
     end
 
     group.subcommand(:delete, "Delete your custom booster role.")
