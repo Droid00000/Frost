@@ -51,7 +51,6 @@ module Boosters
     }
 
     if valid_icon?(data, member.guild)
-      puts "icon is valid!"
       options[:icon] = to_icon(data)
     end
 
