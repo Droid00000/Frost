@@ -10,14 +10,6 @@ CREATE TABLE IF NOT EXISTS emoji_tracker (
   PRIMARY KEY (emoji_id, guild_id)
 );
 
--- Holds info about event roles.
-CREATE TABLE IF NOT EXISTS event_settings (
-  role_id BIGINT NOT NULL, 
-  guild_id BIGINT NOT NULL,
-  any_icon BOOLEAN NOT NULL,
-  PRIMARY KEY (role_id, guild_id)
-);
-
 -- Holds info about server boosters.
 CREATE TABLE IF NOT EXISTS guild_boosters (
   user_id BIGINT NOT NULL,

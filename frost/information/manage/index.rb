@@ -40,7 +40,6 @@ module Settings
         # Add a select menu for the enabled features a server has.
         container.row do |row|
           row.select_menu(custom_id: "settings", placeholder: "Pick a category...", min_values: 1, disabled: !disabled) do |menu|
-            menu.option(label: "Event Roles", value: "Events", description: "Settings for custom server roles.", emoji: "1281715509750005831")
             menu.option(label: "Birthdays", value: "Birthdays", description: "Settings for server birthdays.", emoji: "733787070123737109")
             menu.option(label: "Boosters", value: "Boosters", description: "Settings for server boosters.", emoji: "1320971944627146752")
           end

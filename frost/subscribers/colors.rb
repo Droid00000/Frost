@@ -8,10 +8,10 @@ module Boosters
       return
     end
 
-    # unless data.user.boosting?
-    #  data.edit_response(content: RESPONSE[12])
-    #  return
-    # end
+    unless data.user.boosting?
+      data.edit_response(content: RESPONSE[12])
+      return
+    end
 
     # Initalize the invoking user.
     member = Boosters::Member.new(data)
@@ -34,17 +34,17 @@ module Boosters
     options = {
       role: member.role,
       reason: reason(data),
-      colour: data.options["start"],
-      secondary: data.options["end"]
+      colour: to_color(data.options["start"]),
+      secondary: to_color(data.options["end"])
     }.compact
 
-    validate_gradient = proc do |opt|
+    validate_gradient = -> do
       if options[:colour].nil?
-        return data.edit_response(content: RESPONSE[])
+        return data.edit_response(content: RESPONSE[13])
       end
 
       if options[:secondary].nil?
-        return data.edit_response(content: RESPONSE[])
+        return data.edit_response(content: RESPONSE[14])
       end
     end
 

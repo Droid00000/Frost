@@ -62,13 +62,6 @@ module Boosters
   # @return [String] A string that denotes the action type and current user ID.
   def self.reason(interaction) = format(REASON, interaction.user.id)
 
-  # Returns true if a gradient is about to be removed from a role.
-  # @param colors [Hash] A hash containing the `:colour` and `:secondary` keys.
-  # @return [true, false] If a gradient is about to be removed from a role.
-  def self.no_gradient?(colors)
-    colors.values_at(:colour, :secondary).all? { it == :NULL }
-  end
-
   # Check if we have a valid role icon.
   # @return [Boolean] If the icon is valid.
   def self.valid_icon?(data, guild)

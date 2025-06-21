@@ -8,10 +8,10 @@ module Boosters
       return
     end
 
-    # unless data.user.boosting?
-    #  data.edit_response(content: RESPONSE[12])
-    #  return
-    # end
+    unless data.user.boosting?
+      data.edit_response(content: RESPONSE[12])
+      return
+    end
 
     # Initalize the invoking user.
     member = Boosters::Member.new(data)

@@ -85,33 +85,6 @@ bot.register_application_command(:purge, "Moderation Commands", contexts: [0], i
   end
 end
 
-# @!function [Event Operations] Belongs to a module that manages custom roles.
-bot.register_application_command(:event, "Event roles", contexts: [0], integration_types: [0], name_localizations: { hi: "इवेंट" }, description_localizations: { hi: "इवेंट रोल्स" }) do |command|
-  command.subcommand_group(:role, "Event roles!", name_localizations: { hi: "रोल्स" }, description_localizations: { hi: "इवेंट रोल्स" }) do |group|
-    group.subcommand(:edit, "Edit an event role.", name_localizations: { hi: "परिवर्तन" }, description_localizations: { hi: "अपने इवेंट रोल को संपादित करें" }) do |option|
-      option.role(:role, "Which role do you want to modify?", required: true, name_localizations: { hi: "रोल" }, description_localizations: { hi: "आप कौन सा रोल संपादित करना चाहते हैं" })
-      option.string(:name, "Provide a name for your role.", required: false, max_length: 100, name_localizations: { hi: "नाम" }, description_localizations: { hi: "अपने रोल के लिए एक नाम दें" })
-      option.string(:color, "Provide a HEX color for your role.", required: false, min_length: 3, max_length: 16, name_localizations: { hi: "रंग" }, description_localizations: { hi: "अपने रोल के लिए एक HEX रंग दें" })
-      option.string(:icon, "Provide an emoji for your role icon.", required: false, name_localizations: { hi: "आइकन" }, description_localizations: { hi: "अपने रोल आइकन के रूप में एक इमोजी दें" })
-    end
-
-    group.subcommand(:gradient, "Edit the gradient of an event role.", name_localizations: { hi: "ग्रेडियेंट" }, description_localizations: { hi: "किसी ईवेंट भूमिका का ग्रेडिएंट संपादित करें" }) do |option|
-      option.integer(:style, "The style of the gradient to apply.", required: true, choices: { None: 0, Custom: 1, Holographic: 2 }, name_localizations: { hi: "प्रकार"}, description_localizations: { hi: "लागू करने के लिए ग्रेडिएंट की शैली" })
-      option.string(:start, "Provide a HEX color for your gradient start color.", required: false, min_length: 3, max_length: 16, name_localizations: { hi: "शुरू" }, description_localizations: { hi: "अपने ग्रेडिएंट आरंभ रंग के लिए एक रंग प्रदान करें" })
-      option.string(:end, "Provide a HEX color for your gradient end color.", required: false, min_length: 3, max_length: 16, name_localizations: { hi: "अंत" }, description_localizations: { hi: "अपने ग्रेडिएंट अंतिम रंग के लिए एक रंग प्रदान करें" })
-    end
-
-    group.subcommand(:enable, "Enable the event roles functionality for a role.", name_localizations: { hi: "व्यवस्था" }, description_localizations: { hi: "इवेंट रोल्स कार्यक्षमता सेटअप करें" }) do |option|
-      option.role(:role, "Which role should be modifiable by its users?", required: true, name_localizations: { hi: "रोल" }, description_localizations: { hi: "कौन सा रोल उपयोगकर्ताओं द्वारा संपादित किया जा सकता है" })
-      option.boolean(:icon, "Should external emojis be allowed as role icons?", required: true, name_localizations: { hi: "आइकन" }, description_localizations: { hi: "क्या बाह्य इमोजी को भूमिका चिह्न के रूप में अनुमति दी जानी चाहिए" })
-    end
-
-    group.subcommand(:disable, "Remove the event roles functionality from a role.", name_localizations: { hi: "निकालना" }, description_localizations: { hi: "किसी भूमिका से ईवेंट भूमिका कार्यक्षमता हटाएँ" }) do |option|
-      option.role(:role, "Which role needs to be removed?", required: true, name_localizations: { hi: "रोल" }, description_localizations: { hi: "किस भूमिका को हटाने की जरूरत है" })
-    end
-  end
-end
-
 # @!function [Birthday Operations] Belongs to a module that manages birthday roles.
 bot.register_application_command(:birthday, "birthday roles", contexts: [0], integration_types: [0]) do |command|
   command.subcommand(:add, "Add or edit your date of birth.") do |option|

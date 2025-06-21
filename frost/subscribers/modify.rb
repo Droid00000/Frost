@@ -8,10 +8,10 @@ module Boosters
       return
     end
 
-    # unless data.user.boosting?
-    #  data.edit_response(content: RESPONSE[12])
-    #  return
-    # end
+    unless data.user.boosting?
+      data.edit_response(content: RESPONSE[12])
+      return
+    end
 
     unless safe_name?(data.options["name"])
       data.edit_response(content: RESPONSE[11])
@@ -43,10 +43,6 @@ module Boosters
       role: member.role
     }.compact
 
-    if options[:colour]
-      member.color = options[:colour]
-    end
-
     if valid_icon?(data, member.guild)
       options[:icon] = to_icon(data)
     end
@@ -65,5 +61,8 @@ module Boosters
     end
 
     data.edit_response(content: RESPONSE[7])
+
+    # Do this after in order to not block everything else.
+    member.color = options[:colour] if options[:colour]
   end
 end
