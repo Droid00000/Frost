@@ -50,6 +50,8 @@ module Boosters
 
     case data.options["style"]
     when 0
+      options[:tertiary] = :NULL
+      options[:secondary] = :NULL
       options[:colour] = member.color
     when 2
       options.merge!(HOLOGRAPHIC)
