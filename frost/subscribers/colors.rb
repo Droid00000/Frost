@@ -9,7 +9,7 @@ module Boosters
     end
 
     unless data.user.boosting?
-      data.edit_response(content: RESPONSE[12])
+      data.edit_response(content: RESPONSE[13])
       return
     end
 
@@ -27,7 +27,7 @@ module Boosters
     end
 
     if member.guild.blank?
-      data.edit_response(content: RESPONSE[15])
+      data.edit_response(content: RESPONSE[16])
       return
     end
 
@@ -38,25 +38,34 @@ module Boosters
       secondary: to_color(data.options["end"])
     }.compact
 
-    validate_gradient_colors = proc do
+    gradient_validator = proc do
+      if options[:colour].nil? && options[:secondary].nil?
+        data.edit_response(content: RESPONSE[11])
+        return
+      end
+
       if options[:colour].nil?
-        return data.edit_response(content: RESPONSE[13])
+        data.edit_response(content: RESPONSE[14])
+        return
       end
 
       if options[:secondary].nil?
-        return data.edit_response(content: RESPONSE[14])
+        data.edit_response(content: RESPONSE[15])
+        return
       end
     end
 
     case data.options["style"]
-    when 0
-      options[:tertiary] = :NULL
-      options[:secondary] = :NULL
-      options[:colour] = member.color
+    when 1
+      gradient_validator.call
     when 2
       options.merge!(HOLOGRAPHIC)
-    when 1
-      validate_gradient_colors
+    when 0
+      options.merge!({
+                       colour: member.color,
+                       secondary: :NULL,
+                       tertiary: :NILL
+                     })
     end
 
     begin

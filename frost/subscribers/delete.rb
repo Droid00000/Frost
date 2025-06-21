@@ -9,7 +9,7 @@ module Boosters
     end
 
     unless data.user.boosting?
-      data.edit_response(content: RESPONSE[12])
+      data.edit_response(content: RESPONSE[13])
       return
     end
 
@@ -27,7 +27,7 @@ module Boosters
     end
 
     if member.guild.blank?
-      data.edit_response(content: RESPONSE[15])
+      data.edit_response(content: RESPONSE[16])
       return
     end
 

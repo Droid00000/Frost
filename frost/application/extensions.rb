@@ -37,12 +37,12 @@ module Discordrb
 
       icon = nil unless features.include?(:role_icons)
 
-      colors = if features.include?(:enhanced_role_colors) && (secondary || tertiary)
-                 self.role(role).colors.to_h.merge({
-                   tertiary_color: tertiary,
-                   secondary_color: secondary
-                 }.compact)
-               end
+      # colors = if features.include?(:enhanced_role_colors) && (secondary || tertiary)
+      colors = self.role(role).colors.to_h.merge({
+        tertiary_color: tertiary,
+        secondary_color: secondary
+      }.compact)
+      #         end
 
       colors&.transform_values! do |value|
         value == :NULL ? nil : value&.to_i
@@ -249,6 +249,9 @@ module Discordrb
         end
 
         data[:color] = nil if colour == :NULL
+
+        puts data.inspect
+        return
 
         Discordrb::API.request(
           :guilds_sid_roles_rid,

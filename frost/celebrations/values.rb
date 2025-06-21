@@ -11,7 +11,7 @@ module Birthdays
     6 => "Successfully updated your birthday.",
     7 => "Successfully added your birthday.",
     8 => "Please provide a valid timezone.",
-    9 => "Please provide a valid day."
+    9 => "Please provide a valid date."
   }.freeze
 
   # Default timezones used.

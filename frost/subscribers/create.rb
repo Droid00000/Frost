@@ -8,10 +8,10 @@ module Boosters
       return
     end
 
-    # unless data.user.boosting?
-    #  data.edit_response(content: RESPONSE[12])
-    #  return
-    # end
+    unless data.user.boosting?
+      data.edit_response(content: RESPONSE[13])
+      return
+    end
 
     if data.server.roles.size == 250
       data.edit_response(content: RESPONSE[8])
@@ -19,7 +19,7 @@ module Boosters
     end
 
     unless safe_name?(data.options["name"])
-      data.edit_response(content: RESPONSE[11])
+      data.edit_response(content: RESPONSE[12])
       return
     end
 
@@ -27,12 +27,12 @@ module Boosters
     member = Boosters::Member.new(data)
 
     unless member.blank?
-      data.edit_response(content: RESPONSE[16])
+      data.edit_response(content: RESPONSE[17])
       return
     end
 
     if member.guild.blank?
-      data.edit_response(content: RESPONSE[15])
+      data.edit_response(content: RESPONSE[16])
       return
     end
 

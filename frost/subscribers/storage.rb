@@ -75,7 +75,7 @@ module Boosters
     # @return [Array<Sequel::Dataset>] An array of all the banned members for the guild.
     def bans(**options)
       POSTGRES.transaction do
-        @@bans.where(guild_id: guild).offset(options[:offset].to_i).order(:user_id)
+        @@bans.where(guild_id: guild).offset(options[:offset] || 0).order(:user_id)
       end
     end
 
