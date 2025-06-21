@@ -16,7 +16,7 @@ module Birthdays
     def self.publish(member)
       @actions[:ON_PUBLISH].each { |sub| sub.call(member) }
 
-      Rufus::Scheduler.singleton.in("24h") do
+      @workers.in("24h") do
         @actions[:AFTER_PUBLISH].each { |sub| sub.call(member) }
       end
     end
@@ -39,6 +39,22 @@ module Birthdays
 
       # Create the birthday job here for the member.
       @workers.at(member.next_birthday, tag: member.resolve_id) { publish(member) }
+    end
+
+    # Handle a member that's already pending, e.g. was already scheduled.
+    # @param member [Hash] the member to resolve from the data hash.
+    def self.pending_user(member)
+      member = User.new(member)
+
+      # Check if the birthday has fully passed.
+      if Time.now.utc >= (member.this_birthdate + 86_400)
+        @actions[:AFTER_PUBLISH].each { it.call(member) }
+      else
+        # Otherwise, calculate the next occurrence.
+        @workers.at(member.this_birthdate + 86_400) do
+          @actions[:AFTER_PUBLISH].each { it.call(member) }
+        end
+      end
     end
 
     # un-schedule a member from a given data hash or a user ID.
