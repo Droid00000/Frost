@@ -75,11 +75,11 @@ module Birthdays
         guilds = array_remove(guilds, ?) WHERE ? = ANY(guilds);
       SQL
 
-      # Delete the settings record here from the DB.
+      # Delete the settings record from the database.
       POSGTRES.transaction { @@pg.where(guild_id: guild).delete }
 
       # Filter and remove the guild from the guilds array.
-      POSTGRES.transaction {POSTGRES[query, guild_id, guild_id] }
+      POSTGRES.transaction { POSTGRES[query, guild_id, guild_id] }
     end
 
     private
