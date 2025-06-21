@@ -38,11 +38,11 @@ module Birthdays
       @bot = data.bot
       @lazy = lazy == true
       @guild = data.server.id
-      @model = find_guild(@guild)
-      @role_id = @model[:role_id]
-      @enabled_by = @model[:setup_by]
-      @enabled_at = @model[:setup_at]
-      @channel_id = @model[:channel_id]
+      model = find_guild(@guild)
+      @role_id = model[:role_id]
+      @enabled_by = model[:setup_by]
+      @enabled_at = model[:setup_at]
+      @channel_id = model[:channel_id]
     end
 
     # Check if this guild is nil, e.g. hasn't been setup.
