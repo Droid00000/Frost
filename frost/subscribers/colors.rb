@@ -64,7 +64,7 @@ module Boosters
       options.merge!({
                        colour: member.color,
                        secondary: :NULL,
-                       tertiary: :NILL
+                       tertiary: :NULL
                      })
     end
 
