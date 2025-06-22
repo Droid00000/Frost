@@ -37,6 +37,8 @@ module Discordrb
 
       icon = nil unless features.include?(:role_icons)
 
+      colour = nil if secondary && secondary != :NULL && !features.include?(:enhanced_role_colors)
+
       colors = if features.include?(:enhanced_role_colors) && (secondary || tertiary)
                  self.role(role).colors.to_h.merge({
                    tertiary_color: tertiary,
