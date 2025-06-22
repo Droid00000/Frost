@@ -69,7 +69,7 @@ CREATE INDEX IF NOT EXISTS guild_emojis_idx ON emoji_tracker (guild_id, balance 
 CREATE
 OR REPLACE FUNCTION search_timezones (query text) RETURNS SETOF world_timezones ROWS 25 LANGUAGE SQL STABLE AS $$
  WITH tokens AS (
-    SELECT unnest(string_to_array(unaccent($1), ' ')) AS t
+    SELECT unnest(string_to_array($1, ' ')) AS t
 )
 SELECT name, country, timezone, identifier
 FROM (
