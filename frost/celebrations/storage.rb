@@ -247,7 +247,7 @@ module Birthdays
     # @return [Array<Guild>] Guilds the member is a part of currently.
     def guilds
       query = <<~SQL
-        SELECT * FROM birthday_settings WHERE guild_id =
+        SELECT DISTINCT * FROM birthday_settings WHERE guild_id =
         ANY(ARRAY(SELECT guilds FROM user_birthdays WHERE user_id = ?));
       SQL
 
