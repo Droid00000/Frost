@@ -21,7 +21,7 @@ You'll need to be using PostgreSQL version 16 or higher. Type the following into
 ```sql
 CREATE ROLE frost WITH LOGIN PASSWORD 'urpassword';
 
-CREATE EXTENSION IF NOT EXISTS pg_trgm; CREATE DATABASE frosty OWNER frost;
+CREATE EXTENSION IF NOT EXISTS pg_trgm; CREATE DATABASE tundra OWNER frost;
 ```
 
 4. **Fill in configuration variables**
