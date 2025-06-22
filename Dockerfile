@@ -1,5 +1,7 @@
 FROM ruby:3.4-alpine
 
+ENV TZ="Etc/UTC"
+
 RUN apk add --no-cache \
     postgresql-dev \
     icu-data-full \
