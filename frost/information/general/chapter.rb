@@ -18,10 +18,11 @@ module General
     time = Date.parse(driver.find_element(:css, CONFIG[:Chapter][:ELEMENT]).text)
     name = "📖 #{time.strftime('%B')} #{time.day.ordinal} 3PM GMT"
     BOT.channel(CONFIG[:Chapter][:CHANNEL])&.name = name
+    driver.quit
   end
 end
 
 # Cron job to update the release channel.
-Rufus::Scheduler.singleton.cron "30 11 * * *" do
+Rufus::Scheduler.singleton.cron "25 15 * * *" do
   General.find_chapter
 end

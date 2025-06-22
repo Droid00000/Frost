@@ -31,7 +31,7 @@ module Owner
       Owner.statistics(data)
     when 5
       exec("bundle exec ruby --yjit core.rb")
-    else
+    when 3
       data.show_modal(title: "Eval", custom_id: "3") do |view|
         view.row { it.text_input(label: "Code", style: 2, custom_id: "code") }
       end
