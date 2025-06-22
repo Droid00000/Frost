@@ -3,7 +3,7 @@
 module Birthdays
   # Responses and fields for birthday commands.
   RESPONSE = {
-    1 => "Your birthday couldn't be found. Please add your birthday using the </birthday add:1334725009427664970> command.",
+    1 => "Your birthday couldn't be found. Please add your birthday using the </birthday add:1386237783747854421> command.",
     2 => "Successfully de-synced your birthday from this server.",
     3 => "Successfully synced your birthday to this server.",
     4 => "This server hasn't enabled birthday perks.",
