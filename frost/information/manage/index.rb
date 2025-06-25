@@ -16,13 +16,13 @@ module Settings
           guilds = context.bot.servers.values
           members = guilds.map(&:member_count).sum
           channels = guilds.flat_map(&:channels).size
-          format(RESPONSE[11], guilds.size, members.delimit, channels)
+          format(RESPONSE[15], guilds.size, members.delimit, channels)
         end
 
         # Add our main menu header here in a seperate text display
         # container in order to get some of that natural padding
         # that's tricky to stimulate with the other types of seperators.
-        container.text_display(text: RESPONSE[15])
+        container.text_display(text: RESPONSE[20])
 
         # Create our main section body that contains all of the text we want
         # to show to our user. Currently, we have to use one big string, since
@@ -40,6 +40,7 @@ module Settings
         # Add a select menu for the enabled features a server has.
         container.row do |row|
           row.select_menu(custom_id: "settings", placeholder: "Pick a category...", min_values: 1, disabled: !state) do |menu|
+            menu.option(label: "Vanity Roles", value: "Vanity", description: "Settings for custom vanity roles.", emoji: "1281715509750005831")
             menu.option(label: "Birthdays", value: "Birthdays", description: "Settings for server birthdays.", emoji: "733787070123737109")
             menu.option(label: "Boosters", value: "Boosters", description: "Settings for server boosters.", emoji: "1320971944627146752")
           end

@@ -9,7 +9,7 @@ module Settings
 
     # Return unless birthday perks are enabled in this server.
     if guild.blank?
-      data.send_message(content: RESPONSE[12], ephemeral: true)
+      data.send_message(content: RESPONSE[16], ephemeral: true)
       return
     end
 
@@ -27,13 +27,13 @@ module Settings
         # gets addressed sometime in the future. For now, this will do though.
         container.section do |section|
           # Add our main title heading here.
-          section.text_display(text: format(RESPONSE[13], data.server.name))
+          section.text_display(text: format(RESPONSE[17], data.server.name))
 
           # Add the icon of the server as our thumbnail.
           section.thumbnail(url: data.server.icon_url)
 
           # Add the description text at the botton.
-          section.text_display(text: RESPONSE[3])
+          section.text_display(text: RESPONSE[4])
         end
 
         # Add some spacing between the section content of our
@@ -42,15 +42,15 @@ module Settings
 
         # Add some spacing between the content of our container
         # and the footer text that we're adding.
-        container.text_display(text: format(RESPONSE[8], guild.role))
+        container.text_display(text: format(RESPONSE[11], guild.role))
 
         # Add the manager information we're now showing
         # and tracking. Includes the sanction timestamp.
-        container.text_display(text: format(RESPONSE[6], *guild.view))
+        container.text_display(text: format(RESPONSE[9], *guild.view))
 
         # Add our footer text. Eventually this can be swapped out for
         # an action row with buttons for pagination if needed.
-        container.text_display(text: format(RESPONSE[10], guild.channel)) if guild.channel
+        container.text_display(text: format(RESPONSE[14], guild.channel)) if guild.channel
       end
     end
   end
