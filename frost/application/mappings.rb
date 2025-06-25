@@ -4,7 +4,7 @@
 COLORS = {
   aquamarine: 8_388_564,
   beige: 16_119_260,
-  black: 12,
+  black: 723_723,
   blue: 3_447_003,
   brown: 10_824_234,
   chocolate: 13_789_470,

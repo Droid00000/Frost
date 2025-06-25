@@ -6,7 +6,7 @@ module General
     1 => "The bot needs to have the `manage messages` permission to do this.",
     2 => "The bot needs to have the `view channel` permission to do this.",
     3 => "Successfully deleted %s message",
-    4 => "Invalid timezone.",
+    4 => "Invalid timezone."
   }.freeze
 
   # Application commands for general commands.
