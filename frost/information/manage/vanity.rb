@@ -35,11 +35,11 @@ module Settings
         container.seperator(divider: true, spacing: :small)
 
         # Generate the text we're going to be showing to the user here.
-        role = guild.role_id ? RESPONSE[5] % guild.role_id : nil
+        role = guild.role_id ? RESPONSE[6] % guild.role_id : nil
 
         # Add some spacing between the content of our container
         # and the footer text that we're adding.
-        container.text_display(text: role || RESPONSE[6])
+        container.text_display(text: role || RESPONSE[5])
 
         # Add the manager information we're now showing
         # and tracking. Includes the sanction timestamp.

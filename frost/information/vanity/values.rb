@@ -60,8 +60,10 @@ module Roles
   # @param member [Discordrb::Member] The member to check for exemption.
   # @param guild [Roles::Guild] The guild to fallback to for checking.
   # @return [true, false] Whether the member can modify the given role.
-  def exempt?(member, guild)
-    member.permission?(:manage_roles) || member.role?(guild.exempt_role)
+  def self.exempt?(member, guild)
+    return true if member.permission?(:manage_roles)
+    
+    guild.blank? ? false : member.role?(guild.exempt_role)
   end
 
   # Get an icon for a role.

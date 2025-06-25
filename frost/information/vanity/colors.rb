@@ -33,6 +33,8 @@ module Roles
       end
     end
 
+    role = data.server.role(data.options["role"])
+
     case data.options["style"]
     when 1
       gradient_validator.call
