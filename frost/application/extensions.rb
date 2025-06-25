@@ -33,6 +33,8 @@ module Discordrb
     def update_role(role:, name: nil, colour: nil, icon: nil, secondary: nil, tertiary: nil, reason: nil)
       return nil if self.role(role).nil?
 
+      return nil if role.resolve_id == @id
+
       colour = colour.combined if colour.respond_to?(:combined)
 
       icon = nil unless features.include?(:role_icons)

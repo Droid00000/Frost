@@ -62,6 +62,14 @@ CREATE TABLE IF NOT EXISTS user_birthdays (
   birthdate TIMESTAMPTZ NOT NULL
 );
 
+-- Holds info about custom roles.
+CREATE TABLE IF NOT EXISTS custom_roles (
+  role_id BIGINT NOT NULL,
+  setup_by BIGINT NOT NULL,
+  setup_at BIGINT NOT NULL,
+  guild_id BIGINT PRIMARY KEY
+);
+
 -- Index for the `emoji_tracker` table.
 CREATE INDEX IF NOT EXISTS guild_emojis_idx ON emoji_tracker (guild_id, balance DESC);
 

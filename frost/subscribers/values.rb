@@ -58,8 +58,8 @@ module Boosters
   # @return [Boolean] If the name contains any bad words.
   def self.safe_name?(name) = !name&.match?(REGEX[4])
 
-  # Produce an audit log to show when operating on the current role.
-  # @param data [Interaction] The current interaction the entry is for.
+  # Produce an audit reason log to show when operating on the current role.
+  # @param interaction [Interaction] The current interaction the entry is for.
   # @return [String] A string that denotes the action type and current user ID.
   def self.reason(interaction) = format(REASON, interaction.user.id)
 

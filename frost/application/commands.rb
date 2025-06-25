@@ -85,6 +85,31 @@ bot.register_application_command(:purge, "Moderation Commands", contexts: [0], i
   end
 end
 
+# @!function [General Operations] Belongs to a module that manages general information.
+bot.register_application_command(:vanity, "Vanity Roles", contexts: [0], integration_types: [0]) do |command|
+  command.subcommand_group(:role, "Vanity roles!") do |group|
+    group.subcommand(:gradient, "Edit the gradient of a vanity role.") do |option|
+      option.role(:role, "The vanity role whose gradient you want to edit.", required: true)
+      option.integer(:style, "The style of the gradient to apply.", required: true, choices: { None: 0, Custom: 1, Holographic: 2 })
+      option.string(:start, "Provide a HEX color for the gradient start color.", required: false, min_length: 3, max_length: 16)
+      option.string(:end, "Provide a HEX color for the gradient end color.", required: false, min_length: 3, max_length: 16)
+    end
+
+    group.subcommand(:edit, "Edit a vanity role.") do |option|
+      option.role(:role, "The vanity role you want to edit.", required: true)
+      option.string(:name, "Provide a name for the role.", required: false, max_length: 100)
+      option.string(:color, "Provide a HEX color for the role.", required: false, min_length: 3, max_length: 16)
+      option.string(:icon, "Provide an emoji for the role icon.", required: false, max_length: 1000, min_length: 1)
+    end
+
+    group.subcommand(:enable, "Enable the vanity roles functionality.") do |option|
+      option.role(:role, "The role that can edit other custom roles.", required: true)
+    end
+
+    group.subcommand(:disable, "Disable the vanity roles functionality.")
+  end
+end
+
 # @!function [Birthday Operations] Belongs to a module that manages birthday roles.
 bot.register_application_command(:birthday, "birthday roles", contexts: [0], integration_types: [0]) do |command|
   command.subcommand(:add, "Add or edit your date of birth.") do |option|
