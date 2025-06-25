@@ -62,7 +62,7 @@ module Roles
   # @return [true, false] Whether the member can modify the given role.
   def self.exempt?(member, guild)
     return true if member.permission?(:manage_roles)
-    
+
     guild.blank? ? false : member.role?(guild.exempt_role)
   end
 
