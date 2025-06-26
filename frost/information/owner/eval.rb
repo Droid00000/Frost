@@ -16,8 +16,7 @@ module Owner
       code = eval(escape(data.value("code"))).inspect
       # rubocop:enable Security/Eval
     rescue StandardError, SyntaxError => e
-      data.edit_response(content: format(RESPONSE[7], e.message))
-      return
+      code = format(RESPONSE[7], e.message)
     end
 
     code = if (code.to_s.length + 5) >= 2000
