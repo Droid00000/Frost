@@ -11,6 +11,8 @@ module Emojis
 
     # Cache statistics for messages.
     data.message.emoji.each do |emoji|
+      next if emoji.server.nil?
+
       Storage.add(emoji, data.server)
     end
   end
