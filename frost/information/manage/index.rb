@@ -15,7 +15,7 @@ module Settings
         stats = lambda do |context|
           guilds = context.bot.servers.values
           members = guilds.map(&:member_count).sum
-          channels = guilds.flat_map(&:channels).size
+          channels = guilds.flat_map(&:channels).size.delimit
           format(RESPONSE[15], guilds.size, members.delimit, channels)
         end
 
