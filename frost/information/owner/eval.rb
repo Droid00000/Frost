@@ -20,7 +20,7 @@ module Owner
     end
 
     code = if (code.to_s.length + 5) >= 2000
-             file = Tempfile.new(["output", ".txt"])
+             file = Tempfile.new(["output", ".rb"])
              # rubocop:disable Lint/LiteralAsCondition
              file if [file.write(code), file.rewind]
              # rubocop:enable Lint/LiteralAsCondition
