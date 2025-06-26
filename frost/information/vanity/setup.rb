@@ -15,7 +15,7 @@ module Roles
       role_id: data.options["role"]
     }
 
-    guild = Roles::Guild.new(data)
+    guild = Guild.new(data)
 
     guild.edit(**options.compact)
 
