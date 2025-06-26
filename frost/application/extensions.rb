@@ -352,6 +352,6 @@ end
 class Hash
   # Get a given key from a hash.
   def pull(data)
-    self[data.strip.downcase.gsub(/[^a-zA-Z_\s]/, "").strip.gsub(/(?<=[^\,\.])\s+|\A\s+/, "_").strip.downcase.to_sym] if data
+    self[data.to_s.strip.downcase.gsub(/[^a-zA-Z_\s]/, "").strip.gsub(/(?<=[^\,\.])\s+|\A\s+/, "_").strip.downcase.to_sym] if data
   end
 end
