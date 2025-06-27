@@ -9,4 +9,4 @@ Gemfile.lock
 config.yml
 
 # Log Files
-logs.txt
+logs.rb

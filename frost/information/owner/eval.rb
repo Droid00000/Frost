@@ -16,7 +16,14 @@ module Owner
       code = eval(escape(data.value("code"))).inspect
       # rubocop:enable Security/Eval
     rescue StandardError, SyntaxError => e
-      code = format(RESPONSE[7], e.backtrace)
+      code = e.backtrace.join("\n")
+      # Always just write the error to a file.
+      file = Tempfile.new(["output", ".rb"])
+      # rubocop:disable Lint/LiteralAsCondition
+      file if [file.write(code), file.rewind]
+      # rubocop:enable Lint/LiteralAsCondition
+      data.edit_response(attachments: [file])
+      return
     end
 
     code = if (code.to_s.length + 5) >= 2000
