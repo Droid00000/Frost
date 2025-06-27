@@ -41,12 +41,11 @@ module Discordrb
 
       colour = nil if secondary && secondary != :NULL && !features.include?(:enhanced_role_colors)
 
-      colors = if features.include?(:enhanced_role_colors) && (secondary || tertiary)
-                 self.role(role).colors.to_h.merge({
-                   tertiary_color: tertiary,
-                   secondary_color: secondary
-                 }.compact)
-               end
+      if features.include?(:enhanced_role_colors) && (secondary || tertiary)
+        colors = self.role(role).colors.to_h
+        colors[:secondary_color] = secondary if secondary
+        colors[:tertiary_color] = tertiary if tertiary
+      end
 
       colors&.transform_values! { it == :NULL ? nil : it&.to_i }
 
