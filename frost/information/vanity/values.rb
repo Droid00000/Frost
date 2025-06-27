@@ -8,13 +8,14 @@ module Vanity
     3 => "The bot needs to have the `manage roles` permission to do this.",
     4 => "You need to have the `manage roles` permission to do this.",
     5 => "Please provide a start **and** end color for the gradient.",
-    6 => "You don't have the required permissions to do this.",
-    7 => "The role name contains a word that cannot be used.",
-    8 => "Please provide a start color for the gradient.",
-    9 => "Please provide an end color for the gradient.",
-    10 => "Vanity roles have been successfully updated.",
-    11 => "Vanity roles have been successfully enabled.",
-    12 => "Vanity roles have been successfully disabled."
+    6 => "Please provide a start **or** end color for the gradient.",
+    7 => "You don't have the required permissions to do this.",
+    8 => "The role name contains a word that cannot be used.",
+    9 => "Please provide a start color for the gradient.",
+    10 => "Please provide an end color for the gradient.",
+    11 => "Vanity roles have been successfully updated.",
+    12 => "Vanity roles have been successfully enabled.",
+    13 => "Vanity roles have been successfully disabled."
   }.freeze
 
   # Application commands for vanity roles.

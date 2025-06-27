@@ -20,9 +20,9 @@ module Vanity
     guild.edit(**options.compact)
 
     if guild.blank?
-      data.edit_response(content: RESPONSE[11])
+      data.edit_response(content: RESPONSE[12])
     else
-      data.edit_response(content: RESPONSE[10])
+      data.edit_response(content: RESPONSE[11])
     end
   end
 end

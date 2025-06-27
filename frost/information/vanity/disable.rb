@@ -10,6 +10,6 @@ module Vanity
 
     Guild.new(data, lazy: true).delete
 
-    data.edit_response(content: RESPONSE[12])
+    data.edit_response(content: RESPONSE[13])
   end
 end

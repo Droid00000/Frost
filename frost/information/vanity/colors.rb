@@ -20,18 +20,25 @@ module Vanity
 
     gradient_validator = proc do
       if !options[:colour] && !options[:secondary]
-        data.edit_response(content: RESPONSE[11])
-        return
+        if role.gradient?
+          data.edit_response(content: RESPONSE[6])
+          return
+        end
+
+        unless role.gradient?
+          data.edit_response(content: RESPONSE[5])
+          return
+        end
       end
 
-      if role.holographic? || !role.colors.gradient?
+      if role.holographic? || !role.gradient?
         unless options[:colour]
-          data.edit_response(content: RESPONSE[14])
+          data.edit_response(content: RESPONSE[9])
           return
         end
 
         unless options[:secondary]
-          data.edit_response(content: RESPONSE[15])
+          data.edit_response(content: RESPONSE[10])
           return
         end
       end
@@ -51,7 +58,7 @@ module Vanity
     end
 
     unless exempt?(data.user, Guild.new(data))
-      data.edit_response(content: RESPONSE[6])
+      data.edit_response(content: RESPONSE[7])
       return
     end
 

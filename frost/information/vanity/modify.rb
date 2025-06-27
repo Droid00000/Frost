@@ -9,7 +9,7 @@ module Vanity
     end
 
     unless ::Boosters.safe_name?(data)
-      data.edit_response(content: RESPONSE[7])
+      data.edit_response(content: RESPONSE[8])
       return
     end
 
@@ -31,7 +31,7 @@ module Vanity
     end
 
     unless exempt?(data.user, Guild.new(data))
-      data.edit_response(content: RESPONSE[6])
+      data.edit_response(content: RESPONSE[7])
       return
     end
 
