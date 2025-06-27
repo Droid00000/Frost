@@ -14,26 +14,28 @@ module Vanity
       role: data.options["role"],
       colour: ::Boosters.to_color(data.options["start"]),
       secondary: ::Boosters.to_color(data.options["end"])
-    }.compact
+    }
+
+    role = data.server.role(data.options["role"])
 
     gradient_validator = proc do
       if !options[:colour] && !options[:secondary]
-        data.edit_response(content: RESPONSE[5])
+        data.edit_response(content: RESPONSE[11])
         return
       end
 
-      unless options[:colour]
-        data.edit_response(content: RESPONSE[8])
-        return
-      end
+      if role.holographic? || !role.colors.gradient?
+        unless options[:colour]
+          data.edit_response(content: RESPONSE[14])
+          return
+        end
 
-      unless options[:secondary]
-        data.edit_response(content: RESPONSE[9])
-        return
+        unless options[:secondary]
+          data.edit_response(content: RESPONSE[15])
+          return
+        end
       end
     end
-
-    role = data.server.role(data.options["role"])
 
     case data.options["style"]
     when 1
@@ -54,7 +56,7 @@ module Vanity
     end
 
     begin
-      data.server.update_role(**options)
+      data.server.update_role(**options.compact)
     rescue Discordrb::Errors::NoPermission
       data.edit_response(content: RESPONSE[1])
       return

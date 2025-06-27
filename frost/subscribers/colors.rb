@@ -32,7 +32,7 @@ module Boosters
       reason: reason(data),
       colour: to_color(data.options["start"]),
       secondary: to_color(data.options["end"])
-    }.compact
+    }
 
     gradient_validator = proc do
       if !options[:colour] && !options[:secondary]
@@ -40,14 +40,19 @@ module Boosters
         return
       end
 
-      unless options[:colour]
-        data.edit_response(content: RESPONSE[14])
-        return
-      end
+      # Resolve the given role here.
+      role = data.server.role(member.role)
 
-      unless options[:secondary]
-        data.edit_response(content: RESPONSE[15])
-        return
+      if role.holographic? || !role.colors.gradient?
+        unless options[:colour]
+          data.edit_response(content: RESPONSE[14])
+          return
+        end
+
+        unless options[:secondary]
+          data.edit_response(content: RESPONSE[15])
+          return
+        end
       end
     end
 
@@ -65,7 +70,7 @@ module Boosters
     end
 
     begin
-      data.server.update_role(**options)
+      data.server.update_role(**options.compact)
     rescue Discordrb::Errors::NoPermission
       data.edit_response(content: RESPONSE[6])
       return
