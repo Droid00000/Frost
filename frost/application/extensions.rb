@@ -45,13 +45,11 @@ module Discordrb
         colors = self.role(role).colors.to_h
         colors[:secondary_color] = secondary if secondary
         colors[:tertiary_color] = tertiary if tertiary
+        colors&.transform_values! { it == :NULL ? nil : it&.to_i }
+        colors[:primary_color] = colour&.to_i if colour && colors
       end
 
-      colors&.transform_values! { it == :NULL ? nil : it&.to_i }
-
-      colors[:primary_color] = colour&.to_i if colour && colors
-
-      API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason, colors)
+      API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason, colors ||= nil)
     end
   end
 end
