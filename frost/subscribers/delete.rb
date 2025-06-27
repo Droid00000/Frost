@@ -9,7 +9,7 @@ module Boosters
     end
 
     unless data.user.boosting?
-      data.edit_response(content: RESPONSE[13])
+      data.edit_response(content: RESPONSE[14])
       return
     end
 

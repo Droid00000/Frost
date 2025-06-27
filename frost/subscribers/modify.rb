@@ -9,12 +9,12 @@ module Boosters
     end
 
     unless data.user.boosting?
-      data.edit_response(content: RESPONSE[13])
+      data.edit_response(content: RESPONSE[14])
       return
     end
 
     unless safe_name?(data)
-      data.edit_response(content: RESPONSE[12])
+      data.edit_response(content: RESPONSE[13])
       return
     end
 

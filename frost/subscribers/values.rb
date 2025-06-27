@@ -14,12 +14,13 @@ module Boosters
     9 => "The bot needs to have the `manage roles` permission to do this.",
     10 => "You've been banned from using booster perks in this server.",
     11 => "Please provide a start **and** end color for your gradient.",
-    12 => "Your role name contains a word that cannot be used.",
-    13 => "You must be a server booster to use this command.",
-    14 => "Please provide a start color for your gradient.",
-    15 => "Please provide an end color for your gradient.",
-    16 => "This server hasn't enabled booster perks.",
-    17 => "You've already claimed your custom role."
+    12 => "Please provide a start **or** end color for your gradient.",
+    13 => "Your role name contains a word that cannot be used.",
+    14 => "You must be a server booster to use this command.",
+    15 => "Please provide a start color for your gradient.",
+    16 => "Please provide an end color for your gradient.",
+    17 => "This server hasn't enabled booster perks.",
+    18 => "You've already claimed your custom role."
   }.freeze
 
   # Application commands for boosters.

@@ -9,7 +9,7 @@ module Boosters
     end
 
     unless data.user.boosting?
-      data.edit_response(content: RESPONSE[13])
+      data.edit_response(content: RESPONSE[14])
       return
     end
 
@@ -36,21 +36,28 @@ module Boosters
 
     gradient_validator = proc do
       if !options[:colour] && !options[:secondary]
-        data.edit_response(content: RESPONSE[11])
-        return
+        if role.gradient?
+          data.edit_response(content: RESPONSE[12])
+          return
+        end
+
+        unless role.gradient?
+          data.edit_response(content: RESPONSE[11])
+          return
+        end
       end
 
       # Resolve the given role here.
       role = data.server.role(member.role)
 
-      if role.holographic? || !role.colors.gradient?
+      if role.holographic? || !role.gradient?
         unless options[:colour]
-          data.edit_response(content: RESPONSE[14])
+          data.edit_response(content: RESPONSE[15])
           return
         end
 
         unless options[:secondary]
-          data.edit_response(content: RESPONSE[15])
+          data.edit_response(content: RESPONSE[16])
           return
         end
       end
