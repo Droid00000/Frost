@@ -12,11 +12,6 @@ module Owner
     7 => "```ruby\n%s\n```"
   }.freeze
 
-  # Application commands for owner commands.
-  COMMANDS = {
-    1 => "`/science`"
-  }.freeze
-
   # Mapping of smart quotes to escape.
   QUOTES = %w[‘ ’ “ ”].freeze
 

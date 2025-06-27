@@ -9,9 +9,4 @@ module Emojis
     4 => "-# tracking statistics since: 12/2/2024",
     5 => "### Emoji Statistics for %s"
   }.freeze
-
-  # Application commands for emojis.
-  COMMANDS = {
-    1 => "`/top emojis`"
-  }.freeze
 end

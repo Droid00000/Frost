@@ -25,11 +25,6 @@ module Settings
     20 => "### Main Menu"
   }.freeze
 
-  # Application commands for general commands.
-  COMMANDS = {
-    1 => "`/info`"
-  }.freeze
-
   # Resolve the select menu.
   def self.menu(data)
     case data.values[0].to_sym

@@ -12,11 +12,5 @@ module AdminCommands
       5 => "Birthday perks have been successfully updated.",
       6 => "Birthday perks have been successfully enabled."
     }.freeze
-
-    # Application commands for birthday admins.
-    COMMANDS = {
-      1 => "`/booster admin disable`",
-      2 => "`/booster admin enable`"
-    }.freeze
   end
 end

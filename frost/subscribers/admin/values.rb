@@ -23,16 +23,5 @@ module AdminCommands
       16 => "-# viewing %s out of %s members",
       17 => "### Banned Members for %s"
     }.freeze
-
-    # Application commands for booster admins.
-    COMMANDS = {
-      1 => "`/booster admin disable`",
-      2 => "`/booster admin delete`",
-      3 => "`/booster admin enable`",
-      4 => "`/booster admin unban`",
-      5 => "`/booster admin bans`",
-      6 => "`/booster admin add`",
-      7 => "`/booster admin ban`"
-    }.freeze
   end
 end

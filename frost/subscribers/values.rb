@@ -23,14 +23,6 @@ module Boosters
     18 => "You've already claimed your custom role."
   }.freeze
 
-  # Application commands for boosters.
-  COMMANDS = {
-    1 => "`/booster role gradient`",
-    2 => "`/booster role delete`",
-    3 => "`/booster role claim`",
-    4 => "`/booster role edit`"
-  }.freeze
-
   # The holographic style colors.
   HOLOGRAPHIC = {
     colour: 11_127_295,

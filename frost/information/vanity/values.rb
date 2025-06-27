@@ -18,12 +18,6 @@ module Vanity
     13 => "Vanity roles have been successfully disabled."
   }.freeze
 
-  # Application commands for vanity roles.
-  COMMANDS = {
-    1 => "`/vanity role gradient`",
-    2 => "`/booster role edit`"
-  }.freeze
-
   # Produce an audit reason log to show when operating on the current role.
   # @param interaction [Interaction] The current interaction the entry is for.
   # @return [String] A string that denotes the action type and current user ID.

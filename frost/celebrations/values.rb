@@ -41,11 +41,4 @@ module Birthdays
     "Shanghai, China": "Asia/Shanghai",
     "Lagos, Nigeria": "Africa/Lagos"
   }.freeze
-
-  # Application commands for birthday commands.
-  COMMANDS = {
-    1 => "`/birthday delete`",
-    2 => "`/birthday sync`",
-    3 => "`/birthday add`"
-  }.freeze
 end

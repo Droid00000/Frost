@@ -22,15 +22,4 @@ module Affections
     6 => "**HUGS**",
     7 => "**NOMS**"
   }.freeze
-
-  # Application commands for affections.
-  COMMANDS = {
-    1 => "`/angered`",
-    2 => "`/sleep`",
-    3 => "`/punch`",
-    4 => "`/bonk`",
-    5 => "`/poke`",
-    6 => "`/nom`",
-    7 => "`/hug`"
-  }.freeze
 end

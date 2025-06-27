@@ -9,13 +9,6 @@ module General
     4 => "Invalid timezone."
   }.freeze
 
-  # Application commands for general commands.
-  COMMANDS = {
-    1 => "`/next chapter when`",
-    2 => "`/purge messages`",
-    3 => "`/time`"
-  }.freeze
-
   # Pluralize a string from the given integer.
   # @param string [String] The string to format.
   # @param sum [Integer] Any numeric integer.
