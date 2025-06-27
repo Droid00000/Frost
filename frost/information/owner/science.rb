@@ -19,7 +19,7 @@ module Owner
     when 1
       data.edit_response(content: "Draining emojis!")
     when 6
-      data.edit_response(attachments: [File.open("logs.txt")])
+      data.edit_response(attachments: [File.open("logs.rb")])
     end
 
     case data.options["dial"]
