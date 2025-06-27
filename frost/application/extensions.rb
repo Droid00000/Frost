@@ -51,7 +51,7 @@ module Discordrb
         colors[:primary_color] = colour&.to_i if colour && colors
       end
 
-      API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason, colorss)
+      API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason, colors)
     end
   end
 end
