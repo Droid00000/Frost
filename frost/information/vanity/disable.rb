@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Roles
+module Vanity
   # Disable vanity roles for a server.
   def self.disable(data)
     unless data.user.permission?(:manage_roles)

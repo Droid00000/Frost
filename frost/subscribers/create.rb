@@ -18,7 +18,7 @@ module Boosters
       return
     end
 
-    unless safe_name?(data.options["name"])
+    unless safe_name?(data)
       data.edit_response(content: RESPONSE[12])
       return
     end

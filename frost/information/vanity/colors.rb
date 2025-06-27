@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Roles
+module Vanity
   # Command handler for /vanity role gradient.
   def self.colors(data)
     unless data.server.bot.permission?(:manage_roles)
@@ -12,8 +12,8 @@ module Roles
       tertiary: :NULL,
       reason: reason(data),
       role: data.options["role"],
-      colour: to_color(data.options["start"]),
-      secondary: to_color(data.options["end"])
+      colour: ::Boosters.to_color(data.options["start"]),
+      secondary: ::Boosters.to_color(data.options["end"])
     }.compact
 
     gradient_validator = proc do
@@ -39,7 +39,7 @@ module Roles
     when 1
       gradient_validator.call
     when 2
-      options.merge!(HOLOGRAPHIC)
+      options.merge!(::Boosters::HOLOGRAPHIC)
     when 0
       options.merge!({
                        colour: role.color,

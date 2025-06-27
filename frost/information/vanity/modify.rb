@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Roles
+module Vanity
   # Command handler for /vanity role edit.
   def self.edit(data)
     unless data.server.bot.permission?(:manage_roles)
@@ -8,17 +8,17 @@ module Roles
       return
     end
 
-    unless safe_name?(data.options["name"])
+    unless ::Boosters.safe_name?(data)
       data.edit_response(content: RESPONSE[7])
       return
     end
 
     options = {
-      colour: to_color(data.options["color"]),
+      colour: ::Boosters.to_color(data.options["color"]),
+      icon: ::Boosters.to_icon(data),
       name: data.options["name"],
       role: data.options["role"],
-      reason: reason(data),
-      icon: to_icon(data)
+      reason: reason(data)
     }.compact
 
     if data.options["icon"]&.match?(REGEX[2])

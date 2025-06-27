@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Roles
+module Vanity
   # Setup vanity roles or edit them.
   def self.setup(data)
     unless data.user.permission?(:manage_roles)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Roles
+module Vanity
   # A guild that's enabled vanity roles.
   class Guild
     # @return [Boolean]

@@ -53,15 +53,10 @@ module Boosters
     color.combined.zero? ? COLORS.pull(:BLACK) : color.combined
   end
 
-  # Returns true if a string doesn't contain any bad words.
-  # @param [String] The string to check for slurs and words.
-  # @return [Boolean] If the name contains any bad words.
-  def self.safe_name?(name) = !name&.match?(REGEX[4])
-
   # Produce an audit reason log to show when operating on the current role.
   # @param interaction [Interaction] The current interaction the entry is for.
   # @return [String] A string that denotes the action type and current user ID.
-  def self.reason(interaction) = format(REASON, interaction.user.id)
+  def self.reason(data) = format(REASON, data.user.id)
 
   # Check if we have a valid role icon.
   # @return [Boolean] If the icon is valid.
@@ -69,6 +64,15 @@ module Boosters
     return 0 if [nil, String].include?(to_icon(data)&.class) || guild.any_icon?
 
     data.emoji("icon")&.server && data.server.emojis.key?(data.emoji("icon").id)
+  end
+
+  # Returns true if a string doesn't contain any bad words.
+  # @param [String] The string to check for slurs and words.
+  # @return [Boolean] If the name contains any bad words.
+  def self.safe_name?(data)
+    return true if data.options["name"].nil? || data.options["name"].empty?
+
+    !data.options["name"].unicode_normalize(:nfkd).gsub(/\p{Mn}/, "").match?(REGEX[4])
   end
 
   # Get an icon for a role.

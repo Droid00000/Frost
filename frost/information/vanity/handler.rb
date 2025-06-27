@@ -6,22 +6,22 @@ module AdminCommands
   application_command(:vanity).group(:role) do |group|
     group.subcommand(:gradient) do |event|
       event.defer(ephemeral: false)
-      Roles.colors(event)
+      Vanity.colors(event)
     end
 
     group.subcommand(:disable) do |event|
       event.defer(ephemeral: true)
-      Roles.disable(event)
+      Vanity.disable(event)
     end
 
     group.subcommand(:enable) do |event|
       event.defer(ephemeral: true)
-      Roles.setup(event)
+      Vanity.setup(event)
     end
 
     group.subcommand(:edit) do |event|
       event.defer(ephemeral: false)
-      Roles.edit(event)
+      Vanity.edit(event)
     end
   end
 end
