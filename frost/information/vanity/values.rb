@@ -23,13 +23,10 @@ module Vanity
     2 => "`/booster role edit`"
   }.freeze
 
-  # The audit log reason for vanity roles.
-  REASON = "Vanity Roles (ID: %s)"
-
   # Produce an audit reason log to show when operating on the current role.
   # @param interaction [Interaction] The current interaction the entry is for.
   # @return [String] A string that denotes the action type and current user ID.
-  def self.reason(data) = format(REASON, data.user.id)
+  def self.reason(data) =  "Vanity Roles (ID: #{data.user.resolve_id})"
 
   # Check if a member has permission to modify a given role.
   # @param member [Discordrb::Member] The member to check for exemption.

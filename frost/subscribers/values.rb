@@ -37,9 +37,6 @@ module Boosters
     tertiary: 16_761_760
   }.freeze
 
-  # The audit log reason for boosters.
-  REASON = "Booster Roles (ID: %s)"
-
   # Initilaze a new color object for a role.
   # @param [String] The hex color to resolve.
   # @return [ColourRGB] A colourRGB object.
@@ -54,9 +51,8 @@ module Boosters
   end
 
   # Produce an audit reason log to show when operating on the current role.
-  # @param interaction [Interaction] The current interaction the entry is for.
   # @return [String] A string that denotes the action type and current user ID.
-  def self.reason(data) = format(REASON, data.user.id)
+  def self.reason(data) = "Booster Roles (ID: #{data.user.resolve_id})"
 
   # Check if we have a valid role icon.
   # @return [Boolean] If the icon is valid.
@@ -67,7 +63,6 @@ module Boosters
   end
 
   # Returns true if a string doesn't contain any bad words.
-  # @param [String] The string to check for slurs and words.
   # @return [Boolean] If the name contains any bad words.
   def self.safe_name?(data)
     return true if data.options["name"].nil? || data.options["name"].empty?
