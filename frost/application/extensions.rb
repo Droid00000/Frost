@@ -41,6 +41,8 @@ module Discordrb
 
       colour = nil if secondary && secondary != :NULL && !features.include?(:enhanced_role_colors)
 
+      colors = nil
+
       if features.include?(:enhanced_role_colors) && (secondary || tertiary)
         colors = self.role(role).colors.to_h
         colors[:secondary_color] = secondary if secondary
@@ -49,7 +51,7 @@ module Discordrb
         colors[:primary_color] = colour&.to_i if colour && colors
       end
 
-      API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason, colors ||= nil)
+      API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason, colorss)
     end
   end
 end

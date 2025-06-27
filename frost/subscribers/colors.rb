@@ -34,6 +34,9 @@ module Boosters
       secondary: to_color(data.options["end"])
     }
 
+    # Resolve the given role here.
+    role = data.server.role(member.role)
+
     gradient_validator = proc do
       if !options[:colour] && !options[:secondary]
         if role.gradient?
@@ -46,9 +49,6 @@ module Boosters
           return
         end
       end
-
-      # Resolve the given role here.
-      role = data.server.role(member.role)
 
       if role.holographic? || !role.gradient?
         unless options[:colour]
