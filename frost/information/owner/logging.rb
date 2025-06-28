@@ -4,7 +4,7 @@ module Owner
   # This is how we can handle logging.
   def self.logs(_)
     # Log the time at which we first got a ready event.
-    @@uptime ||= Time.now.to_i
+    @uptime ||= Time.now.to_i
 
     # Initialize all of our birthdays once we're ready.
     Birthdays::Orchestrator.login

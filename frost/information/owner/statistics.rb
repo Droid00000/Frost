@@ -3,9 +3,9 @@
 module Owner
   # Log statistics for raw events.
   def self.raw(data)
-    @@count ||= Hash.new(0)
+    @count ||= Hash.new(0)
 
-    @@count[data.type] += 1
+    @count[data.type] += 1
   end
 
   # A tracker of the total events reccieved so far.
@@ -17,7 +17,7 @@ module Owner
     end
 
     # Sort our stats in descending order by count.
-    stats = @@count.sort_by { |_, size| -size }
+    stats = @count.sort_by { |_, size| -size }
 
     # Calculate the total amount of stats we have.
     total = stats.map(&:last).sum.delimit
@@ -44,7 +44,7 @@ module Owner
         container.seperator(divider: true, spacing: :small)
 
         # Add a little bit of footer text for total count.
-        container.text_display(text: format(RESPONSE[1], total, @@uptime))
+        container.text_display(text: format(RESPONSE[1], total, @uptime))
       end
     end
   end
