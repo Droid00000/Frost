@@ -4,7 +4,7 @@ module Emojis
   # Stats related stuff.
   def self.cache(data)
     # Cache statistics for reactions.
-    if !data.respond_to?(:file) && data.emoji.id
+    if data.respond_to?(:emoji)
       Storage.add(data.emoji, data.server)
       return
     end
