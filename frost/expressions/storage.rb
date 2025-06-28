@@ -24,8 +24,7 @@ module Emojis
           { balance: group.size, **group.first }
         end
 
-        # Try to create a new record, or update the existing record for each emoji
-        #   and then clear the local emoji cache if everything went well.
+        # Try to create a new record, or update the existing record for each emoji.
         @@emojis.clear if @@pg.insert_conflict(
           update: { balance: Sequel[:emoji_tracker][:balance] + Sequel[:excluded][:balance] },
           target: %i[emoji_id guild_id]
