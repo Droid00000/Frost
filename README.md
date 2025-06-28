@@ -49,7 +49,7 @@ Many of these variables are undocumented because the bot is meant for personal u
 
 5. **Run the bot**
 
-Build the Dockerfile with `docker build -t frost:latest --shm-size=2g`
+Build the Dockerfile with `docker build . -t frost:latest --shm-size=2g`
 
 ## ToS and Privacy Policy
 
