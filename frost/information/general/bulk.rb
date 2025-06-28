@@ -13,6 +13,8 @@ module General
       return
     end
 
+    ::Discordrb::LOGGER.warn("Bulk deleting in #{data.server.name}")
+
     count = 0
 
     ([1] * data.options["amount"]).each_slice(100) do |chunk|
