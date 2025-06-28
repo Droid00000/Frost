@@ -41,7 +41,7 @@ module Owner
         container.text_display(text: format(RESPONSE[6], stats.join))
 
         # Add a divider for a bit of visual seperation.
-        container.seperator(divider: false, spacing: :small)
+        container.seperator(divider: true, spacing: :small)
 
         # Add a little bit of footer text for total count.
         container.text_display(text: format(RESPONSE[1], total, @@uptime))
