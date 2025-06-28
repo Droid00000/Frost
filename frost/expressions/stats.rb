@@ -5,7 +5,7 @@ module Emojis
   def self.cache(data)
     # Cache statistics for reactions.
     if data.is_a?(Discordrb::Events::ReactionAddEvent)
-      Storage.add(emoji, data.server) if data.emoji.id
+      Storage.add(data.emoji, data.server) if data.emoji.id
       return
     end
 
