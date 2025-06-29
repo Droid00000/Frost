@@ -147,7 +147,7 @@ bot.register_application_command(:booster, "Booster perks", contexts: [0], integ
       option.string(:icon, "Provide an emoji for your role icon.", required: false)
     end
 
-    group.subcommand(:gradient, "Edit the gradient of your custom booster role.") do |option|
+    group.subcommand(:gradient, "Edit your custom booster role's gradient.") do |option|
       option.integer(:style, "The style of the gradient to apply.", required: true, choices: { None: 0, Custom: 1, Holographic: 2 })
       option.string(:start, "Provide a HEX color for your gradient start color.", required: false, min_length: 3, max_length: 16)
       option.string(:end, "Provide a HEX color for your gradient end color.", required: false, min_length: 3, max_length: 16)
