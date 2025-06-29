@@ -3,8 +3,6 @@
 module General
   # Purge messages.
   def self.bulk_delete(data)
-    Discordrb::LOGGER.warn("guild: #{data.server.id}, user: #{data.user.id}")
-
     unless data.server.bot.permission?(:manage_messages, data.channel)
       data.edit_response(content: RESPONSE[1])
       return
