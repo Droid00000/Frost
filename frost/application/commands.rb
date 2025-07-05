@@ -86,7 +86,7 @@ bot.register_application_command(:purge, "Moderation Commands", contexts: [0], i
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:vanity, "Vanity Roles", contexts: [0], integration_types: [0], default_member_permissions: 268_435_456) do |command|
+bot.register_application_command(:vanity, "Vanity Roles", contexts: [0], integration_types: [0], default_member_permissions: 1_099_780_063_236) do |command|
   command.subcommand_group(:role, "Vanity roles!") do |group|
     group.subcommand(:gradient, "Edit the gradient of a vanity role.") do |option|
       option.role(:role, "The vanity role whose gradient you want to edit.", required: true)
@@ -101,12 +101,6 @@ bot.register_application_command(:vanity, "Vanity Roles", contexts: [0], integra
       option.string(:color, "Provide a HEX color for the role.", required: false, min_length: 3, max_length: 16)
       option.string(:icon, "Provide an emoji for the role icon.", required: false, max_length: 1000, min_length: 1)
     end
-
-    group.subcommand(:enable, "Enable the vanity roles functionality.") do |option|
-      option.role(:role, "The role that can edit other custom roles.", required: true)
-    end
-
-    group.subcommand(:disable, "Disable the vanity roles functionality.")
   end
 end
 
