@@ -40,18 +40,18 @@ bot.register_application_command(:punch, "Punch another user.", contexts: [0, 1,
 end
 
 # @!function [Affections] Belongs to a module that does expressions.
-bot.register_application_command(:sleep, "Tell a user to head to bed.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { hi: "नींद" }, description_localizations: { hi: "किसी सर्वर मित्र को बोलो जाके सो जाए" }) do |option|
+bot.register_application_command(:sleep, "Tell another user to head to bed.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { hi: "नींद" }, description_localizations: { hi: "किसी सर्वर मित्र को बोलो जाके सो जाए" }) do |option|
   option.user(:target, "Who needs to go to sleep?", required: true, name_localizations: { hi: "इशारालगाना" }, description_localizations: { hi: "किसको सोने जाने बोलना है" })
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:time, "View the current time.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { hi: "समय" }, description_localizations: { hi: "वर्तमान समय देखें" }) do |option|
-  option.string(:timezone, "Which timezone do you want to view the time for?", required: true, autocomplete: true, name_localizations: { hi: "समयक्षेत्र" }, description_localizations: { hi: "आप किस समयक्षेत्र का समय देखना चाहते हैं" })
+  option.string(:timezone, "The timezone to view the time in.", required: true, autocomplete: true, name_localizations: { hi: "समयक्षेत्र" }, description_localizations: { hi: "आप किस समयक्षेत्र का समय देखना चाहते हैं" })
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:science, "Access the bot's control panel.", contexts: [0, 1, 2], integration_types: [0, 1], default_member_permissions: 0, name_localizations: { hi: "विज्ञान" }, description_localizations: { hi: "बॉट के नियंत्रण पैनल तक पहुंचें" }) do |option|
-  option.integer(:dial, "Which action do you want to perform?", required: true, choices: { "Drain Emojis" => 1, "Shutdown" => 2, "Evaluate" => 3, "Gateway" => 4, "Restart" => 5, "Logger" => 6 }, name_localizations: { hi: "फ़ोनकरना" }, description_localizations: { hi: "आप कौन सी कार्रवाई करना चाहते हैं" })
+  option.integer(:dial, "The action that you want to perform.", required: true, choices: { "Drain Emojis" => 1, "Shutdown" => 2, "Evaluate" => 3, "Gateway" => 4, "Restart" => 5, "Logger" => 6 }, name_localizations: { hi: "फ़ोनकरना" }, description_localizations: { hi: "आप कौन सी कार्रवाई करना चाहते हैं" })
 end
 
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
