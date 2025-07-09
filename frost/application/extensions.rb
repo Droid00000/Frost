@@ -303,8 +303,7 @@ module Discordrb
         packet = { guild_id: server_id, user_ids: chunk }
 
         begin
-          sleep(2.5)
-          send_packet(Opcodes::REQUEST_MEMBERS, packet)
+          [send_packet(Opcodes::REQUEST_MEMBERS, packet), sleep(4)]
         rescue StandardError
           retry
         end
