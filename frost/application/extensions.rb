@@ -17,8 +17,6 @@ module Discordrb
     def create_role(name: "new role", colour: 0, hoist: false, mentionable: false, permissions: 0, icon: nil, reason: nil)
       colour = colour.combined if colour.respond_to?(:combined)
 
-      icon = nil unless features.include?(:role_icons)
-
       response = API::Server.create_role(@bot.token, @id, name, colour, hoist, mentionable, permissions, icon, reason)
       role = Role.new(JSON.parse(response), @bot, self)
       @roles << role
@@ -31,17 +29,11 @@ module Discordrb
     # @param icon [String, #read] A role icon for this role.
     # @param reason [String] The reason for updating this role.
     def update_role(role:, name: nil, colour: nil, icon: nil, secondary: nil, tertiary: nil, reason: nil)
-      return nil if self.role(role).nil?
-
-      return nil if role.resolve_id == @id
+      return nil if self.role(role).nil? || role.resolve_id == @id
 
       colour = colour.combined if colour.respond_to?(:combined)
 
-      icon = nil unless features.include?(:role_icons)
-
       colour = nil if secondary && secondary != :NULL && !features.include?(:enhanced_role_colors)
-
-      colors = nil
 
       if features.include?(:enhanced_role_colors) && (secondary || tertiary)
         colors = self.role(role).colors.to_h
@@ -51,7 +43,7 @@ module Discordrb
         colors[:primary_color] = colour&.to_i if colour && colors
       end
 
-      API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason, colors)
+      API::Server.update_role(@bot.token, @id, role, name, colour, nil, nil, nil, icon, reason, colors ||= nil)
     end
   end
 end
