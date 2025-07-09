@@ -265,9 +265,9 @@ module Discordrb
     # @param guild [Integer, String] An ID that uniquely identifies a guild.
     # @param id [Integer, String] An ID that uniquely identifies a role.
     def remove_guild_role(guild, id, reason)
-      Discordrb::API::Server.delete_role(@token, guild, id, reason)
-    rescue StandardError
-      nil
+      return nil unless profile.on(guild).permission?(:manage_roles)
+
+      Discordrb::API::Server.delete_role(@token, guild, id, reason) rescue nil
     end
 
     # @overload emoji(id)
