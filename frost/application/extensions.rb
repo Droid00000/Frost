@@ -302,11 +302,10 @@ module Discordrb
       members.each_slice(100).to_a.each do |chunk|
         packet = { guild_id: server_id, user_ids: chunk }
 
-        begin
-          [send_packet(Opcodes::REQUEST_MEMBERS, packet), sleep(4)]
-        rescue StandardError
-          retry
-        end
+        send_packet(Opcodes::REQUEST_MEMBERS, packet) rescue retry
+
+        # There isn't any rate-limiting built in, so just sleep a fixed time.
+        sleep(3)
       end
     end
 
