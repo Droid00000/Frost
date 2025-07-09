@@ -90,8 +90,7 @@ FROM (
         ) AS score
     FROM world_timezones g
 ) sub
-ORDER BY score DESC
-LIMIT 25;
+ORDER BY score DESC LIMIT 25;
 $$;
 
 -- Function for fetching information about a booster.
