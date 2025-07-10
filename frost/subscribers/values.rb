@@ -51,7 +51,7 @@ module Boosters
   # @return [Boolean] If the icon is valid.
   def self.valid_icon?(data, guild)
     return false unless data.server.features.include?(:role_icons)
-    
+
     return 0 if [nil, String].include?(to_icon(data)&.class) || guild.any_icon?
 
     data.emoji("icon")&.server && data.server.emojis.key?(data.emoji("icon").id)
