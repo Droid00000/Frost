@@ -48,7 +48,7 @@ module Boosters
   def self.reason(data) = "Booster Roles (ID: #{data.user.id})"
 
   # Check if we have a valid role icon.
-  # @return [Boolean] If the icon is valid.
+  # @return [true, false] If the icon is valid.
   def self.valid_icon?(data, guild)
     return false unless data.server.features.include?(:role_icons)
 
@@ -58,7 +58,7 @@ module Boosters
   end
 
   # Returns true if a string doesn't contain any bad words.
-  # @return [Boolean] If the name contains any bad words.
+  # @return [true, false] If the name contains any bad words.
   def self.safe_name?(data)
     return true if data.options["name"].nil? || data.options["name"].empty?
 
