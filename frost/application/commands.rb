@@ -7,7 +7,7 @@ return unless ENV.fetch("REGISTER_COMMANDS", nil)
 bot = Discordrb::Bot.new(token: ENV.fetch("TOKEN"), intents: :none)
 
 # @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:info, "View some information about the bot.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { hi: "सेटिंग्स" }, description_localizations: { hi: "आपना सर्वर कॉन्फिग्रेशन देखो" })
+bot.register_application_command(:info, "View information about the bot.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { hi: "सेटिंग्स" }, description_localizations: { hi: "आपना सर्वर कॉन्फिग्रेशन देखो" })
 
 # @!function [Affections] Belongs to a module that does expressions.
 bot.register_application_command(:hug, "Hugs another user.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { hi: "गलेमिलना" }, description_localizations: { hi: "सर्वर मित्र के गले मिलना" }) do |option|
@@ -55,7 +55,7 @@ bot.register_application_command(:science, "Access the bot's control panel.", co
 end
 
 # @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
-bot.register_application_command(:top, "View some emoji stats.", contexts: [0], integration_types: [0], name_localizations: { hi: "इमोजी" }, description_localizations: { hi: "कुछ इमोजी आँकड़े देखें" }) do |command|
+bot.register_application_command(:top, "View the most used emojis in this server.", contexts: [0], integration_types: [0], name_localizations: { hi: "इमोजी" }, description_localizations: { hi: "कुछ इमोजी आँकड़े देखें" }) do |command|
   command.subcommand(:emojis, "View the most used emojis in this server.", name_localizations: { hi: "आँकड़े" }, description_localizations: { hi: "शीर्ष इमोजी के बारे में जानकारी यहां प्राप्त करें" })
 end
 
@@ -105,7 +105,7 @@ bot.register_application_command(:vanity, "Vanity Roles", contexts: [0], integra
 end
 
 # @!function [Birthday Operations] Belongs to a module that manages birthday roles.
-bot.register_application_command(:birthday, "birthday roles", contexts: [0], integration_types: [0]) do |command|
+bot.register_application_command(:birthday, "Birthday Roles", contexts: [0], integration_types: [0]) do |command|
   command.subcommand(:add, "Add or edit your date of birth.") do |option|
     option.integer(:month, "The month you were born in.", required: true, choices: { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 })
     option.integer(:day, "The day you were born on.", required: true, min_value: 1, max_value: 31)
@@ -127,7 +127,7 @@ bot.register_application_command(:birthday, "birthday roles", contexts: [0], int
 end
 
 # @!function [Booster Operations] Belongs to a module that manages booster roles.
-bot.register_application_command(:booster, "Booster perks", contexts: [0], integration_types: [0]) do |command|
+bot.register_application_command(:booster, "Booster Perks", contexts: [0], integration_types: [0]) do |command|
   command.subcommand_group(:role, "Booster roles!") do |group|
     group.subcommand(:claim, "Claim your custom booster role.") do |option|
       option.string(:name, "Provide a name for your role.", required: true, max_length: 100)
