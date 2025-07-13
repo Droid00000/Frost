@@ -110,9 +110,9 @@ module Birthdays
     @@pg = POSTGRES[:user_birthdays]
 
     # @!visibility private
-    def initialize(data, lazy: false)
+    def initialize(data, **rest)
       @data = data
-      @lazy = lazy == true
+      @lazy = rest[:lazy]
       @user_id = data.user.id
       @guild_id = data.server.id
       model = find_user(@user_id)
