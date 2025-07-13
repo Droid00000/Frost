@@ -25,7 +25,7 @@ bot.register_application_command(:nom, "Noms another user.", contexts: [0, 1, 2]
 end
 
 # @!function [Affections] Belongs to a module that does expressions.
-bot.register_application_command(:angered, "Show your anger towards a user.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { hi: "गुस्साकरना" }, description_localizations: { hi: "कोई सर्वर मित्र पे गुस्सा दिखाना" }) do |option|
+bot.register_application_command(:angered, "Show your anger towards another user.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { hi: "गुस्साकरना" }, description_localizations: { hi: "कोई सर्वर मित्र पे गुस्सा दिखाना" }) do |option|
   option.user(:target, "Who are you mad at?", required: true, name_localizations: { hi: "इशारालगाना" }, description_localizations: { hi: "किसपे आपको गुस्सा दिखाना है" })
 end
 
@@ -67,7 +67,7 @@ bot.register_application_command(:next, "View the release date of the next chapt
 end
 
 # @!function [Moderation Operations] Belongs to a module that manages moderation related commands.
-bot.register_application_command(:purge, "Moderation Commands", contexts: [0], integration_types: [0], name_localizations: { hi: "शुद्ध" }, description_localizations: { hi: "मॉडरेशन आदेश" }, default_member_permissions: 11_264) do |command|
+bot.register_application_command(:purge, "Remove messages that meet a criteria.", contexts: [0], integration_types: [0], name_localizations: { hi: "शुद्ध" }, description_localizations: { hi: "मॉडरेशन आदेश" }, default_member_permissions: 11_264) do |command|
   command.subcommand(:messages, "Remove messages that meet a criteria.", name_localizations: { hi: "सूचना" }, description_localizations: { hi: "वर्तमान चैनल में संदेश हटाएँ" }) do |option|
     option.integer(:amount, "The maximum number of messages to delete.", required: true, min_value: 1, max_value: 700, name_localizations: { hi: "रकम" }, description_localizations: { hi: "आप कितने मैसेज डिलीट करना चाहते हैं" })
     option.user(:member, "Remove messages from a specific member.", required: false, name_localizations: { hi: "सदस्य" }, description_localizations: { hi: "किसी विशिष्ट उपयोगकर्ता के संदेश हटाएँ" })
@@ -87,7 +87,7 @@ end
 
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:vanity, "Vanity Roles", contexts: [0], integration_types: [0], default_member_permissions: 268_435_488) do |command|
-  command.subcommand_group(:role, "Vanity roles!") do |group|
+  command.subcommand_group(:role, "Vanity Roles") do |group|
     group.subcommand(:gradient, "Edit the gradient of a vanity role.") do |option|
       option.role(:role, "The vanity role whose gradient you want to edit.", required: true)
       option.integer(:style, "The style of the gradient to apply.", required: true, choices: { None: 0, Custom: 1, Holographic: 2 })
@@ -116,7 +116,7 @@ bot.register_application_command(:birthday, "Birthday Roles", contexts: [0], int
 
   command.subcommand(:delete, "Remove your date of birth from the bot.")
 
-  command.subcommand_group(:admin, "Birthday admin!") do |group|
+  command.subcommand_group(:admin, "Birthday Admin") do |group|
     group.subcommand(:enable, "Enable the birthday perks functionality.") do |option|
       option.role(:role, "The role members should be given on their birthday.", required: false)
       option.channel(:channel, "The channel birthday annoucements should be sent to.", types: [:text], required: false)
@@ -128,7 +128,7 @@ end
 
 # @!function [Booster Operations] Belongs to a module that manages booster roles.
 bot.register_application_command(:booster, "Booster Perks", contexts: [0], integration_types: [0]) do |command|
-  command.subcommand_group(:role, "Booster roles!") do |group|
+  command.subcommand_group(:role, "Booster Perks") do |group|
     group.subcommand(:claim, "Claim your custom booster role.") do |option|
       option.string(:name, "Provide a name for your role.", required: true, max_length: 100)
       option.string(:color, "Provide a HEX color for your role.", required: true, min_length: 3, max_length: 16)
@@ -150,7 +150,7 @@ bot.register_application_command(:booster, "Booster Perks", contexts: [0], integ
     group.subcommand(:delete, "Delete your custom booster role.")
   end
 
-  command.subcommand_group(:admin, "Booster admin!") do |group|
+  command.subcommand_group(:admin, "Booster Admin") do |group|
     group.subcommand(:add, "Add a booster to this server.") do |option|
       option.user(:target, "The member to add as a booster.", required: true)
       option.role(:role, "The role to associate with the member.", required: true)
