@@ -46,14 +46,9 @@ module Birthdays
     def self.pending_user(member)
       member = User.new(member)
 
-      # Check if the birthday has fully passed.
-      if Time.now.utc >= (member.this_birthdate + 86_400)
+      # Re-schedule the removal for the day after.
+      @workers.at(member.this_birthdate + 86_400, discard_past: false) do
         @actions[:AFTER_PUBLISH].each { it.call(member) }
-      else
-        # Otherwise, calculate the next occurrence.
-        @workers.at(member.this_birthdate + 86_400) do
-          @actions[:AFTER_PUBLISH].each { it.call(member) }
-        end
       end
     end
 
