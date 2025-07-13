@@ -30,6 +30,10 @@ module Vanity
       options[:tertiary] = :NULL
     end
 
+    unless data.server.features.include?(:role_icons)
+      options.delete(:icon)
+    end
+
     if options.size > 2
       begin
         data.server.update_role(**options)
