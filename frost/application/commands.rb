@@ -105,7 +105,7 @@ bot.register_application_command(:vanity, "Vanity Roles", contexts: [0], integra
 end
 
 # @!function [Birthday Operations] Belongs to a module that manages birthday roles.
-bot.register_application_command(:birthday, "Birthday Roles", contexts: [0], integration_types: [0]) do |command|
+bot.register_application_command(:birthday, "Customizable birthday roles and announcements.", contexts: [0], integration_types: [0]) do |command|
   command.subcommand(:add, "Add or edit your date of birth.") do |option|
     option.integer(:month, "The month you were born in.", required: true, choices: { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 })
     option.integer(:day, "The day you were born on.", required: true, min_value: 1, max_value: 31)
@@ -127,7 +127,7 @@ bot.register_application_command(:birthday, "Birthday Roles", contexts: [0], int
 end
 
 # @!function [Booster Operations] Belongs to a module that manages booster roles.
-bot.register_application_command(:booster, "Booster Perks", contexts: [0], integration_types: [0]) do |command|
+bot.register_application_command(:booster, "Customizable perks for server boosters.", contexts: [0], integration_types: [0]) do |command|
   command.subcommand_group(:role, "Booster Perks") do |group|
     group.subcommand(:claim, "Claim your custom booster role.") do |option|
       option.string(:name, "Provide a name for your role.", required: true, max_length: 100)
