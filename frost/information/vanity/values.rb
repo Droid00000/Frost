@@ -8,9 +8,8 @@ module Vanity
     3 => "The bot needs to have the `manage roles` permission to do this.",
     4 => "Please provide a start **and** end color for the gradient.",
     5 => "Please provide a start **or** end color for the gradient.",
-    6 => "The role name contains a word that cannot be used.",
-    7 => "Please provide a start color for the gradient.",
-    8 => "Please provide an end color for the gradient."
+    6 => "Please provide a start color for the gradient.",
+    7 => "Please provide an end color for the gradient."
   }.freeze
 
   # Produce an audit reason string to show when operating on the current role.

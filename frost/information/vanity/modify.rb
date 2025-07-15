@@ -8,11 +8,6 @@ module Vanity
       return
     end
 
-    unless ::Boosters.safe_name?(data)
-      data.edit_response(content: RESPONSE[6])
-      return
-    end
-
     options = {
       colour: ::Boosters.to_color(data.options["color"]),
       icon: ::Boosters.to_icon(data),

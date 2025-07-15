@@ -33,12 +33,12 @@ module Vanity
 
       if role.holographic? || !role.gradient?
         unless options[:colour]
-          data.edit_response(content: RESPONSE[7])
+          data.edit_response(content: RESPONSE[6])
           return
         end
 
         unless options[:secondary]
-          data.edit_response(content: RESPONSE[8])
+          data.edit_response(content: RESPONSE[7])
           return
         end
       end
