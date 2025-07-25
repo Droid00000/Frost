@@ -43,7 +43,7 @@ Chapter:
 # the auto-moderation configuration.
 Moderator:
   GUILD: ""
-  LOG_AT: ""
+  CHANNEL: ""
 
 # Database related credentials.
 Postgres:

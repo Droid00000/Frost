@@ -55,7 +55,7 @@ module Moderation
       return nil unless links.any?
 
       # only return the links if `parse` isn't false.
-      parse == false ? nil : links
+      parse == false ? true : links
     end
 
     # Check if the given user is exempt from spam filtering.
@@ -152,18 +152,26 @@ module Moderation
     # @param user [Discordrb::Member] the member the spam entry is for.
     # @param logs [Array<Hash>] the logs to serialize and send to the channel.
     def self.send_spam_logs(user, logs)
+      # Map all of our spam links into the desired format we want.
+      collect_spam_links = lambda do |state|
+        links = state.flatten.flat_map { |spam| extract(spam, parse: true) }
+
+        "\n> **URL**: #{links.uniq.map { "`#{it.to_s}`" }.first(5).join(", ")}"
+      end
+
       # Create the descripton for the given embed.
       embed_description = lambda do |state|
-        failed = logs.map { |log| log[:failed] }.map(&:size).sum
-        deleted = logs.map { |log| log[:deleted] }.map(&:size).sum
+        failed = logs.map { it[:failed] }.map(&:size).sum
+        deleted = logs.map { it[:deleted] }.map(&:size).sum
         result = format(RESPONSE[1], failed, deleted, user.resolve_id)
+        result = "#{result}#{collect_spam_links.call(logs.map { it[:deleted] })}"
         state ? ("> **Joined:** <t:#{user.joined_at.to_i}:R>\n" + result) : result
       end
 
       # Send the embed to the logging channel.
       BOT.channel(CONFIG[:Moderator][:CHANNEL]).send_embed do |embed|
         # Add our main "Attacment Spammer" header here.
-        embed.title = Moderation::RESPONSE[5]
+        embed.title = Moderation::RESPONSE[6]
 
         # Add a small footer timestamp showing when we started purging.
         embed.timestamp = Time.at(logs.first[:time])
