@@ -27,7 +27,7 @@ module AdminCommands
       end
 
       # This is optional, so allow it to be removed.
-      if options[:channel_id]&.match?(REGEX[2])
+      if options[:channel_id]&.match?(REGEX[3])
         options[:channel_id] = nil
       end
 

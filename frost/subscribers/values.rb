@@ -62,7 +62,7 @@ module Boosters
   def self.safe_name?(data)
     return true if data.options["name"].nil? || data.options["name"].empty?
 
-    !data.options["name"].unicode_normalize(:nfkd).gsub(/\p{Mn}/, "").match?(REGEX[4])
+    !data.options["name"].unicode_normalize(:nfkd).gsub(/\p{Mn}/, "").match?(REGEX[5])
   end
 
   # Get an icon for a role.

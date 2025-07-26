@@ -16,7 +16,7 @@ module Vanity
       reason: reason(data)
     }.compact
 
-    if data.options["icon"]&.match?(REGEX[2])
+    if data.options["icon"]&.match?(REGEX[3])
       options[:icon] = :NULL
     end
 

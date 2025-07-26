@@ -8,7 +8,7 @@ module ModerationCommands
     Moderation.purge(event)
   end
 
-  message(contains: Moderation::LinkSpam::REGEXP) do |event|
+  message(contains: REGEX[2]) do |event|
     Moderation.link(event)
   end
 
