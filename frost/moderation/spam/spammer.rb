@@ -4,7 +4,7 @@ module Moderation
   # Check for attachment spam specifically.
   def self.spam(data)
     # Only check for spam in the configured mod server.
-    return if data.server != CONFIG[:Moderator][:GUILD]
+    return if data.server.id != CONFIG[:Moderator][:GUILD]
 
     # Return if the user has only role that's exempt.
     return if FileSpam.exempt?(data.user)
@@ -26,7 +26,7 @@ module Moderation
   # Check for link/HTTP URL spam specifically.
   def self.link(data)
     # Only check for spam in the configured mod server.
-    return if data.server != CONFIG[:Moderator][:GUILD]
+    return if data.server.id != CONFIG[:Moderator][:GUILD]
 
     # Return if the user has only role that's exempt.
     return if LinkSpam.exempt?(data.user)

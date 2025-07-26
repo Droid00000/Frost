@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# A set of common data classes for anti-spam tracking.
+# A set of common data classes used for anti-spam tracking.
 module Moderation
   # Generic storage bucket for tracking user spam.
   class StorageBucket
@@ -18,7 +18,7 @@ module Moderation
 
     # Append a singular message to the current storage bucket.
     # @param message [Discordrb::Message] the message to de-hydrate.
-    # @param uris [Array<URI>, nil] the urls to store in the message.
+    # @param uris [Array<URI>] the urls to store in the message.
     # @return [Array<Messagable>] the collection of stored messages.
     def push(message, uris = nil)
       @messages << Messagable.new(message, uris)
@@ -26,7 +26,7 @@ module Moderation
 
     # Yield each stored message in the array to the given block.
     # @return [Messagable] each stored Messagable will by yielded.
-    def shift
+    def each
       yield(@messages.shift) while @messages.any?
 
       @acted_at = Time.now.to_i
@@ -35,13 +35,13 @@ module Moderation
     # Whether the bucket was recently used and is considered active.
     # @return [true, false] whether this bucket is currently active.
     def active?
-      @acted_at.nil? || Time.now.to_i - @acted_at <= 60
+      @acted_at.nil? || (Time.now.to_i - @acted_at) <= 60
     end
 
     # Whether the current storage bucket is pending automatic deletion.
     # @return [true, false] whether the current storage bucket is EOL.
     def dead?
-      @acted_at.nil? || Time.now.to_i - @acted_at >= 3600
+      @acted_at.nil? || (Time.now.to_i - @acted_at) >= 3600
     end
 
     # Whether the current storage bucket needs to be emptied out.
@@ -82,51 +82,44 @@ module Moderation
     end
   end
 
-  # Base anti-spam module to be extended by all other modules.
-  module SpamFactory
-    # Check if the given user is exempt from spam filtering.
-    # @param user [#roles] the user or member to check for.
-    # @return [true, false] whether the user is exempt.
-    def self.exempt?(user)
-      return true unless user.respond_to?(:roles)
+  # Generic class for storing log stashes.
+  class Loggable
+    # @return [Integer] the amount of results that failed.
+    attr_reader :failed
 
-      user.roles.map(&:id).intersect?(SAFE_ROLES)
+    # @return [Integer] the amount of results that were deleted.
+    attr_reader :deleted
+
+    # @return [Boolean] if the current log has already been bounced.
+    attr_accessor :bounced
+
+    # @!visibility private
+    def initialize
+      @links = []
+      @failed = 0
+      @deleted = 0
+      @bounced = nil
     end
 
-    # Ensure a bucket exists for the given user.
-    # @param user [#id] the user or member to create a bucket for.
-    # @return [StorageBucket] the created storage bucket for the user.
-    def self.make_bucket(user)
-      MUTEX.synchronize { BUCKET[user.id] ||= StorageBucket.new }
+    # Fetch the links that were deleted in the log stash.
+    # @return [Array<URI>] the hyperlinks that were deleted.
+    def links
+      @links.first(5).map(&:to_s).uniq
     end
 
-    # Drain the provided storage bucket.
-    # @param bucket [StorageBucket] the storage bucket which should be drained.
-    # @return [void] this method does not return usable data for the caller.
-    def self.delete_spam(bucket)
-      MUTEX.synchronize { bucket.shift { |message| message.delete } }
+    # Whether this log stash has been marked as being bounced.
+    # @return [true, false] whether the log stash is bounced or not.
+    def bounced?
+      @bounced.nil? ? false : @bounced
     end
 
-    # Remove any dead buckets. The removal threshold is one hour (3600s).
-    # @return [void] this method does not return usable data for the caller.
-    def self.audit
-      MUTEX.synchronize { BUCKET.delete_if { |_, value| value.dead? } }
-    end
-
-    # Merge multiple logging messages sent within a short time period into one.
-    # @param user [#id] the user or member to create a logging bucket for.
-    # @param value [Hash] the log data such as deleted message to log.
-    def debounced_logger(user, value)
-      MUTEX.synchronize do
-        # Add the log message to the user's log stash
-        LOGS[user.id] << value
-
-        # If a debounce is already in progress, don't start another.
-        LOGS[user.id].bouncing? ? return : LOGS[user.id].bounced
-      end
-
-      # Remove the entry entirely, since the user usually gets banned.
-      sleep(15) && MUTEX.synchronize { logger(user, LOGS.delete(user.id)) }
+    # Append a results hash to the log stash.
+    # @param hash [Hash<Symbol => Integer, Array>] the log data to append.
+    # @return [void] the method does not return any usable data for the user.
+    def <<(hash)
+      @links += hash[:links] if hash[:links]
+      @failed += hash[:failed] if hash[:failed]
+      @deleted += hash[:deleted] if hash[:deleted]
     end
   end
 end
