@@ -5,6 +5,7 @@ ENV TZ="Etc/UTC"
 RUN apk add --no-cache \
     postgresql-dev \
     icu-data-full \
+    libc6-compat \
     build-base \
     ruby-dev \
     firefox \
