@@ -48,7 +48,7 @@ module Moderation
     def self.logger(key, value)
       # Create the descripton for the given embed.
       embed_description = lambda do |state|
-        result = format(RESPONSE[1], value.failed, value.deleted, key.id)
+        result = format(RESPONSE[3], value.deleted, key.id)
         result << "\n> **URL**: #{value.links.map { "`#{it}`" }.join(', ')}"
         state ? ("> **Joined:** <t:#{key.joined_at.to_i}:R>\n" + result) : result
       end
@@ -101,13 +101,13 @@ module Moderation
     # @param bucket [StorageBucket] the storage bucket which should be drained.
     # @return [Hash<Symbol => Integer, Array>] the results of the message deletion.
     def self.delete_spam(bucket)
-      results = Hash.new { |hash, key| hash[key] = 0 if key != :links }
+      results = Hash.new
 
       MUTEX.synchronize do
         bucket.each do |item|
-          (results[:links] ||= []).push(*item.uris) unless item.uris && item.uris.empty?
+          (results[:deleted] ||= 0) += 1 if item.delete rescue nil
 
-          results[:deleted] += 1 if item.delete rescue results[:failed] += 1
+          (results[:links] ||= []).push(*item.uris) if item.uris.any?
         end
       end
 
@@ -127,7 +127,7 @@ module Moderation
       end
 
       # Remove the entry entirely, since the user usually gets banned.
-      sleep(20) && MUTEX.synchronize { logger(user, LOGGER.delete(user.id)) }
+      sleep(66) && MUTEX.synchronize { logger(user, LOGGER.delete(user.id)) }
     end
   end
 end
