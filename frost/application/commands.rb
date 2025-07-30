@@ -91,8 +91,8 @@ bot.register_application_command(:vanity, "Vanity Roles", contexts: [0], integra
     group.subcommand(:gradient, "Edit the gradient of a vanity role.") do |option|
       option.role(:role, "The vanity role whose gradient you want to edit.", required: true)
       option.integer(:style, "The style of the gradient to apply.", required: true, choices: { None: 0, Custom: 1, Holographic: 2 })
-      option.string(:start, "Provide a HEX color for the gradient start color.", required: false, min_length: 3, max_length: 16)
-      option.string(:end, "Provide a HEX color for the gradient end color.", required: false, min_length: 3, max_length: 16)
+      option.string(:start, "Provide a HEX color for the gradient's start color.", required: false, min_length: 3, max_length: 16)
+      option.string(:end, "Provide a HEX color for the gradient's end color.", required: false, min_length: 3, max_length: 16)
     end
 
     group.subcommand(:edit, "Edit a vanity role.") do |option|
@@ -143,8 +143,8 @@ bot.register_application_command(:booster, "Customizable perks for server booste
 
     group.subcommand(:gradient, "Edit your custom booster role's gradient.") do |option|
       option.integer(:style, "The style of the gradient to apply.", required: true, choices: { None: 0, Custom: 1, Holographic: 2 })
-      option.string(:start, "Provide a HEX color for your gradient start color.", required: false, min_length: 3, max_length: 16)
-      option.string(:end, "Provide a HEX color for your gradient end color.", required: false, min_length: 3, max_length: 16)
+      option.string(:start, "Provide a HEX color for your gradient's start color.", required: false, min_length: 3, max_length: 16)
+      option.string(:end, "Provide a HEX color for your gradient's end color.", required: false, min_length: 3, max_length: 16)
     end
 
     group.subcommand(:delete, "Delete your custom booster role.")
