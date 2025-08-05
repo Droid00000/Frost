@@ -38,9 +38,9 @@ module Boosters
 
     return if color.nil? || !color.match?(REGEX[1])
 
-    color = Discordrb::ColorRGB.new(color.match(REGEX[1])[0])
+    color = Discordrb::ColorRGB.new(color[REGEX[1]])
 
-    color.combined.zero? ? COLORS.pull(:BLACK) : color.combined
+    color.to_i.zero? ? COLORS.pull(:BLACK) : color.to_i
   end
 
   # Produce an audit reason log to show when operating on the current role.

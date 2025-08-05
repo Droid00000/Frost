@@ -74,11 +74,11 @@ module Moderation
     # @param bucket [StorageBucket] the storage bucket which should be drained.
     # @return [Hash<Symbol => Integer, Array>] the results of the message deletion.
     def self.delete_spam(bucket)
-      results = Hash.new
+      results = Hash.new { |map, key| map[key] = 0 if key != :links }
 
       MUTEX.synchronize do
         bucket.each do |item|
-          (results[:deleted] ||= 0) += 1 if item.delete rescue nil
+          results[:deleted] += 1 if item.delete rescue nil
 
           (results[:links] ||= []).push(*item.uris) if item.uris.any?
         end
