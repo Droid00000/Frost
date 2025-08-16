@@ -1,0 +1,12 @@
+# System Files
+.DS_Store
+.DS_Store?
+
+# Dependencies 
+Gemfile.lock
+
+# Credentials
+config.yml
+
+# Log Files
+logs.rb
