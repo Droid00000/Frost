@@ -1,0 +1,19 @@
+# Discord related credentials.
+Discord:
+  TOKEN: "TOKEN_HERE"
+  OWNER: "YOUR_ID_HERE"
+
+# Manga chapter related credentials.
+Chapter:
+  LINK: ""
+  CHANNEL: ""
+  ELEMENT: ""
+
+# the auto-moderation configuration.
+Moderator:
+  GUILD: ""
+  CHANNEL: ""
+
+# Database related credentials.
+Postgres:
+  URL: "postgres://URI_HERE"
