@@ -168,7 +168,7 @@ bot.register_application_command(:booster, "Customizable perks for server booste
 
     group.subcommand(:enable, "Enable the booster perks functionality.") do |option|
       option.role(:role, "The role that all booster roles should be moved above.", required: false)
-      option.boolean(:icon, "Whether external emojis be allowed as role icons.", required: false)
+      option.boolean(:icon, "Whether external emojis should be allowed as role icons.", required: false)
     end
 
     group.subcommand(:unban, "Unban a member from using booster perks.") do |option|
