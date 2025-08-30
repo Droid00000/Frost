@@ -56,18 +56,10 @@ module Boosters
     # @return [Array(String, Integer)] Metadata info about this guild.
     def view = [@bot.user(enabled_by)&.name, enabled_at]
 
-    # Create a new record or update an existing record.
-    # @param guild_id [Integer] ID of the guild this record is for.
-    # @param role_id [Integer] ID of the hoist-role for this guild.
-    # @param any_icon [Boolean] Whether this guild supports external role icons.
-    # @param setup_by [Integer] ID of the user who setup booster perks for this guild.
-    # @param setup_at [Integer] Timestamp of when booster perks were setup for this guild.
-    def edit(**options)
-      POSTGRES.transaction do
-        options = options.slice(:role_id, :any_icon) unless blank?
-
-        blank? ? @@pg.insert(**options) : @@pg.where(guild_id: guild).update(options)
-      end
+    # Delete the record for this guild.
+    # @note This method takes arguments, but currently they're ignored.
+    def delete(**_options)
+      POSTGRES.transaction { @@pg.where(guild_id: guild).delete }
     end
 
     # Get a list of all the members banned in this guild.
@@ -79,15 +71,17 @@ module Boosters
       end
     end
 
-    # Delete the record for this guild.
-    # @note This method takes arguments, but currently they're ignored.
-    def delete(**_options)
+    # Create a new record or update an existing record.
+    # @param guild_id [Integer] ID of the guild this record is for.
+    # @param role_id [Integer] ID of the hoist-role for this guild.
+    # @param any_icon [Boolean] Whether this guild supports external role icons.
+    # @param setup_by [Integer] ID of the user who setup booster perks for this guild.
+    # @param setup_at [Integer] Timestamp of when booster perks were setup for this guild.
+    def edit(**options)
       POSTGRES.transaction do
-        # Remove the settings record.
-        @@pg.where(guild_id: guild).delete
+        options = options.slice(:role_id, :any_icon) unless blank?
 
-        # Remove all active boosters.
-        @@users.where(guild_id: guild).delete
+        blank? ? @@pg.insert(**options) : @@pg.where(guild_id: guild).update(options)
       end
     end
 

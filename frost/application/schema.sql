@@ -96,7 +96,7 @@ $$;
 -- Function for fetching information about a booster.
 CREATE OR REPLACE FUNCTION guild_booster (user_id BIGINT, guild_id BIGINT)
   RETURNS TABLE (
-    color_id BIGINT, 
+    color_id INTEGER, 
     role_id BIGINT, 
     any_icon BOOLEAN, 
     user_role BIGINT, 
@@ -120,3 +120,6 @@ WHERE
   guild_boosters.user_id IS NOT NULL OR booster_settings.guild_id IS NOT NULL
   OR banned_boosters.user_id IS NOT NULL LIMIT 1;
 $$;
+
+-- Foreign key for the `guild_boosters` table.
+ALTER TABLE guild_boosters ADD CONSTRAINT guild_boosters_fkey FOREIGN KEY (guild_id) REFERENCES booster_settings(guild_id) ON DELETE CASCADE;
