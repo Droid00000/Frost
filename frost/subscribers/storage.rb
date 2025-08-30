@@ -31,9 +31,6 @@ module Boosters
     @@pg = POSTGRES[:booster_settings]
 
     # @return [Sequel::Dataset]
-    @@users = POSTGRES[:guild_boosters]
-
-    # @return [Sequel::Dataset]
     @@bans = POSTGRES[:banned_boosters]
 
     # @!visibility private
