@@ -4,17 +4,17 @@ module Boosters
   # Command handler for /booster role edit.
   def self.edit(data)
     unless data.server.bot.permission?(:manage_roles)
-      data.edit_response(content: RESPONSE[9])
+      data.edit_response(content: RESPONSE[10])
       return
     end
 
     unless data.user.boosting?
-      data.edit_response(content: RESPONSE[14])
+      data.edit_response(content: RESPONSE[15])
       return
     end
 
     unless safe_name?(data)
-      data.edit_response(content: RESPONSE[13])
+      data.edit_response(content: RESPONSE[14])
       return
     end
 
@@ -22,7 +22,7 @@ module Boosters
     member = Boosters::Member.new(data)
 
     if member.guild.blank?
-      data.edit_response(content: RESPONSE[17])
+      data.edit_response(content: RESPONSE[18])
       return
     end
 
@@ -32,8 +32,13 @@ module Boosters
     end
 
     if member.banned?
-      data.edit_response(content: RESPONSE[10])
+      data.edit_response(content: RESPONSE[11])
       return
+    end
+
+    if data.server.role(member.role).nil?
+      data.edit_response(content: RESPONSE[2])
+      return member.delete
     end
 
     options = {

@@ -11,16 +11,17 @@ module Boosters
     6 => "Your role couldn't be edited. The bot's highest role is below your custom role.",
     7 => "Your role has been successfully edited! <a:LoidClap_Maomao:1276327798104920175>",
     8 => "Your role couldn't be created. The maximum role limit has been reached.",
-    9 => "The bot needs to have the `manage roles` permission to do this.",
-    10 => "You've been banned from using booster perks in this server.",
-    11 => "Please provide a start **and** end color for your gradient.",
-    12 => "Please provide a start **or** end color for your gradient.",
-    13 => "Your role name contains a word that cannot be used.",
-    14 => "You must be a server booster to use this command.",
-    15 => "Please provide a start color for your gradient.",
-    16 => "Please provide an end color for your gradient.",
-    17 => "This server hasn't enabled booster perks.",
-    18 => "You've already claimed your custom role."
+    9 => "Your role couldn't be created. This server's hoist role was deleted.",
+    10 => "The bot needs to have the `manage roles` permission to do this.",
+    11 => "You've been banned from using booster perks in this server.",
+    12 => "Please provide a start **and** end color for your gradient.",
+    13 => "Please provide a start **or** end color for your gradient.",
+    14 => "Your role name contains a word that cannot be used.",
+    15 => "You must be a server booster to use this command.",
+    16 => "Please provide a start color for your gradient.",
+    17 => "Please provide an end color for your gradient.",
+    18 => "This server hasn't enabled booster perks.",
+    19 => "You've already claimed your custom role."
   }.freeze
 
   # The holographic style colors.

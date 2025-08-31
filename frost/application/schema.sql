@@ -39,9 +39,9 @@ CREATE TABLE IF NOT EXISTS world_timezones (
 -- Holds info about booster settings.
 CREATE TABLE IF NOT EXISTS booster_settings (
   role_id BIGINT NOT NULL,
+  features BIGINT NOT NULL,
   setup_by BIGINT NOT NULL,
   setup_at BIGINT NOT NULL,
-  any_icon BOOLEAN NOT NULL,
   guild_id BIGINT PRIMARY KEY
 );
 

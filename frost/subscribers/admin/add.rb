@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AdminCommands
-  # namespace for booster admins.
+  # Namespace for booster admins.
   module Boosters
     # Manually adds a user to the database.
     def self.add(data)

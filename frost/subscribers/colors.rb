@@ -4,12 +4,12 @@ module Boosters
   # Command handler for /booster role gradient.
   def self.colors(data)
     unless data.server.bot.permission?(:manage_roles)
-      data.edit_response(content: RESPONSE[9])
+      data.edit_response(content: RESPONSE[10])
       return
     end
 
     unless data.user.boosting?
-      data.edit_response(content: RESPONSE[14])
+      data.edit_response(content: RESPONSE[15])
       return
     end
 
@@ -17,7 +17,7 @@ module Boosters
     member = Boosters::Member.new(data)
 
     if member.guild.blank?
-      data.edit_response(content: RESPONSE[17])
+      data.edit_response(content: RESPONSE[18])
       return
     end
 
@@ -27,8 +27,13 @@ module Boosters
     end
 
     if member.banned?
-      data.edit_response(content: RESPONSE[10])
+      data.edit_response(content: RESPONSE[11])
       return
+    end
+
+    if data.server.role(member.role).nil?
+      data.edit_response(content: RESPONSE[2])
+      return member.delete
     end
 
     options = {
@@ -45,24 +50,24 @@ module Boosters
     gradient_validator = proc do
       if !options[:colour] && !options[:secondary]
         if role.gradient?
-          data.edit_response(content: RESPONSE[12])
+          data.edit_response(content: RESPONSE[13])
           return
         end
 
         unless role.gradient?
-          data.edit_response(content: RESPONSE[11])
+          data.edit_response(content: RESPONSE[12])
           return
         end
       end
 
       if role.holographic? || !role.gradient?
         unless options[:colour]
-          data.edit_response(content: RESPONSE[15])
+          data.edit_response(content: RESPONSE[16])
           return
         end
 
         unless options[:secondary]
-          data.edit_response(content: RESPONSE[16])
+          data.edit_response(content: RESPONSE[17])
           return
         end
       end

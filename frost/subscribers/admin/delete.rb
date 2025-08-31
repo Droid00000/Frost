@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AdminCommands
-  # namespace for booster admins.
+  # Namespace for booster admins.
   module Boosters
     # Manually removes a booster from the database.
     def self.delete(data)

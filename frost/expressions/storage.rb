@@ -11,9 +11,7 @@ module Emojis
 
     # Returns the most used emojis.
     def self.top(guild)
-      POSTGRES.transaction do
-        @@pg.where(guild_id: guild.id).select(:emoji_id, :balance).order(Sequel.desc(:balance)).limit(33)
-      end
+      @@pg.where(guild_id: guild.id).select(:emoji_id, :balance).order(Sequel.desc(:balance)).limit(33)
     end
 
     # Inserts a set of new emojis into the DB.

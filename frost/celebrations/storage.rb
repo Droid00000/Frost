@@ -88,7 +88,7 @@ module Birthdays
 
     # @!visibility private
     def find_guild(**options)
-      @lazy ? options : POSTGRES.transaction { @@pg.where(guild_id: @guild).first } || options
+      @lazy ? options : @@pg.where(guild_id: @guild).first || options
     end
   end
 
@@ -133,35 +133,27 @@ module Birthdays
     def synced? = user_guilds.any?(guild_id)
 
     # Remove this members birthday records for every guild.
-    def delete
-      POSTGRES.transaction { @@pg.where(user_id: user_id).delete }
-    end
+    def delete = @@pg.where(user_id: user_id).delete
 
     # Set the birthday and inital state for the user.
     def birthday=(birthday)
-      POSTGRES.transaction do
-        @@pg.insert_conflict(**on_conflict(birthday.utc)).insert(**on_insert(birthday.utc))
-      end
+      @@pg.insert_conflict(**conflict(birthday.utc)).insert(insertion(birthday.utc))
     end
 
     # Un-sync the guild from the user's guild's array.
     def desync
-      POSTGRES.transaction do
-        @@pg.where(user_id: user_id).update(guilds: Sequel.function(:array_remove, :guilds, guild_id))
-      end
+      @@pg.where(user_id: user_id).update(guilds: Sequel.function(:array_remove, :guilds, guild_id))
     end
 
     # Sync the guild into the user's guild's array.
     def sync
-      POSTGRES.transaction do
-        @@pg.where(user_id: user_id).update(guilds: Sequel.function(:array_append, :guilds, guild_id))
-      end
+      @@pg.where(user_id: user_id).update(guilds: Sequel.function(:array_append, :guilds, guild_id))
     end
 
     private
 
     # @!visibility private
-    def on_conflict(*options)
+    def conflict(*options)
       { target: :user_id, update: { birthdate: options.first } }
     end
 
@@ -171,7 +163,7 @@ module Birthdays
     end
 
     # @!visibility private
-    def on_insert(*options)
+    def insertion(*options)
       { user_id: user_id, guilds: Sequel.pg_array([guild_id]), birthdate: options[0] }
     end
   end
@@ -200,9 +192,7 @@ module Birthdays
     # Set the pending state for the member.
     # @param pending [true, false] if the member is pending or not.
     def pending=(pending)
-      POSTGRES.transaction do
-        @@pg.where(user_id: user_id).update(pending: pending)
-      end
+      @pg.where(user_id: user_id).update(pending: pending)
     end
 
     # Send the birthday message to a channel for a guild.
@@ -253,10 +243,8 @@ module Birthdays
         ANY(ARRAY(SELECT guilds FROM user_birthdays WHERE user_id = ?));
       SQL
 
-      POSTGRES.transaction do
-        POSTGRES[query, user_id].all.map do |model|
-          Guild.new(model[:guild_id], model[:role_id], model[:channel_id])
-        end
+      POSTGRES[query, user_id].all.map do |model|
+        Guild.new(model[:guild_id], model[:role_id], model[:channel_id])
       end
     end
   end

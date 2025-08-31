@@ -14,12 +14,4 @@ module AdminCommands
     event.defer(ephemeral: true)
     General.time(event)
   end
-
-  server_role_delete do |event|
-    General.roles(event)
-  end
-
-  channel_delete do |event|
-    General.channels(event)
-  end
 end

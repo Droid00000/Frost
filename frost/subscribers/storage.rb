@@ -3,6 +3,14 @@
 module Boosters
   # A guild that a server booster belongs to.
   class Guild
+    # Map of guild flags.
+    FLAGS = {
+      any_icon: 1 << 0,
+      no_gradients: 1 << 1,
+      self_service: 1 << 2,
+      manual_queue: 1 << 3
+    }.freeze
+
     # @return [Boolean]
     attr_reader :lazy
     alias lazy? lazy
@@ -16,16 +24,16 @@ module Boosters
     alias hoist_role role_id
 
     # @return [Integer, nil]
+    attr_reader :features
+    alias flags features
+
+    # @return [Integer, nil]
     attr_reader :enabled_by
     alias setup_by enabled_by
 
     # @return [Integer, nil]
     attr_reader :enabled_at
     alias setup_at enabled_at
-
-    # @return [Boolean, nil]
-    attr_reader :any_icon
-    alias any_icon? any_icon
 
     # @return [Sequel::Dataset]
     @@pg = POSTGRES[:booster_settings]
@@ -40,7 +48,7 @@ module Boosters
       @guild = data.server.id
       model = find_guild(**rest)
       @role_id = model[:role_id]
-      @any_icon = model[:any_icon]
+      @features = model[:features]
       @enabled_by = model[:setup_by]
       @enabled_at = model[:setup_at]
     end
@@ -55,30 +63,40 @@ module Boosters
 
     # Delete the record for this guild.
     # @note This method takes arguments, but currently they're ignored.
-    def delete(**_options)
-      POSTGRES.transaction { @@pg.where(guild_id: guild).delete }
-    end
+    def delete(**_options) = @@pg.where(guild_id: guild).delete
 
     # Get a list of all the members banned in this guild.
     # @param offset [Integer, nil] The number of bans to skip before returning results.
     # @return [Array<Sequel::Dataset>] An array of all the banned members for the guild.
     def bans(**options)
-      POSTGRES.transaction do
-        @@bans.where(guild_id: guild).offset(options[:offset] || 0).order(:user_id)
-      end
+      @@bans.where(guild_id: guild).offset(options[:offset] || 0).order(:user_id)
     end
 
     # Create a new record or update an existing record.
     # @param guild_id [Integer] ID of the guild this record is for.
     # @param role_id [Integer] ID of the hoist-role for this guild.
-    # @param any_icon [Boolean] Whether this guild supports external role icons.
+    # @param features [Integer] The feature flags to set for this guild.
     # @param setup_by [Integer] ID of the user who setup booster perks for this guild.
     # @param setup_at [Integer] Timestamp of when booster perks were setup for this guild.
     def edit(**options)
       POSTGRES.transaction do
-        options = options.slice(:role_id, :any_icon) unless blank?
+        options = options.slice(:role_id, :features) unless blank?
 
         blank? ? @@pg.insert(**options) : @@pg.where(guild_id: guild).update(options)
+      end
+    end
+
+    # @!method any_icon?
+    #   @return [Boolean] whether guild boosters can use external emojis as role icons.
+    # @!method no_graidents?
+    #   @return [Boolean] whether setting graidents to booster roles has been disabled.
+    # @!method self_service?
+    #   @return [Boolean] whether this guild is using the self service mode for booster perks.
+    # @!method manual_queue?
+    #   @return [Boolean] whether this guild is using the manual approval mode for booster perks.
+    FLAGS.each do |name, value|
+      define_method("#{name}?") do
+        @features.anybits?(value)
       end
     end
 
@@ -86,7 +104,7 @@ module Boosters
 
     # @!visibility private
     def find_guild(**options)
-      @lazy ? options : POSTGRES.transaction { @@pg.where(guild_id: @guild).first } || options
+      @lazy ? options : @@pg.where(guild_id: @guild).first || options
     end
   end
 
@@ -130,7 +148,25 @@ module Boosters
     # @return [Boolean] Whether this user cannot use booster perks.
     def banned? = @banned || false
 
+    # Unban a user from using booster perks in this guild.
+    def unban
+      @@bans.where(**query).delete
+    end
+
+    # Check if this user's role has been deleted in this guild.
+    # @return [Boolean] Whether the user's role has been deleted.
+    def blank_role?
+      role ? @data.server.role(role).nil? : false
+    end
+
+    # Remove this members booster records in this guild.
+    def delete
+      @@users.where(**query).delete && (@role = nil)
+    end
+
     # Ban this user from using booster perks in this guild.
+    # @param banned_by [Integer] the user who's issuing the ban.
+    # @param banned_at [Integer] the time at when the ban happened.
     def ban(**)
       POSTGRES.transaction do
         @@users.where(**query).delete
@@ -139,28 +175,16 @@ module Boosters
       end
     end
 
-    # Unban a user from using booster perks in this guild.
-    def unban
-      POSTGRES.transaction { @@bans.where(**query).delete }
-    end
-
-    # Remove this members booster records in this guild.
-    def delete
-      POSTGRES.transaction { @@users.where(**query).delete }
-    end
-
     # Set the base role color used by this member.
     # @param color [ColourRGB, Integer] The new base color.
     def color=(color)
-      POSTGRES.transaction { @@users.where(**query).update(color_id: color.to_i) }
+      @@users.where(**query).update(color_id: color.to_i)
     end
 
     # Edit this members booster role in this guild.
     # @note This will update the members role if it already exists.
     def role=(role)
-      POSTGRES.transaction do
-        @@users.insert_conflict(**conflict(role)).insert(**query, **conflict(role)[:update])
-      end
+      @@users.insert_conflict(**conflict(role)).insert(**query, **conflict(role)[:update])
     end
 
     private

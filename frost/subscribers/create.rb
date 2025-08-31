@@ -4,12 +4,12 @@ module Boosters
   # Command handler for /booster role claim.
   def self.create(data)
     unless data.server.bot.permission?(:manage_roles)
-      data.edit_response(content: RESPONSE[9])
+      data.edit_response(content: RESPONSE[10])
       return
     end
 
     unless data.user.boosting?
-      data.edit_response(content: RESPONSE[14])
+      data.edit_response(content: RESPONSE[15])
       return
     end
 
@@ -19,25 +19,34 @@ module Boosters
     end
 
     unless safe_name?(data)
-      data.edit_response(content: RESPONSE[13])
+      data.edit_response(content: RESPONSE[14])
       return
     end
 
     # Initalize the invoking user.
     member = Boosters::Member.new(data)
 
+    # If the role doesn't exist in the cache and the
+    # member isn't blank, the role was deleted.
+    member.delete if member.blank_role?
+
     unless member.blank?
-      data.edit_response(content: RESPONSE[18])
+      data.edit_response(content: RESPONSE[19])
       return
     end
 
     if member.guild.blank?
-      data.edit_response(content: RESPONSE[17])
+      data.edit_response(content: RESPONSE[18])
       return
     end
 
     if member.banned?
-      data.edit_response(content: RESPONSE[10])
+      data.edit_response(content: RESPONSE[11])
+      return
+    end
+
+    unless data.server.role(member.guild.hoist_role)
+      data.edit_response(content: RESPONSE[9])
       return
     end
 
@@ -57,7 +66,7 @@ module Boosters
     begin
       role = data.server.create_role(**options)
     rescue Discordrb::Errors::NoPermission
-      data.edit_response(content: RESPONSE[9])
+      data.edit_response(content: RESPONSE[10])
       return
     end
 

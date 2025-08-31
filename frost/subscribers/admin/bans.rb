@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AdminCommands
-  # namespace for booster admins.
+  # Namespace for booster admins.
   module Boosters
     # Get a list of banned users in this server.
     def self.bans(data)

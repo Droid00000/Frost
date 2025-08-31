@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AdminCommands
-  # namespace for booster admins.
+  # Namespace for booster admins.
   module Boosters
     # Ban someone from using booster perks in a server.
     def self.ban(data)

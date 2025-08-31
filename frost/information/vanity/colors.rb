@@ -48,7 +48,11 @@ module Vanity
     when 1
       gradient_validator.call
     when 2
-      options.merge!(::Boosters::HOLOGRAPHIC)
+      if options[:colour] || options[:secondary]
+        gradient_validator.call
+      else
+        options.merge!(::Boosters::HOLOGRAPHIC)
+      end
     when 0
       options.merge!({
                        colour: role.color,
