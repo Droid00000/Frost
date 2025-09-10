@@ -32,9 +32,9 @@ module AdminCommands
       unless data.options["icon"].nil?
         options[:features] = case data.options["icon"]
                              when TrueClass
-                               (guild.features || 0) | Boosters::Guild::FLAGS[:any_icon]
+                               (guild.features || 0) | ::Boosters::Guild::FLAGS[:any_icon]
                              when FalseClass
-                               (guild.features || 0) & Boosters::Guild::FLAGS[:any_icon]
+                               (guild.features || 0) & ~::Boosters::Guild::FLAGS[:any_icon]
                              end
       end
 

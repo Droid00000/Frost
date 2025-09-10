@@ -6,7 +6,7 @@ module Boosters
     # Map of guild flags.
     FLAGS = {
       any_icon: 1 << 0,
-      no_gradients: 1 << 1,
+      no_gradient: 1 << 1,
       self_service: 1 << 2,
       manual_queue: 1 << 3
     }.freeze

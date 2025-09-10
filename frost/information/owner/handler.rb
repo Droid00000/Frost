@@ -7,7 +7,7 @@ module AdminCommands
     Owner.science(event)
   end
 
-  modal_submit(custom_id: /3/) do |event|
+  modal_submit(custom_id: "3") do |event|
     Owner.code(event)
   end
 

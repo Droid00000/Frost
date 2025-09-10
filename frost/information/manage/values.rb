@@ -14,10 +14,11 @@ module Settings
     9 => "**Manager**\nBooster perks were enabled in this server by **%s** on <t:%s:D>\n\n",
     10 => "**Channel**\nMembers will have their birthdays announced in this channel: <#%s>",
     11 => "**Stats**\nI'm on %s servers with a total of %s members and %s channels.",
-    12 => "This feature has not been enabled.",
-    13 => "### Birthday Perks for %s",
-    14 => "### Booster Perks for %s",
-    15 => "### Main Menu"
+    12 => "This server's hoist role has been deleted.",
+    13 => "This feature has not been enabled.",
+    14 => "### Birthday Perks for %s",
+    15 => "### Booster Perks for %s",
+    16 => "### Main Menu"
   }.freeze
 
   # Resolve the select menu.

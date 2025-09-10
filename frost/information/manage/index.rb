@@ -22,7 +22,7 @@ module Settings
         # Add our main menu header here in a seperate text display
         # container in order to get some of that natural padding
         # that's tricky to stimulate with the other types of seperators.
-        container.text_display(text: RESPONSE[15])
+        container.text_display(text: RESPONSE[16])
 
         # Create our main section body that contains all of the text we want
         # to show to our user. Currently, we have to use one big string, since

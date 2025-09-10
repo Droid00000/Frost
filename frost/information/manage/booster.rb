@@ -9,6 +9,12 @@ module Settings
 
     # Return unless booster perks are enabled here.
     if guild.blank?
+      data.send_message(content: RESPONSE[13], ephemeral: true)
+      return
+    end
+
+    # Return unless the guild's hoist role exists.
+    if data.server.role(guild.hoist_role).nil?
       data.send_message(content: RESPONSE[12], ephemeral: true)
       return
     end
@@ -27,7 +33,7 @@ module Settings
         # gets addressed sometime in the future. For now, this will do though.
         container.section do |section|
           # Add our main title heading here.
-          section.text_display(text: format(RESPONSE[14], data.server.name))
+          section.text_display(text: format(RESPONSE[15], data.server.name))
 
           # Add the icon of the server as our thumbnail.
           section.thumbnail(url: data.server.icon_url)
