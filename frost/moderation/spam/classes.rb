@@ -82,7 +82,7 @@ module Moderation
     # Delete this message from the source location.
     # @return [void] this method does not return usable data.
     def delete
-      Discordrb::API::Channel.delete_message(BOT.token, @channel_id, @message_id)
+      Discordrb::API::Channel.delete_message(BOT.token, @channel_id, @message_id) rescue nil
     end
   end
 
@@ -92,7 +92,7 @@ module Moderation
     attr_reader :deleted
 
     # @return [Boolean] if the current log has already been bounced.
-    attr_accessor :bounced
+    attr_writer :bounced
 
     # @!visibility private
     def initialize
@@ -100,6 +100,7 @@ module Moderation
       @links = []
       @deleted = 0
       @bounced = nil
+      @channels = []
     end
 
     # Fetch the links that were deleted in the log stash.
@@ -114,6 +115,12 @@ module Moderation
       @files.uniq.first(15)
     end
 
+    # Fetch the amount of unique channels where deletes occured.
+    # @return [Integer] the amount of channels where deletes happened.
+    def channel_count
+      @channels.uniq.length
+    end
+
     # Whether this log stash has been marked as being bounced.
     # @return [true, false] whether the log stash is bounced or not.
     def bounced?
@@ -126,7 +133,8 @@ module Moderation
     def <<(hash)
       @files.push(*hash[:files]) if hash[:files]
       @links.push(*hash[:links]) if hash[:links]
-      @deleted += hash[:deleted] if hash[:deleted]
+      @deleted += hash[:deleted].size if hash[:deleted]
+      @channels.push(*hash[:deleted].map(&:channel_id))
     end
   end
 end

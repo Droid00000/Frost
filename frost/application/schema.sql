@@ -98,14 +98,14 @@ CREATE OR REPLACE FUNCTION guild_booster (user_id BIGINT, guild_id BIGINT)
   RETURNS TABLE (
     color_id INTEGER, 
     role_id BIGINT, 
-    any_icon BOOLEAN, 
+    features BIGINT, 
     user_role BIGINT, 
     banned BOOLEAN
   ) ROWS 1 LANGUAGE SQL stable AS $$ 
 SELECT
    guild_boosters.color_id,
    booster_settings.role_id,
-   booster_settings.any_icon,
+   booster_settings.features,
    guild_boosters.role_id AS user_role,
    COALESCE(banned_boosters.user_id IS NOT NULL, FALSE) AS banned
 FROM

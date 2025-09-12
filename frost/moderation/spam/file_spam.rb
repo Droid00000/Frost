@@ -26,6 +26,9 @@ module Moderation
         state ? (result + format(RESPONSE[4], key.joined_at.to_i)) : result
       end
 
+      # Timeout the user if they've spammed in more than 10 channels.
+      key.timeout = (Time.now + 604_800) if value.channel_count >= 10
+
       # Wrap everything in a temporary directory.
       Dir.mktmpdir do |directory|
         # The path to the file to create.
@@ -90,13 +93,13 @@ module Moderation
     # @param bucket [StorageBucket] the storage bucket which should be drained.
     # @return [Hash<Symbol => Integer, Array>] the results of the message deletion.
     def self.delete_spam(bucket)
-      results = Hash.new { |map, key| map[key] = 0 if key != :files }
+      results = Hash.new { |map, key| map[key] = [] }
 
       MUTEX.synchronize do
         bucket.each do |item|
-          results[:deleted] += 1 if item.delete rescue nil
+          results[:files].push(*item.attachments)
 
-          (results[:files] ||= []).push(*item.attachments)
+          results[:deleted] << item if item.delete rescue nil
         end
       end
 

@@ -21,7 +21,7 @@ module Moderation
     739_460_673_779_531_808
   ].freeze
 
-  # URLs that should be ignored by the auotmod.
+  # URLs that should be ignored by the automod.
   SAFE_LINKS = [
     "x.com",
     "redd.it",
@@ -30,6 +30,7 @@ module Moderation
     "youtu.be",
     "imdb.com",
     "hulu.com",
+    "ebay.com",
     "tidal.com",
     "yahoo.com",
     "tenor.com",
@@ -77,6 +78,7 @@ module Moderation
     "music.youtube.com",
     "player.spotify.com",
     "en.m.wikipedia.org",
+    "archiveofourown.org",
     "animenewsnetwork.com",
     "mangaplus.shueisha.co.jp"
   ].freeze
