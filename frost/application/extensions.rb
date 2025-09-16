@@ -158,7 +158,7 @@ module Discordrb
       # @param name [String] The name of the option.
       # @return [Emoji] Emojis sent in this interaction.
       def emoji(name)
-        @options[name] ? @bot.parse_mentions(@options[name]).find { it.is_a? Discordrb::Emoji } : nil
+        @options[name] ? @bot.parse_mentions(@options[name]).find { it.is_a?(Discordrb::Emoji) } : nil
       end
 
       # @param name [String] The name of the option.
@@ -167,10 +167,6 @@ module Discordrb
         return @interaction.user if name.nil?
 
         @resolved[:members][@options[name].to_i] || @resolved[:users][@options[name].to_i]
-      end
-
-      def channels(name)
-        @resolved[:channels][@options[name].to_i] || @bot.channel(@options[name].to_i)
       end
     end
   end
@@ -341,6 +337,6 @@ end
 class Hash
   # Get a given key from a hash.
   def pull(data)
-    self[data.to_s.strip.downcase.gsub(/[^a-zA-Z_\s]/, "").strip.gsub(/(?<=[^\,\.])\s+|\A\s+/, "_").strip.downcase.to_sym] if data
+    self[data.to_s.strip.downcase.gsub(/[^a-zA-Z_\s]/, "").strip.gsub(/(?<=[^,.])\s+|\A\s+/, "_").strip.downcase.to_sym] if data
   end
 end
