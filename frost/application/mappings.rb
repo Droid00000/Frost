@@ -59,7 +59,8 @@ COLORS = {
   yellow: 16_705_372,
   blurple: 5_793_266,
   original_blurple: 7_506_394,
-  baby_blue: 9_031_664
+  baby_blue: 9_031_664,
+  default: 0
 }.freeze
 
 # The YAML configuration file used by the bot.
