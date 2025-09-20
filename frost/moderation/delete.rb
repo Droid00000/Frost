@@ -36,7 +36,7 @@ module Moderation
         end
 
         if data.options["mentions"]
-          pass << logic.mentions?(data.options["mentions"])
+          pass << mentions?(logic, data.options["mentions"])
         end
 
         if data.options["robot"]

@@ -89,4 +89,16 @@ module Moderation
   def self.plural(string, sum)
     "#{format(string, sum)}#{'s' if sum != 1}."
   end
+
+  # Check if a message object mentions a target.
+  # @param message [Discordrb::Message] The message to check.
+  # @param target [Integer, String] An ID of a role or a user.
+  # @return [true, false] whether the target was menitioned or not.
+  def self.mentions?(message, target)
+    mentions = (message.role_mentions + message.mentions)
+
+    mentions << message.server if message.mentions_everyone?
+
+    mentions.collect(&:resolve_id).include?(target.resolve_id)
+  end
 end

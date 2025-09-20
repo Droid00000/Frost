@@ -2,6 +2,7 @@
 
 # Resolvable string color codes.
 COLORS = {
+  default: 0,
   aquamarine: 8_388_564,
   beige: 16_119_260,
   black: 723_723,
@@ -59,8 +60,7 @@ COLORS = {
   yellow: 16_705_372,
   blurple: 5_793_266,
   original_blurple: 7_506_394,
-  baby_blue: 9_031_664,
-  default: 0
+  baby_blue: 9_031_664
 }.freeze
 
 # The YAML configuration file used by the bot.

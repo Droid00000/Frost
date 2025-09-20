@@ -137,21 +137,6 @@ module Discordrb
 end
 
 module Discordrb
-  # Monkey patch for message class.
-  class Message
-    # Check if someone was mentioned in a message.
-    # @param [User, Role, Integer, String, #to_i]
-    def mentions?(mention)
-      mentions = (@role_mentions + @user_mentions)
-
-      mentions.push(@server) if @mention_everyone
-
-      mentions.map(&:resolve_id).include?(mention.resolve_id)
-    end
-  end
-end
-
-module Discordrb
   module Events
     # Monkey patch for application commands.
     class ApplicationCommandEvent
