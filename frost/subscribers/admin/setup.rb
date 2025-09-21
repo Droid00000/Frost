@@ -11,39 +11,32 @@ module AdminCommands
       end
 
       options = {
-        setup_by: data.user.id,
-        setup_at: Time.now.to_i,
-        guild_id: data.server.id,
+        added_features: 0,
+        unset_features: 0,
+        user_id: data.user.id,
         role_id: data.options["role"]
       }
 
-      guild = ::Boosters::Guild.new(data)
+      guild = ::Boosters::Guild.new(data, lazy: true)
 
-      if guild.blank? && data.options["role"].nil?
+      case data.options["icon"]
+      when TrueClass
+        options[:added_features] |= ::Boosters::Guild::FLAGS[:any_icon]
+      when FalseClass
+        options[:unset_features] |= ::Boosters::Guild::FLAGS[:any_icon]
+      end
+
+      state = guild.edit(**options.compact)
+
+      if state == 400 && options[:role_id].nil?
         data.edit_response(content: RESPONSE[2])
         return
       end
 
-      if guild.blank? && data.options["icon"].nil?
-        data.edit_response(content: RESPONSE[3])
-        return
-      end
-
-      unless data.options["icon"].nil?
-        options[:features] = case data.options["icon"]
-                             when TrueClass
-                               (guild.features || 0) | ::Boosters::Guild::FLAGS[:any_icon]
-                             when FalseClass
-                               (guild.features || 0) & ~::Boosters::Guild::FLAGS[:any_icon]
-                             end
-      end
-
-      guild.edit(**options.compact)
-
-      if guild.blank?
-        data.edit_response(content: RESPONSE[9])
-      else
+      if state == 200
         data.edit_response(content: RESPONSE[8])
+      else
+        data.edit_response(content: RESPONSE[9])
       end
     end
   end

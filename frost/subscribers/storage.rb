@@ -73,22 +73,23 @@ module Boosters
     end
 
     # Create a new record or update an existing record.
-    # @param guild_id [Integer] ID of the guild this record is for.
-    # @param role_id [Integer] ID of the hoist-role for this guild.
-    # @param features [Integer] The feature flags to set for this guild.
-    # @param setup_by [Integer] ID of the user who setup booster perks for this guild.
-    # @param setup_at [Integer] Timestamp of when booster perks were setup for this guild.
+    # @param role_id [Integer] The ID of the hoist-role for this guild.
+    # @param user_id [Integer] The ID of the who's user editing this guild.
+    # @param added_features [Integer] The feature flags to set for this guild.
+    # @param unset_features [Integer] The feature flags to remove for this guild.
+    # @return [Integer] The resulting state of the query. `400` for error, `200` for success.
     def edit(**options)
-      POSTGRES.transaction do
-        options = options.slice(:role_id, :features) unless blank?
+      query = <<~SQL
+        SELECT * FROM set_booster_settings(?, ?, ?, ?, ?);
+      SQL
 
-        blank? ? @@pg.insert(**options) : @@pg.where(guild_id: guild).update(options)
-      end
+      POSTGRES[query, guild, options[:role_id], options[:user_id],
+               options[:added_features], options[:unset_features]].first[:set_booster_settings]
     end
 
     # @!method any_icon?
     #   @return [Boolean] whether guild boosters can use external emojis as role icons.
-    # @!method no_graidents?
+    # @!method no_graident?
     #   @return [Boolean] whether setting graidents to booster roles has been disabled.
     # @!method self_service?
     #   @return [Boolean] whether this guild is using the self service mode for booster perks.

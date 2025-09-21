@@ -54,17 +54,17 @@ module Birthdays
     def view = [@bot.user(enabled_by)&.name, enabled_at]
 
     # Create a new record or update an existing record.
-    # @param guild_id [Integer] ID of the guild this record is for.
-    # @param role_id [Integer] ID of the birthday role for this guild.
-    # @param channel_id [Integer] ID of the birthday annoucement channel for this guild.
-    # @param setup_by [Integer] ID of the user who setup birthday events for this guild.
-    # @param setup_at [Integer] Unix timestamp of when birthday events were setup for this guild.
+    # @param role_id [Integer] The ID of the birthday role for this guild.
+    # @param user_id [Integer] The ID of the user who setup birthday events for this guild.
+    # @param channel_id [Integer] The ID of the birthday annoucement channel for this guild.
+    # @return [Integer] The resulting state of the query. `400` for error, `200` for success.
     def edit(**options)
-      POSTGRES.transaction do
-        options = options.slice(:role_id, :channel_id) unless blank?
+      query = <<~SQL
+        SELECT * FROM set_birthday_settings(?, ?, ?, ?);
+      SQL
 
-        blank? ? @@pg.insert(**options) : @@pg.where(guild_id: guild).update(options)
-      end
+      POSTGRES[query, guild, options[:role_id], options[:user_id],
+               options[:channel_id]].first[:set_birthday_settings]
     end
 
     # Delete the record for this guild.

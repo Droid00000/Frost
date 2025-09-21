@@ -121,5 +121,66 @@ WHERE
   OR banned_boosters.user_id IS NOT NULL LIMIT 1;
 $$;
 
+-- Function for modifying a guild's booster settings.
+CREATE OR REPLACE FUNCTION set_booster_settings (
+  new_guild_id BIGINT,
+  new_role_id BIGINT DEFAULT NULL,
+  new_user_id BIGINT DEFAULT NULL,
+  added_features BIGINT DEFAULT NULL,
+  remove_features BIGINT DEFAULT NULL
+) RETURNS INTEGER LANGUAGE PLPGSQL AS $$
+BEGIN
+    PERFORM pg_advisory_xact_lock(new_guild_id);
+    IF EXISTS (SELECT 1 FROM booster_settings WHERE booster_settings.guild_id = $1) THEN
+        UPDATE booster_settings SET
+            role_id = COALESCE($2, booster_settings.role_id),
+            features = CASE
+                WHEN $4 = 0 AND $5 = 0 THEN
+                  booster_settings.features
+                WHEN $4 != 0 OR $5 != 0 THEN
+                  ((booster_settings.features & ~$5) | $4)
+                ELSE
+                  booster_settings.features
+              END
+        WHERE booster_settings.guild_id = $1;
+        RETURN 200;
+    ELSE
+        IF $2 IS NULL OR $4 IS NULL THEN
+          RETURN 400;
+        END IF;
+
+        INSERT INTO booster_settings (guild_id, role_id, any_icon, features, setup_by, setup_at)
+        VALUES ($1, $2, true, $4, $3, extract(epoch from now())::BIGINT);
+        RETURN 201;
+    END IF;
+END;
+$$;
+
+-- Function for modifying a guild's birthday settings.
+CREATE OR REPLACE FUNCTION set_birthday_settings (
+  new_guild_id BIGINT,
+  new_role_id BIGINT DEFAULT NULL,
+  new_setup_by BIGINT DEFAULT NULL,
+  new_channel_id BIGINT DEFAULT NULL
+) RETURNS INTEGER LANGUAGE PLPGSQL AS $$
+BEGIN
+    PERFORM pg_advisory_xact_lock(new_guild_id);
+    IF EXISTS (SELECT 1 FROM birthday_settings WHERE birthday_settings.guild_id = $1) THEN
+        UPDATE birthday_settings SET
+            role_id = COALESCE($2, birthday_settings.role_id),
+            channel_id = COALESCE($4, birthday_settings.channel_id)
+        WHERE birthday_settings.guild_id = $1; RETURN 200;
+    ELSE
+        IF $2 IS NULL THEN
+          RETURN 400;
+        END IF;
+
+        INSERT INTO birthday_settings (guild_id, role_id, channel_id, setup_by, setup_at)
+        VALUES ($1, $2, $4, $3, extract(epoch from now())::BIGINT);
+        RETURN 201;
+    END IF;
+END;
+$$;
+
 -- Foreign key for the `guild_boosters` table.
 ALTER TABLE guild_boosters ADD CONSTRAINT guild_boosters_fkey FOREIGN KEY (guild_id) REFERENCES booster_settings(guild_id) ON DELETE CASCADE;

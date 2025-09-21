@@ -11,32 +11,25 @@ module AdminCommands
       end
 
       # Initialize the invoking guild.
-      guild = ::Birthdays::Guild.new(data)
+      guild = ::Birthdays::Guild.new(data, lazy: true)
 
       options = {
-        setup_by: data.user.id,
-        setup_at: Time.now.to_i,
-        guild_id: data.server.id,
+        user_id: data.user.id,
         role_id: data.options["role"],
         channel_id: data.options["channel"]
-      }.compact
+      }
 
-      if guild.blank? && options[:role_id].nil?
+      state = guild.edit(**options.compact)
+
+      if state == 400 && options[:role_id].nil?
         data.edit_response(content: RESPONSE[2])
         return
       end
 
-      # This is optional, so allow it to be removed.
-      if options[:channel_id]&.match?(REGEX[3])
-        options[:channel_id] = nil
-      end
-
-      guild.edit(**options)
-
-      if guild.blank?
-        data.edit_response(content: RESPONSE[6])
-      else
+      if state == 200
         data.edit_response(content: RESPONSE[5])
+      else
+        data.edit_response(content: RESPONSE[6])
       end
     end
   end
