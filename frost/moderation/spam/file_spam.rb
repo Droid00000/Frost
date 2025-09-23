@@ -26,8 +26,10 @@ module Moderation
         state ? (result + format(RESPONSE[4], key.joined_at.to_i)) : result
       end
 
-      # Timeout the user if they've spammed in more than 10 channels.
-      key.timeout = (Time.now + 604_800) if value.channel_count >= 10
+      unless member.timeout?
+        # Timeout the user if they've spammed in more than 10 channels.
+        key.timeout = (Time.now + 604_800) if value.channel_count >= 10
+      end
 
       # Wrap everything in a temporary directory.
       Dir.mktmpdir do |directory|
