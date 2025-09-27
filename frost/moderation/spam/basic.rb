@@ -19,6 +19,14 @@ module Moderation
       target.const_set(:LOGGER, Hash.new do |hash, key|
         hash[key] = Loggable.new
       end)
+
+      # Set the timeout for the user associated with a given bucket.
+      # @param bucket [StorageBucket] the storage bucket for the user.
+      # @param channels [Array<Integer>] the channels the messages were spammed in.
+      # @return [void] this method does not return any usable data for the caller.
+      target.singleton_class.define_method(:set_timeout) do |bucket, channels|
+        bucket.timeout_member(Time.now + 604_800) if channels.uniq.length >= 10
+      end
     end
   end
 end

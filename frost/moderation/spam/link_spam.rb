@@ -56,11 +56,6 @@ module Moderation
         state ? (result + format(RESPONSE[4], key.joined_at.to_i)) : result
       end
 
-      unless member.timeout
-        # Timeout the user if they've spammed in more than 10 channels.
-        key.timeout = (Time.now + 604_800) if value.channel_count >= 10
-      end
-
       # Wrap everything in a temporary directory.
       Dir.mktmpdir do |directory|
         # The path to the file to create.
@@ -112,7 +107,7 @@ module Moderation
     # @param user [#id] the user or member to create a bucket for.
     # @return [StorageBucket] the created storage bucket for the user.
     def self.make_bucket(user)
-      MUTEX.synchronize { BUCKET[user.id] ||= StorageBucket.new }
+      MUTEX.synchronize { BUCKET[user.id] ||= StorageBucket.new(user) }
     end
 
     # Remove any dead buckets. The removal threshold is one hour (3600s).
@@ -132,6 +127,8 @@ module Moderation
           results[:links].push(*item.uris)
 
           results[:deleted] << item if item.delete rescue nil
+
+          set_timeout(bucket, bucket.depleted.map(&:channel_id))
         end
       end
 

@@ -4,14 +4,22 @@
 module Moderation
   # Generic storage bucket for tracking user spam.
   class StorageBucket
+    # @return [Member] the server member this storage bucket is for.
+    attr_reader :member
+
     # @return [Integer, nil] the last time at which the bucket was used for a drain.
     attr_reader :acted_at
+
+    # @return [Array<Messagable>] the messages that've been drained from the bucket.
+    attr_reader :depleted
 
     # @return [Array<Messagable>] the de-hydrated messages stored within the bucket.
     attr_reader :messages
 
     # @!visibility private
-    def initialize
+    def initialize(user)
+      @member = user
+      @depleted = []
       @messages = []
       @acted_at = nil
     end
@@ -27,7 +35,7 @@ module Moderation
     # Yield each stored message in the array to the given block.
     # @return [Messagable] each stored Messagable will by yielded.
     def each
-      yield(@messages.shift) while @messages.any?
+      yield(@messages.shift.tap { @depleted << it }) while @messages.any?
 
       @acted_at = Time.now.to_i
     end
@@ -54,6 +62,20 @@ module Moderation
     # @return [Integer] the number of unique chanels in the bucket.
     def channel_count
       @messages.map(&:channel_id).uniq.length
+    end
+
+    # Timeout the member this storage bucket is for.
+    # @param duration [Time] the time at when the user's mute should expire.
+    # @return [void] this method does not return usable data for the caller.
+    def timeout_member(duration)
+      @timed_out = @timed_out.nil? ? true : return
+
+      data = {
+        reason: "Auto-mute for spamming",
+        communication_disabled_until: duration&.iso8601
+      }
+
+      Discordrb::API::Server.update_member(BOT.token, @member.server.id, @member.id, **data) rescue nil
     end
   end
 
@@ -100,7 +122,6 @@ module Moderation
       @links = []
       @deleted = 0
       @bounced = nil
-      @channels = []
     end
 
     # Fetch the links that were deleted in the log stash.
@@ -113,12 +134,6 @@ module Moderation
     # @return [Array<Attachment>] the attachments that were deleted.
     def files
       @files.uniq.first(15)
-    end
-
-    # Fetch the amount of unique channels where deletes occured.
-    # @return [Integer] the amount of channels where deletes happened.
-    def channel_count
-      @channels.uniq.length
     end
 
     # Whether this log stash has been marked as being bounced.
@@ -134,7 +149,6 @@ module Moderation
       @files.push(*hash[:files]) if hash[:files]
       @links.push(*hash[:links]) if hash[:links]
       @deleted += hash[:deleted].size if hash[:deleted]
-      @channels.push(*hash[:deleted].map(&:channel_id))
     end
   end
 end
