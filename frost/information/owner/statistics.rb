@@ -48,4 +48,34 @@ module Owner
       end
     end
   end
+
+  # Log statistics for slash command usage.
+  def self.slash(data)
+    hash = data.interaction.data
+
+    # Filter through the options hash.
+    if hash["options"].any?
+      case hash["options"][0]["type"]
+      when 1
+        group = ""
+        subcommand = hash["options"][0]["name"].to_sym
+      when 2
+        group = hash["options"][0]["name"].to_sym
+        subcommand = hash["options"][0]["options"][0]["name"].to_sym
+      end
+    end
+
+    # Build out the dummy database row.
+    options = {
+      command_user: data.user.id,
+      command_epoch: Time.now.to_i,
+      command_channel: data.channel.id,
+      # rubocop:disable Lint/UselessAssignment
+      name: "#{hash['name']} #{group ||= ''}" << " #{subcommand ||= ''}"
+      # rubocop:enable Lint/UselessAssignment
+    }
+
+    # Add the final result to the cache.
+    Storage.add(options.tap { it[:name] = it[:name].gsub(/\s+/, " ").strip })
+  end
 end

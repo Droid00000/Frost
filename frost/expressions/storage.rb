@@ -14,10 +14,10 @@ module Emojis
       @@pg.where(guild_id: guild.id).select(:emoji_id, :balance).order(Sequel.desc(:balance)).limit(33)
     end
 
-    # Inserts a set of new emojis into the DB.
+    # Insert a set of new emojis into the DB.
     def self.drain
       POSTGRES.transaction do
-        # Generate a single hash for insertion.
+        # Generate a single array for insertion.
         emojis = @@emojis.dup.flat_map do |guild_id, hash|
           hash.map { |id, balance| { emoji_id: id, guild_id: guild_id, balance: balance } }
         end

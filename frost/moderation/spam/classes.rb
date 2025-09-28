@@ -68,7 +68,7 @@ module Moderation
     # @param duration [Time] the time at when the user's mute should expire.
     # @return [void] this method does not return usable data for the caller.
     def timeout_member(duration)
-      @timed_out = @timed_out.nil? ? true : return
+      @timed_out = @timed_out.nil? || return
 
       data = {
         reason: "Auto-mute for spamming",

@@ -62,6 +62,14 @@ CREATE TABLE IF NOT EXISTS user_birthdays (
   birthdate TIMESTAMPTZ NOT NULL
 );
 
+-- Holds info about command stats.
+CREATE TABLE IF NOT EXISTS command_stats (
+  command_name TEXT PRIMARY KEY,
+  command_users BIGINT[] NOT NULL,
+  command_epochs BIGINT[] NOT NULL,
+  command_channels BIGINT[] NOT NULL
+);
+
 -- Index for the `emoji_tracker` table.
 CREATE INDEX IF NOT EXISTS guild_emojis_idx ON emoji_tracker (guild_id, balance DESC);
 
