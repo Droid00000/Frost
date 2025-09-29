@@ -49,15 +49,14 @@ module Owner
     end
   end
 
-  # Log statistics for slash command usage.
+  # Log statistics for application command usage.
   def self.slash(data)
     hash = data.interaction.data
 
     # Filter through the options hash.
-    if hash["options"].any?
+    if hash["options"]&.any?
       case hash["options"][0]["type"]
       when 1
-        group = ""
         subcommand = hash["options"][0]["name"].to_sym
       when 2
         group = hash["options"][0]["name"].to_sym

@@ -5,7 +5,7 @@ module AdminCommands
   module Boosters
     # Manually adds a user to the database.
     def self.add(data)
-      unless data.user.permission?(:manage_server)
+      unless data.user.permission?(:manage_roles)
         data.edit_response(content: RESPONSE[6])
         return
       end
