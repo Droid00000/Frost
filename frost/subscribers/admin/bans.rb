@@ -5,7 +5,7 @@ module AdminCommands
   module Boosters
     # Get a list of banned users in this server.
     def self.bans(data)
-      unless data.user.permission?(:manage_roles)
+      unless data.user.permission?(:manage_server)
         data.edit_response(content: RESPONSE[5])
         return
       end

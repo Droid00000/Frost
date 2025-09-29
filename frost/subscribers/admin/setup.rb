@@ -5,7 +5,7 @@ module AdminCommands
   module Boosters
     # Setup booster perks or edit them.
     def self.setup(data)
-      unless data.user.permission?(:manage_roles)
+      unless data.user.permission?(:manage_server)
         data.edit_response(content: RESPONSE[6])
         return
       end

@@ -137,7 +137,7 @@ module Boosters
       @target_id = data.options["target"] || data.user.id
       @query = { user_id: @target_id, guild_id: @guild_id }
       model = find_guild_booster(*@query.values.map(&:to_i))
-      @guild = Guild.new(@data, lazy: true, **model.slice(:role_id, :any_icon))
+      @guild = Guild.new(@data, lazy: true, **model.slice(:role_id, :features))
       @banned, @role, @color = model[:banned], model[:user_role], model[:color_id]
     end
 
@@ -154,15 +154,15 @@ module Boosters
       @@bans.where(**query).delete
     end
 
+    # Remove the record for this booster in this this guild.
+    def delete
+      @@users.where(**query).delete
+    end
+
     # Check if this user's role has been deleted in this guild.
     # @return [Boolean] Whether the user's role has been deleted.
     def blank_role?
       role ? @data.server.role(role).nil? : false
-    end
-
-    # Remove this members booster records in this guild.
-    def delete
-      @@users.where(**query).delete && (@role = nil)
     end
 
     # Ban this user from using booster perks in this guild.

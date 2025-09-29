@@ -157,8 +157,8 @@ BEGIN
           RETURN 400;
         END IF;
 
-        INSERT INTO booster_settings (guild_id, role_id, any_icon, features, setup_by, setup_at)
-        VALUES ($1, $2, true, $4, $3, extract(epoch from now())::BIGINT);
+        INSERT INTO booster_settings (guild_id, role_id, features, setup_by, setup_at)
+        VALUES ($1, $2, $4, $3, extract(epoch from now())::BIGINT);
         RETURN 201;
     END IF;
 END;

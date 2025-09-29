@@ -5,7 +5,7 @@ module AdminCommands
   module Boosters
     # Disable booster perks for a server.
     def self.disable(data)
-      unless data.user.permission?(:manage_roles)
+      unless data.user.permission?(:manage_server)
         data.edit_response(content: RESPONSE[6])
         return
       end

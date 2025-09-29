@@ -5,7 +5,7 @@ module AdminCommands
   module Boosters
     # Ban someone from using booster perks in a server.
     def self.ban(data)
-      unless data.user.permission?(:manage_roles)
+      unless data.user.permission?(:manage_server)
         data.edit_response(content: RESPONSE[6])
         return
       end
