@@ -34,7 +34,7 @@ module Moderation
 
     # Yield each stored message in the array to the given block.
     # @return [Messagable] each stored Messagable will by yielded.
-    def each
+    def shift_each
       yield(@messages.shift.tap { @depleted << it }) while @messages.any?
 
       @acted_at = Time.now.to_i
@@ -146,9 +146,9 @@ module Moderation
     # @param hash [Hash<Symbol => Integer, Array>] the log data to append.
     # @return [void] the method does not return any usable data for the user.
     def <<(hash)
-      @files.push(*hash[:files]) if hash[:files]
-      @links.push(*hash[:links]) if hash[:links]
-      @deleted += hash[:deleted].size if hash[:deleted]
+      @deleted += hash[:deleted].length
+      @links.push(*hash[:deleted].flat_map(&:uris))
+      @files.push(*hash[:deleted].flat_map(&:attachments))
     end
   end
 end
