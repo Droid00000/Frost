@@ -9,6 +9,9 @@ module Owner
     # Initialize all of our birthdays once we're ready.
     Birthdays::Orchestrator.login
 
+    # Return unless we were called in an actual runtime.
+    return unless ENV.fetch("PRODUCTION", nil)
+
     # Tell rufus to output any log info to our log file.
     Rufus::Scheduler.s.stderr = File.open("logs.rb", "ab")
 
