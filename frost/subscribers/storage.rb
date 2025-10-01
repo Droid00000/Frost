@@ -154,15 +154,15 @@ module Boosters
       @@bans.where(**query).delete
     end
 
-    # Remove the record for this booster in this this guild.
-    def delete
-      @@users.where(**query).delete
-    end
-
     # Check if this user's role has been deleted in this guild.
     # @return [Boolean] Whether the user's role has been deleted.
     def blank_role?
       role ? @data.server.role(role).nil? : false
+    end
+
+    # Remove the record for this booster in this this guild.
+    def delete
+      @@users.where(**query).delete && (@role = nil)
     end
 
     # Ban this user from using booster perks in this guild.
