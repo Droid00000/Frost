@@ -64,17 +64,17 @@ module Owner
       end
     end
 
-    # Build out the dummy database row.
-    options = {
+    # Build out the database record.
+    record = {
       command_user: data.user.id,
       command_epoch: Time.now.to_i,
-      command_channel: data.channel.id,
+      command_channels: data.channel_id,
       # rubocop:disable Lint/UselessAssignment
       name: "#{hash['name']} #{group ||= ''}" << " #{subcommand ||= ''}"
       # rubocop:enable Lint/UselessAssignment
     }
 
     # Add the final result to the cache.
-    Storage.add(options.tap { it[:name] = it[:name].gsub(/\s+/, " ").strip })
+    Storage.add(record.tap { it[:name] = it[:name].gsub(/\s+/, " ").strip })
   end
 end
