@@ -10,10 +10,10 @@ module Moderation
     # @param value [Discordrb::Events::MessageEvent] the message data to store.
     def self.increment_bucket(key, value)
       # Don't do anything if we don't have enough files.
-      return unless value.message.attachments.size >= 3
+      return unless value.message.attachments.size > 2
 
       # Add the message data to the user's storage bucket.
-      make_bucket(key) && BUCKET[key.id].push(value.message)
+      make_bucket(key).tap { it.push(value.message) }
     end
 
     # Send the logging message to the configured log channel.

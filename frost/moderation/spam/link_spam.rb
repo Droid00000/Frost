@@ -13,7 +13,7 @@ module Moderation
       return unless (urls = extract(value.message))
 
       # Add the message and the URL to the storage bucket.
-      make_bucket(key) && BUCKET[key.id].push(value.message, urls)
+      make_bucket(key).tap { it.push(value.message, urls) }
     end
 
     # Extract a set of URLs from a given string and convert them into {URI}.
