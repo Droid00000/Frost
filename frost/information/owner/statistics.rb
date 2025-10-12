@@ -68,7 +68,7 @@ module Owner
     record = {
       command_user: data.user.id,
       command_epoch: Time.now.to_i,
-      command_channels: data.channel_id,
+      command_channel: data.channel_id,
       # rubocop:disable Lint/UselessAssignment
       name: "#{hash['name']} #{group ||= ''}" << " #{subcommand ||= ''}"
       # rubocop:enable Lint/UselessAssignment
