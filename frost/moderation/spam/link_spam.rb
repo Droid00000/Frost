@@ -50,9 +50,12 @@ module Moderation
     # @param key [#id] the user or member who was actioned against.
     # @param value [Loggable] the loggging stash to send to the channel.
     def self.logger(key, value)
+      # Don't do anything unless we have enough messages.
+      return if value.messages.empty?
+
       # Create the descripton for the given view.
       description = lambda do |state|
-        result = format(RESPONSE[3], value.deleted, key.id)
+        result = format(RESPONSE[3], value.messages.length, key.id)
         state ? (result + format(RESPONSE[4], key.joined_at.to_i)) : result
       end
 
@@ -67,8 +70,8 @@ module Moderation
         end
 
         # Send the logging message here.
-        BOT.channel(CONFIG[:Moderator][:CHANNEL]).send_embed("", [], [File.open(path, "rb")],
-                                                             false, nil, nil, nil, 1 << 15) do |_, view|
+        message = BOT.channel(CONFIG[:Moderator][:CHANNEL]).send_embed("", [], [File.open(path, "rb")],
+                                                                       false, nil, nil, nil, 1 << 15) do |_, view|
           view.container do |container|
             container.section do |section|
               section.text_display(text: RESPONSE[7])
@@ -80,6 +83,22 @@ module Moderation
             container.file(url: "attachment://harmful-urls.txt")
           end
         end
+
+        # Build out the database row here.
+        Storage.add({
+                      guild_id: message.server.id,
+                      alerted_at: message.id,
+                      user_id: key.id,
+                      spam_index: {
+                        type: 1,
+                        last_message: value.messages.last.id,
+                        message_count: value.messages.length,
+                        starter_message: value.messages[0].id,
+                        threshold_message: value.messages[2].id,
+                        hyperlinks: value.messages.flat_map(&:uris).uniq,
+                        file_counts: value.messages.map { it.attachments.length }.uniq
+                      }.to_json
+                    })
       end
     end
   end

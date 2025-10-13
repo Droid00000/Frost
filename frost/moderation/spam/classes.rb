@@ -81,22 +81,22 @@ module Moderation
 
   # Generic lightweight wrapper over discordrb messages.
   class Messagable
+    # @return [Integer] the associtaed message ID.
+    attr_reader :id
+
     # @return [Array<String>] the parsed URI objects.
     attr_reader :uris
 
     # @return [Integer] the ID of the associated channel.
     attr_reader :channel_id
 
-    # @return [Integer] the ID of the associated message.
-    attr_reader :message_id
-
     # @return [Array<Attachemnt>] the attached message files.
     attr_reader :attachments
 
     # @!visibility private
     def initialize(message, uris)
+      @id = message.id
       @uris = uris.map(&:to_s)
-      @message_id = message.id
       @channel_id = message.channel.id
       @attachments = message.attachments
     end
@@ -104,36 +104,34 @@ module Moderation
     # Delete this message from the source location.
     # @return [void] this method does not return usable data.
     def delete
-      Discordrb::API::Channel.delete_message(BOT.token, @channel_id, @message_id) rescue nil
+      Discordrb::API::Channel.delete_message(BOT.token, @channel_id, @id) rescue nil
     end
   end
 
   # Generic class for storing log stashes.
   class Loggable
-    # @return [Integer] the amount of results that were deleted.
-    attr_reader :deleted
-
     # @return [Boolean] if the current log has already been bounced.
     attr_writer :bounced
 
+    # @return [Array<Messagable>] the messages that have been deleted.
+    attr_reader :messages
+
     # @!visibility private
     def initialize
-      @files = []
-      @links = []
-      @deleted = 0
       @bounced = nil
+      @messages = []
     end
 
     # Fetch the links that were deleted in the log stash.
     # @return [Array<URI>] the hyperlinks that were deleted.
     def links
-      @links.uniq.first(15)
+      @messages.flat_map(&:uris).uniq.take(15)
     end
 
     # Fetch the files that were deleted in the long stash.
     # @return [Array<Attachment>] the attachments that were deleted.
     def files
-      @files.uniq.first(15)
+      @messages.flat_map(&:attachments).uniq.take(15)
     end
 
     # Whether this log stash has been marked as being bounced.
@@ -143,12 +141,10 @@ module Moderation
     end
 
     # Append a results hash to the log stash.
-    # @param hash [Hash<Symbol => Integer, Array>] the log data to append.
+    # @param messages [Array<Messagable>] the log data to append.
     # @return [void] the method does not return any usable data for the user.
-    def <<(hash)
-      @deleted += hash[:deleted].length
-      @links.push(*hash[:deleted].flat_map(&:uris))
-      @files.push(*hash[:deleted].flat_map(&:attachments))
+    def <<(messages)
+      @messages.push(*messages)
     end
   end
 end

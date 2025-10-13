@@ -26,7 +26,7 @@ module Moderation
         # @param bucket [StorageBucket] the storage bucket for the user.
         # @param channels [Array<Integer>] the channels the messages were spammed in.
         # @return [void] this method does not return any usable data for the caller.
-        def self.set_timeout(bucket, channels)
+        def self.timeout(bucket, channels)
           return unless channels.uniq.length >= 8
 
           bucket.timeout_member(Time.now + 604_800)
@@ -56,13 +56,13 @@ module Moderation
         # @param bucket [StorageBucket] the storage bucket which should be drained.
         # @return [Hash<Symbol => Integer, Array>] the results of the message deletion.
         def self.delete_spam(bucket)
-          results = Hash.new { |map, key| map[key] = [] }
+          results = []
 
           self::MUTEX.synchronize do
             bucket.shift_each do |item|
-              results[:deleted] << item if item.delete rescue nil
+              results << item if item.delete rescue nil
 
-              set_timeout(bucket, bucket.depleted.map(&:channel_id))
+              timeout(bucket, bucket.depleted.map(&:channel_id))
             end
           end
 
