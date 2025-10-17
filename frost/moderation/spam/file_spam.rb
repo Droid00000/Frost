@@ -40,8 +40,8 @@ module Moderation
         end
 
         # Send the logging message here.
-        message = BOT.channel(CONFIG[:Moderator][:CHANNEL]).send_embed("", [], [File.open(path, "rb")],
-                                                                       false, nil, nil, nil, 1 << 15) do |_, view|
+        BOT.channel(CONFIG[:Moderator][:CHANNEL]).send_embed("", [], [File.open(path, "rb")],
+                                                             false, nil, nil, nil, 1 << 15) do |_, view|
           view.container do |container|
             container.section do |section|
               section.text_display(text: RESPONSE[6])
@@ -53,23 +53,6 @@ module Moderation
             container.file(url: "attachment://attachment-urls.txt")
           end
         end
-
-        # Build out the database row here.
-        # NOTE: We intentionally do not call #uniq on the file_counts field here.
-        Storage.add({
-                      guild_id: message.server.id,
-                      alerted_at: message.id,
-                      user_id: key.id,
-                      spam_index: {
-                        type: 0,
-                        last_message: value.messages.last.id,
-                        message_count: value.messages.length,
-                        starter_message: value.messages[0].id,
-                        threshold_message: value.messages[2].id,
-                        hyperlinks: value.messages.flat_map(&:uris).uniq,
-                        file_counts: value.messages.map { it.attachments.length }
-                      }.to_json
-                    })
       end
     end
   end

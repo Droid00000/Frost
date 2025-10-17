@@ -42,23 +42,20 @@ module Boosters
     end
 
     options = {
-      colour: to_color(data.options["color"]),
-      name: data.options["name"],
+      role: member.role,
       reason: reason(data),
-      role: member.role
+      name: data.options["name"],
+      icon: to_icon(data, member.guild),
+      colour: to_color(data.options["color"])
     }.compact
-
-    if valid_icon?(data, member.guild)
-      options[:icon] = to_icon(data)
-    end
 
     if data.options["icon"]&.match?(REGEX[3])
       options[:icon] = :NULL
     end
 
     if options[:colour]
-      options[:secondary] = :NULL
       options[:tertiary] = :NULL
+      options[:secondary] = :NULL
     end
 
     if options.size > 2

@@ -29,7 +29,7 @@ module AdminCommands
       state = guild.edit(**options.compact)
 
       if state == 400 && options[:role_id].nil?
-        data.edit_response(content: RESPONSE[2])
+        data.edit_response(content: RESPONSE[3])
         return
       end
 

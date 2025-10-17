@@ -26,8 +26,7 @@ module Boosters
     # Initalize the invoking user.
     member = Boosters::Member.new(data)
 
-    # If the role doesn't exist in the cache and the
-    # member isn't blank, the role was deleted.
+    # Reset the state for the member.
     member.delete if member.blank_role?
 
     unless member.blank?
@@ -51,17 +50,14 @@ module Boosters
     end
 
     options = {
-      colour: to_color(data.options["color"]),
-      name: data.options["name"],
-      reason: reason(data),
-      mentionable: false,
+      hoist: false,
       permissions: 0,
-      hoist: false
+      mentionable: false,
+      reason: reason(data),
+      name: data.options["name"],
+      icon: to_icon(data, member.guild),
+      colour: to_color(data.options["color"])
     }
-
-    if valid_icon?(data, member.guild)
-      options[:icon] = to_icon(data)
-    end
 
     begin
       role = data.server.create_role(**options)
@@ -79,10 +75,13 @@ module Boosters
 
     data.edit_response(content: RESPONSE[1])
 
-    data.user.add_role(role, reason(data))
+    begin
+      data.user.add_role(role, reason(data))
+    rescue Discordrb::Errors::NoPermission
+      data.edit_response(content: RESPONSE[10])
+      return
+    end
 
-    # rubocop:disable Lint/UselessSetterCall
-    member.role = role
-    # rubocop:enable Lint/UselessSetterCall
+    member.role = role if role
   end
 end

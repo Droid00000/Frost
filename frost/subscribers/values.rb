@@ -44,16 +44,14 @@ module Boosters
 
   # Produce an audit reason log to show when operating on the current role.
   # @return [String] A string that denotes the action type and current user ID.
-  def self.reason(data) = "Booster Roles (ID: #{data.user.id})"
+  def self.reason(data)
+    "Booster Roles (ID: #{data.user.resolve_id})"
+  end
 
-  # Check if we have a valid role icon.
-  # @return [true, false] If the icon is valid.
-  def self.valid_icon?(data, guild)
-    return false unless data.server.features.include?(:role_icons)
-
-    return 0 if [nil, String].include?(to_icon(data)&.class) || guild.any_icon?
-
-    data.emoji("icon")&.server && data.server.emojis.key?(data.emoji("icon").id)
+  # Check if a custom emoji is a valid icon for a role.
+  # @return [File, nil] the file for the custom emoji that can be used as the icon.
+  def self.valid_icon?(icon, state, source)
+    icon.file if state || source.emojis.key?(icon.resolve_id)
   end
 
   # Returns true if a string doesn't contain any bad words.
@@ -66,9 +64,13 @@ module Boosters
 
   # Get an icon for a role.
   # @return [String, File, nil] The resolved icon.
-  def self.to_icon(data)
+  def self.to_icon(data, guild)
+    return nil unless data.server.features.include?(:role_icons)
+
     return nil if data.options["icon"].nil? || data.options["icon"].empty?
 
-    data.emoji("icon")&.file || data.options["icon"].scan(Unicode::Emoji::REGEX).first
+    icon = (data.emoji("icon") || data.options["icon"].scan(Unicode::Emoji::REGEX)).first
+
+    icon.is_a?(Discordrb::Emoji) ? valid_icon?(icon, guild.any_icon?, data.server) : icon
   end
 end

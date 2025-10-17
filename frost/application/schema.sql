@@ -28,15 +28,6 @@ CREATE TABLE IF NOT EXISTS banned_boosters (
   PRIMARY KEY (guild_id, user_id)
 );
 
--- Holds info about server incidents.
-CREATE TABLE IF NOT EXISTS guild_incidents (
-  user_id BIGINT NOT NULL,
-  guild_id BIGINT NOT NULL,
-  spam_index JSONB NOT NULL,
-  alerted_at BIGINT NOT NULL,
-  PRIMARY KEY (user_id, alerted_at)
-);
-
 -- Holds info about world timezones.
 CREATE TABLE IF NOT EXISTS world_timezones (
   name TEXT NOT NULL,
@@ -201,3 +192,6 @@ $$;
 
 -- Foreign key for the `guild_boosters` table.
 ALTER TABLE guild_boosters ADD CONSTRAINT guild_boosters_fkey FOREIGN KEY (guild_id) REFERENCES booster_settings(guild_id) ON DELETE CASCADE;
+
+-- Foreign key for the `banned_boosters` table.
+ALTER TABLE banned_boosters ADD CONSTRAINT banned_boosters_fkey FOREIGN KEY (guild_id) REFERENCES booster_settings(guild_id) ON DELETE CASCADE;

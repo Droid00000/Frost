@@ -95,7 +95,7 @@ module Moderation
           end
 
           # Remove the entry entirely, since the user usually gets banned.
-          sleep(66) && self::MUTEX.synchronize { logger(user, self::LOGGER.delete(user.id)) }
+          sleep(64) && self::MUTEX.synchronize { logger(user, self::LOGGER.delete(user.id)) }
         end
       end
     end
