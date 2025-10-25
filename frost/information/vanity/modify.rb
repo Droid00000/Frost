@@ -10,10 +10,10 @@ module Vanity
 
     options = {
       colour: ::Boosters.to_color(data.options["color"]),
-      icon: ::Boosters.to_icon(data),
       name: data.options["name"],
       role: data.options["role"],
-      reason: reason(data)
+      reason: reason(data),
+      icon: to_icon(data)
     }.compact
 
     if data.options["icon"]&.match?(REGEX[3])

@@ -38,3 +38,7 @@ Style/ParallelAssignment:
 # This seems to sometimes trigger falsely with a block so.
 Style/EmptyLiteral:
   Enabled: false
+
+# This seems to sometimes trigger falsely with one-line rescues.
+Style/RedundantParentheses:
+  Enabled: false

@@ -104,6 +104,40 @@ bot.register_application_command(:vanity, "Vanity Roles", contexts: [0], integra
   end
 end
 
+# @!function [Event Operations] Belongs to a module that manages event roles.
+bot.register_application_command(:event, "Role management for server events.", contexts: [0], integration_types: [0], default_member_permissions: "0") do |command|
+  command.subcommand_group(:role, "Event Roles") do |group|
+    group.subcommand(:remove, "Remove one of your event roles.") do |option|
+      option.role(:role, "The event role that you want to remove.", required: true)
+    end
+
+    group.subcommand(:claim, "Claim one of your event roles.") do |option|
+      option.role(:role, "The event role that you want to claim.", required: true)
+      option.boolean(:display, "whether to set the event role as your display role.", required: true)
+    end
+  end
+
+  command.subcommand_group(:admin, "Event Admin") do |group|
+    group.subcommand(:add, "Add a member to an event role.") do |option|
+      option.user(:target, "The member to add to the role.", required: true)
+      option.role(:role, "The event role to associate with the member.", required: true)
+    end
+
+    group.subcommand(:delete, "Remove a member from an event role.") do |option|
+      option.user(:target, "The member to remove access from.", required: true)
+      option.role(:role, "The event role associated with the member.", required: true)
+    end
+
+    group.subcommand(:enable, "Enable the event roles functionality for a role.") do |option|
+      option.role(:role, "The role to enable event roles functionality for.", required: true)
+    end
+
+    group.subcommand(:disable, "Disable the event roles functionality for a role.") do |option|
+      option.role(:role, "The role to disable event roles functionality for.", required: true)
+    end
+  end
+end
+
 # @!function [Birthday Operations] Belongs to a module that manages birthday roles.
 bot.register_application_command(:birthday, "Customizable birthday roles and announcements.", contexts: [0], integration_types: [0]) do |command|
   command.subcommand(:add, "Add or edit your date of birth.") do |option|

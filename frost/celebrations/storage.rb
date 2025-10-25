@@ -192,7 +192,7 @@ module Birthdays
     # Set the pending state for the member.
     # @param pending [true, false] if the member is pending or not.
     def pending=(pending)
-      @pg.where(user_id: user_id).update(pending: pending)
+      @@pg.where(user_id: user_id).update(pending: pending)
     end
 
     # Send the birthday message to a channel for a guild.

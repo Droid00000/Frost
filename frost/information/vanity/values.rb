@@ -16,4 +16,13 @@ module Vanity
   # @param interaction [Interaction] The current interaction the entry is for.
   # @return [String] A string that denotes the action type and current user ID.
   def self.reason(interaction) = "Vanity Roles (ID: #{interaction.user.id})"
+
+  # Convert an interaction object into usable role icon for the current role.
+  # @param interaction [Interaction] The current interaction the role is for.
+  # @return [String, File, nil] The icon from the role that was extracted or `nil`.
+  def self.to_icon(interaction)
+    return nil unless interaction.server.features.include?(:role_icons)
+
+    interaction.emoji("icon")&.file || interaction.options["icon"]&.scan(Unicode::Emoji::REGEX)&.first
+  end
 end
