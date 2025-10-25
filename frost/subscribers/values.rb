@@ -50,8 +50,8 @@ module Boosters
 
   # Check if a custom emoji is a valid icon for a role.
   # @return [File, nil] the file for the custom emoji that can be used as the icon.
-  def self.valid_icon?(icon, state, source)
-    icon.file if state || source.emojis.key?(icon.resolve_id)
+  def self.safe_icon?(icon, state, source)
+    icon.file if state || source[icon.resolve_id]
   end
 
   # Returns true if a string doesn't contain any bad words.
@@ -67,10 +67,8 @@ module Boosters
   def self.to_icon(data, guild)
     return nil unless data.server.features.include?(:role_icons)
 
-    return nil if data.options["icon"].nil? || data.options["icon"].empty?
+    icon = (data.emoji("icon") || data.options["icon"]&.scan(Unicode::Emoji::REGEX)&.first)
 
-    icon = (data.emoji("icon") || data.options["icon"].scan(Unicode::Emoji::REGEX)).first
-
-    icon.is_a?(Discordrb::Emoji) ? valid_icon?(icon, guild.any_icon?, data.server) : icon
+    icon.is_a?(Discordrb::Emoji) ? safe_icon?(icon, guild.any_icon?, data.server.emojis) : icon
   end
 end
