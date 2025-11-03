@@ -8,8 +8,6 @@ module Vanity
       return
     end
 
-    guild = Object.new.tap { it.define_singleton_method(:any_icon?) { true } }
-
     options = {
       colour: ::Boosters.to_color(data.options["color"]),
       name: data.options["name"],

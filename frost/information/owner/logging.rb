@@ -3,8 +3,11 @@
 module Owner
   # This is how we can handle logging.
   def self.logs(_)
-    # Log the time at which we first got a ready event.
+    # Log the time at when we first got a ready event.
     @uptime ||= Time.now.to_i
+
+    # Initialize all of our boosters once we're ready.
+    Boosters::Orchestrator.login
 
     # Initialize all of our birthdays once we're ready.
     Birthdays::Orchestrator.login

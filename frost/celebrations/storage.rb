@@ -28,10 +28,7 @@ module Birthdays
     alias setup_by enabled_by
 
     # @return [Sequel::Dataset]
-    @@pg = POSTGRES[:birthday_settings]
-
-    # @return [Sequel::Dataset]
-    @@users = POSTGRES[:user_birthdays]
+    DB = POSTGRES[:birthday_settings]
 
     # @!visibility private
     def initialize(data, **rest)
@@ -77,7 +74,7 @@ module Birthdays
 
       POSTGRES.transaction do
         # Delete the settings record from the database.
-        @@pg.where(guild_id: guild).delete
+        DB.where(guild_id: guild).delete
 
         # Filter and remove the guild from the guilds array.
         POSTGRES[query, guild_id, guild_id]
@@ -88,7 +85,7 @@ module Birthdays
 
     # @!visibility private
     def find_guild(**options)
-      @lazy ? options : @@pg.where(guild_id: @guild).first || options
+      @lazy ? options : DB.where(guild_id: @guild).first || options
     end
   end
 
@@ -107,7 +104,7 @@ module Birthdays
     attr_reader :user_guilds
 
     # @return [Sequel::Dataset]
-    @@pg = POSTGRES[:user_birthdays]
+    DB = POSTGRES[:user_birthdays]
 
     # @!visibility private
     def initialize(data, **rest)
@@ -133,21 +130,21 @@ module Birthdays
     def synced? = user_guilds.any?(guild_id)
 
     # Remove this members birthday records for every guild.
-    def delete = @@pg.where(user_id: user_id).delete
+    def delete = DB.where(user_id: user_id).delete
 
     # Set the birthday and inital state for the user.
     def birthday=(birthday)
-      @@pg.insert_conflict(**conflict(birthday.utc)).insert(insertion(birthday.utc))
+      DB.insert_conflict(**conflict(birthday.utc)).insert(insertion(birthday.utc))
     end
 
     # Un-sync the guild from the user's guild's array.
     def desync
-      @@pg.where(user_id: user_id).update(guilds: Sequel.function(:array_remove, :guilds, guild_id))
+      DB.where(user_id: user_id).update(guilds: Sequel.function(:array_remove, :guilds, guild_id))
     end
 
     # Sync the guild into the user's guild's array.
     def sync
-      @@pg.where(user_id: user_id).update(guilds: Sequel.function(:array_append, :guilds, guild_id))
+      DB.where(user_id: user_id).update(guilds: Sequel.function(:array_append, :guilds, guild_id))
     end
 
     private
@@ -159,7 +156,7 @@ module Birthdays
 
     # @!visibility private
     def find_user(*options)
-      POSTGRES.transaction { @@pg.where(user_id: options.first).first } || {}
+      POSTGRES.transaction { DB.where(user_id: options.first).first } || {}
     end
 
     # @!visibility private
@@ -178,7 +175,7 @@ module Birthdays
     attr_reader :birthdate
 
     # @return [Sequel::Dataset]
-    @@pg = POSTGRES[:user_birthdays]
+    DB = POSTGRES[:user_birthdays]
 
     # Lightweight struct for guilds.
     Guild = Struct.new(:id, :role, :channel)
@@ -192,7 +189,7 @@ module Birthdays
     # Set the pending state for the member.
     # @param pending [true, false] if the member is pending or not.
     def pending=(pending)
-      @@pg.where(user_id: user_id).update(pending: pending)
+      DB.where(user_id: user_id).update(pending: pending)
     end
 
     # Send the birthday message to a channel for a guild.

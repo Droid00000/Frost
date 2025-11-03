@@ -11,80 +11,58 @@ module Boosters
       manual_queue: 1 << 3
     }.freeze
 
-    # @return [Boolean]
-    attr_reader :lazy
-    alias lazy? lazy
+    # @return [Integer] the ID of the guild this model is for.
+    attr_reader :id
 
-    # @return [Integer]
-    attr_reader :guild
-    alias guild_id guild
-
-    # @return [Integer, nil]
+    # @return [Integer] the ID of the hoist role for this model.
     attr_reader :role_id
-    alias hoist_role role_id
 
-    # @return [Integer, nil]
+    # @return [Integer] the enabled features flags for this model.
     attr_reader :features
-    alias flags features
 
-    # @return [Integer, nil]
-    attr_reader :enabled_by
-    alias setup_by enabled_by
+    # @return [Integer] the time in UNIX seconds of when this guild was setup up.
+    attr_reader :setup_at
 
-    # @return [Integer, nil]
-    attr_reader :enabled_at
-    alias setup_at enabled_at
+    # @return [Integer] the ID of the user that was responsible for setting up this guild.
+    attr_reader :setup_by
 
     # @return [Sequel::Dataset]
-    @@pg = POSTGRES[:booster_settings]
-
-    # @return [Sequel::Dataset]
-    @@bans = POSTGRES[:banned_boosters]
+    DB = POSTGRES[:booster_settings]
 
     # @!visibility private
-    def initialize(data, **rest)
-      @bot = data.bot
-      @lazy = rest[:lazy]
-      @guild = data.server.id
-      model = find_guild(**rest)
-      @role_id = model[:role_id]
-      @features = model[:features]
-      @enabled_by = model[:setup_by]
-      @enabled_at = model[:setup_at]
+    def initialize(state)
+      update_state(state)
     end
 
-    # Check if this guild is nil, e.g. hasn't been setup.
-    # @return [Boolean] Whether this guild is nil or not.
-    def blank? = role_id.nil?
+    # Delete the record for this guild.
+    def delete
+      DB.where(guild_id: id).delete
+    end
+
+    # Check if this booster's role was deleted.
+    # @return [Boolean] Whether the role was deleted.
+    def role_deleted?
+      BOT.server(id)&.role(role_id).nil?
+    end
 
     # Get metadata about the settings for this guild.
     # @return [Array(String, Integer)] Metadata info about this guild.
-    def view = [@bot.user(enabled_by)&.name, enabled_at]
-
-    # Delete the record for this guild.
-    # @note This method takes arguments, but currently they're ignored.
-    def delete(**_options) = @@pg.where(guild_id: guild).delete
-
-    # Get a list of all the members banned in this guild.
-    # @param offset [Integer, nil] The number of bans to skip before returning results.
-    # @return [Array<Sequel::Dataset>] An array of all the banned members for the guild.
-    def bans(**options)
-      @@bans.where(guild_id: guild).offset(options[:offset] || 0).order(:user_id)
+    def view
+      [BOT.user(setup_by)&.name, setup_at]
     end
 
-    # Create a new record or update an existing record.
+    # Update the properties of this guild.
     # @param role_id [Integer] The ID of the hoist-role for this guild.
-    # @param user_id [Integer] The ID of the who's user editing this guild.
     # @param added_features [Integer] The feature flags to set for this guild.
     # @param unset_features [Integer] The feature flags to remove for this guild.
-    # @return [Integer] The resulting state of the query. `400` for error, `200` for success.
-    def edit(**options)
-      query = <<~SQL
-        SELECT * FROM set_booster_settings(?, ?, ?, ?, ?);
-      SQL
+    def edit(**rest)
+      rest = {
+        role_id: rest[:role_id],
+        features: Sequel.lit("(features | ?) & ~?",
+                             rest[:added_features], rest[:unset_features])
+      }
 
-      POSTGRES[query, guild, options[:role_id], options[:user_id],
-               options[:added_features], options[:unset_features]].first[:set_booster_settings]
+      update_state(DB.where(guild_id: id).returning.update(**rest.compact).first)
     end
 
     # @!method any_icon?
@@ -101,135 +79,197 @@ module Boosters
       end
     end
 
+    # @!visibility private
+    def self.create(...)
+      Orchestrator.pool.create_guild(...)
+    end
+
+    # @!visibility private
+    def self.delete(...)
+      Orchestrator.pool.delete_guild(...)
+    end
+
+    # @!visibility private
+    def self.get(data, hit: false)
+      Orchestrator.pool.guild(guild_id: data.server.id, hit:)
+    end
+
     private
 
     # @!visibility private
-    def find_guild(**options)
-      @lazy ? options : @@pg.where(guild_id: @guild).first || options
+    def update_state(new_data)
+      @id = new_data[:guild_id]
+      @role_id = new_data[:role_id]
+      @features = new_data[:features]
+      @setup_by = new_data[:setup_by]
+      @setup_at = new_data[:setup_at]
     end
   end
 
   # Represents a singular booster.
-  class Member
-    # @return [Hash]
-    attr_reader :query
+  class Booster
+    # @return [Integer] the ID of the user this model is for.
+    attr_reader :id
 
-    # @return [Guild]
-    attr_reader :guild
+    # @return [Boolean] if the booster has been banned or not.
+    attr_reader :banned
+    alias banned? banned
 
-    # @return [Integer, nil]
-    attr_reader :color
+    # @return [Integer] the ID of the role this model is for.
+    attr_reader :role_id
 
-    # @return [Integer, nil]
-    attr_reader :role
+    # @return [Integer] the ID of the guild this model is for.
+    attr_reader :guild_id
+
+    # @return [Integer] the hexadecimal color of the model's role.
+    attr_reader :role_color
 
     # @return [Sequel::Dataset]
-    @@bans = POSTGRES[:banned_boosters]
-
-    # @return [Sequel::Dataset]
-    @@users = POSTGRES[:guild_boosters]
+    DB = POSTGRES[:guild_boosters]
 
     # @!visibility private
-    def initialize(data, **rest)
-      @data = data
-      @lazy = rest[:lazy]
-      @guild_id = data.server.id
-      @target_id = data.options["target"] || data.user.id
-      @query = { user_id: @target_id, guild_id: @guild_id }
-      model = find_guild_booster(*@query.values.map(&:to_i))
-      @guild = Guild.new(@data, lazy: true, **model.slice(:role_id, :features))
-      @banned, @role, @color = model[:banned], model[:user_role], model[:color_id]
+    def initialize(state)
+      @banned = false
+      update_state(state)
     end
 
-    # Check if this user is nil, e.g. has no role.
-    # @return [Boolean] Whether this user is nil or not.
-    def blank? = role.nil?
-
-    # Check if this user has been banned from using booster perks.
-    # @return [Boolean] Whether this user cannot use booster perks.
-    def banned? = @banned || false
-
-    # Unban a user from using booster perks in this guild.
-    def unban
-      @@bans.where(**query).delete
+    # Get the audit log reason for this booster.
+    # @return [String] The reason for this booster.
+    def reason
+      @reason ||= "Booster Roles (ID: #{id})"
     end
 
-    # Check if this user's role has been deleted in this guild.
-    # @return [Boolean] Whether the user's role has been deleted.
-    def blank_role?
-      role ? @data.server.role(role).nil? : false
+    # Check if this booster's role was deleted.
+    # @return [Boolean] Whether the role was deleted.
+    def role_deleted?
+      BOT.server(guild_id)&.role(role_id).nil?
     end
 
-    # Remove the record for this booster in this this guild.
+    # Get the guild for this booster.
+    # @return [Guild] The guild for this booster.
+    def guild
+      Orchestrator.pool.guild(guild_id:, hit: true)
+    end
+
+    # Permanently delete the record for this booster.
     def delete
-      @@users.where(**query).delete && (@role = nil)
+      DB.where(guild_id: guild.id, user_id: id).delete
     end
 
-    # Ban this user from using booster perks in this guild.
-    # @param banned_by [Integer] the user who's issuing the ban.
-    # @param banned_at [Integer] the time at when the ban happened.
-    def ban(**)
-      POSTGRES.transaction do
-        @@users.where(**query).delete
+    # Permanently try to delete the record for this booster.
+    def try_delete(...)
+      Booster.delete(...) unless role_deleted? == false
+    end
 
-        @@bans.insert_conflict.insert(**query, **)
+    # Update the properties of this booster.
+    # @param role_id [Integer, nil] The role to set for this booster.
+    # @param role_color [ColourRGB, nil] The role color to set for this booster.
+    def edit(**rest)
+      me = {
+        user_id: id,
+        guild_id: guild.id
+      }
+
+      rest = {
+        role_id: rest[:role].resolve_id,
+        color_id: (rest[:color_id] || rest[:role]&.color)&.to_i
+      }
+
+      update_state(DB.where(**me).returning.update(**rest.compact).first)
+    end
+
+    # @!visibility private
+    def self.create(...)
+      Orchestrator.pool.create_booster(...)
+    end
+
+    # @!visibility private
+    def self.get(data)
+      if (target = data.options["target"])
+        Orchestrator.pool.booster(guild_id: data.server.id, user_id: target.to_i)
+      else
+        Orchestrator.pool.booster(guild_id: data.server.id, user_id: data.user.id)
       end
     end
 
-    # Set the base role color used by this member.
-    # @param color [ColourRGB, Integer] The new base color.
-    def color=(color)
-      @@users.where(**query).update(color_id: color.to_i)
-    end
-
-    # Edit this members booster role in this guild.
-    # @note This will update the members role if it already exists.
-    def role=(role)
-      @@users.insert_conflict(**conflict(role)).insert(**query, **conflict(role)[:update])
+    # @!visibility private
+    def self.delete(data)
+      if (target = data.options["target"])
+        Orchestrator.pool.delete_booster(guild_id: data.server.id, user_id: target.to_i)
+      else
+        Orchestrator.pool.delete_booster(guild_id: data.server.id, user_id: data.user.id)
+      end
     end
 
     private
 
     # @!visibility private
-    def conflict(*options)
-      {
-        target: %i[user_id guild_id],
-        update: {
-          role_id: options.first.resolve_id,
-          color_id: options.first.color.to_i
-        }
-      }
-    end
-
-    # @!visibility private
-    def find_guild_booster(*options)
-      @lazy ? {} : POSTGRES["SELECT * FROM guild_booster(?, ?)", *options].first || {}
+    def update_state(new_data)
+      @user_id = new_data[:user_id]
+      @role_id = new_data[:role_id]
+      @guild_id = new_data[:guild_id]
+      @role_color = new_data[:color_id]
     end
   end
 
-  # Class for singleton methods that are required for role audits.
-  class Members
-    # Get a list of all the boosters that are in the database.
-    # @return [Array<Hash<Symbol => Integer>>, Sequel::Dataset]
-    def self.stream
-      POSTGRES[:guild_boosters].all.map do |member|
-        { **member, reason: "Booster Roles (ID: #{member[:user_id]})" }
-      end
+  # Represents a banned user.
+  class Banned
+    # @return [Boolean] if the user has been banned or not.
+    attr_reader :banned
+    alias banned? banned
+
+    # @return [Integer] the ID of the user this ban is for.
+    attr_reader :user_id
+
+    # @return [Integer] the ID of the guild this ban is for.
+    attr_reader :guild_id
+
+    # @return [Integer] the UNIX timestamp of when this ban was created.
+    attr_reader :banned_at
+
+    # @return [Integer] the ID of the user responsible for creating the ban.
+    attr_reader :banned_by
+
+    # @return [Sequel::Dataset]
+    DB = POSTGRES[:banned_boosters]
+
+    # @!visibility private
+    def initialize(data)
+      @banned = true
+      @user_id = data[:user_id]
+      @guild_id = data[:guild_id]
+      @banned_at = data[:banned_at]
+      @banned_by = data[:banned_by]
     end
 
-    # Get a list of all the boosters that are in the database.
-    # @return [Array<Hash<Symbol => Integer, Symbol => Array>>]
-    def self.chunks
-      stream.group_by { |member| member[:guild_id] }.map do |guild, members|
-        { guild_id: guild, members: members.map { |user| user[:user_id] } }
-      end
+    # Get the guild for this banned user.
+    # @return [Guild] The guild for this user.
+    def guild
+      Layer.pool.guild(guild_id: guild_id)
     end
 
-    # Delete a singular booster from the database from the given options.
-    # @param guild_id [Integer, String] ID of the guild the record is for.
-    # @param user_id [Integer, String] ID of the user the record is for.
-    def self.delete(**)
-      POSTGRES.transaction { POSTGRES[:guild_boosters].where(**).delete }
+    # Remove the ban for this banned user.
+    def delete
+      DB.where(guild_id: guild_id, user_id: user_id).delete
+    end
+
+    # @!visibility private
+    def self.create(...)
+      Orchestrator.pool.create_ban(...)
+    end
+
+    # @!visibility private
+    def self.delete(...)
+      Orchestrator.pool.delete_ban(...)
+    end
+
+    # @!visibility private
+    def self.get(data)
+      if (target = data.options["target"])
+        Orchestrator.pool.ban(guild_id: data.server.id, user_id: target.to_i)
+      else
+        Orchestrator.pool.ban(guild_id: data.server.id, user_id: data.user.id)
+      end
     end
   end
 end

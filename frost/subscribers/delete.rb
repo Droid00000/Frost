@@ -13,15 +13,12 @@ module Boosters
       return
     end
 
-    # Initalize the invoking user.
-    member = Boosters::Member.new(data)
-
-    if member.guild.blank?
+    if !Guild.get(data)
       data.edit_response(content: RESPONSE[18])
       return
     end
 
-    if member.blank?
+    if !(member = Member.get(data))
       data.edit_response(content: RESPONSE[2])
       return
     end
@@ -31,19 +28,22 @@ module Boosters
       return
     end
 
-    role = data.server.role(member.role)
+    if member.role_deleted?
+      data.edit_response(content: RESPONSE[4])
+      return Member.delete(data)
+    end
+
+    role = data.server.role(member.role_id)
 
     # The role may not exist sometimes.
     begin
-      role&.delete(reason(data))
+      role&.delete(member.reason)
     rescue Discordrb::Errors::NoPermission
       data.edit_response(content: RESPONSE[5])
       return
     end
 
     data.edit_response(content: RESPONSE[4])
-
-    # Perform the cleanup in the background
-    member.delete
+    Member.delete(data)
   end
 end

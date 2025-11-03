@@ -23,28 +23,22 @@ module Boosters
       return
     end
 
-    # Initalize the invoking user.
-    member = Boosters::Member.new(data)
-
-    # Reset the state for the member.
-    member.delete if member.blank_role?
-
-    unless member.blank?
-      data.edit_response(content: RESPONSE[19])
-      return
-    end
-
-    if member.guild.blank?
+    if !(guild = Guild.get(data))
       data.edit_response(content: RESPONSE[18])
       return
     end
 
-    if member.banned?
+    if (member = Booster.get(data))
+      data.edit_response(content: RESPONSE[19])
+      return member&.try_delete(data)
+    end
+
+    if member&.banned?
       data.edit_response(content: RESPONSE[11])
       return
     end
 
-    unless data.server.role(member.guild.hoist_role)
+    if guild.role_deleted?
       data.edit_response(content: RESPONSE[9])
       return
     end
@@ -55,7 +49,7 @@ module Boosters
       mentionable: false,
       reason: reason(data),
       name: data.options["name"],
-      icon: to_icon(data, member.guild),
+      icon: to_icon(data, guild),
       colour: to_color(data.options["color"])
     }
 
@@ -67,7 +61,7 @@ module Boosters
     end
 
     begin
-      role.sort_above(member.guild.hoist_role)
+      role.sort_above(guild.role_id)
     rescue Discordrb::Errors::NoPermission
       data.edit_response(content: RESPONSE[3])
       return role.delete
@@ -82,6 +76,10 @@ module Boosters
       return
     end
 
-    member.role = role if role
+    Booster.create(
+      role: role,
+      user_id: data.user.resolve_id,
+      guild_id: data.server.resolve_id
+    )
   end
 end

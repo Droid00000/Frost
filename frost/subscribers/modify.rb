@@ -8,25 +8,22 @@ module Boosters
       return
     end
 
-    unless data.user.boosting?
-      data.edit_response(content: RESPONSE[15])
-      return
-    end
+    # unless data.user.boosting?
+    #  data.edit_response(content: RESPONSE[15])
+    #  return
+    # end
 
     unless safe_name?(data)
       data.edit_response(content: RESPONSE[14])
       return
     end
 
-    # Initalize the invoking user.
-    member = Boosters::Member.new(data)
-
-    if member.guild.blank?
+    if !(guild = Guild.get(data))
       data.edit_response(content: RESPONSE[18])
       return
     end
 
-    if member.blank?
+    if !(member = Booster.get(data))
       data.edit_response(content: RESPONSE[2])
       return
     end
@@ -36,16 +33,16 @@ module Boosters
       return
     end
 
-    if data.server.role(member.role).nil?
+    if member.role_deleted?
       data.edit_response(content: RESPONSE[2])
-      return member.delete
+      return Booster.delete(data)
     end
 
     options = {
-      role: member.role,
-      reason: reason(data),
+      role: member.role_id,
+      reason: member.reason,
       name: data.options["name"],
-      icon: to_icon(data, member.guild),
+      icon: to_icon(data, guild),
       colour: to_color(data.options["color"])
     }.compact
 
@@ -54,8 +51,7 @@ module Boosters
     end
 
     if options[:colour]
-      options[:tertiary] = :NULL
-      options[:secondary] = :NULL
+      options.merge!(tertiary: :NULL, secondary: :NULL)
     end
 
     if options.size > 2
@@ -70,6 +66,6 @@ module Boosters
     data.edit_response(content: RESPONSE[7])
 
     # Do this after in order to not block everything else.
-    member.color = options[:colour] if options[:colour]
+    member.edit(color_id: options[:colour]) if options[:colour]
   end
 end

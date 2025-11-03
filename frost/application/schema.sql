@@ -87,6 +87,33 @@ CREATE TABLE IF NOT EXISTS command_stats (
   command_channels BIGINT[] NOT NULL
 );
 
+-- Function for searching for a timezone.
+CREATE OR REPLACE FUNCTION search_timezones (query TEXT) RETURNS SETOF world_timezones ROWS 25 LANGUAGE SQL STABLE AS $$
+ WITH tokens AS (
+    SELECT unnest(string_to_array($1, ' ')) AS t
+)
+SELECT name, country, timezone, identifier
+FROM (
+    SELECT
+        g.*,
+        (
+            SELECT SUM(
+                CASE WHEN g.name ILIKE '%' || t.t || '%' THEN 1.0 - (t.t <-> g.name) ELSE 0 END +
+                CASE WHEN similarity(g.name, t.t) > 0.2 THEN similarity(g.name, t.t) ELSE 0 END +
+                CASE WHEN g.country ILIKE '%' || t.t || '%' THEN 1.0 - (t.t <-> g.country) ELSE 0 END +
+                CASE WHEN similarity(g.country, t.t) > 0.2 THEN similarity(g.country, t.t) ELSE 0 END +
+                CASE WHEN g.timezone ILIKE '%' || t.t || '%' THEN 1.0 - (t.t <-> g.timezone) ELSE 0 END +
+                CASE WHEN similarity(g.timezone, t.t) > 0.2 THEN similarity(g.timezone, t.t) ELSE 0 END +
+                CASE WHEN g.identifier ILIKE '%' || t.t || '%' THEN 1.0 - (t.t <-> g.identifier) ELSE 0 END +
+                CASE WHEN similarity(g.identifier, t.t) > 0.2 THEN similarity(g.identifier, t.t) ELSE 0 END
+            )
+            FROM tokens t
+        ) AS score
+    FROM world_timezones g
+) sub
+ORDER BY score DESC LIMIT 25;
+$$;
+
 -- Index for the `event_users` table.
 CREATE INDEX IF NOT EXISTS guild_events_idx ON event_users (guild_id, user_id);
 

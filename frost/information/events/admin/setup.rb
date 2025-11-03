@@ -24,7 +24,7 @@ module AdminCommands
         return
       end
 
-      role.tags&.instance_variables.each do |name|
+      role.tags&.instance_variables&.each do |name|
         if role.tags.instance_variable_get(name)
           data.edit_response(content: RESPONSE[1])
           return

@@ -11,7 +11,7 @@ module AdminCommands
       4 => "You cannot enable event perks for this role.",
       5 => "Successfully removed the target member.",
       6 => "Successfully added the target member.",
-      7 => "The target role is not an event role.",
+      7 => "The target role is not an event role."
     }.freeze
 
     # Suppress mentions for event roles.

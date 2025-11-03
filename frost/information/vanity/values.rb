@@ -23,6 +23,6 @@ module Vanity
   def self.to_icon(interaction)
     return nil unless interaction.server.features.include?(:role_icons)
 
-    interaction.emoji("icon")&.file || interaction.options["icon"]&.scan(Unicode::Emoji::REGEX).first
+    interaction.emoji("icon")&.file || interaction.options["icon"]&.scan(Unicode::Emoji::REGEX)&.first
   end
 end

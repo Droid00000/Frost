@@ -13,15 +13,12 @@ module Boosters
       return
     end
 
-    # Initalize the invoking user.
-    member = Boosters::Member.new(data)
-
-    if member.guild.blank?
+    if !Guild.get(data)
       data.edit_response(content: RESPONSE[18])
       return
     end
 
-    if member.blank?
+    if !(member = Booster.get(data))
       data.edit_response(content: RESPONSE[2])
       return
     end
@@ -31,21 +28,21 @@ module Boosters
       return
     end
 
-    if data.server.role(member.role).nil?
+    if member.role_deleted?
       data.edit_response(content: RESPONSE[2])
-      return member.delete
+      return Booster.delete(data)
     end
 
     options = {
       tertiary: :NULL,
-      role: member.role,
-      reason: reason(data),
+      role: member.role_id,
+      reason: member.reason,
       colour: to_color(data.options["start"]),
       secondary: to_color(data.options["end"])
     }
 
     # Resolve the given role here.
-    role = data.server.role(member.role)
+    role = data.server.role(member.role_id)
 
     gradient_validator = proc do
       if !options[:colour] && !options[:secondary]
@@ -84,7 +81,7 @@ module Boosters
       end
     when 0
       options.merge!({
-                       colour: member.color,
+                       colour: member.role_color,
                        secondary: :NULL,
                        tertiary: :NULL
                      })

@@ -4,16 +4,16 @@ module Owner
   # Represents a commands DB.
   class Storage
     # Easy way to access the DB.
-    @@pg = POSTGRES[:command_stats]
+    DB = POSTGRES[:command_stats]
 
     # Easy way to access commands.
-    @@commands = Hash.new { |hash, key| hash[key] = [] }
+    @commands = Hash.new { |hash, key| hash[key] = [] }
 
     # Insert a set of new commands into the DB.
     def self.drain
       POSTGRES.transaction do
         # Generate a single array for insertion.
-        commands = @@commands.dup.map do |key, values|
+        commands = @commands.dup.map do |key, values|
           # Create the final hash for this record.
           final = {
             command_name: key,
@@ -38,7 +38,7 @@ module Owner
         # If there's nothing to drain, just return early.
         return unless commands.any?
 
-        @@commands.clear if @@pg.insert_conflict(
+        @commands.clear if DB.insert_conflict(
           target: :command_name,
           update: {
             command_users: Sequel.lit("command_stats.command_users || EXCLUDED.command_users"),
@@ -53,7 +53,7 @@ module Owner
     def self.add(command)
       return unless command[:name].to_sym != :science
 
-      @@commands[command[:name].to_sym] << command.except(:name)
+      @commands[command[:name].to_sym] << command.except(:name)
     end
   end
 end

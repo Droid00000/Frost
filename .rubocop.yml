@@ -15,10 +15,6 @@ Metrics:
 Style/Documentation:
   Enabled: false
 
-# The usage of class variables is intentional.
-Style/ClassVars:
-  Enabled: false
-
 # I don't like the extra end it introduces.
 Style/IfUnlessModifier:
   Enabled: false
@@ -31,10 +27,10 @@ Layout/LineLength:
 Style/RescueModifier:
   Enabled: false
 
-# I generally think this python-like idiom is okay to use.
-Style/ParallelAssignment:
-  Enabled: false
-
 # This seems to sometimes trigger falsely with a block so.
 Style/EmptyLiteral:
+  Enabled: false
+
+# This seems to sometimes trigger falsely with one-line rescues.
+Style/RedundantParentheses:
   Enabled: false
