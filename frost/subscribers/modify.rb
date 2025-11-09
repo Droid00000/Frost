@@ -31,12 +31,12 @@ module Boosters
       return
     end
 
-    if !(guild = Guild.get(data))
+    unless (guild = Guild.get(data))
       data.edit_response(content: RESPONSE[18])
       return
     end
 
-    if !(member = Booster.get(data))
+    unless (member = Booster.get(data))
       data.edit_response(content: RESPONSE[2])
       return
     end

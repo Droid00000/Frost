@@ -119,7 +119,7 @@ module Birthdays
 
     # Check if this user is a dummy user.
     # @return [Boolean] whether or not the user is a dummy user.
-    def blank? 
+    def blank?
       @birthday.nil?
     end
 
@@ -242,7 +242,7 @@ module Birthdays
     # Get a list of guilds that the member has synced to their account.
     # @return [Array<Guild>] Guilds the member is a part of currently.
     def guilds
-      DB.where(user_id:).select(:guilds).first&[:guilds]&.filter_map do |id|
+      (DB.where(user_id:).select(:guilds).first || {})[:guilds]&.filter_map do |id|
         Storage.guild(guild_id: id, hit: true)
       end
     end

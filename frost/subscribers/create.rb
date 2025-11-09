@@ -33,7 +33,7 @@ module Boosters
       return
     end
 
-    if !(guild = Guild.get(data))
+    unless (guild = Guild.get(data))
       data.edit_response(content: RESPONSE[18])
       return
     end

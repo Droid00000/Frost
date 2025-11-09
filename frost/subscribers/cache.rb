@@ -208,7 +208,7 @@ module Boosters
 
     # Get all of the boosters stored on the real-time layer.
     # @return [Array<Booster>] The boosters stored on the real-time layer.
-    def list_boosters(&block)
+    def list_boosters
       boosters = @boosters.values.flat_map(&:values)
 
       block_given? ? boosters.each { yield(it) } : boosters

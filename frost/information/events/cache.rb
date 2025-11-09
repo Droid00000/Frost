@@ -61,7 +61,7 @@ module Events
     # @param setup_by [Integer] The snowflake ID of the user setting up the role to create.
     # @return [Integer] The resulting state of the action that was caused by the operation.
     def create_role(**options)
-      return 304 if self.role(role_id: options[:role_id])
+      return 304 if role(role_id: options[:role_id])
 
       options = {
         role_id: options[:role_id],
@@ -70,8 +70,8 @@ module Events
         setup_at: options[:setup_at]
       }
 
-      role = ROLES.returning.insert_conflict.insert(options).first
-      201.tap { @roles[role[:role_id]] = Role.new(role) }
+      role = ROLES.insert_conflict.insert_select(options)
+      201.tap { @roles[role[:role_id]] = Role.new(role) } if role
     end
   end
 end
