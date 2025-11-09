@@ -22,12 +22,12 @@ module Boosters
         @guilds[row[:guild_id]] = Guild.new(row)
       end
 
-      BANNED.order(:guild_id, :user_id).paged_each(strategy: :filter) do |row|
-        @banned[row[:guild_id]][row[:user_id]] = Banned.new(row)
-      end
-
       BOOSTERS.order(:guild_id, :user_id).paged_each(strategy: :filter) do |row|
         @boosters[row[:guild_id]][row[:user_id]] = Booster.new(row)
+      end
+
+      BANNED.order(:guild_id, :user_id, :banned_at).paged_each(strategy: :filter) do |row|
+        @banned[row[:guild_id]][row[:user_id]] = Banned.new(row)
       end
     end
 
@@ -144,6 +144,38 @@ module Boosters
       @banned[ban[:guild_id]][ban[:user_id]] = Banned.new(ban) if ban
 
       @boosters[options[:guild_id]]&.delete(options[:user_id])&.delete
+    end
+
+    # Create multiple bans for a guild on the real-time layer.
+    # @param users [Array<Integer>] The snowflake IDs of the users to ban.
+    # @param guild_id [Integer] The snowflake ID of the guild the bans are for.
+    # @param banned_by [Integer] The snowflake ID of the user creating the bans.
+    # @param banned_at [Integer] The UNIX timestamp of when the bans was created.
+    def create_bans(**options)
+      bans = options[:users].map do |user_id|
+        { user_id: user_id, **options.except(:users) }
+      end
+
+      return unless guild?(guild_id: options[:guild_id])
+
+      bans = BANNED.insert_conflict.returning.multi_insert(bans)
+
+      bans.each do |ban|
+        @banned[ban[:guild_id]][ban[:user_id]] = Banned.new(ban)
+
+        @boosters[ban[:guild_id]]&.delete(ban[:user_id])&.delete
+      end
+    end
+
+    # Delete multiple bans for a guild on the real-time layer.
+    # @param guild_id [Integer] The guild ID of the bans that should be deleted.
+    # @param users [Array<Integer>] The user IDs of the bans that should be deleted.
+    def delete_bans(guild_id:, users:)
+      return unless guild?(guild_id: guild_id)
+
+      BANNED.where(guild_id: guild_id, user_id: users).delete
+
+      @banned[guild_id]&.delete_if { |user, _| users.any?(user) }
     end
 
     # Create a booster for a guild on the real-time layer.
