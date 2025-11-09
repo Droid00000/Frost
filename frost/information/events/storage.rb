@@ -86,8 +86,8 @@ module Events
     end
 
     # @!visibility private
-    def self.delete(...)
-      Layer.pool.delete_role(...)
+    def self.delete(data)
+      Layer.pool.delete_role(guild_id: data.server.id, role_id: data.options["role"])
     end
 
     # @!visibility private

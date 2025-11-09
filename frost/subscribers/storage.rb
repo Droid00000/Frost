@@ -11,19 +11,19 @@ module Boosters
       manual_queue: 1 << 3
     }.freeze
 
-    # @return [Integer] the ID of the guild this model is for.
+    # @return [Integer] the snowflake ID of the guild.
     attr_reader :id
 
-    # @return [Integer] the ID of the hoist role for this model.
+    # @return [Integer] the snowflake ID of the guild's hoist role.
     attr_reader :role_id
 
-    # @return [Integer] the enabled features flags for this model.
+    # @return [Integer] the features flags for this guild as a bitfield.
     attr_reader :features
 
-    # @return [Integer] the time in UNIX seconds of when this guild was setup up.
+    # @return [Integer] the UNIX timestamp of when this guild was setup.
     attr_reader :setup_at
 
-    # @return [Integer] the ID of the user that was responsible for setting up this guild.
+    # @return [Integer] the snowflake ID of the user that setup this guild.
     attr_reader :setup_by
 
     # @return [Sequel::Dataset]
@@ -36,23 +36,23 @@ module Boosters
 
     # Delete the record for this guild.
     def delete
-      DB.where(guild_id: id).delete
+      DB.where(guild_id: @id).delete
     end
 
-    # Check if this booster's role was deleted.
+    # Check if this guild's role was deleted.
     # @return [Boolean] Whether the role was deleted.
     def role_deleted?
-      BOT.server(id)&.role(role_id).nil?
+      BOT.server(@id)&.role(@role_id).nil?
     end
 
     # Get metadata about the settings for this guild.
     # @return [Array(String, Integer)] Metadata info about this guild.
     def view
-      [BOT.user(setup_by)&.name, setup_at]
+      [BOT.user(@setup_by)&.name, @setup_at]
     end
 
     # Update the properties of this guild.
-    # @param role_id [Integer] The ID of the hoist-role for this guild.
+    # @param role_id [Integer] The ID of the hoist role for this guild.
     # @param added_features [Integer] The feature flags to set for this guild.
     # @param unset_features [Integer] The feature flags to remove for this guild.
     def edit(**rest)
@@ -62,7 +62,7 @@ module Boosters
                              rest[:added_features], rest[:unset_features])
       }
 
-      update_state(DB.where(guild_id: id).returning.update(**rest.compact).first)
+      update_state(DB.where(guild_id: @id).returning.update(**rest.compact).first)
     end
 
     # @!method any_icon?
@@ -85,13 +85,13 @@ module Boosters
     end
 
     # @!visibility private
-    def self.delete(...)
-      Orchestrator.pool.delete_guild(...)
+    def self.delete(data)
+      Orchestrator.pool.delete_guild(guild_id: data.server.id)
     end
 
     # @!visibility private
     def self.get(data, hit: false)
-      Orchestrator.pool.guild(guild_id: data.server.id, hit:)
+      Orchestrator.pool.guild(guild_id: data.server.id, hit: hit)
     end
 
     private
@@ -108,20 +108,20 @@ module Boosters
 
   # Represents a singular booster.
   class Booster
-    # @return [Integer] the ID of the user this model is for.
+    # @return [Integer] the snowflake user ID of the booster.
     attr_reader :id
 
-    # @return [Boolean] if the booster has been banned or not.
+    # @return [Boolean] whether or not the booster is banned.
     attr_reader :banned
     alias banned? banned
 
-    # @return [Integer] the ID of the role this model is for.
+    # @return [Integer] the snowflake ID of the booster's role.
     attr_reader :role_id
 
-    # @return [Integer] the ID of the guild this model is for.
+    # @return [Integer] the snowflake ID of the booster's guild.
     attr_reader :guild_id
 
-    # @return [Integer] the hexadecimal color of the model's role.
+    # @return [Integer] the RGB hex color of the booster's role.
     attr_reader :role_color
 
     # @return [Sequel::Dataset]
@@ -136,13 +136,13 @@ module Boosters
     # Get the audit log reason for this booster.
     # @return [String] The reason for this booster.
     def reason
-      @reason ||= "Booster Roles (ID: #{id})"
+      @reason ||= "Booster Roles (ID: #{@id})"
     end
 
     # Check if this booster's role was deleted.
     # @return [Boolean] Whether the role was deleted.
     def role_deleted?
-      BOT.server(guild_id)&.role(role_id).nil?
+      BOT.server(@guild_id)&.role(@role_id).nil?
     end
 
     # Get the guild for this booster.
@@ -153,7 +153,7 @@ module Boosters
 
     # Permanently delete the record for this booster.
     def delete
-      DB.where(guild_id: guild.id, user_id: id).delete
+      DB.where(guild_id: @guild_id, user_id: @id).delete
     end
 
     # Permanently try to delete the record for this booster.
@@ -166,8 +166,8 @@ module Boosters
     # @param role_color [ColourRGB, nil] The role color to set for this booster.
     def edit(**rest)
       me = {
-        user_id: id,
-        guild_id: guild.id
+        user_id: @id,
+        guild_id: @guild_id
       }
 
       rest = {
@@ -245,12 +245,12 @@ module Boosters
     # Get the guild for this banned user.
     # @return [Guild] The guild for this user.
     def guild
-      Layer.pool.guild(guild_id: guild_id)
+      Layer.pool.guild(guild_id: @guild_id)
     end
 
     # Remove the ban for this banned user.
     def delete
-      DB.where(guild_id: guild_id, user_id: user_id).delete
+      DB.where(guild_id: @guild_id, user_id: @user_id).delete
     end
 
     # @!visibility private

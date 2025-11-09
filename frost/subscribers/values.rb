@@ -25,7 +25,7 @@ module Boosters
   }.freeze
 
   # The holographic style colors.
-  HOLOGRAPHIC = {
+  HOLOGRAPHIC_COLORS = {
     colour: 11_127_295,
     secondary: 16_759_788,
     tertiary: 16_761_760

@@ -2,7 +2,7 @@
 
 module Boosters
   # The cache-layer for boosters.
-  class Orchestrator
+  class Storage
     # @return [Sequel::Dataset]
     BANNED = POSTGRES[:banned_boosters]
 
@@ -77,7 +77,7 @@ module Boosters
     # @param setup_at [Integer] The UNIX timestamp of when the guild was created.
     # @param added_features [Integer] The features to add to the guild when creating it.
     # @param unset_features [Integer] The features to remove from the guild when creating it.
-    # @return [Array(Integer, Guild)] The state of the action, and the guild that was actioned on.
+    # @return [Integer] The resulting state of the action, and the guild that was actioned on.
     def create_guild(**options)
       if (guild = self.guild(guild_id: options[:guild_id]))
         return 200.tap { guild.edit(**options) }
@@ -94,8 +94,8 @@ module Boosters
       # We need a role to make the record here.
       return 400 unless options[:role_id]
 
-      guild = GUILDS.returning.insert_conflict.insert(options).first
-      201.tap { @guilds[guild[:guild_id]] = Guild.new(guild) }
+      guild = GUILDS.insert_conflict.insert_select(**options)
+      201.tap { @guilds[guild[:guild_id]] = Guild.new(guild) } if guild
     end
 
     # Check if a ban exists on the real-time layer.
@@ -139,7 +139,7 @@ module Boosters
     def create_ban(**options)
       return unless guild?(guild_id: options[:guild_id])
 
-      ban = BANNED.insert_conflict.returning.insert(**options).first
+      ban = BANNED.insert_conflict.insert_select(**options)
 
       @banned[ban[:guild_id]][ban[:user_id]] = Banned.new(ban) if ban
 
@@ -169,8 +169,8 @@ module Boosters
         color_id: options[:role].color.to_i
       }
 
-      booster = BOOSTERS.returning.insert_conflict.insert(**options).first
-      201.tap { @boosters[booster[:guild_id]][booster[:user_id]] = Booster.new(booster) }
+      booster = BOOSTERS.insert_conflict.insert_select(**options)
+      201.tap { @boosters[booster[:guild_id]][booster[:user_id]] = Booster.new(booster) } if booster
     end
 
     # Get a booster from the real-time layer.

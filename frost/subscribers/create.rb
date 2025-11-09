@@ -1,7 +1,17 @@
 # frozen_string_literal: true
 
 module Boosters
-  # Command handler for /booster role claim.
+  # Create a role for a guild booster. This command takes three parameters.
+  #
+  # @param name [String] The name of the role for the booster's custom role that should be
+  #   created. This must be between 1-100 characters, otherwise the request to Discord will fail.
+  #
+  # @param color [String] The base color to set for the role. This must be a hexadecimal value
+  #   or one of the values mapped in {COLORS}. This will fallback to no color if no valid color is provided.
+  #
+  # @param icon [String, nil] The icon to set for the role. This can either be a custom emoji,
+  #   a unicode emoji, or simply left blank. This parameter is silently discarded if the guild has disallowed
+  #   using external emojis for role icons and an external emoji is provided, or if the guild does not support setting role icons.
   def self.create(data)
     unless data.server.bot.permission?(:manage_roles)
       data.edit_response(content: RESPONSE[10])

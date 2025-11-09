@@ -73,7 +73,7 @@ module Birthdays
       member.pending = true
 
       # Add the birthday role and send a message for each server.
-      member.guilds.each do |guild|
+      member.guilds&.each do |guild|
         [member.add_role(guild), member.send_message(guild)]
       end
     end
@@ -84,7 +84,7 @@ module Birthdays
       [member.pending = false, schedule(member)]
 
       # Remove the birthday role from the member for each server.
-      member.guilds.each { |guild| member.remove_role(guild) }
+      member.guilds&.each { |guild| member.remove_role(guild) }
     end
   end
 end

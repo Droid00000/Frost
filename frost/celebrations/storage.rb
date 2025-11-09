@@ -1,167 +1,177 @@
 # frozen_string_literal: true
 
 module Birthdays
-  # Model for a birthday server.
+  # A guild which has enabled birthday perks.
   class Guild
-    # @return [Boolean]
-    attr_reader :lazy
-    alias lazy? lazy
+    # @return [Integer] the snowflake ID of the guild.
+    attr_reader :id
 
-    # @return [Integer]
-    attr_reader :guild
-    alias guild_id guild
-
-    # @return [Integer]
+    # @return [Integer] the snowflake ID of the guild's birthday role.
     attr_reader :role_id
-    alias role role_id
 
-    # @return [Integer, nil]
+    # @return [Integer] the UNIX timestamp of when this guild was setup.
+    attr_reader :setup_at
+
+    # @return [Integer] the snowflake ID of the user that setup this guild.
+    attr_reader :setup_by
+
+    # @return [Integer, nil] the snowflake ID of the guild's annoucement channel.
     attr_reader :channel_id
-    alias channel channel_id
-
-    # @return [Integer, nil]
-    attr_reader :enabled_at
-    alias setup_at enabled_at
-
-    # @return [Integer, nil]
-    attr_reader :enabled_by
-    alias setup_by enabled_by
 
     # @return [Sequel::Dataset]
     DB = POSTGRES[:birthday_settings]
 
     # @!visibility private
-    def initialize(data, **rest)
-      @bot = data.bot
-      @lazy = rest[:lazy]
-      @guild = data.server.id
-      model = find_guild(**rest)
-      @role_id = model[:role_id]
-      @enabled_by = model[:setup_by]
-      @enabled_at = model[:setup_at]
-      @channel_id = model[:channel_id]
+    def initialize(state)
+      update_state(state)
     end
 
-    # Check if this guild is nil, e.g. hasn't been setup.
-    # @return [Boolean] Whether this guild is nil or not.
-    def blank? = role_id.nil?
+    # Check if this guild's role was deleted.
+    # @return [Boolean] Whether the role was deleted.
+    def role_deleted?
+      BOT.server(@id)&.role(@role_id).nil?
+    end
 
-    # Get metadata about the settings for this birthday guild.
-    # @return [Array<String, Integer>] Metadata info about this guild.
-    def view = [@bot.user(enabled_by)&.name, enabled_at]
-
-    # Create a new record or update an existing record.
-    # @param role_id [Integer] The ID of the birthday role for this guild.
-    # @param user_id [Integer] The ID of the user who setup birthday events for this guild.
-    # @param channel_id [Integer] The ID of the birthday annoucement channel for this guild.
-    # @return [Integer] The resulting state of the query. `400` for error, `200` for success.
-    def edit(**options)
-      query = <<~SQL
-        SELECT * FROM set_birthday_settings(?, ?, ?, ?);
-      SQL
-
-      POSTGRES[query, guild, options[:role_id], options[:user_id],
-               options[:channel_id]].first[:set_birthday_settings]
+    # Get metadata about the settings for this guild.
+    # @return [Array(String, Integer)] Metadata info about this guild.
+    def view
+      [BOT.user(@setup_by)&.name, @setup_at]
     end
 
     # Delete the record for this guild.
-    # @note This method takes arguments, but they're ignored.
-    def delete(**)
-      query = <<~SQL
+    # @note Ensure we manually remove the guild from the user's guilds.
+    def delete
+      delete_users = <<~SQL
         UPDATE user_birthdays SET guilds =
         array_remove(guilds, ?) WHERE ? = ANY(guilds);
       SQL
 
       POSTGRES.transaction do
         # Delete the settings record from the database.
-        DB.where(guild_id: guild).delete
+        DB.where(guild_id: @id).delete
 
         # Filter and remove the guild from the guilds array.
-        POSTGRES[query, guild_id, guild_id]
+        POSTGRES[delete_users, @id, @id]
       end
+    end
+
+    # Update the properties of this guild.
+    # @param role_id [Integer] The ID of the birthday role for this guild.
+    # @param channel_id [Integer, nil] The ID of the announcement channel for this guild.
+    def edit(**rest)
+      rest = {
+        role_id: rest[:role_id],
+        channel_id: rest[:channel_id]
+      }
+
+      update_state(DB.where(guild_id: @id).returning.update(**rest.compact).first)
+    end
+
+    # @!visibility private
+    def self.create(...)
+      Storage.pool.create_guild(...)
+    end
+
+    # @!visibility private
+    def self.delete(data)
+      Storage.pool.delete_guild(guild_id: data.server.id)
+    end
+
+    # @!visibility private
+    def self.get(data, hit: false)
+      Storage.pool.guild(guild_id: data.server.id, hit: hit)
     end
 
     private
 
     # @!visibility private
-    def find_guild(**options)
-      @lazy ? options : DB.where(guild_id: @guild).first || options
+    def update_state(new_data)
+      @id = new_data[:guild_id]
+      @role_id = new_data[:role_id]
+      @setup_at = new_data[:setup_at]
+      @setup_by = new_data[:setup_by]
+      @channel_id = new_data[:channel_id]
     end
   end
 
   # Represents a single birthday record for a user.
   class Member
-    # @return [Integer]
-    attr_reader :user_id
+    # @return [Integer] the snowflake ID of the user.
+    attr_reader :id
 
-    # @return [Integer]
-    attr_reader :guild_id
+    # @return [Array<Integer>] the user's synced guilds.
+    attr_reader :guilds
 
-    # @return [Time, nil]
+    # @return [Time, nil] the birthday as a UTC timestamp.
     attr_reader :birthday
-
-    # @return [Array<Integer>]
-    attr_reader :user_guilds
 
     # @return [Sequel::Dataset]
     DB = POSTGRES[:user_birthdays]
 
     # @!visibility private
-    def initialize(data, **rest)
-      @data = data
-      @lazy = rest[:lazy]
-      @user_id = data.user.id
+    def initialize(data)
+      @id = data.user.id
+      model = get_user(@id)
+      @guilds = model[:guilds]
       @guild_id = data.server.id
-      model = find_user(@user_id)
       @birthday = model[:birthdate]
-      @user_guilds = model[:guilds]
     end
 
-    # Check if this member is nil, e.g. doesn't have a record.
-    # @return [true, false] Whether the member itself is blank.
-    def blank? = birthday.nil?
+    # Check if this user is a dummy user.
+    # @return [Boolean] whether or not the user is a dummy user.
+    def blank? 
+      @birthday.nil?
+    end
 
-    # Get the birthday guild this member is a part of.
-    # @return [Guild] The birthday guild this member is part of.
-    def guild = @guild ||= Guild.new(@data)
+    # Check if the guild this user was created in is synced.
+    # @return [Boolean] whether or not the user's guild is synced.
+    def synced?
+      @guilds.include?(@guild_id)
+    end
 
-    # Check if this guild is synced into the user's guilds array.
-    # @return [true, false] Whether this guild is synced or not.
-    def synced? = user_guilds.any?(guild_id)
+    # Delete the record for this user.
+    def delete
+      DB.where(user_id: @id).delete
+    end
 
-    # Remove this members birthday records for every guild.
-    def delete = DB.where(user_id: user_id).delete
+    # Get the guild the user was created in.
+    # @return [Guild, nil] the guild the user was created in.
+    def guild
+      Storage.pool.guild(guild_id: @guild_id)
+    end
 
-    # Set the birthday and inital state for the user.
+    # Set the user's birthdate.
+    # @param birthday [Time] the birthdate to set for the user.
     def birthday=(birthday)
-      DB.insert_conflict(**conflict(birthday.utc)).insert(insertion(birthday.utc))
+      conflict = {
+        target: :user_id,
+        update: { birthdate: birthday.utc }
+      }
+
+      rest = {
+        user_id: @id,
+        birthdate: birthday.utc,
+        guilds: Sequel.pg_array([@guild_id])
+      }
+
+      DB.insert_conflict(**conflict).insert(**rest)
     end
 
-    # Un-sync the guild from the user's guild's array.
-    def desync
-      DB.where(user_id: user_id).update(guilds: Sequel.function(:array_remove, :guilds, guild_id))
-    end
-
-    # Sync the guild into the user's guild's array.
+    # Add the guild this user was created into the user's guilds array.
     def sync
-      DB.where(user_id: user_id).update(guilds: Sequel.function(:array_append, :guilds, guild_id))
+      DB.where(user_id: @id).update(guilds: Sequel.lit("array_append(guilds, ?)", @guild_id))
+    end
+
+    # Remove the guild this user was created into the user's guilds array.
+    def desync
+      DB.where(user_id: @id).update(guilds: Sequel.lit("array_remove(guilds, ?)", @guild_id))
     end
 
     private
 
     # @!visibility private
-    def conflict(*options)
-      { target: :user_id, update: { birthdate: options.first } }
-    end
-
-    # @!visibility private
-    def find_user(*options)
-      POSTGRES.transaction { DB.where(user_id: options.first).first } || {}
-    end
-
-    # @!visibility private
-    def insertion(*options)
-      { user_id: user_id, guilds: Sequel.pg_array([guild_id]), birthdate: options[0] }
+    def get_user(user_id)
+      DB.where(user_id: user_id).first || {}
     end
   end
 
@@ -176,9 +186,6 @@ module Birthdays
 
     # @return [Sequel::Dataset]
     DB = POSTGRES[:user_birthdays]
-
-    # Lightweight struct for guilds.
-    Guild = Struct.new(:id, :role, :channel)
 
     # @!visibility private
     def initialize(data)
@@ -197,19 +204,19 @@ module Birthdays
     def send_message(guild)
       message = ::AdminCommands::Birthdays::RESPONSE[1] % user_id
 
-      BOT.channel(guild.channel)&.send_message(message) rescue nil
+      BOT.channel(guild.channel_id)&.send_message(message) rescue nil
     end
 
     # Add the birthday role to a member for a guild.
     # @param guild [Guild] The guild to add the role for.
     def add_role(guild)
-      BOT.member(guild.id, user_id)&.add_role(guild.role) rescue nil
+      BOT.member(guild.id, user_id)&.add_role(guild.role_id) rescue nil
     end
 
     # Remove the birthday role from a member for a guild.
     # @param guild [Guild] The guild to remove the role for.
     def remove_role(guild)
-      BOT.member(guild.id, user_id)&.remove_role(guild.role) rescue nil
+      BOT.member(guild.id, user_id)&.remove_role(guild.role_id) rescue nil
     end
 
     # Get the time at which the member's birthday occured this year.
@@ -235,13 +242,8 @@ module Birthdays
     # Get a list of guilds that the member has synced to their account.
     # @return [Array<Guild>] Guilds the member is a part of currently.
     def guilds
-      query = <<~SQL
-        SELECT DISTINCT * FROM birthday_settings WHERE guild_id =
-        ANY(ARRAY(SELECT guilds FROM user_birthdays WHERE user_id = ?));
-      SQL
-
-      POSTGRES[query, user_id].all.map do |model|
-        Guild.new(model[:guild_id], model[:role_id], model[:channel_id])
+      DB.where(user_id:).select(:guilds).first&[:guilds]&.filter_map do |id|
+        Storage.guild(guild_id: id, hit: true)
       end
     end
   end

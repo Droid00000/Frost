@@ -1,7 +1,22 @@
 # frozen_string_literal: true
 
 module Boosters
-  # Command handler for /booster role gradient.
+  # Modify a role's colors, for a booster. This command takes three parameters.
+  #
+  # @param style [Integer] The style of the gradient to apply. This can be one
+  #   of three values. `0` signifies that any gradient effects should be removed
+  #   and we should revert the user's role to their base colour. `1` signifies that
+  #   we should check the other two `start` and `end` parameters, since the user wants
+  #   to apply a gradient effect. Lastly, `2` signifies that the user wants to apply a
+  #   holographic style. If the `start` or `end` parameters are filled with a value, then
+  #   we should treat the command as if the style was set to `2`. Otherwise, we should apply
+  #   the holographic preset to the role's colors.
+  #
+  # @param start [String, nil] The starting color to set for the role's gradient. If the role does
+  #   not have a pre-existing gradient set, then the `end` parameter must also be filled with a value.
+  #
+  # @param end [String, nil] The ending color to set for the role's gradient. If the role does not
+  #   have a pre-existing gradient set, then the `start` parameter must also be filled with a value.
   def self.colors(data)
     unless data.server.bot.permission?(:manage_roles)
       data.edit_response(content: RESPONSE[10])
@@ -39,10 +54,9 @@ module Boosters
       reason: member.reason,
       colour: to_color(data.options["start"]),
       secondary: to_color(data.options["end"])
-    }
+    }.compact
 
-    # Resolve the given role here.
-    role = data.server.role(member.role_id)
+    role = data.server.role(options[:role])
 
     gradient_validator = proc do
       if !options[:colour] && !options[:secondary]
@@ -77,18 +91,18 @@ module Boosters
       if options[:colour] || options[:secondary]
         gradient_validator.call
       else
-        options.merge!(HOLOGRAPHIC)
+        options.merge!(HOLOGRAPHIC_COLORS)
       end
     when 0
-      options.merge!({
-                       colour: member.role_color,
-                       secondary: :NULL,
-                       tertiary: :NULL
-                     })
+      options.merge!(
+        tertiary: :NULL,
+        secondary: :NULL,
+        colour: member.role_color
+      )
     end
 
     begin
-      data.server.update_role(**options.compact)
+      data.server.update_role(**options)
     rescue Discordrb::Errors::NoPermission
       data.edit_response(content: RESPONSE[6])
       return

@@ -10,23 +10,22 @@ module AdminCommands
         return
       end
 
-      member = ::Boosters::Member.new(data)
-
-      if member.guild.blank?
+      if Boosters::Guild.get(data).nil?
         data.edit_response(content: RESPONSE[4])
         return
       end
 
-      if member.banned?
-        data.edit_response(content: RESPONSE[5])
+      if (member = Boosters::Booster.get(data))&.banned?
+        data.edit_response(content: RESPONSE[12])
         return
       end
 
-      if data.options["prune"] && member.role
-        data.server.role(member.role)&.delete
+      if data.options["prune"] && member&.role_id
+        data.server.role(member&.role_id)&.delete
       end
 
-      member.delete
+      # Don't block everything else for this.
+      Fiber.new { Boosters::Booster.delete(data) }.resume
 
       data.edit_response(content: RESPONSE[11])
     end

@@ -24,19 +24,9 @@ module AdminCommands
       Boosters.delete(event)
     end
 
-    group.subcommand(:unban) do |event|
-      event.defer(ephemeral: true)
-      Boosters.unban(event)
-    end
-
     group.subcommand(:bans) do |event|
       event.defer(ephemeral: true)
       Boosters.bans(event)
-    end
-
-    group.subcommand(:ban) do |event|
-      event.defer(ephemeral: true)
-      Boosters.ban(event)
     end
   end
 end

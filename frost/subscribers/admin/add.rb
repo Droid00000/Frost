@@ -10,24 +10,26 @@ module AdminCommands
         return
       end
 
-      member = ::Boosters::Member.new(data)
-
-      if member.guild.blank?
+      unless Boosters::Guild.get(data)
         data.edit_response(content: RESPONSE[4])
         return
       end
 
-      if member.banned?
-        data.edit_response(content: RESPONSE[5])
-        return
+      case Booster::Booster.get(data)&.banned?
+      when TrueClass
+        return data.edit_response(content: RESPONSE[5])
+      when FalseClass
+        return data.edit_response(content: RESPONSE[12])
       end
 
       # Resolve the role we need to add here.
-      role_id = data.options["role"].to_i
+      role = data.server.role(data.options["role"])
 
-      # We have to fetch the role first so we can
-      # capture the base color of the pre-existing role.
-      member.role = data.server.role(role_id)
+      Boosters::Booster.create(
+        role: role,
+        user_id: data.options["target"],
+        guild_id: data.server.resolve_id
+      )
 
       data.edit_response(content: RESPONSE[13])
     end

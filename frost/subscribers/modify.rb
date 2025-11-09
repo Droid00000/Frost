@@ -1,17 +1,30 @@
 # frozen_string_literal: true
 
 module Boosters
-  # Command handler for /booster role edit.
+  # Modify a role for a guild booster. This command takes three parameters.
+  #
+  # @param name [String, nil] The new name to set for the booster's role. If provided, the name must be
+  #   be between 1-100 characters. If this parameter is `nil`, then the role's name will not be updated.
+  #
+  # @param color [String, nil] The new base color to set for the booster's role. If provided, This must be
+  #   a hexadecimal value  or one of the values mapped in {COLORS}. Additionally, if the role currently has
+  #   a gradient set, then the gradient will be #be overwritten and replaced with the solid color that was provided.
+  #   If this parameter is `nil`, then the role's color will not be updated.
+  #
+  # @param icon [String, nil] The new icon to set for the booster's role. This can either be a custom emoji, a
+  #   unicode emoji, or simply left blank. This parameter is silently discarded if the guild has disallowed using external
+  #   emojis for role icons and an external emoji is provided, or if the guild does not support setting role icons. If this
+  #   parameter is `nil`, then the role's icon will not be updated.
   def self.edit(data)
     unless data.server.bot.permission?(:manage_roles)
       data.edit_response(content: RESPONSE[10])
       return
     end
 
-    # unless data.user.boosting?
-    #  data.edit_response(content: RESPONSE[15])
-    #  return
-    # end
+    unless data.user.boosting?
+      data.edit_response(content: RESPONSE[15])
+      return
+    end
 
     unless safe_name?(data)
       data.edit_response(content: RESPONSE[14])
@@ -65,7 +78,6 @@ module Boosters
 
     data.edit_response(content: RESPONSE[7])
 
-    # Do this after in order to not block everything else.
-    member.edit(color_id: options[:colour]) if options[:colour]
+    member.edit(color: options[:colour]) if options[:colour]
   end
 end

@@ -14,10 +14,9 @@ module AdminCommands
         added_features: 0,
         unset_features: 0,
         user_id: data.user.id,
-        role_id: data.options["role"]
+        role_id: data.options["role"],
+        guild_id: data.server.resolve_id
       }
-
-      guild = ::Boosters::Guild.new(data, lazy: true)
 
       case data.options["icon"]
       when TrueClass
@@ -26,7 +25,7 @@ module AdminCommands
         options[:unset_features] |= ::Boosters::Guild::FLAGS[:any_icon]
       end
 
-      state = guild.edit(**options.compact)
+      state = Boosters::Guild.create(**options)
 
       if state == 400 && options[:role_id].nil?
         data.edit_response(content: RESPONSE[3])

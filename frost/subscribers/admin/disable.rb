@@ -10,9 +10,10 @@ module AdminCommands
         return
       end
 
-      ::Boosters::Guild.new(data, lazy: true).delete
-
       data.edit_response(content: RESPONSE[7])
+
+      # Do this after, since it can take a while.
+      Boosters::Guild.delete(data)
     end
   end
 end
