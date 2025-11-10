@@ -10,6 +10,7 @@ require "selenium-webdriver"
 
 Dir["frost/**/*.rb"].each { |file| require_relative file }
 
+# TODO: rebase back onto shardlab/discordrb main version branch.
 BOT = Discordrb::Bot.new(token: CONFIG[:Discord][:TOKEN], intents: 34_313)
 
 at_exit { BOT.stop }

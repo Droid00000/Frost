@@ -44,7 +44,7 @@ module Owner
         container.seperator(divider: true, spacing: :small)
 
         # Add a little bit of footer text for total count.
-        container.text_display(text: format(RESPONSE[1], total, @uptime))
+        container.text_display(text: format(RESPONSE[1], total, @time))
       end
     end
   end
