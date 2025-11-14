@@ -51,6 +51,9 @@ module Owner
 
   # Log statistics for application command usage.
   def self.slash(data)
+    # Ignore any commands that were used by the owner.
+    return if data.user.id == CONFIG[:Discord][:OWNER]&.to_i
+
     hash = data.interaction.data
 
     # Filter through the options hash.

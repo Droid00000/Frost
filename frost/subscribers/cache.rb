@@ -26,7 +26,7 @@ module Boosters
         @boosters[row[:guild_id]][row[:user_id]] = Booster.new(row)
       end
 
-      BANNED.order(:guild_id, :user_id, :banned_at).paged_each(strategy: :filter) do |row|
+      BANNED.order(:guild_id, :banned_at, :user_id).paged_each(strategy: :filter) do |row|
         @banned[row[:guild_id]][row[:user_id]] = Banned.new(row)
       end
     end
