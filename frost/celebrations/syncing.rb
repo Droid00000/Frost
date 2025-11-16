@@ -11,7 +11,7 @@ module Birthdays
       return
     end
 
-    if member.guild.blank?
+    if member.guild.nil?
       data.edit_response(content: RESPONSE[4])
       return
     end

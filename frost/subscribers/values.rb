@@ -65,7 +65,7 @@ module Boosters
   # Get an icon for a role.
   # @return [String, File, nil] The resolved icon.
   def self.to_icon(data, guild)
-    return nil unless data.server.features.include?(:role_icons)
+    return nil unless data.interaction.server_features.include?(:role_icons)
 
     icon = (data.emoji("icon") || data.options["icon"]&.scan(Unicode::Emoji::REGEX)&.first)
 

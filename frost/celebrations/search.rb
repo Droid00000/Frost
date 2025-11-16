@@ -3,16 +3,11 @@
 module Birthdays
   # Search for a timezone.
   def self.search(data)
-    choices = if data.options["timezone"].empty?
-                data.choices.merge!(DEFAULT_ZONES)
-              else
-                query = "SELECT * FROM search_timezones(?);"
-                POSTGRES[query, data.options["timezone"]].all
-              end
-
-    unless choices.is_a?(Hash)
-      choices.map do |result|
-        data.choices[result[:name]] = result[:timezone]
+    if (zone = data.options["timezone"]).empty?
+      data.choices.merge!(DEFAULT_ZONES)
+    else
+      POSTGRES.fetch(SEARCH_QUERY, zone).each do |row|
+        data.choices[row[:name]] = row[:timezone]
       end
     end
 

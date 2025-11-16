@@ -6,7 +6,7 @@ module Birthdays
     # Initialize and delete in one go.
     Member.new(data, lazy: true).delete
 
-    # Create the new job with the new data.
+    # Delete the current task if it exists.
     Orchestrator.unschedule(data.user)
 
     data.edit_response(content: RESPONSE[5])

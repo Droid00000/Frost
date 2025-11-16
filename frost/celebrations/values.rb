@@ -41,4 +41,7 @@ module Birthdays
     "Shanghai, China": "Asia/Shanghai",
     "Lagos, Nigeria": "Africa/Lagos"
   }.freeze
+
+  # SQL query used to find timezones.
+  SEARCH_QUERY = "SELECT * FROM search_timezones(?);"
 end

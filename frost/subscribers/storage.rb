@@ -81,17 +81,17 @@ module Boosters
 
     # @!visibility private
     def self.create(...)
-      Orchestrator.pool.create_guild(...)
+      Storage.create_guild(...)
     end
 
     # @!visibility private
     def self.delete(data)
-      Orchestrator.pool.delete_guild(guild_id: data.server.id)
+      Storage.delete_guild(guild_id: data.server.id)
     end
 
     # @!visibility private
     def self.get(data, hit: false)
-      Orchestrator.pool.guild(guild_id: data.server.id, hit: hit)
+      Storage.guild(guild_id: data.server.id, hit: hit)
     end
 
     private
@@ -180,24 +180,24 @@ module Boosters
 
     # @!visibility private
     def self.create(...)
-      Orchestrator.pool.create_booster(...)
+      Storage.create_booster(...)
     end
 
     # @!visibility private
     def self.get(data)
       if (target = data.options["target"])
-        Orchestrator.pool.booster(guild_id: data.server.id, user_id: target.to_i)
+        Storage.booster(guild_id: data.server.id, user_id: target.to_i)
       else
-        Orchestrator.pool.booster(guild_id: data.server.id, user_id: data.user.id)
+        Storage.booster(guild_id: data.server.id, user_id: data.user.id)
       end
     end
 
     # @!visibility private
     def self.delete(data)
       if (target = data.options["target"])
-        Orchestrator.pool.delete_booster(guild_id: data.server.id, user_id: target.to_i)
+        Storage.delete_booster(guild_id: data.server.id, user_id: target.to_i)
       else
-        Orchestrator.pool.delete_booster(guild_id: data.server.id, user_id: data.user.id)
+        Storage.delete_booster(guild_id: data.server.id, user_id: data.user.id)
       end
     end
 
@@ -255,20 +255,20 @@ module Boosters
 
     # @!visibility private
     def self.create(...)
-      Orchestrator.pool.create_ban(...)
+      Storage.create_ban(...)
     end
 
     # @!visibility private
     def self.delete(...)
-      Orchestrator.pool.delete_ban(...)
+      Storage.delete_ban(...)
     end
 
     # @!visibility private
     def self.get(data)
       if (target = data.options["target"])
-        Orchestrator.pool.ban(guild_id: data.server.id, user_id: target.to_i)
+        Storage.ban(guild_id: data.server.id, user_id: target.to_i)
       else
-        Orchestrator.pool.ban(guild_id: data.server.id, user_id: data.user.id)
+        Storage.ban(guild_id: data.server.id, user_id: data.user.id)
       end
     end
   end

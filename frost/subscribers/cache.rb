@@ -33,12 +33,14 @@ module Boosters
 
     # Create the instance for this real-time layer.
     # This does all of the setup needed to get everything going.
-    def self.pool
-      @pool ||= new
+    def self.login
+      @login ||= new
     end
 
-    # #login should only be used in the setup hook.
-    singleton_class.alias_method :login, :pool
+    # @!visibility private
+    def self.method_missing(name, ...)
+      login.respond_to?(name) ? login.__send__(name, ...) : super
+    end
 
     # Get a guild from the real-time layer.
     # @param guild_id [Integer] The guild ID of the guild that should be fetched.

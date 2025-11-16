@@ -9,7 +9,7 @@ module Birthdays
     # Process the datetime given to us here.
     birthdate = create_datetime(data.options)
 
-    if member.guild.blank?
+    if member.guild.nil?
       data.edit_response(content: RESPONSE[4])
       return
     end

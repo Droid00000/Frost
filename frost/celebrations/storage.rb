@@ -26,12 +26,6 @@ module Birthdays
       update_state(state)
     end
 
-    # Check if this guild's role was deleted.
-    # @return [Boolean] Whether the role was deleted.
-    def role_deleted?
-      BOT.server(@id)&.role(@role_id).nil?
-    end
-
     # Get metadata about the settings for this guild.
     # @return [Array(String, Integer)] Metadata info about this guild.
     def view
@@ -41,7 +35,7 @@ module Birthdays
     # Delete the record for this guild.
     # @note Ensure we manually remove the guild from the user's guilds.
     def delete
-      delete_users = <<~SQL
+      delete_query = <<~SQL
         UPDATE user_birthdays SET guilds =
         array_remove(guilds, ?) WHERE ? = ANY(guilds);
       SQL
@@ -51,7 +45,7 @@ module Birthdays
         DB.where(guild_id: @id).delete
 
         # Filter and remove the guild from the guilds array.
-        POSTGRES[delete_users, @id, @id]
+        POSTGRES[delete_query, @id, @id]
       end
     end
 
@@ -69,17 +63,17 @@ module Birthdays
 
     # @!visibility private
     def self.create(...)
-      Storage.pool.create_guild(...)
+      Storage.create_guild(...)
     end
 
     # @!visibility private
     def self.delete(data)
-      Storage.pool.delete_guild(guild_id: data.server.id)
+      Storage.delete_guild(guild_id: data.server.id)
     end
 
     # @!visibility private
     def self.get(data, hit: false)
-      Storage.pool.guild(guild_id: data.server.id, hit: hit)
+      Storage.guild(guild_id: data.server.id, hit: hit)
     end
 
     private
@@ -109,9 +103,9 @@ module Birthdays
     DB = POSTGRES[:user_birthdays]
 
     # @!visibility private
-    def initialize(data)
+    def initialize(data, lazy: nil)
       @id = data.user.id
-      model = get_user(@id)
+      model = get_user(lazy)
       @guilds = model[:guilds]
       @guild_id = data.server.id
       @birthday = model[:birthdate]
@@ -137,7 +131,7 @@ module Birthdays
     # Get the guild the user was created in.
     # @return [Guild, nil] the guild the user was created in.
     def guild
-      Storage.pool.guild(guild_id: @guild_id)
+      Storage.guild(guild_id: @guild_id)
     end
 
     # Set the user's birthdate.
@@ -170,8 +164,8 @@ module Birthdays
     private
 
     # @!visibility private
-    def get_user(user_id)
-      DB.where(user_id: user_id).first || {}
+    def me(lazy)
+      lazy ? {} : DB.where(user_id: @id).first || {}
     end
   end
 
@@ -240,7 +234,7 @@ module Birthdays
     end
 
     # Get a list of guilds that the member has synced to their account.
-    # @return [Array<Guild>] Guilds the member is a part of currently.
+    # @return [Array<Guild>] The guilds the member currently a part of.
     def guilds
       (DB.where(user_id:).select(:guilds).first || {})[:guilds]&.filter_map do |id|
         Storage.guild(guild_id: id, hit: true)

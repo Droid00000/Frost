@@ -10,7 +10,7 @@ module AdminCommands
         return
       end
 
-      ::Birthdays::Guild.new(data, lazy: true).delete
+      ::Birthdays::Guild.delete(data)
 
       data.edit_response(content: RESPONSE[4])
     end

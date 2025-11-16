@@ -10,16 +10,14 @@ module AdminCommands
         return
       end
 
-      # Initialize the invoking guild.
-      guild = ::Birthdays::Guild.new(data, lazy: true)
-
       options = {
-        user_id: data.user.id,
+        setup_by: data.user.id,
+        setup_at: Time.now.to_i,
         role_id: data.options["role"],
         channel_id: data.options["channel"]
       }
 
-      state = guild.edit(**options.compact)
+      state = ::Birthdays::Guild.create(options)
 
       if state == 400 && options[:role_id].nil?
         data.edit_response(content: RESPONSE[2])
