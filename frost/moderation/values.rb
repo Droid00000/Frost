@@ -34,7 +34,6 @@ module Moderation
     "tidal.com",
     "yahoo.com",
     "tenor.com",
-    # "imgur.com", TODO: safely add this back.
     "naver.com",
     "anilist.co",
     "python.org",

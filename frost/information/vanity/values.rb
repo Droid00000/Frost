@@ -12,11 +12,6 @@ module Vanity
     7 => "Please provide an end color for the gradient."
   }.freeze
 
-  # Produce an audit reason string to show when operating on the current role.
-  # @param interaction [Interaction] The current interaction the entry is for.
-  # @return [String] A string that denotes the action type and current user ID.
-  def self.reason(interaction) = "Vanity Roles (ID: #{interaction.user.id})"
-
   # Convert an interaction object into usable role icon for the current role.
   # @param interaction [Interaction] The current interaction the role is for.
   # @return [String, File, nil] The icon from the role that was extracted or `nil`.

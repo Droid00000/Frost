@@ -10,8 +10,8 @@ module Vanity
 
     options = {
       tertiary: :NULL,
-      reason: reason(data),
       role: data.options["role"],
+      reason: "Vanity Roles (ID: #{data.user.id})",
       colour: ::Boosters.to_color(data.options["start"]),
       secondary: ::Boosters.to_color(data.options["end"])
     }
@@ -54,11 +54,11 @@ module Vanity
         options.merge!(::Boosters::HOLOGRAPHIC)
       end
     when 0
-      options.merge!({
-                       colour: role.color,
-                       secondary: :NULL,
-                       tertiary: :NULL
-                     })
+      options.merge!(
+        tertiary: :NULL,
+        secondary: :NULL,
+        colour: role.colour.to_i,
+      )
     end
 
     begin

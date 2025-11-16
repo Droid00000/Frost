@@ -9,29 +9,24 @@ module Vanity
     end
 
     options = {
-      colour: ::Boosters.to_color(data.options["color"]),
+      icon: to_icon(data),
       name: data.options["name"],
       role: data.options["role"],
-      reason: reason(data),
-      icon: to_icon(data)
-    }.compact
+      reason: "Vanity Roles (ID: #{data.user.id})",
+      colour: ::Boosters.to_color(data.options["color"])
+    }
 
     if data.options["icon"]&.match?(REGEX[3])
       options[:icon] = :NULL
     end
 
     if options[:colour]
-      options[:secondary] = :NULL
-      options[:tertiary] = :NULL
-    end
-
-    unless data.server.features.include?(:role_icons)
-      options.delete(:icon)
+      options.merge!(secondary: :NULL, tertiary: :NULL)
     end
 
     if options.size > 2
       begin
-        data.server.update_role(**options)
+        data.server.update_role(**options.compact)
       rescue Discordrb::Errors::NoPermission
         data.edit_response(content: RESPONSE[1])
         return
