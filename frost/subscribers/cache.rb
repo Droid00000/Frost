@@ -79,10 +79,10 @@ module Boosters
     # @param setup_at [Integer] The UNIX timestamp of when the guild was created.
     # @param added_features [Integer] The features to add to the guild when creating it.
     # @param unset_features [Integer] The features to remove from the guild when creating it.
-    # @return [Integer] The resulting state of the action, and the guild that was actioned on.
+    # @return [Integer] The resulting state of the action, of the guild that was actioned on.
     def create_guild(**options)
-      if (guild = self.guild(guild_id: options[:guild_id]))
-        return 200.tap { guild.edit(**options) }
+      if (cached_guild = guild(guild_id: options[:guild_id]))
+        return 200.tap { cached_guild.edit(**options) }
       end
 
       options = {
