@@ -164,7 +164,7 @@ module Birthdays
     private
 
     # @!visibility private
-    def me(lazy)
+    def get_user(lazy)
       lazy ? {} : DB.where(user_id: @id).first || {}
     end
   end
