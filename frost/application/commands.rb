@@ -51,12 +51,7 @@ end
 
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:science, "Access the bot's control panel.", contexts: [0, 1, 2], integration_types: [0, 1], default_member_permissions: 0, name_localizations: { hi: "विज्ञान" }, description_localizations: { hi: "बॉट के नियंत्रण पैनल तक पहुंचें" }) do |option|
-  option.integer(:dial, "The action that you want to perform.", required: true, choices: { "Drain Emojis" => 1, "Shutdown" => 2, "Evaluate" => 3, "Gateway" => 4, "Restart" => 5, "Logger" => 6 }, name_localizations: { hi: "फ़ोनकरना" }, description_localizations: { hi: "आप कौन सी कार्रवाई करना चाहते हैं" })
-end
-
-# @!function [Emoji Operations] Belongs to a module that manages emoji related commands.
-bot.register_application_command(:top, "View the most used emojis in this server.", contexts: [0], integration_types: [0], name_localizations: { hi: "इमोजी" }, description_localizations: { hi: "कुछ इमोजी आँकड़े देखें" }) do |command|
-  command.subcommand(:emojis, "View the most used emojis in this server.", name_localizations: { hi: "आँकड़े" }, description_localizations: { hi: "शीर्ष इमोजी के बारे में जानकारी यहां प्राप्त करें" })
+  option.integer(:dial, "The action that you want to perform.", required: true, choices: { Shutdown: 1, Evaluate: 2, Gateway: 3, Restart: 4, Logger: 5 }, name_localizations: { hi: "फ़ोनकरना" }, description_localizations: { hi: "आप कौन सी कार्रवाई करना चाहते हैं" })
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
@@ -98,15 +93,15 @@ bot.register_application_command(:event, "Role management for server events.", c
 
     group.subcommand(:claim, "Claim one of your event roles.") do |option|
       option.role(:role, "The event role that you want to claim.", required: true)
-      option.boolean(:display, "whether to set the event role as your display role.", required: true)
+      option.boolean(:display, "whether to set the event role as your primary role.", required: true)
     end
 
     group.subcommand(:enable, "Enable the event roles functionality for a role.") do |option|
-      option.role(:role, "The role to enable event roles functionality for.", required: true)
+      option.role(:role, "The role to enable the event roles functionality for.", required: true)
     end
 
     group.subcommand(:disable, "Disable the event roles functionality for an event role.") do |option|
-      option.role(:role, "The role to disable event roles functionality for.", required: true)
+      option.role(:role, "The role to disable the event roles functionality for.", required: true)
     end
   end
 end

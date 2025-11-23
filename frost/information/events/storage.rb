@@ -112,11 +112,11 @@ module Events
     # @!visibility private
     def list_users
       query = <<~SQL
-        SELECT user_id FROM event_users
+        SELECT user_id AS id FROM event_users
         WHERE role_id = ? AND guild_id = ? ORDER BY user_id DESC;
       SQL
 
-      POSTGRES[query, id, guild_id].paged_each(strategy: :filter).map { it[:user_id] }
+      POSTGRES[query, id, guild_id].paged_each(strategy: :filter).map { it[:id] }
     end
   end
 end

@@ -48,36 +48,4 @@ module Owner
       end
     end
   end
-
-  # Log statistics for application command usage.
-  def self.slash(data)
-    # Ignore any commands that were used by the owner.
-    return if data.user.id == CONFIG[:Discord][:OWNER]&.to_i
-
-    hash = data.interaction.data
-
-    # Filter through the options hash.
-    if hash["options"]&.any?
-      case hash["options"][0]["type"]
-      when 1
-        subcommand = hash["options"][0]["name"].to_sym
-      when 2
-        group = hash["options"][0]["name"].to_sym
-        subcommand = hash["options"][0]["options"][0]["name"].to_sym
-      end
-    end
-
-    # Build out the database record.
-    record = {
-      command_user: data.user.id,
-      command_epoch: Time.now.to_i,
-      command_channel: data.channel_id,
-      # rubocop:disable Lint/UselessAssignment
-      name: "#{hash['name']} #{group ||= ''}" << " #{subcommand ||= ''}"
-      # rubocop:enable Lint/UselessAssignment
-    }
-
-    # Add the final result to the cache.
-    Storage.add(record.tap { it[:name] = it[:name].gsub(/\s+/, " ").strip })
-  end
 end

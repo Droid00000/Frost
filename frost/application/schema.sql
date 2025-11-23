@@ -19,14 +19,6 @@ CREATE TABLE IF NOT EXISTS event_users (
   PRIMARY KEY (user_id, role_id)
 );
 
--- Holds info about emoji stats.
-CREATE TABLE IF NOT EXISTS emoji_tracker (
-  balance INTEGER NOT NULL,
-  emoji_id BIGINT NOT NULL,
-  guild_id BIGINT NOT NULL,
-  PRIMARY KEY (emoji_id, guild_id)
-);
-
 -- Holds info about server boosters.
 CREATE TABLE IF NOT EXISTS guild_boosters (
   user_id BIGINT NOT NULL,
@@ -79,14 +71,6 @@ CREATE TABLE IF NOT EXISTS user_birthdays (
   birthdate TIMESTAMPTZ NOT NULL
 );
 
--- Holds info about command stats.
-CREATE TABLE IF NOT EXISTS command_stats (
-  command_name TEXT PRIMARY KEY,
-  command_users BIGINT[] NOT NULL,
-  command_epochs BIGINT[] NOT NULL,
-  command_channels BIGINT[] NOT NULL
-);
-
 -- Function for searching for a timezone.
 CREATE OR REPLACE FUNCTION search_timezones (query TEXT) RETURNS SETOF world_timezones ROWS 25 LANGUAGE SQL STABLE AS $$
  WITH tokens AS (
@@ -119,9 +103,6 @@ CREATE INDEX IF NOT EXISTS guild_events_idx ON event_users (guild_id, user_id);
 
 -- Index for the `event_users` table.
 CREATE INDEX IF NOT EXISTS guild_events_fkey_idx ON event_users (guild_id, role_id);
-
--- Index for the `emoji_tracker` table.
-CREATE INDEX IF NOT EXISTS guild_emojis_idx ON emoji_tracker (guild_id, balance DESC);
 
 -- Foreign key for the `guild_boosters` table.
 ALTER TABLE guild_boosters ADD CONSTRAINT guild_boosters_fkey FOREIGN KEY (guild_id) REFERENCES booster_settings(guild_id) ON DELETE CASCADE;

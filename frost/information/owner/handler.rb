@@ -11,10 +11,6 @@ module AdminCommands
     Owner.code(event)
   end
 
-  interaction_create(type: 2) do |event|
-    Owner.slash(event)
-  end
-
   ready(resumed: false) do |event|
     Owner.logs(event)
   end
