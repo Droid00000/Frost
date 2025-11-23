@@ -85,25 +85,6 @@ bot.register_application_command(:purge, "Remove messages that meet a criteria."
   end
 end
 
-# @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:vanity, "Vanity Roles", contexts: [0], integration_types: [0], default_member_permissions: 268_435_488) do |command|
-  command.subcommand_group(:role, "Vanity Roles") do |group|
-    group.subcommand(:gradient, "Edit the gradient of a vanity role.") do |option|
-      option.role(:role, "The vanity role whose gradient you want to edit.", required: true)
-      option.integer(:style, "The style of the gradient to apply.", required: true, choices: { None: 0, Custom: 1, Holographic: 2 })
-      option.string(:start, "Provide a HEX color for the gradient's start color.", required: false, min_length: 3, max_length: 16)
-      option.string(:end, "Provide a HEX color for the gradient's end color.", required: false, min_length: 3, max_length: 16)
-    end
-
-    group.subcommand(:edit, "Edit a vanity role.") do |option|
-      option.role(:role, "The vanity role you want to edit.", required: true)
-      option.string(:name, "Provide a name for the role.", required: false, max_length: 100)
-      option.string(:color, "Provide a HEX color for the role.", required: false, min_length: 3, max_length: 16)
-      option.string(:icon, "Provide an emoji for the role icon.", required: false, max_length: 1000, min_length: 1)
-    end
-  end
-end
-
 # @!function [Event Operations] Belongs to a module that manages event roles.
 bot.register_application_command(:event, "Role management for server events.", contexts: [0], integration_types: [0]) do |command|
   command.subcommand_group(:role, "Event Roles") do |group|

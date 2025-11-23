@@ -4,9 +4,9 @@ module AdminCommands
   extend Discordrb::EventContainer
 
   application_command(:booster).group(:admin) do |group|
-    group.subcommand(:add) do |event|
-      event.defer(ephemeral: true)
-      Boosters.add(event)
+    modal_submit(custom_id: "bb") do |event|
+      event.defer_update
+      Boosters.ban(event)
     end
 
     group.subcommand(:disable) do |event|
@@ -27,6 +27,11 @@ module AdminCommands
     group.subcommand(:bans) do |event|
       event.defer(ephemeral: true)
       Boosters.bans(event)
+    end
+
+    group.subcommand(:add) do |event|
+      event.defer(ephemeral: true)
+      Boosters.add(event)
     end
   end
 end
