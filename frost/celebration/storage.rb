@@ -45,7 +45,7 @@ module Birthdays
         DB.where(guild_id: @id).delete
 
         # Filter and remove the guild from the guilds array.
-        POSTGRES[delete_query, @id, @id]
+        POSTGRES.run(delete_query, @id, @id)
       end
     end
 
@@ -247,9 +247,9 @@ module Birthdays
     # Get a list of guilds that the member has synced to their account.
     # @return [Array<Guild>] The guilds the member currently a part of.
     def guilds
-      (DB.where(user_id:).select(:guilds).first || {})[:guilds]&.filter_map do |id|
-        Storage.guild(guild_id: id, hit: true)
-      end
+      guilds = (DB.where(user_id:).select(:guilds).first || {})[:guilds]
+
+      guilds&.filter_map { |id| Storage.guild(guild_id: id, hit: true) } || []
     end
   end
 end

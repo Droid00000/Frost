@@ -14,8 +14,8 @@ module AdminCommands
         added_features: 0,
         unset_features: 0,
         user_id: data.user.id,
-        role_id: data.options["role"],
-        guild_id: data.server.resolve_id
+        guild_id: data.server_id,
+        role_id: data.options["role"]
       }
 
       case data.options["icon"]

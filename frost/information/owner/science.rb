@@ -9,7 +9,7 @@ module Owner
     end
 
     # If we need to show a modal, we can't defer here.
-    data.defer(ephemeral: true) if data.options["dial"] != 3
+    data.defer(ephemeral: true) if data.options["dial"] != 2
 
     case data.options["dial"]
     when 1

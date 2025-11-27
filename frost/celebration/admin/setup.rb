@@ -13,11 +13,12 @@ module AdminCommands
       options = {
         setup_by: data.user.id,
         setup_at: Time.now.to_i,
+        guild_id: data.server_id,
         role_id: data.options["role"],
         channel_id: data.options["channel"]
       }
 
-      state = ::Birthdays::Guild.create(options)
+      state = ::Birthdays::Guild.create(**options)
 
       if state == 400 && options[:role_id].nil?
         data.edit_response(content: RESPONSE[2])

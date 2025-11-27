@@ -3,20 +3,23 @@
 module Owner
   # This is how we can handle logging.
   def self.logs(_)
-    # Log the time at when we first got a ready event.
+    # Set the time of when we first got a ready.
     @time ||= Time.now.to_i
 
+    # Initialize all of our events once we're ready.
+    Thread.new { Events::Storage.login }
+
     # Initialize all of our boosters once we're ready.
-    Boosters::Storage.login
+    Thread.new { Boosters::Storage.login }
 
     # Initialize all of our birthdays once we're ready.
-    Birthdays::Storage.login
+    Thread.new { Birthdays::Storage.login }
 
     # Initialize all of our birthdays once we're ready.
-    Birthdays::Orchestrator.login
+    Thread.new { Birthdays::Orchestrator.login }
 
     # Return unless we were called in an actual runtime.
-    return unless ENV.fetch("PRODUCTION", nil)
+    return unless ENV.fetch("PRODUCTION_LOGS", nil)
 
     # Tell rufus to output any log info to our log file.
     Rufus::Scheduler.s.stderr = File.open("logs.rb", "ab")

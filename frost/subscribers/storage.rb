@@ -99,9 +99,9 @@ module Boosters
       {
         guild_id: @id,
         role_id: @role_id,
-        features: @features
+        features: @features,
         setup_by: @setup_by,
-        setup_at: @setup_at,
+        setup_at: @setup_at
       }
     end
 
