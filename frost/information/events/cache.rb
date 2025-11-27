@@ -10,11 +10,11 @@ module Events
     def initialize
       @roles = {}
 
-      ROLES.order(:role_id).paged_each do |data|
+      ROLES.order(:setup_at, :role_id).paged_each(strategy: :filter) do |data|
         @roles[data[:role_id]] = Role.new(data)
       end
 
-      roles.each_value(&:users)
+      @roles.each_value(&:users)
     end
 
     # Create the instance for this real-time layer.

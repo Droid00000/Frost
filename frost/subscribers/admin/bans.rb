@@ -21,16 +21,13 @@ module AdminCommands
       # The users that we want to unban.
       pop = data.values("delete").map(&:to_i)
 
-      if add.empty? && pop.empty?
-        data.edit_response(content: RESPONSE[1])
-        return
-      end
-
-      # The bans to add should take
-      # priority over the bans to remove.
-      pop -= add if add.any? && pop.any?
-
       data.edit_response(content: RESPONSE[3])
+
+      # Exit early unless we have data.
+      return unless add.any? || pop.any?
+
+      # Deletes take priority over inserts.
+      add -= pop if add.any? && pop.any?
 
       add_bans = {
         users: add,

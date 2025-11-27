@@ -23,7 +23,7 @@ module Events
       [role.position, role.resolve_id]
     end
 
-    max = member.server.bot.sort_roles.last 
+    max = member.server.bot.sort_roles.last
 
     role_index = roles.rindex(role.resolve_id)
 

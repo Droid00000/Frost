@@ -94,6 +94,17 @@ module Boosters
       Storage.guild(guild_id: data.server.id, hit: hit)
     end
 
+    # @!visibility private
+    def to_h
+      {
+        guild_id: @id,
+        role_id: @role_id,
+        features: @features
+        setup_by: @setup_by,
+        setup_at: @setup_at,
+      }
+    end
+
     private
 
     # @!visibility private
@@ -201,6 +212,16 @@ module Boosters
       end
     end
 
+    # @!visibility private
+    def to_h
+      {
+        user_id: @user_id,
+        role_id: @role_id,
+        guild_id: @guild_id,
+        color_id: @role_color
+      }
+    end
+
     private
 
     # @!visibility private
@@ -270,6 +291,16 @@ module Boosters
       else
         Storage.ban(guild_id: data.server.id, user_id: data.user.id)
       end
+    end
+
+    # @!visibility private
+    def to_h
+      {
+        user_id: @user_id,
+        guild_id: @guild_id,
+        banned_at: @banned_at,
+        banned_by: @banned_by
+      }
     end
   end
 end

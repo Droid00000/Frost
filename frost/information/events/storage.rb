@@ -3,10 +3,10 @@
 module Events
   # An enabled event role.
   class Role
-    # @return [Integer] the ID of the role this model is for.
+    # @return [Integer] the snowflake ID of the role.
     attr_reader :id
 
-    # @return [Integer] the ID of the guild this model is for.
+    # @return [Integer] the snowflake ID of the guild.
     attr_reader :guild_id
 
     # @return [Integer] the UNIX timestamp of when this role was setup.
@@ -23,29 +23,28 @@ module Events
 
     # @!visibility private
     def initialize(state)
-      @users = Set[]
       update_state(state)
     end
 
     # Fetch the users who have this role.
     # @return [Set] The user IDs for this role.
     def users
-      return @users if @listed
+      return @users if @users
 
-      @users = list_users.to_set.tap { @listed = true }
+      @users = list_users.to_set
     end
 
     # Delete this role permenantely from the DB.
     def delete
-      DB.where(guild_id: guild_id, role_id: id).delete
+      DB.where(guild_id: @guild_id, role_id: @id).delete
     end
 
     # Delete users from this role.
     # @param users [Array<Integer>] The user IDs to delete.
     def delete_users(users:)
       me = {
-        role_id: id,
-        guild_id: guild_id
+        role_id: @id,
+        guild_id: @guild_id
       }
 
       @users.subtract(users.map(&:to_i))
@@ -58,9 +57,9 @@ module Events
     def add_users(users:)
       me = users.map do |user|
         {
-          role_id: id,
+          role_id: @id,
           user_id: user.to_i,
-          guild_id: guild_id
+          guild_id: @guild_id
         }
       end
 
@@ -73,9 +72,9 @@ module Events
     # @param user [Integer] The ID of the user to check.
     # @return [true, false] Whether the user has this role.
     def user?(user:)
-      return @users.any?(user.to_i) if @listed
+      return @users.any?(user.to_i) if @users
 
-      me = { role_id: id, guild_id: guild_id }
+      me = { role_id: @id, guild_id: @guild_id }
 
       USERS.where(user_id: user.to_i, **me).any?
     end
@@ -99,6 +98,16 @@ module Events
       end
     end
 
+    # @!visibility private
+    def to_h
+      {
+        role_id: @id,
+        guild_id: @guild_id,
+        setup_by: @setup_by,
+        setup_at: @setup_at
+      }
+    end
+
     private
 
     # @!visibility private
@@ -112,11 +121,11 @@ module Events
     # @!visibility private
     def list_users
       query = <<~SQL
-        SELECT user_id AS id FROM event_users
+        SELECT user_id FROM event_users
         WHERE role_id = ? AND guild_id = ? ORDER BY user_id DESC;
       SQL
 
-      POSTGRES[query, id, guild_id].paged_each(strategy: :filter).map { it[:id] }
+      POSTGRES[query, @id, @guild_id].paged_each(strategy: :filter).map { it[:user_id] }
     end
   end
 end

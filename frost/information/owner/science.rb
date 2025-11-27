@@ -20,7 +20,7 @@ module Owner
         view.row { it.text_input(label: "Code", style: 2, custom_id: "code") }
       end
     when 3
-      Owner.statistics(data)      
+      Owner.statistics(data)
     when 4
       data.edit_response(content: "Restarting!")
       exec("bundle exec ruby --yjit core.rb")
