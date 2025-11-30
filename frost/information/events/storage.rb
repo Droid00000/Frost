@@ -29,9 +29,7 @@ module Events
     # Fetch the users who have this role.
     # @return [Set] The user IDs for this role.
     def users
-      return @users if @users
-
-      @users = list_users.to_set
+      @users ||= list_users.to_set
     end
 
     # Delete this role permenantely from the DB.
@@ -47,7 +45,7 @@ module Events
         guild_id: @guild_id
       }
 
-      @users.subtract(users.map(&:to_i))
+      @users&.subtract(users.map(&:to_i))
 
       USERS.where(**me, user_id: users).delete
     end
@@ -63,7 +61,7 @@ module Events
         }
       end
 
-      @users.add(users.map(&:to_i))
+      @users&.add(users.map(&:to_i))
 
       USERS.insert_conflict.multi_insert(me)
     end
