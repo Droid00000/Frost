@@ -67,10 +67,10 @@ COLORS = {
 CONFIG = YAML.load_file("#{File.expand_path('../..', __dir__)}/config.yml", symbolize_names: true)
 
 # The Postgres database instance used by the bot.
-POSTGRES = Sequel.connect(CONFIG[:Postgres][:URL], extensions: %i[connection_validator pg_streaming], max_connections: 5000, pool_timeout: 300)
+POSTGRES = Sequel.connect(CONFIG[:Postgres][:URL], extensions: %i[connection_validator], max_connections: 100, pool_timeout: 300)
 
 # The extensions used by sequel and the database instance.
-[POSTGRES.pool.connection_validation_timeout = -1, POSTGRES.stream_all_queries = true, POSTGRES.extension(:pg_array), Sequel.default_timezone = :utc]
+[POSTGRES.pool.connection_validation_timeout = -1, POSTGRES.extension(:pg_streaming), POSTGRES.extension(:pg_array), Sequel.default_timezone = :utc]
 
 # Regular expression patterns utilized by the bot.
 REGEX = {

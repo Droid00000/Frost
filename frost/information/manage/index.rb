@@ -37,11 +37,26 @@ module Settings
         # and the select menu that we're going to show the user.
         container.seperator(divider: true, spacing: :small)
 
-        # Add a select menu for the enabled features a server has.
-        container.row do |row|
-          row.select_menu(custom_id: "settings", placeholder: "Pick a category...", min_values: 1, disabled: !state) do |menu|
-            menu.option(label: "Birthdays", value: "Birthdays", description: "Settings for server birthdays.", emoji: "733787070123737109")
-            menu.option(label: "Boosters", value: "Boosters", description: "Settings for server boosters.", emoji: "1320971944627146752")
+        # This entire if-statement is pretty disgusting, but it is what it is.
+        if data.user.id == CONFIG[:Discord][:OWNER]&.to_i
+          # If the user who ran the command is the bot owner show a special menu.
+          container.row do |row|
+            row.select_menu(custom_id: "settings", placeholder: "Pick a category...", min_values: 1, disabled: false) do |menu|
+              if state
+                menu.option(label: "Birthdays", value: "Birthdays", description: "Settings for server birthdays.", emoji: "733787070123737109")
+                menu.option(label: "Boosters", value: "Boosters", description: "Settings for server boosters.", emoji: "1320971944627146752")
+              end
+
+              menu.option(label: "Settings", value: "Owner", description: "Settings for the application.", emoji: "1449277904147054725")
+            end
+          end
+        else
+          # Otherwise, if the user who ran the command isn't me, show the basic menu.
+          container.row do |row|
+            row.select_menu(custom_id: "settings", placeholder: "Pick a category...", min_values: 1, disabled: !state) do |menu|
+              menu.option(label: "Birthdays", value: "Birthdays", description: "Settings for server birthdays.", emoji: "733787070123737109")
+              menu.option(label: "Boosters", value: "Boosters", description: "Settings for server boosters.", emoji: "1320971944627146752")
+            end
           end
         end
       end
