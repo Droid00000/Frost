@@ -39,19 +39,9 @@ bot.register_application_command(:punch, "Punch another user.", contexts: [0, 1,
   option.user(:target, "Who do you want to punch?", required: true, name_localizations: { hi: "इशारालगाना" }, description_localizations: { hi: "आप किसे मुक्का मारना चाहते हैं?" })
 end
 
-# @!function [Affections] Belongs to a module that does expressions.
-bot.register_application_command(:sleep, "Tell another user to head to bed.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { hi: "नींद" }, description_localizations: { hi: "किसी सर्वर मित्र को बोलो जाके सो जाए" }) do |option|
-  option.user(:target, "Who needs to go to sleep?", required: true, name_localizations: { hi: "इशारालगाना" }, description_localizations: { hi: "किसको सोने जाने बोलना है" })
-end
-
 # @!function [General Operations] Belongs to a module that manages general information.
 bot.register_application_command(:time, "View the current time.", contexts: [0, 1, 2], integration_types: [0, 1], name_localizations: { hi: "समय" }, description_localizations: { hi: "वर्तमान समय देखें" }) do |option|
   option.string(:timezone, "The timezone to view the time in.", required: true, autocomplete: true, name_localizations: { hi: "समयक्षेत्र" }, description_localizations: { hi: "आप किस समयक्षेत्र का समय देखना चाहते हैं" })
-end
-
-# @!function [General Operations] Belongs to a module that manages general information.
-bot.register_application_command(:science, "Access the bot's control panel.", contexts: [0, 1, 2], integration_types: [0, 1], default_member_permissions: 0, name_localizations: { hi: "विज्ञान" }, description_localizations: { hi: "बॉट के नियंत्रण पैनल तक पहुंचें" }) do |option|
-  option.integer(:dial, "The action that you want to perform.", required: true, choices: { Shutdown: 1, Evaluate: 2, Gateway: 3, Restart: 4, Logger: 5 }, name_localizations: { hi: "फ़ोनकरना" }, description_localizations: { hi: "आप कौन सी कार्रवाई करना चाहते हैं" })
 end
 
 # @!function [General Operations] Belongs to a module that manages general information.
@@ -91,8 +81,8 @@ bot.register_application_command(:event, "Role management for server events.", c
       option.role(:role, "The event role that you want to manage members for.", required: true)
     end
 
-    group.subcommand(:claim, "Claim one of your event roles.") do |option|
-      option.role(:role, "The event role that you want to claim.", required: true)
+    group.subcommand(:equip, "Equip one of your event roles.") do |option|
+      option.role(:role, "The event role that you want to equip.", required: true)
       option.boolean(:display, "whether to set the event role as your primary role.", required: true)
     end
 

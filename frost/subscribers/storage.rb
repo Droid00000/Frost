@@ -86,12 +86,12 @@ module Boosters
 
     # @!visibility private
     def self.delete(data)
-      Storage.delete_guild(guild_id: data.server.id)
+      Storage.delete_guild(guild_id: data.server_id)
     end
 
     # @!visibility private
     def self.get(data, hit: false)
-      Storage.guild(guild_id: data.server.id, hit: hit)
+      Storage.guild(guild_id: data.server_id, hit: hit)
     end
 
     # @!visibility private
@@ -197,18 +197,18 @@ module Boosters
     # @!visibility private
     def self.get(data)
       if (target = data.options["target"])
-        Storage.booster(guild_id: data.server.id, user_id: target.to_i)
+        Storage.booster(guild_id: data.server_id, user_id: target.to_i)
       else
-        Storage.booster(guild_id: data.server.id, user_id: data.user.id)
+        Storage.booster(guild_id: data.server_id, user_id: data.user.id)
       end
     end
 
     # @!visibility private
     def self.delete(data)
       if (target = data.options["target"])
-        Storage.delete_booster(guild_id: data.server.id, user_id: target.to_i)
+        Storage.delete_booster(guild_id: data.server_id, user_id: target.to_i)
       else
-        Storage.delete_booster(guild_id: data.server.id, user_id: data.user.id)
+        Storage.delete_booster(guild_id: data.server_id, user_id: data.user.id)
       end
     end
 
@@ -287,9 +287,9 @@ module Boosters
     # @!visibility private
     def self.get(data)
       if (target = data.options["target"])
-        Storage.ban(guild_id: data.server.id, user_id: target.to_i)
+        Storage.ban(guild_id: data.server_id, user_id: target.to_i)
       else
-        Storage.ban(guild_id: data.server.id, user_id: data.user.id)
+        Storage.ban(guild_id: data.server_id, user_id: data.user.id)
       end
     end
 

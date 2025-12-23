@@ -48,61 +48,44 @@ module Boosters
       return Booster.delete(data)
     end
 
+    role = data.server.role(member.role_id.to_i)
+
     options = {
       tertiary: :NULL,
       role: member.role_id,
       reason: member.reason,
-      colour: to_color(data.options["start"]),
-      secondary: to_color(data.options["end"])
-    }.compact
+      colour: serialize_color(data.options["start"]),
+      secondary: serialize_color(data.options["end"])
+    }
 
-    role = data.server.role(options[:role])
+    state = if options["style"] == STYLES[:gradient]
+              # When the style of the role is a two-point gradient, we should simply try
+              # and validate the colors that the user provided to us.
+              validate_gradient(role: role, start: options[:colour], end: options[:secondary])
 
-    gradient_validator = proc do
-      if !options[:colour] && !options[:secondary]
-        if role.gradient?
-          data.edit_response(content: RESPONSE[13])
-          return
-        end
+            elsif options["style"] == STYLES[:solid_color]
+              # When the style of the role is a solid color, we should reset the other two
+              # gradient parameters and reset back to the base color of the booster.
+              options.merge!({ colour: member.role_color, tertiary: :NULL, secondary: :NULL })
 
-        unless role.gradient?
-          data.edit_response(content: RESPONSE[12])
-          return
-        end
-      end
+            elsif options["style"] == STYLES[:holographic] && (options[:colour] || options[:secondary])
+              # When the style of the role is holographic and the other two parameters are provided
+              # we ignore the style and treat the request as if it's for a custom gradient.
+              validate_gradient(role: role, start: options[:colour], end: options[:secondary])
 
-      if role.holographic? || !role.gradient?
-        unless options[:colour]
-          data.edit_response(content: RESPONSE[16])
-          return
-        end
+            elsif options["style"] == STYLES[:holographic] && !(options[:colour] && options[:secondary])
+              # When the style of the role is holographic and the other two parameters aren't provided
+              # we should not ignore the style and instead set the three colors for the holographic preset.
+              options.merge!({ colour: 11_127_295, secondary: 16_759_788, tertiary: 16_761_760 })
+            end
 
-        unless options[:secondary]
-          data.edit_response(content: RESPONSE[17])
-          return
-        end
-      end
-    end
-
-    case data.options["style"]
-    when 1
-      gradient_validator.call
-    when 2
-      if options[:colour] || options[:secondary]
-        gradient_validator.call
-      else
-        options.merge!(HOLOGRAPHIC_COLORS)
-      end
-    when 0
-      options.merge!(
-        tertiary: :NULL,
-        secondary: :NULL,
-        colour: member.role_color
-      )
+    if state.is_a?(String)
+      data.edit_response(content: state)
+      return
     end
 
     begin
-      data.server.update_role(**options)
+      data.server.update_role(**options.compact)
     rescue Discordrb::Errors::NoPermission
       data.edit_response(content: RESPONSE[6])
       return
@@ -111,3 +94,52 @@ module Boosters
     data.edit_response(content: RESPONSE[7])
   end
 end
+
+# def check_booster(filters:, data:, guild:, user:, booster:)
+#   filters.each do |filter|
+#     state = case filter
+#             when :null
+#               RESPONSE[] if booster.nil?
+#             when :real
+#               RESPONSE[] if !booster.nil?
+#             when :banned
+#               RESPONSE[] if booster.banned?
+#             when :boosting
+#               RESPONSE[] if !user.boosting?
+#             when :null_role
+#               RESPONSE[] if data.server.role(booster.role_id)
+#             when :permission
+#               RESPONSE[] if !data.server.bot.permission?(:manage_roles)
+#             else
+#               raise ArgumentError, "Unknown filter criteria: #{filter}"
+#             end
+
+#     return state if state
+#   end
+
+#   nil # Ensure we explicitly return nil when everything was okay.
+# end
+
+# check_booster(
+#   data: data,
+#   guild: guild,
+#   user: data.user,
+#   booster: booster,
+#   filters: %i[boosting null_guild null banned null_role]
+# )
+
+# check_booster(
+#   data: data,
+#   guild: guild,
+#   user: data.user,
+#   booster: booster,
+#   filters: %i[boosting null_guild real banned null_role]
+# )
+
+# check_booster(
+#   data: data,
+#   guild: guild,
+#   user: data.user,
+#   booster: booster,
+#   filters: %i[boosting null_guild real banned null_role]
+# )

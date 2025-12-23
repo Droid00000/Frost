@@ -24,17 +24,10 @@ module Boosters
     19 => "You've already claimed your custom role."
   }.freeze
 
-  # The holographic style colors.
-  HOLOGRAPHIC_COLORS = {
-    colour: 11_127_295,
-    secondary: 16_759_788,
-    tertiary: 16_761_760
-  }.freeze
-
   # Initilaze a new color object for a role.
   # @param [String] The hex color to resolve.
   # @return [ColourRGB] A colourRGB object.
-  def self.to_color(color)
+  def self.serialize_color(color)
     return COLORS.pull(color) if COLORS.pull(color)
 
     return if color.nil? || !(color = color[REGEX[1]])
@@ -42,16 +35,27 @@ module Boosters
     color.to_i(16).zero? ? COLORS[:black] : color.to_i(16)
   end
 
+  # TODO: write docs
+  def validate_gradient(role:, start:, end:)
+    input = {
+      one: options[:start].nil?,
+      two: binding.local_variable_get(:end).nil?
+    }
+
+    case input
+    in { one: true, two: true }
+      role.gradient? ? RESPONSE[13] : RESPONSE[12]
+    in { one: true }
+      RESPONSE[16] if role.holographic? && !role.gradient?
+    in { two: true }
+      RESPONSE[17] if role.holographic? && !role.gradient?
+    end
+  end
+
   # Produce an audit reason log to show when operating on the current role.
   # @return [String] A string that denotes the action type and current user ID.
   def self.reason(data)
     "Booster Roles (ID: #{data.user.resolve_id})"
-  end
-
-  # Check if a custom emoji is a valid icon for a role.
-  # @return [File, nil] the file for the custom emoji that can be used as the icon.
-  def self.safe_icon?(icon, state, source)
-    icon.file if state || source[icon.resolve_id]
   end
 
   # Returns true if a string doesn't contain any bad words.
@@ -64,11 +68,11 @@ module Boosters
 
   # Get an icon for a role.
   # @return [String, File, nil] The resolved icon.
-  def self.to_icon(data, guild)
+  def self.serialize_icon(data, guild)
     return nil unless data.interaction.server_features.include?(:role_icons)
 
     icon = (data.emoji("icon") || data.options["icon"]&.scan(Unicode::Emoji::REGEX)&.first)
 
-    icon.is_a?(Discordrb::Emoji) ? safe_icon?(icon, guild.any_icon?, data.server.emojis) : icon
+    icon.is_a?(Discordrb::Emoji) ? (icon.file if guild.any_icon? || data.server.emoji[icon.id]) : icon
   end
 end

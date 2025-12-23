@@ -147,10 +147,8 @@ module Discordrb
       end
 
       # @param name [String] The name of the option.
-      # @return [Member]
-      def member(name = nil)
-        return @interaction.user if name.nil?
-
+      # @return [Member, User]
+      def resolved_user(name)
         @resolved[:members][@options[name].to_i] || @resolved[:users][@options[name].to_i]
       end
     end

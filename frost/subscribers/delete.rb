@@ -39,16 +39,14 @@ module Boosters
       return
     end
 
-    data.edit_response(content: RESPONSE[4])
-
-    role = data.server.role(member.role_id)
-
     begin
-      role&.delete(member.reason)
+      data.server.role(member.role_id)&.delete(member.reason)
     rescue Discordrb::Errors::NoPermission
       data.edit_response(content: RESPONSE[5])
       return
     end
+
+    data.edit_response(content: RESPONSE[4])
 
     Booster.delete(data)
   end

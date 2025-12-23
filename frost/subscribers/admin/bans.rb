@@ -45,9 +45,9 @@ module AdminCommands
         guild_id: data.server.id
       }
 
-      if pop.any?
-        ::Boosters::Storage.delete_bans(**pop_bans) rescue nil
-      end
+      return unless pop.any?
+
+      ::Boosters::Storage.delete_bans(**pop_bans) rescue nil
     end
   end
 end

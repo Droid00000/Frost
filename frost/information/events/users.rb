@@ -31,8 +31,8 @@ module Events
       role.add_users(users: pop) rescue nil
     end
 
-    if pop.any?
-      role.delete_bans(users: add) rescue nil
-    end
+    return unless pop.any?
+
+    role.delete_bans(users: add) rescue nil
   end
 end

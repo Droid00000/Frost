@@ -9,7 +9,7 @@ module AdminCommands
       Events.delete(event)
     end
 
-    group.subcommand(:claim) do |event|
+    group.subcommand(:equip) do |event|
       event.defer(ephemeral: true)
       Events.claim(event)
     end

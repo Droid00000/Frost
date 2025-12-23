@@ -19,7 +19,7 @@ module AdminCommands
       12 => "Successfully removed the target booster.",
       13 => "Successfully banned the target members.",
       14 => "The target member is already a booster.",
-      15 => "Successfully added the target booster.",
+      15 => "Successfully added the target booster."
     }.freeze
   end
 end

@@ -53,18 +53,16 @@ module Boosters
       return
     end
 
-    options = {
-      hoist: false,
-      permissions: 0,
-      mentionable: false,
-      reason: reason(data),
-      name: data.options["name"],
-      icon: to_icon(data, guild),
-      colour: to_color(data.options["color"])
-    }
-
     begin
-      role = data.server.create_role(**options)
+      role = data.server.create_role(
+        hoist: false,
+        permissions: 0,
+        mentionable: false,
+        reason: reason(data),
+        name: data.options["name"],
+        icon: serialize_icon(data, guild),
+        colour: serialize_color(data.options["color"])
+      )
     rescue Discordrb::Errors::NoPermission
       data.edit_response(content: RESPONSE[10])
       return
@@ -88,8 +86,14 @@ module Boosters
 
     Booster.create(
       role: role,
-      user_id: data.user.resolve_id,
-      guild_id: data.server.resolve_id
+      user_id: data.user.id,
+      guild_id: data.server_id
     )
+
+    # If an exception was raised here, that means either the {guild_id, user_id} constraint was
+    # violated, or the guild disabled booster perks during the execution of the application command. When
+    # this happens, we can just delete the duplicate role that was just created, and call it a day afterwards.
+  rescue Sequel::UniqueConstraintViolation, Sequel::ForeignKeyConstraintViolation
+    data.server.role(role).delete(reason(data))
   end
 end
