@@ -247,7 +247,7 @@ module Birthdays
     # Get a list of guilds that the member has synced to their account.
     # @return [Array<Guild>] The guilds the member currently a part of.
     def guilds
-      guilds = (DB.where(user_id:).select(:guilds).first || {})[:guilds]
+      guilds = DB.where(user_id: user_id).select(:guilds).first&.[](:guilds)
 
       guilds&.filter_map { |id| Storage.guild(guild_id: id, hit: true) } || []
     end

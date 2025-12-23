@@ -28,7 +28,7 @@ module Boosters
   # @param [String] The hex color to resolve.
   # @return [ColourRGB] A colourRGB object.
   def self.serialize_color(color)
-    return COLORS.pull(color) if COLORS.pull(color)
+    COLORS.pull(color)&.then { return it }
 
     return if color.nil? || !(color = color[REGEX[1]])
 
@@ -38,7 +38,7 @@ module Boosters
   # TODO: write docs
   def validate_gradient(role:, start:, end:)
     input = {
-      one: options[:start].nil?,
+      one: start.nil?,
       two: binding.local_variable_get(:end).nil?
     }
 
