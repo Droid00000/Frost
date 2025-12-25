@@ -5,7 +5,8 @@ module General
   def self.chapter(data)
     time = Time.parse(data.bot.channel(CONFIG[:Chapter][:CHANNEL]).name)
 
-    (time += 31_536_000) if Time.now.month == 12 && time.month == 1
+    # Move to the next year because the date has already passed.
+    time += 31_536_000 if (11..12).any?(Time.now.month) && time.month == 1
 
     data.edit_response(content: Discordrb.timestamp(time, :short_datetime))
   end
@@ -19,7 +20,6 @@ module General
     wait = Selenium::WebDriver::Wait.new(timeout: 20)
     wait.until { driver.find_element(:css, CONFIG[:Chapter][:ELEMENT]) }
     time = Date.parse(driver.find_element(:css, CONFIG[:Chapter][:ELEMENT]).text.split("\n")[1])
-    driver.quit
     Discordrb::API.request(
       :channels_cid,
       CONFIG[:Chapter][:CHANNEL],
@@ -30,10 +30,7 @@ module General
       content_type: :json,
       "X-Audit-Log-Reason": "Release Date"
     )
+  ensure
+    driver&.quit
   end
-end
-
-# Cron job to update the release channel.
-Rufus::Scheduler.singleton.cron "19 15 * * *" do
-  General.find_chapter
 end
