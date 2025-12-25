@@ -51,7 +51,8 @@ module Birthdays
     # @param guild_id [Integer] The ID of the guild that should be deleted.
     # @return [Guild, nil] The guild that was deleted, or `nil` if there wasn't one to delete.
     def delete_guild(guild_id:)
-      @guilds.delete(guild_id)&.tap(&:delete)
+      @guilds[guild_id]&.delete
+      @guilds&.delete(guild_id)
     end
 
     # Create a guild on the real-time layer.

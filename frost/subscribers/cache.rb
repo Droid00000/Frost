@@ -206,9 +206,8 @@ module Boosters
     # @param guild_id [Integer] The guild ID of the booster that should be deleted.
     # @return [Booster, nil] The booster that was deleted, or `nil` if there wasn't one to delete.
     def delete_booster(user_id:, guild_id:)
-      guild = @boosters[guild_id]
-
-      (guild[user_id].tap { it&.delete }&.delete)
+      @boosters[guild_id][user_id]&.delete
+      @boosters[guild_id]&.delete(user_id)
     end
 
     # Get all of the boosters currently available.
