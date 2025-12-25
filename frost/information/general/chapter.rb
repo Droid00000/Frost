@@ -4,6 +4,9 @@ module General
   # Gets the release date of a chapter of a series.
   def self.chapter(data)
     time = Time.parse(data.bot.channel(CONFIG[:Chapter][:CHANNEL]).name)
+
+    (time += 31_536_000) if Time.now.month == 12 && time.month == 1
+
     data.edit_response(content: Discordrb.timestamp(time, :short_datetime))
   end
 

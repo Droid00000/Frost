@@ -4,7 +4,7 @@ module AdminCommands
   extend Discordrb::EventContainer
 
   application_command(:booster).group(:admin) do |group|
-    modal_submit(custom_id: "bb") do |event|
+    modal_submit(custom_id: "bans") do |event|
       event.defer_update
       Boosters.ban(event)
     end

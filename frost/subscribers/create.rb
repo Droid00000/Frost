@@ -40,7 +40,7 @@ module Boosters
 
     if (member = Booster.get(data))
       data.edit_response(content: RESPONSE[19])
-      return member&.try_delete(data)
+      return member&.try_delete
     end
 
     if member&.banned?

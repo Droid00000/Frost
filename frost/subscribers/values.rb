@@ -28,7 +28,7 @@ module Boosters
   # @param [String] The hex color to resolve.
   # @return [ColourRGB] A colourRGB object.
   def self.serialize_color(color)
-    COLORS.pull(color)&.then { return it }
+    COLORS.pull(color)&.then { return it } if color
 
     return if color.nil? || !(color = color[REGEX[1]])
 

@@ -48,15 +48,15 @@ module Boosters
 
     if member.role_deleted?
       data.edit_response(content: RESPONSE[2])
-      return Booster.delete(data)
+      return member&.try_delete
     end
 
     options = {
       role: member.role_id,
       reason: member.reason,
       name: data.options["name"],
-      icon: to_icon(data, guild),
-      colour: to_color(data.options["color"])
+      icon: serialize_icon(data, guild),
+      colour: serialize_color(data.options["color"])
     }.compact
 
     if data.options["icon"]&.match?(REGEX[3])

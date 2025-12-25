@@ -67,9 +67,15 @@ module Boosters
     # @param guild_id [Integer] The ID of the guild that should be deleted.
     # @return [Guild, nil] The guild that was deleted, or `nil` if there wasn't one to delete.
     def delete_guild(guild_id:)
+      # Actually delete TS from the DB first because that's
+      # our source of truth and we want to avoid an edge case where the local
+      # cache contains a guild, but there's nothing for that guild in the actual database.
+      @guilds[guild_id]&.delete
+
+      # After that we can basically remove everything else once we're done touching the DB.
       @banned.delete(guild_id)
       @boosters.delete(guild_id)
-      @guilds.delete(guild_id)&.tap(&:delete)
+      @guilds.delete(guild_id)
     end
 
     # Create a guild.
@@ -178,9 +184,9 @@ module Boosters
     # @param hit [true, false] Whether to fallback to a database lookup if the booster isn't cached.
     # @return [Booster, Banned, nil] The booster that was found during the lookup, it's ban entry, or `nil` if it doesn't exist.
     def booster(guild_id:, user_id:, hit: false)
-      @banned[guild_id.to_i][user_id.to_i]&.then { return it }
+      @banned[guild_id][user_id]&.then { return it }
 
-      @boosters[guild_id.to_i][user_id.to_i]&.then { return it }
+      @boosters[guild_id][user_id]&.then { return it }
 
       booster = BOOSTERS.where(guild_id: guild_id, user_id: user_id).first if hit
       @boosters[member[:guild_id]][member[:user_id]] = Booster.new(booster) if booster
@@ -200,11 +206,13 @@ module Boosters
     # @param guild_id [Integer] The guild ID of the booster that should be deleted.
     # @return [Booster, nil] The booster that was deleted, or `nil` if there wasn't one to delete.
     def delete_booster(user_id:, guild_id:)
-      @boosters[guild_id.to_i]&.delete(user_id.to_i)&.tap(&:delete)
+      guild = @boosters[guild_id]
+
+      (guild[user_id].tap { it&.delete }&.delete)
     end
 
     # Get all of the boosters currently available.
-    # @return [Array<Booster>] The boosters stored on the real-time layer.
+    # @return [Array<Booster>] The boosters that are currently stored on the real-time layer.
     def list_boosters
       boosters = @boosters.values.flat_map(&:values)
 

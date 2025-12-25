@@ -12,7 +12,7 @@ module Moderation
       target.const_set(:MUTEX, Mutex.new)
 
       # This creates the hash that track's a user's spam state.
-      target.const_set(:BUCKET, Hash.new)
+      target.const_set(:BUCKET, {})
 
       # Lastly, this creates the buffer which stores debounced
       #   logging messages that should be flushed and logged.

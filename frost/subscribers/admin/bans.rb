@@ -48,6 +48,10 @@ module AdminCommands
       return unless pop.any?
 
       ::Boosters::Storage.delete_bans(**pop_bans) rescue nil
+
+      # If the guild was disabled while inserting, let the user know.
+    rescue Sequel::UniqueConstraintViolation
+      data.edit_response(content: RESPONSE[2])
     end
   end
 end

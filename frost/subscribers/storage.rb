@@ -144,16 +144,16 @@ module Boosters
       update_state(state)
     end
 
+    # Fetch the role for this booster.
+    # @return [Role, nil] the role for this booster.
+    def role
+      BOT.server(@guild_id)&.role(@role_id)
+    end
+
     # Get the audit log reason for this booster.
     # @return [String] The reason for this booster.
     def reason
       @reason ||= "Booster Roles (ID: #{@id})"
-    end
-
-    # Check if this booster's role was deleted.
-    # @return [Boolean] Whether the role was deleted.
-    def role_deleted?
-      BOT.server(@guild_id)&.role(@role_id).nil?
     end
 
     # Get the guild for this booster.
@@ -168,8 +168,8 @@ module Boosters
     end
 
     # Permanently try to delete the record for this booster.
-    def try_delete(...)
-      Booster.delete(...) unless role_deleted? == false
+    def try_delete
+      Storage.delete_booster(user_id: @id, guild_id: @guild_id) if role.nil?
     end
 
     # Update the properties of this booster.

@@ -40,7 +40,7 @@ module Boosters
     end
 
     begin
-      data.server.role(member.role_id)&.delete(member.reason)
+      member.role&.delete(member.reason)
     rescue Discordrb::Errors::NoPermission
       data.edit_response(content: RESPONSE[5])
       return

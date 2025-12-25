@@ -45,10 +45,10 @@ module Boosters
 
     if member.role_deleted?
       data.edit_response(content: RESPONSE[2])
-      return Booster.delete(data)
+      return member&.try_delete
     end
 
-    role = data.server.role(member.role_id.to_i)
+    role = member.role
 
     options = {
       tertiary: :NULL,
@@ -94,52 +94,3 @@ module Boosters
     data.edit_response(content: RESPONSE[7])
   end
 end
-
-# def check_booster(filters:, data:, guild:, user:, booster:)
-#   filters.each do |filter|
-#     state = case filter
-#             when :null
-#               RESPONSE[] if booster.nil?
-#             when :real
-#               RESPONSE[] if !booster.nil?
-#             when :banned
-#               RESPONSE[] if booster.banned?
-#             when :boosting
-#               RESPONSE[] if !user.boosting?
-#             when :null_role
-#               RESPONSE[] if data.server.role(booster.role_id)
-#             when :permission
-#               RESPONSE[] if !data.server.bot.permission?(:manage_roles)
-#             else
-#               raise ArgumentError, "Unknown filter criteria: #{filter}"
-#             end
-
-#     return state if state
-#   end
-
-#   nil # Ensure we explicitly return nil when everything was okay.
-# end
-
-# check_booster(
-#   data: data,
-#   guild: guild,
-#   user: data.user,
-#   booster: booster,
-#   filters: %i[boosting null_guild null banned null_role]
-# )
-
-# check_booster(
-#   data: data,
-#   guild: guild,
-#   user: data.user,
-#   booster: booster,
-#   filters: %i[boosting null_guild real banned null_role]
-# )
-
-# check_booster(
-#   data: data,
-#   guild: guild,
-#   user: data.user,
-#   booster: booster,
-#   filters: %i[boosting null_guild real banned null_role]
-# )
