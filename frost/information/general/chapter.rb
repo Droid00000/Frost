@@ -6,7 +6,7 @@ module General
     time = Time.parse(data.bot.channel(CONFIG[:Chapter][:CHANNEL]).name)
 
     # Move to the next year because the date has already passed.
-    time += 31_536_000 if (11..12).any?(Time.now.month) && time.month == 1
+    time += 31_536_000 if time.month == 1 && (11..12).any?(Time.now.month)
 
     data.edit_response(content: Discordrb.timestamp(time, :short_datetime))
   end
