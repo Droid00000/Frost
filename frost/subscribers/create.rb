@@ -58,9 +58,9 @@ module Boosters
         hoist: false,
         permissions: 0,
         mentionable: false,
-        reason: reason(data),
         name: data.options["name"],
         icon: serialize_icon(data, guild),
+        reason: "Booster Roles (ID: #{data.user.id})",
         colour: serialize_color(data.options["color"])
       )
     rescue Discordrb::Errors::NoPermission

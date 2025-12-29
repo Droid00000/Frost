@@ -26,7 +26,7 @@ module Boosters
 
   # Initilaze a new color object for a role.
   # @param [String] The hex color to resolve.
-  # @return [ColourRGB] A colourRGB object.
+  # @return [Integer] The color that was serialized.
   def self.serialize_color(color)
     COLORS.pull(color)&.then { return it } if color
 
@@ -35,7 +35,11 @@ module Boosters
     color.to_i(16).zero? ? COLORS[:black] : color.to_i(16)
   end
 
-  # TODO: write docs
+  # Validate a gradient for a role.
+  # @param role [Discordrb::Role] The role to validate against.
+  # @param start [Object, nil] The start color to set for the role.
+  # @param end [Object, nil] The ending color to set for the role.
+  # @return [String, nil] The error message, or `nil` if the validation succeded.
   def validate_gradient(role:, start:, end:)
     input = {
       one: start.nil?,
@@ -52,12 +56,6 @@ module Boosters
     end
   end
 
-  # Produce an audit reason log to show when operating on the current role.
-  # @return [String] A string that denotes the action type and current user ID.
-  def self.reason(data)
-    "Booster Roles (ID: #{data.user.resolve_id})"
-  end
-
   # Returns true if a string doesn't contain any bad words.
   # @return [true, false] If the name contains any bad words.
   def self.safe_name?(data)
@@ -71,7 +69,7 @@ module Boosters
   def self.serialize_icon(data, guild)
     return nil unless data.interaction.server_features.include?(:role_icons)
 
-    icon = (data.emoji("icon") || data.options["icon"]&.scan(Unicode::Emoji::REGEX)&.first)
+    icon = (data.emoji("icon") || data.options["icon"]&.[](Unicode::Emoji::REGEX))
 
     icon.is_a?(Discordrb::Emoji) ? (icon.file if guild.any_icon? || data.server.emoji[icon.id]) : icon
   end

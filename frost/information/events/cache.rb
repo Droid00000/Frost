@@ -53,7 +53,8 @@ module Events
     # @param role_id [Integer] The ID of the role that should be deleted.
     # @return [Role, nil] The role that was deleted, or `nil` if there wasn't one to delete.
     def delete_role(role_id:)
-      @roles.delete(role_id.resolve_id)&.tap(&:delete)
+      @roles[role_id]&.delete
+      @roles&.delete(role_id)
     end
 
     # Create a role on the real-time layer.
@@ -73,7 +74,7 @@ module Events
       }
 
       role = ROLES.insert_conflict.insert_select(options)
-      201.tap { @roles[role[:role_id]] = Role.new(role) } if role
+      role ? 201.tap { @roles[role[:role_id]] = Role.new(role) } : 304
     end
   end
 end

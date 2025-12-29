@@ -152,9 +152,11 @@ module Boosters
     # @param guild_id [Integer] The guild ID of the bans that should be deleted.
     # @param users [Array<Integer>] The user IDs of the bans that should be deleted.
     def delete_bans(guild_id:, users:)
-      BANNED.where(guild_id: guild_id, user_id: users).delete
+      users = { user_id: users, guild_id: guild_id }
 
-      @banned[guild_id]&.delete_if { |user, _| users.any?(user) }
+      users = BANNED.where(**users).returning(:user_id).delete
+
+      users.each { |user| @banned[guild_id]&.delete(user[:user_id]) }
     end
 
     # Create a booster for a guild.
@@ -210,6 +212,17 @@ module Boosters
       @boosters[guild_id]&.delete(user_id)
     end
 
+    # Delete multiple boosters for a guild.
+    # @param boosters [Array<Array<Integer, Integer>>] An array of arrays
+    #   containing the guild ID (index [0]) and user ID (index [1]) to delete.
+    def delete_boosters(boosters)
+      boosters = { %i[guild_id user_id] => boosters }
+
+      boosters = BOOSTERS.where(boosters).returning(:guild_id, :user_id).delete
+
+      boosters.each { |booster| @boosters[booster[:guild_id]]&.delete(booster[:user_id]) }
+    end
+
     # Get all of the boosters currently available.
     # @return [Array<Booster>] The boosters that are currently stored on the real-time layer.
     def list_boosters
@@ -223,7 +236,7 @@ module Boosters
     # Get a list of users stored on the real-time layer, grouped by their guild.
     # @return [Array<Hash<Symbol => Integer, Symbol => Array<Integer>>>] The boosters grouped by guild.
     def chunks
-      boosters.group_by { it.guild.id }.map do |guild, users|
+      boosters.group_by(&:guild_id).map do |guild, users|
         { guild_id: guild, users: users.map(&:id) }
       end
     end

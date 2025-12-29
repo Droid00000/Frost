@@ -16,9 +16,7 @@ module Moderation
 
       # Lastly, this creates the buffer which stores debounced
       #   logging messages that should be flushed and logged.
-      target.const_set(:LOGGER, Hash.new do |hash, key|
-        hash[key] = Loggable.new
-      end)
+      target.const_set(:LOGGER, Hash.new { |hash, key| hash[key] = Loggable.new })
 
       # Define all of the methods onto the target's singleton class.
       target.module_eval do
