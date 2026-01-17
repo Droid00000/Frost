@@ -79,7 +79,7 @@ end
 
 #     files = { attachments: Array(File.open(path, "rb")) }
 
-#     channel.send_message!(has_components: true, **files) do |_, builder|
+#     channel&.send_message!(has_components: true, **files) do |_, builder|
 #       # The container is the base entity that will contain all of our other components.
 #       builder.container do |container_component|
 #         # From here, a section will be added inside of the container to contain the content and avatar image.

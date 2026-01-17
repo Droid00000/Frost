@@ -32,26 +32,21 @@ module Boosters
 
     return if color.nil? || !(color = color[REGEX[1]])
 
-    color.to_i(16).zero? ? COLORS[:black] : color.to_i(16)
+    color.to_i(16).zero? ? COLORS["black"] : color.to_i(16)
   end
 
   # Validate a gradient for a role.
   # @param role [Discordrb::Role] The role to validate against.
-  # @param start [Object, nil] The start color to set for the role.
-  # @param end [Object, nil] The ending color to set for the role.
+  # @param one [Object, nil] The start color to set for the role.
+  # @param two [Object, nil] The ending color to set for the role.
   # @return [String, nil] The error message, or `nil` if the validation succeded.
-  def validate_gradient(role:, start:, end:)
-    input = {
-      one: start.nil?,
-      two: binding.local_variable_get(:end).nil?
-    }
-
+  def validate_gradient(role:, one:, two:)
     case input
-    in { one: true, two: true }
+    in { one: :undef, two: :undef }
       role.gradient? ? RESPONSE[13] : RESPONSE[12]
-    in { one: true }
+    in { one: :undef }
       RESPONSE[16] if role.holographic? && !role.gradient?
-    in { two: true }
+    in { two: :undef }
       RESPONSE[17] if role.holographic? && !role.gradient?
     end
   end
@@ -61,7 +56,7 @@ module Boosters
   def self.safe_name?(data)
     return true if data.options["name"].nil? || data.options["name"].empty?
 
-    !data.options["name"].unicode_normalize(:nfkd).gsub(/\p{Mn}/, "").match?(REGEX[5])
+    !data.options["name"].unicode_normalize(:nfkd).gsub(/\p{Mn}/, "").match?(REGEX[4])
   end
 
   # Get an icon for a role.

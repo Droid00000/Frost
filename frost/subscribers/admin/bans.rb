@@ -40,12 +40,12 @@ module AdminCommands
         ::Boosters::Storage.create_bans(**add_bans) rescue nil
       end
 
+      return unless pop.any?
+
       pop_bans = {
         users: pop,
         guild_id: data.server.id
       }
-
-      return unless pop.any?
 
       ::Boosters::Storage.delete_bans(**pop_bans) rescue nil
 

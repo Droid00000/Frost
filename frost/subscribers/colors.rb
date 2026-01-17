@@ -48,44 +48,48 @@ module Boosters
       return member&.try_delete
     end
 
+    if !data.server_features.any?(:enhanced_role_colors) && options["style"] != 1
+      data.edit_response(content: RESPONSE[7])
+      return
+    end
+
     role = member.role
 
     options = {
-      tertiary: :NULL,
-      role: member.role_id,
+      tertiary: nil,
       reason: member.reason,
-      colour: serialize_color(data.options["start"]),
-      secondary: serialize_color(data.options["end"])
+      primary: serialize_color(data.options["start"]) || :undef,
+      secondary: serialize_color(data.options["end"]) || :undef
     }
 
-    state = if options["style"] == STYLES[:gradient]
+    state = if options["style"] == 1
               # When the style of the role is a two-point gradient, we should simply try
               # and validate the colors that the user provided to us.
-              validate_gradient(role: role, start: options[:colour], end: options[:secondary])
+              validate_gradient(role: role, one: options[:primary], two: options[:secondary])
 
-            elsif options["style"] == STYLES[:solid_color]
+            elsif options["style"] == 0
               # When the style of the role is a solid color, we should reset the other two
               # gradient parameters and reset back to the base color of the booster.
-              options.merge!({ colour: member.role_color, tertiary: :NULL, secondary: :NULL })
+              options.merge!({ primary: member.role_color, tertiary: nil, secondary: nil })
 
-            elsif options["style"] == STYLES[:holographic] && (options[:colour] || options[:secondary])
+            elsif options["style"] == 2 && (options[:primary] || options[:secondary])
               # When the style of the role is holographic and the other two parameters are provided
               # we ignore the style and treat the request as if it's for a custom gradient.
-              validate_gradient(role: role, start: options[:colour], end: options[:secondary])
+              validate_gradient(role: role, one: options[:primary], two: options[:secondary])
 
-            elsif options["style"] == STYLES[:holographic] && !(options[:colour] && options[:secondary])
+            elsif options["style"] == 2 && !(options[:primary] && options[:secondary])
               # When the style of the role is holographic and the other two parameters aren't provided
               # we should not ignore the style and instead set the three colors for the holographic preset.
-              options.merge!({ colour: 11_127_295, secondary: 16_759_788, tertiary: 16_761_760 })
+              options.merge!({ primary: 11_127_295, secondary: 16_759_788, tertiary: 16_761_760 })
             end
 
-    if state.is_a?(String)
+    if state
       data.edit_response(content: state)
       return
     end
 
     begin
-      data.server.update_role(**options.compact)
+      role.update_colors(**options.compact)
     rescue Discordrb::Errors::NoPermission
       data.edit_response(content: RESPONSE[6])
       return

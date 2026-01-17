@@ -12,10 +12,10 @@ module Affections
       image: { url: const_get(name.upcase).sample },
       color: data.server_integration? ? data.user.color : 0,
       description: format(RESPONSE[name], data.user.display_name,
-                          data.resolved_user("target").display_name)
+                          data.options_user("target").display_name)
     }
 
     # NOTE: don't ever defer these commands, otherwise the mention doesn't work.
-    data.respond(content: data.resolved_user("target").mention, embeds: [embed])
+    data.respond(content: data.options_user("target").mention, embeds: [embed])
   end
 end

@@ -63,7 +63,7 @@ module Birthdays
     # @param channel_id [Integer, nil] The ID of the announcement channel for the guild.
     # @return [Integer] The resulting state of the action, and the guild that was actioned on.
     def create_guild(**options)
-      if (guild = self.guild(guild_id: options[:guild_id]))
+      if (guild = guild(guild_id: options[:guild_id]))
         return 200.tap { guild.edit(**options) }
       end
 

@@ -53,14 +53,17 @@ module Boosters
       return
     end
 
+    # The audit log reason to show.
+    reason = "Booster Roles (ID: #{data.user.id})"
+
     begin
       role = data.server.create_role(
         hoist: false,
+        reason: reason,
         permissions: 0,
         mentionable: false,
         name: data.options["name"],
-        icon: serialize_icon(data, guild),
-        reason: "Booster Roles (ID: #{data.user.id})",
+        display_icon: serialize_icon(data, guild),
         colour: serialize_color(data.options["color"])
       )
     rescue Discordrb::Errors::NoPermission
@@ -69,16 +72,16 @@ module Boosters
     end
 
     begin
-      role.sort_above(guild.role_id)
+      role.move(above: guild.role_id)
     rescue Discordrb::Errors::NoPermission
       data.edit_response(content: RESPONSE[3])
-      return role.delete
+      return role.delete(reason)
     end
 
     data.edit_response(content: RESPONSE[1])
 
     begin
-      data.user.add_role(role, reason(data))
+      data.user.add_role(role, reason)
     rescue Discordrb::Errors::NoPermission
       data.edit_response(content: RESPONSE[10])
       return
@@ -94,6 +97,6 @@ module Boosters
     # violated, or the guild disabled booster perks during the execution of the application command. When
     # this happens, we can just delete the duplicate role that was just created, and call it a day afterwards.
   rescue Sequel::UniqueConstraintViolation, Sequel::ForeignKeyConstraintViolation
-    data.server.role(role).delete(reason(data))
+    data.server.role(role).delete(reason)
   end
 end

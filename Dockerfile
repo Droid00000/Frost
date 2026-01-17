@@ -1,4 +1,4 @@
-FROM ruby:3.4-alpine
+FROM ruby:4.0.1-alpine
 
 ENV TZ="Etc/UTC"
 

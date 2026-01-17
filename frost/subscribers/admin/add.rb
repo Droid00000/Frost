@@ -15,7 +15,7 @@ module AdminCommands
         return
       end
 
-      case Booster::Booster.get(data)&.banned?
+      case Boosters::Booster.get(data)&.banned?
       when TrueClass
         return data.edit_response(content: RESPONSE[5])
       when FalseClass

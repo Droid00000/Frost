@@ -52,19 +52,23 @@ module Boosters
     end
 
     options = {
-      role: member.role_id,
       reason: member.reason,
+      role_id: member.role_id,
       name: data.options["name"],
-      icon: serialize_icon(data, guild),
-      colour: serialize_color(data.options["color"])
+      display_icon: serialize_icon(data, guild),
+      colors: serialize_color(data.options["color"])
     }.compact
 
     if data.options["icon"]&.match?(REGEX[3])
-      options[:icon] = :NULL
+      options[:display_icon] = nil
     end
 
-    if options[:colour]
-      options.merge!(tertiary: :NULL, secondary: :NULL)
+    if (color = options[:colors])
+      options[:colors] = {
+        tertiary_color: nil,
+        primary_color: color,
+        secondary_color: nil
+      }
     end
 
     if options.size > 2
