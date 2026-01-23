@@ -37,7 +37,7 @@ module AdminCommands
       }
 
       if add.any?
-        ::Boosters::Storage.create_bans(**add_bans) rescue nil
+        ::Boosters::Storage.create_bans(**add_bans)
       end
 
       return unless pop.any?
@@ -47,9 +47,9 @@ module AdminCommands
         guild_id: data.server.id
       }
 
-      ::Boosters::Storage.delete_bans(**pop_bans) rescue nil
+      ::Boosters::Storage.delete_bans(**pop_bans)
 
-      # If the guild was disabled while inserting, let the user know.
+      # If the guild was disabled during insertion, let the user know.
     rescue Sequel::UniqueConstraintViolation
       data.edit_response(content: RESPONSE[2])
     end

@@ -10,7 +10,7 @@ module Birthdays
     def initialize
       @guilds = {}
 
-      GUILDS.order(:setup_at, :guild_id).paged_each(strategy: :filter) do |row|
+      GUILDS.order(:setup_at, :guild_id).paged_each do |row|
         @guilds[row[:guild_id]] = Guild.new(row)
       end
     end

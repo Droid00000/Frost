@@ -70,7 +70,7 @@ CONFIG = YAML.load_file("#{File.expand_path('../..', __dir__)}/config.yml", symb
 POSTGRES = Sequel.connect(CONFIG[:Postgres][:URL], extensions: %i[connection_validator], max_connections: 100, pool_timeout: 300)
 
 # The extensions used by sequel database instance.
-[POSTGRES.pool.connection_validation_timeout = -1, POSTGRES.extension(:pg_streaming), POSTGRES.extension(:pg_array), Sequel.default_timezone = :utc]
+[POSTGRES.pool.connection_validation_timeout = -1, POSTGRES.extension(:pg_streaming), POSTGRES.extension(:pg_auto_parameterize), Sequel.default_timezone = :utc]
 
 # Regular expression patterns utilized by the bot.
 REGEX = {

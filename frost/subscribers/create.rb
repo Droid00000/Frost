@@ -38,9 +38,11 @@ module Boosters
       return
     end
 
-    if (member = Booster.get(data))
+    if (member = Booster.get(data)) && !member.role
+      Booster.delete(data)
+    elsif member
       data.edit_response(content: RESPONSE[19])
-      return member&.try_delete
+      return
     end
 
     if member&.banned?
@@ -48,7 +50,7 @@ module Boosters
       return
     end
 
-    if guild.role_deleted?
+    if guild.role.nil?
       data.edit_response(content: RESPONSE[9])
       return
     end
@@ -63,8 +65,8 @@ module Boosters
         permissions: 0,
         mentionable: false,
         name: data.options["name"],
-        display_icon: serialize_icon(data, guild),
-        colour: serialize_color(data.options["color"])
+        display_icon: get_icon(data, guild),
+        colour: get_color(data.options["color"])
       )
     rescue Discordrb::Errors::NoPermission
       data.edit_response(content: RESPONSE[10])
@@ -87,16 +89,19 @@ module Boosters
       return
     end
 
-    Booster.create(
-      role: role,
-      user_id: data.user.id,
-      guild_id: data.server_id
-    )
+    begin
+      Booster.create(
+        role: role,
+        user_id: data.user.id,
+        guild_id: data.server_id,
+        version: data.interaction.id
+      )
 
-    # If an exception was raised here, that means either the {guild_id, user_id} constraint was
-    # violated, or the guild disabled booster perks during the execution of the application command. When
-    # this happens, we can just delete the duplicate role that was just created, and call it a day afterwards.
-  rescue Sequel::UniqueConstraintViolation, Sequel::ForeignKeyConstraintViolation
-    data.server.role(role).delete(reason)
+      # If an exception was raised here, that means either the {guild_id, user_id} constraint was
+      # violated, or the guild disabled booster perks during the execution of the application command. When
+      # this happens, we can just delete the role that we just created, since in both cases there cannot be a role.
+    rescue Sequel::UniqueConstraintViolation, Sequel::ForeignKeyConstraintViolation
+      data.server.role(role).delete(reason)
+    end
   end
 end

@@ -27,21 +27,21 @@ module Boosters
   # Initilaze a new color object for a role.
   # @param [String] The hex color to resolve.
   # @return [Integer] The color that was serialized.
-  def self.serialize_color(color)
+  def self.get_color(color)
     COLORS.pull(color)&.then { return it } if color
 
     return if color.nil? || !(color = color[REGEX[1]])
 
-    color.to_i(16).zero? ? COLORS["black"] : color.to_i(16)
+    (color = color.to_i(16)).zero? ? COLORS[:black] : color
   end
 
   # Validate a gradient for a role.
   # @param role [Discordrb::Role] The role to validate against.
-  # @param one [Object, nil] The start color to set for the role.
-  # @param two [Object, nil] The ending color to set for the role.
+  # @param one [Integer, Symbol] The start color to set for the role.
+  # @param two [Integer, Symbol] The ending color to set for the role.
   # @return [String, nil] The error message, or `nil` if the validation succeded.
   def validate_gradient(role:, one:, two:)
-    case input
+    case { one:, two: }
     in { one: :undef, two: :undef }
       role.gradient? ? RESPONSE[13] : RESPONSE[12]
     in { one: :undef }
@@ -60,8 +60,8 @@ module Boosters
   end
 
   # Get an icon for a role.
-  # @return [String, File, nil] The resolved icon.
-  def self.serialize_icon(data, guild)
+  # @return [String, File] The resolved icon.
+  def self.get_icon(data, guild)
     return nil unless data.interaction.server_features.include?(:role_icons)
 
     icon = (data.emoji("icon") || data.options["icon"]&.[](Unicode::Emoji::REGEX))

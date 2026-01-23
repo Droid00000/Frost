@@ -25,7 +25,7 @@ module AdminCommands
       end
 
       # Don't block everything else for this.
-      Fiber.new { Boosters::Booster.delete(data) }.resume
+      Boosters::Booster.delete(data)
 
       data.edit_response(content: RESPONSE[11])
     end

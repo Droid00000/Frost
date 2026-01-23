@@ -46,24 +46,24 @@ module Boosters
       return
     end
 
-    if member.role_deleted?
+    unless member.role
       data.edit_response(content: RESPONSE[2])
-      return member&.try_delete
+      return Booster.delete(data)
     end
 
     options = {
       reason: member.reason,
       role_id: member.role_id,
       name: data.options["name"],
-      display_icon: serialize_icon(data, guild),
-      colors: serialize_color(data.options["color"])
+      display_icon: get_icon(data, guild) || :undef,
+      colors: get_color(data.options["color"]) || :undef
     }.compact
 
     if data.options["icon"]&.match?(REGEX[3])
       options[:display_icon] = nil
     end
 
-    if (color = options[:colors])
+    if (color = options[:colors] && color != :undef)
       options[:colors] = {
         tertiary_color: nil,
         primary_color: color,
@@ -82,6 +82,8 @@ module Boosters
 
     data.edit_response(content: RESPONSE[7])
 
-    member.edit(color: options[:colour]) if options[:colour]
+    if options[:colors] != :undef
+      member.edit(color: options[:colors][:primary_color])
+    end
   end
 end

@@ -16,23 +16,15 @@ module Events
   MENTIONS = { allowed_mentions: { parse: [] } }.freeze
 
   # Add an event role to a member.
-  def self.edit_roles(role, member)
-    roles = (member.roles + [role])
+  def self.edit_roles(add, member)
+    pop, top = [], member.server.bot.highest_role
 
-    roles = roles.uniq.sort_by do |role|
-      [role.position, role.resolve_id]
+    member.roles.uniq.each do |role|
+      next if top && (role > top) || !Storage.role?(role_id: role.id)
+
+      (pop << role) if role > add
     end
 
-    max = member.server.bot.sort_roles.last
-
-    role_index = roles.rindex(role.resolve_id)
-
-    roles = roles.reject.with_index do |role, idx|
-      next nil if max && role.position > max.position
-
-      Storage.role?(role_id: role) && idx > role_index
-    end
-
-    member.set_roles(roles, "Event Roles") rescue false
+    member.set_roles(((member.roles - pop) + [add]).uniq, "Event Roles") rescue nil
   end
 end

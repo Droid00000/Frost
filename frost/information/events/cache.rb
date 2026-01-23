@@ -10,7 +10,7 @@ module Events
     def initialize
       @roles = {}
 
-      ROLES.order(:setup_at, :role_id).paged_each(strategy: :filter) do |data|
+      ROLES.order(:setup_at, :role_id).paged_each do |data|
         @roles[data[:role_id]] = Role.new(data)
       end
 

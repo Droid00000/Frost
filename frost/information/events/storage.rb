@@ -96,16 +96,6 @@ module Events
       end
     end
 
-    # @!visibility private
-    def to_h
-      {
-        role_id: @id,
-        guild_id: @guild_id,
-        setup_by: @setup_by,
-        setup_at: @setup_at
-      }
-    end
-
     private
 
     # @!visibility private
@@ -123,7 +113,7 @@ module Events
         WHERE role_id = ? AND guild_id = ? ORDER BY user_id DESC;
       SQL
 
-      POSTGRES[query, @id, @guild_id].paged_each(strategy: :filter).map { it[:user_id] }
+      POSTGRES[query, @id, @guild_id].paged_each.map { it[:user_id] }
     end
   end
 end

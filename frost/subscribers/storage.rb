@@ -39,10 +39,10 @@ module Boosters
       DB.where(guild_id: @id).delete
     end
 
-    # Check if this guild's role was deleted.
-    # @return [Boolean] Whether the role was deleted.
-    def role_deleted?
-      BOT.server(@id)&.role(@role_id).nil?
+    # Get the role for the guild.
+    # @return [Role] The role for the guild.
+    def role
+      BOT.server(@id)&.role(@role_id)
     end
 
     # Get metadata about the settings for this guild.
@@ -94,17 +94,6 @@ module Boosters
       Storage.guild(guild_id: data.server_id, hit: hit)
     end
 
-    # @!visibility private
-    def to_h
-      {
-        guild_id: @id,
-        role_id: @role_id,
-        features: @features,
-        setup_by: @setup_by,
-        setup_at: @setup_at
-      }
-    end
-
     private
 
     # @!visibility private
@@ -125,6 +114,9 @@ module Boosters
     # @return [Boolean] whether or not the booster is banned.
     attr_reader :banned
     alias banned? banned
+
+    # @return [Integer] the interaction version of the booster.
+    attr_reader :version
 
     # @return [Integer] the snowflake ID of the booster's role.
     attr_reader :role_id
@@ -167,11 +159,6 @@ module Boosters
       DB.where(guild_id: @guild_id, user_id: @id).delete
     end
 
-    # Permanently try to delete the record for this booster.
-    def try_delete
-      Storage.delete_booster(user_id: @id, guild_id: @guild_id) if role.nil?
-    end
-
     # Update the properties of this booster.
     # @param role_id [Integer, nil] The role to set for this booster.
     # @param role_color [ColourRGB, nil] The role color to set for this booster.
@@ -212,20 +199,11 @@ module Boosters
       end
     end
 
-    # @!visibility private
-    def to_h
-      {
-        user_id: @user_id,
-        role_id: @role_id,
-        guild_id: @guild_id,
-        color_id: @role_color
-      }
-    end
-
     private
 
     # @!visibility private
     def update_state(new_data)
+      @version = new_data[:version]
       @user_id = new_data[:user_id]
       @role_id = new_data[:role_id]
       @guild_id = new_data[:guild_id]
@@ -291,16 +269,6 @@ module Boosters
       else
         Storage.ban(guild_id: data.server_id, user_id: data.user.id)
       end
-    end
-
-    # @!visibility private
-    def to_h
-      {
-        user_id: @user_id,
-        guild_id: @guild_id,
-        banned_at: @banned_at,
-        banned_by: @banned_by
-      }
     end
   end
 end

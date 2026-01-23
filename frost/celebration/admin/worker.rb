@@ -23,9 +23,13 @@ module Birthdays
 
     # A login hook that's called once `:READY` is raised.
     def self.login
-      @login ||= POSTGRES[:user_birthdays].all.each do |user|
+      return if @login
+
+      POSTGRES[:user_birthdays].order(:user_id).paged_each do |user|
         user[:pending] ? pending_user(user) : schedule(user)
       end
+
+      @login = true
     end
 
     # Schedule a member from a given data hash or a user ID.

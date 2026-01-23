@@ -43,9 +43,9 @@ module Boosters
       return
     end
 
-    if member.role_deleted?
+    unless (role = member.role)
       data.edit_response(content: RESPONSE[2])
-      return member&.try_delete
+      return Booster.delete(data)
     end
 
     if !data.server_features.any?(:enhanced_role_colors) && options["style"] != 1
@@ -53,13 +53,11 @@ module Boosters
       return
     end
 
-    role = member.role
-
     options = {
       tertiary: nil,
       reason: member.reason,
-      primary: serialize_color(data.options["start"]) || :undef,
-      secondary: serialize_color(data.options["end"]) || :undef
+      primary: get_color(data.options["start"]) || :undef,
+      secondary: get_color(data.options["end"]) || :undef
     }
 
     state = if options["style"] == 1
@@ -83,7 +81,7 @@ module Boosters
               options.merge!({ primary: 11_127_295, secondary: 16_759_788, tertiary: 16_761_760 })
             end
 
-    if state
+    if state.is_a?(String)
       data.edit_response(content: state)
       return
     end

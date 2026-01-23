@@ -18,15 +18,15 @@ module Boosters
       @banned = Hash.new { |hash, key| hash[key] = {} }
       @boosters = Hash.new { |hash, key| hash[key] = {} }
 
-      GUILDS.order(:setup_at, :guild_id).paged_each(strategy: :filter) do |row|
+      GUILDS.order(:setup_at, :guild_id).paged_each do |row|
         @guilds[row[:guild_id]] = Guild.new(row)
       end
 
-      BOOSTERS.order(:guild_id, :user_id).paged_each(strategy: :filter) do |row|
+      BOOSTERS.order(:guild_id, :version).paged_each do |row|
         @boosters[row[:guild_id]][row[:user_id]] = Booster.new(row)
       end
 
-      BANNED.order(:guild_id, :banned_at, :user_id).paged_each(strategy: :filter) do |row|
+      BANNED.order(:guild_id, :banned_at, :user_id).paged_each do |row|
         @banned[row[:guild_id]][row[:user_id]] = Banned.new(row)
       end
     end
@@ -161,11 +161,13 @@ module Boosters
 
     # Create a booster for a guild.
     # @param role [Role] The booster role for the user to create.
+    # @param version [Integer] The interaction ID for the version.
     # @param user_id [Integer] The snowflake ID of the user to create.
     # @param guild_id [Integer] The snowflake ID of the guild the user to create is for.
     # @param role_color [Integer, nil] The color of the booster role for the user to create.
     def create_booster(**options)
       me = {
+        version: options[:version],
         user_id: options[:user_id],
         guild_id: options[:guild_id]
       }
@@ -213,10 +215,10 @@ module Boosters
     end
 
     # Delete multiple boosters for a guild.
-    # @param boosters [Array<Array<Integer, Integer>>] An array of arrays
-    #   containing the guild ID (index [0]) and user ID (index [1]) to delete.
+    # @param boosters [Array<Array<Integer, Integer, Integer>>] An array of arrays
+    #   containing the guild ID (index [0]), user ID (index [1]), and version (index [2]) to delete.
     def delete_boosters(boosters)
-      boosters = { %i[guild_id user_id] => boosters }
+      boosters = { %i[guild_id user_id version] => boosters }
 
       boosters = BOOSTERS.where(boosters).returning(:guild_id, :user_id).delete
 

@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS event_users (
 
 -- Holds info about server boosters.
 CREATE TABLE IF NOT EXISTS guild_boosters (
+  version BIGINT NOT NULL,
   user_id BIGINT NOT NULL,
   role_id BIGINT NOT NULL,
   guild_id BIGINT NOT NULL,
