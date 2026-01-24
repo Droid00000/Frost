@@ -3,6 +3,9 @@
 module Owner
   # This is how we can handle logging.
   def self.logs(_)
+    # We're already good to go, so just return.
+    return if @time
+
     # Set the time of when we first got a ready.
     @time ||= Time.now.to_i
 
