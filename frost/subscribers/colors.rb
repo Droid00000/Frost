@@ -28,7 +28,7 @@ module Boosters
       return
     end
 
-    unless Guild.get(data)
+    unless (guild = Guild.get(data))
       data.edit_response(content: RESPONSE[18])
       return
     end
@@ -49,6 +49,11 @@ module Boosters
     end
 
     if !data.server_features.any?(:enhanced_role_colors) && options["style"] != 1
+      data.edit_response(content: RESPONSE[7])
+      return
+    end
+
+    if guild.no_gradient?
       data.edit_response(content: RESPONSE[7])
       return
     end
@@ -87,7 +92,7 @@ module Boosters
     end
 
     begin
-      role.update_colors(**options.compact)
+      role.update_colors(**options)
     rescue Discordrb::Errors::NoPermission
       data.edit_response(content: RESPONSE[6])
       return

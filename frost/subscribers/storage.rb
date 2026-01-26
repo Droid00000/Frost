@@ -6,9 +6,7 @@ module Boosters
     # Map of guild flags.
     FLAGS = {
       any_icon: 1 << 0,
-      no_gradient: 1 << 1,
-      self_service: 1 << 2,
-      manual_queue: 1 << 3
+      no_gradient: 1 << 1
     }.freeze
 
     # @return [Integer] the snowflake ID of the guild.
@@ -148,12 +146,6 @@ module Boosters
       @reason ||= "Booster Roles (ID: #{@id})"
     end
 
-    # Get the guild for this booster.
-    # @return [Guild] The guild for this booster.
-    def guild
-      Orchestrator.pool.guild(guild_id:, hit: true)
-    end
-
     # Permanently delete the record for this booster.
     def delete
       DB.where(guild_id: @guild_id, user_id: @id).delete
@@ -239,12 +231,6 @@ module Boosters
       @guild_id = data[:guild_id]
       @banned_at = data[:banned_at]
       @banned_by = data[:banned_by]
-    end
-
-    # Get the guild for this banned user.
-    # @return [Guild] The guild for this user.
-    def guild
-      Layer.pool.guild(guild_id: @guild_id)
     end
 
     # Remove the ban for this banned user.

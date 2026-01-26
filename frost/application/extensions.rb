@@ -69,7 +69,7 @@ module Discordrb
   # Monkey patches to the emoji class.
   class Emoji
     # Returns a tempfile object of the emoji.
-    # @return [Tempfile] a temporary file.
+    # @return [String] a temporary file.
     def file(static: true)
       link = if static || !animated
                API.emoji_icon_url(id, "png")
@@ -77,13 +77,8 @@ module Discordrb
                API.emoji_icon_url(id, "gif")
              end
 
-      data = {
-        url: link,
-        method: :get,
-        raw_response: true
-      }
-
-      RestClient::Request.execute(data).file
+      io = StringIO.new(RestClient.get(link).body, 'rb')
+      io.tap { it.define_singleton_method(:path) { 'image.png' } }
     rescue StandardError
       nil
     end
