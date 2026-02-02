@@ -4,18 +4,16 @@
 
 -- Holds info about event roles.
 CREATE TABLE IF NOT EXISTS event_roles (
-  role_id BIGINT NOT NULL,
   guild_id BIGINT NOT NULL,
   setup_by BIGINT NOT NULL,
   setup_at BIGINT NOT NULL,
-  PRIMARY KEY (guild_id, role_id)
+  role_id BIGINT PRIMARY KEY,
 );
 
 -- Holds info about event users.
 CREATE TABLE IF NOT EXISTS event_users (
   user_id BIGINT NOT NULL,
   role_id BIGINT NOT NULL,
-  guild_id BIGINT NOT NULL,
   PRIMARY KEY (user_id, role_id)
 );
 
@@ -100,16 +98,13 @@ ORDER BY score DESC LIMIT 25;
 $$;
 
 -- Index for the `event_users` table.
-CREATE INDEX IF NOT EXISTS guild_events_idx ON event_users (guild_id, user_id);
+CREATE INDEX IF NOT EXISTS guild_events_idx ON event_users (role_id);
 
--- Index for the `event_users` table.
-CREATE INDEX IF NOT EXISTS guild_events_fkey_idx ON event_users (guild_id, role_id);
+-- Foreign key for the `event_users` table.
+ALTER TABLE event_users ADD CONSTRAINT event_users_fkey FOREIGN KEY (role_id) REFERENCES event_roles(role_id) ON DELETE CASCADE;
 
 -- Foreign key for the `guild_boosters` table.
 ALTER TABLE guild_boosters ADD CONSTRAINT guild_boosters_fkey FOREIGN KEY (guild_id) REFERENCES booster_settings(guild_id) ON DELETE CASCADE;
 
 -- Foreign key for the `banned_boosters` table.
 ALTER TABLE banned_boosters ADD CONSTRAINT banned_boosters_fkey FOREIGN KEY (guild_id) REFERENCES booster_settings(guild_id) ON DELETE CASCADE;
-
--- Composite foreign key for the `event_users` table.
-ALTER TABLE event_users ADD CONSTRAINT event_users_fkey FOREIGN KEY (guild_id, role_id) REFERENCES event_roles(guild_id, role_id) ON DELETE CASCADE;

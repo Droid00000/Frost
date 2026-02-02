@@ -31,7 +31,7 @@ module Boosters
       end
     end
 
-    # Create the instance for this real-time layer.
+    # Create the instance for this cache.
     # This does all of the setup needed to get everything going.
     def self.login
       @login ||= new
@@ -226,7 +226,7 @@ module Boosters
     end
 
     # Get all of the boosters currently available.
-    # @return [Array<Booster>] The boosters that are currently stored on the real-time layer.
+    # @return [Array<Booster>] The boosters that are currently stored in the cache.
     def list_boosters
       boosters = @boosters.values.flat_map(&:values)
 
@@ -235,7 +235,7 @@ module Boosters
 
     alias boosters list_boosters
 
-    # Get a list of users stored on the real-time layer, grouped by their guild.
+    # Get a list of boosters stored in the cache, grouped by their guild.
     # @return [Array<Hash<Symbol => Integer, Symbol => Array<Integer>>>] The boosters grouped by guild.
     def chunks
       boosters.group_by(&:guild_id).map do |guild, users|

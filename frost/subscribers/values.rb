@@ -4,8 +4,8 @@ module Boosters
   # Responses and fields for boosters.
   RESPONSE = {
     1 => "Your role has been created! You can always edit your role using the </booster role edit:1386237785865850941> command. <:AnyaPeek_Enzo:1276327731113627679>",
-    2 => "Your role couldn't be found. Please use the </booster role claim:1386237785865850941> command to claim your role.",
-    3 => "Your role couldn't be created. The bot doesn't have permission to move your role above this server's hoist role.",
+    2 => "Your role couldn't be created. The bot doesn't have permission to move your role above this server's booster role.",
+    3 => "Your role couldn't be found. Please use the </booster role claim:1386237785865850941> command to claim your role.",
     4 => "Your role has been deleted! Feel free to make a new role at any time. <a:YorClap_Maomao:1287269908157038592>",
     5 => "Your role couldn't be deleted. The bot's highest role is below your custom role.",
     6 => "Your role couldn't be edited. The bot's highest role is below your custom role.",

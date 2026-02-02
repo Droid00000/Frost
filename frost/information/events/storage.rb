@@ -6,6 +6,9 @@ module Events
     # @return [Integer] the snowflake ID of the role.
     attr_reader :id
 
+    # @return [Set] the users who can equip the role.
+    attr_reader :users
+
     # @return [Integer] the snowflake ID of the guild.
     attr_reader :guild_id
 
@@ -23,76 +26,58 @@ module Events
 
     # @!visibility private
     def initialize(state)
+      @users = Set[]
       update_state(state)
-    end
-
-    # Fetch the users who have this role.
-    # @return [Set] The user IDs for this role.
-    def users
-      @users ||= list_users.to_set
     end
 
     # Delete this role permenantely from the DB.
     def delete
-      DB.where(guild_id: @guild_id, role_id: @id).delete
-    end
-
-    # Delete users from this role.
-    # @param users [Array<Integer>] The user IDs to delete.
-    def delete_users(users:)
-      me = {
-        role_id: @id,
-        guild_id: @guild_id
-      }
-
-      @users&.subtract(users.map(&:to_i))
-
-      USERS.where(**me, user_id: users).delete
-    end
-
-    # Add users to this role.
-    # @param users [Array<Integer>] the user IDs to insert.
-    def add_users(users:)
-      me = users.map do |user|
-        {
-          role_id: @id,
-          user_id: user.to_i,
-          guild_id: @guild_id
-        }
-      end
-
-      @users&.add(users.map(&:to_i))
-
-      USERS.insert_conflict.multi_insert(me)
+      DB.where(role_id: @id).delete
     end
 
     # Check if a user has this role.
     # @param user [Integer] The ID of the user to check.
     # @return [true, false] Whether the user has this role.
-    def user?(user:)
-      return @users.any?(user.to_i) if @users
+    def user?(user)
+      return @users.any?(user.resolve_id) if @users
 
-      me = { role_id: @id, guild_id: @guild_id }
+      USERS.where(user_id: user.resolve_id, role_id: @id).any?
+    end
 
-      USERS.where(user_id: user.to_i, **me).any?
+    # Add users to this role.
+    # @param users [Array<Integer>] the user IDs to insert.
+    def add_users(users)
+      me = users.map { { role_id: @id, user_id: it.resolve_id } }
+
+      users = USERS.returning(:user_id).insert_conflict.multi_insert(me)
+
+      users.each { |inserted_user| @users.add(inserted_user[:user_id]) }
+    end
+
+    # Delete users from this role.
+    # @param users [Array<Integer>] The user IDs to delete.
+    def delete_users(users)
+      users = USERS.returning.where(role_id: @id, user_id: users).delete
+
+      users.each { |deleted_user| @users.delete(deleted_user[:user_id]) }
     end
 
     # @!visibility private
     def self.create(...)
-      Layer.pool.create_role(...)
+      Storage.pool.create_role(...)
     end
 
     # @!visibility private
     def self.delete(data)
-      Layer.pool.delete_role(guild_id: data.server.id, role_id: data.options["role"])
+      Storage.pool.delete_role(guild_id: data.server.id, role_id: data.options["role"])
     end
 
     # @!visibility private
     def self.get(data, hit: true)
       if data.respond_to?(:options)
-        Layer.pool.role(guild_id: data.server.id, role_id: data.options["role"], hit:)
+        Storage.pool.role(guild_id: data.server.id, role_id: data.options["role"], hit:)
       else
-        Layer.pool.role(guild_id: data.server.id, role_id: data.values("role")[0], hit:)
+        Storage.pool.role(guild_id: data.server.id, role_id: data.values("role")[0], hit:)
       end
     end
 
@@ -104,16 +89,6 @@ module Events
       @guild_id = new_data[:guild_id]
       @setup_by = new_data[:setup_by]
       @setup_at = new_data[:setup_at]
-    end
-
-    # @!visibility private
-    def list_users
-      query = <<~SQL
-        SELECT user_id FROM event_users
-        WHERE role_id = ? AND guild_id = ? ORDER BY user_id DESC;
-      SQL
-
-      POSTGRES[query, @id, @guild_id].paged_each.map { it[:user_id] }
     end
   end
 end
