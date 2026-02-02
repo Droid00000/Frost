@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS event_roles (
   guild_id BIGINT NOT NULL,
   setup_by BIGINT NOT NULL,
   setup_at BIGINT NOT NULL,
-  role_id BIGINT PRIMARY KEY,
+  role_id BIGINT PRIMARY KEY
 );
 
 -- Holds info about event users.
