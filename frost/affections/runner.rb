@@ -6,7 +6,6 @@ module Affections
     # We can use the name of the command to check the action type.
     name = data.command_name
 
-    # I'm glad we switched away from using the very verbose builder.
     embed = {
       title: HEADERS[name],
       image: { url: const_get(name.upcase).sample },
