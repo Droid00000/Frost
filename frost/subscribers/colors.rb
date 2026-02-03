@@ -48,12 +48,12 @@ module Boosters
       return Booster.delete(data)
     end
 
-    if !data.server_features.any?(:enhanced_role_colors) && options["style"] != 1
+    if guild.no_gradient?
       data.edit_response(content: RESPONSE[7])
       return
     end
 
-    if guild.no_gradient?
+    if !data.interaction.server_features.any?(:enhanced_role_colors) && options["style"] != 0
       data.edit_response(content: RESPONSE[7])
       return
     end

@@ -233,7 +233,7 @@ module Boosters
       @banned_by = data[:banned_by]
     end
 
-    # Remove the ban for this banned user.
+    # Remove the ban.
     def delete
       DB.where(guild_id: @guild_id, user_id: @user_id).delete
     end
