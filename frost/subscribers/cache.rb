@@ -55,19 +55,11 @@ module Boosters
       @guilds[guild[:guild_id]] = Guild.new(guild) if guild
     end
 
-    # Check if a guild exists.
-    # @param guild_id [Integer] The guild ID of the guild that should be checked.
-    # @param hit [true, false] Whether to fallback to a database lookup if the guild isn't cached.
-    # @return [true, false] Whether or not the guild has been configured to utilize booster perks.
-    def guild?(...)
-      !guild(...).nil?
-    end
-
     # Delete a guild, permanently erasing its settings and boosters.
     # @param guild_id [Integer] The ID of the guild that should be deleted.
     # @return [Guild, nil] The guild that was deleted, or `nil` if there wasn't one to delete.
     def delete_guild(guild_id:)
-      # Actually delete TS from the DB first because that's
+      # Actually delete ts from the DB first because that's
       # our source of truth and we want to avoid an edge case where the local
       # cache contains a guild, but there's nothing for that guild in the actual database.
       @guilds[guild_id]&.delete
@@ -106,15 +98,6 @@ module Boosters
       201.tap { @guilds[guild[:guild_id]] = Guild.new(guild) } if guild
     end
 
-    # Check if a ban exists.
-    # @param user_id [Integer] The user ID of the ban that should be fetched.
-    # @param guild_id [Integer] The guild ID of the ban that should be fetched.
-    # @param hit [true, false] Whether to fallback to a database lookup if the ban isn't cached.
-    # @return [true, false] Whether or not the user for the given ID has been banned from the guild.
-    def ban?(...)
-      !ban(...).nil?
-    end
-
     # Get a single ban.
     # @param user_id [Integer] The user ID of the ban that should be fetched.
     # @param guild_id [Integer] The guild ID of the ban that should be fetched.
@@ -142,9 +125,9 @@ module Boosters
       bans = BANNED.insert_conflict.returning.multi_insert(bans)
 
       bans.each do |ban|
-        @banned[ban[:guild_id]][ban[:user_id]] = Banned.new(ban)
+        @boosters[ban[:guild_id]]&.delete(ban[:user_id])
 
-        @boosters[ban[:guild_id]]&.delete(ban[:user_id])&.delete
+        @banned[ban[:guild_id]][ban[:user_id]] = Banned.new(ban)
       end
     end
 
@@ -186,23 +169,12 @@ module Boosters
     # @param user_id [Integer] The user ID of the booster that should be fetched.
     # @param guild_id [Integer] The guild ID of the booster that should be fetched.
     # @param hit [true, false] Whether to fallback to a database lookup if the booster isn't cached.
-    # @return [Booster, Banned, nil] The booster that was found during the lookup, it's ban entry, or `nil` if it doesn't exist.
+    # @return [Booster, nil] The booster that was found during the lookup, or `nil` if it doesn't exist.
     def booster(guild_id:, user_id:, hit: false)
-      @banned[guild_id][user_id]&.then { return it }
-
       @boosters[guild_id][user_id]&.then { return it }
 
       booster = BOOSTERS.where(guild_id: guild_id, user_id: user_id).first if hit
       @boosters[member[:guild_id]][member[:user_id]] = Booster.new(booster) if booster
-    end
-
-    # Check if a booster exists.
-    # @param user_id [Integer] The user ID of the booster that should be fetched.
-    # @param guild_id [Integer] The guild ID of the booster that should be fetched.
-    # @param hit [true, false] Whether to fallback to a database lookup if the booster isn't cached.
-    # @return [true, false] Whether or not the user for the given ID is a booster within the guild.
-    def booster?(...)
-      !booster(...).nil?
     end
 
     # Delete a booster, permanently erasing its record.
@@ -214,7 +186,7 @@ module Boosters
       @boosters[guild_id]&.delete(user_id)
     end
 
-    # Delete multiple boosters for a guild.
+    # Delete multiple boosters across multiple different guilds.
     # @param boosters [Array<Array<Integer, Integer, Integer>>] An array of arrays
     #   containing the guild ID (index [0]), user ID (index [1]), and version (index [2]) to delete.
     def delete_boosters(boosters)
@@ -233,12 +205,10 @@ module Boosters
       block_given? ? boosters.each { yield(it) } : boosters
     end
 
-    alias boosters list_boosters
-
     # Get a list of boosters stored in the cache, grouped by their guild.
     # @return [Array<Hash<Symbol => Integer, Symbol => Array<Integer>>>] The boosters grouped by guild.
     def chunks
-      boosters.group_by(&:guild_id).map do |guild, users|
+      list_boosters.group_by(&:guild_id).map do |guild, users|
         { guild_id: guild, users: users.map(&:id) }
       end
     end

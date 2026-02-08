@@ -38,14 +38,14 @@ module Boosters
       return
     end
 
-    if (member = Booster.get(data)) && !member.role
+    if (member = Booster.get(data)) && member.role.nil?
       Booster.delete(data)
     elsif member
       data.edit_response(content: RESPONSE[19])
       return
     end
 
-    if member&.banned?
+    if Ban.get(data)
       data.edit_response(content: RESPONSE[11])
       return
     end

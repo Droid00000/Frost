@@ -109,10 +109,6 @@ module Boosters
     # @return [Integer] the snowflake user ID of the booster.
     attr_reader :id
 
-    # @return [Boolean] whether or not the booster is banned.
-    attr_reader :banned
-    alias banned? banned
-
     # @return [Integer] the interaction version of the booster.
     attr_reader :version
 
@@ -130,7 +126,6 @@ module Boosters
 
     # @!visibility private
     def initialize(state)
-      @banned = false
       update_state(state)
     end
 
@@ -205,32 +200,19 @@ module Boosters
 
   # Represents a banned user.
   class Banned
-    # @return [Boolean] if the user has been banned or not.
-    attr_reader :banned
-    alias banned? banned
-
     # @return [Integer] the ID of the user this ban is for.
     attr_reader :user_id
 
     # @return [Integer] the ID of the guild this ban is for.
     attr_reader :guild_id
 
-    # @return [Integer] the UNIX timestamp of when this ban was created.
-    attr_reader :banned_at
-
-    # @return [Integer] the ID of the user responsible for creating the ban.
-    attr_reader :banned_by
-
     # @return [Sequel::Dataset]
     DB = POSTGRES[:banned_boosters]
 
     # @!visibility private
     def initialize(data)
-      @banned = true
       @user_id = data[:user_id]
       @guild_id = data[:guild_id]
-      @banned_at = data[:banned_at]
-      @banned_by = data[:banned_by]
     end
 
     # Remove the ban.

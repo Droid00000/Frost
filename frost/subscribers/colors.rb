@@ -38,7 +38,7 @@ module Boosters
       return
     end
 
-    if member.banned?
+    if Ban.get(data)
       data.edit_response(content: RESPONSE[11])
       return
     end
