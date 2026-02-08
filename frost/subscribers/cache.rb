@@ -118,16 +118,18 @@ module Boosters
     # @param banned_by [Integer] The snowflake ID of the user creating the bans.
     # @param banned_at [Integer] The UNIX timestamp of when the bans was created.
     def create_bans(**options)
-      bans = options[:users].map do |user_id|
-        { user_id: user_id, **options.except(:users) }
-      end
+      POSTGRES.transaction do
+        bans = options[:users].map do |user_id|
+          { user_id: user_id.to_i, **options.except(:users) }
+        end
 
-      bans = BANNED.insert_conflict.returning.multi_insert(bans)
+        bans = BANNED.insert_conflict.returning.multi_insert(bans)
 
-      bans.each do |ban|
-        @boosters[ban[:guild_id]]&.delete(ban[:user_id])
+        bans.each do |ban|
+          @banned[ban[:guild_id]][ban[:user_id]] = Banned.new(ban)
 
-        @banned[ban[:guild_id]][ban[:user_id]] = Banned.new(ban)
+          @boosters[ban[:guild_id]]&.delete(ban[:user_id])&.delete
+        end
       end
     end
 
