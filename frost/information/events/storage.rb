@@ -39,9 +39,7 @@ module Events
     # @param user [Integer] The ID of the user to check.
     # @return [true, false] Whether the user has this role.
     def user?(user)
-      return @users.any?(user.resolve_id) if @users
-
-      USERS.where(user_id: user.resolve_id, role_id: @id).any?
+      @users.include?(user.resolve_id)
     end
 
     # Add users to this role.
