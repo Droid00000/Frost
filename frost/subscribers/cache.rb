@@ -119,16 +119,20 @@ module Boosters
     # @param banned_at [Integer] The UNIX timestamp of when the bans was created.
     def create_bans(**options)
       POSTGRES.transaction do
-        bans = options[:users].map do |user_id|
-          { user_id: user_id.to_i, **options.except(:users) }
+        ids = { user_id: options[:users].map(&:to_i) }
+
+        bans = ids[:user_id].map do |user_id|
+          { user_id: user_id, **options.except(:users) }
         end
 
         bans = BANNED.insert_conflict.returning.multi_insert(bans)
 
-        bans.each do |ban|
-          @banned[ban[:guild_id]][ban[:user_id]] = Banned.new(ban)
+        BOOSTERS.where(**ids, guild_id: options[:guild_id]).delete
 
-          @boosters[ban[:guild_id]]&.delete(ban[:user_id])&.delete
+        bans.each do |ban|
+          @boosters[ban[:guild_id]]&.delete(ban[:user_id])
+
+          @banned[ban[:guild_id]][ban[:user_id]] = Banned.new(ban)
         end
       end
     end

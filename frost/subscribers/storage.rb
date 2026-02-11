@@ -38,7 +38,7 @@ module Boosters
     end
 
     # Get the role for the guild.
-    # @return [Role] The role for the guild.
+    # @return [Role, nil] The role for the guild.
     def role
       BOT.server(@id)&.role(@role_id)
     end
@@ -46,7 +46,7 @@ module Boosters
     # Get metadata about the settings for this guild.
     # @return [Array(String, Integer)] Metadata info about this guild.
     def view
-      [BOT.user(@setup_by)&.name, @setup_at]
+      [BOT.user(@setup_by)&.name || "Deleted User", @setup_at]
     end
 
     # Update the properties of this guild.

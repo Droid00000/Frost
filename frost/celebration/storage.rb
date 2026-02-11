@@ -29,7 +29,7 @@ module Birthdays
     # Get metadata about the settings for this guild.
     # @return [Array(String, Integer)] Metadata info about this guild.
     def view
-      [BOT.user(@setup_by)&.name, @setup_at]
+      [BOT.user(@setup_by)&.name || "Deleted User", @setup_at]
     end
 
     # Delete the record for this guild.
@@ -74,17 +74,6 @@ module Birthdays
     # @!visibility private
     def self.get(data, hit: false)
       Storage.guild(guild_id: data.server.id, hit: hit)
-    end
-
-    # @!visibility private
-    def to_h
-      {
-        guild_id: @id,
-        role_id: @role_id,
-        setup_at: @setup_at,
-        setup_by: @setup_by,
-        channel_id: @channel_id
-      }
     end
 
     private
