@@ -22,15 +22,15 @@ module Moderation
     def self.logger(user, bucket)
       return if bucket.messages.empty?
 
-      description = if !user.respond_to?(:joined_at)
-                      format(RESPONSE[3], bucket.messages.length, user.id)[..-6]
-                    else
+      description = if user.respond_to?(:joined_at)
                       format(RESPONSE[3], bucket.messages.length, user.id, user.joined_at.to_i)
+                    else
+                      format(RESPONSE[3], bucket.messages.length, user.id)[..-6]
                     end
 
       channel = BOT.channel(CONFIG[:Moderator][:CHANNEL]) rescue nil
 
-      io = StringIO.new(bucket.files.map(&:url).join("\n\n"), 'rb')
+      io = StringIO.new(bucket.files.map(&:url).join("\n\n"), "rb")
 
       io.define_singleton_method(:path) { "attachment-urls.txt" }
 

@@ -63,6 +63,9 @@ COLORS = {
   baby_blue: 9_031_664
 }.freeze
 
+# The name of our admin module.
+module AdminCommands; end = Admin
+
 # The YAML configuration file used by the bot.
 CONFIG = YAML.load_file("#{File.expand_path('../..', __dir__)}/config.yml", symbolize_names: true)
 

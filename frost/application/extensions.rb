@@ -77,8 +77,8 @@ module Discordrb
                API.emoji_icon_url(id, "gif")
              end
 
-      io = StringIO.new(RestClient.get(link).body, 'rb')
-      io.tap { it.define_singleton_method(:path) { 'emoji.png' } }
+      io = StringIO.new(RestClient.get(link).body, "rb")
+      io.tap { it.define_singleton_method(:path) { "emoji.png" } }
     rescue StandardError
       nil
     end
@@ -148,7 +148,7 @@ end
 class Integer
   # Comma delimit numbers.
   def delimit
-    to_s.reverse.scan(/\d{3}|.+/).join(',').reverse
+    to_s.reverse.scan(/\d{3}|.+/).join(",").reverse
   end
 
   # Append an ordinal suffix to a number.
@@ -170,6 +170,6 @@ end
 class Hash
   # Get a given key from a hash.
   def pull(data)
-    self[data.downcase.gsub(/[^a-z]+/, '_').gsub(/^_|_$/, '').to_sym] if data
+    self[data.downcase.gsub(/[^a-z]+/, "_").gsub(/^_|_$/, "").to_sym] if data
   end
 end

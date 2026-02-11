@@ -82,8 +82,8 @@ module Boosters
 
     data.edit_response(content: RESPONSE[7])
 
-    if options[:colors] != :undef
-      member.edit(color: options[:colors][:primary_color])
-    end
+    return unless options[:colors] != :undef
+
+    member.edit(color: options[:colors][:primary_color])
   end
 end

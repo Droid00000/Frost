@@ -41,12 +41,11 @@ module Boosters
   # @param two [Integer, Symbol] The ending color to set for the role.
   # @return [String, nil] The error message, or `nil` if the validation succeded.
   def validate_gradient(role:, one:, two:)
-    case { one:, two: }
-    in { one: :undef, two: :undef }
+    if one == :undef && two == :undef
       role.gradient? ? RESPONSE[13] : RESPONSE[12]
-    in { one: :undef }
+    elsif one == :undef
       RESPONSE[16] if role.holographic? && !role.gradient?
-    in { two: :undef }
+    elsif two == :undef
       RESPONSE[17] if role.holographic? && !role.gradient?
     end
   end

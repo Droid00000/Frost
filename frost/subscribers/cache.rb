@@ -77,7 +77,7 @@ module Boosters
     # @param setup_at [Integer] The UNIX timestamp of when the guild was created.
     # @param added_features [Integer] The features to add to the guild when creating it.
     # @param unset_features [Integer] The features to remove from the guild when creating it.
-    # @return [Integer] The resulting state of the action, of the guild that was actioned on.
+    # @return [Integer, nil] The resulting state of the action, of the guild that was actioned on.
     def create_guild(**options)
       if (cached_guild = guild(guild_id: options[:guild_id]))
         return 200.tap { cached_guild.edit(**options) }
@@ -113,27 +113,33 @@ module Boosters
     end
 
     # Create multiple bans for a guild.
+    # @param dead [true, false] Whether to return the deleted boosters.
     # @param users [Array<Integer>] The snowflake IDs of the users to ban.
     # @param guild_id [Integer] The snowflake ID of the guild the bans are for.
     # @param banned_by [Integer] The snowflake ID of the user creating the bans.
     # @param banned_at [Integer] The UNIX timestamp of when the bans was created.
+    # @return [Array<Booster>, nil] The boosters that underwent removal, or `nil`.
     def create_bans(**options)
       POSTGRES.transaction do
-        ids = { user_id: options[:users].map(&:to_i) }
+        rest = { user_id: options[:users].map(&:to_i) }
 
-        bans = ids[:user_id].map do |user_id|
+        bans = rest[:user_id].map do |user_id|
           { user_id: user_id, **options.except(:users) }
         end
 
         bans = BANNED.insert_conflict.returning.multi_insert(bans)
 
-        BOOSTERS.where(**ids, guild_id: options[:guild_id]).delete
+        rest = BOOSTERS.where(**rest, guild_id: options[:guild_id])
+
+        rest = options[:dead] ? rest.returning.delete : rest.delete
 
         bans.each do |ban|
           @boosters[ban[:guild_id]]&.delete(ban[:user_id])
 
           @banned[ban[:guild_id]][ban[:user_id]] = Banned.new(ban)
         end
+
+        rest.map { |user| Booster.new(user) } if rest.is_a?(Array)
       end
     end
 

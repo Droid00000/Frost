@@ -53,7 +53,7 @@ module Boosters
       return
     end
 
-    if !data.interaction.server_features.any?(:enhanced_role_colors) && options["style"] != 0
+    if data.interaction.server_features.none?(:enhanced_role_colors) && options["style"] != 0
       data.edit_response(content: RESPONSE[7])
       return
     end
@@ -70,7 +70,7 @@ module Boosters
               # and validate the colors that the user provided to us.
               validate_gradient(role: role, one: options[:primary], two: options[:secondary])
 
-            elsif options["style"] == 0
+            elsif options["style"].zero?
               # When the style of the role is a solid color, we should reset the other two
               # gradient parameters and reset back to the base color of the booster.
               options.merge!({ primary: member.role_color, tertiary: nil, secondary: nil })
