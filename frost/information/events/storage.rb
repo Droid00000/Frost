@@ -62,20 +62,20 @@ module Events
 
     # @!visibility private
     def self.create(...)
-      Storage.pool.create_role(...)
+      Storage.create_role(...)
     end
 
     # @!visibility private
     def self.delete(data)
-      Storage.pool.delete_role(guild_id: data.server.id, role_id: data.options["role"])
+      Storage.delete_role(guild_id: data.server.id, role_id: data.options["role"])
     end
 
     # @!visibility private
     def self.get(data, hit: true)
       if data.respond_to?(:options)
-        Storage.pool.role(guild_id: data.server.id, role_id: data.options["role"], hit:)
+        Storage.role(guild_id: data.server.id, role_id: data.options["role"], hit:)
       else
-        Storage.pool.role(guild_id: data.server.id, role_id: data.values("role")[0], hit:)
+        Storage.role(guild_id: data.server.id, role_id: data.values("role")[0], hit:)
       end
     end
 
