@@ -1,37 +1,38 @@
 # frozen_string_literal: true
 
-module AdminCommands
+module Admin
   # Namespace for booster admins.
   module Boosters
-    # Manually adds a user to the database.
-    def self.add(data)
+    # Create an artifical booster for the guild.
+    def self.create(data)
       unless data.user.permission?(:manage_roles)
-        data.edit_response(content: RESPONSE[6])
+        data.edit_response(content: RESPONSE[:manage_roles])
         return
       end
 
-      unless Boosters::Guild.get(data)
-        data.edit_response(content: RESPONSE[4])
+      unless ::Boosters::Guild.get(data.server_id)
+        data.edit_response(content: RESPONSE[:unknown_guild])
         return
       end
 
-      case Boosters::Booster.get(data)&.banned?
-      when TrueClass
-        return data.edit_response(content: RESPONSE[5])
-      when FalseClass
-        return data.edit_response(content: RESPONSE[12])
+      user_role = data.server.role(data.options['role'].to_i)
+
+      unless user_role
+        data.edit_response(content: RESPONSE[:unknown_role])
+        return
       end
 
-      # Resolve the role we need to add here.
-      role = data.server.role(data.options["role"])
+      if (user = ::Boosters::Booster.get(data))
+        user.edit(role: user_role.id)
+      else
+        ::Boosters::Booster.create(
+          role: user_role.id,
+          guild_id: data.server_id,
+          user_id: data.options['target']
+        )
+      end
 
-      Boosters::Booster.create(
-        role: role,
-        user_id: data.options["target"],
-        guild_id: data.server.resolve_id
-      )
-
-      data.edit_response(content: RESPONSE[13])
+      data.edit_response(content: RESPONSE[:manual_insertion])
     end
   end
 end

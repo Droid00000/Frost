@@ -78,16 +78,6 @@ module Boosters
     end
 
     # @!visibility private
-    def self.create(...)
-      Storage.create_guild(...)
-    end
-
-    # @!visibility private
-    def self.delete(data)
-      Storage.delete_guild(guild_id: data.server_id)
-    end
-
-    # @!visibility private
     def self.get(data, hit: false)
       Storage.guild(guild_id: data.server_id, hit: hit)
     end
@@ -218,16 +208,6 @@ module Boosters
     # Remove the ban.
     def delete
       DB.where(guild_id: @guild_id, user_id: @user_id).delete
-    end
-
-    # @!visibility private
-    def self.create(...)
-      Storage.create_ban(...)
-    end
-
-    # @!visibility private
-    def self.delete(...)
-      Storage.delete_ban(...)
     end
 
     # @!visibility private

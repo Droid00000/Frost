@@ -16,7 +16,7 @@ module AdminCommands
 
     group.subcommand(:enable) do |event|
       event.defer(ephemeral: true)
-      Boosters.setup(event)
+      Boosters.enable(event)
     end
 
     group.subcommand(:delete) do |event|
@@ -26,12 +26,12 @@ module AdminCommands
 
     group.subcommand(:bans) do |event|
       event.defer(ephemeral: true)
-      Boosters.bans(event)
+      Boosters.banned(event)
     end
 
     group.subcommand(:add) do |event|
       event.defer(ephemeral: true)
-      Boosters.add(event)
+      Boosters.create(event)
     end
   end
 end

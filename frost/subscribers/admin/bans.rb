@@ -1,57 +1,62 @@
 # frozen_string_literal: true
 
-module AdminCommands
+module Admin
   # Namespace for booster admins.
   module Boosters
-    # Modify the banned users in the server.
-    def self.ban(data)
-      unless data.server.bot.permission?(:manage_roles)
-        data.edit_response(content: RESPONSE[5])
+    # Ban or unban multiple boosters from the guild.
+    def self.banned(data)
+      unless data.user.permission?(:manage_roles)
+        data.edit_response(content: RESPONSE[:manage_roles])
         return
       end
 
-      if ::Boosters::Guild.get(data).nil?
-        data.edit_response(content: RESPONSE[2])
+      unless ::Boosters::Guild.get(data.server_id)
+        data.edit_response(content: RESPONSE[:unknown_guild])
         return
       end
 
-      # The users that we want to ban.
-      add = data.values("insert").map(&:to_i)
+      new_bans = if (add = data.values('add'))&.any?
+                   {
+                     users: add.map(&:to_i),
+                     banned_by: data.user.id,
+                     guild_id: data.server_id,
+                     banned_at: Time.now.to_i,
+                     dead: data.value('prune')&.any?
+                   }
+                 end
 
-      # The users that we want to unban.
-      pop = data.values("delete").map(&:to_i)
+      old_bans = if (old = data.values('old'))&.any?
+                   {
+                     users: old.map(&:to_i),
+                     guild_id: data.server_id
+                   }
+                 end
 
-      data.edit_response(content: RESPONSE[3])
-
-      # Exit early unless we have data.
-      return unless add.any? || pop.any?
-
-      # Deletes take priority over inserts.
-      add -= pop if add.any? && pop.any?
-
-      add_bans = {
-        users: add,
-        banned_by: data.user.id,
-        guild_id: data.server.id,
-        banned_at: Time.now.to_i
-      }
-
-      if add.any?
-        ::Boosters::Storage.create_bans(**add_bans)
+      if old_bans && new_bans
+        old_bans[:users] -= new_bans[:users] if old_bans && new_bans
       end
 
-      return unless pop.any?
+      data.edit_response(content: RESPONSE[:ban_state])
 
-      pop_bans = {
-        users: pop,
-        guild_id: data.server.id
-      }
+      if old_bans
+        ::Boosters::Storage.delete_bans(**old_bans)
+      end
 
-      ::Boosters::Storage.delete_bans(**pop_bans)
+      if new_bans
+        new_bans = ::Boosters::Storage.create_bans(**new_bans) rescue nil
 
-      # If the guild was disabled during insertion, let the user know.
-    rescue Sequel::UniqueConstraintViolation
-      data.edit_response(content: RESPONSE[2])
+        server = data.server
+        height = server.bot.sort_roles.last
+        reason = "Booster Admins (ID: #{data.user.id})"
+
+        new_bans&.each do |banned|
+          role = server.role(banned.role_id)
+
+          return unless server.bot.permission?(:manage_roles)
+
+          role.delete(reason) if !role.nil? && (role < height)
+        end
+      end
     end
   end
 end
