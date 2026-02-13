@@ -39,9 +39,9 @@ module Admin
       data.edit_response(content: RESPONSE[:ban_state])
 
       # Processing should be async so interaction doesn't timeout.
-      old_bans&.[](:users)&.reject! { data.resolved.users[it]&.bot? }
+      old_bans&.[](:users)&.reject! { data.bot.user(it)&.bot? }
 
-      new_bans&.[](:users)&.reject! { data.resolved.users[it]&.bot? }
+      new_bans&.[](:users)&.reject! { data.bot.user(it)&.bot? }
 
       # Delete all the bans first, since that's usually cheaper.
       if old_bans&.[](:users)&.any?
