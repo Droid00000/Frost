@@ -32,7 +32,7 @@ module Admin
                    }
                  end
 
-      if old_bans && new_bans && old_bans && new_bans
+      if old_bans && new_bans
         old_bans[:users] -= new_bans[:users]
       end
 
