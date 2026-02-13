@@ -63,8 +63,8 @@ COLORS = {
   baby_blue: 9_031_664
 }.freeze
 
-# The name of our admin module.
-module AdminCommands; end = Admin
+# A more concise name for admin commands.
+module AdminCommands; end; Admin = AdminCommands # rubocop:disable Style/Semicolon
 
 # The YAML configuration file used by the bot.
 CONFIG = YAML.load_file("#{File.expand_path('../..', __dir__)}/config.yml", symbolize_names: true)

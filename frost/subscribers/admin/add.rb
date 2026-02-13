@@ -15,7 +15,7 @@ module Admin
         return
       end
 
-      user_role = data.server.role(data.options['role'].to_i)
+      user_role = data.server.role(data.options["role"].to_i)
 
       unless user_role
         data.edit_response(content: RESPONSE[:unknown_role])
@@ -28,7 +28,7 @@ module Admin
         ::Boosters::Booster.create(
           role: user_role.id,
           guild_id: data.server_id,
-          user_id: data.options['target']
+          user_id: data.options["target"]
         )
       end
 

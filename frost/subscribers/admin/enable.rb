@@ -12,18 +12,18 @@ module Admin
 
       options = {
         added_features: 0,
-        added_features: 0,
+        unset_features: 0,
         setup_by: data.user.id,
         setup_at: Time.now.to_i,
         guild_id: data.server_id,
-        role_id: data.options["role"].to_i,
+        role_id: data.options["role"].to_i
       }
 
       case data.options["icon"]
       when TrueClass
         options[:added_features] |= ::Boosters::Guild::FLAGS[:any_icon]
       when FalseClass
-        options[:added_features] |= ::Boosters::Guild::FLAGS[:any_icon]
+        options[:unset_features] |= ::Boosters::Guild::FLAGS[:any_icon]
       end
 
       state = ::Boosters::Storage.create_guild(**options)
