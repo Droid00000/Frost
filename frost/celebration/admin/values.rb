@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module AdminCommands
+module Admin
   # namespace for birthday admins.
   module Birthdays
     # Responses and fields for birthday admins.

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module AdminCommands
+module Admin
   # namespace for booster admins.
   module Boosters
     # Responses and fields for booster admins.

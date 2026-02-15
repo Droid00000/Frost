@@ -65,25 +65,20 @@ module Boosters
       secondary: get_color(data.options["end"]) || :undef
     }
 
-    state = if options["style"] == 1
-              # When the style of the role is a two-point gradient, we should simply try
-              # and validate the colors that the user provided to us.
-              validate_gradient(role: role, one: options[:primary], two: options[:secondary])
-
-            elsif options["style"].zero?
-              # When the style of the role is a solid color, we should reset the other two
+    state = if options["style"].zero?
+              # When the style of the role is 'None', we should reset the other two
               # gradient parameters and reset back to the base color of the booster.
-              options.merge!({ primary: member.role_color, tertiary: nil, secondary: nil })
+              options.merge!(primary: member.role_color, tertiary: nil, secondary: nil)
 
-            elsif options["style"] == 2 && (options[:primary] || options[:secondary])
-              # When the style of the role is holographic and the other two parameters are provided
-              # we ignore the style and treat the request as if it's for a custom gradient.
+            elsif options["style"] != 0 && (options[:primary] != :undef || options[:secondary] != :undef)
+              # When the style of the role is a either 'Gradient' or Holographic' and one of the
+              # other two parameters are provided, validate the colors that were provided.
               validate_gradient(role: role, one: options[:primary], two: options[:secondary])
 
-            elsif options["style"] == 2 && !(options[:primary] && options[:secondary])
-              # When the style of the role is holographic and the other two parameters aren't provided
+            elsif options["style"] == 2 && !(options[:primary] != :undef || options[:secondary] != :undef)
+              # When the style of the role is 'Holographic' and the other two parameters aren't provided
               # we should not ignore the style and instead set the three colors for the holographic preset.
-              options.merge!({ primary: 11_127_295, secondary: 16_759_788, tertiary: 16_761_760 })
+              options.merge!(primary: 11_127_295, secondary: 16_759_788, tertiary: 16_761_760)
             end
 
     if state.is_a?(String)

@@ -62,18 +62,8 @@ module Birthdays
     end
 
     # @!visibility private
-    def self.create(...)
-      Storage.create_guild(...)
-    end
-
-    # @!visibility private
-    def self.delete(data)
-      Storage.delete_guild(guild_id: data.server.id)
-    end
-
-    # @!visibility private
     def self.get(data, hit: false)
-      Storage.guild(guild_id: data.server.id, hit: hit)
+      Storage.guild(guild_id: data.server_id, hit: hit)
     end
 
     private

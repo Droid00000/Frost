@@ -16,7 +16,7 @@ module Admin
         setup_by: data.user.id,
         setup_at: Time.now.to_i,
         guild_id: data.server_id,
-        role_id: data.options["role"].to_i
+        role_id: data.options["role"]&.to_i
       }
 
       case data.options["icon"]
