@@ -29,13 +29,13 @@ module Boosters
       return
     end
 
-    unless (member = Booster.get(data))
-      data.edit_response(content: RESPONSE[2])
+    if Ban.get(data)
+      data.edit_response(content: RESPONSE[11])
       return
     end
 
-    if Ban.get(data)
-      data.edit_response(content: RESPONSE[11])
+    unless (member = Booster.get(data))
+      data.edit_response(content: RESPONSE[2])
       return
     end
 
