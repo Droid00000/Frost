@@ -67,7 +67,7 @@ module Boosters
   def self.to_icon(data, guild)
     return nil unless data.server.features.include?(:role_icons)
 
-    icon = (data.emoji("icon") || data.options["icon"]&.scan(Unicode::Emoji::REGEX)&.first)
+    icon = (data.emoji("icon") || data.options["icon"]&.scan(Unicode::Emoji::REGEX)&.first&.gsub(/[\u{FE00}-\u{FE0F}]/, ''))
 
     icon.is_a?(Discordrb::Emoji) ? safe_icon?(icon, guild.any_icon?, data.server.emojis) : icon
   end
