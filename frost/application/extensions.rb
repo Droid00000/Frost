@@ -90,9 +90,14 @@ module Discordrb
     # Monkey patch for application commands.
     class ApplicationCommandEvent
       # @param name [String] The name of the option.
-      # @return [Emoji] Emojis sent in this interaction.
+      # @return [Emoji] The emoji sent in the option.
       def emoji(name)
-        @options[name] ? @bot.parse_mentions(@options[name]).find { it.is_a?(Discordrb::Emoji) } : nil
+        return unless (name = @options[name])
+
+        if /<a?:\w{2,32}:(\d{15,37})>/ =~ name
+          id = $1.to_i
+          return @bot.emoji(id) || Discordrb::Emoji.new({ "id" => id, "name" => "id", "animated" => false }, @bot)
+        end
       end
     end
   end
