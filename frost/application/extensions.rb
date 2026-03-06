@@ -94,10 +94,10 @@ module Discordrb
       def emoji(name)
         return unless (name = @options[name])
 
-        if /<a?:\w{2,32}:(\d{15,37})>/ =~ name
-          id = $1.to_i
-          return @bot.emoji(id) || Discordrb::Emoji.new({ "id" => id, "name" => "id", "animated" => false }, @bot)
-        end
+        return unless /<a?:\w{2,32}:(\d{15,37})>/ =~ name
+
+        id = ::Regexp.last_match(1).to_i
+        @bot.emoji(id) || Discordrb::Emoji.new({ "id" => id, "name" => "id", "animated" => false }, @bot)
       end
     end
   end
