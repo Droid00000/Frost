@@ -46,34 +46,29 @@ module Boosters
       return
     end
 
-    unless member.role
+    unless (role = member.role)
       data.edit_response(content: RESPONSE[2])
       return Booster.delete(data)
     end
 
     options = {
-      reason: member.reason,
-      role_id: member.role_id,
-      name: data.options["name"],
+      name: data.options["name"] || :undef,
       display_icon: get_icon(data, guild) || :undef,
-      colors: get_color(data.options["color"]) || :undef
+      color: get_color(data.options["color"]) || :undef
     }.compact
 
     if data.options["icon"]&.match?(REGEX[3])
       options[:display_icon] = nil
     end
 
-    if (color = options[:colors] && color != :undef)
-      options[:colors] = {
-        tertiary_color: nil,
-        primary_color: color,
-        secondary_color: nil
-      }
+    if options[:color] != :undef
+      options[:tertiary_color] = nil
+      options[:secondary_color] = nil
     end
 
-    if options.size > 2
+    if options.any? { |_, value| value != :undef }
       begin
-        data.server.update_role(**options)
+        role.modify(**options, reason: member.reason)
       rescue Discordrb::Errors::NoPermission
         data.edit_response(content: RESPONSE[6])
         return
@@ -82,8 +77,6 @@ module Boosters
 
     data.edit_response(content: RESPONSE[7])
 
-    return unless options[:colors] != :undef
-
-    member.edit(color: options[:colors][:primary_color])
+    member.edit(color: options[:color]) if options[:color] != :undef
   end
 end
