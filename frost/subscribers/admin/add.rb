@@ -15,22 +15,16 @@ module Admin
         return
       end
 
-      user_role = data.server.role(data.options["role"].to_i)
-
-      unless user_role
-        data.edit_response(content: RESPONSE[:unknown_role])
+      if ::Boosters::Booster.get(data)
+        data.edit_response(content: RESPONSE[:shared_conflict])
         return
       end
 
-      if (user = ::Boosters::Booster.get(data))
-        user.edit(role: user_role.id)
-      else
-        ::Boosters::Booster.create(
-          role: user_role.id,
-          guild_id: data.server_id,
-          user_id: data.options["target"]
-        )
-      end
+      ::Boosters::Booster.create(
+        guild_id: data.server_id,
+        user_id: data.options["target"],
+        role_id: data.options["role"].to_i,
+      ) rescue nil
 
       data.edit_response(content: RESPONSE[:manual_insertion])
     end

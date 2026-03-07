@@ -1,34 +1,6 @@
 # frozen_string_literal: true
 
 module Discordrb
-  # Monkey patches to the server class.
-  class Server
-    # Updates a role on this server.
-    # @param name [String] New name of the role.
-    # @param colors [Hash] The roles colour.
-    # @param display_icon [String, #read] A role icon for this role.
-    # @param reason [String] The audit log reason for updating this role.
-    def update_role(role:, name: :undef, colors: :undef, display_icon: :undef, reason: nil)
-      return unless (role = self.role(role))
-
-      icon = :undef
-      unicode_emoji = :undef
-      if display_icon.nil?
-        icon = nil
-        unicode_emoji = nil
-      elsif display_icon.is_a?(String)
-        unicode_emoji = display_icon
-        icon = nil
-      elsif display_icon != :undef
-        icon = display_icon
-        unicode_emoji = nil
-      end
-      API::Server.update_role(@bot.token, @id, role.id, name || :undef, :undef, :undef, :undef, :undef, reason, icon, unicode_emoji, colors)
-    end
-  end
-end
-
-module Discordrb
   # Monkey patches to the channel class.
   class Channel
     # Delete the last N messages on this channel.
