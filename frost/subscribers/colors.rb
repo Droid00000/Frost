@@ -3,14 +3,8 @@
 module Boosters
   # Modify a role's colors, for a booster. This command takes three parameters.
   #
-  # @param style [Integer] The style of the gradient to apply. This can be one
-  #   of three values. `0` signifies that any gradient effects should be removed
-  #   and we should revert the user's role to their base colour. `1` signifies that
-  #   we should check the other two `start` and `end` parameters, since the user wants
-  #   to apply a gradient effect. Lastly, `2` signifies that the user wants to apply a
-  #   holographic style. If the `start` or `end` parameters are filled with a value, then
-  #   we should treat the command as if the style was set to `2`. Otherwise, we should apply
-  #   the holographic preset to the role's colors.
+  # @param holographic [true, false, nil] Whether or not to apply or remove the holographic
+  #   style from the role.
   #
   # @param start [String, nil] The starting color to set for the role's gradient. If the role does
   #   not have a pre-existing gradient set, then the `end` parameter must also be filled with a value.
@@ -53,7 +47,7 @@ module Boosters
       return
     end
 
-    if data.interaction.server_features.none?(:enhanced_role_colors) && options["style"] != 0
+    if data.interaction.server_features.none?(:enhanced_role_colors)
       data.edit_response(content: RESPONSE[7])
       return
     end
@@ -65,20 +59,17 @@ module Boosters
       secondary: get_color(data.options["end"]) || :undef
     }
 
-    state = if options["style"].zero?
-              # When the style of the role is 'None', we should reset the other two
-              # gradient parameters and reset back to the base color of the booster.
-              options.merge!(primary: member.role_color, tertiary: nil, secondary: nil)
+    state = if !data.options["holographic"].nil? && options.values[2..].all?(:undef)
+              # When the holographic parameter is set to either true or false, and none of the
+              # other options have been passed, we should attempt to set the holographic colors.
+              tertiary = data.options["holographic"] ? 16_761_760 : nil
+  
+              options.merge!(primary: 11_127_295, secondary: 16_759_788, tertiary: tertiary)
+            else
+              # When the holographic parameter is either left blank, or one of the two options
+              # have been provided as valid colors, then attempt to validate the two-point gradient.
 
-            elsif options["style"] != 0 && (options[:primary] != :undef || options[:secondary] != :undef)
-              # When the style of the role is a either 'Gradient' or Holographic' and one of the
-              # other two parameters are provided, validate the colors that were provided.
               validate_gradient(role: role, one: options[:primary], two: options[:secondary])
-
-            elsif options["style"] == 2 && !(options[:primary] != :undef || options[:secondary] != :undef)
-              # When the style of the role is 'Holographic' and the other two parameters aren't provided
-              # we should not ignore the style and instead set the three colors for the holographic preset.
-              options.merge!(primary: 11_127_295, secondary: 16_759_788, tertiary: 16_761_760)
             end
 
     if state.is_a?(String)

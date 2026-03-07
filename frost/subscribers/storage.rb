@@ -108,9 +108,6 @@ module Boosters
     # @return [Integer] the snowflake ID of the booster's guild.
     attr_reader :guild_id
 
-    # @return [Integer] the RGB hex color of the booster's role.
-    attr_reader :role_color
-
     # @return [Sequel::Dataset]
     DB = POSTGRES[:guild_boosters]
 
@@ -137,17 +134,11 @@ module Boosters
     end
 
     # Update the properties of this booster.
-    # @param role_id [Integer, nil] The role to set for this booster.
-    # @param role_color [ColourRGB, nil] The role color to set for this booster.
+    # @param role_id [Integer] The role to set for this booster.
     def edit(**rest)
       me = {
         user_id: @id,
         guild_id: @guild_id
-      }
-
-      rest = {
-        role_id: rest[:role].resolve_id,
-        color_id: (rest[:color_id] || rest[:role]&.color)&.to_i
       }
 
       update_state(DB.where(**me).returning.update(**rest.compact).first)
@@ -184,7 +175,6 @@ module Boosters
       @user_id = new_data[:user_id]
       @role_id = new_data[:role_id]
       @guild_id = new_data[:guild_id]
-      @role_color = new_data[:color_id]
     end
   end
 

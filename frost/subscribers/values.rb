@@ -55,7 +55,7 @@ module Boosters
   def self.safe_name?(name)
     return true if !name || name.empty?
 
-    !name.unicode_normalize(:nfkd).gsub(/\p{Mn}/, "").match?(REGEX[4])
+    !name.unicode_normalize(:nfkd).gsub(/\p{Mn}/, "").match?(REGEX[5])
   end
 
   # Get an icon for a role.
@@ -63,7 +63,7 @@ module Boosters
   def self.get_icon(data, guild)
     return if data.interaction.server_features.none?(:role_icons)
 
-    icon = (data.emoji("icon") || data.options["icon"]&.[](Unicode::Emoji::REGEX))
+    icon = (data.emoji("icon") || data.options["icon"]&.[](Unicode::Emoji::REGEX))&.gsub(REGEX[2], "")
 
     icon.is_a?(Discordrb::Emoji) ? (icon.file if guild.any_icon? || data.server.emoji[icon.id]) : icon
   end

@@ -91,7 +91,7 @@ module Boosters
 
     begin
       Booster.create(
-        role: role,
+        role_id: role.id,
         user_id: data.user.id,
         guild_id: data.server_id,
         version: data.interaction.id

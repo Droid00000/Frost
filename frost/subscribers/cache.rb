@@ -155,24 +155,11 @@ module Boosters
     end
 
     # Create a booster for a guild.
-    # @param role [Role] The booster role for the user to create.
     # @param version [Integer] The interaction ID for the version.
     # @param user_id [Integer] The snowflake ID of the user to create.
+    # @param role_id [Integer] The booster role for the user to create.
     # @param guild_id [Integer] The snowflake ID of the guild the user to create is for.
-    # @param role_color [Integer, nil] The color of the booster role for the user to create.
     def create_booster(**options)
-      me = {
-        version: options[:version],
-        user_id: options[:user_id],
-        guild_id: options[:guild_id]
-      }
-
-      options = {
-        **me,
-        role_id: options[:role].resolve_id,
-        color_id: options[:role].color.to_i
-      }
-
       booster = BOOSTERS.insert_select(**options)
       201.tap { @boosters[booster[:guild_id]][booster[:user_id]] = Booster.new(booster) } if booster
     end

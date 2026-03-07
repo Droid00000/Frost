@@ -134,9 +134,9 @@ bot.register_application_command(:booster, "Customizable perks for server booste
     end
 
     group.subcommand(:gradient, "Edit your custom booster role's gradient.") do |option|
-      option.integer(:style, "The style of the gradient to apply.", required: true, choices: { None: 0, Custom: 1, Holographic: 2 })
       option.string(:start, "Provide a HEX color for your gradient's start color.", required: false, min_length: 3, max_length: 16)
       option.string(:end, "Provide a HEX color for your gradient's end color.", required: false, min_length: 3, max_length: 16)
+      option.boolean(:holographic, "Whether to use the holographic preset for the gradient.", required: false)
     end
 
     group.subcommand(:delete, "Delete your custom booster role.")

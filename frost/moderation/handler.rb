@@ -8,7 +8,7 @@ module ModerationCommands
     Moderation.purge(event)
   end
 
-  message(contains: REGEX[2]) do |event|
+  message(contains: REGEX[3]) do |event|
     Moderation.link(event)
   end
 

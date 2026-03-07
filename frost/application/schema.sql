@@ -23,7 +23,6 @@ CREATE TABLE IF NOT EXISTS guild_boosters (
   user_id BIGINT NOT NULL,
   role_id BIGINT NOT NULL,
   guild_id BIGINT NOT NULL,
-  color_id INTEGER NOT NULL,
   PRIMARY KEY (user_id, guild_id)
 );
 

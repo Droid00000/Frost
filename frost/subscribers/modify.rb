@@ -57,7 +57,7 @@ module Boosters
       color: get_color(data.options["color"]) || :undef
     }.compact
 
-    if data.options["icon"]&.match?(REGEX[3])
+    if data.options["icon"]&.match?(REGEX[4])
       options[:display_icon] = nil
     end
 
@@ -76,7 +76,5 @@ module Boosters
     end
 
     data.edit_response(content: RESPONSE[7])
-
-    member.edit(color: options[:color]) if options[:color] != :undef
   end
 end
