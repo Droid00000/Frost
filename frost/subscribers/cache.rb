@@ -159,8 +159,8 @@ module Boosters
     # @param user_id [Integer] The snowflake ID of the user to create.
     # @param role_id [Integer] The booster role for the user to create.
     # @param guild_id [Integer] The snowflake ID of the guild the user to create is for.
-    def create_booster(**options)
-      booster = BOOSTERS.insert_select(**options)
+    def create_booster(**)
+      booster = BOOSTERS.insert_select(**)
       201.tap { @boosters[booster[:guild_id]][booster[:user_id]] = Booster.new(booster) } if booster
     end
 

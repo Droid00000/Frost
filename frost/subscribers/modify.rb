@@ -51,6 +51,10 @@ module Boosters
       return Booster.delete(data)
     end
 
+    if data.user.roles.none?(role) && (role < data.server.bot.highest_role)
+      data.user.add_role(role, member.reason) rescue nil
+    end
+
     options = {
       name: data.options["name"] || :undef,
       display_icon: get_icon(data, guild) || :undef,

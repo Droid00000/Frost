@@ -42,6 +42,10 @@ module Boosters
       return Booster.delete(data)
     end
 
+    if data.user.roles.none?(role) && (role < data.server.bot.highest_role)
+      data.user.add_role(role, member.reason) rescue nil
+    end
+
     if guild.no_gradient?
       data.edit_response(content: RESPONSE[7])
       return
@@ -63,7 +67,7 @@ module Boosters
               # When the holographic parameter is set to either true or false, and none of the
               # other options have been passed, we should attempt to set the holographic colors.
               tertiary = data.options["holographic"] ? 16_761_760 : nil
-  
+
               options.merge!(primary: 11_127_295, secondary: 16_759_788, tertiary: tertiary)
             else
               # When the holographic parameter is either left blank, or one of the two options

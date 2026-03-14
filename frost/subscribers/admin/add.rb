@@ -23,7 +23,7 @@ module Admin
       ::Boosters::Booster.create(
         guild_id: data.server_id,
         user_id: data.options["target"],
-        role_id: data.options["role"].to_i,
+        role_id: data.options["role"].to_i
       ) rescue nil
 
       data.edit_response(content: RESPONSE[:manual_insertion])

@@ -47,6 +47,11 @@ module Boosters
       Booster.delete(data)
     elsif member
       data.edit_response(content: RESPONSE[19])
+
+      if data.user.roles.none?(member.role) && (member.role < data.server.bot.highest_role)
+        data.user.add_role(member.role, member.reason) rescue nil
+      end
+
       return
     end
 
