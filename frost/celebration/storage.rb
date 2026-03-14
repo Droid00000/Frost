@@ -26,12 +26,6 @@ module Birthdays
       update_state(state)
     end
 
-    # Get metadata about the settings for this guild.
-    # @return [Array(String, Integer)] Metadata info about this guild.
-    def view
-      [BOT.user(@setup_by)&.name || "Deleted User", @setup_at]
-    end
-
     # Delete the record for this guild.
     # @note Ensure we manually remove the guild from the user's guilds.
     def delete

@@ -53,9 +53,11 @@ module Settings
         # and the footer text that we're adding.
         container.text_display(text: format(RESPONSE[7], guild.role_id))
 
+        boss = BOT.user(guild.setup_by)&.name || "Deleted User"
+
         # Add the manager information we're now showing
         # and tracking. Includes the sanction timestamp.
-        container.text_display(text: format(RESPONSE[9], *guild.view))
+        container.text_display(text: format(RESPONSE[9], boss, guild.setup_at))
 
         # Add our footer text. Eventually this can be swapped out for
         # an action row with buttons for pagination if needed.

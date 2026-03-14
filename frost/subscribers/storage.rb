@@ -43,12 +43,6 @@ module Boosters
       BOT.server(@id)&.role(@role_id)
     end
 
-    # Get metadata about the settings for this guild.
-    # @return [Array(String, Integer)] Metadata info about this guild.
-    def view
-      [BOT.user(@setup_by)&.name || "Deleted User", @setup_at]
-    end
-
     # Update the properties of this guild.
     # @param role_id [Integer] The ID of the hoist role for this guild.
     # @param added_features [Integer] The feature flags to set for this guild.
@@ -65,7 +59,7 @@ module Boosters
 
     # @!method any_icon?
     #   @return [Boolean] whether guild boosters can use external emojis as role icons.
-    # @!method no_graident?
+    # @!method no_gradient?
     #   @return [Boolean] whether setting graidents to booster roles has been disabled.
     # @!method self_service?
     #   @return [Boolean] whether this guild is using the self service mode for booster perks.

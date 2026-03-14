@@ -47,9 +47,11 @@ module Settings
         # and the footer text that we're adding.
         container.text_display(text: format(RESPONSE[8], guild.role))
 
+        boss = BOT.user(guild.setup_by) || "Deleted User"
+
         # Add the manager information we're now showing
         # and tracking. Includes the sanction timestamp.
-        container.text_display(text: format(RESPONSE[6], *guild.view))
+        container.text_display(text: format(RESPONSE[6], boss, guild.setup_at))
 
         # Guard against the channel being potentially deleted.
         if guild.channel && (data.bot.channel(guild.channel) rescue nil)
