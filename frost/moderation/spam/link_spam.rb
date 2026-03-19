@@ -49,38 +49,37 @@ module Moderation
     # Send the logging message to the configured log channel.
     # @param key [#id] the user or member who was actioned against.
     # @param value [Loggable] the loggging stash to send to the channel.
-    def self.logger(key, value)
-      # Don't do anything unless we have enough messages.
-      return if value.messages.empty?
+    def self.logger(user, bucket)
+      return if bucket.messages.empty?
 
-      # Create the descripton for the given view.
-      description = lambda do |state|
-        result = format(RESPONSE[3], value.messages.length, key.id)
-        state ? (result + format(RESPONSE[4], key.joined_at.to_i)) : result
-      end
+      description = if user.respond_to?(:joined_at)
+                      format(RESPONSE[1], bucket.messages.length, user.id, user.joined_at.to_i)
+                    else
+                      format(RESPONSE[1], bucket.messages.length, user.id)[..-31]
+                    end
 
-      # Wrap everything in a temporary directory.
-      Dir.mktmpdir do |directory|
-        # The path to the file to create.
-        path = File.join(directory, "harmful-urls.txt")
+      channel = BOT.channel(CONFIG[:Moderator][:CHANNEL]) rescue nil
 
-        # Write the data to the file here, and then close it.
-        File.open(path, "w") do |file|
-          file.puts(value.links.map(&:to_s).join("\n\n"))
-        end
+      io = StringIO.new(bucket.links.map(&:to_s).join("\n\n"), "rb")
 
-        # Send the logging message here.
-        BOT.channel(CONFIG[:Moderator][:CHANNEL]).send_embed("", [], [File.open(path, "rb")],
-                                                             false, nil, nil, nil, 1 << 15) do |_, view|
-          view.container do |container|
-            container.section do |section|
-              section.text_display(text: RESPONSE[7])
-              section.thumbnail(url: key.display_avatar_url)
-              section.text_display(text: description.call(key.respond_to?(:joined_at)))
-            end
+      io.define_singleton_method(:path) { "harmful-urls.txt" }
 
-            # Only set the base name of the file here, not the whole path.
-            container.file(url: "attachment://harmful-urls.txt")
+      channel&.send_message!(has_components: true, attachments: [io]) do |_, builder|
+        # The container is the base entity that will contain all of our other components.
+        builder.container do |container_component|
+          # From here, a section will be added inside of the container to contain the content and avatar image.
+          container_component.section do |section_component|
+            # The first text display inside of the section is going to contain the type of spam that was actioned.
+            section_component.text_display(content: RESPONSE[6])
+
+            # The second text display inside of the section is going to contain metadata about the spam that was actioned.
+            section_component.text_display(content: description)
+
+            # The second to last thing we're going to add is the base/per-guild avatar of the member who created all of the spam.
+            section_component.thumbnail(url: user.display_avatar_url)
+
+            # Finally, all that's left for is to add is the file that contained all of the spam links or attachment URLs that were deleted.
+            container_component.file(url: "attachment://harmful-urls.txt")
           end
         end
       end

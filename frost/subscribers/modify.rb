@@ -51,7 +51,7 @@ module Boosters
       return Booster.delete(data)
     end
 
-    if data.user.roles.none?(role) && (role < data.server.bot.highest_role)
+    if data.user.roles.none?(role) && (role < data.server.bot.roles.max)
       data.user.add_role(role, member.reason) rescue nil
     end
 

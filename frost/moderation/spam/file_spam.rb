@@ -23,9 +23,9 @@ module Moderation
       return if bucket.messages.empty?
 
       description = if user.respond_to?(:joined_at)
-                      format(RESPONSE[3], bucket.messages.length, user.id, user.joined_at.to_i)
+                      format(RESPONSE[1], bucket.messages.length, user.id, user.joined_at.to_i)
                     else
-                      format(RESPONSE[3], bucket.messages.length, user.id)[..-6]
+                      format(RESPONSE[1], bucket.messages.length, user.id)[..-31]
                     end
 
       channel = BOT.channel(CONFIG[:Moderator][:CHANNEL]) rescue nil
@@ -40,7 +40,7 @@ module Moderation
           # From here, a section will be added inside of the container to contain the content and avatar image.
           container_component.section do |section_component|
             # The first text display inside of the section is going to contain the type of spam that was actioned.
-            section_component.text_display(content: RESPONSE[6])
+            section_component.text_display(content: RESPONSE[5])
 
             # The second text display inside of the section is going to contain metadata about the spam that was actioned.
             section_component.text_display(content: description)

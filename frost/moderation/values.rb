@@ -3,13 +3,12 @@
 module Moderation
   # Responses and fields for moderation commands.
   RESPONSE = {
-    1 => "The bot needs to have the `manage messages` permission to do this.",
-    2 => "The bot needs to have the `view channel` permission to do this.",
-    3 => "> **Deleted Messages:** %s\n> **ID:** `%s`",
-    4 => "\n> **Member Since:** <t:%s:R>\n",
-    5 => "Successfully deleted %s message",
-    6 => "### Attachment Spammer",
-    7 => "### Link Spammer"
+    1 => "> **Deleted Messages:** %s\n> **ID:** `%s`\n> **Member Since:** <t:%s:R>\n",
+    2 => "The bot needs to have the `manage messages` permission to do this.",
+    3 => "The bot needs to have the `view channel` permission to do this.",
+    4 => "Successfully deleted %s message",
+    5 => "### Attachment Spammer",
+    6 => "### Link Spammer"
   }.freeze
 
   # Roles that should be ignored by the automod.

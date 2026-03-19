@@ -18,7 +18,7 @@ module Events
   # Add an event role to a member.
   def self.edit_roles(add, member)
     pop = []
-    top = member.server.bot.highest_role
+    top = member.server.bot.roles.max
 
     member.roles.uniq.each do |role|
       next if (top && (role > top)) || !Storage.role?(role_id: role.id)
@@ -26,6 +26,6 @@ module Events
       (pop << role) if role > add
     end
 
-    member.set_roles(((member.roles - pop) + [add]).uniq, "Event Roles") rescue nil
+    member.set_roles(((member.roles - pop) << add).uniq, "Event Roles") rescue nil
   end
 end

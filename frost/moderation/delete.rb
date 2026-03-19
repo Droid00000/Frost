@@ -4,12 +4,12 @@ module Moderation
   # Purge messages.
   def self.purge(data)
     unless data.server.bot.permission?(:manage_messages, data.channel)
-      data.edit_response(content: RESPONSE[1])
+      data.edit_response(content: RESPONSE[2])
       return
     end
 
     unless data.server.bot.permission?(:read_messages, data.channel)
-      data.edit_response(content: RESPONSE[2])
+      data.edit_response(content: RESPONSE[3])
       return
     end
 
@@ -63,6 +63,6 @@ module Moderation
       end
     end
 
-    data.edit_response(content: plural(RESPONSE[5], count))
+    data.edit_response(content: plural(RESPONSE[4], count))
   end
 end

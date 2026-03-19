@@ -53,7 +53,7 @@ module Admin
       new_bans = ::Boosters::Storage.create_bans(**new_bans) rescue nil
 
       server = data.server
-      height = server.bot.sort_roles.last
+      height = server.bot.roles.max
       reason = "Booster Admins (ID: #{data.user.id})"
 
       new_bans&.each do |banned|

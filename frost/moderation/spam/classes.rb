@@ -125,13 +125,13 @@ module Moderation
     # Fetch the links that were deleted in the log stash.
     # @return [Array<URI>] the hyperlinks that were deleted.
     def links
-      @messages.flat_map(&:uris).uniq.take(15)
+      @messages.flat_map(&:uris).uniq.take(50)
     end
 
     # Fetch the files that were deleted in the long stash.
     # @return [Array<Attachment>] the attachments that were deleted.
     def files
-      @messages.flat_map(&:attachments).uniq.take(15)
+      @messages.flat_map(&:attachments).uniq.take(50)
     end
 
     # Whether this log stash has been marked as being bounced.

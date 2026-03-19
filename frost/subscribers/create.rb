@@ -48,7 +48,7 @@ module Boosters
     elsif member
       data.edit_response(content: RESPONSE[19])
 
-      if data.user.roles.none?(member.role) && (member.role < data.server.bot.highest_role)
+      if data.user.roles.none?(member.role) && (member.role < data.server.bot.roles.max)
         data.user.add_role(member.role, member.reason) rescue nil
       end
 
