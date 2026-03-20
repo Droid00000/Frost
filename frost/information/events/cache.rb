@@ -29,9 +29,7 @@ module Events
     end
 
     # @!visibility private
-    def self.method_missing(name, ...)
-      login.respond_to?(name) ? login.__send__(name, ...) : super
-    end
+    def self.method_missing(name, ...) = login.__send__(name, ...)
 
     # Get a single role.
     # @param role_id [Integer] The role ID of the role that should be fetched.

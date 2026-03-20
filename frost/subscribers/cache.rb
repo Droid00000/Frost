@@ -38,9 +38,7 @@ module Boosters
     end
 
     # @!visibility private
-    def self.method_missing(name, ...)
-      login.respond_to?(name) ? login.__send__(name, ...) : super
-    end
+    def self.method_missing(name, ...) = login.__send__(name, ...)
 
     # Get a single guild.
     # @param guild_id [Integer] The guild ID of the guild that should be fetched.
