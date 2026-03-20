@@ -33,6 +33,6 @@ module Events
 
     return unless pop.any?
 
-    role.delete_bans(users: add) rescue nil
+    role.delete_users(users: add) rescue nil
   end
 end
