@@ -68,15 +68,8 @@ module Events
     # @param setup_at [Integer] The UNIX timestamp of when the role was created.
     # @param setup_by [Integer] The snowflake ID of the user setting up the role to create.
     # @return [Integer] The resulting state of the action that was caused by the operation.
-    def create_role(**options)
-      options = {
-        role_id: options[:role_id],
-        guild_id: options[:guild_id],
-        setup_by: options[:setup_by],
-        setup_at: options[:setup_at]
-      }
-
-      role = ROLES.insert_conflict.insert_select(**options)
+    def create_role(**)
+      role = ROLES.insert_conflict.insert_select(**)
       role ? 201.tap { @roles[role[:role_id]] = Role.new(role) } : 304
     end
   end
