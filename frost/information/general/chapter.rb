@@ -20,16 +20,8 @@ module General
     wait = Selenium::WebDriver::Wait.new(timeout: 20)
     wait.until { driver.find_element(:css, CONFIG[:Chapter][:ELEMENT]) }
     time = Date.parse(driver.find_element(:css, CONFIG[:Chapter][:ELEMENT]).text.split("\n")[1])
-    Discordrb::API.request(
-      :channels_cid,
-      CONFIG[:Chapter][:CHANNEL],
-      :patch,
-      "#{Discordrb::API.api_base}/channels/#{CONFIG[:Chapter][:CHANNEL]}",
-      { name: "📖 #{time.strftime('%B')} #{time.day.ordinal} 3PM GMT" }.to_json,
-      Authorization: BOT.token,
-      content_type: :json,
-      "X-Audit-Log-Reason": "Release Date"
-    )
+    new_channel_name = "📖 #{time.strftime('%B')} #{time.day.ordinal} 3PM GMT"
+    BOT.channel(CONFIG[:Chapter][:CHANNEL])&.modify(name: new_channel_name, reason: "Release Date")
   ensure
     driver&.quit
   end

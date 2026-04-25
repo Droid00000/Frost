@@ -168,7 +168,7 @@ module Boosters
     # @param hit [true, false] Whether to fallback to a database lookup if the booster isn't cached.
     # @return [Booster, nil] The booster that was found during the lookup, or `nil` if it doesn't exist.
     def booster(guild_id:, user_id:, hit: false)
-      @boosters[guild_id][user_id]&.then { return it }
+      (booster = @boosters[guild_id][user_id]) and return booster
 
       booster = BOOSTERS.where(guild_id: guild_id, user_id: user_id).first if hit
       @boosters[member[:guild_id]][member[:user_id]] = Booster.new(booster) if booster
