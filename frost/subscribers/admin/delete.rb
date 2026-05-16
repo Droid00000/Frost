@@ -5,7 +5,7 @@ module Admin
   module Boosters
     # Delete a pre-exisiting booster from the guild.
     def self.delete(data)
-      unless data.user.permission?(:manage_roles)
+      unless data.user.can_manage_roles?
         data.edit_response(content: RESPONSE[:manage_roles])
         return
       end
@@ -17,7 +17,7 @@ module Admin
 
       result = ::Boosters::Booster.delete(data)
 
-      if prune && data.server.bot.permission?(:manage_roles)
+      if prune && data.server.bot.can_manage_roles?
         result&.role&.delete("Booster Admins (ID: #{data.user.id})")
       end
 

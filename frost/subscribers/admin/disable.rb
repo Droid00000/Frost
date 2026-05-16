@@ -5,7 +5,7 @@ module Admin
   module Boosters
     # Disable the booster-roles functionality for the guild.
     def self.disable(data)
-      unless data.user.permission?(:manage_roles)
+      unless data.user.can_manage_roles?
         data.edit_response(content: RESPONSE[:manage_roles])
         return
       end

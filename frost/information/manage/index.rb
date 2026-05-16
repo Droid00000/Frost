@@ -31,7 +31,7 @@ module Settings
 
         # Check if we're in a server, and if the user has the
         # manage roles permission in the server this command's called from.
-        state = data.server_id && data.user.permission?(:manage_roles) rescue nil
+        state = data.server_id && data.user.can_manage_roles? rescue nil
 
         # Add some spacing between the content of our container
         # and the select menu that we're going to show the user.

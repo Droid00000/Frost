@@ -5,7 +5,7 @@ module Admin
   module Birthdays
     # Enable birthday perks in this server.
     def self.setup(data)
-      unless data.user.permission?(:administrator)
+      unless data.user.can_administrate?
         data.edit_response(content: RESPONSE[3])
         return
       end

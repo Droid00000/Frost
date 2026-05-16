@@ -5,7 +5,7 @@ module Admin
   module Boosters
     # Ban or unban multiple boosters from the guild.
     def self.banned(data)
-      unless data.user.permission?(:manage_roles)
+      unless data.user.can_manage_roles?
         data.edit_response(content: RESPONSE[:manage_roles])
         return
       end
@@ -59,7 +59,7 @@ module Admin
       new_bans&.each do |banned|
         role = server.role(banned.role_id)
 
-        return unless server.bot.permission?(:manage_roles)
+        return unless server.bot.can_manage_roles?
 
         role.delete(reason) if !role.nil? && (role < height)
       end

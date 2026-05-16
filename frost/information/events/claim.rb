@@ -3,7 +3,7 @@
 module Events
   # Add an event role to a user.
   def self.claim(data)
-    unless data.server.bot.permission?(:manage_roles)
+    unless data.server.bot.can_manage_roles?
       data.edit_response(content: RESPONSE[3])
       return
     end

@@ -14,7 +14,7 @@ module Boosters
   #   do not remove the role from the DB. This is because we most likely do not want
   #   the user to have a role that can out-last their boosting duration.
   def self.delete(data)
-    unless data.server.bot.permission?(:manage_roles)
+    unless data.server.bot.can_manage_roles?
       data.edit_response(content: RESPONSE[10])
       return
     end

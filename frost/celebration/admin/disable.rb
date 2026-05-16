@@ -5,7 +5,7 @@ module Admin
   module Birthdays
     # Disable the birthdays-perks functionality for the guild.
     def self.disable(data)
-      unless data.user.permission?(:administrator)
+      unless data.user.can_administrate?
         data.edit_response(content: RESPONSE[3])
         return
       end

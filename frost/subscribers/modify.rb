@@ -16,7 +16,7 @@ module Boosters
   #   emojis for role icons and an external emoji is provided, or if the guild does not support setting role icons. If this
   #   parameter is `nil`, then the role's icon will not be updated.
   def self.edit(data)
-    unless data.server.bot.permission?(:manage_roles)
+    unless data.server.bot.can_manage_roles?
       data.edit_response(content: RESPONSE[10])
       return
     end

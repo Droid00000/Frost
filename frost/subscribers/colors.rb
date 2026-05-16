@@ -12,7 +12,7 @@ module Boosters
   # @param end [String, nil] The ending color to set for the role's gradient. If the role does not
   #   have a pre-existing gradient set, then the `start` parameter must also be filled with a value.
   def self.colors(data)
-    unless data.server.bot.permission?(:manage_roles)
+    unless data.server.bot.can_manage_roles?
       data.edit_response(content: RESPONSE[10])
       return
     end

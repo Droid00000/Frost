@@ -13,7 +13,7 @@ module Boosters
   #   a unicode emoji, or simply left blank. This parameter is silently discarded if the guild has disallowed
   #   using external emojis for role icons and an external emoji is provided, or if the guild does not support setting role icons.
   def self.create(data)
-    unless data.server.bot.permission?(:manage_roles)
+    unless data.server.bot.can_manage_roles?
       data.edit_response(content: RESPONSE[10])
       return
     end
