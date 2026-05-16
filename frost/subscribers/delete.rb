@@ -39,6 +39,11 @@ module Boosters
       return
     end
 
+    if member.recent?
+      data.edit_response(content: RESPONSE[8])
+      return
+    end
+
     begin
       member.role&.delete(member.reason)
     rescue Discordrb::Errors::NoPermission

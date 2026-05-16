@@ -66,16 +66,11 @@ module Moderation
 
     # Timeout the member this storage bucket is for.
     # @param duration [Time] the time at when the user's mute should expire.
-    # @return [void] this method does not return usable data for the caller.
+    # @return [nil] this method does not return usable data for the caller.
     def timeout_member(duration)
-      @timed_out = @timed_out.nil? || return
+      return if @member.communication_disabled?
 
-      data = {
-        reason: "Auto-mute for spamming",
-        communication_disabled_until: duration&.iso8601
-      }
-
-      Discordrb::API::Server.update_member(BOT.token, @member.server.id, @member.id, **data) rescue nil
+      @member.modify(timeout_until: duration&.iso8601, reason: "Auto-mute for spamming") rescue nil
     end
   end
 

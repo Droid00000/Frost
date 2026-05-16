@@ -127,6 +127,12 @@ module Boosters
       DB.where(guild_id: @guild_id, user_id: @id).delete
     end
 
+    # Check if this booster's role was created recently.
+    # @return [true, false] If the role was created recently.
+    def recent?
+      !role.nil? && ((Time.now - role.creation_time) < 600)
+    end
+
     # Update the properties of this booster.
     # @param role_id [Integer] The role to set for this booster.
     def edit(**rest)

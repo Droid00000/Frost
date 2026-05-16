@@ -10,18 +10,19 @@ module Boosters
     5 => "Your role couldn't be deleted. The bot's highest role is below your custom role.",
     6 => "Your role couldn't be edited. The bot's highest role is below your custom role.",
     7 => "Your role has been successfully edited! <a:LoidClap_Maomao:1276327798104920175>",
-    8 => "Your role couldn't be created. The maximum role limit has been reached.",
-    9 => "Your role couldn't be created. This server's hoist role was deleted.",
-    10 => "The bot needs to have the `manage roles` permission to do this.",
-    11 => "You've been banned from using booster perks in this server.",
-    12 => "Please provide a start **and** end color for your gradient.",
-    13 => "Please provide a start **or** end color for your gradient.",
-    14 => "Your role name contains a word that cannot be used.",
-    15 => "You must be a server booster to use this command.",
-    16 => "Please provide a start color for your gradient.",
-    17 => "Please provide an end color for your gradient.",
-    18 => "This server hasn't enabled booster perks.",
-    19 => "You've already claimed your custom role."
+    8 => "Your role couldn't be deleted. A new role can only be deleted after 10 minutes.",
+    9 => "Your role couldn't be created. The maximum role limit has been reached.",
+    10 => "Your role couldn't be created. This server's hoist role was deleted.",
+    11 => "The bot needs to have the `manage roles` permission to do this.",
+    12 => "You've been banned from using booster perks in this server.",
+    13 => "Please provide a start **and** end color for your gradient.",
+    14 => "Please provide a start **or** end color for your gradient.",
+    15 => "Your role name contains a word that cannot be used.",
+    16 => "You must be a server booster to use this command.",
+    17 => "Please provide a start color for your gradient.",
+    18 => "Please provide an end color for your gradient.",
+    19 => "This server hasn't enabled booster perks.",
+    20 => "You've already claimed your custom role."
   }.freeze
 
   # Initilaze a new color object for a role.
