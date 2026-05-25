@@ -229,7 +229,7 @@ module Boosters
     # @param guild_id [Integer, String] ID of the guild the record is for.
     # @param user_id [Integer, String] ID of the user the record is for.
     def self.delete(**)
-      POSTGRES.transaction { POSTGRES[:guild_boosters].where(**).delete }
+      POSTGRES[:guild_boosters].where(**).delete
     end
   end
 end
