@@ -33,12 +33,9 @@ module Boosters
 
     # Create the instance for this cache.
     # This does all of the setup needed to get everything going.
-    def self.login
-      @login ||= new
+    def self.state
+      @state ||= new
     end
-
-    # @!visibility private
-    def self.method_missing(name, ...) = login.__send__(name, ...)
 
     # Get a single guild.
     # @param guild_id [Integer] The guild ID of the guild that should be fetched.
@@ -56,7 +53,7 @@ module Boosters
     # Delete a guild, permanently erasing its settings and boosters.
     # @param guild_id [Integer] The ID of the guild that should be deleted.
     # @return [Guild, nil] The guild that was deleted, or `nil` if there wasn't one to delete.
-    def delete_guild(guild_id:)
+    def delete_guild(guild_id)
       # Actually delete ts from the DB first because that's
       # our source of truth and we want to avoid an edge case where the local
       # cache contains a guild, but there's nothing for that guild in the actual database.

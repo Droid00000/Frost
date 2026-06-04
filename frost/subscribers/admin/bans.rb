@@ -45,12 +45,12 @@ module Admin
 
       # Delete all the bans first, since that's usually cheaper.
       if old_bans&.[](:users)&.any?
-        ::Boosters::Storage.delete_bans(**old_bans)
+        ::Boosters::Storage.state.delete_bans(**old_bans)
       end
 
       return unless new_bans&.[](:users)&.any?
 
-      new_bans = ::Boosters::Storage.create_bans(**new_bans) rescue nil
+      new_bans = ::Boosters::Storage.state.create_bans(**new_bans)
 
       server = data.server
       height = server.bot.roles.max

@@ -13,7 +13,7 @@ module Admin
       data.edit_response(content: RESPONSE[:guild_deleted])
 
       # Cleanup should be async so interaction doesn't timeout.
-      ::Boosters::Storage.delete_guild(guild_id: data.server_id)
+      ::Boosters::Guild.delete(data.server_id)
     end
   end
 end

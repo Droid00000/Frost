@@ -10,16 +10,16 @@ module Owner
     @time ||= Time.now.to_i
 
     # Initialize all of our events once we're ready.
-    Thread.new { Events::Storage.login }
+    Thread.new { Events::Storage.state }
 
     # Initialize all of our boosters once we're ready.
-    Thread.new { Boosters::Storage.login }
+    Thread.new { Boosters::Storage.state }
 
     # Initialize all of our birthdays once we're ready.
-    Thread.new { Birthdays::Storage.login }
+    Thread.new { Birthdays::Storage.state }
 
     # Initialize all of our birthdays once we're ready.
-    Thread.new { Birthdays::Orchestrator.login }
+    Thread.new { Birthdays::Orchestrator.state }
 
     # Return unless we were called in an actual runtime.
     return unless ENV.fetch("PRODUCTION_LOGS", nil)

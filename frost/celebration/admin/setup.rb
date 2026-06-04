@@ -18,7 +18,7 @@ module Admin
         channel_id: data.options["channel"]&.to_i
       }
 
-      state = ::Birthdays::Storage.create_guild(**options)
+      state = ::Birthdays::Guild.create(**options)
 
       if state == 400 && options[:role_id].nil?
         data.edit_response(content: RESPONSE[2])

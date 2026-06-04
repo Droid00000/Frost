@@ -30,7 +30,3 @@ Style/RescueModifier:
 # This seems to sometimes trigger falsely with one-line rescues.
 Style/RedundantParentheses:
   Enabled: false
-
-# It is completely unnessecary and not needed to define this method.
-Style/MissingRespondToMissing:
-  Enabled: false

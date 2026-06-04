@@ -7,15 +7,15 @@ module AdminCommands
     Owner.science(event)
   end
 
-  modal_submit(custom_id: "3") do |event|
+  modal_submit(custom_id: "AD") do |event|
     Owner.code(event)
   end
 
-  ready(resumed: false) do |event|
+  ready do |event|
     Owner.logs(event)
   end
 
-  raw(filter: false) do |event|
+  raw do |event|
     Owner.raw(event)
   end
 end

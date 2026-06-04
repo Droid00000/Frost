@@ -67,7 +67,7 @@ module Events
 
     # @!visibility private
     def self.delete(data)
-      Storage.delete_role(guild_id: data.server.id, role_id: data.options["role"])
+      Storage.delete_role(data.options["role"])
     end
 
     # @!visibility private

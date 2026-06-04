@@ -61,10 +61,6 @@ module Boosters
     #   @return [Boolean] whether guild boosters can use external emojis as role icons.
     # @!method no_gradient?
     #   @return [Boolean] whether setting graidents to booster roles has been disabled.
-    # @!method self_service?
-    #   @return [Boolean] whether this guild is using the self service mode for booster perks.
-    # @!method manual_queue?
-    #   @return [Boolean] whether this guild is using the manual approval mode for booster perks.
     FLAGS.each do |name, value|
       define_method("#{name}?") do
         @features.anybits?(value)
@@ -72,8 +68,18 @@ module Boosters
     end
 
     # @!visibility private
+    def self.create(...)
+      Storage.state.create_guild(...)
+    end
+
+    # @!visibility private
+    def self.delete(...)
+      Storage.state.delete_guild(...)
+    end
+
+    # @!visibility private
     def self.get(data, hit: false)
-      Storage.guild(guild_id: data.server_id, hit: hit)
+      Storage.state.guild(guild_id: data.server_id, hit: hit)
     end
 
     private
@@ -146,24 +152,24 @@ module Boosters
 
     # @!visibility private
     def self.create(...)
-      Storage.create_booster(...)
+      Storage.state.create_booster(...)
     end
 
     # @!visibility private
     def self.get(data)
       if (target = data.options["target"])
-        Storage.booster(guild_id: data.server_id, user_id: target.to_i)
+        Storage.state.booster(guild_id: data.server_id, user_id: target.to_i)
       else
-        Storage.booster(guild_id: data.server_id, user_id: data.user.id)
+        Storage.state.booster(guild_id: data.server_id, user_id: data.user.id)
       end
     end
 
     # @!visibility private
     def self.delete(data)
       if (target = data.options["target"])
-        Storage.delete_booster(guild_id: data.server_id, user_id: target.to_i)
+        Storage.state.delete_booster(guild_id: data.server_id, user_id: target.to_i)
       else
-        Storage.delete_booster(guild_id: data.server_id, user_id: data.user.id)
+        Storage.state.delete_booster(guild_id: data.server_id, user_id: data.user.id)
       end
     end
 
@@ -203,9 +209,9 @@ module Boosters
     # @!visibility private
     def self.get(data)
       if (target = data.options["target"])
-        Storage.ban(guild_id: data.server_id, user_id: target.to_i)
+        Storage.state.ban(guild_id: data.server_id, user_id: target.to_i)
       else
-        Storage.ban(guild_id: data.server_id, user_id: data.user.id)
+        Storage.state.ban(guild_id: data.server_id, user_id: data.user.id)
       end
     end
   end

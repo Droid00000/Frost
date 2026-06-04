@@ -24,12 +24,9 @@ module Events
 
     # Create the instance for this cache.
     # This does all of the setup needed to get everything going.
-    def self.login
-      @login ||= new
+    def self.state
+      @state ||= new
     end
-
-    # @!visibility private
-    def self.method_missing(name, ...) = login.__send__(name, ...)
 
     # Get a single role.
     # @param role_id [Integer] The role ID of the role that should be fetched.
@@ -55,7 +52,7 @@ module Events
     # Delete a role, permanently erasing its settings and users.
     # @param role_id [Integer] The ID of the role that should be deleted.
     # @return [Role, nil] The role that was deleted, or `nil` if there wasn't one to delete.
-    def delete_role(role_id:)
+    def delete_role(role_id)
       @roles[role_id]&.delete
       @roles&.delete(role_id)
     end

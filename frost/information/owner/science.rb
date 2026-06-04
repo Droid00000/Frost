@@ -16,7 +16,7 @@ module Owner
       data.edit_response(content: "Exiting!")
       exit
     when 2
-      data.show_modal(title: "Eval", custom_id: "3") do |view|
+      data.show_modal(title: "Eval", custom_id: "AD") do |view|
         view.row { it.text_input(label: "Code", style: 2, custom_id: "code") }
       end
     when 3

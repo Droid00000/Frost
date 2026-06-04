@@ -59,7 +59,7 @@ module Boosters
       name: data.options["name"] || :undef,
       display_icon: get_icon(data, guild) || :undef,
       color: get_color(data.options["color"]) || :undef
-    }.compact
+    }
 
     if data.options["icon"]&.match?(REGEX[4])
       options[:display_icon] = nil

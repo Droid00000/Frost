@@ -12,8 +12,8 @@ module Admin
 
       data.edit_response(content: RESPONSE[4])
 
-      # Cleanup should be async so interaction doesn't timeout.
-      ::Birthdays::Storage.delete_guild(guild_id: data.server_id)
+      # Cleanup should be run asynchronously.
+      ::Birthdays::Guild.delete(data.server_id)
     end
   end
 end

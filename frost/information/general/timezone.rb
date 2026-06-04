@@ -10,11 +10,6 @@ module General
 
     zone = Birthdays.timezone(data).now.to_time
 
-    format = lambda do |time|
-      date = time.strftime(time.day.ordinal)
-      time.strftime("%B #{date}, %Y at %I:%M %p")
-    end
-
-    data.edit_response(content: format.call(zone))
+    data.edit_response(content: format_time(zone))
   end
 end

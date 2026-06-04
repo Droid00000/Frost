@@ -56,8 +56,18 @@ module Birthdays
     end
 
     # @!visibility private
+    def self.create(...)
+      Storage.state.create_guild(...)
+    end
+
+    # @!visibility private
+    def self.delete(...)
+      Storage.state.delete_guild(...)
+    end
+
+    # @!visibility private
     def self.get(data, hit: false)
-      Storage.guild(guild_id: data.server_id, hit: hit)
+      Storage.state.guild(guild_id: data.server_id, hit: hit)
     end
 
     private
@@ -115,7 +125,7 @@ module Birthdays
     # Get the guild the user was created in.
     # @return [Guild, nil] the guild the user was created in.
     def guild
-      Storage.guild(guild_id: @guild_id)
+      Storage.state.guild(guild_id: @guild_id)
     end
 
     # Set the user's birthdate.
@@ -222,7 +232,7 @@ module Birthdays
     def guilds
       guilds = DB.where(user_id: user_id).select(:guilds).first&.[](:guilds)
 
-      guilds&.filter_map { |id| Storage.guild(guild_id: id, hit: true) } || []
+      guilds&.filter_map { Storage.state.guild(guild_id: it, hit: true) } || []
     end
   end
 end

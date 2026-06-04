@@ -17,12 +17,9 @@ module Birthdays
 
     # Create the instance for this real-time layer.
     # This does all of the setup needed to get everything going.
-    def self.login
-      @login ||= new
+    def self.state
+      @state ||= new
     end
-
-    # @!visibility private
-    def self.method_missing(name, ...) = login.__send__(name, ...)
 
     # Get a guild from the real-time layer.
     # @param guild_id [Integer] The guild ID of the guild that should be fetched.
@@ -48,7 +45,7 @@ module Birthdays
     # Delete a guild, permanently erasing its settings and users.
     # @param guild_id [Integer] The ID of the guild that should be deleted.
     # @return [Guild, nil] The guild that was deleted, or `nil` if there wasn't one to delete.
-    def delete_guild(guild_id:)
+    def delete_guild(guild_id)
       @guilds[guild_id]&.delete
       @guilds&.delete(guild_id)
     end

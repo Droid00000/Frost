@@ -14,7 +14,10 @@ module Affections
                           data.options_user("target").display_name)
     }
 
-    # NOTE: don't ever defer these commands, otherwise the mention doesn't work.
-    data.respond(content: data.options_user("target").mention, embeds: [embed])
+    # NOTE: the resolved user gets cached, so we can just use {Bot#user}.
+    user_id = data.options["target"]
+
+    # NOTE: don't ever defer these commands since that breaks the mention.
+    data.respond(content: data.bot.user(user_id)&.mention, embeds: [embed])
   end
 end

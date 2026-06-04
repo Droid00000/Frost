@@ -26,7 +26,7 @@ module Admin
         options[:unset_features] |= ::Boosters::Guild::FLAGS[:any_icon]
       end
 
-      state = ::Boosters::Storage.create_guild(**options)
+      state = ::Boosters::Guild.create(**options)
 
       if state == 400 && options[:role_id].nil?
         data.edit_response(content: RESPONSE[:missing_role])
