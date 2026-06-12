@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-gem "discordrb", github: "droid00000/discordrb", branch: "prod-v2"
+gem "discordrb", github: "droid00000/discordrb", branch: "feat/legacy"
 
 gem "rubocop", require: false
 
