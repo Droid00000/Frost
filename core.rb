@@ -5,6 +5,7 @@ require "sequel"
 require "discordrb"
 require "tzinfo/data"
 require "unicode/emoji"
+# require "concurrent-ruby"
 require "rufus-scheduler"
 require "selenium-webdriver"
 
@@ -27,6 +28,14 @@ module Frost
       end
     end
 
+    # Create a new immutable map like structure which is optimized
+    #   for reading values. Internally, this uses Ruby's {Data} class.
+    # @param hash [Hash<Object => Object>] The hash to build the table from.
+    # @return [Data] The data class that was created from the given hash table.
+    def self.table(hash)
+      Data.define(hash.keys)[hash]
+    end
+
     # Take an integer and add a comma every 3 digits.
     # @param integer [Integer] An integer that should be comma-delimited.
     # @return [String] The stringified integer delimited by a comma every 3-digits.
@@ -39,6 +48,20 @@ module Frost
     # @return [String, nil] The string that has been converted to snake-case format.
     def self.to_snake_case(string)
       string ? string.downcase.gsub(/[^a-z]+/, "_").gsub(/^_|_$/, "") : nil
+    end
+  end
+
+  # A mechanism for locking a resource using a specific key.
+  class Locker
+    # @!visibility private
+    def initialize
+      @map = Concurrent::Map.new
+    end
+
+    # Similar to Mutex#synchronize except it locks using a key.
+    # @param key [Object] Anything that can be used as a hash key.
+    def synchronize(key, &)
+      @map.compute_if_absent(key) { Mutex.new }.synchronize(&)
     end
   end
 
@@ -96,14 +119,20 @@ module Frost
 
   # The wrapper for the bot and the database.
   class Tundra
+    # @return [Sequel::Database] the database for the bot.
+    attr_reader :db
+
     # @return [Configuration] the configuration for the bot.
     attr_reader :config
 
     # @return [Discordrb::Bot] the discord connection for the bot.
     attr_reader :discord
 
-    # @return [Sequel::Postgres::Database] the database for the bot.
-    attr_reader :database
+    # @return [Hash] The allowed mentions that will stop all mentions.
+    attr_reader :no_mentions
+
+    # @return [Boosters::Cache] the cached resources for booster perks.
+    attr_reader :boosters_cache
 
     # @!visibility private
     def initialize
@@ -118,6 +147,13 @@ module Frost
           guild_expressions
           guild_message_content
         ]
+      }
+
+      # suppress all mentions in a message.
+      @no_mentions = {
+        allowed_mentions: {
+          parse: []
+        }
       }
 
       @discord = Discordrb::Bot.new(**bot)
@@ -138,30 +174,49 @@ module Frost
         ]
       }
 
-      @database = Sequel.connect(@config.database_uri, **db)
+      @db = Sequel.connect(@config.database_uri, **db)
 
-      # NOTE: Because we are using postgres through the NEON
-      # platform, we can only keep connections around for a total
-      # of 5 minutes, since the database will scale to zero after
-      # 5-minutes of inactivity.
-      @database.pool.connection_validation_timeout = (60 * 5)
+      # NOTE: Because we're using postgres through NEON
+      # we can only keep connections around for a total
+      # of 5 minutes, since the database will scale to 0
+      # after 5-minutes of inactivity.
+      @db.pool.connection_validation_timeout = (60 * 4) + 30
 
-      return unless ENV["REGISTER_COMMANDS"] == "true"
+      return unless ENV["REGISTER_SLASH_COMMANDS"] == "true"
 
       Frost::Commands.register_application_commands(@discord)
+    end
+
+    # Cache all of the state for a specific type of resource.
+    # @param type [Symbol] The type of resource that should be cached.
+    def initialize_cache(type)
+      case type
+      when :BOOSTERS
+        @boosters_cache ||= Boosters::Cache.new
+      when :BIRTHDAYS
+        @birthdays_cache ||= Birthdays::Cache.new
+      when :EVENT_ROLES
+        @event_roles_cache ||= EventRoles::Cache.new
+      else
+        raise ArgumentError, "Unknown cache type: #{type}"
+      end
     end
   end
 end
 
-Dir["frost/**/*.rb"].reverse_each { |file| require_relative file }
-
 BOT = Frost::Tundra.new
 
+Dir["frost/**/*.rb"].reverse_each { |file| require_relative file }
+
+# BOT.initialize_cache :BOOSTERS
+# BOT.initialize_cache :BIRTHDAYS
+# BOT.initialize_cache :EVENT_ROLES
+
 BOT.discord.include! AdminCommands
-BOT.discord.include! EventCommands
 BOT.discord.include! ActionCommands
-BOT.discord.include! BoosterCommands
-BOT.discord.include! BirthdayCommands
-BOT.discord.include! ModerationCommands
+# BOT.discord.include! BoosterCommands
+# BOT.discord.include! BirthdayCommands
+# BOT.discord.include! EventRoleCommands
+# BOT.discord.include! ModerationCommands
 
 BOT.discord.run

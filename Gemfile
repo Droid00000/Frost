@@ -10,6 +10,8 @@ gem "selenium-webdriver"
 
 gem "rufus-scheduler"
 
+gem "concurrent-ruby"
+
 gem "tzinfo-data"
 
 gem "sequel_pg"

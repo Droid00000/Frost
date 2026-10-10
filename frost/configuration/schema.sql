@@ -1,18 +1,18 @@
 -- Revision: V4
 -- Creation Time: 2025-01-02 12:31:07.804358 UTC
 
+-- Holds info about event roles.
+CREATE TABLE IF NOT EXISTS event_roles (
+  guild_id BIGINT NOT NULL,
+  features BIGINT NOT NULL,
+  role_id BIGINT PRIMARY KEY
+);
+
 -- Holds info about event users.
 CREATE TABLE IF NOT EXISTS event_users (
   user_id BIGINT NOT NULL,
   role_id BIGINT NOT NULL,
   PRIMARY KEY (user_id, role_id)
-);
-
--- Holds info about event roles.
-CREATE TABLE IF NOT EXISTS event_roles (
-  guild_id BIGINT NOT NULL,
-  role_id BIGINT PRIMARY KEY,
-  enabled BOOLEAN DEFAULT TRUE,
 );
 
 -- Holds info about server boosters.
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS birthday_settings (
 );
 
 -- Holds info about moderation settings.
-CREATE TABLE IF NOT EXISTS moderation_settings (
+CREATE TABLE IF NOT EXISTS automod_settings (
   setup_by BIGINT NOT NULL,
   setup_at BIGINT NOT NULL,
   guild_id BIGINT PRIMARY KEY,
@@ -105,7 +105,7 @@ ORDER BY score DESC LIMIT 25;
 $$;
 
 -- Index for the `event_users` table.
-CREATE INDEX IF NOT EXISTS guild_events_idx ON event_users (role_id);
+CREATE INDEX IF NOT EXISTS guild_roles_index ON event_users (role_id);
 
 -- Foreign key for the `event_users` table.
 ALTER TABLE event_users ADD CONSTRAINT event_users_fkey FOREIGN KEY (role_id) REFERENCES event_roles(role_id) ON DELETE CASCADE;

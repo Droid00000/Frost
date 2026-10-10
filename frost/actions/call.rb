@@ -5,7 +5,7 @@ module Actions
   def self.call(event, name)
     # If the command is from a DM, don't resolve a member.
     target = if event.resolved.members.none?
-               event.resolved.users[event.options[:target].to_i]
+               event.bot.user(event.options[:target].to_i)
              else
                event.resolved.members[event.options[:target].to_i]
              end
