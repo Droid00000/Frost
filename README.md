@@ -4,7 +4,7 @@ Frost is a personal Discord bot. It handles booster perks, birthday roles, and m
 
 ## Installation
 
-Ruby version 3.4, a PostgreSQL database, and Docker is needed to run the bot.
+Ruby version 4.0, a PostgreSQL database, and Docker is needed to run the bot.
 
 1. **Install the latest version of Ruby**
 
@@ -16,7 +16,7 @@ Simply do: `bundle install`.
 
 3. **Create the database in PostgreSQL**
 
-You'll need to be using PostgreSQL version 17 or higher. Type the following into the PostgreSQL manager:
+You'll need to be using PostgreSQL version 18 or higher. Type the following into the PostgreSQL manager:
 
 ```sql
 CREATE ROLE frost WITH LOGIN PASSWORD 'urpassword';
@@ -39,11 +39,6 @@ Chapter:
   LINK: ""
   CHANNEL: ""
   ELEMENT: ""
-
-# the auto-moderation configuration.
-Moderator:
-  GUILD: ""
-  CHANNEL: ""
 
 # Database related credentials.
 Postgres:

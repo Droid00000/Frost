@@ -17,7 +17,7 @@ module Frost::Commands
       option.user(:target, "Who do you want to poke?", required: true)
     end
 
-    bot.create_application_command(:angered, "Show your anger towards another user.", contexts: %i[guild bot_dm private_channel], integration_types: %i[user guild], queue: true) do |option|
+    bot.create_application_command(:angered, "Show another user you're angry.", contexts: %i[guild bot_dm private_channel], integration_types: %i[user guild], queue: true) do |option|
       option.user(:target, "Who are you mad at?", required: true)
     end
 
@@ -47,10 +47,6 @@ module Frost::Commands
           option.role(:role, "The event role that you want to remove.", required: true)
         end
 
-        group.subcommand(:members, "Manage the members for an event role.") do |option|
-          option.role(:role, "The event role that you want to manage members for.", required: true)
-        end
-
         group.subcommand(:add, "Add one of your event roles.") do |option|
           option.role(:role, "The event role that you want to add.", required: true)
           option.boolean(:display, "whether to set the event role as your main event role.", required: true)
@@ -59,20 +55,20 @@ module Frost::Commands
     end
 
     bot.register_application_command(:birthday, "Customizable birthday roles and announcements.", contexts: [:guild], integration_types: [:guild], queue: true) do |command|
-      command.subcommand(:add, "Add or edit your date of birth.") do |option|
+      command.subcommand(:add, "Add or edit your birthday.") do |option|
         option.integer(:month, "The month you were born in.", required: true, choices: { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 })
         option.integer(:day, "The day you were born on.", required: true, min_value: 1, max_value: 31)
         option.string(:timezone, "The timezone you were born in.", required: true, autocomplete: true, min_length: 5, max_length: 35)
       end
 
-      command.subcommand(:sync, "Sync your date of birth to this server.")
+      command.subcommand(:sync, "Sync your birthday to this server.")
 
-      command.subcommand(:delete, "Remove your date of birth from the bot.")
+      command.subcommand(:delete, "Remove your birthday from the bot.")
 
       command.subcommand_group(:admin, "Birthday Admin") do |group|
         group.subcommand(:enable, "Enable the birthday perks functionality.") do |option|
           option.role(:role, "The role members should be given on their birthday.", required: false)
-          option.channel(:channel, "The channel birthday annoucements should be sent to.", types: [:text], required: false)
+          option.channel(:channel, "The channel birthday annoucements should be sent to.", types: %i[text annoucement], required: false)
         end
 
         group.subcommand(:disable, "Disable the birthday perks functionality.")
@@ -104,12 +100,12 @@ module Frost::Commands
 
       command.subcommand_group(:admin, "Booster Admin") do |group|
         group.subcommand(:add, "Add a booster to this server.") do |option|
-          option.user(:target, "The member to add as a booster.", required: true)
-          option.role(:role, "The role to associate with the member.", required: true)
+          option.user(:target, "The member for the booster.", required: true)
+          option.role(:role, "The role to link to the booster.", required: true)
         end
 
         group.subcommand(:delete, "Remove a booster from this server.") do |option|
-          option.user(:target, "The booster to remove from the server.", required: true)
+          option.user(:target, "The booster to remove from this server.", required: true)
           option.boolean(:prune, "Whether to delete the member's booster role.", required: true)
         end
 

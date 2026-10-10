@@ -2,7 +2,7 @@
 
 module EventRoles
   # Remove an event role from a user.
-  def self.remove_event_role(event)
+  def self.event_role_remove(event)
     unless event.guild.current_bot.can_manage_roles?
       event.edit_response(content: REPLY.MISSING_PERMISSIONS)
       return

@@ -5,7 +5,7 @@ require "sequel"
 require "discordrb"
 require "tzinfo/data"
 require "unicode/emoji"
-# require "concurrent-ruby"
+require "concurrent-ruby"
 require "rufus-scheduler"
 require "selenium-webdriver"
 

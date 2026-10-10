@@ -2,7 +2,7 @@
 
 module EventRoles
   # Add an event role to a user.
-  def self.add_event_role(event)
+  def self.event_role_add(event)
     unless event.guild.current_bot.can_manage_roles?
       event.edit_response(content: REPLY.MISSING_PERMISSIONS)
       return

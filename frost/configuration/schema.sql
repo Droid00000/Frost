@@ -74,7 +74,8 @@ CREATE TABLE IF NOT EXISTS automod_settings (
   guild_id BIGINT PRIMARY KEY,
   channel_id BIGINT DEFAULT NULL,
   exempt_roles BIGINT[] NOT NULL,
-  timeout_seconds INTEGER DEFAULT NULL
+  exempt_channels BIGINT[] NOT NULL,
+  timeout_seconds INTEGER DEFAULT 120
 );
 
 -- Function for searching for a timezone.
