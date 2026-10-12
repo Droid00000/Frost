@@ -226,7 +226,7 @@ BOT.discord.include! AdminCommands
 BOT.discord.include! ActionCommands
 # BOT.discord.include! BoosterCommands
 # BOT.discord.include! BirthdayCommands
-# BOT.discord.include! EventRoleCommands
+BOT.discord.include! EventRoleCommands
 # BOT.discord.include! ModerationCommands
 
 BOT.discord.run

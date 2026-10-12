@@ -55,16 +55,16 @@ module EventRoles
           end
 
           if remove.any?
-            old = USERS
-                  .returning(:user_id)
-                  .where(role_id: @id, user_id: remove)
-                  .delete
+            remove = USERS
+                    .returning(:user_id)
+                    .where(role_id: @id, user_id: remove)
+                    .delete
           end
         end
 
         add&.each { |item| @users << item }
 
-        old&.each { |item| @users.delete(item[:user_id]) }
+        remove&.each { |item| @users.delete(item[:user_id]) }
       end
     end
 

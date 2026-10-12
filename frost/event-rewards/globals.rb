@@ -6,15 +6,15 @@ module EventRoles
     MISSING_PERMISSIONS: "The bot is missing the `manage roles` permission.",
     GUILD_ROLE_NOT_FOUND: "The event role that you picked could not be found.",
     UNCONFIGURED_EVENT_ROLE: "The role that you picked is not an event role.",
-    USER_NOT_FOUND_EVENT_ROLE: "You are not allowed to access this event role.",
+    USER_NOT_FOUND_EVENT_ROLE: "You're not allowed to access this event role.",
     BOT_MAX_ROLE_BELOW_TARGET: "The bot's top role is below the selected event role.",
     MISSING_MEMBER_PERMISSIONS: "The bot does not have permission to interaction with you.",
-    REMOVE_EVENT_ROLE_SUCCESSFUL: "You've successfully removed the <@&%s> role!",
-    APPPEND_EVENT_ROLE_SUCCESSFUL: "You've successfully equipped the <@&%s> role!",
+    REMOVE_EVENT_ROLE_SUCCESSFUL: "Successfully removed the <@&%s> role.",
+    APPPEND_EVENT_ROLE_SUCCESSFUL: "Successfully added the <@&%s> role.",
     USER_MISSING_CONFIGURE_PERMISSIONS: "You need to have the `manage roles` permission to do this.",
     USER_MAX_ROLE_BELOW_CONFIGURE_TARGET: "Your top role is below the selected event role.",
-    ROLE_CONFIGURE_SUCCESSFUL: "You've successfully configured the <@&%s> role.",
-    EVENT_ROLE_DELETE_CONFIGURE_SUCCESS: "You've successfully disabled the <@&%s> role."
+    ROLE_CONFIGURE_SUCCESSFUL: "Successfully configured the <@&%s> role.",
+    EVENT_ROLE_DELETE_CONFIGURE_SUCCESS: "Successfully disabled the <@&%s> role."
   )
 
   # Make a specific role a user's highest event role.
@@ -28,6 +28,8 @@ module EventRoles
 
       (role != event_role) && (role > event_role) && (role < max_role)
     end
+
+    new_roles << event_role if new_roles.none?(event_role)
 
     member.modify(roles: new_roles, reason: "Event Roles")
   end
