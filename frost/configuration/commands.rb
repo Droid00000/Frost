@@ -51,14 +51,20 @@ module Frost::Commands
           option.role(:role, "The event role that you want to add.", required: true)
           option.boolean(:display, "whether to set the event role as your main event role.", required: true)
         end
+
+        group.subcommand(:configure, "Configure an event role.")
+
+        group.subcommand(:disable, "Disable an event role.") do |option|
+          option.role(:role, "The event role that you want to disable.", required: true)
+        end
       end
     end
 
     bot.register_application_command(:birthday, "Customizable birthday roles and announcements.", contexts: [:guild], integration_types: [:guild], queue: true) do |command|
       command.subcommand(:add, "Add or edit your birthday.") do |option|
         option.integer(:month, "The month you were born in.", required: true, choices: { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 })
-        option.integer(:day, "The day you were born on.", required: true, min_value: 1, max_value: 31)
-        option.string(:timezone, "The timezone you were born in.", required: true, autocomplete: true, min_length: 5, max_length: 35)
+        option.integer(:day, "The day you were born on.", required: true, min: 1, max: 31)
+        option.string(:timezone, "The timezone you were born in.", required: true, autocomplete: true, min: 5, max: 35)
       end
 
       command.subcommand(:sync, "Sync your birthday to this server.")
@@ -66,32 +72,29 @@ module Frost::Commands
       command.subcommand(:delete, "Remove your birthday from the bot.")
 
       command.subcommand_group(:admin, "Birthday Admin") do |group|
-        group.subcommand(:enable, "Enable the birthday perks functionality.") do |option|
-          option.role(:role, "The role members should be given on their birthday.", required: false)
-          option.channel(:channel, "The channel birthday annoucements should be sent to.", types: %i[text annoucement], required: false)
-        end
-
         group.subcommand(:disable, "Disable the birthday perks functionality.")
+
+        group.subcommand(:configure, "Configure the birthday perks functionality.")
       end
     end
 
     bot.register_application_command(:booster, "Customizable perks for server boosters.", contexts: [:guild], integration_types: [:guild], queue: true) do |command|
       command.subcommand_group(:role, "Booster Perks") do |group|
         group.subcommand(:claim, "Claim your custom booster role.") do |option|
-          option.string(:name, "Provide a name for your role.", required: true, max_length: 100)
-          option.string(:color, "Provide a HEX color for your role.", required: true, min_length: 3, max_length: 16)
+          option.string(:name, "Provide a name for your role.", required: true, max: 100)
+          option.string(:color, "Provide a HEX color for your role.", required: true, min: 3, max: 16)
           option.string(:icon, "Provide an emoji for your role icon.", required: false)
         end
 
         group.subcommand(:edit, "Edit your custom booster role.") do |option|
-          option.string(:name, "Provide a name for your role.", required: false, max_length: 100)
-          option.string(:color, "Provide a HEX color for your role.", required: false, min_length: 3, max_length: 16)
+          option.string(:name, "Provide a name for your role.", required: false, max: 100)
+          option.string(:color, "Provide a HEX color for your role.", required: false, min: 3, max: 16)
           option.string(:icon, "Provide an emoji for your role icon.", required: false)
         end
 
         group.subcommand(:gradient, "Edit your custom booster role's gradient.") do |option|
-          option.string(:start, "Provide a HEX color for your gradient's start color.", required: false, min_length: 3, max_length: 16)
-          option.string(:end, "Provide a HEX color for your gradient's end color.", required: false, min_length: 3, max_length: 16)
+          option.string(:start, "Provide a HEX color for your gradient's start color.", required: false, min: 3, max: 16)
+          option.string(:end, "Provide a HEX color for your gradient's end color.", required: false, min: 3, max: 16)
           option.boolean(:holographic, "Whether to use the holographic preset for the gradient.", required: false)
         end
 
@@ -109,17 +112,16 @@ module Frost::Commands
           option.boolean(:prune, "Whether to delete the member's booster role.", required: true)
         end
 
-        group.subcommand(:enable, "Enable the booster perks functionality.") do |option|
-          option.role(:role, "The role that all booster roles should be moved above.", required: false)
-          option.boolean(:icon, "Whether external emojis should be allowed as role icons.", required: false)
-        end
-
         group.subcommand(:disable, "Disable the booster perks functionality.")
+
+        group.subcommand(:configure, "Configure the booster perks functionality.")
 
         group.subcommand(:bans, "Manage the members banned from using booster perks.")
       end
     end
 
-    bot.sync_application_commands(merge: false)
+    bot.sync_application_commands(merge: true)
   end
+
+  register_application_commands(BOT.discord) if ENV["REGISTER_SLASH_COMMANDS"] == "true"
 end

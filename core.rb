@@ -33,7 +33,7 @@ module Frost
     # @param hash [Hash<Object => Object>] The hash to build the table from.
     # @return [Data] The data class that was created from the given hash table.
     def self.table(hash)
-      Data.define(hash.keys)[hash]
+      Data.define(*hash.keys).new(*hash.values)
     end
 
     # Take an integer and add a comma every 3 digits.
@@ -128,11 +128,17 @@ module Frost
     # @return [Discordrb::Bot] the discord connection for the bot.
     attr_reader :discord
 
+    # @return [Integer, nil] UNIX of when the bot logged into Discord.
+    attr_reader :ready_time
+
     # @return [Hash] The allowed mentions that will stop all mentions.
     attr_reader :no_mentions
 
     # @return [Boosters::Cache] the cached resources for booster perks.
     attr_reader :boosters_cache
+
+    # @return [EventRoles::Cache] the cached resources for event roles.
+    attr_reader :event_roles_cache
 
     # @!visibility private
     def initialize
@@ -158,6 +164,11 @@ module Frost
 
       @discord = Discordrb::Bot.new(**bot)
 
+      # Mark this as `nil` due to ruby IVAR shapes.
+      @ready_at = nil
+
+      @discord.ready { @ready_time ||= Time.now.to_i }
+
       # NOTE: Due to how we store birthdays, we should always
       # treat timestamp columns as being in UTC. I haven't tested
       # what happens if I remove this, and I don't really plan on
@@ -181,10 +192,6 @@ module Frost
       # of 5 minutes, since the database will scale to 0
       # after 5-minutes of inactivity.
       @db.pool.connection_validation_timeout = (60 * 4) + 30
-
-      return unless ENV["REGISTER_SLASH_COMMANDS"] == "true"
-
-      Frost::Commands.register_application_commands(@discord)
     end
 
     # Cache all of the state for a specific type of resource.
@@ -195,6 +202,8 @@ module Frost
         @boosters_cache ||= Boosters::Cache.new
       when :BIRTHDAYS
         @birthdays_cache ||= Birthdays::Cache.new
+      when :MODERATION
+        @moderation_cache ||= Moderation::Cache.new
       when :EVENT_ROLES
         @event_roles_cache ||= EventRoles::Cache.new
       else
@@ -210,7 +219,8 @@ Dir["frost/**/*.rb"].reverse_each { |file| require_relative file }
 
 # BOT.initialize_cache :BOOSTERS
 # BOT.initialize_cache :BIRTHDAYS
-# BOT.initialize_cache :EVENT_ROLES
+# BOT.initialize_cache :MODERATION
+BOT.initialize_cache :EVENT_ROLES
 
 BOT.discord.include! AdminCommands
 BOT.discord.include! ActionCommands

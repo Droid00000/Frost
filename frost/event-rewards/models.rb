@@ -3,16 +3,8 @@
 module EventRoles
   # A guild role with linked users.
   class Role
-    # Mapping of role feature flags.
-    FEATURES = {
-      disabled: 1 << 0
-    }.freeze
-
     # @return [Integer] the ID of the role on Discord.
     attr_reader :id
-
-    # @return [Integer] the feature flags combined as a bitfield.
-    attr_reader :features
 
     # @return [Integer] the ID of the role's associated guild on Discord.
     attr_reader :guild_id
@@ -23,42 +15,10 @@ module EventRoles
     # @!visibility private
     def initialize(new_state)
       @users = Set[]
-      @inner_flags = 0
       @users_lock = Mutex.new
 
       update_state(new_state)
     end
-
-    #  ##     ##    ###    #### ##    ##
-    #  ###   ###   ## ##    ##  ###   ##
-    #  #### ####  ##   ##   ##  ####  ##
-    #  ## ### ## ##     ##  ##  ## ## ##
-    #  ##     ## #########  ##  ##  ####
-    #  ##     ## ##     ##  ##  ##   ###
-    #  ##     ## ##     ## #### ##    ##
-
-    # @!group General
-
-    # Delete the role. Will remove all users.
-    # @return [void]
-    def delete
-      BOT.event_roles_cache.delete_role(@id)
-    end
-
-    # Modify the properties of the role.
-    # @param add_features [Integer, nil] The feature flags to add to the role.
-    # @param unset_features [Integer, nil] The feature flags to remove from the role.
-    # @return [void]
-    def modify(add_features: nil, unset_features: nil)
-      rest = {
-        features: Sequel.lit("(features | ?) & ~?",
-                             add_features || 0, unset_features || 0)
-      }.compact
-
-      BOT.event_roles_cache.update_role(@id, rest) if @inner_flags.nobits?(1)
-    end
-
-    # @!endgroup
 
     #  ##     ##  ######  ######## ########   ######
     #  ##     ## ##    ## ##       ##     ## ##    ##
@@ -77,31 +37,34 @@ module EventRoles
       @users.include?(user.resolve_id)
     end
 
-    # Add multiple linked users to the role.
-    # @param users [Array<User, Member, Integer>] The users to add.
-    # @return [void]
-    def add_users(users:)
-      keys = %i[user_id role_id]
+    # Modify the users of the event role.
+    # @param add [Array<Integer, User, Member>, nil] The users to add to the event role.
+    # @param remove [Array<Integer, User, Member>, nil] The users to remove from the event role.
+    def modify_users(add: nil, remove: nil)
+      remove = remove&.map(&:resolve_id) || []
 
-      list = users.map { [it.resolve_id, @id] }
-
-      @users_lock.synchronize do
-        rows = USERS.insert_conflict.returning(:user_id).import(keys, list)
-
-        @bans.merge(rows.tap { rows.map! { |new_row| new_row[:user_id] } })
-      end
-    end
-
-    # Remove multiple linked users from the role.
-    # @param users [Array<User, Member, Integer>] The users to remove.
-    # @return [void]
-    def remove_users(users:)
-      list = users.map(&:resolve_id)
+      insert = add&.map { [it.resolve_id, @id] } || []
 
       @users_lock.synchronize do
-        rows = USERS.where(role_id: @id, user_id: list).returning(:user_id)
+        BOT.db.transaction(isolation: :serializable) do
+          if insert.any?
+            add = USERS
+                  .insert_conflict
+                  .returning(:user_id)
+                  .import(%i[user_id role_id], insert)
+          end
 
-        rows.delete.each { |delete_row| @users.delete(delete_row[:user_id]) }
+          if remove.any?
+            old = USERS
+                  .returning(:user_id)
+                  .where(role_id: @id, user_id: remove)
+                  .delete
+          end
+        end
+
+        add&.each { |item| @users << item }
+
+        old&.each { |item| @users.delete(item[:user_id]) }
       end
     end
 
@@ -116,20 +79,14 @@ module EventRoles
     #  ####  ##    ##    ##    ######## ##     ## ##    ## ##     ## ########  ######
 
     # @!visibility private
-    def set_tombstone_state
-      @inner_flags |= (1 << 0)
-    end
-
-    # @!visibility private
     def push_user(item)
-      (@users << item.resolve_id)
+      @users << item.resolve_id
     end
 
     # @!visibility private
     def update_state(new_state)
       @id = new_state[:role_id]
       @guild_id = new_state[:guild_id]
-      @features = new_state[:features]
     end
   end
 end

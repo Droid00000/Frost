@@ -54,16 +54,11 @@ module Boosters
     end
 
     # Modify the properties of the guild.
-    # @param role [Role, Integer, nil] The new hoist role of the guild.
-    # @param add_features [Integer, nil] The feature flags to add to the guild.
-    # @param unset_features [Integer, nil] The feature flags to remove from the guild.
+    # @param role [Role, Integer] The new hoist role for the guild.
+    # @param features [Integer] The feature flags to set for the guild.
     # @return [void]
-    def modify(role: nil, add_features: nil, unset_features: nil)
-      rest = {
-        role_id: role&.resolve_id,
-        features: Sequel.lit("(features | ?) & ~?",
-                             add_features || 0, unset_features || 0)
-      }.compact
+    def modify(role: nil, features: nil)
+      rest = { role_id: role&.resolve_id, features: features }.compact
 
       BOT.boosters_cache.update_guild(@id, rest) if @inner_flags.nobits?(1)
     end
@@ -112,9 +107,7 @@ module Boosters
       list = users.map { [it.resolve_id, @id, unix, user] }
 
       @bans_lock.synchronize do
-        rows = BANS.insert_conflict.returning(:user_id).import(keys, list)
-
-        @bans.merge(rows.tap { rows.map! { |new_row| new_row[:user_id] } })
+        @bans.merge(BANS.insert_ignore.returning(:user_id).import(keys, list))
       end
     end
 

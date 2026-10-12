@@ -4,7 +4,6 @@
 -- Holds info about event roles.
 CREATE TABLE IF NOT EXISTS event_roles (
   guild_id BIGINT NOT NULL,
-  features BIGINT NOT NULL,
   role_id BIGINT PRIMARY KEY
 );
 

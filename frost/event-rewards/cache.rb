@@ -20,7 +20,7 @@ module EventRoles
            .paged_each { @roles[it[:role_id]] = Role.new(it) }
 
       USERS.order(:role_id, :user_id)
-           .paged_each { @roles[it[:role_id]]&.push_user(it) }
+           .paged_each { @roles[it[:role_id]]&.push_user(it[:user_id]) }
     end
 
     # Fetch a single role.
@@ -37,25 +37,9 @@ module EventRoles
       role_id = role_id.resolve_id
 
       @locker.synchronize(role_id) do
-        result = ROLES.where(role_id:).returning(:role_id)
+        result = ROLES.where(role_id:).returning(:role_id).delete
 
-        if result.delete.first&.[](:role_id)
-          @roles.delete(role_id)&.tap(:set_tombstone_state)
-        end
-      end
-    end
-
-    # Update a single role.
-    # @param role_id [Integer, Role] The ID of the role to update.
-    # @param rest [Hash] All of the parameters to update for the role.
-    # @return [Hash, nil] The new role-data, or `nil` if the role was deleted.
-    def update_role(role_id, rest)
-      role_id = role_id.resolve_id
-
-      @locker.synchronize(role_id) do
-        result = ROLES.where(role_id:).update(**rest).returning
-
-        @roles[role_id]&.update_state(result[0]) if result.any?
+        @roles.delete(role_id) if result.delete.first&.[](:role_id)
       end
     end
 
@@ -66,9 +50,8 @@ module EventRoles
     def create_role(id:, guild:)
       role_id = id.resolve_id
 
-      values = {
+      options = {
         role_id: role_id,
-        features: 0,
         guild_id: guild.resolve_id
       }
 
@@ -76,7 +59,7 @@ module EventRoles
         result = ROLES
                  .insert_conflict
                  .returning
-                 .insert_select(**values)
+                 .insert_select(**options)
 
         return unless result
 

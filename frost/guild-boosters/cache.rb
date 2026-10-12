@@ -17,9 +17,7 @@ module Boosters
       MERGE INTO booster_settings main USING (VALUES (?, ?, ?, ?, ?)) AS
         params (guild_id, features, setup_at, role_id, setup_by) on main.guild_id = params.guild_id
       WHEN MATCHED THEN
-        UPDATE SET
-        role_id = COALESCE(params.role_id, main.role_id),
-        features = COALESCE(params.features, main.features)
+        UPDATE SET role_id = params.role_id, features = params.features
       WHEN NOT MATCHED THEN
         INSERT (guild_id, features, setup_at, role_id, setup_by)
         VALUES (params.guild_id, params.features, params.setup_at, params.role_id, params.setup_by)

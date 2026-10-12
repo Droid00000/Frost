@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module PersonalThings
-  # Show the release date for the next chapter of a manga series.
+  # Show the release date for the next chapter.
   def self.next_chapter_when(event)
     time = Time.parse(BOT.config.chapter_info.channel.name)
 
