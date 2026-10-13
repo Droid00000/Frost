@@ -30,6 +30,12 @@ module EventRoles
 
     # @!group Users
 
+    # Get the number of users linked to the role.
+    # @return [Integer] The number of users linked to the role.
+    def user_count
+      @users.length
+    end
+
     # Check if a user has been linked to the role.
     # @param user [User, Member, Integer] The user to check.
     # @return [true, false] Whether or not the user has been linked.
@@ -56,9 +62,9 @@ module EventRoles
 
           if remove.any?
             remove = USERS
-                    .returning(:user_id)
-                    .where(role_id: @id, user_id: remove)
-                    .delete
+                     .returning(:user_id)
+                     .where(role_id: @id, user_id: remove)
+                     .delete
           end
         end
 

@@ -42,16 +42,9 @@ module Frost::Commands
     end
 
     bot.register_application_command(:event, "Role management for server events.", contexts: [:guild], integration_types: [:guild], queue: true) do |command|
+      command.subcommand(:roles, "Manage your event roles.")
+
       command.subcommand_group(:role, "Event Roles") do |group|
-        group.subcommand(:remove, "Remove one of your event roles.") do |option|
-          option.role(:role, "The event role that you want to remove.", required: true)
-        end
-
-        group.subcommand(:add, "Add one of your event roles.") do |option|
-          option.role(:role, "The event role that you want to add.", required: true)
-          option.boolean(:display, "whether to set the event role as your main event role.", required: true)
-        end
-
         group.subcommand(:configure, "Configure an event role.")
 
         group.subcommand(:disable, "Disable an event role.") do |option|

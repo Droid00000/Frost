@@ -37,7 +37,7 @@ module EventRoles
       role_id = role_id.resolve_id
 
       @locker.synchronize(role_id) do
-        result = ROLES.where(role_id:).returning(:role_id).delete
+        result = ROLES.where(role_id: role_id).returning(:role_id)
 
         @roles.delete(role_id) if result.delete.first&.[](:role_id)
       end
@@ -55,7 +55,7 @@ module EventRoles
         guild_id: guild.resolve_id
       }
 
-      @locker.synchronize(guild_id) do
+      @locker.synchronize(role_id) do
         result = ROLES
                  .insert_conflict
                  .returning

@@ -40,6 +40,8 @@ module Frost
     # @param integer [Integer] An integer that should be comma-delimited.
     # @return [String] The stringified integer delimited by a comma every 3-digits.
     def self.delimit(integer)
+      return integer.to_s if integer < 1000
+
       integer.to_s.tap { it.gsub!(/\B(?=(\d{3})+(?!\d))/, ",") }
     end
 

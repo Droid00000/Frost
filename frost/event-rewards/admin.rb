@@ -57,6 +57,16 @@ module EventRoles
       return
     end
 
+    if guild_role.id == event.guild_id
+      event.edit_response(content: REPLY.INVALID_CONFIGURE_TARGET_EVERYONE_ROLE)
+      return
+    end
+
+    if guild_role.managed? || guild_role.bot_id || guild_role.integration_id
+      event.edit_response(content: REPLY.INVALID_CONFIGURE_TARGET_MANAGED_ROLE)
+      return
+    end
+
     unless (event_role = BOT.event_roles_cache.fetch_role(id))
       event_role = BOT.event_roles_cache.create_role(id: id, guild: event.guild)
     end
