@@ -8,14 +8,19 @@ module EventRoleCommands
     EventRoles.configure_submission(event)
   end
 
+  application_command(:event).subcommand(:roles) do |event|
+    event.defer(ephemeral: true)
+    EventRoles.event_roles_locker(event)
+  end
+
   select_menu(custom_id: "event_roles_locker") do |event|
     event.defer_update
     EventRoles.event_roles_locker_menu(event)
   end
 
-  application_command(:event).subcommand(:roles) do |event|
-    event.defer(ephemeral: true)
-    EventRoles.event_roles_locker(event)
+  button(custom_id: /event_role_\d{1,}/) do |event|
+    event.defer_update
+    EventRoles.handle_locker_button(event)
   end
 
   application_command(:event).group(:role) do |group|

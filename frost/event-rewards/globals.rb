@@ -16,7 +16,7 @@ module EventRoles
     ROLE_CONFIGURE_SUCCESSFUL: "Successfully configured the <@&%s> role.",
     EVENT_ROLE_DELETE_CONFIGURE_SUCCESS: "Successfully disabled the <@&%s> role.",
     INVALID_CONFIGURE_TARGET_EVERYONE_ROLE: "The `@everyone` role cannot be an event role.",
-    INVALID_CONFIGURE_TARGET_MANAGED_ROLE: "Roles managed by an integration cannot be event roles.",
+    INVALID_CONFIGURE_TARGET_MANAGED_ROLE: "A role managed by an integration cannot be an event role.",
     NO_EVENT_ROLES_AVAILABLE: "You don't have any event roles."
   )
 
