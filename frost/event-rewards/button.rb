@@ -45,10 +45,10 @@ module EventRoles
       return
     end
 
-    tree = event.interaction.components_tree
+    ui = event.interaction.components_tree
 
     # has_role means the opposite after the action.
-    tree.modify_button(
+    ui.modify_button(
       event.custom_id.to_s,
       label: has_role ? "Equip" : "Remove",
       style: has_role ? :secondary : :danger
@@ -57,6 +57,6 @@ module EventRoles
     # EPHEMERAL and IS_COMPONENTS_V2 message flags.
     flags = (1 << 6) | (1 << 15)
 
-    event.edit_response(components: tree, flags: flags)
+    event.edit_response(components: ui, flags: flags)
   end
 end

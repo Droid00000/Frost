@@ -1,4 +1,4 @@
--- Revision: V4
+-- Revision: V5
 -- Creation Time: 2025-01-02 12:31:07.804358 UTC
 
 -- Holds info about event roles.
@@ -105,7 +105,7 @@ ORDER BY score DESC LIMIT 25;
 $$;
 
 -- Index for the `event_users` table.
-CREATE INDEX IF NOT EXISTS guild_roles_index ON event_users (role_id);
+CREATE INDEX IF NOT EXISTS event_users_cursor ON event_users (role_id, user_id);
 
 -- Foreign key for the `event_users` table.
 ALTER TABLE event_users ADD CONSTRAINT event_users_fkey FOREIGN KEY (role_id) REFERENCES event_roles(role_id) ON DELETE CASCADE;

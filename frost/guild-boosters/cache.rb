@@ -34,11 +34,10 @@ module Boosters
       GUILDS.order(:setup_at, :guild_id)
             .paged_each { @guilds[it[:guild_id]] = Guild.new(it) }
 
-      BOOSTERS.order(:guild_id, :version)
+      BOOSTERS.order(:guild_id, :user_id)
               .paged_each { @guilds[it[:guild_id]]&.push_booster(it) }
 
-      BANS.select(:guild_id, :user_id)
-          .order(:guild_id, :banned_at, :user_id)
+      BANS.select(:guild_id, :user_id).order(:guild_id)
           .paged_each { @guilds[it[:guild_id]]&.push_ban(it[:user_id]) }
     end
 
