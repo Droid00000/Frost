@@ -133,8 +133,11 @@ module Frost
     # @return [Integer, nil] UNIX of when the bot logged into Discord.
     attr_reader :ready_time
 
-    # @return [Hash] The allowed mentions that will stop all mentions.
+    # @return [Hash] the allowed mentions that will stop all mentions.
     attr_reader :no_mentions
+
+    # @return [Integer] the amount of events received over the Gateway.
+    attr_reader :event_counter
 
     # @return [Boosters::Cache] the cached resources for booster perks.
     attr_reader :boosters_cache
@@ -166,8 +169,12 @@ module Frost
 
       @discord = Discordrb::Bot.new(**bot)
 
-      # Mark this as `nil` due to ruby IVAR shapes.
-      @ready_at = nil
+      # Initialize these due to ruby IVAR shapes.
+      @ready_time = nil
+
+      @event_counter = 0
+
+      @discord.raw { @event_counter += 1 }
 
       @discord.ready { @ready_time ||= Time.now.to_i }
 

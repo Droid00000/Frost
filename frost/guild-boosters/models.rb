@@ -113,6 +113,26 @@ module Boosters
 
     # @!endgroup
 
+    #  ######## ########    ###    ######## ##     ## ########  ########   ######
+    #  ##       ##         ## ##      ##    ##     ## ##    ##  ##        ##    ##
+    #  ##       ##        ##   ##     ##    ##     ## ##    ##  ##        ##
+    #  ######   ######   ##     ##    ##    ##     ## ########  ######     ######
+    #  ##       ##       #########    ##    ##     ## ##   ##   ##              ##
+    #  ##       ##       ##     ##    ##    ##     ## ##    ##  ##        ##    ##
+    #  ##       ######## ##     ##    ##     #######  ##     ## ########   ######
+
+    # @!group Features
+
+    # @!method any_icon?
+    #   @return [true, false] whether boosters can use any emoji for their role icon.
+    # @!method no_gradient?
+    #   @return [true, false] whether boosters cannot use gradient colors for their roles.
+    FEATURES.each do |name, value|
+      define_method("#{name}?") { @features.anybits?(value) }
+    end
+
+    # @!endgroup
+
     #  ####  ###   ## ######## ######## ########  ##    ##    ###    ##        ######
     #   ##   ###   ##    ##    ##       ##     ## ###   ##   ## ##   ##       ##    ##
     #   ##   ####  ##    ##    ##       ##     ## ####  ##  ##   ##  ##       ##
