@@ -8,8 +8,8 @@ module Frost::Overview
       owner_page(event)
     when "Boosters"
       boosters_page(event)
-    when "Birthdays"
-      birthdays_page(event)
+    when "Celebrations"
+      celebrations_page(event)
     end
   end
 end

@@ -5,7 +5,8 @@ module Frost::Overview
   REPLY = Frost::Utilities.table(
     FEATURE_NOT_ENABLED: "This feature has not been enabled.",
     BOOSTER_ROLE_DELETED: "This server's booster role has been deleted.",
-    MISSING_PERMISSIONS: "You need to have the `manage roles` permission to do this."
+    MISSING_PERMISSIONS: "You need to have the `manage roles` permission to do this.",
+    CELEBRATIONS_ROLE_DELETED: "This server's birthday role has been deleted."
   )
 
   # Content for different pages.
@@ -16,7 +17,11 @@ module Frost::Overview
     BOOSTERS_MENU_ANY_ICON: "**Icon**\nServer boosters may use any custom or unicode emoji as their role icon.",
     BOOSTERS_MENU_MANAGER_INFO: "**Manager**\nBooster perks were enabled in this server by **%s** on <t:%s:D>\n\n",
     BOOSTERS_MENU_HOIST_ROLE_INFO: "**Hoist Role**\nAll newly created roles will be moved above this role: <@&%s>\n\n",
-    BOOSTERS_MENU_NO_EXTERNAL_ICONS: "**Icon**\nServer boosters may only use server and unicode emojis as their role icon."
+    BOOSTERS_MENU_NO_EXTERNAL_ICONS: "**Icon**\nServer boosters may only use server and unicode emojis as their role icon.",
+    CELEBRATIONS_MENU_OVERVIEW: "These are the birthday settings for your server. Birthday perks can be enabled, edited, and disabled with the **/birthday admin** command group.",
+    CELEBRATIONS_MENU_ROLE_INFO: "**Birthday Role**\nMembers will be given this role on their birthday: <@&%s>\n\n",
+    CELEBRATIONS_MENU_CHANNEL_INFO: "**Channel**\nMembers will have their birthdays announced in this channel: <#%s>",
+    CELEBRATIONS_MENU_MANAGER_INFO: "**Manager**\nBirthday perks were enabled in this server by **%s** on <t:%s:D>\n\n"
   )
 
   # Add a select menu to a container for an interaction initiated by a basic user.
@@ -32,7 +37,7 @@ module Frost::Overview
       action_row.select_menu(**base_state) do |menu|
         menu.option(
           value: "Birthdays",
-          label: "Birthdays",
+          label: "Celebrations",
           emoji: "733787070123737109",
           description: "Settings for server birthdays."
         )
@@ -60,7 +65,7 @@ module Frost::Overview
         if event.guild_integration?
           menu.option(
             value: "Birthdays",
-            label: "Birthdays",
+            label: "Celebrations",
             emoji: "733787070123737109",
             description: "Settings for server birthdays."
           )

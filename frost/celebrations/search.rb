@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Birthdays
+module Celebrations
   # Search for a timezone.
   def self.search_timezone(data)
     if (zone = data.options[:timezone]).empty?

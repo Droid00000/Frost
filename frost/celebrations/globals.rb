@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Birthdays
+module Celebrations
   # Default timezones for autocomplete.
   DEFAULT_ZONES = {
     "New York, United States": "America/New_York",

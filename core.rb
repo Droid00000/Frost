@@ -227,15 +227,15 @@ BOT = Frost::Tundra.new
 Dir["frost/**/*.rb"].reverse_each { |file| require_relative file }
 
 # BOT.initialize_cache :BOOSTERS
-# BOT.initialize_cache :BIRTHDAYS
 # BOT.initialize_cache :MODERATION
 BOT.initialize_cache :EVENT_ROLES
+# BOT.initialize_cache :CELEBRATIONS
 
 BOT.discord.include! AdminCommands
 BOT.discord.include! ActionCommands
 # BOT.discord.include! BoosterCommands
-# BOT.discord.include! BirthdayCommands
 BOT.discord.include! EventRoleCommands
 # BOT.discord.include! ModerationCommands
+# BOT.discord.include! CelebrationCommands
 
 BOT.discord.run

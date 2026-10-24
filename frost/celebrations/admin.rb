@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Birthdays
-  # Configure the birthdays feature.
+module Celebrations
+  # Configure the celebrations feature.
   def self.birthday_admin_configure(event)
     unless event.user.can_administrate?
       event.edit_response(content: REPLY.USER_MISSING_MANAGE_PERMISSIONS)
