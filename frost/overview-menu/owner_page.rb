@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
 module Frost::Overview
-  # Event handler for the bot's settings menu.
+  # Event handler for the bot's owner menu.
   def self.owner_page(event)
+    if event.user.id != BOT.config.owner_id
+      event.send_message(content: REPLY.USER_NOT_BOT_OWNER, ephemeral: true)
+      return
+    end
+
     # EPHEMERAL and IS_COMPONENTS_V2 message flags.
     flags = (1 << 6) | (1 << 15)
 
@@ -42,5 +47,31 @@ module Frost::Overview
         end
       end
     end
+  end
+
+  # Event handler for the owner page's buttons.
+  def self.owner_button(event)
+    case event.custom_id
+    when "owner_page_restart"
+      owner_page_restart(event)
+    when "owner_page_logging"
+      owner_page_logging(event)
+    when "owner_page_evaluate"
+      owner_page_evaluate(event)
+    end
+  end
+
+  # Event handler for the owner_page_logging button.
+  def self.owner_page_logging(event)
+    if event.user.id != BOT.config.owner_id
+      event.send_message(
+        content: REPLY.USER_NOT_BOT_OWNER, ephemeral: true
+      )
+      return
+    end
+
+    event.send_message(
+      attachments: [File.open("logs.rb", "rb")], ephemeral: true
+    )
   end
 end

@@ -6,7 +6,8 @@ module Frost::Overview
     FEATURE_NOT_ENABLED: "This feature has not been enabled.",
     BOOSTER_ROLE_DELETED: "This server's booster role has been deleted.",
     MISSING_PERMISSIONS: "You need to have the `manage roles` permission to do this.",
-    CELEBRATIONS_ROLE_DELETED: "This server's birthday role has been deleted."
+    CELEBRATIONS_ROLE_DELETED: "This server's birthday role has been deleted.",
+    USER_NOT_BOT_OWNER: "This option is restricted to the bot owner."
   )
 
   # Content for different pages.

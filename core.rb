@@ -224,6 +224,8 @@ end
 
 BOT = Frost::Tundra.new
 
+Discordrb::LOGGER.streams = [File.open("logs.rb", "ab")]
+
 Dir["frost/**/*.rb"].reverse_each { |file| require_relative file }
 
 # BOT.initialize_cache :BOOSTERS

@@ -3,6 +3,11 @@
 module AdminCommands
   extend Discordrb::EventContainer
 
+  button(custom_id: /owner_page_\w+/) do |event|
+    event.defer_update
+    Frost::Overview.owner_button(event)
+  end
+
   select_menu(custom_id: "settings") do |event|
     event.defer_update
     Frost::Overview.select_menu(event)
