@@ -43,22 +43,42 @@ module Frost::Overview
 
         container.section do |section|
           section.text_display(content: "**Gateway**\n-# Events Seen: #{events}\n-# Login Time: <t:#{BOT.ready_time}:d>\n")
-          section.button(style: :danger, label: "Logout", custom_id: "owner_page_gateway_logout")
+          section.button(style: :danger, label: "Logout", custom_id: "owner_page_shutdown")
         end
       end
     end
   end
 
-  # Event handler for the owner page's buttons.
-  def self.owner_button(event)
-    case event.custom_id
-    when "owner_page_restart"
-      owner_page_restart(event)
-    when "owner_page_logging"
-      owner_page_logging(event)
-    when "owner_page_evaluate"
-      owner_page_evaluate(event)
+  # Event handler for the owner_page_restart button.
+  def self.owner_page_restart(event)
+    if event.user.id != BOT.config.owner_id
+      event.send_message(
+        content: REPLY.USER_NOT_BOT_OWNER, ephemeral: true
+      )
+      return
     end
+
+    event.send_message(
+      content: REPLY.PROCESS_RESTARTING_NOW, ephemeral: true
+    )
+
+    Kernel.exec("bundle exec ruby core.rb")
+  end
+
+  # Event handler for the owner_page_shutdown button.
+  def self.owner_page_shutdown(event)
+    if event.user.id != BOT.config.owner_id
+      event.send_message(
+        content: REPLY.USER_NOT_BOT_OWNER, ephemeral: true
+      )
+      return
+    end
+
+    event.send_message(
+      content: REPLY.PROCESS_TERMINATING_NOW, ephemeral: true
+    )
+
+    Kernel.exit(0)
   end
 
   # Event handler for the owner_page_logging button.
@@ -73,5 +93,53 @@ module Frost::Overview
     event.send_message(
       attachments: [File.open("logs.rb", "rb")], ephemeral: true
     )
+  end
+
+  # Event handler for the owner_page_evaluate button.
+  def self.owner_page_evaluate(event)
+    if event.user.id != BOT.config.owner_id
+      event.send_message(
+        content: REPLY.USER_NOT_BOT_OWNER, ephemeral: true
+      )
+      return
+    end
+
+    id = "owner_page_evaluate"
+
+    event.show_modal(title: "Evaluate", custom_id: id) do |ui|
+      ui.label(label: "Code") do |label|
+        label.text_input(style: :paragraph, custom_id: "code")
+      end
+    end
+  end
+
+  # Event handler for the owner_page_evaluate modal.
+  def self.evaluate_modal_submit(event)
+    # Transform mobile smart quotes to normal quotes.
+    (code = event.value("code")).gsub!(/[‘’“”]/, '"')
+
+    begin
+      # rubocop:disable Security/Eval
+      code = eval(code)
+      # rubocop:enable Security/Eval
+    rescue StandardError, SyntaxError => e
+      code = "#{e.backtrace.join("\n")}\n#{e.message}"
+    end
+
+    code = if (string = code.inspect).length > 100
+             value = PP.pp(code, +"")
+             bytes = StringIO.new(value, "rb")
+             { file: bytes, filename: "output.rb" }
+           else
+             string
+           end
+
+    if code.is_a?(Hash)
+      event.edit_response(attachments: [code])
+    elsif code.to_s.empty?
+      event.edit_response(content: REPLY.EVAL_NO_CONTENT)
+    else
+      event.edit_response(content: "```ruby\n#{code}\n```")
+    end
   end
 end

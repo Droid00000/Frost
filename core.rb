@@ -174,6 +174,9 @@ module Frost
 
       @event_counter = 0
 
+      # Make the bot cleanly disconnect on shutdown.
+      at_exit { @discord.stop }
+
       @discord.raw { @event_counter += 1 }
 
       @discord.ready { @ready_time ||= Time.now.to_i }

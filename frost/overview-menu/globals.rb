@@ -7,7 +7,10 @@ module Frost::Overview
     BOOSTER_ROLE_DELETED: "This server's booster role has been deleted.",
     MISSING_PERMISSIONS: "You need to have the `manage roles` permission to do this.",
     CELEBRATIONS_ROLE_DELETED: "This server's birthday role has been deleted.",
-    USER_NOT_BOT_OWNER: "This option is restricted to the bot owner."
+    USER_NOT_BOT_OWNER: "This button can only be used by the owner.",
+    PROCESS_RESTARTING_NOW: "The bot has successfully restarted.",
+    PROCESS_TERMINATING_NOW: "The bot has successfully logged out.",
+    EVAL_NO_CONTENT: "Nothing to see here."
   )
 
   # Content for different pages.
