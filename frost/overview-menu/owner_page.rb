@@ -115,13 +115,16 @@ module Frost::Overview
 
   # Event handler for the owner_page_evaluate modal.
   def self.evaluate_modal_submit(event)
+    if event.user.id != BOT.config.owner_id
+      event.edit_response(content: REPLY.USER_NOT_BOT_OWNER)
+      return
+    end
+
     # Transform mobile smart quotes to normal quotes.
     (code = event.value("code")).gsub!(/[‘’“”]/, '"')
 
     begin
-      # rubocop:disable Security/Eval
-      code = eval(code)
-      # rubocop:enable Security/Eval
+      code = eval(code) # rubocop:disable Security/Eval
     rescue StandardError, SyntaxError => e
       code = "#{e.backtrace.join("\n")}\n#{e.message}"
     end
