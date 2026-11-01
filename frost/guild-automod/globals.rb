@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 module Moderation
+  # Interaction responses.
+  REPLY = Frost::Utilities.table(
+    USER_MISSING_CONFIGURE_PERMISSIONS: "You need to have the `administrator` permission to do this."
+  )
+
   # Content for alert messages.
   ELEMENTS = Frost::Utilities.table(
     SPAM_ALERT_PRIMARY_CONTENT: "> **Deleted Messages:** %s\n> **ID:** `%s`\n> **Member Since:** <t:%s:R>\n",
@@ -8,7 +13,7 @@ module Moderation
     LINK_SPAM_ALERT_HEADER: "### Link Spammer"
   )
 
-  # URLs that should be ignored by AutoMod.
+  # URLs that should be ignored by RoboMod.
   SAFE_LINKS = Set[
     "x.com",
     "redd.it",

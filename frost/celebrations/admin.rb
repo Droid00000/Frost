@@ -9,8 +9,8 @@ module Celebrations
     end
 
     settings = BOT.birthdays_cache.fetch_guild(event.guild_id)
-    role_default = settings ? [birthday_settings.role_id] : nil
-    channel_default = settings ? [birthday_settings.channel_id] : nil
+    role_default = settings && event.guild.role(settings.role_id) ? [settings.role_id] : nil
+    channel_default = settings && event.bot.channel(settings.channel_id) ? [settings.channel_id] : nil
 
     event.show_modal(title: "Settings", custom_id: "birthday_settings") do |modal|
       modal.label(label: "Birthday Role", description: "The role members should be given on their birthday.") do |label|

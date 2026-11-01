@@ -17,7 +17,7 @@ module Frost::Commands
       option.user(:target, "Who do you want to poke?", required: true)
     end
 
-    bot.create_application_command(:angered, "Show another user you're angry.", contexts: %i[guild bot_dm private_channel], integration_types: %i[user guild], queue: true) do |option|
+    bot.create_application_command(:angry, "Show another user you're angry.", contexts: %i[guild bot_dm private_channel], integration_types: %i[user guild], queue: true) do |option|
       option.user(:target, "Who are you mad at?", required: true)
     end
 
@@ -51,6 +51,12 @@ module Frost::Commands
           option.role(:role, "The event role that you want to disable.", required: true)
         end
       end
+    end
+
+    bot.register_application_command(:robomod, "Auto-moderation functionality for link and file spam.", contexts: [:guild], integration_types: [:guild], queue: true) do |command|
+      command.subcommand(:configure, "Configure the robomod functionality.")
+
+      command.subcommand(:disable, "Disable the robomod functionality.")
     end
 
     bot.register_application_command(:birthday, "Customizable birthday roles and announcements.", contexts: [:guild], integration_types: [:guild], queue: true) do |command|

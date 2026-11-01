@@ -9,9 +9,9 @@ module Boosters
     end
 
     settings = BOT.boosters_cache.fetch_guild(event.guild_id)
-    role_default = settings ? [settings.role_id] : nil
     external_icons_default = settings ? settings.any_icon? : true
     gradient_colors_default = settings ? !settings.no_gradient? : true
+    role_default = settings && event.guild.role(settings.role_id) ? [settings.role_id] : nil
 
     event.show_modal(title: "Settings", custom_id: "booster_settings") do |ui|
       ui.label(label: "Role", description: "The role that all booster roles should be moved above.") do |label|
