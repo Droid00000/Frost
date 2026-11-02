@@ -93,4 +93,25 @@ module Moderation
     "animenewsnetwork.com",
     "mangaplus.shueisha.co.jp"
   ].freeze
+
+  # Format a duration in seconds into a human-readable format.
+  def format_duration_seconds(seconds)
+    weeks, leftover = seconds.divmod(604_800)
+    days, leftover = leftover.divmod(86_400)
+    hours, leftover = leftover.divmod(3_600)
+    minutes, seconds_left = leftover.divmod(60)
+
+    parts = []
+
+    parts << "#{weeks} week#{'s' if weeks > 1}" if weeks.positive?
+    parts << "#{days} day#{'s' if days > 1}" if days.positive?
+    parts << "#{hours} hour#{'s' if hours > 1}" if hours.positive?
+    parts << "#{minutes} minute#{'s' if minutes > 1}" if minutes.positive?
+
+    if seconds_left.positive? || parts.empty?
+      parts << "#{seconds_left} second#{'s' if seconds_left > 1}"
+    end
+
+    parts.join(", ")
+  end
 end
