@@ -19,7 +19,7 @@ module Boosters
           max_values: 1,
           required: true,
           default_values: role_default,
-          custom_id: "role_#{role_default&.first || 0}"
+          custom_id: "role_#{role_default&.first || -1}"
         )
       end
 

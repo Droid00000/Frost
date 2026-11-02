@@ -21,7 +21,7 @@ module Moderation
           max_values: 1,
           required: true,
           default_values: alert_channel_default,
-          custom_id: "alert_channel_#{alert_channel_default&.first || 0}",
+          custom_id: "alert_channel_#{alert_channel_default&.first || -1}",
           types: %i[
             text
             announcement
@@ -37,7 +37,7 @@ module Moderation
           max_values: 25,
           required: false,
           default_values: exempt_roles_default,
-          custom_id: "exempt_roles_#{exempt_roles_default&.length || 0}"
+          custom_id: "exempt_roles_#{event.interaction.id}"
         )
       end
 
@@ -46,7 +46,7 @@ module Moderation
           max_values: 25,
           required: false,
           default_values: exempt_channels_default,
-          custom_id: "exempt_channels_#{exempt_channels_default&.length || 0}",
+          custom_id: "exempt_channels_#{event.interaction.id}",
           types: %i[
             text
             voice
@@ -66,7 +66,7 @@ module Moderation
           required: false,
           default_value: timeout_seconds_default,
           placeholder: "E.g. 5 minutes, 1 hour, 25 days, etc.",
-          custom_id: "timeout_duration_#{settings&.timeout_duration || 0}"
+          custom_id: "timeout_duration_#{settings&.timeout_duration || -1}"
         )
       end
     end

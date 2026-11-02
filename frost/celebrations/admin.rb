@@ -18,7 +18,7 @@ module Celebrations
           max_values: 1,
           required: false,
           default_values: role_default,
-          custom_id: "role_#{role_default&.first || 0}"
+          custom_id: "role_#{role_default&.first || -1}"
         )
       end
 
@@ -28,7 +28,7 @@ module Celebrations
           required: false,
           types: %i[text announcement],
           default_values: channel_default,
-          custom_id: "channel_#{channel_default&.first || 0}"
+          custom_id: "channel_#{channel_default&.first || -1}"
         )
       end
     end

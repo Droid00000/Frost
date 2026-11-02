@@ -142,6 +142,9 @@ module Frost
     # @return [Boosters::Cache] the cached resources for booster perks.
     attr_reader :boosters_cache
 
+    # @return [Moderation::Cache] the cached resources for the RoboMod.
+    attr_reader :moderation_cache
+
     # @return [EventRoles::Cache] the cached resources for event roles.
     attr_reader :event_roles_cache
 

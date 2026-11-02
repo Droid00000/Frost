@@ -37,34 +37,6 @@ module Boosters
       @boosters = Concurrent::Map.new
     end
 
-    #  ##     ##    ###    #### ##    ##
-    #  ###   ###   ## ##    ##  ###   ##
-    #  #### ####  ##   ##   ##  ####  ##
-    #  ## ### ## ##     ##  ##  ## ## ##
-    #  ##     ## #########  ##  ##  ####
-    #  ##     ## ##     ##  ##  ##   ###
-    #  ##     ## ##     ## #### ##    ##
-
-    # @!group General
-
-    # Delete the guild. Will remove all boosters and bans.
-    # @return [void]
-    def delete
-      BOT.boosters_cache.delete_guild(@id)
-    end
-
-    # Modify the properties of the guild.
-    # @param role [Role, Integer] The new hoist role for the guild.
-    # @param features [Integer] The feature flags to set for the guild.
-    # @return [void]
-    def modify(role: nil, features: nil)
-      rest = { role_id: role&.resolve_id, features: features }.compact
-
-      BOT.boosters_cache.update_guild(@id, rest) if @inner_flags.nobits?(1)
-    end
-
-    # @!endgroup
-
     #  ########     ###    ##    ##  ######
     #  ##     ##   ## ##   ###   ## ##    ##
     #  ##     ##  ##   ##  ####  ## ##

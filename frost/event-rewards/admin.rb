@@ -62,7 +62,9 @@ module EventRoles
       return
     end
 
-    if guild_role.managed? || guild_role.bot_id || guild_role.integration_id
+    if guild_role.managed? || guild_role.bot_id ||
+       guild_role.integration_id || guild_role.connections? ||
+       guild_role.premium_subscriber? || guild_role.available_for_purchase?
       event.edit_response(content: REPLY.INVALID_CONFIGURE_TARGET_MANAGED_ROLE)
       return
     end

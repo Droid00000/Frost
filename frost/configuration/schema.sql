@@ -67,14 +67,14 @@ CREATE TABLE IF NOT EXISTS birthday_settings (
 );
 
 -- Holds info about moderation settings.
-CREATE TABLE IF NOT EXISTS automod_settings (
+CREATE TABLE IF NOT EXISTS robomod_settings (
   setup_by BIGINT NOT NULL,
   setup_at BIGINT NOT NULL,
+  channel_id BIGINT NOT NULL,
   guild_id BIGINT PRIMARY KEY,
-  channel_id BIGINT DEFAULT NULL,
   exempt_roles BIGINT[] NOT NULL,
-  exempt_channels BIGINT[] NOT NULL,
-  timeout_seconds INTEGER DEFAULT 120
+  timeout_seconds INTEGER NOT NULL,
+  exempt_channels BIGINT[] NOT NULL
 );
 
 -- Function for searching for a timezone.
