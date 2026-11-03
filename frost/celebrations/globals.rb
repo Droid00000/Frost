@@ -9,7 +9,7 @@ module Celebrations
     INVALID_CONFIGURE_TARGET_EVERYONE_ROLE: "The `@everyone` role cannot be the birthday role.",
     INVALID_CONFIGURE_TARGET_MANAGED_ROLE: "A role managed by an integration cannot be the birthday role.",
     GUILD_UNCONFIGURED: "This server hasn't enabled birthday perks.",
-    DELETE_CONFIGURE_SUCCESS: "Successfully disabled birthday perks for this server.",
+    DELETE_CONFIGURE_SUCCESS: "Successfully disabled birthday perks for this server."
   )
 
   # Default timezones for autocomplete.
