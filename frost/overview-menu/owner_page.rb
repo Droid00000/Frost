@@ -91,7 +91,7 @@ module Frost::Overview
     end
 
     event.send_message(
-      attachments: [File.open("logs.rb", "rb")], ephemeral: true
+      attachments: [File.open("logs.txt", "rb")], ephemeral: true
     )
   end
 

@@ -20,8 +20,8 @@ module Moderation
         label.channel_select(
           max_values: 1,
           required: true,
+          custom_id: "alert_channel",
           default_values: alert_channel_default,
-          custom_id: "alert_channel_#{alert_channel_default&.first || -1}",
           types: %i[
             text
             announcement
@@ -45,8 +45,8 @@ module Moderation
         label.channel_select(
           max_values: 25,
           required: false,
+          custom_id: "exempt_channels",
           default_values: exempt_channels_default,
-          custom_id: "exempt_channels_#{event.interaction.id}",
           types: %i[
             text
             voice
@@ -64,9 +64,9 @@ module Moderation
           style: :short,
           max_length: 30,
           required: false,
+          custom_id: "timeout_duration",
           default_value: timeout_seconds_default,
-          placeholder: "E.g. 5 minutes, 1 hour, 25 days, etc.",
-          custom_id: "timeout_duration_#{settings&.timeout_duration || -1}"
+          placeholder: "E.g. 5 minutes, 1 hour, 25 days, etc."
         )
       end
     end

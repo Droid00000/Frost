@@ -1,6 +1,17 @@
 # frozen_string_literal: true
 
 module Celebrations
+  # Interaction responses.
+  REPLY = Frost::Utilities.table(
+    USER_MISSING_CONFIGURE_PERMISSIONS: "You need to have the `administrator` permission to do this.",
+    USER_MAX_ROLE_BELOW_CONFIGURE_TARGET: "Your top role is below the selected birthday role.",
+    CONFIGURE_SUCCESS: "Successfully configured birthday perks for this server.",
+    INVALID_CONFIGURE_TARGET_EVERYONE_ROLE: "The `@everyone` role cannot be the birthday role.",
+    INVALID_CONFIGURE_TARGET_MANAGED_ROLE: "A role managed by an integration cannot be the birthday role.",
+    GUILD_UNCONFIGURED: "This server hasn't enabled birthday perks.",
+    DELETE_CONFIGURE_SUCCESS: "Successfully disabled birthday perks for this server.",
+  )
+
   # Default timezones for autocomplete.
   DEFAULT_ZONES = {
     "New York, United States": "America/New_York",

@@ -53,7 +53,7 @@ module Frost::Commands
       end
     end
 
-    bot.register_application_command(:robomod, "Auto-moderation functionality for link and file spam.", contexts: [:guild], integration_types: [:guild], queue: true) do |command|
+    bot.register_application_command(:robomod, "Auto-moderation functionality for link and file spam.", contexts: [:guild], integration_types: [:guild], queue: true, default_permissions: [:administrator]) do |command|
       command.subcommand(:configure, "Configure the robomod functionality.")
 
       command.subcommand(:disable, "Disable the robomod functionality.")
