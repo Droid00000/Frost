@@ -38,20 +38,20 @@ module Moderation
       @guilds = {}
       @locker = Frost::Locker.new
 
-      GUILDS.order(:setup_at, :guild_id)
+      GUILDS.order(Sequel.asc(:guild_id))
             .paged_each { @guilds[it[:guild_id]] = Guild.new(it) }
     end
 
     # Fetch a single guild.
     # @param guild_id [Integer, Guild] The ID of the guild to fetch.
-    # @return [Boosters::Guild, nil] The guild for the given guild ID.
+    # @return [Moderation::Guild, nil] The guild for the given guild ID.
     def fetch_guild(guild_id)
       @guilds[guild_id.resolve_id]
     end
 
     # Delete a single guild.
     # @param guild_id [Integer, Guild] The ID of the guild to delete.
-    # @return [Boosters::Guild, nil] The guild for the given guild ID.
+    # @return [Moderation::Guild, nil] The guild for the given guild ID.
     def delete_guild(guild_id)
       guild_id = guild_id.resolve_id
 

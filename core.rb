@@ -230,6 +230,8 @@ end
 
 BOT = Frost::Tundra.new
 
+Rufus::Scheduler.singleton(max_work_threads: 50)
+
 Discordrb::LOGGER.streams = [File.open("logs.txt", "ab")]
 
 Dir["frost/**/*.rb"].reverse_each { |file| require_relative file }

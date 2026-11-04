@@ -33,7 +33,7 @@ module Boosters
       @guilds = {}
       @locker = Frost::Locker.new
 
-      GUILDS.order(:setup_at, :guild_id)
+      GUILDS.order(Sequel.asc(:guild_id))
             .paged_each { @guilds[it[:guild_id]] = Guild.new(it) }
 
       BOOSTERS.order(:guild_id, :user_id)

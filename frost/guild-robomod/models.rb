@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Moderation
-  # RoboMod for a guild.
+  # RoboMod settings for a guild.
   class Guild
     # @return [Integer] the ID of the guild on Discord.
     attr_reader :id
