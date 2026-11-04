@@ -1,4 +1,4 @@
--- Revision: V5
+-- Revision: V7
 -- Creation Time: 2025-01-02 12:31:07.804358 UTC
 
 -- Holds info about event roles.
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS event_roles (
 CREATE TABLE IF NOT EXISTS event_users (
   user_id BIGINT NOT NULL,
   role_id BIGINT NOT NULL,
-  PRIMARY KEY (user_id, role_id)
+  PRIMARY KEY (role_id, user_id)
 );
 
 -- Holds info about server boosters.
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS guild_boosters (
   user_id BIGINT NOT NULL,
   role_id BIGINT NOT NULL,
   guild_id BIGINT NOT NULL,
-  PRIMARY KEY (user_id, guild_id)
+  PRIMARY KEY (guild_id, user_id)
 );
 
 -- Holds info about banned boosters.
@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS world_timezones (
 -- Holds info about member birthdays.
 CREATE TABLE IF NOT EXISTS user_birthdays (
   guilds BIGINT[] NOT NULL,
+  pending BOOLEAN NOT NULL,
   user_id BIGINT PRIMARY KEY,
-  pending BOOLEAN DEFAULT FALSE,
   birthdate TIMESTAMPTZ NOT NULL
 );
 
@@ -103,9 +103,6 @@ FROM (
 ) sub
 ORDER BY score DESC LIMIT 25;
 $$;
-
--- Index for the `event_users` table.
-CREATE INDEX IF NOT EXISTS event_users_cursor ON event_users (role_id, user_id);
 
 -- Foreign key for the `event_users` table.
 ALTER TABLE event_users ADD CONSTRAINT event_users_fkey FOREIGN KEY (role_id) REFERENCES event_roles(role_id) ON DELETE CASCADE;

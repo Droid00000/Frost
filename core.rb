@@ -215,12 +215,12 @@ module Frost
       case type
       when :BOOSTERS
         @boosters_cache ||= Boosters::Cache.new
-      when :BIRTHDAYS
-        @birthdays_cache ||= Birthdays::Cache.new
       when :MODERATION
         @moderation_cache ||= Moderation::Cache.new
       when :EVENT_ROLES
         @event_roles_cache ||= EventRoles::Cache.new
+      when :CELEBRATIONS
+        @celebrations_cache ||= Celebrations::Cache.new
       else
         raise ArgumentError, "Unknown cache type: #{type}"
       end
@@ -239,13 +239,13 @@ Dir["frost/**/*.rb"].reverse_each { |file| require_relative file }
 BOT.initialize_cache :BOOSTERS
 BOT.initialize_cache :MODERATION
 BOT.initialize_cache :EVENT_ROLES
-# BOT.initialize_cache :CELEBRATIONS
+BOT.initialize_cache :CELEBRATIONS
 
 BOT.discord.include! AdminCommands
 BOT.discord.include! ActionCommands
 # BOT.discord.include! BoosterCommands
 BOT.discord.include! EventRoleCommands
 BOT.discord.include! ModerationCommands
-# BOT.discord.include! CelebrationCommands
+BOT.discord.include! CelebrationCommands
 
 BOT.discord.run

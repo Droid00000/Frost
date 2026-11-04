@@ -8,7 +8,7 @@ module Celebrations
       return
     end
 
-    settings = BOT.birthdays_cache.fetch_guild(event.guild_id)
+    settings = BOT.celebrations_cache.fetch_guild(event.guild_id)
     role_default = settings && event.guild.role(settings.role_id) ? [settings.role_id] : nil
     channel_default = settings && event.bot.channel(settings.channel_id) ? [settings.channel_id] : nil
 
@@ -67,7 +67,7 @@ module Celebrations
       return
     end
 
-    BOT.birthdays_cache.create_guild(
+    BOT.celebrations_cache.create_guild(
       id: event.guild_id,
       role: selected_role,
       setup_by: event.user,
@@ -84,7 +84,7 @@ module Celebrations
       return
     end
 
-    result = BOT.birthdays_cache.delete_guild(event.guild_id)
+    result = BOT.celebrations_cache.delete_guild(event.guild_id)
 
     if result.nil?
       event.edit_response(content: DELETE_CONFIGURE_SUCCESS)
