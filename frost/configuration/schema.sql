@@ -1,4 +1,4 @@
--- Revision: V7
+-- Revision: V8
 -- Creation Time: 2025-01-02 12:31:07.804358 UTC
 
 -- Holds info about event roles.
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS robomod_settings (
 
 -- Function for searching for a timezone.
 CREATE OR REPLACE FUNCTION search_timezones (query TEXT) RETURNS SETOF world_timezones ROWS 25 LANGUAGE SQL STABLE AS $$
- WITH tokens AS (
+ WITH tokens AS MATERIALIZED (
     SELECT unnest(string_to_array($1, ' ')) AS t
 )
 SELECT name, country, timezone, identifier
@@ -103,6 +103,9 @@ FROM (
 ) sub
 ORDER BY score DESC LIMIT 25;
 $$;
+
+-- Index for the `user_birthdays` table.
+CREATE INDEX user_birthday_guilds ON user_birthdays USING GIN (guilds);
 
 -- Foreign key for the `event_users` table.
 ALTER TABLE event_users ADD CONSTRAINT event_users_fkey FOREIGN KEY (role_id) REFERENCES event_roles(role_id) ON DELETE CASCADE;

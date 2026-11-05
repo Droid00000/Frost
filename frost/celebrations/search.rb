@@ -2,17 +2,19 @@
 
 module Celebrations
   # Search for a timezone.
-  def self.search_timezone(data)
-    if (zone = data.options[:timezone]).empty?
-      data.choices.merge!(DEFAULT_ZONES)
+  def self.search_timezone(event)
+    option = event.options[:timezone] || ""
+
+    if option.empty? || !option.match?(/[[:alpha:]]/)
+      event.choices.merge!(DEFAULT_ZONES)
     else
       query = "SELECT * FROM search_timezones(?);"
 
-      BOT.db.fetch(query, zone).each do |row|
-        data.choices[row[:name]] = row[:timezone]
+      BOT.db.fetch(query, option).each do |value|
+        event.choices[value[:name]] = value[:timezone]
       end
     end
 
-    data.respond(choices: data.choices)
+    event.respond(choices: event.choices)
   end
 end
