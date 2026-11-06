@@ -49,7 +49,7 @@ module EventRoles
             )
           end
 
-          if next_role_id && roles.any? { it.id > next_role_id }
+          if single_page || (next_role_id && roles.any? { it.id > next_role_id })
             menu.option(
               label: "Forward",
               emoji: 1_557_209_202_211_168_318,

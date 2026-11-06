@@ -52,7 +52,7 @@ module EventRoles
       insert = add&.map { [it.resolve_id, @id] } || []
 
       @users_lock.synchronize do
-        BOT.db.transaction(isolation: :serializable) do
+        BOT.db.transaction(isolation: :committed) do
           if insert.any?
             add = USERS
                   .insert_conflict
