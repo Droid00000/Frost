@@ -39,4 +39,15 @@ module Celebrations
     "Shanghai, China": "Asia/Shanghai",
     "Lagos, Nigeria": "Africa/Lagos"
   }.freeze
+
+  # Parse an IANA timezone from a given string.
+  def self.parse_timezone(input)
+    return nil unless input&.include?("/")
+
+    processed = input.split("/").map do |piece|
+      piece.split(/[\s_]+/).map(&:capitalize).join("_")
+    end
+
+    TZInfo::Timezone.get(processed.join("/")) rescue nil
+  end
 end

@@ -19,3 +19,6 @@ Layout/LineLength:
 
 Style/ClassAndModuleChildren:
   Enabled: false
+
+Style/RescueModifier:
+  Enabled: false

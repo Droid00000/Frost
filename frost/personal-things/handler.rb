@@ -9,4 +9,9 @@ module AdminCommands
       PersonalThings.next_chapter_when(event)
     end
   end
+
+  application_command(:time) do |event|
+    event.defer(ephemeral: true)
+    PersonalThings.timezone_time(event)
+  end
 end

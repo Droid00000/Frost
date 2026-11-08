@@ -6,6 +6,9 @@ module Moderation
     # @return [Sequel::Dataset]
     GUILDS = BOT.db[:robomod_settings]
 
+    # @return [Hash<Integer => Array<Array<Integer>>>]
+    attr_reader :modals
+
     # SQL query to update an existing guild or insert a new one.
     GUILD_UPSERT = <<~QUERY
       MERGE INTO robomod_settings main USING (VALUES (?, ?, ?, ?, ?, ?, ?)) AS
@@ -36,6 +39,7 @@ module Moderation
     # Discord. Make sure to turn off any other bot containers.
     def initialize
       @guilds = {}
+      @modals = {}
       @locker = Frost::Locker.new
 
       GUILDS.order(Sequel.asc(:guild_id))
