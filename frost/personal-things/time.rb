@@ -4,7 +4,7 @@ module PersonalThings
   # View the time in a specific timezone.
   def self.timezone_time(event)
     unless (zone = Celebrations.parse_timezone(event.options[:timezone]))
-      event.edit_response(content: "Invalid timezone.")
+      event.edit_response(content: REPLY.INVALID_TIMEZONE)
       return
     end
 
