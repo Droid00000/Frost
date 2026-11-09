@@ -21,15 +21,15 @@ module Moderation
           exempt_channels = COALESCE(params.exempt_channels, main.exempt_channels),
           timeout_seconds = COALESCE(params.timeout_seconds, main.timeout_seconds)
       WHEN NOT MATCHED THEN
-        INSERT (guild_id, setup_at, setup_by, channel_id, exempt_roles, exempt_channels, timeout_seconds)
+        INSERT (guild_id, setup_at, setup_by, channel_id, timeout_seconds, exempt_roles, exempt_channels)
         VALUES (
           params.guild_id,
           params.setup_at,
           params.setup_by,
           params.channel_id,
-          params.exempt_roles,
-          params.exempt_channels,
-          params.timeout_seconds
+          params.timeout_seconds,
+          COALESCE(params.exempt_roles, ARRAY[]::bigint[]),
+          COALESCE(params.exempt_channels, ARRAY[]::bigint[])
         )
         RETURNING main.*;
     QUERY
@@ -74,7 +74,7 @@ module Moderation
       guild_id = guild_id.resolve_id
 
       @locker.synchronize(guild_id) do
-        result = GUILDS.where(guild_id:).update(**rest).returning
+        result = GUILDS.where(guild_id:).returning.update(**rest)
 
         @guilds[guild_id]&.update_state(result[0]) if result.any?
       end

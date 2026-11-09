@@ -243,7 +243,7 @@ BOT.initialize_cache :CELEBRATIONS
 
 BOT.discord.include! AdminCommands
 BOT.discord.include! ActionCommands
-# BOT.discord.include! BoosterCommands
+BOT.discord.include! BoosterCommands
 BOT.discord.include! EventRoleCommands
 BOT.discord.include! ModerationCommands
 BOT.discord.include! CelebrationCommands

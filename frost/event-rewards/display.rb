@@ -22,10 +22,6 @@ module EventRoles
     next_role_id = guild_roles.last&.id
     before_role_id = guild_roles.first&.id
 
-    guild_roles.sort_by! do |role|
-      role.name.chars.sum { GG_SANS_WIDTHS[it] || 1.2 }
-    end
-
     # IS_COMPONENTS_V2 message flag.
     flags = 1 << 15
 
@@ -92,10 +88,6 @@ module EventRoles
 
     next_role_id = guild_roles.last&.id
     before_role_id = guild_roles.first&.id
-
-    guild_roles.sort_by! do |role|
-      role.name.chars.sum { GG_SANS_WIDTHS[it] || 1.2 }
-    end
 
     # EPHEMERAL and IS_COMPONENTS_V2 message flags.
     flags = (1 << 6) | (1 << 15)

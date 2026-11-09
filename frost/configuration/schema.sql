@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS guild_boosters (
 );
 
 -- Holds info about banned boosters.
-CREATE TABLE IF NOT EXISTS banned_boosters (  
+CREATE TABLE IF NOT EXISTS banned_boosters (
   user_id BIGINT NOT NULL,
   guild_id BIGINT NOT NULL,
   banned_by BIGINT NOT NULL,

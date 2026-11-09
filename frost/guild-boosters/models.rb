@@ -30,7 +30,6 @@ module Boosters
     # @!visibility private
     def initialize(new_state)
       @bans = Set[]
-      @inner_flags = 0
       @bans_lock = Mutex.new
 
       update_state(new_state)
@@ -114,11 +113,6 @@ module Boosters
     #  ####  ##    ##    ##    ######## ##     ## ##    ## ##     ## ########  ######
 
     # @!visibility private
-    def set_tombstone_state
-      @inner_flags |= (1 << 0)
-    end
-
-    # @!visibility private
     def push_ban(item)
       (@bans << item.resolve_id)
     end
@@ -135,6 +129,38 @@ module Boosters
       @features = new_state[:features]
       @setup_by = new_state[:setup_by]
       @setup_at = new_state[:setup_at]
+    end
+  end
+
+  # A booster for a guild.
+  class Booster
+    # @return [Integer] the ID of the user on Discord.
+    attr_reader :id
+
+    # @return [Integer] the ID of the user's role in the guild.
+    attr_reader :role_id
+
+    # @return [Integer] a snowflake representing the booster's version.
+    attr_reader :version
+
+    # @!visibility private
+    def initialize(new_state)
+      update_state(new_state)
+    end
+
+    #  ####  ###   ## ######## ######## ########  ##    ##    ###    ##        ######
+    #   ##   ###   ##    ##    ##       ##     ## ###   ##   ## ##   ##       ##    ##
+    #   ##   ####  ##    ##    ##       ##     ## ####  ##  ##   ##  ##       ##
+    #   ##   ## ## ##    ##    ######   ########  ## ## ## ##     ## ##        ######
+    #   ##   ##  ####    ##    ##       ##   ##   ##  #### ######### ##             ##
+    #   ##   ##   ###    ##    ##       ##    ##  ##   ### ##     ## ##       ##    ##
+    #  ####  ##    ##    ##    ######## ##     ## ##    ## ##     ## ########  ######
+
+    # @!visibility private
+    def update_state(new_state)
+      @id = new_state[:user_id]
+      @role_id = new_state[:role_id]
+      @version = new_state[:version]
     end
   end
 end

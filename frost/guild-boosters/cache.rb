@@ -59,9 +59,7 @@ module Boosters
       @locker.synchronize(guild_id) do
         result = GUILDS.where(guild_id:).returning(:guild_id)
 
-        if result.delete.first&.[](:guild_id)
-          @guilds.delete(guild_id)&.tap(:set_tombstone_state)
-        end
+        @guilds.delete(guild_id) if result.delete[0]&.[](:guild_id)
       end
     end
 
@@ -73,7 +71,7 @@ module Boosters
       guild_id = guild_id.resolve_id
 
       @locker.synchronize(guild_id) do
-        result = GUILDS.where(guild_id:).update(**rest).returning
+        result = GUILDS.where(guild_id:).returning.update(**rest)
 
         @guilds[guild_id]&.update_state(result[0]) if result.any?
       end
