@@ -8,7 +8,7 @@ module EventRoles
       return
     end
 
-    event.show_modal(title: "Event Roles", custom_id: "event_role_settings") do |ui|
+    event.show_modal(title: "Settings", custom_id: "event_role_settings") do |ui|
       ui.label(label: "Role", description: "The role that you want to configure.") do |label|
         label.role_select(
           max_values: 1,

@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS banned_boosters (
 
 -- Holds info about world timezones.
 CREATE TABLE IF NOT EXISTS world_timezones (
-  name TEXT NOT NULL,
+  name TEXT PRIMARY KEY,
   country TEXT NOT NULL,
   timezone TEXT NOT NULL,
   identifier TEXT NOT NULL

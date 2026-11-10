@@ -69,14 +69,13 @@ module Frost
 
   # The configuration for the current bot.
   class Configuration
-    # @return [Integer] the ID of the bot owner.
+    # @return [Integer] the user ID of the bot owner.
     attr_reader :owner_id
 
-    # @return [String] the auth token of the bot.
+    # @return [String] the authentication token of the bot.
     attr_reader :bot_token
 
-    # @return [String] the URI of the database. The URL must
-    #   use the `postgres://` URI scheme or the connection will fail.
+    # @return [String] the `postgres://` URI of the database.
     attr_reader :database_uri
 
     # @return [ChapterInfo] the information about the cron job that will run
@@ -85,11 +84,12 @@ module Frost
 
     # @!visibility private
     def initialize
-      data = YAML.load_file("config.yml")
-      @owner_id = Integer(data["Discord"]["OWNER"])
-      @bot_token = String(data["Discord"]["TOKEN"])
-      @database_uri = String(data["Postgres"]["URL"])
-      @chapter_info = ChapterInfo.new(data["Chapter"]).freeze
+      yaml = YAML.safe_load_file("config.yml")
+      @owner_id = Integer(yaml["Discord"]["OWNER"])
+      @bot_token = String(yaml["Discord"]["TOKEN"])
+      @database_uri = String(yaml["Postgres"]["URL"])
+      @chapter_info = ChapterInfo.new(yaml["Chapter"]).freeze
+      @database_uri.gsub!(/\Apostgresql:\/\//, "postgres://")
     end
 
     # The configuration for the release channel cron job.
@@ -168,7 +168,7 @@ module Frost
         allowed_mentions: {
           parse: []
         }
-      }
+      }.freeze
 
       @discord = Discordrb::Bot.new(**bot)
 
@@ -206,7 +206,7 @@ module Frost
       # we can only keep connections around for a total
       # of 5 minutes, since the database will scale to 0
       # after 5-minutes of inactivity.
-      @db.pool.connection_validation_timeout = (60 * 4) + 30
+      @db.pool.connection_validation_timeout = (60 * 4) + 45
     end
 
     # Cache all of the state for a specific type of resource.
