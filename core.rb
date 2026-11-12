@@ -89,7 +89,7 @@ module Frost
       @bot_token = String(yaml["Discord"]["TOKEN"])
       @database_uri = String(yaml["Postgres"]["URL"])
       @chapter_info = ChapterInfo.new(yaml["Chapter"]).freeze
-      @database_uri.gsub!(/\Apostgresql:\/\//, "postgres://")
+      @database_uri.gsub!(%r{\Apostgresql://}, "postgres://")
     end
 
     # The configuration for the release channel cron job.

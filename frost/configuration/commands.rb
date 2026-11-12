@@ -25,23 +25,23 @@ module Frost::Commands
       option.user(:target, "Who do you want to bonk?", required: true)
     end
 
-    bot.register_application_command(:punch, "Punch another user.", contexts: %i[guild bot_dm private_channel], integration_types: %i[user guild], queue: true) do |option|
+    bot.create_application_command(:punch, "Punch another user.", contexts: %i[guild bot_dm private_channel], integration_types: %i[user guild], queue: true) do |option|
       option.user(:target, "Who do you want to punch?", required: true)
     end
 
-    bot.register_application_command(:time, "View the current time.", contexts: %i[guild bot_dm private_channel], integration_types: %i[user guild], queue: true) do |option|
+    bot.create_application_command(:time, "View the current time.", contexts: %i[guild bot_dm private_channel], integration_types: %i[user guild], queue: true) do |option|
       option.string(:timezone, "The timezone to view the time in.", required: true, autocomplete: true)
     end
 
     if (guild_id = ENV.fetch("GUILD", nil))
-      bot.register_application_command(:next, "View the release date of the next chapter.", guild: guild_id) do |command|
+      bot.create_application_command(:next, "View the release date of the next chapter.", guild: guild_id) do |command|
         command.subcommand_group(:chapter, "View the release date of the next chapter.") do |group|
           group.subcommand(:when, "View the release date of the next chapter.")
         end
       end
     end
 
-    bot.register_application_command(:event, "Role management for server events.", contexts: [:guild], integration_types: [:guild], queue: true) do |command|
+    bot.create_application_command(:event, "Role management for server events.", contexts: [:guild], integration_types: [:guild], queue: true) do |command|
       command.subcommand(:roles, "Manage your event roles.")
 
       command.subcommand_group(:role, "Event Roles") do |group|
@@ -53,13 +53,13 @@ module Frost::Commands
       end
     end
 
-    bot.register_application_command(:robomod, "Auto-moderation functionality for link and file spam.", contexts: [:guild], integration_types: [:guild], queue: true, default_permissions: [:administrator]) do |command|
+    bot.create_application_command(:robomod, "Auto-moderation functionality for link and file spam.", contexts: [:guild], integration_types: [:guild], queue: true, default_permissions: [:administrator]) do |command|
       command.subcommand(:configure, "Configure the robomod functionality.")
 
       command.subcommand(:disable, "Disable the robomod functionality.")
     end
 
-    bot.register_application_command(:birthday, "Customizable birthday roles and announcements.", contexts: [:guild], integration_types: [:guild], queue: true) do |command|
+    bot.create_application_command(:birthday, "Customizable birthday roles and announcements.", contexts: [:guild], integration_types: [:guild], queue: true) do |command|
       command.subcommand(:add, "Add or edit your birthday.") do |option|
         option.integer(:month, "The month you were born in.", required: true, choices: { January: 1, February: 2, March: 3, April: 4, May: 5, June: 6, July: 7, August: 8, September: 9, October: 10, November: 11, December: 12 })
         option.integer(:day, "The day you were born on.", required: true, min: 1, max: 31)
@@ -77,7 +77,7 @@ module Frost::Commands
       end
     end
 
-    bot.register_application_command(:booster, "Customizable perks for server boosters.", contexts: [:guild], integration_types: [:guild], queue: true) do |command|
+    bot.create_application_command(:booster, "Customizable perks for server boosters.", contexts: [:guild], integration_types: [:guild], queue: true) do |command|
       command.subcommand_group(:role, "Booster Perks") do |group|
         group.subcommand(:claim, "Claim your custom booster role.") do |option|
           option.string(:name, "Provide a name for your role.", required: true, max: 100)
