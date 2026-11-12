@@ -46,6 +46,9 @@ module Celebrations
     # @return [Integer] the ID of the user on Discord.
     attr_reader :id
 
+    # @return [Sequel::Dataset]
+    USERS = BOT.db[:user_birthdays]
+
     # @!visibility private
     def initialize(new_state)
       update_state(new_state)
@@ -56,7 +59,7 @@ module Celebrations
     #   birthday is ongoing and should be checked when recovering
     #   from a crash or unexpected shutdown.
     def modify(pending:)
-      USER.where(user_id: @id).update(pending: pending)
+      USERS.where(user_id: @id).update(pending: pending)
     end
 
     # Get the birthdate of a user in the current year.
@@ -70,7 +73,9 @@ module Celebrations
     # @return [Time] The next occurence of the user's birthdate. This
     #   should almost always point to a date in the future.
     def next_birthdate
-      Time.now.utc > birthdate ? (birthdate + 31_536_000) : birthdate
+      timestamp = birthdate
+
+      Time.now.utc > timestamp ? (timestamp + 31_536_000) : timestamp
     end
 
     # Get the guilds that a user has synced themselves to.
