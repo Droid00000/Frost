@@ -88,3 +88,6 @@ ALTER TABLE guild_boosters ADD CONSTRAINT guild_boosters_fkey FOREIGN KEY (guild
 
 -- Foreign key for the `banned_boosters` table.
 ALTER TABLE banned_boosters ADD CONSTRAINT banned_boosters_fkey FOREIGN KEY (guild_id) REFERENCES booster_settings(guild_id) ON DELETE CASCADE;
+
+-- Generated column for fuzzy matching timezones. 
+ALTER TABLE world_timezones ADD COLUMN search_text TEXT GENERATED ALWAYS AS (name || ' ' || country || ' ' || timezone || ' ' || identifier) STORED;

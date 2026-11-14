@@ -22,20 +22,20 @@ module Celebrations
 
     # SQL query to fuzzy search timezones matching a specific query.
     SEARCH_TIMEZONES = <<~QUERY
-      WITH tokens AS MATERIALIZED (SELECT unnest(string_to_array(?, ' ')) AS t) SELECT name, timezone
-        FROM (SELECT g.*,
-          (
-            SELECT SUM(
-              CASE WHEN g.name ILIKE '%' || t.t || '%' THEN 1.0 - (t.t <-> g.name) ELSE 0 END +
-              CASE WHEN similarity(g.name, t.t) > 0.2 THEN similarity(g.name, t.t) ELSE 0 END +
-              CASE WHEN g.country ILIKE '%' || t.t || '%' THEN 1.0 - (t.t <-> g.country) ELSE 0 END +
-              CASE WHEN similarity(g.country, t.t) > 0.2 THEN similarity(g.country, t.t) ELSE 0 END +
-              CASE WHEN g.timezone ILIKE '%' || t.t || '%' THEN 1.0 - (t.t <-> g.timezone) ELSE 0 END +
-              CASE WHEN similarity(g.timezone, t.t) > 0.2 THEN similarity(g.timezone, t.t) ELSE 0 END +
-              CASE WHEN g.identifier ILIKE '%' || t.t || '%' THEN 1.0 - (t.t <-> g.identifier) ELSE 0 END +
-              CASE WHEN similarity(g.identifier, t.t) > 0.2 THEN similarity(g.identifier, t.t) ELSE 0 END
-            ) FROM tokens t) AS score FROM world_timezones g) AS subquery
-      ORDER BY score DESC LIMIT 25;
+      WITH query_words AS MATERIALIZED(
+        SELECT unnest(string_to_array(trim(?), ' ')) AS word
+      )
+      SELECT entry.name, entry.timezone FROM world_timezones AS entry WHERE EXISTS (
+        SELECT 1 FROM query_words WHERE
+          entry.search_text % query_words.word OR entry.search_text ILIKE '%' || query_words.word || '%'
+        )
+      ORDER BY(
+        SELECT SUM(
+          CASE WHEN match.similarity > 0.2 THEN match.similarity ELSE 0 END +
+          CASE WHEN entry.search_text ILIKE '%' || query_words.word || '%' THEN match.similarity ELSE 0 END
+        )
+      FROM query_words CROSS JOIN
+        LATERAL(SELECT similarity(entry.search_text, query_words.word) AS similarity) AS match) DESC LIMIT 25;
     QUERY
 
     # Fetch all of the data for celebrations from the DB.
