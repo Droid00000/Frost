@@ -11,9 +11,6 @@ Metrics:
 Style/Documentation:
   Enabled: false
 
-Style/IfUnlessModifier:
-  Enabled: false
-
 Layout/LineLength:
   Enabled: false
 

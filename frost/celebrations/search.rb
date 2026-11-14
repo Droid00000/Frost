@@ -8,7 +8,7 @@ module Celebrations
     if option.empty? || !option.match?(/[[:alpha:]]/)
       event.choices.merge!(DEFAULT_ZONES)
     else
-      query = "SELECT * FROM search_timezones(?);"
+      query = Cache::SEARCH_TIMEZONES
 
       BOT.db.fetch(query, option).each do |value|
         event.choices[value[:name]] = value[:timezone]
