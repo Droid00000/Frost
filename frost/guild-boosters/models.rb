@@ -27,13 +27,17 @@ module Boosters
     # @return [Sequel::Dataset]
     BANS = BOT.db[:banned_boosters]
 
+    # @return [Sequel::Dataset]
+    BOOSTERS = BOT.db[:guild_boosters]
+
     # @!visibility private
     def initialize(new_state)
       @bans = Set[]
+      @boosters = {}
+      @lock = Mutex.new
       @bans_lock = Mutex.new
 
       update_state(new_state)
-      @boosters = Concurrent::Map.new
     end
 
     #  ########     ###    ##    ##  ######
@@ -82,15 +86,78 @@ module Boosters
       end
     end
 
+    #  ########   ######   ######   ######  ######## ######## ########   ######
+    #  ##     ## ##    ## ##    ## ##    ##    ##    ##       ##     ## ##    ##
+    #  ##     ## ##    ## ##    ## ##          ##    ##       ##     ## ##
+    #  ########  ##    ## ##    ##  ######     ##    ######   ########   ######
+    #  ##     ## ##    ## ##    ##       ##    ##    ##       ##   ##         ##
+    #  ##     ## ##    ## ##    ## ##    ##    ##    ##       ##    ##  ##    ##
+    #  ########   ######   ######   ######     ##    ######## ##     ##  ######
+
+    # @!group Boosters
+
+    # Delete a single booster for the guild.
+    # @param id [Member, Integer] The user ID of the booster.
+    # @param version [Integer, nil] An optional version to match against.
+    def delete_booster(id:, version: nil)
+      rest = {
+        guild_id: @id,
+        user_id: id.resolve_id,
+        version: version&.resolve_id
+      }.compact
+
+      @lock.synchronize do
+        if (row = BOOSTERS.where(**rest).returning.delete.first)
+          now = @boosters[rest[:user_id]]&.version
+
+          @boosters.delete(rest[:user_id]) if now == row[:version]
+        end
+      end
+    end
+
+    # Create a single booster for the guild.
+    # @param id [Member, Integer] The user ID of the booster.
+    # @param role [Role, Integer] The ID of the booster's linked role.
+    # @param version [Integer] The snowflake interaction ID of the booster.
+    def create_booster(id:, role:, version:)
+      rest = {
+        user_id: id.resolve_id,
+        role_id: role.resolve_id,
+        version: version.resolve_id
+      }
+
+      @lock.synchronize do
+        push_booster(BOOSTERS.insert_select(guild_id: @id, **rest))
+      end
+    end
+
+    # Delete multiple boosters for the guild.
+    # @param boosters [Array<Booster>] The boosters to delete.
+    def delete_boosters(boosters)
+      columns = %i[guild_id user_id version]
+
+      list = boosters.map { [@id, it.id, it.version] }
+
+      @lock.synchronize do
+        rows = BOOSTERS.where(columns => list).returning.delete
+
+        rows.each do |row|
+          now = @boosters[row[:user_id]]&.version
+
+          @boosters.delete(row[:user_id]) if now == row[:version]
+        end
+      end
+    end
+
     # @!endgroup
 
-    #  ######## ########    ###    ######## ##     ## ########  ########   ######
-    #  ##       ##         ## ##      ##    ##     ## ##    ##  ##        ##    ##
-    #  ##       ##        ##   ##     ##    ##     ## ##    ##  ##        ##
-    #  ######   ######   ##     ##    ##    ##     ## ########  ######     ######
-    #  ##       ##       #########    ##    ##     ## ##   ##   ##              ##
-    #  ##       ##       ##     ##    ##    ##     ## ##    ##  ##        ##    ##
-    #  ##       ######## ##     ##    ##     #######  ##     ## ########   ######
+    #  ######## ########    ###    ######## ##     ## ########   ########   ######
+    #  ##       ##         ## ##      ##    ##     ## ##     ##  ##        ##    ##
+    #  ##       ##        ##   ##     ##    ##     ## ##     ##  ##        ##
+    #  ######   ######   ##     ##    ##    ##     ## ########   ######     ######
+    #  ##       ##       #########    ##    ##     ## ##   ##    ##              ##
+    #  ##       ##       ##     ##    ##    ##     ## ##    ##   ##        ##    ##
+    #  ##       ######## ##     ##    ##     #######  ##     ##  ########   ######
 
     # @!group Features
 
@@ -113,13 +180,13 @@ module Boosters
     #  ####  ##    ##    ##    ######## ##     ## ##    ## ##     ## ########  ######
 
     # @!visibility private
-    def push_ban(item)
-      (@bans << item.resolve_id)
+    def push_ban(value)
+      @bans << value.resolve_id
     end
 
     # @!visibility private
-    def push_booster(item)
-      @boosters[item[:user_id]] = Booster.new(item)
+    def push_booster(value)
+      @boosters[value[:user_id]] = Booster.new(value)
     end
 
     # @!visibility private
@@ -145,19 +212,6 @@ module Boosters
 
     # @!visibility private
     def initialize(new_state)
-      update_state(new_state)
-    end
-
-    #  ####  ###   ## ######## ######## ########  ##    ##    ###    ##        ######
-    #   ##   ###   ##    ##    ##       ##     ## ###   ##   ## ##   ##       ##    ##
-    #   ##   ####  ##    ##    ##       ##     ## ####  ##  ##   ##  ##       ##
-    #   ##   ## ## ##    ##    ######   ########  ## ## ## ##     ## ##        ######
-    #   ##   ##  ####    ##    ##       ##   ##   ##  #### ######### ##             ##
-    #   ##   ##   ###    ##    ##       ##    ##  ##   ### ##     ## ##       ##    ##
-    #  ####  ##    ##    ##    ######## ##     ## ##    ## ##     ## ########  ######
-
-    # @!visibility private
-    def update_state(new_state)
       @id = new_state[:user_id]
       @role_id = new_state[:role_id]
       @version = new_state[:version]

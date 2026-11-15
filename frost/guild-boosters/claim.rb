@@ -3,13 +3,13 @@
 module Boosters
   # Claim a booster role.
   def self.booster_role_claim(event)
-    unless event.guild.bot.can_manage_roles?
-      event.edit_response(content: REPLY.MISSING_PERMISSIONS)
+    unless event.user.premium_since
+      event.edit_response(content: REPLY.MEMBER_MISSING_BOOST)
       return
     end
 
-    unless event.user.premium_since
-      event.edit_response(content: REPLY.MEMBER_MISSING_BOOST)
+    unless event.guild.bot.can_manage_roles?
+      event.edit_response(content: REPLY.MISSING_PERMISSIONS)
       return
     end
 
@@ -43,7 +43,7 @@ module Boosters
         event.edit_response(content: REPLY.BOOSTER_ROLE_ALREADY_CLAIMED)
         return
       else
-        settings.delete_booster(booster.user_id, version: booster.version)
+        settings.delete_booster(id: booster.id, version: booster.version)
       end
     end
 
@@ -85,9 +85,9 @@ module Boosters
 
     begin
       settings.create_booster(
-        role_id: new_role.id,
-        user_id: event.user.id,
-        version: event.interaction.id
+        id: event.user,
+        role: new_role,
+        version: event.interaction
       )
     rescue Sequel::UniqueConstraintViolation, Sequel::ForeignKeyConstraintViolation
       new_role.delete(reason: x_audit_log)

@@ -30,7 +30,7 @@ module Frost::Commands
     end
 
     bot.create_application_command(:time, "View the current time.", contexts: %i[guild bot_dm private_channel], integration_types: %i[user guild], queue: true) do |option|
-      option.string(:timezone, "The timezone to view the time in.", required: true, autocomplete: true)
+      option.string(:timezone, "The timezone to view the time in.", required: true, autocomplete: true, max: 100)
     end
 
     if (guild_id = ENV.fetch("GUILD", nil))
@@ -82,13 +82,13 @@ module Frost::Commands
         group.subcommand(:claim, "Claim your custom booster role.") do |option|
           option.string(:name, "Provide a name for your role.", required: true, max: 100)
           option.string(:color, "Provide a HEX color for your role.", required: true, min: 3, max: 16)
-          option.string(:icon, "Provide an emoji for your role icon.", required: false)
+          option.string(:icon, "Provide an emoji for your role icon.", required: false, max: 160)
         end
 
         group.subcommand(:edit, "Edit your custom booster role.") do |option|
           option.string(:name, "Provide a name for your role.", required: false, max: 100)
           option.string(:color, "Provide a HEX color for your role.", required: false, min: 3, max: 16)
-          option.string(:icon, "Provide an emoji for your role icon.", required: false)
+          option.string(:icon, "Provide an emoji for your role icon.", required: false, max: 160)
         end
 
         group.subcommand(:gradient, "Edit your custom booster role's gradient.") do |option|

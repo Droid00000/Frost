@@ -93,10 +93,7 @@ module Boosters
   HEX_COLOR_REGEX = /[0-9A-F]{6}\b/i
 
   # Regex for matching Discord emojis.
-  CUSTOM_EMOJI_REGEX = /<a?:\w{2,32}:(\d{15,75})>/
-
-  # Regex for normalizing unicode emojis.
-  UNICODE_EMOJI_VARIANT_REGEX = /[\u{FE00}-\u{FE0F}]/
+  CUSTOM_DISCORD_EMOJI_REGEX = /<a?:\w{2,32}:(\d{15,70})>/
 
   # Regex for matching offensive language.
   ROLE_NAME_REGEX = /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|@everyone|r34|porn|hentai|sakimichan|patron only|pornhub|\.gg|xxxvideos|xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|khyleri|dyke|anus|anal|blowjob|boner|cum|chink|chinky|paki|futanari|titjob|boobjob|scat|jizz|gangbang|chingchong|ziggaboo|mexcrement|kill yourself|kys|clit|orgasm|semen|foreskin|cock|ahegao|pedophile|pedophille|autist|pedos|gook|negro|\brape|raper\b|rapist|slut|fellatio|cuck|\.com|\.org|\.net|pussy|penis|uterus|cnc|bdsm|cunt|kink|kinky|discord\.gg|join my server|thighs|th1ghs|smut|wanker|vulva|wank|titty|topless|\btit\b|tits|swinger|hitler|swastika|strapon|spooge|jizz|shibari|cumshot|shemale|sex|chaturbate|scat|masochist|scissoring|schlong|shibari|sadism|raping|queef|pornography|pissing|pegging|pegged|paedophile|orgy|pedobear|ponyplay|nympho|nudes|nude|octopussy|omorashi|masturbate|milf|dilf|lolita|missionary|missionary style|m!ssionary style|m!ss!onary style|m!ss!0nary style|d0ggy style| kike|incest|nhentai|jailbait|handjob|g-spot|futanari|fisting|fingering|femdom|squirting|ecchi|ejaculation|erotic|doggiestyle|doggy style|doggystyle|deepthroat|date rape|daterape|dildo|clit|clitoris|camgirl|camslut|camwhore|butthole|anal|bitches|black cock|erotic|disboard|invite\.gg|higger|nate higgers|gooner|kys|kms|s3x/i
@@ -106,7 +103,7 @@ module Boosters
     return if input.nil? || input.empty?
 
     if (value = input[HEX_COLOR_REGEX]&.to_i(16))
-      value.zero? ? COLORS[:black] : value
+      value.zero? ? COLORS["black"] : value
     else
       COLORS[Frost::Utilities.to_snake_case(input)]
     end
@@ -116,19 +113,15 @@ module Boosters
   def self.extract_icon(event, settings)
     return unless (icon = event.options[:icon])
 
-    if (custom_emoji = icon[CUSTOM_EMOJI_REGEX, 1])
-      return if !settings.any_icon? && !event.guild.emoji(custom_emoji)
+    if (id = icon[CUSTOM_DISCORD_EMOJI_REGEX, 1])
+      return if !settings.any_icon? && !event.guild.emoji(id)
 
-      endpoint = Discordrb::Assets::ENDPOINTS[:custom_emoji]
-
-      http = Faraday.get(
-        "#{format(endpoint, custom_emoji, 'png')}?size=128"
-      )
+      http = BOT.discord_cdn.get("/emojis/#{id}.png?size=128")
 
       return http.success? ? StringIO.new(http.body, "rb") : nil
     end
 
-    icon[Unicode::Emoji::REGEX]&.gsub(UNICODE_EMOJI_VARIANT_REGEX, "")
+    icon.strip[Unicode::Emoji::REGEX]&.delete("\u{FE00}-\u{FE0F}")
   end
 
   # Validate a role name for any harmful words or phrases. Strips diacritics.

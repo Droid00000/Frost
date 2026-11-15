@@ -136,6 +136,9 @@ module Frost
     # @return [Hash] the allowed mentions that will stop all mentions.
     attr_reader :no_mentions
 
+    # @return [Faraday::Connection] an HTTP client for the Discord CDN.
+    attr_reader :discord_cdn
+
     # @return [Integer] the amount of events received over the Gateway.
     attr_reader :event_counter
 
@@ -163,6 +166,10 @@ module Frost
         ]
       }
 
+      @discord_cdn = Faraday.new(
+        url: "https://cdn.discordapp.com"
+      )
+
       # suppress all mentions in a message.
       @no_mentions = {
         allowed_mentions: {
@@ -177,7 +184,6 @@ module Frost
 
       @event_counter = 0
 
-      # Make the bot cleanly disconnect on shutdown.
       at_exit { @discord.stop }
 
       @discord.raw { @event_counter += 1 }
@@ -234,7 +240,7 @@ Rufus::Scheduler.singleton(max_work_threads: 50)
 
 Discordrb::LOGGER.streams = [File.open("logs.txt", "ab")]
 
-Dir["frost/**/*.rb"].reverse_each { |file| require_relative file }
+Dir["frost/**/*.rb"].each { |file| require_relative file }
 
 BOT.initialize_cache :BOOSTERS
 BOT.initialize_cache :MODERATION
