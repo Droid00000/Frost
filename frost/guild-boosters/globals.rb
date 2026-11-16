@@ -116,6 +116,8 @@ module Boosters
   def self.extract_icon(event, settings)
     return unless (icon = event.options[:icon])
 
+    return unless event.guild_features.include?(:ROLE_ICONS)
+
     if (id = icon[CUSTOM_DISCORD_EMOJI_REGEX, 1])
       return if !settings.any_icon? && !event.guild.emoji(id)
 

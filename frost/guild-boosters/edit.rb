@@ -23,15 +23,15 @@ module Boosters
       return
     end
 
-    if invalid_role_name?(event.options[:name])
-      event.edit_response(content: REPLY.BOOSTER_ROLE_NAME_DISALLOWED)
-      return
-    end
-
     booster = settings.fetch_booster(event.user.id)
 
     if !booster || !(role = event.guild.role(booster.role_id))
       event.edit_response(content: REPLY.BOOSTER_ROLE_NOT_FOUND)
+      return
+    end
+
+    if invalid_role_name?(event.options[:name])
+      event.edit_response(content: REPLY.BOOSTER_ROLE_NAME_DISALLOWED)
       return
     end
 
