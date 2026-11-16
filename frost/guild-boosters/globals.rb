@@ -7,8 +7,8 @@ module Boosters
     BOT_MAX_ROLE_BELOW_HOIST_ROLE: "Your role couldn't be created. The bot doesn't have permission to move your role above this server's booster role.",
     BOOSTER_ROLE_DELETE_SUCCESSFUL: "Your role has been deleted! Feel free to make a new role at any time. <a:YorClap_Maomao:1287269908157038592>",
     BOOSTER_ROLE_NOT_FOUND: "Your role couldn't be found. Please use the </booster role claim:1386237785865850941> command to claim your role.",
-    BOT_MAX_ROLE_BELOW_BOOSTER_ROLE_DELETE: "Your role couldn't be deleted. The bot's highest role is below your custom role.",
-    BOT_MAX_ROLE_BELOW_BOOSTER_ROLE_EDIT: "Your role couldn't be edited. The bot's highest role is below your custom role.",
+    BOOSTER_ROLE_DELETE_BOT_MAX_ROLE_BELOW: "Your role couldn't be deleted. The bot's highest role is below your custom role.",
+    BOOSTER_ROLE_EDIT_BOT_MAX_ROLE_BELOW: "Your role couldn't be edited. The bot's highest role is below your custom role.",
     BOOSTER_ROLE_EDIT_SUCCESSFUL: "Your role has been successfully edited! <a:LoidClap_Maomao:1276327798104920175>",
     BOOSTER_ROLE_DELETE_COOLDOWN: "Your role couldn't be deleted. A new role can only be deleted after 10 minutes.",
     USER_MISSING_CONFIGURE_PERMISSIONS: "You need to have the `manage roles` permission to do this.",
@@ -95,6 +95,9 @@ module Boosters
   # Regex for matching Discord emojis.
   CUSTOM_DISCORD_EMOJI_REGEX = /<a?:\w{2,32}:(\d{15,70})>/
 
+  # Regex for matching reset-like terms.
+  RESET_ROLE_FIELD_REGEX = /^\s*(?:remove|off|disable|delete|null|nil|reset)\s*$/i
+
   # Regex for matching offensive language.
   ROLE_NAME_REGEX = /fag|f@g|bitch|b1tch|faggot|whore|wh0re|tranny|tr@nny|nigger|nigga|faggot|nibba|n1g|n1gger|nigaboo|n1gga|n i g g e r|n i g g a|@everyone|r34|porn|hentai|sakimichan|patron only|pornhub|\.gg|xxxvideos|xvideos|retard|retarded|porno|deepfake|erection|thirst trap|erection|khyleri|dyke|anus|anal|blowjob|boner|cum|chink|chinky|paki|futanari|titjob|boobjob|scat|jizz|gangbang|chingchong|ziggaboo|mexcrement|kill yourself|kys|clit|orgasm|semen|foreskin|cock|ahegao|pedophile|pedophille|autist|pedos|gook|negro|\brape|raper\b|rapist|slut|fellatio|cuck|\.com|\.org|\.net|pussy|penis|uterus|cnc|bdsm|cunt|kink|kinky|discord\.gg|join my server|thighs|th1ghs|smut|wanker|vulva|wank|titty|topless|\btit\b|tits|swinger|hitler|swastika|strapon|spooge|jizz|shibari|cumshot|shemale|sex|chaturbate|scat|masochist|scissoring|schlong|shibari|sadism|raping|queef|pornography|pissing|pegging|pegged|paedophile|orgy|pedobear|ponyplay|nympho|nudes|nude|octopussy|omorashi|masturbate|milf|dilf|lolita|missionary|missionary style|m!ssionary style|m!ss!onary style|m!ss!0nary style|d0ggy style| kike|incest|nhentai|jailbait|handjob|g-spot|futanari|fisting|fingering|femdom|squirting|ecchi|ejaculation|erotic|doggiestyle|doggy style|doggystyle|deepthroat|date rape|daterape|dildo|clit|clitoris|camgirl|camslut|camwhore|butthole|anal|bitches|black cock|erotic|disboard|invite\.gg|higger|nate higgers|gooner|kys|kms|s3x/i
 
@@ -116,12 +119,12 @@ module Boosters
     if (id = icon[CUSTOM_DISCORD_EMOJI_REGEX, 1])
       return if !settings.any_icon? && !event.guild.emoji(id)
 
-      http = BOT.discord_cdn.get("/emojis/#{id}.png?size=128")
+      request = BOT.discord_cdn.get("/emojis/#{id}.png?size=128")
 
-      return http.success? ? StringIO.new(http.body, "rb") : nil
+      return request.success? ? StringIO.new(request.body, "rb") : nil
     end
 
-    icon.strip[Unicode::Emoji::REGEX]&.delete("\u{FE00}-\u{FE0F}")
+    icon[Unicode::Emoji::REGEX]&.tap { it.delete!("\u{FE00}-\u{FE0F}") }
   end
 
   # Validate a role name for any harmful words or phrases. Strips diacritics.
