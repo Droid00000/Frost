@@ -22,20 +22,24 @@ module Celebrations
 
     # SQL query to fuzzy search timezones matching a specific query.
     SEARCH_TIMEZONES = <<~QUERY
-      WITH query_words AS MATERIALIZED(
+      WITH query_words AS MATERIALIZED (
         SELECT unnest(string_to_array(trim(?), ' ')) AS word
       )
       SELECT entry.name, entry.timezone FROM world_timezones AS entry WHERE EXISTS (
         SELECT 1 FROM query_words WHERE
           entry.search_terms % query_words.word OR entry.search_terms ILIKE '%' || query_words.word || '%'
         )
-      ORDER BY(
+      ORDER BY (
         SELECT SUM(
-          CASE WHEN match.similarity > 0.2 THEN match.similarity ELSE 0 END +
-          CASE WHEN entry.search_terms ILIKE '%' || query_words.word || '%' THEN match.similarity ELSE 0 END
+          CASE WHEN entry.search_terms ~* ('(^|[[:space:]])' || query_words.word || '([[:space:]]|$)')
+            THEN 1.0 + (match.similarity * 3)
+          WHEN entry.search_terms ILIKE '%' || query_words.word || '%'
+            THEN 0.5 + (match.similarity * 1.5)
+          WHEN match.similarity > 0.2
+            THEN match.similarity ELSE 0 END
         )
-      FROM query_words CROSS JOIN
-        LATERAL(SELECT similarity(entry.search_terms, query_words.word) AS similarity) AS match) DESC LIMIT 25;
+        FROM query_words CROSS JOIN
+          LATERAL(SELECT similarity(entry.search_terms, query_words.word) AS similarity) AS match) DESC LIMIT 25;
     QUERY
 
     # Fetch all of the data for celebrations from the DB.

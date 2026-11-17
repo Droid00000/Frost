@@ -49,6 +49,7 @@ module Boosters
     end
 
     unless payload[:display_icon]
+      # rubocop:disable Style/SoleNestedConditional
       if event.options[:icon]&.match?(RESET_ROLE_FIELD_REGEX)
         payload[:icon] = nil
         payload[:unicode_emoji] = nil
@@ -63,6 +64,7 @@ module Boosters
       end
     end
 
+    # rubocop:enable Style/SoleNestedConditional
     if payload.empty?
       event.edit_response(content: REPLY.BOOSTER_ROLE_EDIT_SUCCESSFUL)
       return
