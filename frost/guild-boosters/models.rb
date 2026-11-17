@@ -96,6 +96,13 @@ module Boosters
 
     # @!group Boosters
 
+    # Fetch a single booster.
+    # @param user_id [Member, Integer] The ID of the booster to fetch.
+    # @return [Boosters::Booster, nil] The booster for the given user ID.
+    def fetch_booster(user_id)
+      @boosters[user_id.resolve_id]
+    end
+
     # Delete a single booster for the guild.
     # @param id [Member, Integer] The user ID of the booster.
     # @param version [Integer, nil] An optional version to match against.

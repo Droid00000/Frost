@@ -27,15 +27,15 @@ module Celebrations
       )
       SELECT entry.name, entry.timezone FROM world_timezones AS entry WHERE EXISTS (
         SELECT 1 FROM query_words WHERE
-          entry.search_text % query_words.word OR entry.search_text ILIKE '%' || query_words.word || '%'
+          entry.search_terms % query_words.word OR entry.search_terms ILIKE '%' || query_words.word || '%'
         )
       ORDER BY(
         SELECT SUM(
           CASE WHEN match.similarity > 0.2 THEN match.similarity ELSE 0 END +
-          CASE WHEN entry.search_text ILIKE '%' || query_words.word || '%' THEN match.similarity ELSE 0 END
+          CASE WHEN entry.search_terms ILIKE '%' || query_words.word || '%' THEN match.similarity ELSE 0 END
         )
       FROM query_words CROSS JOIN
-        LATERAL(SELECT similarity(entry.search_text, query_words.word) AS similarity) AS match) DESC LIMIT 25;
+        LATERAL(SELECT similarity(entry.search_terms, query_words.word) AS similarity) AS match) DESC LIMIT 25;
     QUERY
 
     # Fetch all of the data for celebrations from the DB.
