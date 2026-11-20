@@ -41,8 +41,6 @@ module Boosters
       display_icon: extract_icon(event, settings)
     }.compact
 
-    audit_log = "Booster Roles (ID: #{event.user.id})"
-
     if payload[:color]
       payload[:tertiary_color] = nil
       payload[:secondary_color] = nil
@@ -71,7 +69,7 @@ module Boosters
     end
 
     begin
-      role.modify(**payload, reason: audit_log)
+      role.modify(**payload, reason: "Booster Roles (ID: #{event.user.id})")
     rescue Discordrb::Errors::NoPermission
       event.edit_response(content: REPLY.BOOSTER_ROLE_EDIT_BOT_MAX_ROLE_BELOW)
       return

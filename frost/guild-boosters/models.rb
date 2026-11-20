@@ -223,5 +223,11 @@ module Boosters
       @role_id = new_state[:role_id]
       @version = new_state[:version]
     end
+
+    # Retrieve the time at when the booster was created.
+    # @return [Time] The time at when the booster was created.
+    def creation_time
+      @creation_time ||= Discordrb::Snowflake.decompose(@version)
+    end
   end
 end
