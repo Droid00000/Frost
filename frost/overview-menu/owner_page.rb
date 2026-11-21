@@ -39,10 +39,10 @@ module Frost::Overview
 
         container.separator(spacing: :small, divider: true)
 
-        events = Frost::Utilities.delimit(BOT.event_counter)
+        count = Frost::Utilities.delimit(BOT.event_counter)
 
         container.section do |section|
-          section.text_display(content: "**Gateway**\n-# Events Seen: #{events}\n-# Login Time: <t:#{BOT.ready_time}:d>\n")
+          section.text_display(content: "**Gateway**\n-# Events Seen: #{count}\n-# Login Time: <t:#{BOT.ready_at}:d>\n")
           section.button(style: :danger, label: "Logout", custom_id: "owner_page_shutdown")
         end
       end

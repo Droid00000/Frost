@@ -131,7 +131,7 @@ module Frost
     attr_reader :discord
 
     # @return [Integer, nil] UNIX of when the bot logged into Discord.
-    attr_reader :ready_time
+    attr_reader :ready_at
 
     # @return [Hash] the allowed mentions that will stop all mentions.
     attr_reader :no_mentions
@@ -180,7 +180,7 @@ module Frost
       @discord = Discordrb::Bot.new(**bot)
 
       # Initialize these due to ruby IVAR shapes.
-      @ready_time = nil
+      @ready_at = nil
 
       @event_counter = 0
 
@@ -188,7 +188,7 @@ module Frost
 
       @discord.raw { @event_counter += 1 }
 
-      @discord.ready { @ready_time ||= Time.now.to_i }
+      @discord.ready { @ready_at ||= Time.now.to_i }
 
       # NOTE: Due to how we store birthdays, we should always
       # treat timestamp columns as being in UTC. I haven't tested
