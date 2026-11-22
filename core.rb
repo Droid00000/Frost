@@ -53,6 +53,29 @@ module Frost
     end
   end
 
+  # A logger that periodically flushes messages to disk.
+  class SimpleLogger
+    LOG_MESSAGES = [] # rubocop:disable Style/MutableConstant
+
+    # Flush logs every 15 minutes to disk.
+    WORKER_THREAD = Thread.new do
+      loop do
+        sleep(900)
+
+        next if (messages = LOG_MESSAGES.shift(5000)).empty?
+
+        File.write("logs.txt", "#{messages.join("\n")}\n", mode: "a")
+      end
+    end
+
+    def self.flush; end
+
+    # Add a message to the array.
+    def self.puts(message)
+      LOG_MESSAGES.push(message)
+    end
+  end
+
   # A mechanism for locking a resource using a specific key.
   class Locker
     # @!visibility private
@@ -238,7 +261,7 @@ BOT = Frost::Tundra.new
 
 Rufus::Scheduler.singleton(max_work_threads: 50)
 
-Discordrb::LOGGER.streams = [File.open("logs.txt", "ab")]
+Discordrb::LOGGER.streams = [Frost::SimpleLogger]
 
 Dir["frost/**/*.rb"].each { |file| require_relative file }
 

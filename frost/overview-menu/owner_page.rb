@@ -90,8 +90,16 @@ module Frost::Overview
       return
     end
 
+    name = "logs.txt"
+
+    disk = File.readlines(name, chomp: true) if File.exist?(name)
+
+    logs = (disk || []).concat(Frost::SimpleLogger::LOG_MESSAGES)
+
+    file = StringIO.new(logs.empty? ? "" : logs.join("\n"), "rb")
+
     event.send_message(
-      attachments: [File.open("logs.txt", "rb")], ephemeral: true
+      attachments: [{ filename: name, file: file }], ephemeral: true
     )
   end
 
