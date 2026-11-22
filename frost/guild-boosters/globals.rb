@@ -16,18 +16,21 @@ module Boosters
     USER_MISSING_CONFIGURE_PERMISSIONS: "You need to have the `manage roles` permission to do this.",
     GUILD_HOIST_ROLE_DELETED: "Your role couldn't be created. This server's hoist role was deleted.",
     GUILD_MAX_ROLE_LIMIT: "Your role couldn't be created. The maximum role limit has been reached.",
+    USER_MAX_ROLE_BELOW_CONFIGURE_TARGET: "Your highest role is below the selected booster role.",
     MISSING_START_AND_END_COLORS: "Please provide a start **and** end color for your gradient.",
+    BOT_MISSING_PERMISSIONS: "The bot needs to have the `manage roles` permission to do this.",
     MEMBER_BANNED_BOOSTER_PERKS: "You've been banned from using booster perks in this server.",
     MISSING_START_OR_END_COLORS: "Please provide a start **or** end color for your gradient.",
-    MISSING_PERMISSIONS: "The bot needs to have the `manage roles` permission to do this.",
     BOOSTER_ROLE_NAME_DISALLOWED: "Your role name contains a word that cannot be used.",
+    DELETE_CONFIGURE_SUCCESS: "Successfully disabled booster perks for this server.",
     INVALID_START_COLOR: "Please provide a valid start color for your gradient.",
+    CONFIGURE_SUCCESS: "Successfully configured booster perks for this server.",
     MEMBER_MISSING_BOOST: "You must be a server booster to use this command.",
     INVALID_END_COLOR: "Please provide a valid end color for your gradient.",
     BOOSTER_ROLE_ALREADY_CLAIMED: "You've already claimed your custom role.",
     MISSING_START_COLOR: "Please provide a start color for your gradient.",
     MISSING_END_COLOR: "Please provide an end color for your gradient.",
-    UNCONFIGURED_GUILD: "This server hasn't enabled booster perks."
+    GUILD_UNCONFIGURED: "This server hasn't enabled booster perks."
   )
 
   # Pre-defined colors.

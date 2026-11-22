@@ -9,7 +9,7 @@ module Boosters
     end
 
     unless event.guild.bot.can_manage_roles?
-      event.edit_response(content: REPLY.MISSING_PERMISSIONS)
+      event.edit_response(content: REPLY.BOT_MISSING_PERMISSIONS)
       return
     end
 
@@ -19,7 +19,7 @@ module Boosters
     end
 
     unless (settings = BOT.boosters_cache.fetch_guild(event.guild_id))
-      event.edit_response(content: REPLY.UNCONFIGURED_GUILD)
+      event.edit_response(content: REPLY.GUILD_UNCONFIGURED)
       return
     end
 
@@ -56,17 +56,17 @@ module Boosters
       permissions: "0"
     }
 
-    x_audit_log = "Booster Roles (ID: #{event.user.id})"
+    audit_log = "Booster Roles (ID: #{event.user.id})"
 
     begin
-      new_role = event.guild.create_role(**payload, reason: x_audit_log)
+      new_role = event.guild.create_role(**payload, reason: audit_log)
     rescue Discordrb::Errors::NoPermission
       event.edit_response(content: REPLY.MISSING_PERMISSIONS)
       return
     end
 
     begin
-      new_role.move(above: hoist_role, reason: x_audit_log)
+      new_role.move(above: hoist_role, reason: audit_log)
     rescue Discordrb::Errors::NoPermission
       new_role.delete(reason: "Booster Roles (Missing Permissions)")
 
@@ -77,7 +77,7 @@ module Boosters
     event.edit_response(content: REPLY.BOOSTER_ROLE_CLAIM_SUCCESSFUL)
 
     begin
-      event.user.add_roles(new_role, reason: x_audit_log)
+      event.user.add_roles(new_role, reason: audit_log)
     rescue Discordrb::Errors::NoPermission
       event.edit_response(content: REPLY.MISSING_PERMISSIONS)
       return

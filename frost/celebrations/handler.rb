@@ -18,11 +18,6 @@ module CelebrationCommands
     Celebrations.birthday_add(event)
   end
 
-  application_command(:time) do |event|
-    event.defer(ephemeral: true)
-    Celebrations.generic_time(event)
-  end
-
   autocomplete(:timezone) do |event|
     Celebrations.search_timezone(event)
   end

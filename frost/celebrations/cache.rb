@@ -105,7 +105,7 @@ module Celebrations
       ]
 
       @locker.synchronize(guild_id) do
-        result = BOT.db.run(GUILD_UPSERT, *list).first
+        result = BOT.db[GUILD_UPSERT, *list].first
 
         if (cached_guild = @guilds[guild_id])
           cached_guild.tap { it.update_state(result) }

@@ -18,8 +18,8 @@ module Boosters
         label.role_select(
           max_values: 1,
           required: true,
-          default_values: role_default,
-          custom_id: "role_#{role_default&.first || -1}"
+          custom_id: "role_picker",
+          default_values: role_default
         )
       end
 
@@ -40,6 +40,54 @@ module Boosters
           )
         end
       end
+    end
+  end
+
+  # Update the configuration for a guild.
+  def self.configure_submission(event)
+    unless event.user.can_manage_roles?
+      event.edit_response(content: REPLY.USER_MISSING_CONFIGURE_PERMISSIONS)
+      return
+    end
+
+    roles = event.get_component("role_picker")
+    selected_role = event.guild.role(roles.values.first)
+
+    features = event.get_component("features")
+    external_icons = features.values.include?("external_icons")
+    gradient_colors = features.values.include?("gradient_colors")
+
+    flags = external_icons ? Boosters::Guild::FEATURES[:any_icon] : 0
+    (flags |= Boosters::Guild::FEATURES[:no_gradient]) unless gradient_colors
+
+    if selected_role > event.user.top_role && !event.user.owner?
+      event.edit_response(content: REPLY.USER_MAX_ROLE_BELOW_CONFIGURE_TARGET)
+      return
+    end
+
+    BOT.boosters_cache.create_guild(
+      features: flags,
+      id: event.guild_id,
+      role: selected_role,
+      setup_by: event.user
+    )
+
+    event.edit_response(content: REPLY.CONFIGURE_SUCCESS)
+  end
+
+  # Disable the booster perks feature.
+  def self.booster_admin_disable(event)
+    unless event.user.can_manage_roles?
+      event.edit_response(content: REPLY.USER_MISSING_CONFIGURE_PERMISSIONS)
+      return
+    end
+
+    result = BOT.boosters_cache.delete_guild(event.guild_id)
+
+    if result.nil?
+      event.edit_response(content: DELETE_CONFIGURE_SUCCESS)
+    else
+      event.edit_response(content: GUILD_UNCONFIGURED)
     end
   end
 end

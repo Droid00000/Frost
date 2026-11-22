@@ -9,12 +9,12 @@ module Boosters
     end
 
     unless event.guild.bot.can_manage_roles?
-      event.edit_response(content: REPLY.MISSING_PERMISSIONS)
+      event.edit_response(content: REPLY.BOT_MISSING_PERMISSIONS)
       return
     end
 
     unless (settings = BOT.boosters_cache.fetch_guild(event.guild_id))
-      event.edit_response(content: REPLY.UNCONFIGURED_GUILD)
+      event.edit_response(content: REPLY.GUILD_UNCONFIGURED)
       return
     end
 

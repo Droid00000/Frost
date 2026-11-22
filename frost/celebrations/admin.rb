@@ -50,7 +50,7 @@ module Celebrations
     channels = event.get_component("channel_picker")
     selected_role = event.guild.role(roles.values.first)
 
-    if selected_role && selected_role > event.user.top_role
+    if selected_role && selected_role > event.user.top_role && !event.user.owner?
       event.edit_response(content: REPLY.USER_MAX_ROLE_BELOW_CONFIGURE_TARGET)
       return
     end
