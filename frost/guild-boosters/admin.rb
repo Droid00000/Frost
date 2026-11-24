@@ -90,4 +90,41 @@ module Boosters
       event.edit_response(content: GUILD_UNCONFIGURED)
     end
   end
+
+  # Manually remove a booster.
+  def self.booster_admin_delete(event)
+    unless event.user.can_manage_roles?
+      event.edit_response(content: REPLY.USER_MISSING_CONFIGURE_PERMISSIONS)
+      return
+    end
+
+    unless (settings = BOT.boosters_cache.fetch_guild(event.guild_id))
+      event.edit_response(content: REPLY.GUILD_UNCONFIGURED)
+      return
+    end
+
+    user_id = event.options[:target].to_i
+
+    unless (booster = settings.fetch_booster(user_id))
+      event.edit_response(content: REPLY.BOOSTER_ADMIN_DELETE_FAILURE)
+      return
+    end
+
+    if booster && event.options[:prune]
+      role = event.guild.role(booster.role_id)
+      bot_max = event.guild.current_bot.top_role
+
+      if role && (role < event.user.top_role) && (role < bot_max)
+        role.delete(
+          reason: "Booster Roles (Moderator: #{event.user.id})"
+        )
+      end
+    end
+
+    if settings.delete_booster(id: user_id)
+      event.edit_response(content: REPLY.BOOSTER_ADMIN_DELETE_SUCCESS)
+    else
+      event.edit_response(content: REPLY.BOOSTER_ADMIN_DELETE_FAILURE)
+    end
+  end
 end

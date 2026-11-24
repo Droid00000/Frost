@@ -42,11 +42,11 @@ module BoosterCommands
 
     group.subcommand(:claim) do |event|
       event.defer(ephemeral: false)
-      Boosters.booster_role_create(event)
+      Boosters.booster_role_claim(event)
     end
 
     group.subcommand(:delete) do |event|
-      event.defer(ephemeral: false)
+      event.defer(ephemeral: true)
       Boosters.booster_role_delete(event)
     end
 

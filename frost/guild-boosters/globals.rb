@@ -24,11 +24,13 @@ module Boosters
     BOOSTER_ROLE_NAME_DISALLOWED: "Your role name contains a word that cannot be used.",
     DELETE_CONFIGURE_SUCCESS: "Successfully disabled booster perks for this server.",
     INVALID_START_COLOR: "Please provide a valid start color for your gradient.",
-    CONFIGURE_SUCCESS: "Successfully configured booster perks for this server.",
     MEMBER_MISSING_BOOST: "You must be a server booster to use this command.",
+    BOOSTER_ADMIN_DELETE_SUCCESS: "Successfully removed the target booster.",
     INVALID_END_COLOR: "Please provide a valid end color for your gradient.",
     BOOSTER_ROLE_ALREADY_CLAIMED: "You've already claimed your custom role.",
+    BOOSTER_ADMIN_DELETE_FAILURE: "The target booster could not be found.",
     MISSING_START_COLOR: "Please provide a start color for your gradient.",
+    CONFIGURE_SUCCESS: "Booster perks have been successfully configured.",
     MISSING_END_COLOR: "Please provide an end color for your gradient.",
     GUILD_UNCONFIGURED: "This server hasn't enabled booster perks."
   )
