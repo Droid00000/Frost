@@ -52,7 +52,7 @@ module EventRoles
       return
     end
 
-    if guild_role > event.user.highest_role && !event.user.owner?
+    if guild_role >= event.user.highest_role && !event.user.owner?
       event.edit_response(content: REPLY.USER_MAX_ROLE_BELOW_CONFIGURE_TARGET)
       return
     end
@@ -98,7 +98,7 @@ module EventRoles
       return
     end
 
-    if guild_role > event.user.highest_role && !event.user.owner?
+    if guild_role >= event.user.highest_role && !event.user.owner?
       event.edit_response(content: REPLY.USER_MAX_ROLE_BELOW_CONFIGURE_TARGET)
       return
     end

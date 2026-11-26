@@ -60,7 +60,7 @@ module Boosters
     flags = external_icons ? Boosters::Guild::FEATURES[:any_icon] : 0
     (flags |= Boosters::Guild::FEATURES[:no_gradient]) unless gradient_colors
 
-    if selected_role > event.user.top_role && !event.user.owner?
+    if selected_role >= event.user.top_role && !event.user.owner?
       event.edit_response(content: REPLY.USER_MAX_ROLE_BELOW_CONFIGURE_TARGET)
       return
     end
@@ -82,12 +82,10 @@ module Boosters
       return
     end
 
-    result = BOT.boosters_cache.delete_guild(event.guild_id)
-
-    if result.nil?
-      event.edit_response(content: DELETE_CONFIGURE_SUCCESS)
+    if BOT.boosters_cache.delete_guild(event.guild_id)
+      event.edit_response(content: REPLY.DELETE_CONFIGURE_SUCCESS)
     else
-      event.edit_response(content: GUILD_UNCONFIGURED)
+      event.edit_response(content: REPLY.GUILD_UNCONFIGURED)
     end
   end
 
@@ -110,7 +108,7 @@ module Boosters
       return
     end
 
-    if booster && event.options[:prune]
+    if event.options[:prune]
       role = event.guild.role(booster.role_id)
       bot_max = event.guild.current_bot.top_role
 
@@ -125,6 +123,74 @@ module Boosters
       event.edit_response(content: REPLY.BOOSTER_ADMIN_DELETE_SUCCESS)
     else
       event.edit_response(content: REPLY.BOOSTER_ADMIN_DELETE_FAILURE)
+    end
+  end
+
+  # Manually add a booster.
+  def self.booster_admin_add(event)
+    unless event.user.can_manage_roles?
+      event.edit_response(content: REPLY.USER_MISSING_CONFIGURE_PERMISSIONS)
+      return
+    end
+
+    unless (settings = BOT.boosters_cache.fetch_guild(event.guild_id))
+      event.edit_response(content: REPLY.GUILD_UNCONFIGURED)
+      return
+    end
+
+    user_id = event.options[:target].to_i
+
+    if settings.fetch_booster(user_id)
+      event.edit_response(content: REPLY.BOOSTER_ADMIN_ADD_FAILURE)
+      return
+    end
+
+    unless (role = event.guild.role(event.options[:role]))
+      event.edit_response(content: REPLY.BOOSTER_ADMIN_ADD_ROLE_DELETED)
+      return
+    end
+
+    if role.id == event.guild_id
+      event.edit_response(content: REPLY.BOOSTER_ADMIN_ADD_INVALID_EVERYONE_ROLE)
+      return
+    end
+
+    if role.managed? || role.bot_id || role.integration_id ||
+       role.connections? || role.premium_subscriber? || role.available_for_purchase?
+      event.edit_response(content: REPLY.BOOSTER_ADMIN_ADD_INVALID_MANAGED_ROLE)
+      return
+    end
+
+    if role >= event.user.highest_role
+      event.edit_response(content: REPLY.BOOSTER_ADMIN_ADD_INVALID_ROLE_USER_MAX_ROLE_BELOW)
+      return
+    end
+
+    if role >= event.guild.current_bot.highest_role
+      event.edit_response(content: REPLY.BOOSTER_ADMIN_ADD_INVALID_ROLE_BOT_MAX_ROLE_BELOW)
+      return
+    end
+
+    member = event.resolved.members[user_id]
+    add_role = member && !member.role?(role.id)
+    member&.add_role(role, reason: "Booster Roles (Moderator: #{event.user.id})") if add_role
+
+    begin
+      settings.create_booster(
+        id: user_id,
+        role: role.id,
+        version: event.interaction.id
+      )
+
+      success = true
+    rescue Sequel::UniqueConstraintViolation
+      success = false
+    end
+
+    if success
+      event.edit_response(content: REPLY.BOOSTER_ADMIN_ADD_SUCCESS)
+    else
+      event.edit_response(content: REPLY.BOOSTER_ADMIN_ADD_FAILURE)
     end
   end
 end
