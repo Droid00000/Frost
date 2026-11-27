@@ -106,7 +106,7 @@ module Frost::Commands
           option.role(:role, "The role to link to the booster.", required: true)
         end
 
-        group.subcommand(:delete, "Remove a booster from this server.") do |option|
+        group.subcommand(:remove, "Remove a booster from this server.") do |option|
           option.user(:target, "The booster to remove from this server.", required: true)
           option.boolean(:prune, "Whether to delete the member's booster role.", required: true)
         end

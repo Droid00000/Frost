@@ -18,9 +18,9 @@ module BoosterCommands
       Boosters.booster_admin_disable(event)
     end
 
-    group.subcommand(:delete) do |event|
+    group.subcommand(:remove) do |event|
       event.defer(ephemeral: true)
-      Boosters.booster_admin_delete(event)
+      Boosters.booster_admin_remove(event)
     end
 
     group.subcommand(:bans) do |event|

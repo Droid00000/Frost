@@ -90,7 +90,7 @@ module Boosters
   end
 
   # Manually remove a booster.
-  def self.booster_admin_delete(event)
+  def self.booster_admin_remove(event)
     unless event.user.can_manage_roles?
       event.edit_response(content: REPLY.USER_MISSING_CONFIGURE_PERMISSIONS)
       return

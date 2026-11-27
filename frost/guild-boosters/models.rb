@@ -156,6 +156,54 @@ module Boosters
       end
     end
 
+    # Reconcile each booster in the guild with Discord.
+    def audit_boosters
+      items = @boosters.clone
+
+      user_ids = items.keys.each_slice(100)
+
+      return unless (guild = BOT.discord.guild(@id))
+
+      return unless guild.current_bot.can_manage_roles?
+
+      chunks = user_ids.map { guild.query_members(users: it) }
+
+      tombstones = []
+
+      # Loop over every GUILD_MEMBERS_CHUNK we recieved.
+      chunks.each do |result|
+        # The set of members that are still a part of the guild.
+        result.each do |member|
+          next if member.premium_since
+
+          next unless (booster = items[member.user.id])
+
+          next unless (role = guild.role(booster.role_id))
+
+          next if role >= guild&.current_bot&.highest_role
+
+          role.delete(reason: "Booster Roles (ID: #{booster.id})")
+
+          tombstones << booster
+        end
+
+        # The set of user IDs that have left the guild or are invalid.
+        result.not_found.each do |id|
+          next unless (booster = items[id.resolve_id])
+
+          next unless (role = guild.role(booster.role_id))
+
+          next if role >= guild&.current_bot&.highest_role
+
+          role.delete(reason: "Booster Roles (ID: #{booster.id})")
+
+          tombstones << booster
+        end
+      end
+
+      delete_boosters(tombstones)
+    end
+
     # @!endgroup
 
     #  ######## ########    ###    ######## ##     ## ########   ########   ######

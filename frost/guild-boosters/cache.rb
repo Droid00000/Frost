@@ -12,6 +12,9 @@ module Boosters
     # @return [Sequel::Dataset]
     BOOSTERS = BOT.db[:guild_boosters]
 
+    # @return [Hash<Integer => Boosters::Guild>]
+    attr_reader :guilds
+
     # SQL query to update an existing guild or insert a new one.
     GUILD_UPSERT = <<~QUERY
       MERGE INTO booster_settings main USING (VALUES (?, ?, ?, ?, ?)) AS
