@@ -141,15 +141,20 @@ module Boosters
     # Delete multiple boosters for the guild.
     # @param boosters [Array<Booster>] The boosters to delete.
     def delete_boosters(boosters)
-      columns = %i[guild_id user_id version]
+      columns = %i[user_id version]
 
-      list = boosters.map { [@id, it.id, it.version] }
+      return if !boosters || boosters.empty?
+
+      rest = {
+        guild_id: @id,
+        columns => boosters.map { [it.id, it.version] }
+      }
 
       @lock.synchronize do
-        rows = BOOSTERS.where(columns => list).returning.delete
+        rows = BOOSTERS.where(**rest).returning.delete
 
         rows.each do |row|
-          now = @boosters[row[:user_id]]&.version
+          next unless (now = @boosters[row[:user_id]]&.version)
 
           @boosters.delete(row[:user_id]) if now == row[:version]
         end
