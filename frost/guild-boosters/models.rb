@@ -21,7 +21,7 @@ module Boosters
     # @return [Integer] the ID of the user who enabled booster perks.
     attr_reader :setup_by
 
-    # @return [Integer] the unix time at when booster perks were enanbled.
+    # @return [Integer] the unix time at when booster perks were enabled.
     attr_reader :setup_at
 
     # @return [Sequel::Dataset]
