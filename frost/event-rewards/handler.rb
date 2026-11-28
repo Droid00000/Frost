@@ -9,12 +9,10 @@ module EventRoleCommands
   end
 
   application_command(:event).subcommand(:roles) do |event|
-    event.defer(ephemeral: true)
     EventRoles.event_roles_locker(event)
   end
 
   select_menu(custom_id: "event_roles_locker") do |event|
-    event.defer_update
     EventRoles.event_roles_locker_menu(event)
   end
 

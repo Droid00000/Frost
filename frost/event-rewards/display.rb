@@ -12,7 +12,10 @@ module EventRoles
     end
 
     if roles.empty?
-      event.edit_response(content: REPLY.NO_EVENT_ROLES_AVAILABLE)
+      event.respond(
+        content: REPLY.NO_EVENT_ROLES_AVAILABLE, ephemeral: true
+      )
+
       return
     end
 
@@ -22,10 +25,10 @@ module EventRoles
     next_role_id = guild_roles.last&.id
     before_role_id = guild_roles.first&.id
 
-    # IS_COMPONENTS_V2 message flag.
-    flags = 1 << 15
+    # EPHEMERAL and IS_COMPONENTS_V2 message flags.
+    flags = (1 << 6) | (1 << 15)
 
-    event.edit_response(flags: flags) do |_, ui|
+    event.respond(flags: flags) do |_, ui|
       container = add_roles_ui(ui, guild_roles, event.user)
 
       menu = {
@@ -69,7 +72,7 @@ module EventRoles
     end
 
     if roles.empty?
-      event.send_message(
+      event.respond(
         content: REPLY.NO_EVENT_ROLES_AVAILABLE, ephemeral: true
       )
 
@@ -92,7 +95,7 @@ module EventRoles
     # EPHEMERAL and IS_COMPONENTS_V2 message flags.
     flags = (1 << 6) | (1 << 15)
 
-    event.edit_response(flags: flags) do |_, ui|
+    event.update_message(flags: flags) do |_, ui|
       container = add_roles_ui(ui, guild_roles, event.user)
 
       menu = {
