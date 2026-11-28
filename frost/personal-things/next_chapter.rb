@@ -8,6 +8,6 @@ module PersonalThings
     # Move to the next year because the date has already passed.
     time += 31_536_000 if time.month == 1 && [11, 12].any?(Time.now.month)
 
-    event.edit_response(content: Discordrb.timestamp(time, :short_datetime))
+    event.respond(content: Discordrb.timestamp(time, "f"), ephemeral: true)
   end
 end

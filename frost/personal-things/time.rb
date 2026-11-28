@@ -2,15 +2,17 @@
 
 module PersonalThings
   # View the time in a specific timezone.
-  def self.timezone_time(event)
+  def self.time(event)
     unless (zone = Celebrations.parse_timezone(event.options[:timezone]))
-      event.edit_response(content: REPLY.INVALID_TIMEZONE)
+      event.respond(content: REPLY.INVALID_TIMEZONE, ephemeral: true)
       return
     end
 
     time = zone.now.to_time
-    date = time.strftime(Frost::Utilities.ordinal(time.day))
+    day = Frost::Utilities.ordinal(time.day)
 
-    event.edit_response(content: time.strftime("%B #{date}, %Y at %I:%M %p"))
+    event.respond(
+      content: time.strftime("%B #{day}, %Y at %I:%M %p"), ephemeral: true
+    )
   end
 end
